@@ -8,7 +8,14 @@ service:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/
       method: GET
       auth: true
-      docs: Retrieve a list of all pauses.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a list of all pauses.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -54,7 +61,14 @@ service:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/
       method: POST
       auth: true
-      docs: Create a new pause entry.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new pause entry.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -96,7 +110,14 @@ service:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
       method: GET
       auth: true
-      docs: Retrieve a specific pause by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific pause by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -135,7 +156,14 @@ service:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
       method: DELETE
       auth: true
-      docs: Delete a specific pause by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific pause by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -154,7 +182,14 @@ service:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
       method: PATCH
       auth: true
-      docs: Partially update a pause entry by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Partially update a pause entry by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:

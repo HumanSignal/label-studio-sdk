@@ -8,7 +8,14 @@ service:
       path: /api/project-templates/
       method: GET
       auth: true
-      docs: Get a list of all project templates for an organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all project templates for an organization.
       source:
         openapi: openapi/openapi.yaml
       display-name: Get project templates
@@ -48,7 +55,14 @@ service:
       path: /api/project-templates/
       method: POST
       auth: true
-      docs: Create a project template for an organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a project template for an organization.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create project template
@@ -88,7 +102,14 @@ service:
       path: /api/project-templates/{id}
       method: GET
       auth: true
-      docs: Get a specific project template by ID for an organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific project template by ID for an organization.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -126,7 +147,14 @@ service:
       path: /api/project-templates/{id}
       method: PUT
       auth: true
-      docs: Overwrite a specific project template by ID for an organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific project template by ID for an organization.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -170,7 +198,14 @@ service:
       path: /api/project-templates/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific project template by ID for an organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific project template by ID for an organization.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -186,6 +221,12 @@ service:
       method: PATCH
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update the details of a specific project template by ID for an
         organization.
       source:
@@ -257,6 +298,12 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a project from a specific project template by ID for an
         organization.
       source:

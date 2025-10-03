@@ -22,6 +22,12 @@ class SamlClient:
 
     def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> SamlSettings:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve SAML2 settings for the currently active organization.
 
         Parameters
@@ -71,6 +77,12 @@ class SamlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SamlSettingsUpdate:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update SAML2 settings for the currently active organization.
 
         Parameters
@@ -145,6 +157,12 @@ class AsyncSamlClient:
 
     async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> SamlSettings:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve SAML2 settings for the currently active organization.
 
         Parameters
@@ -202,6 +220,12 @@ class AsyncSamlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SamlSettingsUpdate:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update SAML2 settings for the currently active organization.
 
         Parameters

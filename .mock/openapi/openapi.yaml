@@ -8,7 +8,14 @@ info:
 paths:
   /api/activity-logs/:
     get:
-      description: Retrieve activity logs filtered by workspace, project, user, HTTP method, date range or search query.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve activity logs filtered by workspace, project, user, HTTP method, date range or search query.
       operationId: api_activity_logs_list
       parameters:
         - description: End date/time (ISO-8601) for log filtering.
@@ -92,7 +99,14 @@ paths:
       x-fern-sdk-method-name: list
   /api/annotation-history/:
     delete:
-      description: Delete all annotation history items for a specific annotation, task or project. This method is available only for users with administrator roles.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete all annotation history items for a specific annotation, task or project. This method is available only for users with administrator roles.
       operationId: api_annotation_history_destroy
       parameters:
         - description: Annotation ID to delete annotation history items for.
@@ -131,7 +145,14 @@ paths:
       x-fern-sdk-group-name: annotation_history
       x-fern-sdk-method-name: delete
     get:
-      description: 'List annotation history items for an annotation. Annotation history logs all actions performed with annotations, such as: imports, submits, updates, reviews, and more. Users can view annotation history items in the Annotation History panel during labeling.'
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List annotation history items for an annotation. Annotation history logs all actions performed with annotations, such as: imports, submits, updates, reviews, and more. Users can view annotation history items in the Annotation History panel during labeling.
       operationId: api_annotation_history_list
       parameters:
         - description: Annotation ID to get annotation history items for.
@@ -165,7 +186,14 @@ paths:
       x-fern-sdk-method-name: list
   /api/annotation-reviews/:
     get:
-      description: List all reviews for a specific annotation ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all reviews for a specific annotation ID.
       operationId: api_annotation_reviews_list
       parameters:
         - in: query
@@ -201,7 +229,14 @@ paths:
       x-fern-sdk-group-name: annotation_reviews
       x-fern-sdk-method-name: list
     post:
-      description: Create a review for a specific annotation ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a review for a specific annotation ID.
       operationId: api_annotation_reviews_create
       parameters:
         - description: Whether to postprocess the review asynchronously.
@@ -239,7 +274,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/annotation-reviews/{id}/:
     delete:
-      description: Delete a review by ID
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a review by ID
       operationId: api_annotation_reviews_destroy
       parameters:
         - description: A unique integer value identifying this annotation review.
@@ -261,7 +303,14 @@ paths:
       x-fern-sdk-group-name: annotation_reviews
       x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a specific review by ID for an annotation.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific review by ID for an annotation.
       operationId: api_annotation_reviews_retrieve
       parameters:
         - description: A unique integer value identifying this annotation review.
@@ -287,7 +336,14 @@ paths:
       x-fern-sdk-group-name: annotation_reviews
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific review by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific review by ID.
       operationId: api_annotation_reviews_partial_update
       parameters:
         - description: A unique integer value identifying this annotation review.
@@ -324,7 +380,14 @@ paths:
       x-fern-sdk-group-name: annotation_reviews
       x-fern-sdk-method-name: update
     put:
-      description: Overwrite a specific review by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific review by ID.
       operationId: api_annotation_reviews_update
       parameters:
         - description: A unique integer value identifying this annotation review.
@@ -617,7 +680,14 @@ paths:
         - internal
   /api/billing/info:
     get:
-      description: Retrieve billing checks and feature flags for the active organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve billing checks and feature flags for the active organization.
       operationId: api_billing_info_retrieve
       responses:
         '200':
@@ -926,7 +996,14 @@ paths:
         - internal
   /api/comments/:
     get:
-      description: List all comments for a specific annotation ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all comments for a specific annotation ID.
       operationId: api_comments_list
       parameters:
         - in: query
@@ -975,7 +1052,14 @@ paths:
       x-fern-sdk-group-name: comments
       x-fern-sdk-method-name: list
     post:
-      description: Create a comment for a specific annotation ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a comment for a specific annotation ID.
       operationId: api_comments_create
       parameters:
         - description: Expand the created_by field
@@ -1012,7 +1096,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/comments/export/:
     get:
-      description: Export comments to CSV file
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Export comments to CSV file
       operationId: api_comments_export_retrieve
       parameters:
         - in: query
@@ -1060,7 +1151,14 @@ paths:
       x-fern-sdk-method-name: export
   /api/comments/{id}/:
     delete:
-      description: Delete a comment by ID
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a comment by ID
       operationId: api_comments_destroy
       parameters:
         - description: Expand the created_by field
@@ -1086,7 +1184,14 @@ paths:
       x-fern-sdk-group-name: comments
       x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a specific comment by ID for an annotation.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific comment by ID for an annotation.
       operationId: api_comments_retrieve
       parameters:
         - description: Expand the created_by field
@@ -1116,7 +1221,14 @@ paths:
       x-fern-sdk-group-name: comments
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific comment by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific comment by ID.
       operationId: api_comments_partial_update
       parameters:
         - description: Expand the created_by field
@@ -1157,7 +1269,14 @@ paths:
       x-fern-sdk-group-name: comments
       x-fern-sdk-method-name: update
     put:
-      description: Overwrite a specific comment by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific comment by ID.
       operationId: api_comments_update
       parameters:
         - description: Expand the created_by field
@@ -1197,7 +1316,14 @@ paths:
         - internal
   /api/current-user:
     get:
-      description: Get info about the currently authenticated user.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get info about the currently authenticated user.
       operationId: api_current_user_retrieve
       responses:
         '200':
@@ -1216,7 +1342,14 @@ paths:
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: get_current_user
     patch:
-      description: Update details for the currently authenticated user.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update details for the currently authenticated user.
       operationId: api_current_user_partial_update
       requestBody:
         content:
@@ -3837,7 +3970,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/inference-runs/{id}/indicators/:
     get:
-      description: Get key indicators for the Prompt dashboard.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get key indicators for the Prompt dashboard.
       operationId: api_inference_runs_indicators_retrieve
       parameters:
         - in: path
@@ -3872,7 +4012,14 @@ paths:
       x-fern-sdk-method-name: list
   /api/inference-runs/{id}/indicators/{indicator_key}:
     get:
-      description: Get a specific key indicator for the Prompt dashboard.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific key indicator for the Prompt dashboard.
       operationId: api_inference_runs_indicators_retrieve_2
       parameters:
         - in: path
@@ -3950,7 +4097,14 @@ paths:
       x-fern-sdk-method-name: reset_token
   /api/invite/revoke:
     post:
-      description: Revoke invite to organization
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Revoke invite to organization
       operationId: api_invite_revoke_create
       requestBody:
         content:
@@ -3981,7 +4135,14 @@ paths:
       x-fern-sdk-method-name: revoke_invite
   /api/invite/send-email:
     post:
-      description: Send email with invite to organization
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Send email with invite to organization
       operationId: api_invite_send_email_create
       requestBody:
         content:
@@ -4747,7 +4908,7 @@ paths:
       x-fern-sdk-method-name: predict_interactive
   /api/ml/{id}/predict:
     post:
-      description: "Note: not available in the community edition of Label Studio. \n\nCreate predictions for all tasks using a specific ML backend so that you can set up an active learning strategy based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires a Label Studio ML backend set up and configured for your project. \n\nSee [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend. \n\nReference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list)."
+      description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n\nCreate predictions for all tasks using a specific ML backend so that you can set up an active learning strategy based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires a Label Studio ML backend set up and configured for your project. \n\nSee [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend. \n\nReference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list)."
       operationId: api_ml_predict_create
       parameters:
         - description: Computed number of tasks without predictions that the ML backend needs to predict.
@@ -4891,7 +5052,14 @@ paths:
       x-fern-sdk-method-name: list_model_versions
   /api/model-provider-connections/:
     get:
-      description: List all model provider connections.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all model provider connections.
       operationId: api_model_provider_connections_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -4919,7 +5087,14 @@ paths:
       x-fern-sdk-group-name: model_providers
       x-fern-sdk-method-name: list
     post:
-      description: Create a new model provider connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new model provider connection.
       operationId: api_model_provider_connections_create
       requestBody:
         content:
@@ -4950,7 +5125,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/model-provider-connections/provider-choices:
     get:
-      description: List all possible model provider choices
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all possible model provider choices
       operationId: api_model_provider_connections_provider_choices_retrieve
       responses:
         '200':
@@ -4975,7 +5157,14 @@ paths:
       x-fern-sdk-method-name: list_model_provider_choices
   /api/model-provider-connections/{id}/:
     delete:
-      description: Delete a model provider connection by ID
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a model provider connection by ID
       operationId: api_model_provider_connections_destroy
       parameters:
         - in: path
@@ -4996,7 +5185,14 @@ paths:
       x-fern-sdk-group-name: model_providers
       x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a specific model provider connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific model provider connection.
       operationId: api_model_provider_connections_retrieve
       parameters:
         - in: path
@@ -5021,7 +5217,14 @@ paths:
       x-fern-sdk-group-name: model_providers
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific model provider connection by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific model provider connection by ID.
       operationId: api_model_provider_connections_partial_update
       parameters:
         - in: path
@@ -5057,7 +5260,14 @@ paths:
       x-fern-sdk-group-name: model_providers
       x-fern-sdk-method-name: update
     put:
-      description: Overwrite a specific model provider connection by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific model provider connection by ID.
       operationId: api_model_provider_connections_update
       parameters:
         - in: path
@@ -5092,7 +5302,14 @@ paths:
         - internal
   /api/model-run/batch-failed-predictions:
     post:
-      description: Create a new batch of failed predictions.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new batch of failed predictions.
       operationId: api_model_run_batch_failed_predictions_create
       parameters:
         - description: Number of failed predictions being sent (for telemetry only, has no effect)
@@ -5130,7 +5347,14 @@ paths:
       x-fern-sdk-method-name: batch_failed_predictions
   /api/model-run/batch-predictions:
     post:
-      description: Create a new batch prediction.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new batch prediction.
       operationId: api_model_run_batch_predictions_create
       parameters:
         - description: Number of predictions being sent (for telemetry only, has no effect)
@@ -5222,7 +5446,14 @@ paths:
       x-fern-sdk-group-name: organizations
       x-fern-sdk-method-name: get
     patch:
-      description: Update organization details including title, embed domains, and Plugins settings.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update organization details including title, embed domains, and Plugins settings.
       operationId: api_organizations_partial_update
       parameters:
         - in: path
@@ -5266,7 +5497,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/organizations/{id}/memberships:
     get:
-      description: Retrieve a list of all users and roles in a specific organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a list of all users and roles in a specific organization.
       operationId: api_organizations_memberships_list
       parameters:
         - description: Project ID to exclude users who are already associated with this project (direct members, workspace members, or implicit admin/owner access).
@@ -5329,6 +5567,12 @@ paths:
       x-fern-sdk-method-name: list
     patch:
       description: |+
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update organization membership or role for a specific user ID.
 
         **User Rotation Best Practices for API Usage**
@@ -5451,7 +5695,14 @@ paths:
       x-fern-sdk-method-name: get
   /api/organizations/{id}/permissions:
     get:
-      description: List all organization-level permission overrides for a given organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all organization-level permission overrides for a given organization.
       operationId: api_organizations_permissions_list
       parameters:
         - in: path
@@ -5487,7 +5738,14 @@ paths:
         - permissions
       x-fern-sdk-method-name: list
     post:
-      description: Create a new organization-level permission override for a given organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new organization-level permission override for a given organization.
       operationId: api_organizations_permissions_create
       parameters:
         - in: path
@@ -5532,7 +5790,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/organizations/{id}/permissions/options:
     get:
-      description: Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
       operationId: api_organizations_permissions_options_list
       parameters:
         - in: path
@@ -5637,7 +5902,14 @@ paths:
         - permissions
       x-fern-sdk-method-name: get
     patch:
-      description: Partially update the organization-level permission override for a given permission key.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Partially update the organization-level permission override for a given permission key.
       operationId: api_organizations_permissions_partial_update
       parameters:
         - in: path
@@ -5687,7 +5959,14 @@ paths:
         - permissions
       x-fern-sdk-method-name: update
     put:
-      description: Replace the organization-level permission override for a given permission key.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Replace the organization-level permission override for a given permission key.
       operationId: api_organizations_permissions_update
       parameters:
         - description: A unique integer value identifying this organization.
@@ -5741,7 +6020,14 @@ paths:
       x-fern-sdk-method-name: replace
   /api/organizations/{id}/set-default-role:
     patch:
-      description: Update the default role for members of a specific organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update the default role for members of a specific organization.
       operationId: api_organizations_set_default_role_partial_update
       parameters:
         - in: path
@@ -6221,7 +6507,14 @@ paths:
         - internal
   /api/project-templates/:
     get:
-      description: Get a list of all project templates for an organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all project templates for an organization.
       operationId: api_project_templates_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -6250,7 +6543,14 @@ paths:
         - project-templates
       x-fern-sdk-method-name: list
     post:
-      description: Create a project template for an organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a project template for an organization.
       operationId: api_project_templates_create
       requestBody:
         content:
@@ -6283,7 +6583,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/project-templates/{id}:
     delete:
-      description: Delete a specific project template by ID for an organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific project template by ID for an organization.
       operationId: api_project_templates_destroy
       parameters:
         - in: path
@@ -6305,7 +6612,14 @@ paths:
         - project-templates
       x-fern-sdk-method-name: delete
     get:
-      description: Get a specific project template by ID for an organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific project template by ID for an organization.
       operationId: api_project_templates_retrieve
       parameters:
         - in: path
@@ -6331,7 +6645,14 @@ paths:
         - project-templates
       x-fern-sdk-method-name: get
     patch:
-      description: Update the details of a specific project template by ID for an organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update the details of a specific project template by ID for an organization.
       operationId: api_project_templates_partial_update
       parameters:
         - in: path
@@ -6368,7 +6689,14 @@ paths:
         - project-templates
       x-fern-sdk-method-name: update
     put:
-      description: Overwrite a specific project template by ID for an organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific project template by ID for an organization.
       operationId: api_project_templates_update
       parameters:
         - in: path
@@ -6404,7 +6732,14 @@ paths:
         - internal
   /api/project-templates/{id}/create-project:
     post:
-      description: Create a project from a specific project template by ID for an organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a project from a specific project template by ID for an organization.
       operationId: api_project_templates_create_project_create
       parameters:
         - in: path
@@ -6628,7 +6963,7 @@ paths:
       x-fern-sdk-method-name: list_counts
   /api/projects/roles/:
     get:
-      description: "\n        List project roles for requested IDs for the current user\n        "
+      description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        List project roles for requested IDs for the current user\n        "
       operationId: api_projects_roles_list
       parameters:
         - in: query
@@ -6656,7 +6991,7 @@ paths:
       tags:
         - Project Roles
     post:
-      description: "\n        Create project role for user allowing the user the same access level provided by organization role.\n        "
+      description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        Create project role for user allowing the user the same access level provided by organization role.\n        "
       operationId: api_projects_roles_create
       requestBody:
         content:
@@ -6684,7 +7019,7 @@ paths:
         - Project Roles
   /api/projects/roles/{id}/:
     delete:
-      description: "\n        Remove project role for user allowing the user the same access level provided by organization role.\n        "
+      description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        Remove project role for user allowing the user the same access level provided by organization role.\n        "
       operationId: api_projects_roles_destroy
       parameters:
         - description: A unique integer value identifying this project role.
@@ -6827,7 +7162,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/projects/{id}/annotation-history/:
     get:
-      description: List all annotation history items for the project with pagination.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all annotation history items for the project with pagination.
       operationId: api_projects_annotation_history_list
       parameters:
         - in: path
@@ -7219,7 +7561,14 @@ paths:
         - internal
   /api/projects/{id}/duplicate/:
     post:
-      description: Make a copy of project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Make a copy of project.
       operationId: api_projects_duplicate_create
       parameters:
         - in: path
@@ -7856,7 +8205,14 @@ paths:
       x-fern-sdk-method-name: create_many_status
   /api/projects/{id}/members/:
     delete:
-      description: Remove a member from a specific project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Remove a member from a specific project.
       operationId: api_projects_members_destroy
       parameters:
         - in: path
@@ -7878,7 +8234,14 @@ paths:
       tags:
         - Projects
     get:
-      description: Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
       operationId: api_projects_members_retrieve
       parameters:
         - in: path
@@ -7912,7 +8275,14 @@ paths:
         - members
       x-fern-sdk-method-name: get
     post:
-      description: Add a member to a specific project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Add a member to a specific project.
       operationId: api_projects_members_create
       parameters:
         - in: path
@@ -7946,7 +8316,14 @@ paths:
         - Projects
   /api/projects/{id}/members/bulk/:
     delete:
-      description: Unassign project members in bulk. Allows the same request body as bulk assign.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Unassign project members in bulk. Allows the same request body as bulk assign.
       operationId: api_projects_members_bulk_destroy
       parameters:
         - in: path
@@ -7982,7 +8359,14 @@ paths:
         - bulk
       x-fern-sdk-method-name: delete
     post:
-      description: Assign project members in bulk.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign project members in bulk.
       operationId: api_projects_members_bulk_create
       parameters:
         - in: path
@@ -8031,7 +8415,14 @@ paths:
       x-fern-sdk-method-name: post
   /api/projects/{id}/members/paginated/:
     get:
-      description: Retrieve the members for a specific project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the members for a specific project.
       operationId: api_projects_members_paginated_list
       parameters:
         - in: path
@@ -8100,7 +8491,14 @@ paths:
       x-fern-sdk-method-name: list
   /api/projects/{id}/metricparam/:
     get:
-      description: Get the current metrics configuration for a project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get the current metrics configuration for a project.
       operationId: api_projects_metricparam_retrieve
       parameters:
         - in: path
@@ -8127,7 +8525,14 @@ paths:
         - metrics
       x-fern-sdk-method-name: get
     post:
-      description: Update metrics strategy and parameters for a project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update metrics strategy and parameters for a project.
       operationId: api_projects_metricparam_create
       parameters:
         - in: path
@@ -8285,7 +8690,14 @@ paths:
         - Stats
   /api/projects/{id}/project-extra-params/:
     get:
-      description: Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project.
       operationId: api_projects_project_extra_params_retrieve
       parameters:
         - in: path
@@ -8323,7 +8735,14 @@ paths:
       tags:
         - Projects
     post:
-      description: Create annotator weights to be used in the annotation statistics for a project, such as when calculating kappa metrics for inter-annotator agreement.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create annotator weights to be used in the annotation statistics for a project, such as when calculating kappa metrics for inter-annotator agreement.
       operationId: api_projects_project_extra_params_create
       parameters:
         - in: path
@@ -8401,7 +8820,7 @@ paths:
         - internal
   /api/projects/{id}/roles:
     get:
-      description: "\n        List users and their project level roles for a given project.\n        If user is not listed here and is a member of the project then they would behave as assigned role in organization.\n        "
+      description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        List users and their project level roles for a given project.\n        If user is not listed here and is a member of the project then they would behave as assigned role in organization.\n        "
       operationId: api_projects_roles_retrieve
       parameters:
         - in: path
@@ -8423,7 +8842,14 @@ paths:
         - Project Roles
   /api/projects/{id}/stats/IAA:
     get:
-      description: Get Inter-Annotator Agreement (IAA) matrix for a project, showing agreement between all annotators.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get Inter-Annotator Agreement (IAA) matrix for a project, showing agreement between all annotators.
       operationId: api_projects_stats_IAA_retrieve
       parameters:
         - description: Comma-separated list of fields to expand
@@ -8575,7 +9001,14 @@ paths:
       x-fern-sdk-method-name: iaa
   /api/projects/{id}/stats/agreement_annotator/{user_id}:
     get:
-      description: Get agreement statistics for a specific annotator within a project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement statistics for a specific annotator within a project.
       operationId: api_projects_stats_agreement_annotator_retrieve
       parameters:
         - in: path
@@ -8751,6 +9184,12 @@ paths:
   /api/projects/{id}/stats/total_agreement:
     get:
       description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Overall or per-label total agreement across the project.
 
         NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handling a 204 response. As a workaround, wrap call to this function in a try-except block.
@@ -8863,7 +9302,14 @@ paths:
         - internal
   /api/projects/{id}/tasks/assignees:
     post:
-      description: Assign multiple users to a collection of tasks within a specific project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign multiple users to a collection of tasks within a specific project.
       operationId: api_projects_tasks_assignees_create
       parameters:
         - in: path
@@ -9054,7 +9500,14 @@ paths:
       x-fern-sdk-method-name: bulk_assign
   /api/projects/{id}/tasks/{task_pk}/assignees:
     delete:
-      description: Remove assignees for a task within a specific project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Remove assignees for a task within a specific project.
       operationId: api_projects_tasks_assignees_destroy
       parameters:
         - description: A unique integer value identifying this project.
@@ -9097,7 +9550,14 @@ paths:
         - assignments
       x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a list of tasks and assignees for those tasks for a specific project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a list of tasks and assignees for those tasks for a specific project.
       operationId: api_projects_tasks_assignees_retrieve
       parameters:
         - description: A unique integer value identifying this project.
@@ -9133,7 +9593,14 @@ paths:
         - assignments
       x-fern-sdk-method-name: list
     patch:
-      description: Update the assignee for a task in a specific project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update the assignee for a task in a specific project.
       operationId: api_projects_tasks_assignees_partial_update
       parameters:
         - description: A unique integer value identifying this project.
@@ -9187,7 +9654,14 @@ paths:
         - assignments
       x-fern-sdk-method-name: update
     post:
-      description: Assign a user to a task in a specific project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign a user to a task in a specific project.
       operationId: api_projects_tasks_assignees_create_2
       parameters:
         - description: A unique integer value identifying this project.
@@ -9277,7 +9751,14 @@ paths:
       x-fern-sdk-method-name: update_stats
   /api/projects/{id}/user-stats/{user_pk}/prediction:
     get:
-      description: Get prediction agreement statistics for a specific user within a project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get prediction agreement statistics for a specific user within a project.
       operationId: api_projects_user_stats_prediction_retrieve
       parameters:
         - in: path
@@ -9324,7 +9805,14 @@ paths:
       x-fern-sdk-method-name: user_prediction_agreement
   /api/projects/{id}/user-stats/{user_pk}/review_score:
     get:
-      description: Get review score statistics for a specific user within a project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get review score statistics for a specific user within a project.
       operationId: api_projects_user_stats_review_score_retrieve
       parameters:
         - in: path
@@ -9379,7 +9867,14 @@ paths:
       x-fern-sdk-method-name: user_review_score
   /api/projects/{id}/users/{user_pk}/stats/agreement-groundtruth:
     get:
-      description: Get ground truth agreement statistics for a specific user within a project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get ground truth agreement statistics for a specific user within a project.
       operationId: api_projects_users_stats_agreement_groundtruth_retrieve
       parameters:
         - in: path
@@ -9466,7 +9961,14 @@ paths:
       x-fern-sdk-method-name: validate_label_config
   /api/projects/{project_pk}/members/{user_pk}/pauses/:
     get:
-      description: Retrieve a list of all pauses.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a list of all pauses.
       operationId: api_projects_members_pauses_list
       parameters:
         - description: Include deleted pauses.
@@ -9511,7 +10013,14 @@ paths:
         - pauses
       x-fern-sdk-method-name: list
     post:
-      description: Create a new pause entry.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new pause entry.
       operationId: api_projects_members_pauses_create
       parameters:
         - in: path
@@ -9556,7 +10065,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/:
     delete:
-      description: Delete a specific pause by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific pause by ID.
       operationId: api_projects_members_pauses_destroy
       parameters:
         - in: path
@@ -9589,7 +10105,14 @@ paths:
         - pauses
       x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a specific pause by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific pause by ID.
       operationId: api_projects_members_pauses_retrieve
       parameters:
         - in: path
@@ -9626,7 +10149,14 @@ paths:
         - pauses
       x-fern-sdk-method-name: get
     patch:
-      description: Partially update a pause entry by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Partially update a pause entry by ID.
       operationId: api_projects_members_pauses_partial_update
       parameters:
         - in: path
@@ -9674,7 +10204,14 @@ paths:
         - pauses
       x-fern-sdk-method-name: update
     put:
-      description: Overwrite a pause entry by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a pause entry by ID.
       operationId: api_projects_members_pauses_update
       parameters:
         - in: path
@@ -9720,7 +10257,7 @@ paths:
         - internal
   /api/projects/{project_pk}/subset-tasks:
     get:
-      description: "\n        Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.\n        "
+      description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.\n        "
       operationId: api_projects_subset_tasks_list
       parameters:
         - description: If true (default), includes task_count in response; if false, omits it.
@@ -9786,7 +10323,7 @@ paths:
       x-fern-sdk-method-name: subset_tasks
   /api/projects/{project_pk}/subsets:
     get:
-      description: "\n        Provides list of available subsets for a project along with count of tasks in each subset\n        "
+      description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        Provides list of available subsets for a project along with count of tasks in each subset\n        "
       operationId: api_projects_subsets_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -9848,7 +10385,14 @@ paths:
       x-fern-sdk-group-name: prompts
       x-fern-sdk-method-name: list
     post:
-      description: Create a new prompt.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new prompt.
       operationId: api_prompts_create
       requestBody:
         content:
@@ -9928,7 +10472,14 @@ paths:
       x-fern-sdk-method-name: compatible_projects
   /api/prompts/{id}/:
     delete:
-      description: Delete a prompt by ID
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a prompt by ID
       operationId: api_prompts_destroy
       parameters:
         - in: path
@@ -9949,7 +10500,14 @@ paths:
       x-fern-sdk-group-name: prompts
       x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a specific prompt.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific prompt.
       operationId: api_prompts_retrieve
       parameters:
         - in: path
@@ -9974,7 +10532,14 @@ paths:
       x-fern-sdk-group-name: prompts
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific prompt by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific prompt by ID.
       operationId: api_prompts_partial_update
       parameters:
         - in: path
@@ -10010,7 +10575,14 @@ paths:
       x-fern-sdk-group-name: prompts
       x-fern-sdk-method-name: update
     put:
-      description: Overwrite a specific prompt by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific prompt by ID.
       operationId: api_prompts_update
       parameters:
         - in: path
@@ -10046,7 +10618,14 @@ paths:
         - internal
   /api/prompts/{id}/get-default-version-name:
     get:
-      description: Get default prompt version name
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get default prompt version name
       operationId: api_prompts_get_default_version_name_retrieve
       parameters:
         - in: path
@@ -10070,7 +10649,14 @@ paths:
       x-fern-sdk-method-name: get_default_version_name
   /api/prompts/{prompt_id}/versions:
     get:
-      description: List all versions of a prompt.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all versions of a prompt.
       operationId: api_prompts_versions_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -10105,7 +10691,14 @@ paths:
         - versions
       x-fern-sdk-method-name: list
     post:
-      description: Create a new version of a prompt.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new version of a prompt.
       operationId: api_prompts_versions_create
       parameters:
         - in: path
@@ -10145,7 +10738,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/prompts/{prompt_id}/versions/{version_id}:
     delete:
-      description: Delete a prompt version by ID
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a prompt version by ID
       operationId: api_prompts_versions_destroy
       parameters:
         - in: path
@@ -10173,7 +10773,14 @@ paths:
         - versions
       x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a specific prompt of a model.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific prompt of a model.
       operationId: api_prompts_versions_retrieve
       parameters:
         - in: path
@@ -10205,7 +10812,14 @@ paths:
         - versions
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific prompt version by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific prompt version by ID.
       operationId: api_prompts_versions_partial_update
       parameters:
         - in: path
@@ -10248,7 +10862,14 @@ paths:
         - versions
       x-fern-sdk-method-name: update
     put:
-      description: Overwrite a specific prompt version by ID.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific prompt version by ID.
       operationId: api_prompts_versions_update
       parameters:
         - in: path
@@ -10289,7 +10910,14 @@ paths:
         - internal
   /api/prompts/{prompt_id}/versions/{version_id}/cost-estimate:
     get:
-      description: Get an estimate of the cost for making an inference run on the selected Prompt Version and Project/ProjectSubset
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get an estimate of the cost for making an inference run on the selected Prompt Version and Project/ProjectSubset
       operationId: api_prompts_versions_cost_estimate_retrieve
       parameters:
         - in: path
@@ -10322,7 +10950,14 @@ paths:
       x-fern-sdk-method-name: cost_estimate
   /api/prompts/{prompt_id}/versions/{version_id}/inference-runs:
     get:
-      description: Get information (status, metadata, etc) about an existing inference run
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get information (status, metadata, etc) about an existing inference run
       operationId: api_prompts_versions_inference_runs_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -10381,7 +11016,14 @@ paths:
         - runs
       x-fern-sdk-method-name: list
     post:
-      description: Run a prompt inference.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Run a prompt inference.
       operationId: api_prompts_versions_inference_runs_create
       parameters:
         - in: path
@@ -10426,7 +11068,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel:
     post:
-      description: Cancel the inference run for the given api
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel the inference run for the given api
       operationId: api_prompts_versions_inference_runs_cancel_create
       parameters:
         - in: path
@@ -10557,7 +11206,14 @@ paths:
       x-fern-sdk-method-name: refine_prompt
   /api/saml/settings:
     get:
-      description: Retrieve SAML2 settings for the currently active organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve SAML2 settings for the currently active organization.
       operationId: api_saml_settings_retrieve
       responses:
         '200':
@@ -10592,7 +11248,14 @@ paths:
         - saml
       x-fern-sdk-method-name: get
     post:
-      description: Update SAML2 settings for the currently active organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update SAML2 settings for the currently active organization.
       operationId: api_saml_settings_create
       requestBody:
         content:
@@ -10653,7 +11316,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/scim/settings:
     get:
-      description: Retrieve SCIM settings for the currently active organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve SCIM settings for the currently active organization.
       operationId: api_scim_settings_retrieve
       responses:
         '200':
@@ -10688,7 +11358,14 @@ paths:
         - scim
       x-fern-sdk-method-name: get
     post:
-      description: Update SCIM settings for the currently active organization.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update SCIM settings for the currently active organization.
       operationId: api_scim_settings_create
       requestBody:
         content:
@@ -11148,7 +11825,14 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/azure_spi/:
     get:
-      description: Get list of all Azure import storage connections set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get list of all Azure import storage connections set up with Service Principal authentication.
       operationId: api_storages_azure_spi_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -11183,7 +11867,14 @@ paths:
         - azure_spi
       x-fern-sdk-method-name: list
     post:
-      description: Create Azure import storage with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create Azure import storage with Service Principal authentication.
       operationId: api_storages_azure_spi_create
       requestBody:
         content:
@@ -11217,7 +11908,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/storages/azure_spi/validate:
     post:
-      description: Validate a specific Azure import storage connection that was set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_validate_create
       requestBody:
         content:
@@ -11247,7 +11945,14 @@ paths:
       x-fern-sdk-method-name: validate
   /api/storages/azure_spi/{id}:
     delete:
-      description: Delete a specific Azure import storage connection that was set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_destroy
       parameters:
         - in: path
@@ -11270,7 +11975,14 @@ paths:
         - azure_spi
       x-fern-sdk-method-name: delete
     get:
-      description: Get a specific Azure import storage connection that was set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_retrieve
       parameters:
         - in: path
@@ -11297,7 +12009,14 @@ paths:
         - azure_spi
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific Azure import storage connection that was set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_partial_update
       parameters:
         - in: path
@@ -11336,7 +12055,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/storages/azure_spi/{id}/sync:
     post:
-      description: Sync tasks from an Azure import storage connection that was set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from an Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_sync_create
       parameters:
         - in: path
@@ -11364,7 +12090,14 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/databricks/:
     get:
-      description: Get list of all Databricks Files import storage connections.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get list of all Databricks Files import storage connections.
       operationId: api_storages_databricks_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -11399,7 +12132,14 @@ paths:
         - databricks
       x-fern-sdk-method-name: list
     post:
-      description: Create a Databricks Files import storage connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a Databricks Files import storage connection.
       operationId: api_storages_databricks_create
       requestBody:
         content:
@@ -11433,7 +12173,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/storages/databricks/validate:
     post:
-      description: Validate a specific Databricks Files import storage connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Databricks Files import storage connection.
       operationId: api_storages_databricks_validate_create
       requestBody:
         content:
@@ -11463,7 +12210,14 @@ paths:
       x-fern-sdk-method-name: validate
   /api/storages/databricks/{id}:
     delete:
-      description: Delete a specific Databricks Files import storage connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific Databricks Files import storage connection.
       operationId: api_storages_databricks_destroy
       parameters:
         - in: path
@@ -11486,7 +12240,14 @@ paths:
         - databricks
       x-fern-sdk-method-name: delete
     get:
-      description: Get a specific Databricks Files import storage connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific Databricks Files import storage connection.
       operationId: api_storages_databricks_retrieve
       parameters:
         - in: path
@@ -11513,7 +12274,14 @@ paths:
         - databricks
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific Databricks Files import storage connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific Databricks Files import storage connection.
       operationId: api_storages_databricks_partial_update
       parameters:
         - in: path
@@ -11552,7 +12320,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/storages/databricks/{id}/sync:
     post:
-      description: Sync tasks from a Databricks Files import storage.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from a Databricks Files import storage.
       operationId: api_storages_databricks_sync_create
       parameters:
         - in: path
@@ -11895,7 +12670,14 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/export/azure_spi:
     get:
-      description: Get a list of all Azure export storage connections that were set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all Azure export storage connections that were set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -11930,7 +12712,14 @@ paths:
         - azure_spi
       x-fern-sdk-method-name: list
     post:
-      description: Create an Azure export storage connection with Service Principal authentication to store annotations.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create an Azure export storage connection with Service Principal authentication to store annotations.
       operationId: api_storages_export_azure_spi_create
       requestBody:
         content:
@@ -11964,7 +12753,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/storages/export/azure_spi/validate:
     post:
-      description: Validate a specific Azure export storage connection that was set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Azure export storage connection that was set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_validate_create
       requestBody:
         content:
@@ -11994,7 +12790,14 @@ paths:
       x-fern-sdk-method-name: validate
   /api/storages/export/azure_spi/{id}:
     delete:
-      description: Delete a specific Azure export storage connection that was set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific Azure export storage connection that was set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_destroy
       parameters:
         - in: path
@@ -12017,7 +12820,14 @@ paths:
         - azure_spi
       x-fern-sdk-method-name: delete
     get:
-      description: Get a specific Azure export storage connection that was set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific Azure export storage connection that was set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_retrieve
       parameters:
         - in: path
@@ -12044,7 +12854,14 @@ paths:
         - azure_spi
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific Azure export storage connection that was set up with Service Principal authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific Azure export storage connection that was set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_partial_update
       parameters:
         - in: path
@@ -12083,7 +12900,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/storages/export/azure_spi/{id}/sync:
     post:
-      description: Sync tasks from an Azure SPI export storage.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from an Azure SPI export storage.
       operationId: api_storages_export_azure_spi_sync_create
       parameters:
         - in: path
@@ -12111,7 +12935,14 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/export/databricks:
     get:
-      description: Get a list of all Databricks Files export storage connections.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all Databricks Files export storage connections.
       operationId: api_storages_export_databricks_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -12146,7 +12977,14 @@ paths:
         - databricks
       x-fern-sdk-method-name: list
     post:
-      description: Create a Databricks Files export storage connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a Databricks Files export storage connection.
       operationId: api_storages_export_databricks_create
       requestBody:
         content:
@@ -12180,7 +13018,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/storages/export/databricks/validate:
     post:
-      description: Validate a specific Databricks Files export storage connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Databricks Files export storage connection.
       operationId: api_storages_export_databricks_validate_create
       requestBody:
         content:
@@ -12210,7 +13055,14 @@ paths:
       x-fern-sdk-method-name: validate
   /api/storages/export/databricks/{id}:
     delete:
-      description: Delete a specific Databricks Files export storage connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific Databricks Files export storage connection.
       operationId: api_storages_export_databricks_destroy
       parameters:
         - in: path
@@ -12233,7 +13085,14 @@ paths:
         - databricks
       x-fern-sdk-method-name: delete
     get:
-      description: Get a specific Databricks Files export storage connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific Databricks Files export storage connection.
       operationId: api_storages_export_databricks_retrieve
       parameters:
         - in: path
@@ -12260,7 +13119,14 @@ paths:
         - databricks
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific Databricks Files export storage connection.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific Databricks Files export storage connection.
       operationId: api_storages_export_databricks_partial_update
       parameters:
         - in: path
@@ -12299,7 +13165,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/storages/export/databricks/{id}/sync:
     post:
-      description: Export annotations to a Databricks Files storage.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Export annotations to a Databricks Files storage.
       operationId: api_storages_export_databricks_sync_create
       parameters:
         - in: path
@@ -12610,7 +13483,14 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/export/gcswif:
     get:
-      description: Get a list of all GCS export storage connections that were set up with WIF authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all GCS export storage connections that were set up with WIF authentication.
       operationId: api_storages_export_gcswif_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -12645,7 +13525,14 @@ paths:
         - gcswif
       x-fern-sdk-method-name: list
     post:
-      description: Create an GCS export storage connection with WIF authentication to store annotations.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create an GCS export storage connection with WIF authentication to store annotations.
       operationId: api_storages_export_gcswif_create
       requestBody:
         content:
@@ -12679,7 +13566,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/storages/export/gcswif/validate:
     post:
-      description: Validate a specific GCS export storage connection that was set up with WIF authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific GCS export storage connection that was set up with WIF authentication.
       operationId: api_storages_export_gcswif_validate_create
       requestBody:
         content:
@@ -12709,7 +13603,14 @@ paths:
       x-fern-sdk-method-name: validate
   /api/storages/export/gcswif/{id}:
     delete:
-      description: Delete a specific GCS export storage connection that was set up with WIF authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific GCS export storage connection that was set up with WIF authentication.
       operationId: api_storages_export_gcswif_destroy
       parameters:
         - in: path
@@ -12732,7 +13633,14 @@ paths:
         - gcswif
       x-fern-sdk-method-name: delete
     get:
-      description: Get a specific GCS export storage connection that was set up with WIF authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific GCS export storage connection that was set up with WIF authentication.
       operationId: api_storages_export_gcswif_retrieve
       parameters:
         - in: path
@@ -12759,7 +13667,14 @@ paths:
         - gcswif
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific GCS export storage connection that was set up with WIF authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific GCS export storage connection that was set up with WIF authentication.
       operationId: api_storages_export_gcswif_partial_update
       parameters:
         - in: path
@@ -12798,7 +13713,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/storages/export/gcswif/{id}/sync:
     post:
-      description: Sync tasks from an GCS WIF export storage.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from an GCS WIF export storage.
       operationId: api_storages_export_gcswif_sync_create
       parameters:
         - in: path
@@ -13702,7 +14624,14 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/export/s3s:
     get:
-      description: Get a list of all S3 export storage connections that were set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all S3 export storage connections that were set up with IAM role access.
       operationId: api_storages_export_s3s_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -13737,7 +14666,14 @@ paths:
         - s3s
       x-fern-sdk-method-name: list
     post:
-      description: Create an S3 export storage connection with IAM role access to store annotations.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create an S3 export storage connection with IAM role access to store annotations.
       operationId: api_storages_export_s3s_create
       requestBody:
         content:
@@ -13771,7 +14707,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/storages/export/s3s/validate:
     post:
-      description: Validate a specific S3 export storage connection that was set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific S3 export storage connection that was set up with IAM role access.
       operationId: api_storages_export_s3s_validate_create
       requestBody:
         content:
@@ -13801,7 +14744,14 @@ paths:
       x-fern-sdk-method-name: validate
   /api/storages/export/s3s/{id}:
     delete:
-      description: Delete a specific S3 export storage connection that was set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific S3 export storage connection that was set up with IAM role access.
       operationId: api_storages_export_s3s_destroy
       parameters:
         - in: path
@@ -13824,7 +14774,14 @@ paths:
         - s3s
       x-fern-sdk-method-name: delete
     get:
-      description: Get a specific S3 export storage connection that was set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific S3 export storage connection that was set up with IAM role access.
       operationId: api_storages_export_s3s_retrieve
       parameters:
         - in: path
@@ -13851,7 +14808,14 @@ paths:
         - s3s
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific S3 export storage connection that was set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific S3 export storage connection that was set up with IAM role access.
       operationId: api_storages_export_s3s_partial_update
       parameters:
         - in: path
@@ -13890,7 +14854,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/storages/export/s3s/{id}/sync:
     post:
-      description: Sync tasks from an S3 export storage.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from an S3 export storage.
       operationId: api_storages_export_s3s_sync_create
       parameters:
         - in: path
@@ -14263,7 +15234,14 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/gcswif/:
     get:
-      description: Get list of all GCS import storage connections set up with WIF authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get list of all GCS import storage connections set up with WIF authentication.
       operationId: api_storages_gcswif_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -14298,7 +15276,14 @@ paths:
         - gcswif
       x-fern-sdk-method-name: list
     post:
-      description: Create GCS import storage with WIF.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create GCS import storage with WIF.
       operationId: api_storages_gcswif_create
       requestBody:
         content:
@@ -14332,7 +15317,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/storages/gcswif/validate:
     post:
-      description: Validate a specific GCS import storage connection that was set up with WIF authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific GCS import storage connection that was set up with WIF authentication.
       operationId: api_storages_gcswif_validate_create
       requestBody:
         content:
@@ -14362,7 +15354,14 @@ paths:
       x-fern-sdk-method-name: validate
   /api/storages/gcswif/{id}:
     delete:
-      description: Delete a specific GCS import storage connection that was set up with WIF authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific GCS import storage connection that was set up with WIF authentication.
       operationId: api_storages_gcswif_destroy
       parameters:
         - in: path
@@ -14385,7 +15384,14 @@ paths:
         - gcswif
       x-fern-sdk-method-name: delete
     get:
-      description: Get a specific GCS import storage connection that was set up with WIF.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific GCS import storage connection that was set up with WIF.
       operationId: api_storages_gcswif_retrieve
       parameters:
         - in: path
@@ -14412,7 +15418,14 @@ paths:
         - gcswif
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific GCS import storage connection that was set up with WIF authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific GCS import storage connection that was set up with WIF authentication.
       operationId: api_storages_gcswif_partial_update
       parameters:
         - in: path
@@ -14451,7 +15464,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/storages/gcswif/{id}/sync:
     post:
-      description: Sync tasks from an GCS import storage connection that was set up with WIF authentication.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from an GCS import storage connection that was set up with WIF authentication.
       operationId: api_storages_gcswif_sync_create
       parameters:
         - in: path
@@ -15400,7 +16420,14 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/s3s/:
     get:
-      description: Get list of all S3 import storage connections set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get list of all S3 import storage connections set up with IAM role access.
       operationId: api_storages_s3s_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -15435,7 +16462,14 @@ paths:
         - s3s
       x-fern-sdk-method-name: list
     post:
-      description: Create S3 import storage with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create S3 import storage with IAM role access.
       operationId: api_storages_s3s_create
       requestBody:
         content:
@@ -15469,7 +16503,14 @@ paths:
       x-fern-sdk-method-name: create
   /api/storages/s3s/validate:
     post:
-      description: Validate a specific S3 import storage connection that was set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific S3 import storage connection that was set up with IAM role access.
       operationId: api_storages_s3s_validate_create
       requestBody:
         content:
@@ -15499,7 +16540,14 @@ paths:
       x-fern-sdk-method-name: validate
   /api/storages/s3s/{id}:
     delete:
-      description: Delete a specific S3 import storage connection that was set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific S3 import storage connection that was set up with IAM role access.
       operationId: api_storages_s3s_destroy
       parameters:
         - in: path
@@ -15522,7 +16570,14 @@ paths:
         - s3s
       x-fern-sdk-method-name: delete
     get:
-      description: Get a specific S3 import storage connection that was set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific S3 import storage connection that was set up with IAM role access.
       operationId: api_storages_s3s_retrieve
       parameters:
         - in: path
@@ -15549,7 +16604,14 @@ paths:
         - s3s
       x-fern-sdk-method-name: get
     patch:
-      description: Update a specific S3 import storage connection that was set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific S3 import storage connection that was set up with IAM role access.
       operationId: api_storages_s3s_partial_update
       parameters:
         - in: path
@@ -15588,7 +16650,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/storages/s3s/{id}/sync:
     post:
-      description: Sync tasks from an S3 import storage connection that was set up with IAM role access.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from an S3 import storage connection that was set up with IAM role access.
       operationId: api_storages_s3s_sync_create
       parameters:
         - in: path
@@ -16455,7 +17524,14 @@ paths:
       x-fern-sdk-method-name: update
   /api/version/:
     get:
-      description: Get version information about the Label Studio instance.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get version information about the Label Studio instance.
       operationId: api_version_retrieve
       responses:
         '200':

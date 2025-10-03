@@ -16,7 +16,14 @@ service:
       path: /api/prompts/{prompt_id}/versions/{version_id}/inference-runs
       method: GET
       auth: true
-      docs: Get information (status, metadata, etc) about an existing inference run
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get information (status, metadata, etc) about an existing inference run
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -71,7 +78,14 @@ service:
       path: /api/prompts/{prompt_id}/versions/{version_id}/inference-runs
       method: POST
       auth: true
-      docs: Run a prompt inference.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Run a prompt inference.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -140,7 +154,14 @@ service:
         /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel
       method: POST
       auth: true
-      docs: Cancel the inference run for the given api
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel the inference run for the given api
       source:
         openapi: openapi/openapi.yaml
       path-parameters:

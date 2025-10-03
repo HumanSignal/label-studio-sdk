@@ -839,7 +839,14 @@ service:
       path: /api/projects/{id}/duplicate/
       method: POST
       auth: true
-      docs: Make a copy of project.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Make a copy of project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -1034,7 +1041,14 @@ service:
       path: /api/projects/{id}/members/
       method: POST
       auth: true
-      docs: Add a member to a specific project.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Add a member to a specific project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -1061,7 +1075,14 @@ service:
       path: /api/projects/{id}/members/
       method: DELETE
       auth: true
-      docs: Remove a member from a specific project.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Remove a member from a specific project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -1081,6 +1102,12 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve the annotator weights for statistics and Cohen's Kappa for a
         specific project.
       source:
@@ -1104,6 +1131,12 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create annotator weights to be used in the annotation statistics for a
         project, such as when calculating kappa metrics for inter-annotator
         agreement.
