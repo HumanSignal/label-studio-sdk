@@ -2,32 +2,23 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .bulk.client import BulkClient
-from .paginated.client import PaginatedClient
 from ...core.request_options import RequestOptions
-from ...types.lse_user import LseUser
+from ...types.lse_project_params import LseProjectParams
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.project_member import ProjectMember
 from ...core.client_wrapper import AsyncClientWrapper
-from .bulk.client import AsyncBulkClient
-from .paginated.client import AsyncPaginatedClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class MembersClient:
+class AnnotatorWeightsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.bulk = BulkClient(client_wrapper=self._client_wrapper)
-        self.paginated = PaginatedClient(client_wrapper=self._client_wrapper)
 
-    def get(
-        self, id: int, *, user_ids: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[LseUser]:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseProjectParams:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -35,22 +26,19 @@ class MembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
+        Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project.
 
         Parameters
         ----------
         id : int
-
-        user_ids : typing.Optional[str]
-            Comma-separated list of user IDs to include. Example: user_ids=1,2,3
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[LseUser]
-            List of users with membership information
+        LseProjectParams
+            Annotator weights retrieved
 
         Examples
         --------
@@ -59,24 +47,21 @@ class MembersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.members.get(
+        client.projects.annotator_weights.get(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
+            f"api/projects/{jsonable_encoder(id)}/project-extra-params/",
             method="GET",
-            params={
-                "user_ids": user_ids,
-            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[LseUser],
+                    LseProjectParams,
                     construct_type(
-                        type_=typing.List[LseUser],  # type: ignore
+                        type_=LseProjectParams,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -85,7 +70,14 @@ class MembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def add(self, id: int, *, user: int, request_options: typing.Optional[RequestOptions] = None) -> ProjectMember:
+    def create(
+        self,
+        id: int,
+        *,
+        annotator_params: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        use_kappa: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseProjectParams:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -93,21 +85,24 @@ class MembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Add a member to a specific project.
+        Create annotator weights to be used in the annotation statistics for a project, such as when calculating kappa metrics for inter-annotator agreement.
 
         Parameters
         ----------
         id : int
 
-        user : int
+        annotator_params : typing.Optional[typing.Optional[typing.Any]]
+
+        use_kappa : typing.Optional[bool]
+            If categorical variables are used in labeling (e.g. choices), Cohen's Kappa statistic is computed to measure inter-rater reliability instead of basic agreement
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ProjectMember
-
+        LseProjectParams
+            Annotator weights created/updated
 
         Examples
         --------
@@ -116,16 +111,16 @@ class MembersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.members.add(
+        client.projects.annotator_weights.create(
             id=1,
-            user=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
+            f"api/projects/{jsonable_encoder(id)}/project-extra-params/",
             method="POST",
             json={
-                "user": user,
+                "annotator_params": annotator_params,
+                "use_kappa": use_kappa,
             },
             headers={
                 "content-type": "application/json",
@@ -136,9 +131,9 @@ class MembersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectMember,
+                    LseProjectParams,
                     construct_type(
-                        type_=ProjectMember,  # type: ignore
+                        type_=LseProjectParams,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -147,61 +142,12 @@ class MembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Remove a member from a specific project.
 
-        Parameters
-        ----------
-        id : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.members.remove(
-            id=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-
-class AsyncMembersClient:
+class AsyncAnnotatorWeightsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.bulk = AsyncBulkClient(client_wrapper=self._client_wrapper)
-        self.paginated = AsyncPaginatedClient(client_wrapper=self._client_wrapper)
 
-    async def get(
-        self, id: int, *, user_ids: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[LseUser]:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseProjectParams:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -209,22 +155,19 @@ class AsyncMembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
+        Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project.
 
         Parameters
         ----------
         id : int
-
-        user_ids : typing.Optional[str]
-            Comma-separated list of user IDs to include. Example: user_ids=1,2,3
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[LseUser]
-            List of users with membership information
+        LseProjectParams
+            Annotator weights retrieved
 
         Examples
         --------
@@ -238,7 +181,7 @@ class AsyncMembersClient:
 
 
         async def main() -> None:
-            await client.projects.members.get(
+            await client.projects.annotator_weights.get(
                 id=1,
             )
 
@@ -246,19 +189,16 @@ class AsyncMembersClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
+            f"api/projects/{jsonable_encoder(id)}/project-extra-params/",
             method="GET",
-            params={
-                "user_ids": user_ids,
-            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[LseUser],
+                    LseProjectParams,
                     construct_type(
-                        type_=typing.List[LseUser],  # type: ignore
+                        type_=LseProjectParams,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -267,9 +207,14 @@ class AsyncMembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def add(
-        self, id: int, *, user: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectMember:
+    async def create(
+        self,
+        id: int,
+        *,
+        annotator_params: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        use_kappa: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseProjectParams:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -277,21 +222,24 @@ class AsyncMembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Add a member to a specific project.
+        Create annotator weights to be used in the annotation statistics for a project, such as when calculating kappa metrics for inter-annotator agreement.
 
         Parameters
         ----------
         id : int
 
-        user : int
+        annotator_params : typing.Optional[typing.Optional[typing.Any]]
+
+        use_kappa : typing.Optional[bool]
+            If categorical variables are used in labeling (e.g. choices), Cohen's Kappa statistic is computed to measure inter-rater reliability instead of basic agreement
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ProjectMember
-
+        LseProjectParams
+            Annotator weights created/updated
 
         Examples
         --------
@@ -305,19 +253,19 @@ class AsyncMembersClient:
 
 
         async def main() -> None:
-            await client.projects.members.add(
+            await client.projects.annotator_weights.create(
                 id=1,
-                user=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
+            f"api/projects/{jsonable_encoder(id)}/project-extra-params/",
             method="POST",
             json={
-                "user": user,
+                "annotator_params": annotator_params,
+                "use_kappa": use_kappa,
             },
             headers={
                 "content-type": "application/json",
@@ -328,65 +276,12 @@ class AsyncMembersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectMember,
+                    LseProjectParams,
                     construct_type(
-                        type_=ProjectMember,  # type: ignore
+                        type_=LseProjectParams,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Remove a member from a specific project.
-
-        Parameters
-        ----------
-        id : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.members.remove(
-                id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

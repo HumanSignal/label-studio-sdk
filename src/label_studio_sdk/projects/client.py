@@ -2,9 +2,11 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .roles.client import RolesClient
 from .exports.client import ExportsClient
 from .members.client import MembersClient
 from .metrics.client import MetricsClient
+from .annotator_weights.client import AnnotatorWeightsClient
 from .stats.client import StatsClient
 from .assignments.client import AssignmentsClient
 from .pauses.client import PausesClient
@@ -39,9 +41,11 @@ from ..types.prediction_request import PredictionRequest
 from .types.projects_import_predictions_response import ProjectsImportPredictionsResponse
 from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
+from .roles.client import AsyncRolesClient
 from .exports.client import AsyncExportsClient
 from .members.client import AsyncMembersClient
 from .metrics.client import AsyncMetricsClient
+from .annotator_weights.client import AsyncAnnotatorWeightsClient
 from .stats.client import AsyncStatsClient
 from .assignments.client import AsyncAssignmentsClient
 from .pauses.client import AsyncPausesClient
@@ -54,9 +58,11 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.roles = RolesClient(client_wrapper=self._client_wrapper)
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
         self.members = MembersClient(client_wrapper=self._client_wrapper)
         self.metrics = MetricsClient(client_wrapper=self._client_wrapper)
+        self.annotator_weights = AnnotatorWeightsClient(client_wrapper=self._client_wrapper)
         self.stats = StatsClient(client_wrapper=self._client_wrapper)
         self.assignments = AssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = PausesClient(client_wrapper=self._client_wrapper)
@@ -1235,9 +1241,11 @@ class ProjectsClient:
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.roles = AsyncRolesClient(client_wrapper=self._client_wrapper)
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
         self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
         self.metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
+        self.annotator_weights = AsyncAnnotatorWeightsClient(client_wrapper=self._client_wrapper)
         self.stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
         self.assignments = AsyncAssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)

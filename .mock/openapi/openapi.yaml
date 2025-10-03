@@ -6990,6 +6990,12 @@ paths:
       summary: List project roles for current user
       tags:
         - Project Roles
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - roles
+      x-fern-sdk-method-name: list
     post:
       description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        Create project role for user allowing the user the same access level provided by organization role.\n        "
       operationId: api_projects_roles_create
@@ -7011,12 +7017,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectRole'
-          description: ''
+          description: Role created
       security:
         - Token: []
       summary: Create project role for user
       tags:
         - Project Roles
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - roles
+      x-fern-sdk-method-name: add
   /api/projects/roles/{id}/:
     delete:
       description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        Remove project role for user allowing the user the same access level provided by organization role.\n        "
@@ -7030,12 +7042,18 @@ paths:
             type: integer
       responses:
         '204':
-          description: No response body
+          description: Role removed
       security:
         - Token: []
       summary: Remove project role for user
       tags:
         - Project Roles
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - roles
+      x-fern-sdk-method-name: remove
   /api/projects/validate/:
     post:
       description: Validate an arbitrary labeling configuration.
@@ -8220,19 +8238,20 @@ paths:
           required: true
           schema:
             type: integer
-        - description: A unique integer value identifying this project member.
-          in: query
-          name: project_member
-          schema:
-            type: integer
       responses:
         '204':
-          description: No response body
+          description: Member removed
       security:
         - Token: []
       summary: Remove member from project
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+      x-fern-sdk-method-name: remove
     get:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -8314,6 +8333,12 @@ paths:
       summary: Add project member
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+      x-fern-sdk-method-name: add
   /api/projects/{id}/members/bulk/:
     delete:
       description: |-
@@ -8710,22 +8735,7 @@ paths:
           content:
             application/json:
               schema:
-                description: Create or change annotator weights for statistics
-                properties:
-                  annotator_params:
-                    description: Dict of users with weights
-                    items:
-                      description: '{user_id: weight}'
-                      title: User_id and weight
-                      type: object
-                    title: annotator_params
-                    type: array
-                  use_kappa:
-                    description: If project uses Cohen's Kappa in calculation
-                    title: use_kappa
-                    type: boolean
-                title: Change annotator weights for statistics
-                type: object
+                $ref: '#/components/schemas/LseProjectParams'
           description: Annotator weights retrieved
         '204':
           description: No annotator weights found
@@ -8734,6 +8744,12 @@ paths:
       summary: Get annotator weights
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - annotator_weights
+      x-fern-sdk-method-name: get
     post:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -8766,28 +8782,19 @@ paths:
           content:
             application/json:
               schema:
-                description: Create or change annotator weights for statistics
-                properties:
-                  annotator_params:
-                    description: Dict of users with weights
-                    items:
-                      description: '{user_id: weight}'
-                      title: User_id and weight
-                      type: object
-                    title: annotator_params
-                    type: array
-                  use_kappa:
-                    description: If project uses Cohen's Kappa in calculation
-                    title: use_kappa
-                    type: boolean
-                title: Change annotator weights for statistics
-                type: object
+                $ref: '#/components/schemas/LseProjectParams'
           description: Annotator weights created/updated
       security:
         - Token: []
       summary: Create annotator weights for statistics
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - annotator_weights
+      x-fern-sdk-method-name: create
   /api/projects/{id}/reimports/{reimport_pk}/:
     get:
       description: Return data related to async project reimport operation
@@ -8833,13 +8840,21 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectRole'
+                items:
+                  $ref: '#/components/schemas/ProjectRole'
+                type: array
           description: ''
       security:
         - Token: []
       summary: List project roles
       tags:
         - Project Roles
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - roles
+      x-fern-sdk-method-name: get
   /api/projects/{id}/stats/IAA:
     get:
       description: |-
@@ -18463,6 +18478,12 @@ paths:
       summary: Remove workspace projects
       tags:
         - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - workspaces
+        - projects
+      x-fern-sdk-method-name: remove
     get:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -18491,6 +18512,12 @@ paths:
       summary: List workspace projects
       tags:
         - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - workspaces
+        - projects
+      x-fern-sdk-method-name: list
     post:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -18530,6 +18557,12 @@ paths:
       summary: Create workspace project
       tags:
         - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - workspaces
+        - projects
+      x-fern-sdk-method-name: add
   /data/upload/{filename}:
     get:
       description: Download a specific uploaded file.
@@ -24157,6 +24190,15 @@ components:
           type: string
         workspace:
           type: integer
+      type: object
+    LseProjectParams:
+      properties:
+        annotator_params:
+          description: 'user ID and user weight in score calculation. Format {user_id[int]: weight[Float[0..1]]}'
+          nullable: true
+        use_kappa:
+          description: If categorical variables are used in labeling (e.g. choices), Cohen's Kappa statistic is computed to measure inter-rater reliability instead of basic agreement
+          type: boolean
       type: object
     LseProjectParamsRequest:
       properties:
