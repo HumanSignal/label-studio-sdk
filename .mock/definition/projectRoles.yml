@@ -8,7 +8,13 @@ service:
       path: /api/projects/roles/
       method: GET
       auth: true
-      docs: |2-
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
 
                 List project roles for requested IDs for the current user
                 
@@ -36,7 +42,13 @@ service:
       path: /api/projects/roles/
       method: POST
       auth: true
-      docs: |2-
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
 
                 Create project role for user allowing the user the same access level provided by organization role.
                 
@@ -80,7 +92,13 @@ service:
       path: /api/projects/roles/{id}/
       method: DELETE
       auth: true
-      docs: |2-
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
 
                 Remove project role for user allowing the user the same access level provided by organization role.
                 
@@ -98,7 +116,13 @@ service:
       path: /api/projects/{id}/roles
       method: GET
       auth: true
-      docs: |2-
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
 
                 List users and their project level roles for a given project.
                 If user is not listed here and is a member of the project then they would behave as assigned role in organization.

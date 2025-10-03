@@ -28,6 +28,12 @@ class S3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[LseS3ExportStorage]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a list of all S3 export storage connections that were set up with IAM role access.
 
         Parameters
@@ -108,6 +114,12 @@ class S3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseS3ExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create an S3 export storage connection with IAM role access to store annotations.
 
         Parameters
@@ -276,6 +288,12 @@ class S3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Validate a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
@@ -409,6 +427,12 @@ class S3SClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
@@ -455,6 +479,12 @@ class S3SClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
@@ -523,6 +553,12 @@ class S3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseS3ExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
@@ -667,6 +703,12 @@ class S3SClient:
 
     def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Sync tasks from an S3 export storage.
 
         Parameters
@@ -724,6 +766,12 @@ class AsyncS3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[LseS3ExportStorage]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a list of all S3 export storage connections that were set up with IAM role access.
 
         Parameters
@@ -812,6 +860,12 @@ class AsyncS3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseS3ExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create an S3 export storage connection with IAM role access to store annotations.
 
         Parameters
@@ -988,6 +1042,12 @@ class AsyncS3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Validate a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
@@ -1129,6 +1189,12 @@ class AsyncS3SClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
@@ -1183,6 +1249,12 @@ class AsyncS3SClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
@@ -1259,6 +1331,12 @@ class AsyncS3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseS3ExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
@@ -1411,6 +1489,12 @@ class AsyncS3SClient:
 
     async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Sync tasks from an S3 export storage.
 
         Parameters

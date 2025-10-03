@@ -27,6 +27,12 @@ class PermissionsClient:
         self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[OrganizationPermission]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all organization-level permission overrides for a given organization.
 
         Parameters
@@ -86,6 +92,12 @@ class PermissionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new organization-level permission override for a given organization.
 
         Parameters
@@ -165,6 +177,12 @@ class PermissionsClient:
         self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ConfigurablePermissionOption]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
 
         Parameters
@@ -294,6 +312,12 @@ class PermissionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Replace the organization-level permission override for a given permission key.
 
         Parameters
@@ -454,6 +478,12 @@ class PermissionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Partially update the organization-level permission override for a given permission key.
 
         Parameters
@@ -553,6 +583,12 @@ class AsyncPermissionsClient:
         self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[OrganizationPermission]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all organization-level permission overrides for a given organization.
 
         Parameters
@@ -620,6 +656,12 @@ class AsyncPermissionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new organization-level permission override for a given organization.
 
         Parameters
@@ -707,6 +749,12 @@ class AsyncPermissionsClient:
         self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ConfigurablePermissionOption]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
 
         Parameters
@@ -852,6 +900,12 @@ class AsyncPermissionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Replace the organization-level permission override for a given permission key.
 
         Parameters
@@ -1030,6 +1084,12 @@ class AsyncPermissionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Partially update the organization-level permission override for a given permission key.
 
         Parameters

@@ -8,7 +8,14 @@ service:
       path: /api/model-run/batch-failed-predictions
       method: POST
       auth: true
-      docs: Create a new batch of failed predictions.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new batch of failed predictions.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create batch of failed predictions
@@ -48,7 +55,14 @@ service:
       path: /api/model-run/batch-predictions
       method: POST
       auth: true
-      docs: Create a new batch prediction.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new batch prediction.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create batch predictions
@@ -88,7 +102,13 @@ service:
       path: /api/projects/{project_pk}/subset-tasks
       method: GET
       auth: true
-      docs: |2-
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
 
                 Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
                 
@@ -149,7 +169,13 @@ service:
       path: /api/projects/{project_pk}/subsets
       method: GET
       auth: true
-      docs: |2-
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
 
                 Provides list of available subsets for a project along with count of tasks in each subset
                 
@@ -223,7 +249,14 @@ service:
       path: /api/prompts/
       method: POST
       auth: true
-      docs: Create a new prompt.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new prompt.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create prompt
@@ -382,7 +415,14 @@ service:
       path: /api/prompts/{id}/
       method: GET
       auth: true
-      docs: Retrieve a specific prompt.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific prompt.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -422,7 +462,14 @@ service:
       path: /api/prompts/{id}/
       method: PUT
       auth: true
-      docs: Overwrite a specific prompt by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific prompt by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -466,7 +513,14 @@ service:
       path: /api/prompts/{id}/
       method: DELETE
       auth: true
-      docs: Delete a prompt by ID
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a prompt by ID
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -481,7 +535,14 @@ service:
       path: /api/prompts/{id}/
       method: PATCH
       auth: true
-      docs: Update a specific prompt by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific prompt by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -543,7 +604,14 @@ service:
       path: /api/prompts/{prompt_id}/versions/{version_id}
       method: PUT
       auth: true
-      docs: Overwrite a specific prompt version by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific prompt version by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:

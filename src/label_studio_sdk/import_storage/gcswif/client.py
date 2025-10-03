@@ -28,6 +28,12 @@ class GcswifClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[GcswifImportStorage]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get list of all GCS import storage connections set up with WIF authentication.
 
         Parameters
@@ -107,6 +113,12 @@ class GcswifClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcswifImportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create GCS import storage with WIF.
 
         Parameters
@@ -269,6 +281,12 @@ class GcswifClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Validate a specific GCS import storage connection that was set up with WIF authentication.
 
         Parameters
@@ -397,6 +415,12 @@ class GcswifClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcswifImportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a specific GCS import storage connection that was set up with WIF.
 
         Parameters
@@ -443,6 +467,12 @@ class GcswifClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a specific GCS import storage connection that was set up with WIF authentication.
 
         Parameters
@@ -510,6 +540,12 @@ class GcswifClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcswifImportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific GCS import storage connection that was set up with WIF authentication.
 
         Parameters
@@ -650,6 +686,12 @@ class GcswifClient:
 
     def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcswifImportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Sync tasks from an GCS import storage connection that was set up with WIF authentication.
 
         Parameters
@@ -707,6 +749,12 @@ class AsyncGcswifClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[GcswifImportStorage]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get list of all GCS import storage connections set up with WIF authentication.
 
         Parameters
@@ -794,6 +842,12 @@ class AsyncGcswifClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcswifImportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create GCS import storage with WIF.
 
         Parameters
@@ -964,6 +1018,12 @@ class AsyncGcswifClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Validate a specific GCS import storage connection that was set up with WIF authentication.
 
         Parameters
@@ -1100,6 +1160,12 @@ class AsyncGcswifClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcswifImportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a specific GCS import storage connection that was set up with WIF.
 
         Parameters
@@ -1154,6 +1220,12 @@ class AsyncGcswifClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a specific GCS import storage connection that was set up with WIF authentication.
 
         Parameters
@@ -1229,6 +1301,12 @@ class AsyncGcswifClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcswifImportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific GCS import storage connection that was set up with WIF authentication.
 
         Parameters
@@ -1377,6 +1455,12 @@ class AsyncGcswifClient:
 
     async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcswifImportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Sync tasks from an GCS import storage connection that was set up with WIF authentication.
 
         Parameters

@@ -6,7 +6,14 @@ service:
       path: /api/prompts/{id}/get-default-version-name
       method: GET
       auth: true
-      docs: Get default prompt version name
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get default prompt version name
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -21,7 +28,14 @@ service:
       path: /api/prompts/{prompt_id}/versions
       method: GET
       auth: true
-      docs: List all versions of a prompt.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all versions of a prompt.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -64,7 +78,14 @@ service:
       path: /api/prompts/{prompt_id}/versions
       method: POST
       auth: true
-      docs: Create a new version of a prompt.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new version of a prompt.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -108,7 +129,14 @@ service:
       path: /api/prompts/{prompt_id}/versions/{version_id}
       method: GET
       auth: true
-      docs: Retrieve a specific prompt of a model.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific prompt of a model.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -147,7 +175,14 @@ service:
       path: /api/prompts/{prompt_id}/versions/{version_id}
       method: DELETE
       auth: true
-      docs: Delete a prompt version by ID
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a prompt version by ID
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -164,7 +199,14 @@ service:
       path: /api/prompts/{prompt_id}/versions/{version_id}
       method: PATCH
       auth: true
-      docs: Update a specific prompt version by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific prompt version by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -244,6 +286,12 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get an estimate of the cost for making an inference run on the selected
         Prompt Version and Project/ProjectSubset
       source:

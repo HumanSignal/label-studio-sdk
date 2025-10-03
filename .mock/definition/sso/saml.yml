@@ -8,7 +8,14 @@ service:
       path: /api/saml/settings
       method: GET
       auth: true
-      docs: Retrieve SAML2 settings for the currently active organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve SAML2 settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
       display-name: Retrieve SAML2 Settings
@@ -35,7 +42,14 @@ service:
       path: /api/saml/settings
       method: POST
       auth: true
-      docs: Update SAML2 settings for the currently active organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update SAML2 settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
       display-name: Update SAML2 Settings

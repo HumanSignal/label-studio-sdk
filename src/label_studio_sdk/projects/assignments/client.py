@@ -38,6 +38,12 @@ class AssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AssignmentsBulkAssignResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Assign multiple users to a collection of tasks within a specific project.
 
         Parameters
@@ -130,6 +136,12 @@ class AssignmentsClient:
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[TaskAssignment]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve a list of tasks and assignees for those tasks for a specific project.
 
         Parameters
@@ -189,6 +201,12 @@ class AssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Assign a user to a task in a specific project.
 
         Parameters
@@ -264,6 +282,12 @@ class AssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Remove assignees for a task within a specific project.
 
         Parameters
@@ -326,6 +350,12 @@ class AssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update the assignee for a task in a specific project.
 
         Parameters
@@ -407,6 +437,12 @@ class AsyncAssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AssignmentsBulkAssignResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Assign multiple users to a collection of tasks within a specific project.
 
         Parameters
@@ -507,6 +543,12 @@ class AsyncAssignmentsClient:
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[TaskAssignment]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve a list of tasks and assignees for those tasks for a specific project.
 
         Parameters
@@ -574,6 +616,12 @@ class AsyncAssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Assign a user to a task in a specific project.
 
         Parameters
@@ -657,6 +705,12 @@ class AsyncAssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Remove assignees for a task within a specific project.
 
         Parameters
@@ -727,6 +781,12 @@ class AsyncAssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update the assignee for a task in a specific project.
 
         Parameters

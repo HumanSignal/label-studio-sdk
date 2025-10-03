@@ -25,6 +25,12 @@ class ModelProvidersClient:
         self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ModelProviderConnection]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all model provider connections.
 
         Parameters
@@ -89,6 +95,12 @@ class ModelProvidersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new model provider connection.
 
         Parameters
@@ -182,6 +194,12 @@ class ModelProvidersClient:
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ModelProvidersListModelProviderChoicesResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all possible model provider choices
 
         Parameters
@@ -224,6 +242,12 @@ class ModelProvidersClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve a specific model provider connection.
 
         Parameters
@@ -270,6 +294,12 @@ class ModelProvidersClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a model provider connection by ID
 
         Parameters
@@ -326,6 +356,12 @@ class ModelProvidersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific model provider connection by ID.
 
         Parameters
@@ -431,6 +467,12 @@ class AsyncModelProvidersClient:
         self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ModelProviderConnection]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all model provider connections.
 
         Parameters
@@ -503,6 +545,12 @@ class AsyncModelProvidersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new model provider connection.
 
         Parameters
@@ -604,6 +652,12 @@ class AsyncModelProvidersClient:
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ModelProvidersListModelProviderChoicesResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all possible model provider choices
 
         Parameters
@@ -654,6 +708,12 @@ class AsyncModelProvidersClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve a specific model provider connection.
 
         Parameters
@@ -708,6 +768,12 @@ class AsyncModelProvidersClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a model provider connection by ID
 
         Parameters
@@ -772,6 +838,12 @@ class AsyncModelProvidersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific model provider connection by ID.
 
         Parameters

@@ -8,7 +8,14 @@ service:
       path: /api/annotation-reviews/
       method: GET
       auth: true
-      docs: List all reviews for a specific annotation ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all reviews for a specific annotation ID.
       source:
         openapi: openapi/openapi.yaml
       display-name: List reviews
@@ -44,7 +51,14 @@ service:
       path: /api/annotation-reviews/
       method: POST
       auth: true
-      docs: Create a review for a specific annotation ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a review for a specific annotation ID.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create review
@@ -82,7 +96,14 @@ service:
       path: /api/annotation-reviews/{id}/
       method: GET
       auth: true
-      docs: Retrieve a specific review by ID for an annotation.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific review by ID for an annotation.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -116,7 +137,14 @@ service:
       path: /api/annotation-reviews/{id}/
       method: PUT
       auth: true
-      docs: Overwrite a specific review by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific review by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -155,7 +183,14 @@ service:
       path: /api/annotation-reviews/{id}/
       method: DELETE
       auth: true
-      docs: Delete a review by ID
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a review by ID
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -172,7 +207,14 @@ service:
       path: /api/annotation-reviews/{id}/
       method: PATCH
       auth: true
-      docs: Update a specific review by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific review by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:

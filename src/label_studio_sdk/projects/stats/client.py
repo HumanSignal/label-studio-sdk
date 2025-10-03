@@ -230,6 +230,12 @@ class StatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsIaaResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get Inter-Annotator Agreement (IAA) matrix for a project, showing agreement between all annotators.
 
         Parameters
@@ -296,6 +302,12 @@ class StatsClient:
         self, id: int, user_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsAgreementAnnotatorResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get agreement statistics for a specific annotator within a project.
 
         Parameters
@@ -499,6 +511,12 @@ class StatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsTotalAgreementResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Overall or per-label total agreement across the project.
 
         NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handling a 204 response. As a workaround, wrap call to this function in a try-except block.
@@ -618,6 +636,12 @@ class StatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserPredictionAgreementResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get prediction agreement statistics for a specific user within a project.
 
         Parameters
@@ -680,6 +704,12 @@ class StatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserReviewScoreResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get review score statistics for a specific user within a project.
 
         Parameters
@@ -742,6 +772,12 @@ class StatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserGroundTruthAgreementResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get ground truth agreement statistics for a specific user within a project.
 
         Parameters
@@ -1028,6 +1064,12 @@ class AsyncStatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsIaaResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get Inter-Annotator Agreement (IAA) matrix for a project, showing agreement between all annotators.
 
         Parameters
@@ -1102,6 +1144,12 @@ class AsyncStatsClient:
         self, id: int, user_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsAgreementAnnotatorResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get agreement statistics for a specific annotator within a project.
 
         Parameters
@@ -1339,6 +1387,12 @@ class AsyncStatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsTotalAgreementResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Overall or per-label total agreement across the project.
 
         NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handling a 204 response. As a workaround, wrap call to this function in a try-except block.
@@ -1474,6 +1528,12 @@ class AsyncStatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserPredictionAgreementResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get prediction agreement statistics for a specific user within a project.
 
         Parameters
@@ -1544,6 +1604,12 @@ class AsyncStatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserReviewScoreResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get review score statistics for a specific user within a project.
 
         Parameters
@@ -1614,6 +1680,12 @@ class AsyncStatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserGroundTruthAgreementResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get ground truth agreement statistics for a specific user within a project.
 
         Parameters

@@ -343,6 +343,12 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get Inter-Annotator Agreement (IAA) matrix for a project, showing
         agreement between all annotators.
       source:
@@ -433,7 +439,14 @@ service:
       path: /api/projects/{id}/stats/agreement_annotator/{user_id}
       method: GET
       auth: true
-      docs: Get agreement statistics for a specific annotator within a project.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement statistics for a specific annotator within a project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -538,6 +551,12 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Overall or per-label total agreement across the project.
 
 
@@ -598,6 +617,12 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get prediction agreement statistics for a specific user within a
         project.
       source:
@@ -628,7 +653,14 @@ service:
       path: /api/projects/{id}/user-stats/{user_pk}/review_score
       method: GET
       auth: true
-      docs: Get review score statistics for a specific user within a project.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get review score statistics for a specific user within a project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -659,6 +691,12 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get ground truth agreement statistics for a specific user within a
         project.
       source:
