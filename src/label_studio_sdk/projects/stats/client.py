@@ -30,10 +30,13 @@ class StatsClient:
         self, id: int, model_version: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsModelVersionAnnotatorAgreementResponse:
         """
-        Overall agreement between a given model version's predictions and all annotators on overlapping tasks.
-        Computed as the average of per-annotator agreement vs this model version over annotators who overlap on at least one task.
-        Mirrors IAA per annotator, but one side is the model.
-        :return: {"agreement": float[0..1]}
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and all annotators in the project for overlapping tasks.
 
         Parameters
         ----------
@@ -89,9 +92,13 @@ class StatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsModelVersionGroundTruthAgreementResponse:
         """
-        Ground truth agreement for annotations that match predictions of a specific model version.
-        This mirrors gt_per_user_agreement but filters stats by tasks where predictions have given model_version.
-        :return: {"agreement": float[0..1]}
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and ground truth annotations in the project for overlapping tasks.
 
         Parameters
         ----------
@@ -153,14 +160,13 @@ class StatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsModelVersionPredictionAgreementResponse:
         """
-        Mean agreement between the given model version and all other model versions in the project.
-
-        Computed as the average of pairwise model-to-model agreement scores from PredictionPairStats where either
-        prediction pair's model_version_from or model_version_to equals the provided model_version.
-
-        When per_label=true, returns a mapping of label -> average agreement across the same set of pairs.
-
-        :return: {"average_prediction_agreement_per_model": float[0..1] | {label: float[0..1]}}
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and all other model versions in the project for overlapping tasks.
 
         Parameters
         ----------
@@ -798,10 +804,13 @@ class AsyncStatsClient:
         self, id: int, model_version: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsModelVersionAnnotatorAgreementResponse:
         """
-        Overall agreement between a given model version's predictions and all annotators on overlapping tasks.
-        Computed as the average of per-annotator agreement vs this model version over annotators who overlap on at least one task.
-        Mirrors IAA per annotator, but one side is the model.
-        :return: {"agreement": float[0..1]}
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and all annotators in the project for overlapping tasks.
 
         Parameters
         ----------
@@ -865,9 +874,13 @@ class AsyncStatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsModelVersionGroundTruthAgreementResponse:
         """
-        Ground truth agreement for annotations that match predictions of a specific model version.
-        This mirrors gt_per_user_agreement but filters stats by tasks where predictions have given model_version.
-        :return: {"agreement": float[0..1]}
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and ground truth annotations in the project for overlapping tasks.
 
         Parameters
         ----------
@@ -937,14 +950,13 @@ class AsyncStatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsModelVersionPredictionAgreementResponse:
         """
-        Mean agreement between the given model version and all other model versions in the project.
-
-        Computed as the average of pairwise model-to-model agreement scores from PredictionPairStats where either
-        prediction pair's model_version_from or model_version_to equals the provided model_version.
-
-        When per_label=true, returns a mapping of label -> average agreement across the same set of pairs.
-
-        :return: {"average_prediction_agreement_per_model": float[0..1] | {label: float[0..1]}}
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and all other model versions in the project for overlapping tasks.
 
         Parameters
         ----------
