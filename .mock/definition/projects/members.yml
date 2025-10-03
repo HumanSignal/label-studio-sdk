@@ -78,5 +78,63 @@ service:
                 username: username
       audiences:
         - public
+    add:
+      path: /api/projects/{id}/members/
+      method: POST
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Add a member to a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Add project member
+      request:
+        name: ProjectMemberRequest
+        body:
+          properties:
+            user: integer
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ProjectMember
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            user: 1
+          response:
+            body:
+              user: 1
+      audiences:
+        - public
+    remove:
+      path: /api/projects/{id}/members/
+      method: DELETE
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Remove a member from a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Remove member from project
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml

@@ -87,3 +87,26 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 
     async_response = await async_client.projects.members.get(id=1)
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_add(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"user": 1}
+    expected_types: typing.Any = {"user": "integer"}
+    response = client.projects.members.add(id=1, user=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.members.add(id=1, user=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_remove(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.projects.members.remove(id=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.projects.members.remove(id=1)  # type: ignore[func-returns-value]
+        is None
+    )
