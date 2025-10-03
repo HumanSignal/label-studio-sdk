@@ -8195,6 +8195,7 @@ paths:
               schema:
                 properties:
                   agreement:
+                    nullable: true
                     type: number
                 type: object
           description: Model-version overall agreement vs annotators
@@ -8244,6 +8245,7 @@ paths:
               schema:
                 properties:
                   agreement:
+                    nullable: true
                     type: number
                 type: object
           description: Model-version ground truth agreement
@@ -8292,7 +8294,8 @@ paths:
             application/json:
               schema:
                 properties:
-                  average_prediction_agreement_per_model:
+                  agreement:
+                    nullable: true
                     type: number
                 type: object
           description: Model-version prediction agreement

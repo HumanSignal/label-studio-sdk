@@ -11,7 +11,7 @@ types:
       openapi: openapi/openapi.yaml
   StatsModelVersionPredictionAgreementResponse:
     properties:
-      average_prediction_agreement_per_model: optional<double>
+      agreement: optional<double>
     source:
       openapi: openapi/openapi.yaml
   StatsIaaResponseIaa:
@@ -335,7 +335,7 @@ service:
             model_version: model_version
           response:
             body:
-              average_prediction_agreement_per_model: 1.1
+              agreement: 1.1
       audiences:
         - public
     iaa:

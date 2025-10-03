@@ -7,7 +7,7 @@ import pydantic
 
 
 class StatsModelVersionPredictionAgreementResponse(UncheckedBaseModel):
-    average_prediction_agreement_per_model: typing.Optional[float] = None
+    agreement: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

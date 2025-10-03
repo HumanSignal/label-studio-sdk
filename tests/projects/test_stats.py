@@ -31,8 +31,8 @@ async def test_model_version_ground_truth_agreement(client: LabelStudio, async_c
 
 
 async def test_model_version_prediction_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"average_prediction_agreement_per_model": 1.1}
-    expected_types: typing.Any = {"average_prediction_agreement_per_model": None}
+    expected_response: typing.Any = {"agreement": 1.1}
+    expected_types: typing.Any = {"agreement": None}
     response = client.projects.stats.model_version_prediction_agreement(id=1, model_version="model_version")
     validate_response(response, expected_response, expected_types)
 
