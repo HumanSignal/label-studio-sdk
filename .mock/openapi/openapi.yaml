@@ -8294,7 +8294,7 @@ paths:
             application/json:
               schema:
                 properties:
-                  agreement:
+                  average_prediction_agreement_per_model:
                     nullable: true
                     type: number
                 type: object
