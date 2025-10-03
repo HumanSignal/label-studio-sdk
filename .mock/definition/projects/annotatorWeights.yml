@@ -70,9 +70,14 @@ service:
         docs: Annotator weights created/updated
         type: root.LseProjectParams
       examples:
-        - path-parameters:
+        - name: payload format for annotator_params
+          path-parameters:
             id: 1
-          request: {}
+          request:
+            annotator_params:
+              '123': 1
+              '456': 0.75
+            use_kappa: true
           response:
             body:
               annotator_params:

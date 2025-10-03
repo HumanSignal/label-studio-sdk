@@ -113,6 +113,8 @@ class AnnotatorWeightsClient:
         )
         client.projects.annotator_weights.create(
             id=1,
+            annotator_params={"123": 1, "456": 0.75},
+            use_kappa=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -255,6 +257,8 @@ class AsyncAnnotatorWeightsClient:
         async def main() -> None:
             await client.projects.annotator_weights.create(
                 id=1,
+                annotator_params={"123": 1, "456": 0.75},
+                use_kappa=True,
             )
 
 

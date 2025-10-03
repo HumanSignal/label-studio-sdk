@@ -19,8 +19,10 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"annotator_params": {"key": "value"}, "use_kappa": True}
     expected_types: typing.Any = {"annotator_params": None, "use_kappa": None}
-    response = client.projects.annotator_weights.create(id=1)
+    response = client.projects.annotator_weights.create(id=1, annotator_params={"123": 1, "456": 0.75}, use_kappa=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.annotator_weights.create(id=1)
+    async_response = await async_client.projects.annotator_weights.create(
+        id=1, annotator_params={"123": 1, "456": 0.75}, use_kappa=True
+    )
     validate_response(async_response, expected_response, expected_types)

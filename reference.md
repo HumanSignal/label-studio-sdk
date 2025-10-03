@@ -32480,6 +32480,8 @@ client = LabelStudio(
 )
 client.projects.annotator_weights.create(
     id=1,
+    annotator_params={"123": 1, "456": 0.75},
+    use_kappa=True,
 )
 
 ```

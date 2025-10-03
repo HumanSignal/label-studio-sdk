@@ -8792,6 +8792,15 @@ paths:
       requestBody:
         content:
           application/json:
+            examples:
+              AnnotatorWeightsMapping:
+                description: annotator_params must be a mapping of user_id to weight (0..1).
+                summary: payload format for annotator_params
+                value:
+                  annotator_params:
+                    123: 1.0
+                    456: 0.75
+                  use_kappa: true
             schema:
               $ref: '#/components/schemas/LseProjectParamsRequest'
           application/x-www-form-urlencoded:
