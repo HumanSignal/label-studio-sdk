@@ -6,6 +6,42 @@ import typing
 from ..utilities import validate_response
 
 
+async def test_model_version_annotator_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"agreement": 1.1}
+    expected_types: typing.Any = {"agreement": None}
+    response = client.projects.stats.model_version_annotator_agreement(id=1, model_version="model_version")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.stats.model_version_annotator_agreement(
+        id=1, model_version="model_version"
+    )
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_model_version_ground_truth_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"agreement": 1.1}
+    expected_types: typing.Any = {"agreement": None}
+    response = client.projects.stats.model_version_ground_truth_agreement(id=1, model_version="model_version")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.stats.model_version_ground_truth_agreement(
+        id=1, model_version="model_version"
+    )
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_model_version_prediction_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"average_prediction_agreement_per_model": 1.1}
+    expected_types: typing.Any = {"average_prediction_agreement_per_model": None}
+    response = client.projects.stats.model_version_prediction_agreement(id=1, model_version="model_version")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.stats.model_version_prediction_agreement(
+        id=1, model_version="model_version"
+    )
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_iaa(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "IAA": [[1, 0.5], [0.5, 1]],
