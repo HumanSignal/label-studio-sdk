@@ -11,6 +11,9 @@ from .stats_iaa_response_iaa import StatsIaaResponseIaa
 from .stats_iaa_response_std import StatsIaaResponseStd
 from .stats_lead_time_response import StatsLeadTimeResponse
 from .stats_lead_time_response_lead_time_stats_item import StatsLeadTimeResponseLeadTimeStatsItem
+from .stats_model_version_annotator_agreement_response import StatsModelVersionAnnotatorAgreementResponse
+from .stats_model_version_ground_truth_agreement_response import StatsModelVersionGroundTruthAgreementResponse
+from .stats_model_version_prediction_agreement_response import StatsModelVersionPredictionAgreementResponse
 from .stats_total_agreement_response import StatsTotalAgreementResponse
 from .stats_total_agreement_response_one import StatsTotalAgreementResponseOne
 from .stats_total_agreement_response_zero import StatsTotalAgreementResponseZero
@@ -36,6 +39,9 @@ __all__ = [
     "StatsIaaResponseStd",
     "StatsLeadTimeResponse",
     "StatsLeadTimeResponseLeadTimeStatsItem",
+    "StatsModelVersionAnnotatorAgreementResponse",
+    "StatsModelVersionGroundTruthAgreementResponse",
+    "StatsModelVersionPredictionAgreementResponse",
     "StatsTotalAgreementResponse",
     "StatsTotalAgreementResponseOne",
     "StatsTotalAgreementResponseZero",

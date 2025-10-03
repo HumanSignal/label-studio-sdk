@@ -3,11 +3,14 @@
 from ...core.client_wrapper import SyncClientWrapper
 import typing
 from ...core.request_options import RequestOptions
-from .types.stats_iaa_response import StatsIaaResponse
+from .types.stats_model_version_annotator_agreement_response import StatsModelVersionAnnotatorAgreementResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from .types.stats_model_version_ground_truth_agreement_response import StatsModelVersionGroundTruthAgreementResponse
+from .types.stats_model_version_prediction_agreement_response import StatsModelVersionPredictionAgreementResponse
+from .types.stats_iaa_response import StatsIaaResponse
 from .types.stats_agreement_annotator_response import StatsAgreementAnnotatorResponse
 from .types.stats_data_filters_response import StatsDataFiltersResponse
 from .types.stats_finished_tasks_response import StatsFinishedTasksResponse
@@ -22,6 +25,199 @@ from ...core.client_wrapper import AsyncClientWrapper
 class StatsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def model_version_annotator_agreement(
+        self, id: int, model_version: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> StatsModelVersionAnnotatorAgreementResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and all annotators in the project for overlapping tasks.
+
+        Parameters
+        ----------
+        id : int
+
+        model_version : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsModelVersionAnnotatorAgreementResponse
+            Model-version overall agreement vs annotators
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.model_version_annotator_agreement(
+            id=1,
+            model_version="model_version",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/agreement",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsModelVersionAnnotatorAgreementResponse,
+                    construct_type(
+                        type_=StatsModelVersionAnnotatorAgreementResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def model_version_ground_truth_agreement(
+        self,
+        id: int,
+        model_version: str,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StatsModelVersionGroundTruthAgreementResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and ground truth annotations in the project for overlapping tasks.
+
+        Parameters
+        ----------
+        id : int
+
+        model_version : str
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsModelVersionGroundTruthAgreementResponse
+            Model-version ground truth agreement
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.model_version_ground_truth_agreement(
+            id=1,
+            model_version="model_version",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/agreement-groundtruth",
+            method="GET",
+            params={
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsModelVersionGroundTruthAgreementResponse,
+                    construct_type(
+                        type_=StatsModelVersionGroundTruthAgreementResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def model_version_prediction_agreement(
+        self,
+        id: int,
+        model_version: str,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StatsModelVersionPredictionAgreementResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and all other model versions in the project for overlapping tasks.
+
+        Parameters
+        ----------
+        id : int
+
+        model_version : str
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsModelVersionPredictionAgreementResponse
+            Model-version prediction agreement
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.model_version_prediction_agreement(
+            id=1,
+            model_version="model_version",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/prediction",
+            method="GET",
+            params={
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsModelVersionPredictionAgreementResponse,
+                    construct_type(
+                        type_=StatsModelVersionPredictionAgreementResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def iaa(
         self,
@@ -639,6 +835,223 @@ class StatsClient:
 class AsyncStatsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def model_version_annotator_agreement(
+        self, id: int, model_version: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> StatsModelVersionAnnotatorAgreementResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and all annotators in the project for overlapping tasks.
+
+        Parameters
+        ----------
+        id : int
+
+        model_version : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsModelVersionAnnotatorAgreementResponse
+            Model-version overall agreement vs annotators
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.model_version_annotator_agreement(
+                id=1,
+                model_version="model_version",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/agreement",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsModelVersionAnnotatorAgreementResponse,
+                    construct_type(
+                        type_=StatsModelVersionAnnotatorAgreementResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def model_version_ground_truth_agreement(
+        self,
+        id: int,
+        model_version: str,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StatsModelVersionGroundTruthAgreementResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and ground truth annotations in the project for overlapping tasks.
+
+        Parameters
+        ----------
+        id : int
+
+        model_version : str
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsModelVersionGroundTruthAgreementResponse
+            Model-version ground truth agreement
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.model_version_ground_truth_agreement(
+                id=1,
+                model_version="model_version",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/agreement-groundtruth",
+            method="GET",
+            params={
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsModelVersionGroundTruthAgreementResponse,
+                    construct_type(
+                        type_=StatsModelVersionGroundTruthAgreementResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def model_version_prediction_agreement(
+        self,
+        id: int,
+        model_version: str,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StatsModelVersionPredictionAgreementResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement between a given model version and all other model versions in the project for overlapping tasks.
+
+        Parameters
+        ----------
+        id : int
+
+        model_version : str
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsModelVersionPredictionAgreementResponse
+            Model-version prediction agreement
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.model_version_prediction_agreement(
+                id=1,
+                model_version="model_version",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/prediction",
+            method="GET",
+            params={
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsModelVersionPredictionAgreementResponse,
+                    construct_type(
+                        type_=StatsModelVersionPredictionAgreementResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def iaa(
         self,
