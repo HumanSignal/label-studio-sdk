@@ -13,8 +13,9 @@ You will learn:
 - How to compute distances in georeferenced images
 - How to use the Label Studio SDK to poll for new annotations and modify task data (this is a toy example - for production use cases, we recommend using Plugins in Label Studio Enterprise for real-time updates to the labeling interface on [annotation events](https://labelstud.io/guide/frontend_reference#Annotation-events).)
 
-[!NOTE]
-This example predates the Plugins feature. Consider using Plugins for this use case instead of polling using the SDK. 
+> [!WARNING]
+> 
+> This example predates the Plugins feature. Consider using Plugins for this use case instead of polling using the SDK. 
 
 ## Setup data
 
