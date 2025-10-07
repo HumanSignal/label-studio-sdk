@@ -83,6 +83,15 @@ types:
         docs: Agreement score for the annotator (0-1)
     source:
       openapi: openapi/openapi.yaml
+  StatsAgreementAnnotatorsResponse:
+    properties:
+      agreement:
+        type: map<string, double>
+        docs: >-
+          Mapping of annotator ID to their agreement score (0-1) or null if no
+          data
+    source:
+      openapi: openapi/openapi.yaml
   StatsDataFiltersResponseUserFiltersStatsItem:
     properties:
       id:
@@ -463,6 +472,45 @@ service:
           response:
             body:
               Agreement_per_annotator: 1.1
+      audiences:
+        - public
+    agreement_annotators:
+      path: /api/projects/{id}/stats/agreement_annotators
+      method: GET
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement statistics for multiple annotators within a project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get agreement statistics for multiple annotators
+      request:
+        name: StatsAgreementAnnotatorsRequest
+        query-parameters:
+          ids:
+            type: string
+            docs: >-
+              Comma-separated list of annotator user IDs to get agreement scores
+              for
+      response:
+        docs: Multiple annotator agreement statistics
+        type: StatsAgreementAnnotatorsResponse
+      examples:
+        - path-parameters:
+            id: 1
+          query-parameters:
+            ids: ids
+          response:
+            body:
+              agreement:
+                key: 1.1
       audiences:
         - public
     data_filters:
