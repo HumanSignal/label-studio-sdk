@@ -8745,7 +8745,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project.
+        Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project. Affects dashboard-members stats, but old and unused.
       operationId: api_projects_project_extra_params_retrieve
       parameters:
         - in: path
@@ -8768,7 +8768,7 @@ paths:
       tags:
         - Projects
       x-fern-audiences:
-        - public
+        - internal
       x-fern-sdk-group-name:
         - projects
         - annotator_weights
@@ -8781,7 +8781,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create annotator weights to be used in the annotation statistics for a project, such as when calculating kappa metrics for inter-annotator agreement.
+        Create annotator weights to be used in the annotation statistics for a project, such as when calculating kappa metrics for inter-annotator agreement. Affects dashboard-members stats, but old and unused.
       operationId: api_projects_project_extra_params_create
       parameters:
         - in: path
@@ -8822,7 +8822,7 @@ paths:
       tags:
         - Projects
       x-fern-audiences:
-        - public
+        - internal
       x-fern-sdk-group-name:
         - projects
         - annotator_weights

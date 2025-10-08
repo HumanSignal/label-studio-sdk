@@ -7,7 +7,6 @@ from .exports.client import ExportsClient
 from .members.client import MembersClient
 from .metrics.client import MetricsClient
 from .stats.client import StatsClient
-from .annotator_weights.client import AnnotatorWeightsClient
 from .assignments.client import AssignmentsClient
 from .pauses.client import PausesClient
 from ..core.request_options import RequestOptions
@@ -46,7 +45,6 @@ from .exports.client import AsyncExportsClient
 from .members.client import AsyncMembersClient
 from .metrics.client import AsyncMetricsClient
 from .stats.client import AsyncStatsClient
-from .annotator_weights.client import AsyncAnnotatorWeightsClient
 from .assignments.client import AsyncAssignmentsClient
 from .pauses.client import AsyncPausesClient
 from ..core.pagination import AsyncPager
@@ -63,7 +61,6 @@ class ProjectsClient:
         self.members = MembersClient(client_wrapper=self._client_wrapper)
         self.metrics = MetricsClient(client_wrapper=self._client_wrapper)
         self.stats = StatsClient(client_wrapper=self._client_wrapper)
-        self.annotator_weights = AnnotatorWeightsClient(client_wrapper=self._client_wrapper)
         self.assignments = AssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = PausesClient(client_wrapper=self._client_wrapper)
 
@@ -1248,7 +1245,6 @@ class AsyncProjectsClient:
         self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
         self.metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         self.stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
-        self.annotator_weights = AsyncAnnotatorWeightsClient(client_wrapper=self._client_wrapper)
         self.assignments = AsyncAssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)
 

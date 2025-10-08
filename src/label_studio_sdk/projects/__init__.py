@@ -9,7 +9,7 @@ from .types import (
     ProjectsImportPredictionsResponse,
     ProjectsImportTasksResponse,
 )
-from . import annotator_weights, assignments, exports, members, metrics, pauses, roles, stats
+from . import assignments, exports, members, metrics, pauses, roles, stats
 from .assignments import (
     AssignmentsAssignRequestType,
     AssignmentsBulkAssignRequestFilters,
@@ -103,7 +103,6 @@ __all__ = [
     "StatsUserReviewScoreResponse",
     "StatsUserReviewScoreResponsePerformanceScore",
     "StatsUserReviewScoreResponseReviewScore",
-    "annotator_weights",
     "assignments",
     "exports",
     "members",

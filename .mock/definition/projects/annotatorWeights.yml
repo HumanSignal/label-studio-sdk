@@ -16,7 +16,7 @@ service:
                 </p>
             </Card>
         Retrieve the annotator weights for statistics and Cohen's Kappa for a
-        specific project.
+        specific project. Affects dashboard-members stats, but old and unused.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -34,7 +34,7 @@ service:
                 key: value
               use_kappa: true
       audiences:
-        - public
+        - internal
     create:
       path: /api/projects/{id}/project-extra-params/
       method: POST
@@ -48,7 +48,7 @@ service:
             </Card>
         Create annotator weights to be used in the annotation statistics for a
         project, such as when calculating kappa metrics for inter-annotator
-        agreement.
+        agreement. Affects dashboard-members stats, but old and unused.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -84,6 +84,6 @@ service:
                 key: value
               use_kappa: true
       audiences:
-        - public
+        - internal
   source:
     openapi: openapi/openapi.yaml

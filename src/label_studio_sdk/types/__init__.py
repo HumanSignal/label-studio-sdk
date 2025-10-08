@@ -91,7 +91,6 @@ from .lse_project_counts import LseProjectCounts
 from .lse_project_create import LseProjectCreate
 from .lse_project_create_sampling import LseProjectCreateSampling
 from .lse_project_create_skip_queue import LseProjectCreateSkipQueue
-from .lse_project_params import LseProjectParams
 from .lse_project_response import LseProjectResponse
 from .lse_project_response_sampling import LseProjectResponseSampling
 from .lse_project_response_skip_queue import LseProjectResponseSkipQueue
@@ -335,7 +334,6 @@ __all__ = [
     "LseProjectCreate",
     "LseProjectCreateSampling",
     "LseProjectCreateSkipQueue",
-    "LseProjectParams",
     "LseProjectResponse",
     "LseProjectResponseSampling",
     "LseProjectResponseSkipQueue",
