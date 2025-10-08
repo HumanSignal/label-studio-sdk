@@ -8,7 +8,6 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.workspace_projects import WorkspaceProjects
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -71,9 +70,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def add(
-        self, id: int, *, project: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> WorkspaceProjects:
+    def add(self, id: int, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -81,7 +78,7 @@ class ProjectsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create a project in a specific workspace.
+        Add a project to a specific workspace.
 
         Parameters
         ----------
@@ -94,8 +91,7 @@ class ProjectsClient:
 
         Returns
         -------
-        WorkspaceProjects
-            Project created
+        None
 
         Examples
         --------
@@ -123,13 +119,7 @@ class ProjectsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    WorkspaceProjects,
-                    construct_type(
-                        type_=WorkspaceProjects,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -143,7 +133,7 @@ class ProjectsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete projects from a specific workspace.
+        Remove a project from a specific workspace.
 
         Parameters
         ----------
@@ -245,9 +235,7 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def add(
-        self, id: int, *, project: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> WorkspaceProjects:
+    async def add(self, id: int, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -255,7 +243,7 @@ class AsyncProjectsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create a project in a specific workspace.
+        Add a project to a specific workspace.
 
         Parameters
         ----------
@@ -268,8 +256,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        WorkspaceProjects
-            Project created
+        None
 
         Examples
         --------
@@ -305,13 +292,7 @@ class AsyncProjectsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    WorkspaceProjects,
-                    construct_type(
-                        type_=WorkspaceProjects,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -325,7 +306,7 @@ class AsyncProjectsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete projects from a specific workspace.
+        Remove a project from a specific workspace.
 
         Parameters
         ----------

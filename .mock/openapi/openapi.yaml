@@ -18543,7 +18543,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete projects from a specific workspace.
+        Remove a project from a specific workspace.
       operationId: api_workspaces_projects_destroy
       parameters:
         - in: path
@@ -18553,10 +18553,10 @@ paths:
             type: integer
       responses:
         '204':
-          description: Project deleted
+          description: Project removed
       security:
         - Token: []
-      summary: Remove workspace projects
+      summary: Remove workspace project
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18609,7 +18609,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create a project in a specific workspace.
+        Add a project to a specific workspace.
       operationId: api_workspaces_projects_create
       parameters:
         - in: path
@@ -18631,14 +18631,10 @@ paths:
         required: true
       responses:
         '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WorkspaceProjects'
-          description: Project created
+          description: Project added
       security:
         - Token: []
-      summary: Create workspace project
+      summary: Add workspace project
       tags:
         - Workspaces
       x-fern-audiences:
@@ -32314,13 +32310,6 @@ components:
           type: integer
       required:
         - user
-      type: object
-    WorkspaceProjects:
-      properties:
-        project:
-          type: integer
-      required:
-        - project
       type: object
     WorkspaceProjectsRequest:
       properties:

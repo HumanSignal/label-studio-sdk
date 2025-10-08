@@ -241,7 +241,6 @@ from .types import (
     Workspace,
     WorkspaceMemberCreate,
     WorkspaceMemberList,
-    WorkspaceProjects,
 )
 from .errors import (
     BadRequestError,
@@ -674,7 +673,6 @@ __all__ = [
     "Workspace",
     "WorkspaceMemberCreate",
     "WorkspaceMemberList",
-    "WorkspaceProjects",
     "__version__",
     "actions",
     "activity_logs",

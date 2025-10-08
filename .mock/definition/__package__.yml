@@ -8436,8 +8436,3 @@ types:
         docs: Workspace ID
     source:
       openapi: openapi/openapi.yaml
-  WorkspaceProjects:
-    properties:
-      project: integer
-    source:
-      openapi: openapi/openapi.yaml

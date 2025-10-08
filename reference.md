@@ -36266,7 +36266,7 @@ client.workspaces.projects.list(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Create a project in a specific workspace.
+Add a project to a specific workspace.
 </dd>
 </dl>
 </dd>
@@ -36351,7 +36351,7 @@ client.workspaces.projects.add(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Delete projects from a specific workspace.
+Remove a project from a specific workspace.
 </dd>
 </dl>
 </dd>

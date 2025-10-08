@@ -93,29 +93,23 @@ service:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create a project in a specific workspace.
+        Add a project to a specific workspace.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Create workspace project
+      display-name: Add workspace project
       request:
         name: WorkspaceProjectsRequest
         body:
           properties:
             project: integer
         content-type: application/json
-      response:
-        docs: Project created
-        type: root.WorkspaceProjects
       examples:
         - path-parameters:
             id: 1
           request:
             project: 1
-          response:
-            body:
-              project: 1
       audiences:
         - public
     remove:
@@ -129,12 +123,12 @@ service:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete projects from a specific workspace.
+        Remove a project from a specific workspace.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Remove workspace projects
+      display-name: Remove workspace project
       examples:
         - path-parameters:
             id: 1
