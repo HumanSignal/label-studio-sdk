@@ -30,6 +30,7 @@ service:
       response:
         docs: List of users with membership information
         type: list<root.LseUser>
+      availability: deprecated
       examples:
         - path-parameters:
             id: 1

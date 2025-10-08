@@ -8253,6 +8253,7 @@ paths:
         - members
       x-fern-sdk-method-name: remove
     get:
+      deprecated: true
       description: |-
         Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
 
