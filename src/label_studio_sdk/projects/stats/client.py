@@ -12,6 +12,7 @@ from .types.stats_model_version_ground_truth_agreement_response import StatsMode
 from .types.stats_model_version_prediction_agreement_response import StatsModelVersionPredictionAgreementResponse
 from .types.stats_iaa_response import StatsIaaResponse
 from .types.stats_agreement_annotator_response import StatsAgreementAnnotatorResponse
+from .types.stats_agreement_annotators_response import StatsAgreementAnnotatorsResponse
 from .types.stats_data_filters_response import StatsDataFiltersResponse
 from .types.stats_finished_tasks_response import StatsFinishedTasksResponse
 from .types.stats_lead_time_response import StatsLeadTimeResponse
@@ -347,6 +348,67 @@ class StatsClient:
                     StatsAgreementAnnotatorResponse,
                     construct_type(
                         type_=StatsAgreementAnnotatorResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def agreement_annotators(
+        self, id: int, *, ids: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> StatsAgreementAnnotatorsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement statistics for multiple annotators within a project.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : str
+            Comma-separated list of annotator user IDs to get agreement scores for
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsAgreementAnnotatorsResponse
+            Multiple annotator agreement statistics
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.agreement_annotators(
+            id=1,
+            ids="ids",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/stats/agreement_annotators",
+            method="GET",
+            params={
+                "ids": ids,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsAgreementAnnotatorsResponse,
+                    construct_type(
+                        type_=StatsAgreementAnnotatorsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1197,6 +1259,75 @@ class AsyncStatsClient:
                     StatsAgreementAnnotatorResponse,
                     construct_type(
                         type_=StatsAgreementAnnotatorResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def agreement_annotators(
+        self, id: int, *, ids: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> StatsAgreementAnnotatorsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement statistics for multiple annotators within a project.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : str
+            Comma-separated list of annotator user IDs to get agreement scores for
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsAgreementAnnotatorsResponse
+            Multiple annotator agreement statistics
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.agreement_annotators(
+                id=1,
+                ids="ids",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/stats/agreement_annotators",
+            method="GET",
+            params={
+                "ids": ids,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsAgreementAnnotatorsResponse,
+                    construct_type(
+                        type_=StatsAgreementAnnotatorsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
