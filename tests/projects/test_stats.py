@@ -75,6 +75,16 @@ async def test_agreement_annotator(client: LabelStudio, async_client: AsyncLabel
     validate_response(async_response, expected_response, expected_types)
 
 
+async def test_agreement_annotators(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"agreement": {"key": 1.1}}
+    expected_types: typing.Any = {"agreement": ("dict", {0: (None, None)})}
+    response = client.projects.stats.agreement_annotators(id=1, ids="ids")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.stats.agreement_annotators(id=1, ids="ids")
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_data_filters(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"user_filters": {"stats": [{}], "tasks_with_annotations": {"key": "value"}}}
     expected_types: typing.Any = {

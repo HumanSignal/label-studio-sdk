@@ -22,67 +22,67 @@ service:
         id: integer
       display-name: List workspace projects
       response:
-        docs: ''
-        type: root.Project
+        docs: Projects list
+        type: list<root.Project>
       examples:
         - path-parameters:
             id: 1
           response:
             body:
-              color: color
-              config_has_control_tags: true
-              config_suitable_for_bulk_annotation: true
-              control_weights:
-                key: value
-              created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                avatar: avatar
-                email: email
-                first_name: first_name
+              - color: color
+                config_has_control_tags: true
+                config_suitable_for_bulk_annotation: true
+                control_weights:
+                  key: value
+                created_at: '2024-01-15T09:30:00Z'
+                created_by:
+                  avatar: avatar
+                  email: email
+                  first_name: first_name
+                  id: 1
+                  last_name: last_name
+                description: description
+                enable_empty_annotation: true
+                evaluate_predictions_automatically: true
+                expert_instruction: expert_instruction
+                finished_task_number: 1
+                ground_truth_number: 1
                 id: 1
-                last_name: last_name
-              description: description
-              enable_empty_annotation: true
-              evaluate_predictions_automatically: true
-              expert_instruction: expert_instruction
-              finished_task_number: 1
-              ground_truth_number: 1
-              id: 1
-              is_draft: true
-              is_published: true
-              label_config: label_config
-              maximum_annotations: 1
-              min_annotations_to_start_training: 1
-              model_version: model_version
-              num_tasks_with_annotations: 1
-              organization: 1
-              overlap_cohort_percentage: 1
-              parsed_label_config:
-                key: value
-              pinned_at: '2024-01-15T09:30:00Z'
-              queue_done: 1
-              queue_total: 1
-              reveal_preannotations_interactively: true
-              sampling: Sequential sampling
-              show_annotation_history: true
-              show_collab_predictions: true
-              show_ground_truth_first: true
-              show_instruction: true
-              show_overlap_first: true
-              show_skip_button: true
-              skip_queue: REQUEUE_FOR_ME
-              skipped_annotations_number: 1
-              start_training_on_annotation_update: true
-              task_data_login: task_data_login
-              task_data_password: task_data_password
-              task_number: 1
-              title: title
-              total_annotations_number: 1
-              total_predictions_number: 1
-              useful_annotation_number: 1
+                is_draft: true
+                is_published: true
+                label_config: label_config
+                maximum_annotations: 1
+                min_annotations_to_start_training: 1
+                model_version: model_version
+                num_tasks_with_annotations: 1
+                organization: 1
+                overlap_cohort_percentage: 1
+                parsed_label_config:
+                  key: value
+                pinned_at: '2024-01-15T09:30:00Z'
+                queue_done: 1
+                queue_total: 1
+                reveal_preannotations_interactively: true
+                sampling: Sequential sampling
+                show_annotation_history: true
+                show_collab_predictions: true
+                show_ground_truth_first: true
+                show_instruction: true
+                show_overlap_first: true
+                show_skip_button: true
+                skip_queue: REQUEUE_FOR_ME
+                skipped_annotations_number: 1
+                start_training_on_annotation_update: true
+                task_data_login: task_data_login
+                task_data_password: task_data_password
+                task_number: 1
+                title: title
+                total_annotations_number: 1
+                total_predictions_number: 1
+                useful_annotation_number: 1
       audiences:
         - public
-    add:
+    create:
       path: /api/workspaces/{id}/projects/
       method: POST
       auth: true
@@ -100,168 +100,25 @@ service:
         id: integer
       display-name: Create workspace project
       request:
-        name: ProjectRequest
+        name: WorkspaceProjectsRequest
         body:
           properties:
-            color:
-              type: optional<string>
-              validation:
-                maxLength: 16
-            control_weights: optional<unknown>
-            created_by:
-              type: optional<root.UserSimpleRequest>
-              docs: Project owner
-            description:
-              type: optional<string>
-              docs: Project description
-            enable_empty_annotation:
-              type: optional<boolean>
-              docs: Allow annotators to submit empty annotations
-            evaluate_predictions_automatically:
-              type: optional<boolean>
-              docs: Retrieve and display predictions when loading a task
-            expert_instruction:
-              type: optional<string>
-              docs: Labeling instructions in HTML format
-            is_draft:
-              type: optional<boolean>
-              docs: Whether or not the project is in the middle of being created
-            is_published:
-              type: optional<boolean>
-              docs: Whether or not the project is published to annotators
-            label_config:
-              type: optional<string>
-              docs: Label config in XML format. See more about it in documentation
-            maximum_annotations:
-              type: optional<integer>
-              docs: >-
-                Maximum number of annotations for one task. If the number of
-                annotations per task is equal or greater to this value, the task
-                is completed (is_labeled=True)
-              validation:
-                min: -2147483648
-                max: 2147483647
-            min_annotations_to_start_training:
-              type: optional<integer>
-              docs: >-
-                Minimum number of completed tasks after which model training is
-                started
-              validation:
-                min: -2147483648
-                max: 2147483647
-            model_version:
-              type: optional<string>
-              docs: Machine learning model version
-            organization: optional<integer>
-            overlap_cohort_percentage:
-              type: optional<integer>
-              validation:
-                min: -2147483648
-                max: 2147483647
-            pinned_at:
-              type: optional<datetime>
-              docs: Pinned date and time
-            reveal_preannotations_interactively:
-              type: optional<boolean>
-              docs: Reveal pre-annotations interactively
-            sampling: optional<ProjectRequestSampling>
-            show_annotation_history:
-              type: optional<boolean>
-              docs: Show annotation history to annotator
-            show_collab_predictions:
-              type: optional<boolean>
-              docs: If set, the annotator can view model predictions
-            show_ground_truth_first: optional<boolean>
-            show_instruction:
-              type: optional<boolean>
-              docs: Show instructions to the annotator before they start
-            show_overlap_first: optional<boolean>
-            show_skip_button:
-              type: optional<boolean>
-              docs: >-
-                Show a skip button in interface and allow annotators to skip the
-                task
-            skip_queue: optional<ProjectRequestSkipQueue>
-            task_data_login:
-              type: optional<string>
-              docs: 'Task data credentials: login'
-              validation:
-                maxLength: 256
-            task_data_password:
-              type: optional<string>
-              docs: 'Task data credentials: password'
-              validation:
-                maxLength: 256
-            title:
-              type: optional<string>
-              docs: Project name. Must be between 3 and 50 characters long.
-              validation:
-                minLength: 3
-                maxLength: 50
+            project: integer
         content-type: application/json
       response:
-        docs: ''
-        type: root.Project
+        docs: Project created
+        type: root.WorkspaceProjects
       examples:
         - path-parameters:
             id: 1
-          request: {}
+          request:
+            project: 1
           response:
             body:
-              color: color
-              config_has_control_tags: true
-              config_suitable_for_bulk_annotation: true
-              control_weights:
-                key: value
-              created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                avatar: avatar
-                email: email
-                first_name: first_name
-                id: 1
-                last_name: last_name
-              description: description
-              enable_empty_annotation: true
-              evaluate_predictions_automatically: true
-              expert_instruction: expert_instruction
-              finished_task_number: 1
-              ground_truth_number: 1
-              id: 1
-              is_draft: true
-              is_published: true
-              label_config: label_config
-              maximum_annotations: 1
-              min_annotations_to_start_training: 1
-              model_version: model_version
-              num_tasks_with_annotations: 1
-              organization: 1
-              overlap_cohort_percentage: 1
-              parsed_label_config:
-                key: value
-              pinned_at: '2024-01-15T09:30:00Z'
-              queue_done: 1
-              queue_total: 1
-              reveal_preannotations_interactively: true
-              sampling: Sequential sampling
-              show_annotation_history: true
-              show_collab_predictions: true
-              show_ground_truth_first: true
-              show_instruction: true
-              show_overlap_first: true
-              show_skip_button: true
-              skip_queue: REQUEUE_FOR_ME
-              skipped_annotations_number: 1
-              start_training_on_annotation_update: true
-              task_data_login: task_data_login
-              task_data_password: task_data_password
-              task_number: 1
-              title: title
-              total_annotations_number: 1
-              total_predictions_number: 1
-              useful_annotation_number: 1
+              project: 1
       audiences:
         - public
-    remove:
+    delete:
       path: /api/workspaces/{id}/projects/
       method: DELETE
       auth: true
@@ -285,20 +142,3 @@ service:
         - public
   source:
     openapi: openapi/openapi.yaml
-types:
-  ProjectRequestSampling:
-    discriminated: false
-    union:
-      - root.SamplingDe5Enum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ProjectRequestSkipQueue:
-    discriminated: false
-    union:
-      - root.SkipQueueEnum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true

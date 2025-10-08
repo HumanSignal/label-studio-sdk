@@ -8,11 +8,7 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.user_simple_request import UserSimpleRequest
-import datetime as dt
-from .types.project_request_sampling import ProjectRequestSampling
-from .types.project_request_skip_queue import ProjectRequestSkipQueue
-from ...core.serialization import convert_and_respect_annotation_metadata
+from ...types.workspace_projects import WorkspaceProjects
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -23,7 +19,7 @@ class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
+    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Project]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -42,8 +38,8 @@ class ProjectsClient:
 
         Returns
         -------
-        Project
-
+        typing.List[Project]
+            Projects list
 
         Examples
         --------
@@ -64,9 +60,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Project,
+                    typing.List[Project],
                     construct_type(
-                        type_=Project,  # type: ignore
+                        type_=typing.List[Project],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -75,40 +71,9 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def add(
-        self,
-        id: int,
-        *,
-        color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        enable_empty_annotation: typing.Optional[bool] = OMIT,
-        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
-        expert_instruction: typing.Optional[str] = OMIT,
-        is_draft: typing.Optional[bool] = OMIT,
-        is_published: typing.Optional[bool] = OMIT,
-        label_config: typing.Optional[str] = OMIT,
-        maximum_annotations: typing.Optional[int] = OMIT,
-        min_annotations_to_start_training: typing.Optional[int] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        overlap_cohort_percentage: typing.Optional[int] = OMIT,
-        pinned_at: typing.Optional[dt.datetime] = OMIT,
-        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        sampling: typing.Optional[ProjectRequestSampling] = OMIT,
-        show_annotation_history: typing.Optional[bool] = OMIT,
-        show_collab_predictions: typing.Optional[bool] = OMIT,
-        show_ground_truth_first: typing.Optional[bool] = OMIT,
-        show_instruction: typing.Optional[bool] = OMIT,
-        show_overlap_first: typing.Optional[bool] = OMIT,
-        show_skip_button: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[ProjectRequestSkipQueue] = OMIT,
-        task_data_login: typing.Optional[str] = OMIT,
-        task_data_password: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Project:
+    def create(
+        self, id: int, *, project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> WorkspaceProjects:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -122,89 +87,15 @@ class ProjectsClient:
         ----------
         id : int
 
-        color : typing.Optional[str]
-
-        control_weights : typing.Optional[typing.Optional[typing.Any]]
-
-        created_by : typing.Optional[UserSimpleRequest]
-            Project owner
-
-        description : typing.Optional[str]
-            Project description
-
-        enable_empty_annotation : typing.Optional[bool]
-            Allow annotators to submit empty annotations
-
-        evaluate_predictions_automatically : typing.Optional[bool]
-            Retrieve and display predictions when loading a task
-
-        expert_instruction : typing.Optional[str]
-            Labeling instructions in HTML format
-
-        is_draft : typing.Optional[bool]
-            Whether or not the project is in the middle of being created
-
-        is_published : typing.Optional[bool]
-            Whether or not the project is published to annotators
-
-        label_config : typing.Optional[str]
-            Label config in XML format. See more about it in documentation
-
-        maximum_annotations : typing.Optional[int]
-            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-
-        min_annotations_to_start_training : typing.Optional[int]
-            Minimum number of completed tasks after which model training is started
-
-        model_version : typing.Optional[str]
-            Machine learning model version
-
-        organization : typing.Optional[int]
-
-        overlap_cohort_percentage : typing.Optional[int]
-
-        pinned_at : typing.Optional[dt.datetime]
-            Pinned date and time
-
-        reveal_preannotations_interactively : typing.Optional[bool]
-            Reveal pre-annotations interactively
-
-        sampling : typing.Optional[ProjectRequestSampling]
-
-        show_annotation_history : typing.Optional[bool]
-            Show annotation history to annotator
-
-        show_collab_predictions : typing.Optional[bool]
-            If set, the annotator can view model predictions
-
-        show_ground_truth_first : typing.Optional[bool]
-
-        show_instruction : typing.Optional[bool]
-            Show instructions to the annotator before they start
-
-        show_overlap_first : typing.Optional[bool]
-
-        show_skip_button : typing.Optional[bool]
-            Show a skip button in interface and allow annotators to skip the task
-
-        skip_queue : typing.Optional[ProjectRequestSkipQueue]
-
-        task_data_login : typing.Optional[str]
-            Task data credentials: login
-
-        task_data_password : typing.Optional[str]
-            Task data credentials: password
-
-        title : typing.Optional[str]
-            Project name. Must be between 3 and 50 characters long.
+        project : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Project
-
+        WorkspaceProjects
+            Project created
 
         Examples
         --------
@@ -213,48 +104,16 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.projects.add(
+        client.workspaces.projects.create(
             id=1,
+            project=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/workspaces/{jsonable_encoder(id)}/projects/",
             method="POST",
             json={
-                "color": color,
-                "control_weights": control_weights,
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=UserSimpleRequest, direction="write"
-                ),
-                "description": description,
-                "enable_empty_annotation": enable_empty_annotation,
-                "evaluate_predictions_automatically": evaluate_predictions_automatically,
-                "expert_instruction": expert_instruction,
-                "is_draft": is_draft,
-                "is_published": is_published,
-                "label_config": label_config,
-                "maximum_annotations": maximum_annotations,
-                "min_annotations_to_start_training": min_annotations_to_start_training,
-                "model_version": model_version,
-                "organization": organization,
-                "overlap_cohort_percentage": overlap_cohort_percentage,
-                "pinned_at": pinned_at,
-                "reveal_preannotations_interactively": reveal_preannotations_interactively,
-                "sampling": convert_and_respect_annotation_metadata(
-                    object_=sampling, annotation=ProjectRequestSampling, direction="write"
-                ),
-                "show_annotation_history": show_annotation_history,
-                "show_collab_predictions": show_collab_predictions,
-                "show_ground_truth_first": show_ground_truth_first,
-                "show_instruction": show_instruction,
-                "show_overlap_first": show_overlap_first,
-                "show_skip_button": show_skip_button,
-                "skip_queue": convert_and_respect_annotation_metadata(
-                    object_=skip_queue, annotation=ProjectRequestSkipQueue, direction="write"
-                ),
-                "task_data_login": task_data_login,
-                "task_data_password": task_data_password,
-                "title": title,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -265,9 +124,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Project,
+                    WorkspaceProjects,
                     construct_type(
-                        type_=Project,  # type: ignore
+                        type_=WorkspaceProjects,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -276,7 +135,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -304,7 +163,7 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.projects.remove(
+        client.workspaces.projects.delete(
             id=1,
         )
         """
@@ -326,7 +185,7 @@ class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
+    async def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Project]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -345,8 +204,8 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        Project
-
+        typing.List[Project]
+            Projects list
 
         Examples
         --------
@@ -375,9 +234,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Project,
+                    typing.List[Project],
                     construct_type(
-                        type_=Project,  # type: ignore
+                        type_=typing.List[Project],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -386,40 +245,9 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def add(
-        self,
-        id: int,
-        *,
-        color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        enable_empty_annotation: typing.Optional[bool] = OMIT,
-        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
-        expert_instruction: typing.Optional[str] = OMIT,
-        is_draft: typing.Optional[bool] = OMIT,
-        is_published: typing.Optional[bool] = OMIT,
-        label_config: typing.Optional[str] = OMIT,
-        maximum_annotations: typing.Optional[int] = OMIT,
-        min_annotations_to_start_training: typing.Optional[int] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        overlap_cohort_percentage: typing.Optional[int] = OMIT,
-        pinned_at: typing.Optional[dt.datetime] = OMIT,
-        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        sampling: typing.Optional[ProjectRequestSampling] = OMIT,
-        show_annotation_history: typing.Optional[bool] = OMIT,
-        show_collab_predictions: typing.Optional[bool] = OMIT,
-        show_ground_truth_first: typing.Optional[bool] = OMIT,
-        show_instruction: typing.Optional[bool] = OMIT,
-        show_overlap_first: typing.Optional[bool] = OMIT,
-        show_skip_button: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[ProjectRequestSkipQueue] = OMIT,
-        task_data_login: typing.Optional[str] = OMIT,
-        task_data_password: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Project:
+    async def create(
+        self, id: int, *, project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> WorkspaceProjects:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -433,89 +261,15 @@ class AsyncProjectsClient:
         ----------
         id : int
 
-        color : typing.Optional[str]
-
-        control_weights : typing.Optional[typing.Optional[typing.Any]]
-
-        created_by : typing.Optional[UserSimpleRequest]
-            Project owner
-
-        description : typing.Optional[str]
-            Project description
-
-        enable_empty_annotation : typing.Optional[bool]
-            Allow annotators to submit empty annotations
-
-        evaluate_predictions_automatically : typing.Optional[bool]
-            Retrieve and display predictions when loading a task
-
-        expert_instruction : typing.Optional[str]
-            Labeling instructions in HTML format
-
-        is_draft : typing.Optional[bool]
-            Whether or not the project is in the middle of being created
-
-        is_published : typing.Optional[bool]
-            Whether or not the project is published to annotators
-
-        label_config : typing.Optional[str]
-            Label config in XML format. See more about it in documentation
-
-        maximum_annotations : typing.Optional[int]
-            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-
-        min_annotations_to_start_training : typing.Optional[int]
-            Minimum number of completed tasks after which model training is started
-
-        model_version : typing.Optional[str]
-            Machine learning model version
-
-        organization : typing.Optional[int]
-
-        overlap_cohort_percentage : typing.Optional[int]
-
-        pinned_at : typing.Optional[dt.datetime]
-            Pinned date and time
-
-        reveal_preannotations_interactively : typing.Optional[bool]
-            Reveal pre-annotations interactively
-
-        sampling : typing.Optional[ProjectRequestSampling]
-
-        show_annotation_history : typing.Optional[bool]
-            Show annotation history to annotator
-
-        show_collab_predictions : typing.Optional[bool]
-            If set, the annotator can view model predictions
-
-        show_ground_truth_first : typing.Optional[bool]
-
-        show_instruction : typing.Optional[bool]
-            Show instructions to the annotator before they start
-
-        show_overlap_first : typing.Optional[bool]
-
-        show_skip_button : typing.Optional[bool]
-            Show a skip button in interface and allow annotators to skip the task
-
-        skip_queue : typing.Optional[ProjectRequestSkipQueue]
-
-        task_data_login : typing.Optional[str]
-            Task data credentials: login
-
-        task_data_password : typing.Optional[str]
-            Task data credentials: password
-
-        title : typing.Optional[str]
-            Project name. Must be between 3 and 50 characters long.
+        project : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Project
-
+        WorkspaceProjects
+            Project created
 
         Examples
         --------
@@ -529,8 +283,9 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.workspaces.projects.add(
+            await client.workspaces.projects.create(
                 id=1,
+                project=1,
             )
 
 
@@ -540,40 +295,7 @@ class AsyncProjectsClient:
             f"api/workspaces/{jsonable_encoder(id)}/projects/",
             method="POST",
             json={
-                "color": color,
-                "control_weights": control_weights,
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=UserSimpleRequest, direction="write"
-                ),
-                "description": description,
-                "enable_empty_annotation": enable_empty_annotation,
-                "evaluate_predictions_automatically": evaluate_predictions_automatically,
-                "expert_instruction": expert_instruction,
-                "is_draft": is_draft,
-                "is_published": is_published,
-                "label_config": label_config,
-                "maximum_annotations": maximum_annotations,
-                "min_annotations_to_start_training": min_annotations_to_start_training,
-                "model_version": model_version,
-                "organization": organization,
-                "overlap_cohort_percentage": overlap_cohort_percentage,
-                "pinned_at": pinned_at,
-                "reveal_preannotations_interactively": reveal_preannotations_interactively,
-                "sampling": convert_and_respect_annotation_metadata(
-                    object_=sampling, annotation=ProjectRequestSampling, direction="write"
-                ),
-                "show_annotation_history": show_annotation_history,
-                "show_collab_predictions": show_collab_predictions,
-                "show_ground_truth_first": show_ground_truth_first,
-                "show_instruction": show_instruction,
-                "show_overlap_first": show_overlap_first,
-                "show_skip_button": show_skip_button,
-                "skip_queue": convert_and_respect_annotation_metadata(
-                    object_=skip_queue, annotation=ProjectRequestSkipQueue, direction="write"
-                ),
-                "task_data_login": task_data_login,
-                "task_data_password": task_data_password,
-                "title": title,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -584,9 +306,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Project,
+                    WorkspaceProjects,
                     construct_type(
-                        type_=Project,  # type: ignore
+                        type_=WorkspaceProjects,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -595,7 +317,7 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -628,7 +350,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.workspaces.projects.remove(
+            await client.workspaces.projects.delete(
                 id=1,
             )
 

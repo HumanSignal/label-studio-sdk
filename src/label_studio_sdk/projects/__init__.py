@@ -29,6 +29,7 @@ from .assignments import (
 from .exports import ExportsConvertResponse
 from .stats import (
     StatsAgreementAnnotatorResponse,
+    StatsAgreementAnnotatorsResponse,
     StatsDataFiltersResponse,
     StatsDataFiltersResponseUserFilters,
     StatsDataFiltersResponseUserFiltersStatsItem,
@@ -78,6 +79,7 @@ __all__ = [
     "ProjectsImportPredictionsResponse",
     "ProjectsImportTasksResponse",
     "StatsAgreementAnnotatorResponse",
+    "StatsAgreementAnnotatorsResponse",
     "StatsDataFiltersResponse",
     "StatsDataFiltersResponseUserFilters",
     "StatsDataFiltersResponseUserFiltersStatsItem",

@@ -2,6 +2,7 @@
 
 from .types import (
     StatsAgreementAnnotatorResponse,
+    StatsAgreementAnnotatorsResponse,
     StatsDataFiltersResponse,
     StatsDataFiltersResponseUserFilters,
     StatsDataFiltersResponseUserFiltersStatsItem,
@@ -29,6 +30,7 @@ from .types import (
 
 __all__ = [
     "StatsAgreementAnnotatorResponse",
+    "StatsAgreementAnnotatorsResponse",
     "StatsDataFiltersResponse",
     "StatsDataFiltersResponseUserFilters",
     "StatsDataFiltersResponseUserFiltersStatsItem",

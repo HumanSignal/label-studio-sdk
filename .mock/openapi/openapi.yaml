@@ -9090,6 +9090,55 @@ paths:
         - projects
         - stats
       x-fern-sdk-method-name: agreement_annotator
+  /api/projects/{id}/stats/agreement_annotators:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement statistics for multiple annotators within a project.
+      operationId: api_projects_stats_agreement_annotators_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Comma-separated list of annotator user IDs to get agreement scores for
+          in: query
+          name: ids
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  agreement:
+                    additionalProperties:
+                      type: number
+                    description: Mapping of annotator ID to their agreement score (0-1) or null if no data
+                    type: object
+                required:
+                  - agreement
+                type: object
+          description: Multiple annotator agreement statistics
+      security:
+        - Token: []
+      summary: Get agreement statistics for multiple annotators
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: agreement_annotators
   /api/projects/{id}/stats/data_filter:
     get:
       description: Get statistics about user data filters and their usage within a project.
@@ -18504,7 +18553,7 @@ paths:
             type: integer
       responses:
         '204':
-          description: No response body
+          description: Project deleted
       security:
         - Token: []
       summary: Remove workspace projects
@@ -18515,7 +18564,7 @@ paths:
       x-fern-sdk-group-name:
         - workspaces
         - projects
-      x-fern-sdk-method-name: remove
+      x-fern-sdk-method-name: delete
     get:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -18537,8 +18586,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
-          description: ''
+                items:
+                  $ref: '#/components/schemas/Project'
+                type: array
+          description: Projects list
       security:
         - Token: []
       summary: List workspace projects
@@ -18570,20 +18621,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProjectRequest'
+              $ref: '#/components/schemas/WorkspaceProjectsRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ProjectRequest'
+              $ref: '#/components/schemas/WorkspaceProjectsRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ProjectRequest'
+              $ref: '#/components/schemas/WorkspaceProjectsRequest'
+        required: true
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
-          description: ''
+                $ref: '#/components/schemas/WorkspaceProjects'
+          description: Project created
       security:
         - Token: []
       summary: Create workspace project
@@ -18594,7 +18646,7 @@ paths:
       x-fern-sdk-group-name:
         - workspaces
         - projects
-      x-fern-sdk-method-name: add
+      x-fern-sdk-method-name: create
   /data/upload/{filename}:
     get:
       description: Download a specific uploaded file.
@@ -18986,6 +19038,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -23751,6 +23804,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -24032,6 +24086,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -24190,6 +24245,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -24437,6 +24493,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -24695,6 +24752,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -28452,6 +28510,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -29517,6 +29576,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -29838,121 +29898,6 @@ components:
           type: integer
       required:
         - id
-      type: object
-    ProjectRequest:
-      description: |-
-        Serializer get numbers from project queryset annotation,
-        make sure, that you use correct one(Project.objects.with_counts())
-      properties:
-        color:
-          maxLength: 16
-          nullable: true
-          type: string
-        control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
-          nullable: true
-        created_by:
-          allOf:
-            - $ref: '#/components/schemas/UserSimpleRequest'
-          description: Project owner
-        description:
-          description: Project description
-          nullable: true
-          type: string
-        enable_empty_annotation:
-          description: Allow annotators to submit empty annotations
-          type: boolean
-        evaluate_predictions_automatically:
-          description: Retrieve and display predictions when loading a task
-          type: boolean
-        expert_instruction:
-          description: Labeling instructions in HTML format
-          nullable: true
-          type: string
-        is_draft:
-          description: Whether or not the project is in the middle of being created
-          type: boolean
-        is_published:
-          description: Whether or not the project is published to annotators
-          title: Published
-          type: boolean
-        label_config:
-          description: Label config in XML format. See more about it in documentation
-          nullable: true
-          type: string
-        maximum_annotations:
-          description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-          maximum: 2147483647
-          minimum: -2147483648
-          title: Maximum annotation number
-          type: integer
-        min_annotations_to_start_training:
-          description: Minimum number of completed tasks after which model training is started
-          maximum: 2147483647
-          minimum: -2147483648
-          type: integer
-        model_version:
-          description: Machine learning model version
-          nullable: true
-          type: string
-        organization:
-          nullable: true
-          type: integer
-        overlap_cohort_percentage:
-          maximum: 2147483647
-          minimum: -2147483648
-          type: integer
-        pinned_at:
-          description: Pinned date and time
-          format: date-time
-          nullable: true
-          type: string
-        reveal_preannotations_interactively:
-          description: Reveal pre-annotations interactively
-          type: boolean
-        sampling:
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
-        show_annotation_history:
-          description: Show annotation history to annotator
-          type: boolean
-        show_collab_predictions:
-          description: If set, the annotator can view model predictions
-          title: Show predictions to annotator
-          type: boolean
-        show_ground_truth_first:
-          type: boolean
-        show_instruction:
-          description: Show instructions to the annotator before they start
-          type: boolean
-        show_overlap_first:
-          type: boolean
-        show_skip_button:
-          description: Show a skip button in interface and allow annotators to skip the task
-          type: boolean
-        skip_queue:
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
-        task_data_login:
-          description: 'Task data credentials: login'
-          maxLength: 256
-          nullable: true
-          type: string
-        task_data_password:
-          description: 'Task data credentials: password'
-          maxLength: 256
-          nullable: true
-          type: string
-        title:
-          description: Project name. Must be between 3 and 50 characters long.
-          maxLength: 50
-          minLength: 3
-          nullable: true
-          type: string
       type: object
     ProjectRole:
       properties:
@@ -32369,6 +32314,20 @@ components:
           type: integer
       required:
         - user
+      type: object
+    WorkspaceProjects:
+      properties:
+        project:
+          type: integer
+      required:
+        - project
+      type: object
+    WorkspaceProjectsRequest:
+      properties:
+        project:
+          type: integer
+      required:
+        - project
       type: object
     WorkspaceRequest:
       description: |-

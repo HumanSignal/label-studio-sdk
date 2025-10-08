@@ -282,6 +282,7 @@ class ProjectsClient:
             If set, the annotator can view model predictions
 
         show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
 
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
@@ -708,6 +709,7 @@ class ProjectsClient:
             If set, the annotator can view model predictions
 
         show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
 
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
@@ -1473,6 +1475,7 @@ class AsyncProjectsClient:
             If set, the annotator can view model predictions
 
         show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
 
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
@@ -1931,6 +1934,7 @@ class AsyncProjectsClient:
             If set, the annotator can view model predictions
 
         show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
 
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start

@@ -9134,7 +9134,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**show_ground_truth_first:** `typing.Optional[bool]` 
+**show_ground_truth_first:** `typing.Optional[bool]` — Onboarding mode (true): show ground truth tasks first in the labeling stream
     
 </dd>
 </dl>
@@ -9812,7 +9812,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**show_ground_truth_first:** `typing.Optional[bool]` 
+**show_ground_truth_first:** `typing.Optional[bool]` — Onboarding mode (true): show ground truth tasks first in the labeling stream
     
 </dd>
 </dl>
@@ -31702,6 +31702,91 @@ client.projects.stats.agreement_annotator(
 </dl>
 </details>
 
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">agreement_annotators</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Get agreement statistics for multiple annotators within a project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.stats.agreement_annotators(
+    id=1,
+    ids="ids",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `str` — Comma-separated list of annotator user IDs to get agreement scores for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">data_filters</a>(...)</code></summary>
 <dl>
 <dd>
@@ -36334,7 +36419,7 @@ client.workspaces.projects.list(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">add</a>(...)</code></summary>
+<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -36372,8 +36457,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.workspaces.projects.add(
+client.workspaces.projects.create(
     id=1,
+    project=1,
 )
 
 ```
@@ -36398,223 +36484,7 @@ client.workspaces.projects.add(
 <dl>
 <dd>
 
-**color:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[UserSimpleRequest]` — Project owner
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Project description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**evaluate_predictions_automatically:** `typing.Optional[bool]` — Retrieve and display predictions when loading a task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**expert_instruction:** `typing.Optional[str]` — Labeling instructions in HTML format
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_draft:** `typing.Optional[bool]` — Whether or not the project is in the middle of being created
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_published:** `typing.Optional[bool]` — Whether or not the project is published to annotators
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**maximum_annotations:** `typing.Optional[int]` — Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**min_annotations_to_start_training:** `typing.Optional[int]` — Minimum number of completed tasks after which model training is started
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_version:** `typing.Optional[str]` — Machine learning model version
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**overlap_cohort_percentage:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reveal_preannotations_interactively:** `typing.Optional[bool]` — Reveal pre-annotations interactively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sampling:** `typing.Optional[ProjectRequestSampling]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_annotation_history:** `typing.Optional[bool]` — Show annotation history to annotator
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_ground_truth_first:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_instruction:** `typing.Optional[bool]` — Show instructions to the annotator before they start
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_overlap_first:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_skip_button:** `typing.Optional[bool]` — Show a skip button in interface and allow annotators to skip the task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**skip_queue:** `typing.Optional[ProjectRequestSkipQueue]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task_data_login:** `typing.Optional[str]` — Task data credentials: login
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task_data_password:** `typing.Optional[str]` — Task data credentials: password
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
+**project:** `int` 
     
 </dd>
 </dl>
@@ -36634,7 +36504,7 @@ client.workspaces.projects.add(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">remove</a>(...)</code></summary>
+<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -36672,7 +36542,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.workspaces.projects.remove(
+client.workspaces.projects.delete(
     id=1,
 )
 

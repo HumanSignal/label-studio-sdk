@@ -318,7 +318,11 @@ types:
       show_collab_predictions:
         type: optional<boolean>
         docs: If set, the annotator can view model predictions
-      show_ground_truth_first: optional<boolean>
+      show_ground_truth_first:
+        type: optional<boolean>
+        docs: >-
+          Onboarding mode (true): show ground truth tasks first in the labeling
+          stream
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the annotator before they start
@@ -3846,7 +3850,11 @@ types:
       show_collab_predictions:
         type: optional<boolean>
         docs: If set, the annotator can view model predictions
-      show_ground_truth_first: optional<boolean>
+      show_ground_truth_first:
+        type: optional<boolean>
+        docs: >-
+          Onboarding mode (true): show ground truth tasks first in the labeling
+          stream
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the annotator before they start
@@ -4037,7 +4045,11 @@ types:
       show_collab_predictions:
         type: optional<boolean>
         docs: If set, the annotator can view model predictions
-      show_ground_truth_first: optional<boolean>
+      show_ground_truth_first:
+        type: optional<boolean>
+        docs: >-
+          Onboarding mode (true): show ground truth tasks first in the labeling
+          stream
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the annotator before they start
@@ -4258,7 +4270,11 @@ types:
       show_collab_predictions:
         type: optional<boolean>
         docs: If set, the annotator can view model predictions
-      show_ground_truth_first: optional<boolean>
+      show_ground_truth_first:
+        type: optional<boolean>
+        docs: >-
+          Onboarding mode (true): show ground truth tasks first in the labeling
+          stream
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the annotator before they start
@@ -4442,7 +4458,11 @@ types:
       show_collab_predictions:
         type: optional<boolean>
         docs: If set, the annotator can view model predictions
-      show_ground_truth_first: optional<boolean>
+      show_ground_truth_first:
+        type: optional<boolean>
+        docs: >-
+          Onboarding mode (true): show ground truth tasks first in the labeling
+          stream
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the annotator before they start
@@ -6474,7 +6494,11 @@ types:
       show_collab_predictions:
         type: optional<boolean>
         docs: If set, the annotator can view model predictions
-      show_ground_truth_first: optional<boolean>
+      show_ground_truth_first:
+        type: optional<boolean>
+        docs: >-
+          Onboarding mode (true): show ground truth tasks first in the labeling
+          stream
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the annotator before they start
@@ -8410,5 +8434,10 @@ types:
       workspace:
         type: optional<integer>
         docs: Workspace ID
+    source:
+      openapi: openapi/openapi.yaml
+  WorkspaceProjects:
+    properties:
+      project: integer
     source:
       openapi: openapi/openapi.yaml
