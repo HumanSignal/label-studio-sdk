@@ -36248,7 +36248,7 @@ client.workspaces.projects.list(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">add</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -36286,7 +36286,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.workspaces.projects.create(
+client.workspaces.projects.add(
     id=1,
     project=1,
 )
@@ -36333,7 +36333,7 @@ client.workspaces.projects.create(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">remove</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -36371,7 +36371,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.workspaces.projects.delete(
+client.workspaces.projects.remove(
     id=1,
 )
 

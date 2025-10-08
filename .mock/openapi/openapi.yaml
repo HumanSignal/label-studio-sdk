@@ -18564,7 +18564,7 @@ paths:
       x-fern-sdk-group-name:
         - workspaces
         - projects
-      x-fern-sdk-method-name: delete
+      x-fern-sdk-method-name: remove
     get:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -18646,7 +18646,7 @@ paths:
       x-fern-sdk-group-name:
         - workspaces
         - projects
-      x-fern-sdk-method-name: create
+      x-fern-sdk-method-name: add
   /data/upload/{filename}:
     get:
       description: Download a specific uploaded file.

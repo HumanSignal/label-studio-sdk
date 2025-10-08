@@ -82,7 +82,7 @@ service:
                 useful_annotation_number: 1
       audiences:
         - public
-    create:
+    add:
       path: /api/workspaces/{id}/projects/
       method: POST
       auth: true
@@ -118,7 +118,7 @@ service:
               project: 1
       audiences:
         - public
-    delete:
+    remove:
       path: /api/workspaces/{id}/projects/
       method: DELETE
       auth: true

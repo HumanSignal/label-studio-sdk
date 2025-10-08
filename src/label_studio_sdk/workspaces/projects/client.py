@@ -71,7 +71,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create(
+    def add(
         self, id: int, *, project: int, request_options: typing.Optional[RequestOptions] = None
     ) -> WorkspaceProjects:
         """
@@ -104,7 +104,7 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.projects.create(
+        client.workspaces.projects.add(
             id=1,
             project=1,
         )
@@ -135,7 +135,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -163,7 +163,7 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.projects.delete(
+        client.workspaces.projects.remove(
             id=1,
         )
         """
@@ -245,7 +245,7 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create(
+    async def add(
         self, id: int, *, project: int, request_options: typing.Optional[RequestOptions] = None
     ) -> WorkspaceProjects:
         """
@@ -283,7 +283,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.workspaces.projects.create(
+            await client.workspaces.projects.add(
                 id=1,
                 project=1,
             )
@@ -317,7 +317,7 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -350,7 +350,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.workspaces.projects.delete(
+            await client.workspaces.projects.remove(
                 id=1,
             )
 
