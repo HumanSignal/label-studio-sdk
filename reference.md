@@ -31767,7 +31767,7 @@ client.projects.stats.agreement_annotators(
 <dl>
 <dd>
 
-**ids:** `str` — Comma-separated list of annotator user IDs to get agreement scores for
+**ids:** `str` — Comma separated list of annotator user IDs to get agreement scores for
     
 </dd>
 </dl>
@@ -32234,7 +32234,7 @@ client.projects.stats.users_annotators_agreement(
 <dl>
 <dd>
 
-**ids:** `str` — Comma-separated list of annotator user IDs to get prediction agreement scores for
+**ids:** `str` — Comma separated list of annotator user IDs to get agreement scores for
     
 </dd>
 </dl>
@@ -32242,7 +32242,7 @@ client.projects.stats.users_annotators_agreement(
 <dl>
 <dd>
 
-**per_label:** `typing.Optional[bool]` — Calculate agreement per label
+**per_label:** `typing.Optional[bool]` — Per label
     
 </dd>
 </dl>

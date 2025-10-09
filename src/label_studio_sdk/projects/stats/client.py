@@ -374,7 +374,7 @@ class StatsClient:
         id : int
 
         ids : str
-            Comma-separated list of annotator user IDs to get agreement scores for
+            Comma separated list of annotator user IDs to get agreement scores for
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -712,10 +712,10 @@ class StatsClient:
         id : int
 
         ids : str
-            Comma-separated list of annotator user IDs to get prediction agreement scores for
+            Comma separated list of annotator user IDs to get agreement scores for
 
         per_label : typing.Optional[bool]
-            Calculate agreement per label
+            Per label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1355,7 +1355,7 @@ class AsyncStatsClient:
         id : int
 
         ids : str
-            Comma-separated list of annotator user IDs to get agreement scores for
+            Comma separated list of annotator user IDs to get agreement scores for
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1743,10 +1743,10 @@ class AsyncStatsClient:
         id : int
 
         ids : str
-            Comma-separated list of annotator user IDs to get prediction agreement scores for
+            Comma separated list of annotator user IDs to get agreement scores for
 
         per_label : typing.Optional[bool]
-            Calculate agreement per label
+            Per label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

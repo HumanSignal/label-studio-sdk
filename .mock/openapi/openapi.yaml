@@ -8992,7 +8992,7 @@ paths:
           required: true
           schema:
             type: integer
-        - description: Comma-separated list of annotator user IDs to get agreement scores for
+        - description: Comma separated list of annotator user IDs to get agreement scores for
           in: query
           name: ids
           required: true
@@ -9747,16 +9747,17 @@ paths:
           required: true
           schema:
             type: integer
-        - description: Comma-separated list of annotator user IDs to get prediction agreement scores for
+        - description: Comma separated list of annotator user IDs to get agreement scores for
           in: query
           name: ids
           required: true
           schema:
             type: string
-        - description: Calculate agreement per label
+        - description: Per label
           in: query
           name: per_label
           schema:
+            default: false
             type: boolean
       responses:
         '200':

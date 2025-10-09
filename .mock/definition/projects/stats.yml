@@ -520,7 +520,7 @@ service:
           ids:
             type: string
             docs: >-
-              Comma-separated list of annotator user IDs to get agreement scores
+              Comma separated list of annotator user IDs to get agreement scores
               for
       response:
         docs: Multiple annotator agreement statistics
@@ -707,11 +707,12 @@ service:
           ids:
             type: string
             docs: >-
-              Comma-separated list of annotator user IDs to get prediction
-              agreement scores for
+              Comma separated list of annotator user IDs to get agreement scores
+              for
           per_label:
             type: optional<boolean>
-            docs: Calculate agreement per label
+            default: false
+            docs: Per label
       response:
         docs: Prediction agreement statistics for multiple annotators
         type: StatsUsersAnnotatorsAgreementResponse
