@@ -2,15 +2,15 @@
 
 from ....core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .stats_users_annotators_agreement_response_agreement_value import (
-    StatsUsersAnnotatorsAgreementResponseAgreementValue,
+from .stats_users_prediction_agreement_response_agreement_value import (
+    StatsUsersPredictionAgreementResponseAgreementValue,
 )
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class StatsUsersAnnotatorsAgreementResponse(UncheckedBaseModel):
-    agreement: typing.Optional[typing.Dict[str, StatsUsersAnnotatorsAgreementResponseAgreementValue]] = pydantic.Field(
+class StatsUsersPredictionAgreementResponse(UncheckedBaseModel):
+    agreement: typing.Optional[typing.Dict[str, StatsUsersPredictionAgreementResponseAgreementValue]] = pydantic.Field(
         default=None
     )
     """

@@ -17,7 +17,7 @@ from .types.stats_data_filters_response import StatsDataFiltersResponse
 from .types.stats_finished_tasks_response import StatsFinishedTasksResponse
 from .types.stats_lead_time_response import StatsLeadTimeResponse
 from .types.stats_total_agreement_response import StatsTotalAgreementResponse
-from .types.stats_users_annotators_agreement_response import StatsUsersAnnotatorsAgreementResponse
+from .types.stats_users_prediction_agreement_response import StatsUsersPredictionAgreementResponse
 from .types.stats_user_prediction_agreement_response import StatsUserPredictionAgreementResponse
 from .types.stats_user_review_score_response import StatsUserReviewScoreResponse
 from .types.stats_user_ground_truth_agreement_response import StatsUserGroundTruthAgreementResponse
@@ -690,14 +690,14 @@ class StatsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def users_annotators_agreement(
+    def users_prediction_agreement(
         self,
         id: int,
         *,
         ids: str,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersAnnotatorsAgreementResponse:
+    ) -> StatsUsersPredictionAgreementResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -722,7 +722,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsUsersAnnotatorsAgreementResponse
+        StatsUsersPredictionAgreementResponse
             Prediction agreement statistics for multiple annotators
 
         Examples
@@ -732,7 +732,7 @@ class StatsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.stats.users_annotators_agreement(
+        client.projects.stats.users_prediction_agreement(
             id=1,
             ids="ids",
         )
@@ -749,9 +749,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUsersAnnotatorsAgreementResponse,
+                    StatsUsersPredictionAgreementResponse,
                     construct_type(
-                        type_=StatsUsersAnnotatorsAgreementResponse,  # type: ignore
+                        type_=StatsUsersPredictionAgreementResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1721,14 +1721,14 @@ class AsyncStatsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def users_annotators_agreement(
+    async def users_prediction_agreement(
         self,
         id: int,
         *,
         ids: str,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersAnnotatorsAgreementResponse:
+    ) -> StatsUsersPredictionAgreementResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1753,7 +1753,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsUsersAnnotatorsAgreementResponse
+        StatsUsersPredictionAgreementResponse
             Prediction agreement statistics for multiple annotators
 
         Examples
@@ -1768,7 +1768,7 @@ class AsyncStatsClient:
 
 
         async def main() -> None:
-            await client.projects.stats.users_annotators_agreement(
+            await client.projects.stats.users_prediction_agreement(
                 id=1,
                 ids="ids",
             )
@@ -1788,9 +1788,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUsersAnnotatorsAgreementResponse,
+                    StatsUsersPredictionAgreementResponse,
                     construct_type(
-                        type_=StatsUsersAnnotatorsAgreementResponse,  # type: ignore
+                        type_=StatsUsersPredictionAgreementResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -175,7 +175,7 @@ types:
       - StatsTotalAgreementResponseOne
     source:
       openapi: openapi/openapi.yaml
-  StatsUsersAnnotatorsAgreementResponseAgreementValue:
+  StatsUsersPredictionAgreementResponseAgreementValue:
     discriminated: false
     union:
       - type: double
@@ -189,12 +189,12 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  StatsUsersAnnotatorsAgreementResponse:
+  StatsUsersPredictionAgreementResponse:
     properties:
       agreement:
         type: >-
           optional<map<string,
-          StatsUsersAnnotatorsAgreementResponseAgreementValue>>
+          StatsUsersPredictionAgreementResponseAgreementValue>>
         docs: Dictionary mapping user IDs to their prediction agreement scores
     source:
       openapi: openapi/openapi.yaml
@@ -683,7 +683,7 @@ service:
               key: value
       audiences:
         - public
-    users_annotators_agreement:
+    users_prediction_agreement:
       path: /api/projects/{id}/user-stats/prediction
       method: GET
       auth: true
@@ -702,7 +702,7 @@ service:
         id: integer
       display-name: Get prediction agreement statistics for multiple annotators
       request:
-        name: StatsUsersAnnotatorsAgreementRequest
+        name: StatsUsersPredictionAgreementRequest
         query-parameters:
           ids:
             type: string
@@ -715,7 +715,7 @@ service:
             docs: Per label
       response:
         docs: Prediction agreement statistics for multiple annotators
-        type: StatsUsersAnnotatorsAgreementResponse
+        type: StatsUsersPredictionAgreementResponse
       examples:
         - path-parameters:
             id: 1

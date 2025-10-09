@@ -9788,7 +9788,7 @@ paths:
       x-fern-sdk-group-name:
         - projects
         - stats
-      x-fern-sdk-method-name: users_annotators_agreement
+      x-fern-sdk-method-name: users_prediction_agreement
   /api/projects/{id}/user-stats/{user_pk}/prediction:
     get:
       description: |-

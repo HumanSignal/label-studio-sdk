@@ -32169,7 +32169,7 @@ client.projects.stats.update_stats(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_annotators_agreement</a>(...)</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_prediction_agreement</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -32207,7 +32207,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.stats.users_annotators_agreement(
+client.projects.stats.users_prediction_agreement(
     id=1,
     ids="ids",
 )
