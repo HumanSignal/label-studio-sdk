@@ -7461,122 +7461,6 @@ paths:
         - Dashboard
       x-fern-audiences:
         - internal
-  /api/projects/{id}/dashboard-members:
-    get:
-      deprecated: true
-      description: Get dashboard for members, including similarity matrix, user statistics and users list.
-      operationId: api_projects_dashboard_members_retrieve
-      parameters:
-        - description: All data objects will be filtered by updated_at or created_at field
-          in: query
-          name: action
-          schema:
-            type: string
-        - description: End date for dashboard stats calculation. UTC timezone by default. Use iso format (yyyy-mm-dd-hh-mm) to specify timezone.
-          in: query
-          name: end_date
-          schema:
-            type: string
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-        - description: Per label calculation
-          in: query
-          name: per_label
-          schema:
-            type: boolean
-        - description: Start date for dashboard stats calculation. UTC timezone by default. Use iso format (yyyy-mm-dd-hh-mm) to specify timezone.
-          in: query
-          name: start_date
-          schema:
-            type: string
-        - description: All task objects will be filtered by updated_by field. Only tasks that were updated by concrete user will be taken in account.
-          in: query
-          name: updated_by
-          schema:
-            type: string
-        - description: Use kappa statistics for calculation
-          in: query
-          name: use_kappa
-          schema:
-            type: boolean
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                description: Task creation response
-                properties:
-                  similarity:
-                    description: Consensus statistics between different users
-                    items:
-                      title: Similarities, common tasks
-                      type: object
-                    type: array
-                  stats:
-                    description: Number of annotated (completed) tasks
-                    items:
-                      description: User statistics
-                      properties:
-                        accepted:
-                          description: Number of annotations marked as "Accepted" by reviewer
-                          title: Accepted tasks
-                          type: integer
-                        finished:
-                          title: Finished tasks
-                          type: integer
-                        gt:
-                          description: Average agreement with Ground Truth annotations
-                          title: Ground Truth score
-                          type: number
-                        mean_time:
-                          description: Average mean time spent on annotation
-                          title: Mean time
-                          type: number
-                        median_time:
-                          description: Average median time spent on annotation
-                          title: Median time
-                          type: number
-                        predictions:
-                          description: Average agreement with predictions
-                          title: Predictions score
-                          type: number
-                        progress:
-                          description: Fraction of annotation work done so far
-                          title: Annotation progress
-                          type: integer
-                        rejected:
-                          description: Number of annotations marked as "Rejected" by reviewer
-                          title: Rejected tasks
-                          type: integer
-                        review_score:
-                          description: Average reviewing score, when calling with "per_label=true", returns dictionary with labels to score breakdown
-                          title: Review score
-                          type: number
-                        skipped:
-                          title: Skipped tasks
-                          type: integer
-                      title: User statistics
-                      type: object
-                    type: array
-                  users:
-                    description: List of users
-                    items:
-                      title: User data
-                      type: object
-                    type: array
-                title: Task creation response
-                type: object
-          description: Successful response returns project-related annotation statistics
-      security:
-        - Token: []
-      summary: Get dashboard data for members
-      tags:
-        - Dashboard
-      x-fern-audiences:
-        - internal
   /api/projects/{id}/duplicate/:
     post:
       description: |-
@@ -9108,7 +8992,7 @@ paths:
           required: true
           schema:
             type: integer
-        - description: Comma-separated list of annotator user IDs to get agreement scores for
+        - description: Comma separated list of annotator user IDs to get agreement scores for
           in: query
           name: ids
           required: true
@@ -9846,6 +9730,65 @@ paths:
         - projects
         - stats
       x-fern-sdk-method-name: update_stats
+  /api/projects/{id}/user-stats/prediction:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get prediction agreement statistics for multiple annotators within a project.
+      operationId: api_projects_user_stats_prediction_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Comma separated list of annotator user IDs to get agreement scores for
+          in: query
+          name: ids
+          required: true
+          schema:
+            type: string
+        - description: Per label
+          in: query
+          name: per_label
+          schema:
+            default: false
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  agreement:
+                    additionalProperties:
+                      oneOf:
+                        - description: Average prediction agreement score for the user (0-1) when per_label=False
+                          type: number
+                        - additionalProperties:
+                            type: number
+                          description: Average prediction agreement score per label for the user (0-1) when per_label=True
+                          type: object
+                    description: Dictionary mapping user IDs to their prediction agreement scores
+                    type: object
+                type: object
+          description: Prediction agreement statistics for multiple annotators
+      security:
+        - Token: []
+      summary: Get prediction agreement statistics for multiple annotators
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: users_prediction_agreement
   /api/projects/{id}/user-stats/{user_pk}/prediction:
     get:
       description: |-
@@ -9856,7 +9799,7 @@ paths:
                 </p>
             </Card>
         Get prediction agreement statistics for a specific user within a project.
-      operationId: api_projects_user_stats_prediction_retrieve
+      operationId: api_projects_user_stats_prediction_retrieve_2
       parameters:
         - in: path
           name: id

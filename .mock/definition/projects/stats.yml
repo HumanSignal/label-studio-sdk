@@ -175,6 +175,29 @@ types:
       - StatsTotalAgreementResponseOne
     source:
       openapi: openapi/openapi.yaml
+  StatsUsersPredictionAgreementResponseAgreementValue:
+    discriminated: false
+    union:
+      - type: double
+        docs: >-
+          Average prediction agreement score for the user (0-1) when
+          per_label=False
+      - type: map<string, double>
+        docs: >-
+          Average prediction agreement score per label for the user (0-1) when
+          per_label=True
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsUsersPredictionAgreementResponse:
+    properties:
+      agreement:
+        type: >-
+          optional<map<string,
+          StatsUsersPredictionAgreementResponseAgreementValue>>
+        docs: Dictionary mapping user IDs to their prediction agreement scores
+    source:
+      openapi: openapi/openapi.yaml
   StatsUserPredictionAgreementResponseAveragePredictionAgreementPerUser:
     discriminated: false
     union:
@@ -497,7 +520,7 @@ service:
           ids:
             type: string
             docs: >-
-              Comma-separated list of annotator user IDs to get agreement scores
+              Comma separated list of annotator user IDs to get agreement scores
               for
       response:
         docs: Multiple annotator agreement statistics
@@ -658,6 +681,50 @@ service:
           response:
             body:
               key: value
+      audiences:
+        - public
+    users_prediction_agreement:
+      path: /api/projects/{id}/user-stats/prediction
+      method: GET
+      auth: true
+      docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get prediction agreement statistics for multiple annotators within a
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get prediction agreement statistics for multiple annotators
+      request:
+        name: StatsUsersPredictionAgreementRequest
+        query-parameters:
+          ids:
+            type: string
+            docs: >-
+              Comma separated list of annotator user IDs to get agreement scores
+              for
+          per_label:
+            type: optional<boolean>
+            default: false
+            docs: Per label
+      response:
+        docs: Prediction agreement statistics for multiple annotators
+        type: StatsUsersPredictionAgreementResponse
+      examples:
+        - path-parameters:
+            id: 1
+          query-parameters:
+            ids: ids
+          response:
+            body:
+              agreement:
+                key: 1.1
       audiences:
         - public
     user_prediction_agreement:
