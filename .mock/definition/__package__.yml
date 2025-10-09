@@ -4103,6 +4103,17 @@ types:
       workspace: optional<integer>
     source:
       openapi: openapi/openapi.yaml
+  LseProjectParams:
+    properties:
+      annotator_params: optional<unknown>
+      use_kappa:
+        type: optional<boolean>
+        docs: >-
+          If categorical variables are used in labeling (e.g. choices), Cohen's
+          Kappa statistic is computed to measure inter-rater reliability instead
+          of basic agreement
+    source:
+      openapi: openapi/openapi.yaml
   LseProjectResponseSampling:
     discriminated: false
     union:

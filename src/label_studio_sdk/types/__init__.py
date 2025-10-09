@@ -163,13 +163,18 @@ from .pause import Pause
 from .pause_request import PauseRequest
 from .prediction import Prediction
 from .prediction_request import PredictionRequest
+from .project import Project
 from .project_group import ProjectGroup
 from .project_group_request import ProjectGroupRequest
 from .project_group_role_enum import ProjectGroupRoleEnum
 from .project_import import ProjectImport
 from .project_label_config import ProjectLabelConfig
 from .project_label_config_request import ProjectLabelConfigRequest
+from .project_member import ProjectMember
 from .project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
+from .project_role import ProjectRole
+from .project_sampling import ProjectSampling
+from .project_skip_queue import ProjectSkipQueue
 from .project_subset_enum import ProjectSubsetEnum
 from .project_subset_item import ProjectSubsetItem
 from .project_subset_task_item import ProjectSubsetTaskItem
@@ -400,13 +405,18 @@ __all__ = [
     "PauseRequest",
     "Prediction",
     "PredictionRequest",
+    "Project",
     "ProjectGroup",
     "ProjectGroupRequest",
     "ProjectGroupRoleEnum",
     "ProjectImport",
     "ProjectLabelConfig",
     "ProjectLabelConfigRequest",
+    "ProjectMember",
     "ProjectMemberBulkAssignRolesRequest",
+    "ProjectRole",
+    "ProjectSampling",
+    "ProjectSkipQueue",
     "ProjectSubsetEnum",
     "ProjectSubsetItem",
     "ProjectSubsetTaskItem",

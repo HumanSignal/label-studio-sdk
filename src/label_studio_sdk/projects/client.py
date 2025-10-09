@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .roles.client import RolesClient
 from .exports.client import ExportsClient
 from .members.client import MembersClient
 from .metrics.client import MetricsClient
@@ -39,6 +40,7 @@ from ..types.prediction_request import PredictionRequest
 from .types.projects_import_predictions_response import ProjectsImportPredictionsResponse
 from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
+from .roles.client import AsyncRolesClient
 from .exports.client import AsyncExportsClient
 from .members.client import AsyncMembersClient
 from .metrics.client import AsyncMetricsClient
@@ -54,6 +56,7 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.roles = RolesClient(client_wrapper=self._client_wrapper)
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
         self.members = MembersClient(client_wrapper=self._client_wrapper)
         self.metrics = MetricsClient(client_wrapper=self._client_wrapper)
@@ -1237,6 +1240,7 @@ class ProjectsClient:
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.roles = AsyncRolesClient(client_wrapper=self._client_wrapper)
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
         self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
         self.metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)

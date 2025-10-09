@@ -6990,6 +6990,12 @@ paths:
       summary: List project roles for current user
       tags:
         - Project Roles
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - roles
+      x-fern-sdk-method-name: list
     post:
       description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        Create project role for user allowing the user the same access level provided by organization role.\n        "
       operationId: api_projects_roles_create
@@ -7011,12 +7017,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectRole'
-          description: ''
+          description: Role created
       security:
         - Token: []
       summary: Create project role for user
       tags:
         - Project Roles
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - roles
+      x-fern-sdk-method-name: add
   /api/projects/roles/{id}/:
     delete:
       description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        Remove project role for user allowing the user the same access level provided by organization role.\n        "
@@ -7030,12 +7042,18 @@ paths:
             type: integer
       responses:
         '204':
-          description: No response body
+          description: Role removed
       security:
         - Token: []
       summary: Remove project role for user
       tags:
         - Project Roles
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - roles
+      x-fern-sdk-method-name: remove
   /api/projects/validate/:
     post:
       description: Validate an arbitrary labeling configuration.
@@ -8220,28 +8238,26 @@ paths:
           required: true
           schema:
             type: integer
-        - description: A unique integer value identifying this project member.
-          in: query
-          name: project_member
-          schema:
-            type: integer
       responses:
         '204':
-          description: No response body
+          description: Member removed
       security:
         - Token: []
       summary: Remove member from project
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+      x-fern-sdk-method-name: remove
     get:
+      deprecated: true
       description: |-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
+
+        Does NOT include annotators. Deprecated; use paginated endpoint.
       operationId: api_projects_members_retrieve
       parameters:
         - in: path
@@ -8269,7 +8285,7 @@ paths:
       tags:
         - Projects
       x-fern-audiences:
-        - public
+        - internal
       x-fern-sdk-group-name:
         - projects
         - members
@@ -8314,6 +8330,12 @@ paths:
       summary: Add project member
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+      x-fern-sdk-method-name: add
   /api/projects/{id}/members/bulk/:
     delete:
       description: |-
@@ -8724,7 +8746,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project.
+        Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project. Affects dashboard-members stats, but old and unused.
       operationId: api_projects_project_extra_params_retrieve
       parameters:
         - in: path
@@ -8737,22 +8759,7 @@ paths:
           content:
             application/json:
               schema:
-                description: Create or change annotator weights for statistics
-                properties:
-                  annotator_params:
-                    description: Dict of users with weights
-                    items:
-                      description: '{user_id: weight}'
-                      title: User_id and weight
-                      type: object
-                    title: annotator_params
-                    type: array
-                  use_kappa:
-                    description: If project uses Cohen's Kappa in calculation
-                    title: use_kappa
-                    type: boolean
-                title: Change annotator weights for statistics
-                type: object
+                $ref: '#/components/schemas/LseProjectParams'
           description: Annotator weights retrieved
         '204':
           description: No annotator weights found
@@ -8761,6 +8768,12 @@ paths:
       summary: Get annotator weights
       tags:
         - Projects
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name:
+        - projects
+        - annotator_weights
+      x-fern-sdk-method-name: get
     post:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -8769,7 +8782,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create annotator weights to be used in the annotation statistics for a project, such as when calculating kappa metrics for inter-annotator agreement.
+        Create annotator weights to be used in the annotation statistics for a project, such as when calculating kappa metrics for inter-annotator agreement. Affects dashboard-members stats, but old and unused.
       operationId: api_projects_project_extra_params_create
       parameters:
         - in: path
@@ -8780,6 +8793,15 @@ paths:
       requestBody:
         content:
           application/json:
+            examples:
+              AnnotatorWeightsMapping:
+                description: annotator_params must be a mapping of user_id to weight (0..1).
+                summary: payload format for annotator_params
+                value:
+                  annotator_params:
+                    123: 1.0
+                    456: 0.75
+                  use_kappa: true
             schema:
               $ref: '#/components/schemas/LseProjectParamsRequest'
           application/x-www-form-urlencoded:
@@ -8793,28 +8815,19 @@ paths:
           content:
             application/json:
               schema:
-                description: Create or change annotator weights for statistics
-                properties:
-                  annotator_params:
-                    description: Dict of users with weights
-                    items:
-                      description: '{user_id: weight}'
-                      title: User_id and weight
-                      type: object
-                    title: annotator_params
-                    type: array
-                  use_kappa:
-                    description: If project uses Cohen's Kappa in calculation
-                    title: use_kappa
-                    type: boolean
-                title: Change annotator weights for statistics
-                type: object
+                $ref: '#/components/schemas/LseProjectParams'
           description: Annotator weights created/updated
       security:
         - Token: []
       summary: Create annotator weights for statistics
       tags:
         - Projects
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name:
+        - projects
+        - annotator_weights
+      x-fern-sdk-method-name: create
   /api/projects/{id}/reimports/{reimport_pk}/:
     get:
       description: Return data related to async project reimport operation
@@ -8860,13 +8873,21 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectRole'
+                items:
+                  $ref: '#/components/schemas/ProjectRole'
+                type: array
           description: ''
       security:
         - Token: []
       summary: List project roles
       tags:
         - Project Roles
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - roles
+      x-fern-sdk-method-name: get
   /api/projects/{id}/stats/IAA:
     get:
       description: |-
@@ -18523,7 +18544,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete projects from a specific workspace.
+        Remove a project from a specific workspace.
       operationId: api_workspaces_projects_destroy
       parameters:
         - in: path
@@ -18533,12 +18554,18 @@ paths:
             type: integer
       responses:
         '204':
-          description: No response body
+          description: Project removed
       security:
         - Token: []
-      summary: Remove workspace projects
+      summary: Remove workspace project
       tags:
         - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - workspaces
+        - projects
+      x-fern-sdk-method-name: remove
     get:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -18560,13 +18587,21 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
-          description: ''
+                items:
+                  $ref: '#/components/schemas/Project'
+                type: array
+          description: Projects list
       security:
         - Token: []
       summary: List workspace projects
       tags:
         - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - workspaces
+        - projects
+      x-fern-sdk-method-name: list
     post:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -18575,7 +18610,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create a project in a specific workspace.
+        Add a project to a specific workspace.
       operationId: api_workspaces_projects_create
       parameters:
         - in: path
@@ -18587,25 +18622,28 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProjectRequest'
+              $ref: '#/components/schemas/WorkspaceProjectsRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ProjectRequest'
+              $ref: '#/components/schemas/WorkspaceProjectsRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ProjectRequest'
+              $ref: '#/components/schemas/WorkspaceProjectsRequest'
+        required: true
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Project'
-          description: ''
+        '201':
+          description: Project added
       security:
         - Token: []
-      summary: Create workspace project
+      summary: Add workspace project
       tags:
         - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - workspaces
+        - projects
+      x-fern-sdk-method-name: add
   /data/upload/{filename}:
     get:
       description: Download a specific uploaded file.
@@ -24238,6 +24276,15 @@ components:
         workspace:
           type: integer
       type: object
+    LseProjectParams:
+      properties:
+        annotator_params:
+          description: 'user ID and user weight in score calculation. Format {user_id[int]: weight[Float[0..1]]}'
+          nullable: true
+        use_kappa:
+          description: If categorical variables are used in labeling (e.g. choices), Cohen's Kappa statistic is computed to measure inter-rater reliability instead of basic agreement
+          type: boolean
+      type: object
     LseProjectParamsRequest:
       properties:
         annotator_params:
@@ -29849,122 +29896,6 @@ components:
       required:
         - id
       type: object
-    ProjectRequest:
-      description: |-
-        Serializer get numbers from project queryset annotation,
-        make sure, that you use correct one(Project.objects.with_counts())
-      properties:
-        color:
-          maxLength: 16
-          nullable: true
-          type: string
-        control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
-          nullable: true
-        created_by:
-          allOf:
-            - $ref: '#/components/schemas/UserSimpleRequest'
-          description: Project owner
-        description:
-          description: Project description
-          nullable: true
-          type: string
-        enable_empty_annotation:
-          description: Allow annotators to submit empty annotations
-          type: boolean
-        evaluate_predictions_automatically:
-          description: Retrieve and display predictions when loading a task
-          type: boolean
-        expert_instruction:
-          description: Labeling instructions in HTML format
-          nullable: true
-          type: string
-        is_draft:
-          description: Whether or not the project is in the middle of being created
-          type: boolean
-        is_published:
-          description: Whether or not the project is published to annotators
-          title: Published
-          type: boolean
-        label_config:
-          description: Label config in XML format. See more about it in documentation
-          nullable: true
-          type: string
-        maximum_annotations:
-          description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-          maximum: 2147483647
-          minimum: -2147483648
-          title: Maximum annotation number
-          type: integer
-        min_annotations_to_start_training:
-          description: Minimum number of completed tasks after which model training is started
-          maximum: 2147483647
-          minimum: -2147483648
-          type: integer
-        model_version:
-          description: Machine learning model version
-          nullable: true
-          type: string
-        organization:
-          nullable: true
-          type: integer
-        overlap_cohort_percentage:
-          maximum: 2147483647
-          minimum: -2147483648
-          type: integer
-        pinned_at:
-          description: Pinned date and time
-          format: date-time
-          nullable: true
-          type: string
-        reveal_preannotations_interactively:
-          description: Reveal pre-annotations interactively
-          type: boolean
-        sampling:
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
-        show_annotation_history:
-          description: Show annotation history to annotator
-          type: boolean
-        show_collab_predictions:
-          description: If set, the annotator can view model predictions
-          title: Show predictions to annotator
-          type: boolean
-        show_ground_truth_first:
-          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
-          type: boolean
-        show_instruction:
-          description: Show instructions to the annotator before they start
-          type: boolean
-        show_overlap_first:
-          type: boolean
-        show_skip_button:
-          description: Show a skip button in interface and allow annotators to skip the task
-          type: boolean
-        skip_queue:
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
-        task_data_login:
-          description: 'Task data credentials: login'
-          maxLength: 256
-          nullable: true
-          type: string
-        task_data_password:
-          description: 'Task data credentials: password'
-          maxLength: 256
-          nullable: true
-          type: string
-        title:
-          description: Project name. Must be between 3 and 50 characters long.
-          maxLength: 50
-          minLength: 3
-          nullable: true
-          type: string
-      type: object
     ProjectRole:
       properties:
         id:
@@ -32380,6 +32311,13 @@ components:
           type: integer
       required:
         - user
+      type: object
+    WorkspaceProjectsRequest:
+      properties:
+        project:
+          type: integer
+      required:
+        - project
       type: object
     WorkspaceRequest:
       description: |-

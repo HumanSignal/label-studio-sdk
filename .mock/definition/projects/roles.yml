@@ -1,10 +1,10 @@
 imports:
-  root: __package__.yml
+  root: ../__package__.yml
 service:
   auth: false
   base-path: ''
   endpoints:
-    api_projects_roles_list:
+    list:
       path: /api/projects/roles/
       method: GET
       auth: true
@@ -22,7 +22,7 @@ service:
         openapi: openapi/openapi.yaml
       display-name: List project roles for current user
       request:
-        name: ApiProjectsRolesListRequest
+        name: RolesListRequest
         query-parameters:
           ids: optional<integer>
           ordering:
@@ -38,7 +38,9 @@ service:
                 project: 1
                 role: OW
                 user: 1
-    api_projects_roles_create:
+      audiences:
+        - public
+    add:
       path: /api/projects/roles/
       method: POST
       auth: true
@@ -75,7 +77,7 @@ service:
             user: integer
         content-type: application/json
       response:
-        docs: ''
+        docs: Role created
         type: root.ProjectRole
       examples:
         - request:
@@ -88,7 +90,9 @@ service:
               project: 1
               role: OW
               user: 1
-    api_projects_roles_destroy:
+      audiences:
+        - public
+    remove:
       path: /api/projects/roles/{id}/
       method: DELETE
       auth: true
@@ -112,7 +116,9 @@ service:
       examples:
         - path-parameters:
             id: 1
-    api_projects_roles_retrieve:
+      audiences:
+        - public
+    get:
       path: /api/projects/{id}/roles
       method: GET
       auth: true
@@ -134,15 +140,17 @@ service:
       display-name: List project roles
       response:
         docs: ''
-        type: root.ProjectRole
+        type: list<root.ProjectRole>
       examples:
         - path-parameters:
             id: 1
           response:
             body:
-              id: 1
-              project: 1
-              role: OW
-              user: 1
+              - id: 1
+                project: 1
+                role: OW
+                user: 1
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml

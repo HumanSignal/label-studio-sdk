@@ -2,29 +2,23 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .bulk.client import BulkClient
-from .paginated.client import PaginatedClient
 from ...core.request_options import RequestOptions
-from ...types.project_member import ProjectMember
+from ...types.project import Project
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper
-from .bulk.client import AsyncBulkClient
-from .paginated.client import AsyncPaginatedClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class MembersClient:
+class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.bulk = BulkClient(client_wrapper=self._client_wrapper)
-        self.paginated = PaginatedClient(client_wrapper=self._client_wrapper)
 
-    def add(self, id: int, *, user: int, request_options: typing.Optional[RequestOptions] = None) -> ProjectMember:
+    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Project]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -32,21 +26,19 @@ class MembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Add a member to a specific project.
+        Retrieve a list of all projects in a specific workspace.
 
         Parameters
         ----------
         id : int
-
-        user : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ProjectMember
-
+        typing.List[Project]
+            Projects list
 
         Examples
         --------
@@ -55,16 +47,69 @@ class MembersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.members.add(
+        client.workspaces.projects.list(
             id=1,
-            user=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
+            f"api/workspaces/{jsonable_encoder(id)}/projects/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[Project],
+                    construct_type(
+                        type_=typing.List[Project],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def add(self, id: int, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Add a project to a specific workspace.
+
+        Parameters
+        ----------
+        id : int
+
+        project : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspaces.projects.add(
+            id=1,
+            project=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/workspaces/{jsonable_encoder(id)}/projects/",
             method="POST",
             json={
-                "user": user,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -74,13 +119,7 @@ class MembersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ProjectMember,
-                    construct_type(
-                        type_=ProjectMember,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -94,7 +133,7 @@ class MembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a member from a specific project.
+        Remove a project from a specific workspace.
 
         Parameters
         ----------
@@ -114,12 +153,12 @@ class MembersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.members.remove(
+        client.workspaces.projects.remove(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
+            f"api/workspaces/{jsonable_encoder(id)}/projects/",
             method="DELETE",
             request_options=request_options,
         )
@@ -132,15 +171,11 @@ class MembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncMembersClient:
+class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.bulk = AsyncBulkClient(client_wrapper=self._client_wrapper)
-        self.paginated = AsyncPaginatedClient(client_wrapper=self._client_wrapper)
 
-    async def add(
-        self, id: int, *, user: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectMember:
+    async def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Project]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -148,21 +183,19 @@ class AsyncMembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Add a member to a specific project.
+        Retrieve a list of all projects in a specific workspace.
 
         Parameters
         ----------
         id : int
-
-        user : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ProjectMember
-
+        typing.List[Project]
+            Projects list
 
         Examples
         --------
@@ -176,19 +209,80 @@ class AsyncMembersClient:
 
 
         async def main() -> None:
-            await client.projects.members.add(
+            await client.workspaces.projects.list(
                 id=1,
-                user=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
+            f"api/workspaces/{jsonable_encoder(id)}/projects/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[Project],
+                    construct_type(
+                        type_=typing.List[Project],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def add(self, id: int, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Add a project to a specific workspace.
+
+        Parameters
+        ----------
+        id : int
+
+        project : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspaces.projects.add(
+                id=1,
+                project=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/workspaces/{jsonable_encoder(id)}/projects/",
             method="POST",
             json={
-                "user": user,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -198,13 +292,7 @@ class AsyncMembersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ProjectMember,
-                    construct_type(
-                        type_=ProjectMember,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -218,7 +306,7 @@ class AsyncMembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a member from a specific project.
+        Remove a project from a specific workspace.
 
         Parameters
         ----------
@@ -243,7 +331,7 @@ class AsyncMembersClient:
 
 
         async def main() -> None:
-            await client.projects.members.remove(
+            await client.workspaces.projects.remove(
                 id=1,
             )
 
@@ -251,7 +339,7 @@ class AsyncMembersClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
+            f"api/workspaces/{jsonable_encoder(id)}/projects/",
             method="DELETE",
             request_options=request_options,
         )
