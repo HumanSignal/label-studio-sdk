@@ -3031,6 +3031,9 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
+      precomputed_agreement:
+        type: optional<double>
+        docs: Average agreement score for the task
       predictions: optional<list<PredictionRequest>>
       total_annotations:
         type: optional<integer>
@@ -4952,6 +4955,9 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
+      precomputed_agreement:
+        type: optional<double>
+        docs: Average agreement score for the task
       predictions:
         docs: Predictions for this task
         type: list<LseTaskPredictionsItem>
@@ -5406,6 +5412,9 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
+      precomputed_agreement:
+        type: optional<double>
+        docs: Average agreement score for the task
       predictions:
         docs: Predictions for this task
         type: list<LseTaskSerializerForReviewersPredictionsItem>

@@ -22748,6 +22748,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions:
           default: []
           items:
@@ -25406,6 +25411,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions:
           description: Predictions for this task
           items:
@@ -25946,6 +25956,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions:
           description: Predictions for this task
           items:
@@ -28799,6 +28814,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions_score:
           format: double
           type: number

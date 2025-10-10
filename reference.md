@@ -11199,6 +11199,14 @@ client.tasks.update(
 <dl>
 <dd>
 
+**precomputed_agreement:** `typing.Optional[float]` — Average agreement score for the task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **predictions_score:** `typing.Optional[float]` 
     
 </dd>
