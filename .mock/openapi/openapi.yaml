@@ -18978,6 +18978,7 @@ components:
           nullable: true
           type: string
         num_tasks_with_annotations:
+          nullable: true
           readOnly: true
           type: integer
         organization:
@@ -23760,7 +23761,7 @@ components:
           nullable: true
           type: string
         num_tasks_with_annotations:
-          description: Tasks with annotations count
+          nullable: true
           readOnly: true
           type: integer
         organization:
@@ -23926,6 +23927,7 @@ components:
           readOnly: true
           type: integer
         num_tasks_with_annotations:
+          nullable: true
           readOnly: true
           type: integer
         queue_done:
