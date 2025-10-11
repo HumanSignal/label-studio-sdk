@@ -31,6 +31,11 @@ from .stats_users_prediction_agreement_response import StatsUsersPredictionAgree
 from .stats_users_prediction_agreement_response_agreement_value import (
     StatsUsersPredictionAgreementResponseAgreementValue,
 )
+from .stats_users_review_score_response import StatsUsersReviewScoreResponse
+from .stats_users_review_score_response_performance_score_value import (
+    StatsUsersReviewScoreResponsePerformanceScoreValue,
+)
+from .stats_users_review_score_response_review_score_value import StatsUsersReviewScoreResponseReviewScoreValue
 
 __all__ = [
     "StatsAgreementAnnotatorResponse",
@@ -60,4 +65,7 @@ __all__ = [
     "StatsUserReviewScoreResponseReviewScore",
     "StatsUsersPredictionAgreementResponse",
     "StatsUsersPredictionAgreementResponseAgreementValue",
+    "StatsUsersReviewScoreResponse",
+    "StatsUsersReviewScoreResponsePerformanceScoreValue",
+    "StatsUsersReviewScoreResponseReviewScoreValue",
 ]

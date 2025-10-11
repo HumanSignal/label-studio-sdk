@@ -28,6 +28,9 @@ from .types import (
     StatsUserReviewScoreResponseReviewScore,
     StatsUsersPredictionAgreementResponse,
     StatsUsersPredictionAgreementResponseAgreementValue,
+    StatsUsersReviewScoreResponse,
+    StatsUsersReviewScoreResponsePerformanceScoreValue,
+    StatsUsersReviewScoreResponseReviewScoreValue,
 )
 
 __all__ = [
@@ -58,4 +61,7 @@ __all__ = [
     "StatsUserReviewScoreResponseReviewScore",
     "StatsUsersPredictionAgreementResponse",
     "StatsUsersPredictionAgreementResponseAgreementValue",
+    "StatsUsersReviewScoreResponse",
+    "StatsUsersReviewScoreResponsePerformanceScoreValue",
+    "StatsUsersReviewScoreResponseReviewScoreValue",
 ]

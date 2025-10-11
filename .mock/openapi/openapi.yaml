@@ -9789,6 +9789,75 @@ paths:
         - projects
         - stats
       x-fern-sdk-method-name: users_prediction_agreement
+  /api/projects/{id}/user-stats/review_score:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get review score and performance score statistics for multiple annotators within a project.
+      operationId: api_projects_user_stats_review_score_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Comma separated list of annotator user IDs to get review scores for
+          in: query
+          name: ids
+          required: true
+          schema:
+            type: string
+        - description: Per label
+          in: query
+          name: per_label
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  performance_score:
+                    additionalProperties:
+                      oneOf:
+                        - description: Performance score for the annotator when per_label=False
+                          type: number
+                        - additionalProperties:
+                            type: number
+                          description: Performance score per label for the annotator when per_label=True
+                          type: object
+                    description: Performance scores mapped by annotator ID
+                    type: object
+                  review_score:
+                    additionalProperties:
+                      oneOf:
+                        - description: Average review score for the annotator when per_label=False
+                          type: number
+                        - additionalProperties:
+                            type: number
+                          description: Review score per label for the annotator when per_label=True
+                          type: object
+                    description: Review scores mapped by annotator ID
+                    type: object
+                type: object
+          description: Review scores and performance scores for multiple annotators
+      security:
+        - Token: []
+      summary: Get review scores for multiple annotators
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: users_review_score
   /api/projects/{id}/user-stats/{user_pk}/prediction:
     get:
       description: |-
@@ -9853,7 +9922,7 @@ paths:
                 </p>
             </Card>
         Get review score statistics for a specific user within a project.
-      operationId: api_projects_user_stats_review_score_retrieve
+      operationId: api_projects_user_stats_review_score_retrieve_2
       parameters:
         - in: path
           name: id
@@ -18909,6 +18978,7 @@ components:
           nullable: true
           type: string
         num_tasks_with_annotations:
+          nullable: true
           readOnly: true
           type: integer
         organization:
@@ -22679,6 +22749,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions:
           default: []
           items:
@@ -23686,7 +23761,7 @@ components:
           nullable: true
           type: string
         num_tasks_with_annotations:
-          description: Tasks with annotations count
+          nullable: true
           readOnly: true
           type: integer
         organization:
@@ -23852,6 +23927,7 @@ components:
           readOnly: true
           type: integer
         num_tasks_with_annotations:
+          nullable: true
           readOnly: true
           type: integer
         queue_done:
@@ -25337,6 +25413,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions:
           description: Predictions for this task
           items:
@@ -25877,6 +25958,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions:
           description: Predictions for this task
           items:
@@ -28730,6 +28816,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions_score:
           format: double
           type: number

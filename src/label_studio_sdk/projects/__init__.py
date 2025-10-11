@@ -55,6 +55,9 @@ from .stats import (
     StatsUserReviewScoreResponseReviewScore,
     StatsUsersPredictionAgreementResponse,
     StatsUsersPredictionAgreementResponseAgreementValue,
+    StatsUsersReviewScoreResponse,
+    StatsUsersReviewScoreResponsePerformanceScoreValue,
+    StatsUsersReviewScoreResponseReviewScoreValue,
 )
 
 __all__ = [
@@ -107,6 +110,9 @@ __all__ = [
     "StatsUserReviewScoreResponseReviewScore",
     "StatsUsersPredictionAgreementResponse",
     "StatsUsersPredictionAgreementResponseAgreementValue",
+    "StatsUsersReviewScoreResponse",
+    "StatsUsersReviewScoreResponsePerformanceScoreValue",
+    "StatsUsersReviewScoreResponseReviewScoreValue",
     "assignments",
     "exports",
     "members",

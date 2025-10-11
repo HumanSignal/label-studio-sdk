@@ -114,11 +114,7 @@ class LseProject(UncheckedBaseModel):
     Machine learning model version
     """
 
-    num_tasks_with_annotations: int = pydantic.Field()
-    """
-    Tasks with annotations count
-    """
-
+    num_tasks_with_annotations: typing.Optional[int] = None
     organization: typing.Optional[int] = None
     overlap_cohort_percentage: typing.Optional[int] = None
     parsed_label_config: typing.Optional[typing.Any] = None
