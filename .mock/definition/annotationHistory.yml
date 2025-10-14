@@ -21,7 +21,7 @@ service:
         the Annotation History panel during labeling.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List all annotation history items for annotation
+      display-name: 👑 List all annotation history items for annotation
       request:
         name: AnnotationHistoryListRequest
         query-parameters:
