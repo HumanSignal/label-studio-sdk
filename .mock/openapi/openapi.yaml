@@ -177,7 +177,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List all annotation history items for annotation
+      summary: "\U0001F451 List all annotation history items for annotation"
       tags:
         - Annotation History
       x-fern-audiences:
@@ -18909,6 +18909,7 @@ components:
           nullable: true
           type: string
         num_tasks_with_annotations:
+          nullable: true
           readOnly: true
           type: integer
         organization:
@@ -22679,6 +22680,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions:
           default: []
           items:
@@ -23686,7 +23692,7 @@ components:
           nullable: true
           type: string
         num_tasks_with_annotations:
-          description: Tasks with annotations count
+          nullable: true
           readOnly: true
           type: integer
         organization:
@@ -23852,6 +23858,7 @@ components:
           readOnly: true
           type: integer
         num_tasks_with_annotations:
+          nullable: true
           readOnly: true
           type: integer
         queue_done:
@@ -25337,6 +25344,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions:
           description: Predictions for this task
           items:
@@ -25877,6 +25889,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions:
           description: Predictions for this task
           items:
@@ -28730,6 +28747,11 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        precomputed_agreement:
+          description: Average agreement score for the task
+          format: double
+          nullable: true
+          type: number
         predictions_score:
           format: double
           type: number
