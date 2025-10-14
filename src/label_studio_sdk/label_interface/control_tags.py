@@ -986,7 +986,8 @@ class ChatMessageTag(ControlTag):
                         "role": {"type": "string"},
                         "content": {"type": "string"},
                         "createdAt": {"type": "number"}
-                    }
+                    },
+                    "additionalProperties": True
                 }
             },
             "description": f"Chat message for {self.to_name[0]}"
