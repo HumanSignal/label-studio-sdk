@@ -20,7 +20,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get project metrics configuration
+      display-name: ✨ Get project metrics configuration
       response:
         docs: Current metrics configuration
         type: root.MetricParam
@@ -53,7 +53,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update project metrics configuration
+      display-name: ✨ Update project metrics configuration
       request:
         name: ProjectMetricParamUpdateRequest
         body:

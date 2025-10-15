@@ -18,7 +18,7 @@ service:
         Get info about the currently authenticated user.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get current user info
+      display-name: ✨ Get current user info
       response:
         docs: ''
         type: root.LseUserApi
@@ -64,7 +64,7 @@ service:
         Update details for the currently authenticated user.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Update current user
+      display-name: ✨ Update current user
       request:
         name: PatchedLseUserSerializerUpdateRequest
         body:

@@ -116,7 +116,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         project_pk: integer
-      display-name: Get Project Subset Task List with Predictions and Accuracy details
+      display-name: ✨ Get Project Subset Task List with Predictions and Accuracy details
       request:
         name: PromptsSubsetTasksRequest
         query-parameters:
@@ -183,7 +183,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         project_pk: integer
-      display-name: Get available subsets of a project (for prompts usage)
+      display-name: ✨ Get available subsets of a project (for prompts usage)
       request:
         name: PromptsSubsetsRequest
         query-parameters:

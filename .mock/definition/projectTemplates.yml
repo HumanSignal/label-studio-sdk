@@ -18,7 +18,7 @@ service:
         Get a list of all project templates for an organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get project templates
+      display-name: ✨ Get project templates
       request:
         name: ProjectTemplatesListRequest
         query-parameters:
@@ -65,7 +65,7 @@ service:
         Create a project template for an organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create project template
+      display-name: ✨ Create project template
       request:
         body: root.ProjectTemplateRequest
         content-type: application/json
@@ -114,7 +114,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get a project template
+      display-name: ✨ Get a project template
       response:
         docs: ''
         type: root.ProjectTemplate
@@ -159,7 +159,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Overwrite a project template
+      display-name: ✨ Overwrite a project template
       request:
         body: root.ProjectTemplateRequest
         content-type: application/json
@@ -210,7 +210,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete a project template
+      display-name: ✨ Delete a project template
       examples:
         - path-parameters:
             id: 1
@@ -233,7 +233,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update a project template
+      display-name: ✨ Update a project template
       request:
         name: PatchedProjectTemplateRequest
         body:
@@ -310,7 +310,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Create project from template
+      display-name: ✨ Create project from template
       request:
         name: ProjectTemplatesCreateProjectFromTemplateRequest
         body:

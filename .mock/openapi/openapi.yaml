@@ -221,7 +221,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List reviews
+      summary: ✨ List reviews
       tags:
         - Annotation Reviews
       x-fern-audiences:
@@ -265,7 +265,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create review
+      summary: ✨ Create review
       tags:
         - Annotation Reviews
       x-fern-audiences:
@@ -295,7 +295,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete review
+      summary: ✨ Delete review
       tags:
         - Annotation Reviews
       x-fern-audiences:
@@ -328,7 +328,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get review
+      summary: ✨ Get review
       tags:
         - Annotation Reviews
       x-fern-audiences:
@@ -372,7 +372,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update review
+      summary: ✨ Update review
       tags:
         - Annotation Reviews
       x-fern-audiences:
@@ -417,7 +417,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Put review
+      summary: ✨ Put review
       tags:
         - Annotation Reviews
       x-fern-audiences:
@@ -1334,7 +1334,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get current user info
+      summary: ✨ Get current user info
       tags:
         - Users
       x-fern-audiences:
@@ -1371,7 +1371,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update current user
+      summary: ✨ Update current user
       tags:
         - Users
       x-fern-audiences:
@@ -6550,7 +6550,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get project templates
+      summary: ✨ Get project templates
       tags:
         - Project Templates
       x-fern-audiences:
@@ -6589,7 +6589,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create project template
+      summary: ✨ Create project template
       tags:
         - Project Templates
       x-fern-audiences:
@@ -6619,7 +6619,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete a project template
+      summary: ✨ Delete a project template
       tags:
         - Project Templates
       x-fern-audiences:
@@ -6652,7 +6652,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get a project template
+      summary: ✨ Get a project template
       tags:
         - Project Templates
       x-fern-audiences:
@@ -6696,7 +6696,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update a project template
+      summary: ✨ Update a project template
       tags:
         - Project Templates
       x-fern-audiences:
@@ -6741,7 +6741,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Overwrite a project template
+      summary: ✨ Overwrite a project template
       tags:
         - Project Templates
       x-fern-audiences:
@@ -6790,7 +6790,7 @@ paths:
           description: Project created successfully
       security:
         - Token: []
-      summary: Create project from template
+      summary: ✨ Create project from template
       tags:
         - Project Templates
       x-fern-audiences:
@@ -7003,7 +7003,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List project roles for current user
+      summary: ✨ List project roles for current user
       tags:
         - Project Roles
       x-fern-audiences:
@@ -7036,7 +7036,7 @@ paths:
           description: Role created
       security:
         - Token: []
-      summary: Create project role for user
+      summary: ✨ Create project role for user
       tags:
         - Project Roles
       x-fern-audiences:
@@ -7061,7 +7061,7 @@ paths:
           description: Role removed
       security:
         - Token: []
-      summary: Remove project role for user
+      summary: ✨ Remove project role for user
       tags:
         - Project Roles
       x-fern-audiences:
@@ -8270,7 +8270,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Bulk unassign project members
+      summary: ✨ Bulk unassign project members
       tags:
         - Projects
       x-fern-audiences:
@@ -8325,7 +8325,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Bulk assign project members
+      summary: ✨ Bulk assign project members
       tags:
         - Projects
       x-fern-audiences:
@@ -8437,7 +8437,7 @@ paths:
           description: Current metrics configuration
       security:
         - Token: []
-      summary: Get project metrics configuration
+      summary: ✨ Get project metrics configuration
       tags:
         - Projects
       x-fern-audiences:
@@ -8484,7 +8484,7 @@ paths:
           description: No params provided to update
       security:
         - Token: []
-      summary: Update project metrics configuration
+      summary: ✨ Update project metrics configuration
       tags:
         - Projects
       x-fern-audiences:
@@ -8665,7 +8665,7 @@ paths:
           description: No annotator weights found
       security:
         - Token: []
-      summary: Get annotator weights
+      summary: ✨ Get annotator weights
       tags:
         - Projects
       x-fern-audiences:
@@ -8719,7 +8719,7 @@ paths:
           description: Annotator weights created/updated
       security:
         - Token: []
-      summary: Create annotator weights for statistics
+      summary: ✨ Create annotator weights for statistics
       tags:
         - Projects
       x-fern-audiences:
@@ -8779,7 +8779,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List project roles
+      summary: ✨ List project roles
       tags:
         - Project Roles
       x-fern-audiences:
@@ -10128,7 +10128,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List pauses
+      summary: ✨ List pauses
       tags:
         - Pauses
       x-fern-audiences:
@@ -10179,7 +10179,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create pause
+      summary: ✨ Create pause
       tags:
         - Pauses
       x-fern-audiences:
@@ -10220,7 +10220,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete pause
+      summary: ✨ Delete pause
       tags:
         - Pauses
       x-fern-audiences:
@@ -10264,7 +10264,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get pause
+      summary: ✨ Get pause
       tags:
         - Pauses
       x-fern-audiences:
@@ -10319,7 +10319,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update pause
+      summary: ✨ Update pause
       tags:
         - Pauses
       x-fern-audiences:
@@ -10375,7 +10375,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Put pause
+      summary: ✨ Put pause
       tags:
         - Pauses
       x-fern-audiences:
@@ -10439,7 +10439,7 @@ paths:
           description: Bad request - missing parent_model
       security:
         - Token: []
-      summary: Get Project Subset Task List with Predictions and Accuracy details
+      summary: ✨ Get Project Subset Task List with Predictions and Accuracy details
       tags:
         - Projects
       x-fern-audiences:
@@ -10473,7 +10473,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get available subsets of a project (for prompts usage)
+      summary: ✨ Get available subsets of a project (for prompts usage)
       tags:
         - Projects
       x-fern-audiences:
