@@ -8931,6 +8931,66 @@ paths:
         - projects
         - stats
       x-fern-sdk-method-name: iaa
+  /api/projects/{id}/stats/agreement-groundtruth:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get ground truth agreement statistics for multiple users within a project.
+      operationId: api_projects_stats_agreement_groundtruth_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Comma separated list of user IDs to get ground truth agreement for
+          in: query
+          name: ids
+          required: true
+          schema:
+            type: string
+        - description: Per label
+          in: query
+          name: per_label
+          schema:
+            default: false
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  agreement:
+                    additionalProperties:
+                      oneOf:
+                        - description: Ground truth agreement score for the user (0-1) when per_label=False
+                          type: number
+                        - additionalProperties:
+                            description: Agreement score for specific label (0-1)
+                            type: number
+                          description: Ground truth agreement scores per label when per_label=True
+                          type: object
+                    description: Dictionary mapping user IDs to their ground truth agreement scores
+                    type: object
+                type: object
+          description: Ground truth agreement statistics for multiple users
+      security:
+        - Token: []
+      summary: Get ground truth agreement for multiple users
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: users_ground_truth_agreement
   /api/projects/{id}/stats/agreement_annotator/{user_id}:
     get:
       description: |-

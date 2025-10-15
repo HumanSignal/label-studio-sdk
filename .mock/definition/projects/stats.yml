@@ -76,6 +76,25 @@ types:
         docs: List of users in the matrix
     source:
       openapi: openapi/openapi.yaml
+  StatsUsersGroundTruthAgreementResponseAgreementValue:
+    discriminated: false
+    union:
+      - type: double
+        docs: Ground truth agreement score for the user (0-1) when per_label=False
+      - type: map<string, double>
+        docs: Ground truth agreement scores per label when per_label=True
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsUsersGroundTruthAgreementResponse:
+    properties:
+      agreement:
+        type: >-
+          optional<map<string,
+          StatsUsersGroundTruthAgreementResponseAgreementValue>>
+        docs: Dictionary mapping user IDs to their ground truth agreement scores
+    source:
+      openapi: openapi/openapi.yaml
   StatsAgreementAnnotatorResponse:
     properties:
       Agreement_per_annotator:
@@ -497,6 +516,48 @@ service:
                   id: 1
                 - email: user2@example.com
                   id: 2
+      audiences:
+        - public
+    users_ground_truth_agreement:
+      path: /api/projects/{id}/stats/agreement-groundtruth
+      method: GET
+      auth: true
+      docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get ground truth agreement statistics for multiple users within a
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get ground truth agreement for multiple users
+      request:
+        name: StatsUsersGroundTruthAgreementRequest
+        query-parameters:
+          ids:
+            type: string
+            docs: Comma separated list of user IDs to get ground truth agreement for
+          per_label:
+            type: optional<boolean>
+            default: false
+            docs: Per label
+      response:
+        docs: Ground truth agreement statistics for multiple users
+        type: StatsUsersGroundTruthAgreementResponse
+      examples:
+        - path-parameters:
+            id: 1
+          query-parameters:
+            ids: ids
+          response:
+            body:
+              agreement:
+                key: 1.1
       audiences:
         - public
     agreement_annotator:
