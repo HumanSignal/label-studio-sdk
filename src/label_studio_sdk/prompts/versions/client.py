@@ -515,6 +515,12 @@ class VersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get the refined prompt based on the `refinement_job_id`.
 
         Parameters
@@ -580,6 +586,12 @@ class VersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Refine a prompt version using a teacher model and save the refined prompt as a new version.
 
         Parameters
@@ -1211,6 +1223,12 @@ class AsyncVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get the refined prompt based on the `refinement_job_id`.
 
         Parameters
@@ -1284,6 +1302,12 @@ class AsyncVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Refine a prompt version using a teacher model and save the refined prompt as a new version.
 
         Parameters

@@ -572,12 +572,19 @@ service:
       path: /api/projects/{id}/stats/data_filter
       method: GET
       auth: true
-      docs: Get statistics about user data filters and their usage within a project.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get statistics about user data filters and their usage within a project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get user data filter statistics
+      display-name: ✨ Get user data filter statistics
       response:
         docs: User data filter statistics
         type: StatsDataFiltersResponse
@@ -597,12 +604,19 @@ service:
       path: /api/projects/{id}/stats/finished
       method: GET
       auth: true
-      docs: Get statistics about finished tasks for a project.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get statistics about finished tasks for a project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get finished tasks statistics
+      display-name: ✨ Get finished tasks statistics
       request:
         name: StatsFinishedTasksRequest
         query-parameters:
@@ -627,13 +641,19 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get lead time statistics across the project, including average
         annotation time.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get lead time statistics
+      display-name: ✨ Get lead time statistics
       response:
         docs: Lead time statistics
         type: StatsLeadTimeResponse
@@ -692,12 +712,19 @@ service:
       path: /api/projects/{id}/update-stats
       method: GET
       auth: true
-      docs: Start stats recalculation for given project
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Start stats recalculation for given project
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Start stats recalculation
+      display-name: ✨ Start stats recalculation
       request:
         name: StatsUpdateStatsRequest
         query-parameters:

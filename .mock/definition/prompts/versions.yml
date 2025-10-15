@@ -323,13 +323,20 @@ service:
       path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: GET
       auth: true
-      docs: Get the refined prompt based on the `refinement_job_id`.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get the refined prompt based on the `refinement_job_id`.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: Get refined prompt
+      display-name: ✨ Get refined prompt
       request:
         name: VersionsGetRefinedPromptRequest
         query-parameters:
@@ -378,6 +385,12 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Refine a prompt version using a teacher model and save the refined
         prompt as a new version.
       source:
@@ -385,7 +398,7 @@ service:
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: Refine a prompt version
+      display-name: ✨ Refine a prompt version
       request:
         name: RefinePromptRequestRequest
         query-parameters:

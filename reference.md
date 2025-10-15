@@ -31847,6 +31847,12 @@ client.projects.stats.agreement_annotators(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Get statistics about user data filters and their usage within a project.
 </dd>
 </dl>
@@ -31917,6 +31923,12 @@ client.projects.stats.data_filters(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Get statistics about finished tasks for a project.
 </dd>
 </dl>
@@ -31995,6 +32007,12 @@ client.projects.stats.finished_tasks(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Get lead time statistics across the project, including average annotation time.
 </dd>
 </dl>
@@ -32151,6 +32169,12 @@ client.projects.stats.total_agreement(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Start stats recalculation for given project
 </dd>
 </dl>
@@ -34062,6 +34086,12 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Get the AWS Lambda code for the custom metric configured for this project.
 </dd>
 </dl>
@@ -34132,6 +34162,12 @@ client.projects.metrics.custom.get_lambda(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Create or update the AWS Lambda function used for custom metrics in this project.
 </dd>
 </dl>
@@ -34227,6 +34263,12 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Get AWS lambda logs for project, including filtering by start and end dates
 </dd>
 </dl>
@@ -34321,6 +34363,12 @@ client.projects.metrics.custom.logs(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Validate custom matching function code for the project.
 </dd>
 </dl>
@@ -35274,6 +35322,12 @@ client.prompts.versions.cost_estimate(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Get the refined prompt based on the `refinement_job_id`.
 </dd>
 </dl>
@@ -35361,6 +35415,12 @@ client.prompts.versions.get_refined_prompt(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Refine a prompt version using a teacher model and save the refined prompt as a new version.
 </dd>
 </dl>

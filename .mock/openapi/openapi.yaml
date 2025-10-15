@@ -7269,7 +7269,14 @@ paths:
       x-fern-sdk-method-name: list_unique_annotators
   /api/projects/{id}/aws-custom-function:
     get:
-      description: Get the AWS Lambda code for the custom metric configured for this project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get the AWS Lambda code for the custom metric configured for this project.
       operationId: api_projects_aws_custom_function_retrieve
       parameters:
         - in: path
@@ -7291,7 +7298,7 @@ paths:
           description: Lambda code
       security:
         - Token: []
-      summary: Get AWS custom metric code
+      summary: ✨ Get AWS custom metric code
       tags:
         - Projects
       x-fern-audiences:
@@ -7302,7 +7309,14 @@ paths:
         - custom
       x-fern-sdk-method-name: get_lambda
     post:
-      description: Create or update the AWS Lambda function used for custom metrics in this project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create or update the AWS Lambda function used for custom metrics in this project.
       operationId: api_projects_aws_custom_function_create
       parameters:
         - in: path
@@ -7333,7 +7347,7 @@ paths:
           description: Error updating function
       security:
         - Token: []
-      summary: Update AWS custom metric Lambda
+      summary: ✨ Update AWS custom metric Lambda
       tags:
         - Projects
       x-fern-audiences:
@@ -7345,7 +7359,14 @@ paths:
       x-fern-sdk-method-name: update_lambda
   /api/projects/{id}/aws-custom-function-logs:
     get:
-      description: Get AWS lambda logs for project, including filtering by start and end dates
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get AWS lambda logs for project, including filtering by start and end dates
       operationId: api_projects_aws_custom_function_logs_retrieve
       parameters:
         - description: End date for AWS logs filtering in format %Y-%m-%d
@@ -7380,7 +7401,7 @@ paths:
           description: Successful response returns list of AWS lambda logs
       security:
         - Token: []
-      summary: Get AWS lambda logs for project
+      summary: ✨ Get AWS lambda logs for project
       tags:
         - AWS
       x-fern-audiences:
@@ -7392,7 +7413,14 @@ paths:
       x-fern-sdk-method-name: logs
   /api/projects/{id}/check-function:
     post:
-      description: Validate custom matching function code for the project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate custom matching function code for the project.
       operationId: api_projects_check_function_create
       parameters:
         - in: path
@@ -7417,7 +7445,7 @@ paths:
           description: Code is valid
       security:
         - Token: []
-      summary: Check custom matching function code
+      summary: ✨ Check custom matching function code
       tags:
         - Projects
       x-fern-audiences:
@@ -9042,7 +9070,14 @@ paths:
       x-fern-sdk-method-name: agreement_annotators
   /api/projects/{id}/stats/data_filter:
     get:
-      description: Get statistics about user data filters and their usage within a project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get statistics about user data filters and their usage within a project.
       operationId: api_projects_stats_data_filter_retrieve
       parameters:
         - in: path
@@ -9079,7 +9114,7 @@ paths:
           description: User data filter statistics
       security:
         - Token: []
-      summary: Get user data filter statistics
+      summary: ✨ Get user data filter statistics
       tags:
         - Stats
       x-fern-audiences:
@@ -9090,7 +9125,14 @@ paths:
       x-fern-sdk-method-name: data_filters
   /api/projects/{id}/stats/finished:
     get:
-      description: Get statistics about finished tasks for a project.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get statistics about finished tasks for a project.
       operationId: api_projects_stats_finished_retrieve
       parameters:
         - in: path
@@ -9122,7 +9164,7 @@ paths:
           description: Finished tasks statistics
       security:
         - Token: []
-      summary: Get finished tasks statistics
+      summary: ✨ Get finished tasks statistics
       tags:
         - Stats
       x-fern-audiences:
@@ -9133,7 +9175,14 @@ paths:
       x-fern-sdk-method-name: finished_tasks
   /api/projects/{id}/stats/lead_time:
     get:
-      description: Get lead time statistics across the project, including average annotation time.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get lead time statistics across the project, including average annotation time.
       operationId: api_projects_stats_lead_time_retrieve
       parameters:
         - in: path
@@ -9169,7 +9218,7 @@ paths:
           description: Lead time statistics
       security:
         - Token: []
-      summary: Get lead time statistics
+      summary: ✨ Get lead time statistics
       tags:
         - Stats
       x-fern-audiences:
@@ -9713,7 +9762,14 @@ paths:
       x-fern-sdk-method-name: assign
   /api/projects/{id}/update-stats:
     get:
-      description: Start stats recalculation for given project
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Start stats recalculation for given project
       operationId: api_projects_update_stats_retrieve
       parameters:
         - in: path
@@ -9737,7 +9793,7 @@ paths:
           description: Successful response returns job id
       security:
         - Token: []
-      summary: Start stats recalculation
+      summary: ✨ Start stats recalculation
       tags:
         - Stats
       x-fern-audiences:
@@ -11238,7 +11294,14 @@ paths:
       x-fern-sdk-method-name: cancel
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
     get:
-      description: Get the refined prompt based on the `refinement_job_id`.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get the refined prompt based on the `refinement_job_id`.
       operationId: api_prompts_versions_refine_retrieve
       parameters:
         - in: path
@@ -11271,7 +11334,7 @@ paths:
           description: Refinement job status
       security:
         - Token: []
-      summary: Get refined prompt
+      summary: ✨ Get refined prompt
       tags:
         - Prompts
       x-fern-audiences:
@@ -11281,7 +11344,14 @@ paths:
         - versions
       x-fern-sdk-method-name: get_refined_prompt
     post:
-      description: Refine a prompt version using a teacher model and save the refined prompt as a new version.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Refine a prompt version using a teacher model and save the refined prompt as a new version.
       operationId: api_prompts_versions_refine_create
       parameters:
         - description: Whether to run the refinement asynchronously
@@ -11320,7 +11390,7 @@ paths:
           description: Refined prompt response
       security:
         - Token: []
-      summary: Refine a prompt version
+      summary: ✨ Refine a prompt version
       tags:
         - Prompts
       x-fern-audiences:
