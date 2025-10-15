@@ -281,7 +281,7 @@ types:
       model_version:
         type: optional<string>
         docs: Machine learning model version
-      num_tasks_with_annotations: integer
+      num_tasks_with_annotations: optional<integer>
       organization: optional<integer>
       overlap_cohort_percentage:
         type: optional<integer>
@@ -3031,6 +3031,9 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
+      precomputed_agreement:
+        type: optional<double>
+        docs: Average agreement score for the task
       predictions: optional<list<PredictionRequest>>
       total_annotations:
         type: optional<integer>
@@ -3815,9 +3818,7 @@ types:
       model_version:
         type: optional<string>
         docs: Machine learning model version
-      num_tasks_with_annotations:
-        type: integer
-        docs: Tasks with annotations count
+      num_tasks_with_annotations: optional<integer>
       organization: optional<integer>
       overlap_cohort_percentage:
         type: optional<integer>
@@ -3920,7 +3921,7 @@ types:
         type: integer
         docs: Honeypot annotation number in project
       id: integer
-      num_tasks_with_annotations: integer
+      num_tasks_with_annotations: optional<integer>
       queue_done: integer
       queue_left: integer
       queue_total: string
@@ -4952,6 +4953,9 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
+      precomputed_agreement:
+        type: optional<double>
+        docs: Average agreement score for the task
       predictions:
         docs: Predictions for this task
         type: list<LseTaskPredictionsItem>
@@ -5406,6 +5410,9 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
+      precomputed_agreement:
+        type: optional<double>
+        docs: Average agreement score for the task
       predictions:
         docs: Predictions for this task
         type: list<LseTaskSerializerForReviewersPredictionsItem>

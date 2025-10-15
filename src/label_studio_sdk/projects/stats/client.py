@@ -18,6 +18,7 @@ from .types.stats_finished_tasks_response import StatsFinishedTasksResponse
 from .types.stats_lead_time_response import StatsLeadTimeResponse
 from .types.stats_total_agreement_response import StatsTotalAgreementResponse
 from .types.stats_users_prediction_agreement_response import StatsUsersPredictionAgreementResponse
+from .types.stats_users_review_score_response import StatsUsersReviewScoreResponse
 from .types.stats_user_prediction_agreement_response import StatsUserPredictionAgreementResponse
 from .types.stats_user_review_score_response import StatsUserReviewScoreResponse
 from .types.stats_user_ground_truth_agreement_response import StatsUserGroundTruthAgreementResponse
@@ -752,6 +753,76 @@ class StatsClient:
                     StatsUsersPredictionAgreementResponse,
                     construct_type(
                         type_=StatsUsersPredictionAgreementResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def users_review_score(
+        self,
+        id: int,
+        *,
+        ids: str,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StatsUsersReviewScoreResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get review score and performance score statistics for multiple annotators within a project.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : str
+            Comma separated list of annotator user IDs to get review scores for
+
+        per_label : typing.Optional[bool]
+            Per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsUsersReviewScoreResponse
+            Review scores and performance scores for multiple annotators
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.users_review_score(
+            id=1,
+            ids="ids",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/user-stats/review_score",
+            method="GET",
+            params={
+                "ids": ids,
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsUsersReviewScoreResponse,
+                    construct_type(
+                        type_=StatsUsersReviewScoreResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1791,6 +1862,84 @@ class AsyncStatsClient:
                     StatsUsersPredictionAgreementResponse,
                     construct_type(
                         type_=StatsUsersPredictionAgreementResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def users_review_score(
+        self,
+        id: int,
+        *,
+        ids: str,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StatsUsersReviewScoreResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get review score and performance score statistics for multiple annotators within a project.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : str
+            Comma separated list of annotator user IDs to get review scores for
+
+        per_label : typing.Optional[bool]
+            Per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsUsersReviewScoreResponse
+            Review scores and performance scores for multiple annotators
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.users_review_score(
+                id=1,
+                ids="ids",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/user-stats/review_score",
+            method="GET",
+            params={
+                "ids": ids,
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsUsersReviewScoreResponse,
+                    construct_type(
+                        type_=StatsUsersReviewScoreResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

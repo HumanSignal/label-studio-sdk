@@ -198,6 +198,38 @@ types:
         docs: Dictionary mapping user IDs to their prediction agreement scores
     source:
       openapi: openapi/openapi.yaml
+  StatsUsersReviewScoreResponsePerformanceScoreValue:
+    discriminated: false
+    union:
+      - type: double
+        docs: Performance score for the annotator when per_label=False
+      - type: map<string, double>
+        docs: Performance score per label for the annotator when per_label=True
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsUsersReviewScoreResponseReviewScoreValue:
+    discriminated: false
+    union:
+      - type: double
+        docs: Average review score for the annotator when per_label=False
+      - type: map<string, double>
+        docs: Review score per label for the annotator when per_label=True
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsUsersReviewScoreResponse:
+    properties:
+      performance_score:
+        type: >-
+          optional<map<string,
+          StatsUsersReviewScoreResponsePerformanceScoreValue>>
+        docs: Performance scores mapped by annotator ID
+      review_score:
+        type: optional<map<string, StatsUsersReviewScoreResponseReviewScoreValue>>
+        docs: Review scores mapped by annotator ID
+    source:
+      openapi: openapi/openapi.yaml
   StatsUserPredictionAgreementResponseAveragePredictionAgreementPerUser:
     discriminated: false
     union:
@@ -724,6 +756,51 @@ service:
           response:
             body:
               agreement:
+                key: 1.1
+      audiences:
+        - public
+    users_review_score:
+      path: /api/projects/{id}/user-stats/review_score
+      method: GET
+      auth: true
+      docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get review score and performance score statistics for multiple
+        annotators within a project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get review scores for multiple annotators
+      request:
+        name: StatsUsersReviewScoreRequest
+        query-parameters:
+          ids:
+            type: string
+            docs: >-
+              Comma separated list of annotator user IDs to get review scores
+              for
+          per_label:
+            type: optional<boolean>
+            docs: Per label
+      response:
+        docs: Review scores and performance scores for multiple annotators
+        type: StatsUsersReviewScoreResponse
+      examples:
+        - path-parameters:
+            id: 1
+          query-parameters:
+            ids: ids
+          response:
+            body:
+              performance_score:
+                key: 1.1
+              review_score:
                 key: 1.1
       audiences:
         - public
