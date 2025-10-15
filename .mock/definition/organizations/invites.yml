@@ -38,7 +38,7 @@ service:
         Revoke invite to organization
       source:
         openapi: openapi/openapi.yaml
-      display-name: Revoke invite
+      display-name: ✨ Revoke invite
       request:
         name: RevokeInviteRequest
         body:
@@ -67,7 +67,7 @@ service:
         Send email with invite to organization
       source:
         openapi: openapi/openapi.yaml
-      display-name: Send email with invite
+      display-name: ✨ Send email with invite
       request:
         name: SendInviteRequest
         body:

@@ -18,7 +18,7 @@ service:
         Retrieve billing checks and feature flags for the active organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get billing info
+      display-name: ✨ Get billing info
       response:
         docs: Billing information for the active organization
         type: root.BillingInfoResponse

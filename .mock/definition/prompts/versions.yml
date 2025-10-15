@@ -18,7 +18,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get default prompt version name
+      display-name: ✨ Get default prompt version name
       examples:
         - path-parameters:
             id: 1
@@ -40,7 +40,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         prompt_id: integer
-      display-name: List prompt versions
+      display-name: ✨ List prompt versions
       request:
         name: VersionsListRequest
         query-parameters:
@@ -90,7 +90,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         prompt_id: integer
-      display-name: Create prompt version
+      display-name: ✨ Create prompt version
       request:
         body: root.ThirdPartyModelVersionRequest
         content-type: application/json
@@ -142,7 +142,7 @@ service:
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: Get prompt version
+      display-name: ✨ Get prompt version
       response:
         docs: ''
         type: root.ThirdPartyModelVersion
@@ -188,7 +188,7 @@ service:
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: Delete prompt version
+      display-name: ✨ Delete prompt version
       examples:
         - path-parameters:
             prompt_id: 1
@@ -212,7 +212,7 @@ service:
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: Update prompt version
+      display-name: ✨ Update prompt version
       request:
         name: PatchedThirdPartyModelVersionRequest
         body:
@@ -300,7 +300,7 @@ service:
         prompt_id: integer
         version_id: integer
       display-name: >-
-        Get cost estimate for running a prompt version on a particular
+        ✨ Get cost estimate for running a prompt version on a particular
         project/subset
       response:
         docs: Cost estimate response

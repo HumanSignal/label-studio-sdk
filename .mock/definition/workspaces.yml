@@ -22,7 +22,7 @@ service:
         documentation](https://docs.humansignal.com/workspaces).
       source:
         openapi: openapi/openapi.yaml
-      display-name: List workspaces
+      display-name: ✨ List workspaces
       request:
         name: WorkspacesListRequest
         query-parameters:
@@ -65,7 +65,7 @@ service:
         documentation](https://docs.humansignal.com/workspaces).
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create workspace
+      display-name: ✨ Create workspace
       request:
         name: WorkspaceRequest
         body:
@@ -123,7 +123,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get workspace
+      display-name: ✨ Get workspace
       response:
         docs: ''
         type: root.Workspace
@@ -157,7 +157,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete workspace
+      display-name: ✨ Delete workspace
       examples:
         - path-parameters:
             id: 1
@@ -179,7 +179,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update workspace
+      display-name: ✨ Update workspace
       request:
         name: PatchedWorkspaceRequest
         body:

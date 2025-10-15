@@ -18,7 +18,7 @@ service:
         Get list of all Databricks Files import storage connections.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List Databricks import storages
+      display-name: ✨ List Databricks import storages
       request:
         name: DatabricksListRequest
         query-parameters:
@@ -77,7 +77,7 @@ service:
         Create a Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create Databricks import storage
+      display-name: ✨ Create Databricks import storage
       request:
         body: root.DatabricksImportStorageRequest
         content-type: application/json
@@ -136,7 +136,7 @@ service:
         Validate a specific Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Validate Databricks import storage
+      display-name: ✨ Validate Databricks import storage
       request:
         body: root.DatabricksImportStorageRequest
         content-type: application/json
@@ -165,7 +165,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get Databricks import storage
+      display-name: ✨ Get Databricks import storage
       response:
         docs: ''
         type: root.DatabricksImportStorage
@@ -219,7 +219,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete Databricks import storage
+      display-name: ✨ Delete Databricks import storage
       examples:
         - path-parameters:
             id: 1
@@ -241,7 +241,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update Databricks import storage
+      display-name: ✨ Update Databricks import storage
       request:
         name: PatchedDatabricksImportStorageRequest
         body:
@@ -389,7 +389,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Sync Databricks import storage
+      display-name: ✨ Sync Databricks import storage
       response:
         docs: ''
         type: root.DatabricksImportStorage

@@ -18,7 +18,7 @@ service:
         List all model provider connections.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List model provider connections
+      display-name: ✨ List model provider connections
       request:
         name: ModelProvidersListRequest
         query-parameters:
@@ -71,7 +71,7 @@ service:
         Create a new model provider connection.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create model provider connection
+      display-name: ✨ Create model provider connection
       request:
         body: root.ModelProviderConnectionRequest
         content-type: application/json
@@ -122,7 +122,7 @@ service:
         List all possible model provider choices
       source:
         openapi: openapi/openapi.yaml
-      display-name: List model provider choices
+      display-name: ✨ List model provider choices
       response:
         docs: List of model provider choices
         type: ModelProvidersListModelProviderChoicesResponse
@@ -149,7 +149,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Get model provider connection
+      display-name: ✨ Get model provider connection
       response:
         docs: ''
         type: root.ModelProviderConnection
@@ -200,7 +200,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Delete model provider connection
+      display-name: ✨ Delete model provider connection
       examples:
         - path-parameters:
             id: id
@@ -222,7 +222,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Update model provider connection
+      display-name: ✨ Update model provider connection
       request:
         name: PatchedModelProviderConnectionRequest
         body:

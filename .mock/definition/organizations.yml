@@ -106,7 +106,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update organization
+      display-name: ✨ Update organization
       request:
         name: PatchedLseOrganizationSerializerUpdateRequest
         body:
@@ -181,7 +181,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update default role
+      display-name: ✨ Update default role
       request:
         name: PatchedDefaultRoleRequest
         body:

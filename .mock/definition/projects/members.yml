@@ -92,7 +92,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Add project member
+      display-name: ✨ Add project member
       request:
         name: ProjectMemberRequest
         body:
@@ -128,7 +128,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Remove member from project
+      display-name: ✨ Remove member from project
       examples:
         - path-parameters:
             id: 1

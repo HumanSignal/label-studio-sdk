@@ -90,7 +90,7 @@ paths:
           description: No more logs found
       security:
         - Token: []
-      summary: Get activity logs
+      summary: ✨ Get activity logs
       tags:
         - Activity Logs
       x-fern-audiences:
@@ -137,7 +137,7 @@ paths:
           description: Returns a dict containing the count of removed items.
       security:
         - Token: []
-      summary: Delete annotation history items
+      summary: ✨ Delete annotation history items
       tags:
         - Annotation History
       x-fern-audiences:
@@ -177,7 +177,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List all annotation history items for annotation
+      summary: ✨ List all annotation history items for annotation
       tags:
         - Annotation History
       x-fern-audiences:
@@ -909,7 +909,7 @@ paths:
           description: Billing information for the active organization
       security:
         - Token: []
-      summary: Get billing info
+      summary: ✨ Get billing info
       tags:
         - Billing
       x-fern-audiences:
@@ -1044,7 +1044,7 @@ paths:
           description: List of comments
       security:
         - Token: []
-      summary: List comments
+      summary: ✨ List comments
       tags:
         - Comments
       x-fern-audiences:
@@ -1087,7 +1087,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create comment
+      summary: ✨ Create comment
       tags:
         - Comments
       x-fern-audiences:
@@ -1142,7 +1142,7 @@ paths:
           description: CSV file with comments
       security:
         - Token: []
-      summary: Export comments to CSV
+      summary: ✨ Export comments to CSV
       tags:
         - Comments
       x-fern-audiences:
@@ -1176,7 +1176,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete comment
+      summary: ✨ Delete comment
       tags:
         - Comments
       x-fern-audiences:
@@ -1213,7 +1213,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get comment
+      summary: ✨ Get comment
       tags:
         - Comments
       x-fern-audiences:
@@ -1261,7 +1261,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update comment
+      summary: ✨ Update comment
       tags:
         - Comments
       x-fern-audiences:
@@ -1309,7 +1309,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Put comment
+      summary: ✨ Put comment
       tags:
         - Comments
       x-fern-audiences:
@@ -4001,7 +4001,7 @@ paths:
           description: Key indicators
       security:
         - Token: []
-      summary: Get key indicators
+      summary: ✨ Get key indicators
       tags:
         - Prompts
       x-fern-audiences:
@@ -4041,7 +4041,7 @@ paths:
           description: Key indicator
       security:
         - Token: []
-      summary: Get key indicator
+      summary: ✨ Get key indicator
       tags:
         - Prompts
       x-fern-audiences:
@@ -4123,7 +4123,7 @@ paths:
           description: Invite revoked
       security:
         - Token: []
-      summary: Revoke invite
+      summary: ✨ Revoke invite
       tags:
         - Organizations
         - Invites
@@ -4163,7 +4163,7 @@ paths:
           description: Organization does not allow to invite people
       security:
         - Token: []
-      summary: Send email with invite
+      summary: ✨ Send email with invite
       tags:
         - Organizations
         - Invites
@@ -4927,7 +4927,7 @@ paths:
           description: Predictions have successfully started.
       security:
         - Token: []
-      summary: Create predictions for all tasks
+      summary: ✨ Create predictions for all tasks
       tags:
         - Machine Learning
       x-fern-audiences:
@@ -5079,7 +5079,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List model provider connections
+      summary: ✨ List model provider connections
       tags:
         - Model Provider Connection
       x-fern-audiences:
@@ -5116,7 +5116,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create model provider connection
+      summary: ✨ Create model provider connection
       tags:
         - Model Provider Connection
       x-fern-audiences:
@@ -5148,7 +5148,7 @@ paths:
           description: List of model provider choices
       security:
         - Token: []
-      summary: List model provider choices
+      summary: ✨ List model provider choices
       tags:
         - Model Provider Connection
       x-fern-audiences:
@@ -5177,7 +5177,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete model provider connection
+      summary: ✨ Delete model provider connection
       tags:
         - Model Provider Connection
       x-fern-audiences:
@@ -5209,7 +5209,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get model provider connection
+      summary: ✨ Get model provider connection
       tags:
         - Model Provider Connection
       x-fern-audiences:
@@ -5252,7 +5252,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update model provider connection
+      summary: ✨ Update model provider connection
       tags:
         - Model Provider Connection
       x-fern-audiences:
@@ -5295,7 +5295,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Put model provider connection
+      summary: ✨ Put model provider connection
       tags:
         - Model Provider Connection
       x-fern-audiences:
@@ -5338,7 +5338,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create batch of failed predictions
+      summary: ✨ Create batch of failed predictions
       tags:
         - Prompts
       x-fern-audiences:
@@ -5383,7 +5383,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create batch predictions
+      summary: ✨ Create batch predictions
       tags:
         - Prompts
       x-fern-audiences:
@@ -5487,7 +5487,7 @@ paths:
           description: Not Found
       security:
         - Token: []
-      summary: Update organization
+      summary: ✨ Update organization
       tags:
         - Organizations
       x-fern-audiences:
@@ -5556,7 +5556,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get organization members/roles
+      summary: ✨ Get organization members/roles
       tags:
         - Organizations
       x-fern-audiences:
@@ -5615,7 +5615,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update organization member/role
+      summary: ✨ Update organization member/role
       tags:
         - Organizations
       x-fern-audiences:
@@ -5727,7 +5727,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List organization permission overrides
+      summary: ✨ List organization permission overrides
       tags:
         - Organizations
         - Permissions
@@ -5778,7 +5778,7 @@ paths:
           description: Permission Denied
       security:
         - Token: []
-      summary: Create organization permission override
+      summary: ✨ Create organization permission override
       tags:
         - Organizations
         - Permissions
@@ -5822,7 +5822,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get configurable permissions options
+      summary: ✨ Get configurable permissions options
       tags:
         - Organizations
         - Permissions
@@ -5834,6 +5834,14 @@ paths:
       x-fern-sdk-method-name: get_options
   /api/organizations/{id}/permissions/{permission}:
     delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete the organization-level permission override for a given permission key.
       operationId: api_organizations_permissions_destroy
       parameters:
         - in: path
@@ -5855,7 +5863,7 @@ paths:
           description: Permission not found for organization
       security:
         - Token: []
-      summary: Delete organization permission override
+      summary: ✨ Delete organization permission override
       tags:
         - Organizations
         - Permissions
@@ -5866,6 +5874,14 @@ paths:
         - permissions
       x-fern-sdk-method-name: delete
     get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the organization-level permission override for a given permission key.
       operationId: api_organizations_permissions_retrieve
       parameters:
         - in: path
@@ -5891,7 +5907,7 @@ paths:
           description: Permission not found for organization
       security:
         - Token: []
-      summary: Retrieve organization permission override
+      summary: ✨ Retrieve organization permission override
       tags:
         - Organizations
         - Permissions
@@ -5948,7 +5964,7 @@ paths:
           description: Permission not found for organization
       security:
         - Token: []
-      summary: Update organization permission override
+      summary: ✨ Update organization permission override
       tags:
         - Organizations
         - Permissions
@@ -6008,7 +6024,7 @@ paths:
           description: Permission not found for organization
       security:
         - Token: []
-      summary: Replace organization permission override
+      summary: ✨ Replace organization permission override
       tags:
         - Organizations
         - Permissions
@@ -6055,7 +6071,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update default role
+      summary: ✨ Update default role
       tags:
         - Organizations
       x-fern-audiences:
@@ -7216,7 +7232,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List annotation history items for project
+      summary: ✨ List annotation history items for project
       tags:
         - Annotation History
       x-fern-audiences:
@@ -7505,7 +7521,7 @@ paths:
           description: Project duplicated
       security:
         - Token: []
-      summary: Duplicate project
+      summary: ✨ Duplicate project
       tags:
         - Projects
       x-fern-audiences:
@@ -8127,7 +8143,7 @@ paths:
           description: Member removed
       security:
         - Token: []
-      summary: Remove member from project
+      summary: ✨ Remove member from project
       tags:
         - Projects
       x-fern-audiences:
@@ -8211,7 +8227,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Add project member
+      summary: ✨ Add project member
       tags:
         - Projects
       x-fern-audiences:
@@ -8382,7 +8398,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get project members paginated
+      summary: ✨ Get project members paginated
       tags:
         - Projects
       x-fern-audiences:
@@ -8512,7 +8528,7 @@ paths:
           description: Model-version overall agreement vs annotators
       security:
         - Token: []
-      summary: Get model-version overall agreement vs annotators
+      summary: ✨ Get model-version overall agreement vs annotators
       tags:
         - Stats
       x-fern-audiences:
@@ -8562,7 +8578,7 @@ paths:
           description: Model-version ground truth agreement
       security:
         - Token: []
-      summary: Get model-version ground truth agreement
+      summary: ✨ Get model-version ground truth agreement
       tags:
         - Stats
       x-fern-audiences:
@@ -8612,7 +8628,7 @@ paths:
           description: Model-version prediction agreement
       security:
         - Token: []
-      summary: Get model-version prediction agreement
+      summary: ✨ Get model-version prediction agreement
       tags:
         - Stats
       x-fern-audiences:
@@ -8922,7 +8938,7 @@ paths:
           description: Inter-Annotator Agreement matrix
       security:
         - Token: []
-      summary: Get Inter-Annotator Agreement matrix
+      summary: ✨ Get Inter-Annotator Agreement matrix
       tags:
         - Stats
       x-fern-audiences:
@@ -8966,7 +8982,7 @@ paths:
           description: Individual annotator agreement statistics
       security:
         - Token: []
-      summary: Get individual annotator agreement stats
+      summary: ✨ Get individual annotator agreement stats
       tags:
         - Stats
       x-fern-audiences:
@@ -9015,7 +9031,7 @@ paths:
           description: Multiple annotator agreement statistics
       security:
         - Token: []
-      summary: Get agreement statistics for multiple annotators
+      summary: ✨ Get agreement statistics for multiple annotators
       tags:
         - Stats
       x-fern-audiences:
@@ -9207,7 +9223,7 @@ paths:
           description: No data to compute agreement
       security:
         - Token: []
-      summary: Get total agreement for project
+      summary: ✨ Get total agreement for project
       tags:
         - Stats
       x-fern-audiences:
@@ -9470,7 +9486,7 @@ paths:
           description: Can't assign tasks
       security:
         - Token: []
-      summary: Bulk assign users to tasks
+      summary: ✨ Bulk assign users to tasks
       tags:
         - Tasks
       x-fern-audiences:
@@ -9521,7 +9537,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete task assignments
+      summary: ✨ Delete task assignments
       tags:
         - Tasks
       x-fern-audiences:
@@ -9564,7 +9580,7 @@ paths:
           description: List of assignments for the task
       security:
         - Token: []
-      summary: Get assigned tasks and assignees
+      summary: ✨ Get assigned tasks and assignees
       tags:
         - Tasks
       x-fern-audiences:
@@ -9625,7 +9641,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update task assignee
+      summary: ✨ Update task assignee
       tags:
         - Tasks
       x-fern-audiences:
@@ -9686,7 +9702,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create task assignee
+      summary: ✨ Create task assignee
       tags:
         - Tasks
       x-fern-audiences:
@@ -9780,7 +9796,7 @@ paths:
           description: Prediction agreement statistics for multiple annotators
       security:
         - Token: []
-      summary: Get prediction agreement statistics for multiple annotators
+      summary: ✨ Get prediction agreement statistics for multiple annotators
       tags:
         - Stats
       x-fern-audiences:
@@ -9849,7 +9865,7 @@ paths:
           description: Review scores and performance scores for multiple annotators
       security:
         - Token: []
-      summary: Get review scores for multiple annotators
+      summary: ✨ Get review scores for multiple annotators
       tags:
         - Stats
       x-fern-audiences:
@@ -9903,7 +9919,7 @@ paths:
           description: Individual user prediction agreement statistics
       security:
         - Token: []
-      summary: Get individual user prediction agreement
+      summary: ✨ Get individual user prediction agreement
       tags:
         - Stats
       x-fern-audiences:
@@ -9965,7 +9981,7 @@ paths:
           description: Individual user review score statistics
       security:
         - Token: []
-      summary: Get individual user review scores
+      summary: ✨ Get individual user review scores
       tags:
         - Stats
       x-fern-audiences:
@@ -10020,7 +10036,7 @@ paths:
           description: Individual user ground truth agreement statistics
       security:
         - Token: []
-      summary: Get individual user ground truth agreement
+      summary: ✨ Get individual user ground truth agreement
       tags:
         - Stats
       x-fern-audiences:
@@ -10486,7 +10502,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List prompts
+      summary: ✨ List prompts
       tags:
         - Prompts
       x-fern-audiences:
@@ -10524,7 +10540,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create prompt
+      summary: ✨ Create prompt
       tags:
         - Prompts
       x-fern-audiences:
@@ -10572,7 +10588,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List projects compatible with prompt
+      summary: ✨ List projects compatible with prompt
       tags:
         - Prompts
       x-fern-audiences:
@@ -10601,7 +10617,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete prompt
+      summary: ✨ Delete prompt
       tags:
         - Prompts
       x-fern-audiences:
@@ -10633,7 +10649,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get prompt
+      summary: ✨ Get prompt
       tags:
         - Prompts
       x-fern-audiences:
@@ -10676,7 +10692,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update prompt
+      summary: ✨ Update prompt
       tags:
         - Prompts
       x-fern-audiences:
@@ -10720,7 +10736,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Put prompt
+      summary: ✨ Put prompt
       tags:
         - Prompts
       x-fern-audiences:
@@ -10747,7 +10763,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Get default prompt version name
+      summary: ✨ Get default prompt version name
       tags:
         - Prompts
       x-fern-audiences:
@@ -10790,7 +10806,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List prompt versions
+      summary: ✨ List prompt versions
       tags:
         - Prompts
       x-fern-audiences:
@@ -10836,7 +10852,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create prompt version
+      summary: ✨ Create prompt version
       tags:
         - Prompts
       x-fern-audiences:
@@ -10872,7 +10888,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete prompt version
+      summary: ✨ Delete prompt version
       tags:
         - Prompts
       x-fern-audiences:
@@ -10911,7 +10927,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get prompt version
+      summary: ✨ Get prompt version
       tags:
         - Prompts
       x-fern-audiences:
@@ -10961,7 +10977,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update prompt version
+      summary: ✨ Update prompt version
       tags:
         - Prompts
       x-fern-audiences:
@@ -11012,7 +11028,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Put prompt version
+      summary: ✨ Put prompt version
       tags:
         - Prompts
       x-fern-audiences:
@@ -11048,7 +11064,7 @@ paths:
           description: Cost estimate response
       security:
         - Token: []
-      summary: Get cost estimate for running a prompt version on a particular project/subset
+      summary: ✨ Get cost estimate for running a prompt version on a particular project/subset
       tags:
         - Prompts
       x-fern-audiences:
@@ -11115,7 +11131,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get inference run info
+      summary: ✨ Get inference run info
       tags:
         - Prompts
       x-fern-audiences:
@@ -11166,7 +11182,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Run prompt inference
+      summary: ✨ Run prompt inference
       tags:
         - Prompts
       x-fern-audiences:
@@ -11211,7 +11227,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Cancel Inference Run API
+      summary: ✨ Cancel Inference Run API
       tags:
         - Prompts
       x-fern-audiences:
@@ -11347,7 +11363,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Retrieve SAML2 Settings
+      summary: ✨ Retrieve SAML2 Settings
       tags:
         - SSO
       x-fern-audiences:
@@ -11414,7 +11430,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update SAML2 Settings
+      summary: ✨ Update SAML2 Settings
       tags:
         - SSO
       x-fern-audiences:
@@ -11457,7 +11473,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Retrieve SCIM Settings
+      summary: ✨ Retrieve SCIM Settings
       tags:
         - SSO
       x-fern-audiences:
@@ -11524,7 +11540,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update SCIM Settings
+      summary: ✨ Update SCIM Settings
       tags:
         - SSO
       x-fern-audiences:
@@ -11966,7 +11982,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get Azure SPI import storage
+      summary: ✨ Get Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12006,7 +12022,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create Azure import storage with SPI
+      summary: ✨ Create Azure import storage with SPI
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12043,7 +12059,7 @@ paths:
           description: Validation successful
       security:
         - Token: []
-      summary: Validate Azure SPI import storage
+      summary: ✨ Validate Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12074,7 +12090,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete Azure SPI import storage
+      summary: ✨ Delete Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12108,7 +12124,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get Azure SPI import storage
+      summary: ✨ Get Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12153,7 +12169,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update Azure SPI import storage
+      summary: ✨ Update Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12188,7 +12204,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Sync Azure SPI import storage
+      summary: ✨ Sync Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12231,7 +12247,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List Databricks import storages
+      summary: ✨ List Databricks import storages
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -12271,7 +12287,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create Databricks import storage
+      summary: ✨ Create Databricks import storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -12308,7 +12324,7 @@ paths:
           description: Validation successful
       security:
         - Token: []
-      summary: Validate Databricks import storage
+      summary: ✨ Validate Databricks import storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -12339,7 +12355,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete Databricks import storage
+      summary: ✨ Delete Databricks import storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -12373,7 +12389,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get Databricks import storage
+      summary: ✨ Get Databricks import storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -12418,7 +12434,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update Databricks import storage
+      summary: ✨ Update Databricks import storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -12453,7 +12469,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Sync Databricks import storage
+      summary: ✨ Sync Databricks import storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -12811,7 +12827,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get all Azure SPI export storage
+      summary: ✨ Get all Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12851,7 +12867,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create Azure export storage with SPI authentication
+      summary: ✨ Create Azure export storage with SPI authentication
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12888,7 +12904,7 @@ paths:
           description: Validation successful
       security:
         - Token: []
-      summary: Validate Azure SPI export storage
+      summary: ✨ Validate Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12919,7 +12935,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete Azure SPI export storage
+      summary: ✨ Delete Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12953,7 +12969,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get Azure SPI export storage
+      summary: ✨ Get Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -12998,7 +13014,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update Azure SPI export storage
+      summary: ✨ Update Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -13033,7 +13049,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Sync Azure SPI export storage
+      summary: ✨ Sync Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
       x-fern-audiences:
@@ -13076,7 +13092,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List Databricks export storages
+      summary: ✨ List Databricks export storages
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -13116,7 +13132,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create Databricks export storage
+      summary: ✨ Create Databricks export storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -13153,7 +13169,7 @@ paths:
           description: Validation successful
       security:
         - Token: []
-      summary: Validate Databricks export storage
+      summary: ✨ Validate Databricks export storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -13184,7 +13200,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete Databricks export storage
+      summary: ✨ Delete Databricks export storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -13218,7 +13234,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get Databricks export storage
+      summary: ✨ Get Databricks export storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -13263,7 +13279,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update Databricks export storage
+      summary: ✨ Update Databricks export storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -13298,7 +13314,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Sync Databricks export storage
+      summary: ✨ Sync Databricks export storage
       tags:
         - 'Storage: Databricks Files'
       x-fern-audiences:
@@ -13624,7 +13640,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get all GCS WIF export storage
+      summary: ✨ Get all GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -13664,7 +13680,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create GCS export storage with WIF authentication
+      summary: ✨ Create GCS export storage with WIF authentication
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -13701,7 +13717,7 @@ paths:
           description: Validation successful
       security:
         - Token: []
-      summary: Validate GCS WIF export storage
+      summary: ✨ Validate GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -13732,7 +13748,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete GCS WIF export storage
+      summary: ✨ Delete GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -13766,7 +13782,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get GCS WIF export storage
+      summary: ✨ Get GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -13811,7 +13827,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update GCS WIF export storage
+      summary: ✨ Update GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -13846,7 +13862,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Sync GCS WIF export storage
+      summary: ✨ Sync GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -14765,7 +14781,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List S3s export storage
+      summary: ✨ List S3s export storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -14805,7 +14821,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create export storage
+      summary: ✨ Create export storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -14842,7 +14858,7 @@ paths:
           description: Validation successful
       security:
         - Token: []
-      summary: Validate export storage
+      summary: ✨ Validate export storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -14873,7 +14889,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete export storage
+      summary: ✨ Delete export storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -14907,7 +14923,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get export storage
+      summary: ✨ Get export storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -14952,7 +14968,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update export storage
+      summary: ✨ Update export storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -14987,7 +15003,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Sync export storage
+      summary: ✨ Sync export storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -15375,7 +15391,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get GCS WIF import storage
+      summary: ✨ Get GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -15415,7 +15431,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create GCS import storage with WIF
+      summary: ✨ Create GCS import storage with WIF
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -15452,7 +15468,7 @@ paths:
           description: Validation successful
       security:
         - Token: []
-      summary: Validate GCS WIF import storage
+      summary: ✨ Validate GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -15483,7 +15499,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete GCS WIF import storage
+      summary: ✨ Delete GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -15517,7 +15533,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get GCS WIF import storage
+      summary: ✨ Get GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -15562,7 +15578,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update GCS WIF import storage
+      summary: ✨ Update GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -15597,7 +15613,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Sync GCS WIF import storage
+      summary: ✨ Sync GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
       x-fern-audiences:
@@ -16561,7 +16577,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List S3s import storage
+      summary: ✨ List S3s import storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -16601,7 +16617,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create import storage
+      summary: ✨ Create import storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -16638,7 +16654,7 @@ paths:
           description: Validation successful
       security:
         - Token: []
-      summary: Validate import storage
+      summary: ✨ Validate import storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -16669,7 +16685,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete import storage
+      summary: ✨ Delete import storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -16703,7 +16719,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get import storage
+      summary: ✨ Get import storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -16748,7 +16764,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update import storage
+      summary: ✨ Update import storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -16783,7 +16799,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Sync import storage
+      summary: ✨ Sync import storage
       tags:
         - 'Storage: S3 Roles'
       x-fern-audiences:
@@ -17652,7 +17668,7 @@ paths:
       security:
         - Token: []
         - {}
-      summary: Get version information
+      summary: ✨ Get version information
       tags:
         - Versions
       x-fern-audiences:
@@ -18134,7 +18150,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List workspaces
+      summary: ✨ List workspaces
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18172,7 +18188,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create workspace
+      summary: ✨ Create workspace
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18201,7 +18217,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete workspace
+      summary: ✨ Delete workspace
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18233,7 +18249,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get workspace
+      summary: ✨ Get workspace
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18276,7 +18292,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Update workspace
+      summary: ✨ Update workspace
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18305,7 +18321,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete workspace membership
+      summary: ✨ Delete workspace membership
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18341,7 +18357,7 @@ paths:
           description: A list of workspace memberships
       security:
         - Token: []
-      summary: List workspace memberships
+      summary: ✨ List workspace memberships
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18387,7 +18403,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Create workspace membership
+      summary: ✨ Create workspace membership
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18425,7 +18441,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Bulk unassign workspace members
+      summary: ✨ Bulk unassign workspace members
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18475,7 +18491,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Bulk assign workspace members
+      summary: ✨ Bulk assign workspace members
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18534,7 +18550,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get workspace members paginated
+      summary: ✨ Get workspace members paginated
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18569,7 +18585,7 @@ paths:
           description: Project removed
       security:
         - Token: []
-      summary: Remove workspace project
+      summary: ✨ Remove workspace project
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18605,7 +18621,7 @@ paths:
           description: Projects list
       security:
         - Token: []
-      summary: List workspace projects
+      summary: ✨ List workspace projects
       tags:
         - Workspaces
       x-fern-audiences:
@@ -18647,7 +18663,7 @@ paths:
           description: Project added
       security:
         - Token: []
-      summary: Add workspace project
+      summary: ✨ Add workspace project
       tags:
         - Workspaces
       x-fern-audiences:

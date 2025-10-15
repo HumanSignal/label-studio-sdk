@@ -313,7 +313,7 @@ service:
       path-parameters:
         id: integer
         model_version: string
-      display-name: Get model-version overall agreement vs annotators
+      display-name: ✨ Get model-version overall agreement vs annotators
       response:
         docs: Model-version overall agreement vs annotators
         type: StatsModelVersionAnnotatorAgreementResponse
@@ -344,7 +344,7 @@ service:
       path-parameters:
         id: integer
         model_version: string
-      display-name: Get model-version ground truth agreement
+      display-name: ✨ Get model-version ground truth agreement
       request:
         name: StatsModelVersionGroundTruthAgreementRequest
         query-parameters:
@@ -382,7 +382,7 @@ service:
       path-parameters:
         id: integer
         model_version: string
-      display-name: Get model-version prediction agreement
+      display-name: ✨ Get model-version prediction agreement
       request:
         name: StatsModelVersionPredictionAgreementRequest
         query-parameters:
@@ -419,7 +419,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get Inter-Annotator Agreement matrix
+      display-name: ✨ Get Inter-Annotator Agreement matrix
       request:
         name: StatsIaaRequest
         query-parameters:
@@ -516,7 +516,7 @@ service:
       path-parameters:
         id: integer
         user_id: integer
-      display-name: Get individual annotator agreement stats
+      display-name: ✨ Get individual annotator agreement stats
       response:
         docs: Individual annotator agreement statistics
         type: StatsAgreementAnnotatorResponse
@@ -545,7 +545,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get agreement statistics for multiple annotators
+      display-name: ✨ Get agreement statistics for multiple annotators
       request:
         name: StatsAgreementAnnotatorsRequest
         query-parameters:
@@ -670,7 +670,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get total agreement for project
+      display-name: ✨ Get total agreement for project
       request:
         name: StatsTotalAgreementRequest
         query-parameters:
@@ -732,7 +732,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get prediction agreement statistics for multiple annotators
+      display-name: ✨ Get prediction agreement statistics for multiple annotators
       request:
         name: StatsUsersPredictionAgreementRequest
         query-parameters:
@@ -776,7 +776,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get review scores for multiple annotators
+      display-name: ✨ Get review scores for multiple annotators
       request:
         name: StatsUsersReviewScoreRequest
         query-parameters:
@@ -822,7 +822,7 @@ service:
       path-parameters:
         id: integer
         user_pk: integer
-      display-name: Get individual user prediction agreement
+      display-name: ✨ Get individual user prediction agreement
       request:
         name: StatsUserPredictionAgreementRequest
         query-parameters:
@@ -858,7 +858,7 @@ service:
       path-parameters:
         id: integer
         user_pk: integer
-      display-name: Get individual user review scores
+      display-name: ✨ Get individual user review scores
       request:
         name: StatsUserReviewScoreRequest
         query-parameters:
@@ -896,7 +896,7 @@ service:
       path-parameters:
         id: integer
         user_pk: integer
-      display-name: Get individual user ground truth agreement
+      display-name: ✨ Get individual user ground truth agreement
       request:
         name: StatsUserGroundTruthAgreementRequest
         query-parameters:

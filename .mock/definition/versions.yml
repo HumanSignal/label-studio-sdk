@@ -18,7 +18,7 @@ service:
         Get version information about the Label Studio instance.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get version information
+      display-name: ✨ Get version information
       response:
         docs: ''
         type: root.VersionResponse
