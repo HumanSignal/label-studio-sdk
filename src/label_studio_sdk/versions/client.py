@@ -16,12 +16,6 @@ class VersionsClient:
 
     def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> VersionResponse:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Get version information about the Label Studio instance.
 
         Parameters
@@ -69,12 +63,6 @@ class AsyncVersionsClient:
 
     async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> VersionResponse:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Get version information about the Label Studio instance.
 
         Parameters

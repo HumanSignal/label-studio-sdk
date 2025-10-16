@@ -19,7 +19,7 @@ service:
         authentication.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get GCS WIF import storage
+      display-name: ✨ Get GCS WIF import storage
       request:
         name: GcswifListRequest
         query-parameters:
@@ -78,7 +78,7 @@ service:
         Create GCS import storage with WIF.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create GCS import storage with WIF
+      display-name: ✨ Create GCS import storage with WIF
       request:
         body: root.GcswifImportStorageRequest
         content-type: application/json
@@ -134,7 +134,7 @@ service:
         WIF authentication.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Validate GCS WIF import storage
+      display-name: ✨ Validate GCS WIF import storage
       request:
         body: root.GcswifImportStorageRequest
         content-type: application/json
@@ -159,7 +159,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get GCS WIF import storage
+      display-name: ✨ Get GCS WIF import storage
       response:
         docs: ''
         type: root.GcswifImportStorage
@@ -214,7 +214,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete GCS WIF import storage
+      display-name: ✨ Delete GCS WIF import storage
       examples:
         - path-parameters:
             id: 1
@@ -237,7 +237,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update GCS WIF import storage
+      display-name: ✨ Update GCS WIF import storage
       request:
         name: PatchedGcswifImportStorageRequest
         body:
@@ -373,7 +373,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Sync GCS WIF import storage
+      display-name: ✨ Sync GCS WIF import storage
       response:
         docs: ''
         type: root.GcswifImportStorage

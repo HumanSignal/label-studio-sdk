@@ -20,7 +20,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: List workspace projects
+      display-name: ✨ List workspace projects
       response:
         docs: Projects list
         type: list<root.Project>
@@ -98,7 +98,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Add workspace project
+      display-name: ✨ Add workspace project
       request:
         name: WorkspaceProjectsRequest
         body:
@@ -128,7 +128,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Remove workspace project
+      display-name: ✨ Remove workspace project
       examples:
         - path-parameters:
             id: 1

@@ -21,7 +21,7 @@ service:
       path-parameters:
         project_pk: integer
         user_pk: integer
-      display-name: List pauses
+      display-name: ✨ List pauses
       request:
         name: PausesListRequest
         query-parameters:
@@ -74,7 +74,7 @@ service:
       path-parameters:
         project_pk: integer
         user_pk: integer
-      display-name: Create pause
+      display-name: ✨ Create pause
       request:
         body: root.PauseRequest
         content-type: application/json
@@ -124,7 +124,7 @@ service:
         id: string
         project_pk: integer
         user_pk: integer
-      display-name: Get pause
+      display-name: ✨ Get pause
       response:
         docs: ''
         type: root.Pause
@@ -170,7 +170,7 @@ service:
         id: string
         project_pk: integer
         user_pk: integer
-      display-name: Delete pause
+      display-name: ✨ Delete pause
       examples:
         - path-parameters:
             id: id
@@ -196,7 +196,7 @@ service:
         id: string
         project_pk: integer
         user_pk: integer
-      display-name: Update pause
+      display-name: ✨ Update pause
       request:
         name: PatchedPauseRequest
         body:

@@ -18,7 +18,7 @@ service:
         List all comments for a specific annotation ID.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List comments
+      display-name: ✨ List comments
       request:
         name: CommentsListRequest
         query-parameters:
@@ -67,7 +67,7 @@ service:
         Create a comment for a specific annotation ID.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create comment
+      display-name: ✨ Create comment
       request:
         body: root.CommentRequest
         query-parameters:
@@ -114,7 +114,7 @@ service:
         Export comments to CSV file
       source:
         openapi: openapi/openapi.yaml
-      display-name: Export comments to CSV
+      display-name: ✨ Export comments to CSV
       request:
         name: CommentsExportRequest
         query-parameters:
@@ -149,7 +149,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Get comment
+      display-name: ✨ Get comment
       request:
         name: CommentsGetRequest
         query-parameters:
@@ -197,7 +197,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Put comment
+      display-name: ✨ Put comment
       request:
         body: root.CommentRequest
         query-parameters:
@@ -248,7 +248,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Delete comment
+      display-name: ✨ Delete comment
       request:
         name: CommentsDeleteRequest
         query-parameters:
@@ -276,7 +276,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Update comment
+      display-name: ✨ Update comment
       request:
         name: PatchedCommentRequest
         query-parameters:

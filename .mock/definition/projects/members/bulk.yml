@@ -31,7 +31,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Bulk assign project members
+      display-name: ✨ Bulk assign project members
       request:
         name: ProjectMemberBulkAssignRequest
         query-parameters:
@@ -77,7 +77,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Bulk unassign project members
+      display-name: ✨ Bulk unassign project members
       request:
         name: BulkDeleteRequest
         query-parameters:

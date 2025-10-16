@@ -23,7 +23,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get project members paginated
+      display-name: ✨ Get project members paginated
       request:
         name: PaginatedListRequest
         query-parameters:

@@ -21,7 +21,7 @@ service:
         the Annotation History panel during labeling.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List all annotation history items for annotation
+      display-name: ✨ List all annotation history items for annotation
       request:
         name: AnnotationHistoryListRequest
         query-parameters:
@@ -71,7 +71,7 @@ service:
         roles.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Delete annotation history items
+      display-name: ✨ Delete annotation history items
       request:
         name: AnnotationHistoryDeleteRequest
         query-parameters:
@@ -109,7 +109,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: List annotation history items for project
+      display-name: ✨ List annotation history items for project
       request:
         name: AnnotationHistoryListForProjectRequest
         query-parameters:
