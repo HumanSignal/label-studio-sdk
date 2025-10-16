@@ -1688,15 +1688,6 @@ types:
       total: optional<integer>
     source:
       openapi: openapi/openapi.yaml
-  CustomScriptsEditableByEnum:
-    enum:
-      - AD
-      - MA
-    docs: |-
-      * `AD` - Administrator
-      * `MA` - Manager
-    source:
-      openapi: openapi/openapi.yaml
   DatabricksExportStorage:
     properties:
       can_delete_objects:
@@ -2167,22 +2158,6 @@ types:
       - 'NO'
     source:
       openapi: openapi/openapi.yaml
-  DefaultRoleCustomScriptsEditableBy:
-    discriminated: false
-    docs: >-
-      Set the minimum user role that can edit custom scripts (Plugins) in the
-      UI.
-
-
-      * `AD` - Administrator
-
-      * `MA` - Manager
-    union:
-      - CustomScriptsEditableByEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   DefaultRole:
     properties:
       annotator_reviewer_firewall_enabled_at:
@@ -2192,16 +2167,6 @@ types:
           reviewers in the label stream, review stream, and notifications (which
           will be disabled). In these settings, information about annotator and
           reviewer identity is suppressed in the UI.
-      custom_scripts_editable_by:
-        type: optional<DefaultRoleCustomScriptsEditableBy>
-        docs: >-
-          Set the minimum user role that can edit custom scripts (Plugins) in
-          the UI.
-
-
-          * `AD` - Administrator
-
-          * `MA` - Manager
       custom_scripts_enabled_at:
         type: optional<datetime>
         docs: >-
@@ -3631,36 +3596,10 @@ types:
       trial_role: optional<LseFieldsRequestTrialRole>
     source:
       openapi: openapi/openapi.yaml
-  LseOrganizationCustomScriptsEditableBy:
-    discriminated: false
-    docs: >-
-      Set the minimum user role that can edit custom scripts (Plugins) in the
-      UI.
-
-
-      * `AD` - Administrator
-
-      * `MA` - Manager
-    union:
-      - CustomScriptsEditableByEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseOrganization:
     properties:
       billing: OrganizationBilling
       created_at: datetime
-      custom_scripts_editable_by:
-        type: optional<LseOrganizationCustomScriptsEditableBy>
-        docs: >-
-          Set the minimum user role that can edit custom scripts (Plugins) in
-          the UI.
-
-
-          * `AD` - Administrator
-
-          * `MA` - Manager
       custom_scripts_enabled: string
       default_role:
         type: optional<Role9E7Enum>

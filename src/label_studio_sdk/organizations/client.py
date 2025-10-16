@@ -17,12 +17,8 @@ from ..errors.bad_request_error import BadRequestError
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.not_found_error import NotFoundError
 import datetime as dt
-from .types.patched_default_role_request_custom_scripts_editable_by import (
-    PatchedDefaultRoleRequestCustomScriptsEditableBy,
-)
 from ..types.role9e7enum import Role9E7Enum
 from ..types.default_role import DefaultRole
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 from .invites.client import AsyncInvitesClient
 from .members.client import AsyncMembersClient
@@ -185,7 +181,6 @@ class OrganizationsClient:
         *,
         contact_info: typing.Optional[str] = OMIT,
         created_by: typing.Optional[int] = OMIT,
-        custom_scripts_editable_by: typing.Optional[str] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
         email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
@@ -210,8 +205,6 @@ class OrganizationsClient:
         contact_info : typing.Optional[str]
 
         created_by : typing.Optional[int]
-
-        custom_scripts_editable_by : typing.Optional[str]
 
         custom_scripts_enabled : typing.Optional[bool]
 
@@ -250,7 +243,6 @@ class OrganizationsClient:
             json={
                 "contact_info": contact_info,
                 "created_by": created_by,
-                "custom_scripts_editable_by": custom_scripts_editable_by,
                 "custom_scripts_enabled": custom_scripts_enabled,
                 "email_notification_settings": email_notification_settings,
                 "embed_domains": embed_domains,
@@ -313,7 +305,6 @@ class OrganizationsClient:
         id: int,
         *,
         annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        custom_scripts_editable_by: typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy] = OMIT,
         custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
         default_role: typing.Optional[Role9E7Enum] = OMIT,
         email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
@@ -341,12 +332,6 @@ class OrganizationsClient:
 
         annotator_reviewer_firewall_enabled_at : typing.Optional[dt.datetime]
             Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-
-        custom_scripts_editable_by : typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy]
-            Set the minimum user role that can edit custom scripts (Plugins) in the UI.
-
-            * `AD` - Administrator
-            * `MA` - Manager
 
         custom_scripts_enabled_at : typing.Optional[dt.datetime]
             Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
@@ -406,11 +391,6 @@ class OrganizationsClient:
             method="PATCH",
             json={
                 "annotator_reviewer_firewall_enabled_at": annotator_reviewer_firewall_enabled_at,
-                "custom_scripts_editable_by": convert_and_respect_annotation_metadata(
-                    object_=custom_scripts_editable_by,
-                    annotation=PatchedDefaultRoleRequestCustomScriptsEditableBy,
-                    direction="write",
-                ),
                 "custom_scripts_enabled_at": custom_scripts_enabled_at,
                 "default_role": default_role,
                 "email_notification_settings": email_notification_settings,
@@ -620,7 +600,6 @@ class AsyncOrganizationsClient:
         *,
         contact_info: typing.Optional[str] = OMIT,
         created_by: typing.Optional[int] = OMIT,
-        custom_scripts_editable_by: typing.Optional[str] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
         email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
@@ -645,8 +624,6 @@ class AsyncOrganizationsClient:
         contact_info : typing.Optional[str]
 
         created_by : typing.Optional[int]
-
-        custom_scripts_editable_by : typing.Optional[str]
 
         custom_scripts_enabled : typing.Optional[bool]
 
@@ -693,7 +670,6 @@ class AsyncOrganizationsClient:
             json={
                 "contact_info": contact_info,
                 "created_by": created_by,
-                "custom_scripts_editable_by": custom_scripts_editable_by,
                 "custom_scripts_enabled": custom_scripts_enabled,
                 "email_notification_settings": email_notification_settings,
                 "embed_domains": embed_domains,
@@ -756,7 +732,6 @@ class AsyncOrganizationsClient:
         id: int,
         *,
         annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        custom_scripts_editable_by: typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy] = OMIT,
         custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
         default_role: typing.Optional[Role9E7Enum] = OMIT,
         email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
@@ -784,12 +759,6 @@ class AsyncOrganizationsClient:
 
         annotator_reviewer_firewall_enabled_at : typing.Optional[dt.datetime]
             Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-
-        custom_scripts_editable_by : typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy]
-            Set the minimum user role that can edit custom scripts (Plugins) in the UI.
-
-            * `AD` - Administrator
-            * `MA` - Manager
 
         custom_scripts_enabled_at : typing.Optional[dt.datetime]
             Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
@@ -857,11 +826,6 @@ class AsyncOrganizationsClient:
             method="PATCH",
             json={
                 "annotator_reviewer_firewall_enabled_at": annotator_reviewer_firewall_enabled_at,
-                "custom_scripts_editable_by": convert_and_respect_annotation_metadata(
-                    object_=custom_scripts_editable_by,
-                    annotation=PatchedDefaultRoleRequestCustomScriptsEditableBy,
-                    direction="write",
-                ),
                 "custom_scripts_enabled_at": custom_scripts_enabled_at,
                 "default_role": default_role,
                 "email_notification_settings": email_notification_settings,
