@@ -535,7 +535,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get ground truth agreement for multiple users
+      display-name: ✨ Get ground truth agreement for multiple users
       request:
         name: StatsUsersGroundTruthAgreementRequest
         query-parameters:

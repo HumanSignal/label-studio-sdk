@@ -9026,7 +9026,7 @@ paths:
           description: Ground truth agreement statistics for multiple users
       security:
         - Token: []
-      summary: Get ground truth agreement for multiple users
+      summary: ✨ Get ground truth agreement for multiple users
       tags:
         - Stats
       x-fern-audiences:
