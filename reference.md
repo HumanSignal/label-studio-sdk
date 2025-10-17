@@ -4767,14 +4767,6 @@ client.organizations.update(
 <dl>
 <dd>
 
-**custom_scripts_editable_by:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **custom_scripts_enabled:** `typing.Optional[bool]` 
     
 </dd>
@@ -4900,19 +4892,6 @@ client.organizations.update_default_role(
 <dd>
 
 **annotator_reviewer_firewall_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_scripts_editable_by:** `typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy]` 
-
-Set the minimum user role that can edit custom scripts (Plugins) in the UI.
-
-* `AD` - Administrator
-* `MA` - Manager
     
 </dd>
 </dl>

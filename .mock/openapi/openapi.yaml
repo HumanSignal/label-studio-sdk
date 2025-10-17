@@ -21212,14 +21212,6 @@ components:
         - limit
         - reached
       type: object
-    CustomScriptsEditableByEnum:
-      description: |-
-        * `AD` - Administrator
-        * `MA` - Manager
-      enum:
-        - AD
-        - MA
-      type: string
     DatabricksExportStorage:
       properties:
         can_delete_objects:
@@ -21803,16 +21795,6 @@ components:
           format: date-time
           nullable: true
           type: string
-        custom_scripts_editable_by:
-          description: |-
-            Set the minimum user role that can edit custom scripts (Plugins) in the UI.
-
-            * `AD` - Administrator
-            * `MA` - Manager
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/CustomScriptsEditableByEnum'
-            - $ref: '#/components/schemas/NullEnum'
         custom_scripts_enabled_at:
           description: Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
           format: date-time
@@ -23695,16 +23677,6 @@ components:
           format: date-time
           readOnly: true
           type: string
-        custom_scripts_editable_by:
-          description: |-
-            Set the minimum user role that can edit custom scripts (Plugins) in the UI.
-
-            * `AD` - Administrator
-            * `MA` - Manager
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/CustomScriptsEditableByEnum'
-            - $ref: '#/components/schemas/NullEnum'
         custom_scripts_enabled:
           readOnly: true
           type: string
@@ -28118,16 +28090,6 @@ components:
           format: date-time
           nullable: true
           type: string
-        custom_scripts_editable_by:
-          description: |-
-            Set the minimum user role that can edit custom scripts (Plugins) in the UI.
-
-            * `AD` - Administrator
-            * `MA` - Manager
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/CustomScriptsEditableByEnum'
-            - $ref: '#/components/schemas/NullEnum'
         custom_scripts_enabled_at:
           description: Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
           format: date-time
@@ -28516,11 +28478,6 @@ components:
         created_by:
           nullable: true
           type: integer
-        custom_scripts_editable_by:
-          minLength: 1
-          nullable: true
-          type: string
-          writeOnly: true
         custom_scripts_enabled:
           nullable: true
           type: boolean
