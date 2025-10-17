@@ -859,7 +859,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Duplicate project
+      display-name: ✨ Duplicate project
       request:
         name: ProjectDuplicateRequest
         body:

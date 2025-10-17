@@ -494,6 +494,12 @@ class StatsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsDataFiltersResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get statistics about user data filters and their usage within a project.
 
         Parameters
@@ -542,6 +548,12 @@ class StatsClient:
         self, id: int, *, user_pk: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsFinishedTasksResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get statistics about finished tasks for a project.
 
         Parameters
@@ -594,6 +606,12 @@ class StatsClient:
 
     def lead_time(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> StatsLeadTimeResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get lead time statistics across the project, including average annotation time.
 
         Parameters
@@ -712,6 +730,12 @@ class StatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, typing.Optional[typing.Any]]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Start stats recalculation for given project
 
         Parameters
@@ -1631,6 +1655,12 @@ class AsyncStatsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsDataFiltersResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get statistics about user data filters and their usage within a project.
 
         Parameters
@@ -1687,6 +1717,12 @@ class AsyncStatsClient:
         self, id: int, *, user_pk: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsFinishedTasksResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get statistics about finished tasks for a project.
 
         Parameters
@@ -1749,6 +1785,12 @@ class AsyncStatsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsLeadTimeResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get lead time statistics across the project, including average annotation time.
 
         Parameters
@@ -1883,6 +1925,12 @@ class AsyncStatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, typing.Optional[typing.Any]]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Start stats recalculation for given project
 
         Parameters

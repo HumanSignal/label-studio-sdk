@@ -25,7 +25,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get key indicators
+      display-name: ✨ Get key indicators
       response:
         docs: Key indicators
         type: list<IndicatorsListResponseItem>
@@ -56,7 +56,7 @@ service:
       path-parameters:
         id: integer
         indicator_key: string
-      display-name: Get key indicator
+      display-name: ✨ Get key indicator
       response:
         docs: Key indicator
         type: root.LseKeyIndicatorValue

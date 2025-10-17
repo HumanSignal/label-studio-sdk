@@ -13,13 +13,19 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get the AWS Lambda code for the custom metric configured for this
         project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get AWS custom metric code
+      display-name: ✨ Get AWS custom metric code
       response:
         docs: Lambda code
         type: CustomGetLambdaResponse
@@ -36,13 +42,19 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create or update the AWS Lambda function used for custom metrics in this
         project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update AWS custom metric Lambda
+      display-name: ✨ Update AWS custom metric Lambda
       request:
         name: AwsCustomFunctionUpdateRequest
         body:
@@ -68,13 +80,19 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get AWS lambda logs for project, including filtering by start and end
         dates
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get AWS lambda logs for project
+      display-name: ✨ Get AWS lambda logs for project
       request:
         name: CustomLogsRequest
         query-parameters:
@@ -103,12 +121,19 @@ service:
       path: /api/projects/{id}/check-function
       method: POST
       auth: true
-      docs: Validate custom matching function code for the project.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate custom matching function code for the project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Check custom matching function code
+      display-name: ✨ Check custom matching function code
       request:
         name: CheckMatchingFunctionRequestRequest
         body:

@@ -332,7 +332,7 @@ service:
       path-parameters:
         id: integer
         model_version: string
-      display-name: Get model-version overall agreement vs annotators
+      display-name: ✨ Get model-version overall agreement vs annotators
       response:
         docs: Model-version overall agreement vs annotators
         type: StatsModelVersionAnnotatorAgreementResponse
@@ -363,7 +363,7 @@ service:
       path-parameters:
         id: integer
         model_version: string
-      display-name: Get model-version ground truth agreement
+      display-name: ✨ Get model-version ground truth agreement
       request:
         name: StatsModelVersionGroundTruthAgreementRequest
         query-parameters:
@@ -401,7 +401,7 @@ service:
       path-parameters:
         id: integer
         model_version: string
-      display-name: Get model-version prediction agreement
+      display-name: ✨ Get model-version prediction agreement
       request:
         name: StatsModelVersionPredictionAgreementRequest
         query-parameters:
@@ -438,7 +438,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get Inter-Annotator Agreement matrix
+      display-name: ✨ Get Inter-Annotator Agreement matrix
       request:
         name: StatsIaaRequest
         query-parameters:
@@ -577,7 +577,7 @@ service:
       path-parameters:
         id: integer
         user_id: integer
-      display-name: Get individual annotator agreement stats
+      display-name: ✨ Get individual annotator agreement stats
       response:
         docs: Individual annotator agreement statistics
         type: StatsAgreementAnnotatorResponse
@@ -606,7 +606,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get agreement statistics for multiple annotators
+      display-name: ✨ Get agreement statistics for multiple annotators
       request:
         name: StatsAgreementAnnotatorsRequest
         query-parameters:
@@ -633,12 +633,19 @@ service:
       path: /api/projects/{id}/stats/data_filter
       method: GET
       auth: true
-      docs: Get statistics about user data filters and their usage within a project.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get statistics about user data filters and their usage within a project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get user data filter statistics
+      display-name: ✨ Get user data filter statistics
       response:
         docs: User data filter statistics
         type: StatsDataFiltersResponse
@@ -658,12 +665,19 @@ service:
       path: /api/projects/{id}/stats/finished
       method: GET
       auth: true
-      docs: Get statistics about finished tasks for a project.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get statistics about finished tasks for a project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get finished tasks statistics
+      display-name: ✨ Get finished tasks statistics
       request:
         name: StatsFinishedTasksRequest
         query-parameters:
@@ -688,13 +702,19 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get lead time statistics across the project, including average
         annotation time.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get lead time statistics
+      display-name: ✨ Get lead time statistics
       response:
         docs: Lead time statistics
         type: StatsLeadTimeResponse
@@ -731,7 +751,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get total agreement for project
+      display-name: ✨ Get total agreement for project
       request:
         name: StatsTotalAgreementRequest
         query-parameters:
@@ -753,12 +773,19 @@ service:
       path: /api/projects/{id}/update-stats
       method: GET
       auth: true
-      docs: Start stats recalculation for given project
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Start stats recalculation for given project
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Start stats recalculation
+      display-name: ✨ Start stats recalculation
       request:
         name: StatsUpdateStatsRequest
         query-parameters:
@@ -793,7 +820,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get prediction agreement statistics for multiple annotators
+      display-name: ✨ Get prediction agreement statistics for multiple annotators
       request:
         name: StatsUsersPredictionAgreementRequest
         query-parameters:
@@ -837,7 +864,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get review scores for multiple annotators
+      display-name: ✨ Get review scores for multiple annotators
       request:
         name: StatsUsersReviewScoreRequest
         query-parameters:
@@ -883,7 +910,7 @@ service:
       path-parameters:
         id: integer
         user_pk: integer
-      display-name: Get individual user prediction agreement
+      display-name: ✨ Get individual user prediction agreement
       request:
         name: StatsUserPredictionAgreementRequest
         query-parameters:
@@ -919,7 +946,7 @@ service:
       path-parameters:
         id: integer
         user_pk: integer
-      display-name: Get individual user review scores
+      display-name: ✨ Get individual user review scores
       request:
         name: StatsUserReviewScoreRequest
         query-parameters:
@@ -957,7 +984,7 @@ service:
       path-parameters:
         id: integer
         user_pk: integer
-      display-name: Get individual user ground truth agreement
+      display-name: ✨ Get individual user ground truth agreement
       request:
         name: StatsUserGroundTruthAgreementRequest
         query-parameters:

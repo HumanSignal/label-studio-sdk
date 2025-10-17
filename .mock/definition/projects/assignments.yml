@@ -356,7 +356,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Bulk assign users to tasks
+      display-name: ✨ Bulk assign users to tasks
       request:
         name: AssignmentsBulkAssignRequest
         body:
@@ -427,7 +427,7 @@ service:
         task_pk:
           type: integer
           docs: A unique integer value identifying this task.
-      display-name: Get assigned tasks and assignees
+      display-name: ✨ Get assigned tasks and assignees
       response:
         docs: List of assignments for the task
         type: list<root.TaskAssignment>
@@ -465,7 +465,7 @@ service:
         task_pk:
           type: integer
           docs: A unique integer value identifying this task.
-      display-name: Create task assignee
+      display-name: ✨ Create task assignee
       request:
         name: AssignmentsAssignRequest
         body:
@@ -518,7 +518,7 @@ service:
         task_pk:
           type: integer
           docs: A unique integer value identifying this task.
-      display-name: Delete task assignments
+      display-name: ✨ Delete task assignments
       request:
         name: AssignmentsDeleteRequest
         query-parameters:
@@ -559,7 +559,7 @@ service:
         task_pk:
           type: integer
           docs: A unique integer value identifying this task.
-      display-name: Update task assignee
+      display-name: ✨ Update task assignee
       request:
         name: AssignmentsUpdateRequest
         body:

@@ -18,7 +18,7 @@ service:
         Get a list of all Databricks Files export storage connections.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List Databricks export storages
+      display-name: ✨ List Databricks export storages
       request:
         name: DatabricksListRequest
         query-parameters:
@@ -75,7 +75,7 @@ service:
         Create a Databricks Files export storage connection.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create Databricks export storage
+      display-name: ✨ Create Databricks export storage
       request:
         body: root.DatabricksExportStorageRequest
         content-type: application/json
@@ -132,7 +132,7 @@ service:
         Validate a specific Databricks Files export storage connection.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Validate Databricks export storage
+      display-name: ✨ Validate Databricks export storage
       request:
         body: root.DatabricksExportStorageRequest
         content-type: application/json
@@ -161,7 +161,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get Databricks export storage
+      display-name: ✨ Get Databricks export storage
       response:
         docs: ''
         type: root.DatabricksExportStorage
@@ -213,7 +213,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete Databricks export storage
+      display-name: ✨ Delete Databricks export storage
       examples:
         - path-parameters:
             id: 1
@@ -235,7 +235,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update Databricks export storage
+      display-name: ✨ Update Databricks export storage
       request:
         name: PatchedDatabricksExportStorageRequest
         body:
@@ -372,7 +372,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Sync Databricks export storage
+      display-name: ✨ Sync Databricks export storage
       response:
         docs: ''
         type: root.DatabricksExportStorage

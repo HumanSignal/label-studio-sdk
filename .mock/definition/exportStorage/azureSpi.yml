@@ -19,7 +19,7 @@ service:
         Service Principal authentication.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get all Azure SPI export storage
+      display-name: ✨ Get all Azure SPI export storage
       request:
         name: AzureSpiListRequest
         query-parameters:
@@ -76,7 +76,7 @@ service:
         authentication to store annotations.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create Azure export storage with SPI authentication
+      display-name: ✨ Create Azure export storage with SPI authentication
       request:
         body: root.AzureServicePrincipalExportStorageRequest
         content-type: application/json
@@ -129,7 +129,7 @@ service:
         Service Principal authentication.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Validate Azure SPI export storage
+      display-name: ✨ Validate Azure SPI export storage
       request:
         body: root.AzureServicePrincipalExportStorageRequest
         content-type: application/json
@@ -155,7 +155,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get Azure SPI export storage
+      display-name: ✨ Get Azure SPI export storage
       response:
         docs: ''
         type: root.AzureServicePrincipalExportStorage
@@ -207,7 +207,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete Azure SPI export storage
+      display-name: ✨ Delete Azure SPI export storage
       examples:
         - path-parameters:
             id: 1
@@ -230,7 +230,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update Azure SPI export storage
+      display-name: ✨ Update Azure SPI export storage
       request:
         name: PatchedAzureServicePrincipalExportStorageRequest
         body:
@@ -350,7 +350,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Sync Azure SPI export storage
+      display-name: ✨ Sync Azure SPI export storage
       response:
         docs: ''
         type: root.AzureServicePrincipalExportStorage
