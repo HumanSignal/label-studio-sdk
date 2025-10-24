@@ -21,8 +21,8 @@ class S3Client:
     def list(
         self,
         *,
+        project: int,
         ordering: typing.Optional[str] = None,
-        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[S3ExportStorage]:
         """
@@ -30,11 +30,11 @@ class S3Client:
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        project : typing.Optional[int]
-            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,7 +51,9 @@ class S3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.s3.list()
+        client.export_storage.s3.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/export/s3",
@@ -554,8 +556,8 @@ class AsyncS3Client:
     async def list(
         self,
         *,
+        project: int,
         ordering: typing.Optional[str] = None,
-        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[S3ExportStorage]:
         """
@@ -563,11 +565,11 @@ class AsyncS3Client:
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        project : typing.Optional[int]
-            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -589,7 +591,9 @@ class AsyncS3Client:
 
 
         async def main() -> None:
-            await client.export_storage.s3.list()
+            await client.export_storage.s3.list(
+                project=1,
+            )
 
 
         asyncio.run(main())

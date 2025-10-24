@@ -146,6 +146,10 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
+      user_session:
+        type: optional<string>
+        validation:
+          maxLength: 8
       workspace_owner_id:
         type: optional<integer>
         docs: Owner id of workspace where action performed
@@ -686,6 +690,28 @@ types:
       remove_from_queue: optional<boolean>
       result: optional<unknown>
       started_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml
+  AnnotatorPerformance:
+    docs: |-
+      Response serializer for annotator performance data.
+      Returns user info and all performance metrics.
+    properties:
+      accepted: integer
+      assigned: integer
+      avg_time_seconds: optional<double>
+      fix_accepted: integer
+      median_time_seconds: optional<double>
+      pending: integer
+      performance_score: optional<double>
+      rejected: integer
+      skipped: integer
+      submitted: integer
+      time_submitting_seconds: optional<double>
+      time_updating_seconds: optional<double>
+      total_time_seconds: optional<double>
+      updated: integer
+      user: LseUser
     source:
       openapi: openapi/openapi.yaml
   AssignmentSettingsLabelStreamTaskDistribution:
@@ -1429,6 +1455,7 @@ types:
       allow_data_credentials: boolean
       allow_invite_people: boolean
       allow_invite_project_experts: boolean
+      allow_nda: boolean
       allow_organization_webhooks: boolean
       allow_sso: boolean
       allow_storage_proxy: boolean
@@ -1441,7 +1468,6 @@ types:
       embed_domains: optional<list<map<string, unknown>>>
       embed_enabled: boolean
       embed_settings: optional<map<string, unknown>>
-      hide_storage_settings_for_manager: boolean
       manual_role_management: boolean
       manual_workspace_management: boolean
       secure_mode: boolean
@@ -6010,6 +6036,20 @@ types:
         validation:
           format: uri
       results: list<AnnotationHistory>
+    source:
+      openapi: openapi/openapi.yaml
+  PaginatedAnnotatorPerformanceList:
+    properties:
+      count: integer
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      previous:
+        type: optional<string>
+        validation:
+          format: uri
+      results: list<AnnotatorPerformance>
     source:
       openapi: openapi/openapi.yaml
   PaginatedLabelCreateList:

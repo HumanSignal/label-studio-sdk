@@ -74,6 +74,7 @@ service:
                 allow_data_credentials: true
                 allow_invite_people: true
                 allow_invite_project_experts: true
+                allow_nda: true
                 allow_organization_webhooks: true
                 allow_sso: false
                 allow_storage_proxy: true
@@ -91,7 +92,6 @@ service:
                   public_verify_alg:
                     - RS256
                   public_verify_key: ....
-                hide_storage_settings_for_manager: false
                 manual_role_management: false
                 manual_workspace_management: false
                 secure_mode: false
@@ -148,6 +148,7 @@ service:
                 allow_data_credentials: true
                 allow_invite_people: true
                 allow_invite_project_experts: true
+                allow_nda: true
                 allow_organization_webhooks: true
                 allow_sso: true
                 allow_storage_proxy: true
@@ -165,7 +166,6 @@ service:
                   public_verify_alg:
                     - RS256
                   public_verify_key: ....
-                hide_storage_settings_for_manager: false
                 manual_role_management: false
                 manual_workspace_management: false
                 secure_mode: false
@@ -222,6 +222,7 @@ service:
                 allow_data_credentials: false
                 allow_invite_people: true
                 allow_invite_project_experts: true
+                allow_nda: true
                 allow_organization_webhooks: false
                 allow_sso: true
                 allow_storage_proxy: true
@@ -239,7 +240,6 @@ service:
                   public_verify_alg:
                     - RS256
                   public_verify_key: ....
-                hide_storage_settings_for_manager: false
                 manual_role_management: true
                 manual_workspace_management: true
                 secure_mode: false

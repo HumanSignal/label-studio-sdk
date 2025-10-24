@@ -1,0 +1,97 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_analytics_annotator_performance_list:
+      path: /api/analytics/annotator-performance/
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve performance metrics for all annotators in the active
+        organization. Returns metrics including submitted, pending, accepted,
+        rejected annotations, performance scores, and time statistics. Supports
+        filtering by date range, projects, and specific members. Implements
+        query-level pagination for optimal performance with large organizations.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Get annotator performance metrics
+      request:
+        name: ApiAnalyticsAnnotatorPerformanceListRequest
+        query-parameters:
+          end:
+            type: optional<datetime>
+            docs: End date for filtering (ISO format)
+          members:
+            type: optional<string>
+            docs: Comma-separated list of user IDs to filter by
+          ordering:
+            type: optional<string>
+            docs: >-
+              Field to order by. Prefix with - for descending. User fields
+              (efficient): email, username, first_name, last_name. Metric
+              fields: assigned, pending, submitted, updated, skipped,
+              performance_score, accepted, rejected, fix_accepted,
+              total_time_seconds, avg_time_seconds, median_time_seconds.
+              Default: email
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
+          projects:
+            type: optional<string>
+            docs: Comma-separated list of project IDs to filter by
+          start:
+            type: optional<datetime>
+            docs: Start date for filtering (ISO format)
+      response:
+        docs: Annotator performance metrics
+        type: root.PaginatedAnnotatorPerformanceList
+      errors:
+        - root.NotFoundError
+      examples:
+        - response:
+            body:
+              count: 123
+              next: http://api.example.org/accounts/?page=4
+              previous: http://api.example.org/accounts/?page=2
+              results:
+                - accepted: 1
+                  assigned: 1
+                  avg_time_seconds: 1.1
+                  fix_accepted: 1
+                  median_time_seconds: 1.1
+                  pending: 1
+                  performance_score: 1.1
+                  rejected: 1
+                  skipped: 1
+                  submitted: 1
+                  time_submitting_seconds: 1.1
+                  time_updating_seconds: 1.1
+                  total_time_seconds: 1.1
+                  updated: 1
+                  user:
+                    active_organization_meta: active_organization_meta
+                    avatar: avatar
+                    id: 1
+                    initials: initials
+                    last_activity: '2024-01-15T09:30:00Z'
+                    lse_fields:
+                      email_notification_settings: email_notification_settings
+                      invite_expired: invite_expired
+                      invite_expired_at: invite_expired_at
+                    org_membership:
+                      - active: active
+                        organization_id: 1
+                        role: role
+                    organization_membership:
+                      active: active
+                      organization_id: 1
+                      role: role
+                    pause: pause
+                    username: username
+  source:
+    openapi: openapi/openapi.yaml

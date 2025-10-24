@@ -97,6 +97,64 @@ paths:
         - public
       x-fern-sdk-group-name: activity_logs
       x-fern-sdk-method-name: list
+  /api/analytics/annotator-performance/:
+    get:
+      description: Retrieve performance metrics for all annotators in the active organization. Returns metrics including submitted, pending, accepted, rejected annotations, performance scores, and time statistics. Supports filtering by date range, projects, and specific members. Implements query-level pagination for optimal performance with large organizations.
+      operationId: api_analytics_annotator_performance_list
+      parameters:
+        - description: End date for filtering (ISO format)
+          in: query
+          name: end
+          schema:
+            format: date-time
+            type: string
+        - description: Comma-separated list of user IDs to filter by
+          in: query
+          name: members
+          schema:
+            type: string
+        - description: 'Field to order by. Prefix with - for descending. User fields (efficient): email, username, first_name, last_name. Metric fields: assigned, pending, submitted, updated, skipped, performance_score, accepted, rejected, fix_accepted, total_time_seconds, avg_time_seconds, median_time_seconds. Default: email'
+          in: query
+          name: ordering
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: Comma-separated list of project IDs to filter by
+          in: query
+          name: projects
+          schema:
+            type: string
+        - description: Start date for filtering (ISO format)
+          in: query
+          name: start
+          schema:
+            format: date-time
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAnnotatorPerformanceList'
+          description: Annotator performance metrics
+        '404':
+          description: Organization not found
+      security:
+        - Token: []
+      summary: Get annotator performance metrics
+      tags:
+        - Analytics
   /api/annotation-history/:
     delete:
       description: |-
@@ -758,7 +816,6 @@ paths:
                         public_verify_alg:
                           - RS256
                         public_verify_key: '....'
-                      hide_storage_settings_for_manager: false
                       manual_role_management: false
                       manual_workspace_management: false
                       secure_mode: false
@@ -828,7 +885,6 @@ paths:
                         public_verify_alg:
                           - RS256
                         public_verify_key: '....'
-                      hide_storage_settings_for_manager: false
                       manual_role_management: false
                       manual_workspace_management: false
                       secure_mode: false
@@ -898,7 +954,6 @@ paths:
                         public_verify_alg:
                           - RS256
                         public_verify_key: '....'
-                      hide_storage_settings_for_manager: false
                       manual_role_management: true
                       manual_workspace_management: true
                       secure_mode: false
@@ -2971,8 +3026,12 @@ paths:
                       title: Order
                       type: integer
                     permission:
-                      title: Permission
-                      type: string
+                      oneOf:
+                        - type: string
+                        - description: List of permissions (user needs any all of them)
+                          items:
+                            type: string
+                          type: array
                     title:
                       title: Title
                       type: string
@@ -11775,6 +11834,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -12099,6 +12159,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -12364,6 +12425,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -12654,6 +12716,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -12944,6 +13007,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -13209,6 +13273,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -13467,6 +13532,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -13757,6 +13823,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -14015,6 +14082,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -14280,6 +14348,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -14572,6 +14641,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -14898,6 +14968,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -15184,6 +15255,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -15508,6 +15580,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -15766,6 +15839,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -16032,6 +16106,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -16325,6 +16400,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -16694,6 +16770,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -18950,6 +19027,10 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        user_session:
+          maxLength: 8
+          nullable: true
+          type: string
         workspace_owner_id:
           description: Owner id of workspace where action performed
           maximum: 2147483647
@@ -19763,6 +19844,72 @@ components:
           type: string
       required:
         - annotation
+      type: object
+    AnnotatorPerformance:
+      description: |-
+        Response serializer for annotator performance data.
+        Returns user info and all performance metrics.
+      properties:
+        accepted:
+          type: integer
+        assigned:
+          type: integer
+        avg_time_seconds:
+          format: double
+          nullable: true
+          type: number
+        fix_accepted:
+          type: integer
+        median_time_seconds:
+          format: double
+          nullable: true
+          type: number
+        pending:
+          type: integer
+        performance_score:
+          format: double
+          nullable: true
+          type: number
+        rejected:
+          type: integer
+        skipped:
+          type: integer
+        submitted:
+          type: integer
+        time_submitting_seconds:
+          format: double
+          nullable: true
+          type: number
+        time_updating_seconds:
+          format: double
+          nullable: true
+          type: number
+        total_time_seconds:
+          format: double
+          nullable: true
+          type: number
+        updated:
+          type: integer
+        user:
+          allOf:
+            - $ref: '#/components/schemas/LseUser'
+          readOnly: true
+      required:
+        - accepted
+        - assigned
+        - avg_time_seconds
+        - fix_accepted
+        - median_time_seconds
+        - pending
+        - performance_score
+        - rejected
+        - skipped
+        - submitted
+        - time_submitting_seconds
+        - time_updating_seconds
+        - total_time_seconds
+        - updated
+        - user
       type: object
     AssignmentSettings:
       properties:
@@ -20728,6 +20875,8 @@ components:
           type: boolean
         allow_invite_project_experts:
           type: boolean
+        allow_nda:
+          type: boolean
         allow_organization_webhooks:
           type: boolean
         allow_sso:
@@ -20756,8 +20905,6 @@ components:
         embed_settings:
           additionalProperties: {}
           type: object
-        hide_storage_settings_for_manager:
-          type: boolean
         manual_role_management:
           type: boolean
         manual_workspace_management:
@@ -20777,6 +20924,7 @@ components:
         - allow_data_credentials
         - allow_invite_people
         - allow_invite_project_experts
+        - allow_nda
         - allow_organization_webhooks
         - allow_sso
         - allow_storage_proxy
@@ -20787,7 +20935,6 @@ components:
         - disable_project_imports
         - early_adopter
         - embed_enabled
-        - hide_storage_settings_for_manager
         - manual_role_management
         - manual_workspace_management
         - secure_mode
@@ -27230,6 +27377,29 @@ components:
         results:
           items:
             $ref: '#/components/schemas/AnnotationHistory'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedAnnotatorPerformanceList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/AnnotatorPerformance'
           type: array
       required:
         - count

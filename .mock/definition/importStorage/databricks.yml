@@ -26,13 +26,15 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
           project:
-            type: optional<integer>
+            type: integer
             docs: Project ID
       response:
         docs: ''
         type: list<root.DatabricksImportStorage>
       examples:
-        - response:
+        - query-parameters:
+            project: 1
+          response:
             body:
               - catalog: catalog
                 created_at: '2024-01-15T09:30:00Z'

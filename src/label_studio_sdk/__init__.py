@@ -291,6 +291,7 @@ from .actions import (
     ActionsCreateRequestSelectedItemsIncluded,
     ActionsListResponseItem,
     ActionsListResponseItemDialog,
+    ActionsListResponseItemPermission,
 )
 from .activity_logs import ActivityLogsListRequestMethod
 from .annotation_history import AnnotationHistoryDeleteResponse
@@ -367,6 +368,7 @@ __all__ = [
     "ActionsEnum",
     "ActionsListResponseItem",
     "ActionsListResponseItemDialog",
+    "ActionsListResponseItemPermission",
     "ActivityLog",
     "ActivityLogResponse",
     "ActivityLogsListRequestMethod",

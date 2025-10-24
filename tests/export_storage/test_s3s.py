@@ -72,10 +72,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.export_storage.s3s.list()
+    response = client.export_storage.s3s.list(project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.export_storage.s3s.list()
+    async_response = await async_client.export_storage.s3s.list(project=1)
     validate_response(async_response, expected_response, expected_types)
 
 

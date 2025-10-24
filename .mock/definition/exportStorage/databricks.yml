@@ -26,13 +26,15 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
           project:
-            type: optional<integer>
+            type: integer
             docs: Project ID
       response:
         docs: ''
         type: list<root.DatabricksExportStorage>
       examples:
-        - response:
+        - query-parameters:
+            project: 1
+          response:
             body:
               - can_delete_objects: true
                 catalog: catalog

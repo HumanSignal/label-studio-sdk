@@ -23,8 +23,8 @@ class GcswifClient:
     def list(
         self,
         *,
+        project: int,
         ordering: typing.Optional[str] = None,
-        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[GcswifImportStorage]:
         """
@@ -38,11 +38,11 @@ class GcswifClient:
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        project : typing.Optional[int]
-            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -59,7 +59,9 @@ class GcswifClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.gcswif.list()
+        client.import_storage.gcswif.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/gcswif/",
@@ -744,8 +746,8 @@ class AsyncGcswifClient:
     async def list(
         self,
         *,
+        project: int,
         ordering: typing.Optional[str] = None,
-        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[GcswifImportStorage]:
         """
@@ -759,11 +761,11 @@ class AsyncGcswifClient:
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        project : typing.Optional[int]
-            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -785,7 +787,9 @@ class AsyncGcswifClient:
 
 
         async def main() -> None:
-            await client.import_storage.gcswif.list()
+            await client.import_storage.gcswif.list(
+                project=1,
+            )
 
 
         asyncio.run(main())

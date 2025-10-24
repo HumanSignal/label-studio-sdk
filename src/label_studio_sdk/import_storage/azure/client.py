@@ -21,8 +21,8 @@ class AzureClient:
     def list(
         self,
         *,
+        project: int,
         ordering: typing.Optional[str] = None,
-        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[AzureBlobImportStorage]:
         """
@@ -30,11 +30,11 @@ class AzureClient:
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        project : typing.Optional[int]
-            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,7 +51,9 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure.list()
+        client.import_storage.azure.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/azure/",
@@ -540,8 +542,8 @@ class AsyncAzureClient:
     async def list(
         self,
         *,
+        project: int,
         ordering: typing.Optional[str] = None,
-        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[AzureBlobImportStorage]:
         """
@@ -549,11 +551,11 @@ class AsyncAzureClient:
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        project : typing.Optional[int]
-            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -575,7 +577,9 @@ class AsyncAzureClient:
 
 
         async def main() -> None:
-            await client.import_storage.azure.list()
+            await client.import_storage.azure.list(
+                project=1,
+            )
 
 
         asyncio.run(main())
