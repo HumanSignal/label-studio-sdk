@@ -97,10 +97,28 @@ paths:
         - public
       x-fern-sdk-group-name: activity_logs
       x-fern-sdk-method-name: list
-  /api/analytics/annotator-performance/:
+  /api/analytics/kpis/:
     get:
-      description: Retrieve performance metrics for all annotators in the active organization. Returns metrics including submitted, pending, accepted, rejected annotations, performance scores, and time statistics. Supports filtering by date range, projects, and specific members. Implements query-level pagination for optimal performance with large organizations.
-      operationId: api_analytics_annotator_performance_list
+      description: Returns metadata for all available KPI (Key Performance Indicator) classes. Each KPI includes its key, label, base class, dependencies, and configuration. This endpoint is useful for discovering available metrics and understanding their relationships and requirements.
+      operationId: api_analytics_kpis_retrieve
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/KPIMetadata'
+                type: array
+          description: List of available KPIs with metadata
+      security:
+        - Token: []
+      summary: List all available KPIs
+      tags:
+        - Analytics
+  /api/analytics/kpis/{kpi_key}:
+    get:
+      description: Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter).
+      operationId: api_analytics_kpis_retrieve_2
       parameters:
         - description: End date for filtering (ISO format)
           in: query
@@ -108,51 +126,58 @@ paths:
           schema:
             format: date-time
             type: string
-        - description: Comma-separated list of user IDs to filter by
+        - description: KPI identifier (key)
+          in: path
+          name: kpi_key
+          required: true
+          schema:
+            type: string
+        - description: Comma-separated user IDs. If empty, includes all organization members.
           in: query
           name: members
           schema:
             type: string
-        - description: 'Field to order by. Prefix with - for descending. User fields (efficient): email, username, first_name, last_name. Metric fields: assigned, pending, submitted, updated, skipped, performance_score, accepted, rejected, fix_accepted, total_time_seconds, avg_time_seconds, median_time_seconds. Default: email'
-          in: query
-          name: ordering
-          schema:
-            type: string
-        - description: A page number within the paginated result set.
-          in: query
-          name: page
-          required: false
-          schema:
-            type: integer
-        - description: Number of results to return per page.
-          in: query
-          name: page_size
-          required: false
-          schema:
-            type: integer
-        - description: Comma-separated list of project IDs to filter by
+        - description: Comma-separated project IDs. If empty, includes all organization projects.
           in: query
           name: projects
           schema:
             type: string
+        - description: 'Time granularity: hourly, daily, weekly, monthly, yearly'
+          in: query
+          name: segment_by_time
+          schema:
+            type: string
+        - description: Whether to segment results by user
+          in: query
+          name: segment_by_user
+          schema:
+            type: boolean
         - description: Start date for filtering (ISO format)
           in: query
           name: start
           schema:
             format: date-time
             type: string
+        - description: Timezone for date filtering (IANA timezone name, e.g., "America/New_York", "UTC"). The start and end dates will be interpreted in this timezone.
+          in: query
+          name: tz
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedAnnotatorPerformanceList'
-          description: Annotator performance metrics
+                $ref: '#/components/schemas/KPIDetailResponse'
+          description: KPI data with requested segmentation
+        '400':
+          description: Invalid parameters or unsupported KPI type
         '404':
-          description: Organization not found
+          description: KPI not found or organization not found
       security:
         - Token: []
-      summary: Get annotator performance metrics
+      summary: Get KPI data with optional segmentation
       tags:
         - Analytics
       x-fern-audiences:
@@ -19851,72 +19876,6 @@ components:
       required:
         - annotation
       type: object
-    AnnotatorPerformance:
-      description: |-
-        Response serializer for annotator performance data.
-        Returns user info and all performance metrics.
-      properties:
-        accepted:
-          type: integer
-        assigned:
-          type: integer
-        avg_time_seconds:
-          format: double
-          nullable: true
-          type: number
-        fix_accepted:
-          type: integer
-        median_time_seconds:
-          format: double
-          nullable: true
-          type: number
-        pending:
-          type: integer
-        performance_score:
-          format: double
-          nullable: true
-          type: number
-        rejected:
-          type: integer
-        skipped:
-          type: integer
-        submitted:
-          type: integer
-        time_submitting_seconds:
-          format: double
-          nullable: true
-          type: number
-        time_updating_seconds:
-          format: double
-          nullable: true
-          type: number
-        total_time_seconds:
-          format: double
-          nullable: true
-          type: number
-        updated:
-          type: integer
-        user:
-          allOf:
-            - $ref: '#/components/schemas/LseUser'
-          readOnly: true
-      required:
-        - accepted
-        - assigned
-        - avg_time_seconds
-        - fix_accepted
-        - median_time_seconds
-        - pending
-        - performance_score
-        - rejected
-        - skipped
-        - submitted
-        - time_submitting_seconds
-        - time_updating_seconds
-        - total_time_seconds
-        - updated
-        - user
-      type: object
     AssignmentSettings:
       properties:
         id:
@@ -23081,6 +23040,217 @@ components:
           description: Total cost of the inference (in USD)
           nullable: true
           type: string
+      type: object
+    KPIDetailResponse:
+      description: |-
+        Response serializer for KPI detail endpoint.
+        Structure varies based on segmentation parameters.
+      properties:
+        by_user:
+          allOf:
+            - $ref: '#/components/schemas/KPIUserSegment'
+          description: User-segmented data (compact format with parallel arrays)
+          nullable: true
+        kpi_key:
+          description: KPI identifier
+          type: string
+        kpi_label:
+          description: Human-readable KPI label
+          nullable: true
+          type: string
+        matrix:
+          allOf:
+            - $ref: '#/components/schemas/KPIMatrixSegment'
+          description: 2D matrix (time × user) in compact format
+          nullable: true
+        segmentation:
+          allOf:
+            - $ref: '#/components/schemas/SegmentationEnum'
+          description: |-
+            Type of segmentation applied
+
+            * `none` - none
+            * `time` - time
+            * `user` - user
+            * `matrix` - matrix
+        time_series:
+          allOf:
+            - $ref: '#/components/schemas/KPITimeSegment'
+          description: Time-segmented data (compact format with parallel arrays)
+          nullable: true
+        total:
+          allOf:
+            - $ref: '#/components/schemas/KPIValue'
+          description: Total value (no segmentation)
+          nullable: true
+        unit:
+          description: 'Unit of measurement: seconds, minutes, hours, count, or ratio'
+          type: string
+      required:
+        - kpi_key
+        - kpi_label
+        - segmentation
+        - unit
+      type: object
+    KPIMatrixSegment:
+      description: |-
+        Serializer for 2D matrix segmentation (time × user) in compact format.
+        Returns a 2D array where values[user_index][time_index] corresponds to
+        users[user_index] at interval_start[time_index].
+      properties:
+        interval_start:
+          description: Array of time period start timestamps
+          items:
+            format: date-time
+            type: string
+          type: array
+        users:
+          description: Array of user information
+          items:
+            $ref: '#/components/schemas/KPIUserInfo'
+          type: array
+        values:
+          description: '2D array of values: values[user_index][time_index]'
+          items:
+            items:
+              format: double
+              nullable: true
+              type: number
+            type: array
+          type: array
+      required:
+        - interval_start
+        - users
+        - values
+      type: object
+    KPIMetadata:
+      description: |-
+        Serializer for KPI metadata information.
+        Provides information about available KPIs including their keys, labels,
+        dependencies, and configuration.
+      properties:
+        base_class:
+          description: Base class name that the KPI inherits from
+          type: string
+        calculation_formula:
+          additionalProperties: {}
+          description: 'Formula for calculated KPIs defining how to derive the value from component KPIs. Structure: {"type": "ratio|sum|difference|product", "numerator": "kpi_key", "denominator": "kpi_key"}'
+          nullable: true
+          type: object
+        date_column:
+          description: Database column used for date filtering and aggregation
+          nullable: true
+          type: string
+        depends_on_kpis:
+          description: List of other KPI keys that this KPI depends on
+          items:
+            type: string
+          type: array
+        is_calculated:
+          description: Whether this KPI is calculated from other KPIs (has dependencies)
+          type: boolean
+        is_label_type:
+          description: Whether this KPI is a label/filter type that does not show a value per se
+          type: boolean
+        key:
+          description: Unique identifier for the KPI
+          type: string
+        label:
+          description: Human-readable label for the KPI
+          nullable: true
+          type: string
+        percentage:
+          description: 'Whether the KPI value is a percentage (DEPRECATED: use unit)'
+          type: boolean
+        unit:
+          description: 'Unit of measurement: seconds, minutes, hours, count, or ratio'
+          type: string
+      required:
+        - base_class
+        - date_column
+        - depends_on_kpis
+        - is_calculated
+        - is_label_type
+        - key
+        - label
+        - percentage
+        - unit
+      type: object
+    KPITimeSegment:
+      description: |-
+        Serializer for time-segmented KPI data (compact format).
+        Returns parallel arrays: interval_start and values.
+      properties:
+        interval_start:
+          description: Array of time period start timestamps
+          items:
+            format: date-time
+            type: string
+          type: array
+        values:
+          description: Array of KPI values, one per time period (parallel to interval_start)
+          items:
+            format: double
+            nullable: true
+            type: number
+          type: array
+      required:
+        - interval_start
+        - values
+      type: object
+    KPIUserInfo:
+      description: Serializer for user information (compact format).
+      properties:
+        user_email:
+          description: User email
+          format: email
+          type: string
+        user_id:
+          description: User ID
+          type: integer
+        username:
+          description: Username
+          type: string
+      required:
+        - user_email
+        - user_id
+        - username
+      type: object
+    KPIUserSegment:
+      description: |-
+        Serializer for user-segmented KPI data (compact format).
+        Returns parallel arrays: users and values.
+      properties:
+        users:
+          description: Array of user information
+          items:
+            $ref: '#/components/schemas/KPIUserInfo'
+          type: array
+        values:
+          description: Array of KPI values, one per user (parallel to users array)
+          items:
+            format: double
+            nullable: true
+            type: number
+          type: array
+      required:
+        - users
+        - values
+      type: object
+    KPIValue:
+      description: Serializer for a single KPI value (no segmentation).
+      properties:
+        unit:
+          description: 'Unit of measurement: seconds, minutes, hours, count, or ratio'
+          type: string
+        value:
+          description: The KPI value in its native unit
+          format: double
+          nullable: true
+          type: number
+      required:
+        - unit
+        - value
       type: object
     LSAPITokenBlacklistRequest:
       properties:
@@ -27388,29 +27558,6 @@ components:
         - count
         - results
       type: object
-    PaginatedAnnotatorPerformanceList:
-      properties:
-        count:
-          example: 123
-          type: integer
-        next:
-          example: http://api.example.org/accounts/?page=4
-          format: uri
-          nullable: true
-          type: string
-        previous:
-          example: http://api.example.org/accounts/?page=2
-          format: uri
-          nullable: true
-          type: string
-        results:
-          items:
-            $ref: '#/components/schemas/AnnotatorPerformance'
-          type: array
-      required:
-        - count
-        - results
-      type: object
     PaginatedLabelCreateList:
       properties:
         count:
@@ -31480,6 +31627,18 @@ components:
         - Organization
         - User
         - Model
+      type: string
+    SegmentationEnum:
+      description: |-
+        * `none` - none
+        * `time` - time
+        * `user` - user
+        * `matrix` - matrix
+      enum:
+        - none
+        - time
+        - user
+        - matrix
       type: string
     SelectedItemsRequest:
       properties:

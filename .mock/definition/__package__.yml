@@ -6,18 +6,18 @@ errors:
     examples:
       - value:
           key: value
-  ForbiddenError:
-    status-code: 403
-    type: unknown
-    docs: Organization does not allow to invite people
   BadRequestError:
     status-code: 400
     type: unknown
-    docs: ''
+    docs: Invalid parameters or unsupported KPI type
     examples:
       - value:
           key: value
       - value: string
+  ForbiddenError:
+    status-code: 403
+    type: unknown
+    docs: Organization does not allow to invite people
   InternalServerError:
     status-code: 500
     type: unknown
@@ -690,28 +690,6 @@ types:
       remove_from_queue: optional<boolean>
       result: optional<unknown>
       started_at: optional<datetime>
-    source:
-      openapi: openapi/openapi.yaml
-  AnnotatorPerformance:
-    docs: |-
-      Response serializer for annotator performance data.
-      Returns user info and all performance metrics.
-    properties:
-      accepted: integer
-      assigned: integer
-      avg_time_seconds: optional<double>
-      fix_accepted: integer
-      median_time_seconds: optional<double>
-      pending: integer
-      performance_score: optional<double>
-      rejected: integer
-      skipped: integer
-      submitted: integer
-      time_submitting_seconds: optional<double>
-      time_updating_seconds: optional<double>
-      total_time_seconds: optional<double>
-      updated: integer
-      user: LseUser
     source:
       openapi: openapi/openapi.yaml
   AssignmentSettingsLabelStreamTaskDistribution:
@@ -3071,6 +3049,156 @@ types:
       total_cost_usd:
         type: optional<string>
         docs: Total cost of the inference (in USD)
+    source:
+      openapi: openapi/openapi.yaml
+  KpiDetailResponse:
+    docs: |-
+      Response serializer for KPI detail endpoint.
+      Structure varies based on segmentation parameters.
+    properties:
+      by_user:
+        type: optional<KpiUserSegment>
+        docs: User-segmented data (compact format with parallel arrays)
+      kpi_key:
+        type: string
+        docs: KPI identifier
+      kpi_label:
+        type: optional<string>
+        docs: Human-readable KPI label
+      matrix:
+        type: optional<KpiMatrixSegment>
+        docs: 2D matrix (time × user) in compact format
+      segmentation:
+        type: SegmentationEnum
+        docs: |-
+          Type of segmentation applied
+
+          * `none` - none
+          * `time` - time
+          * `user` - user
+          * `matrix` - matrix
+      time_series:
+        type: optional<KpiTimeSegment>
+        docs: Time-segmented data (compact format with parallel arrays)
+      total:
+        type: optional<KpiValue>
+        docs: Total value (no segmentation)
+      unit:
+        type: string
+        docs: 'Unit of measurement: seconds, minutes, hours, count, or ratio'
+    source:
+      openapi: openapi/openapi.yaml
+  KpiMatrixSegment:
+    docs: |-
+      Serializer for 2D matrix segmentation (time × user) in compact format.
+      Returns a 2D array where values[user_index][time_index] corresponds to
+      users[user_index] at interval_start[time_index].
+    properties:
+      interval_start:
+        docs: Array of time period start timestamps
+        type: list<datetime>
+      users:
+        docs: Array of user information
+        type: list<KpiUserInfo>
+      values:
+        docs: '2D array of values: values[user_index][time_index]'
+        type: list<list<optional<double>>>
+    source:
+      openapi: openapi/openapi.yaml
+  KpiMetadata:
+    docs: |-
+      Serializer for KPI metadata information.
+      Provides information about available KPIs including their keys, labels,
+      dependencies, and configuration.
+    properties:
+      base_class:
+        type: string
+        docs: Base class name that the KPI inherits from
+      calculation_formula:
+        type: optional<map<string, unknown>>
+        docs: >-
+          Formula for calculated KPIs defining how to derive the value from
+          component KPIs. Structure: {"type": "ratio|sum|difference|product",
+          "numerator": "kpi_key", "denominator": "kpi_key"}
+      date_column:
+        type: optional<string>
+        docs: Database column used for date filtering and aggregation
+      depends_on_kpis:
+        docs: List of other KPI keys that this KPI depends on
+        type: list<string>
+      is_calculated:
+        type: boolean
+        docs: Whether this KPI is calculated from other KPIs (has dependencies)
+      is_label_type:
+        type: boolean
+        docs: >-
+          Whether this KPI is a label/filter type that does not show a value per
+          se
+      key:
+        type: string
+        docs: Unique identifier for the KPI
+      label:
+        type: optional<string>
+        docs: Human-readable label for the KPI
+      percentage:
+        type: boolean
+        docs: 'Whether the KPI value is a percentage (DEPRECATED: use unit)'
+      unit:
+        type: string
+        docs: 'Unit of measurement: seconds, minutes, hours, count, or ratio'
+    source:
+      openapi: openapi/openapi.yaml
+  KpiTimeSegment:
+    docs: |-
+      Serializer for time-segmented KPI data (compact format).
+      Returns parallel arrays: interval_start and values.
+    properties:
+      interval_start:
+        docs: Array of time period start timestamps
+        type: list<datetime>
+      values:
+        docs: Array of KPI values, one per time period (parallel to interval_start)
+        type: list<optional<double>>
+    source:
+      openapi: openapi/openapi.yaml
+  KpiUserInfo:
+    docs: Serializer for user information (compact format).
+    properties:
+      user_email:
+        type: string
+        docs: User email
+        validation:
+          format: email
+      user_id:
+        type: integer
+        docs: User ID
+      username:
+        type: string
+        docs: Username
+    source:
+      openapi: openapi/openapi.yaml
+  KpiUserSegment:
+    docs: |-
+      Serializer for user-segmented KPI data (compact format).
+      Returns parallel arrays: users and values.
+    properties:
+      users:
+        docs: Array of user information
+        type: list<KpiUserInfo>
+      values:
+        docs: Array of KPI values, one per user (parallel to users array)
+        type: list<optional<double>>
+    source:
+      openapi: openapi/openapi.yaml
+  KpiValue:
+    docs: Serializer for a single KPI value (no segmentation).
+    properties:
+      unit:
+        type: string
+        docs: 'Unit of measurement: seconds, minutes, hours, count, or ratio'
+      value:
+        type: optional<double>
+        docs: The KPI value in its native unit
     source:
       openapi: openapi/openapi.yaml
   LseapiTokenCreate:
@@ -6038,20 +6166,6 @@ types:
       results: list<AnnotationHistory>
     source:
       openapi: openapi/openapi.yaml
-  PaginatedAnnotatorPerformanceList:
-    properties:
-      count: integer
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: list<AnnotatorPerformance>
-    source:
-      openapi: openapi/openapi.yaml
   PaginatedLabelCreateList:
     properties:
       count: integer
@@ -7688,6 +7802,19 @@ types:
       * `Organization` - Organization
       * `User` - User
       * `Model` - Model
+    source:
+      openapi: openapi/openapi.yaml
+  SegmentationEnum:
+    enum:
+      - none
+      - time
+      - user
+      - matrix
+    docs: |-
+      * `none` - none
+      * `time` - time
+      * `user` - user
+      * `matrix` - matrix
     source:
       openapi: openapi/openapi.yaml
   SelectedItemsRequest:

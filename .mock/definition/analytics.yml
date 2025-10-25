@@ -1,0 +1,38 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_analytics_kpis_retrieve:
+      path: /api/analytics/kpis/
+      method: GET
+      auth: true
+      docs: >-
+        Returns metadata for all available KPI (Key Performance Indicator)
+        classes. Each KPI includes its key, label, base class, dependencies, and
+        configuration. This endpoint is useful for discovering available metrics
+        and understanding their relationships and requirements.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List all available KPIs
+      response:
+        docs: List of available KPIs with metadata
+        type: list<root.KpiMetadata>
+      examples:
+        - response:
+            body:
+              - base_class: base_class
+                calculation_formula:
+                  key: value
+                date_column: date_column
+                depends_on_kpis:
+                  - depends_on_kpis
+                is_calculated: true
+                is_label_type: true
+                key: key
+                label: label
+                percentage: true
+                unit: unit
+  source:
+    openapi: openapi/openapi.yaml
