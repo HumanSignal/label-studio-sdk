@@ -155,6 +155,12 @@ paths:
       summary: Get annotator performance metrics
       tags:
         - Analytics
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name:
+        - organizations
+        - stats
+      x-fern-sdk-method-name: annotator_performance
   /api/annotation-history/:
     delete:
       description: |-

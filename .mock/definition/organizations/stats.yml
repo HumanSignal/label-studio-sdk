@@ -1,10 +1,10 @@
 imports:
-  root: __package__.yml
+  root: ../__package__.yml
 service:
   auth: false
   base-path: ''
   endpoints:
-    api_analytics_annotator_performance_list:
+    annotator_performance:
       path: /api/analytics/annotator-performance/
       method: GET
       auth: true
@@ -18,7 +18,7 @@ service:
         openapi: openapi/openapi.yaml
       display-name: Get annotator performance metrics
       request:
-        name: ApiAnalyticsAnnotatorPerformanceListRequest
+        name: StatsAnnotatorPerformanceRequest
         query-parameters:
           end:
             type: optional<datetime>
@@ -93,5 +93,7 @@ service:
                       role: role
                     pause: pause
                     username: username
+      audiences:
+        - internal
   source:
     openapi: openapi/openapi.yaml
