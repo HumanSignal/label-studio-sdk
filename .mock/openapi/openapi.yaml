@@ -180,12 +180,6 @@ paths:
       summary: Get KPI data with optional segmentation
       tags:
         - Analytics
-      x-fern-audiences:
-        - internal
-      x-fern-sdk-group-name:
-        - organizations
-        - stats
-      x-fern-sdk-method-name: annotator_performance
   /api/annotation-history/:
     delete:
       description: |-
