@@ -3,6 +3,7 @@
 from ...core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .actions_list_response_item_dialog import ActionsListResponseItemDialog
+from .actions_list_response_item_permission import ActionsListResponseItemPermission
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -12,7 +13,7 @@ class ActionsListResponseItem(UncheckedBaseModel):
     experimental: typing.Optional[bool] = None
     id: typing.Optional[str] = None
     order: typing.Optional[int] = None
-    permission: typing.Optional[str] = None
+    permission: typing.Optional[ActionsListResponseItemPermission] = None
     title: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

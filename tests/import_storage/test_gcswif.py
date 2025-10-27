@@ -70,10 +70,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.import_storage.gcswif.list()
+    response = client.import_storage.gcswif.list(project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.import_storage.gcswif.list()
+    async_response = await async_client.import_storage.gcswif.list(project=1)
     validate_response(async_response, expected_response, expected_types)
 
 

@@ -11,6 +11,7 @@ from ...core.api_error import ApiError
 from .types.stats_model_version_ground_truth_agreement_response import StatsModelVersionGroundTruthAgreementResponse
 from .types.stats_model_version_prediction_agreement_response import StatsModelVersionPredictionAgreementResponse
 from .types.stats_iaa_response import StatsIaaResponse
+from .types.stats_users_ground_truth_agreement_response import StatsUsersGroundTruthAgreementResponse
 from .types.stats_agreement_annotator_response import StatsAgreementAnnotatorResponse
 from .types.stats_agreement_annotators_response import StatsAgreementAnnotatorsResponse
 from .types.stats_data_filters_response import StatsDataFiltersResponse
@@ -293,6 +294,76 @@ class StatsClient:
                     StatsIaaResponse,
                     construct_type(
                         type_=StatsIaaResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def users_ground_truth_agreement(
+        self,
+        id: int,
+        *,
+        ids: str,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StatsUsersGroundTruthAgreementResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get ground truth agreement statistics for multiple users within a project.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : str
+            Comma separated list of user IDs to get ground truth agreement for
+
+        per_label : typing.Optional[bool]
+            Per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsUsersGroundTruthAgreementResponse
+            Ground truth agreement statistics for multiple users
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.users_ground_truth_agreement(
+            id=1,
+            ids="ids",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/stats/agreement-groundtruth",
+            method="GET",
+            params={
+                "ids": ids,
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsUsersGroundTruthAgreementResponse,
+                    construct_type(
+                        type_=StatsUsersGroundTruthAgreementResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1360,6 +1431,84 @@ class AsyncStatsClient:
                     StatsIaaResponse,
                     construct_type(
                         type_=StatsIaaResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def users_ground_truth_agreement(
+        self,
+        id: int,
+        *,
+        ids: str,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StatsUsersGroundTruthAgreementResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get ground truth agreement statistics for multiple users within a project.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : str
+            Comma separated list of user IDs to get ground truth agreement for
+
+        per_label : typing.Optional[bool]
+            Per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StatsUsersGroundTruthAgreementResponse
+            Ground truth agreement statistics for multiple users
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.users_ground_truth_agreement(
+                id=1,
+                ids="ids",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/stats/agreement-groundtruth",
+            method="GET",
+            params={
+                "ids": ids,
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    StatsUsersGroundTruthAgreementResponse,
+                    construct_type(
+                        type_=StatsUsersGroundTruthAgreementResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

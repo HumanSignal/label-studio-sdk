@@ -46,14 +46,12 @@ from .types import (
     ConvertedFormat,
     ConvertedFormatRequest,
     CountLimit,
-    CustomScriptsEditableByEnum,
     DatabricksExportStorage,
     DatabricksExportStorageRequest,
     DatabricksImportStorage,
     DatabricksImportStorageRequest,
     Default165Enum,
     DefaultRole,
-    DefaultRoleCustomScriptsEditableBy,
     EditionEnum,
     Export,
     FileUpload,
@@ -83,7 +81,6 @@ from .types import (
     LseFieldsTrialRole,
     LseKeyIndicatorValue,
     LseOrganization,
-    LseOrganizationCustomScriptsEditableBy,
     LseOrganizationMemberList,
     LseProject,
     LseProjectCounts,
@@ -294,6 +291,7 @@ from .actions import (
     ActionsCreateRequestSelectedItemsIncluded,
     ActionsListResponseItem,
     ActionsListResponseItemDialog,
+    ActionsListResponseItemPermission,
 )
 from .activity_logs import ActivityLogsListRequestMethod
 from .annotation_history import AnnotationHistoryDeleteResponse
@@ -304,7 +302,6 @@ from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
 from .ml import MlCreateRequestAuthMethod, MlListModelVersionsResponse, MlUpdateRequestAuthMethod
 from .model_providers import ModelProvidersListModelProviderChoicesResponse
-from .organizations import PatchedDefaultRoleRequestCustomScriptsEditableBy
 from .projects import (
     LseProjectCreateRequestSampling,
     LseProjectCreateRequestSkipQueue,
@@ -371,6 +368,7 @@ __all__ = [
     "ActionsEnum",
     "ActionsListResponseItem",
     "ActionsListResponseItemDialog",
+    "ActionsListResponseItemPermission",
     "ActivityLog",
     "ActivityLogResponse",
     "ActivityLogsListRequestMethod",
@@ -421,14 +419,12 @@ __all__ = [
     "ConvertedFormat",
     "ConvertedFormatRequest",
     "CountLimit",
-    "CustomScriptsEditableByEnum",
     "DatabricksExportStorage",
     "DatabricksExportStorageRequest",
     "DatabricksImportStorage",
     "DatabricksImportStorageRequest",
     "Default165Enum",
     "DefaultRole",
-    "DefaultRoleCustomScriptsEditableBy",
     "EditionEnum",
     "Export",
     "ExportStorageListTypesResponseItem",
@@ -464,7 +460,6 @@ __all__ = [
     "LseFieldsTrialRole",
     "LseKeyIndicatorValue",
     "LseOrganization",
-    "LseOrganizationCustomScriptsEditableBy",
     "LseOrganizationMemberList",
     "LseProject",
     "LseProjectCounts",
@@ -547,7 +542,6 @@ __all__ = [
     "PaginatedProjectMember",
     "PaginatedProjectSubsetTasksResponseList",
     "PaginatedRoleBasedTaskList",
-    "PatchedDefaultRoleRequestCustomScriptsEditableBy",
     "PatchedLseProjectUpdateRequestSampling",
     "PatchedLseProjectUpdateRequestSkipQueue",
     "Pause",
