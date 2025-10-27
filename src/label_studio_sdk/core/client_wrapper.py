@@ -4,7 +4,12 @@ import httpx
 
 from .http_client import AsyncHttpClient, HttpClient
 
-VERSION = "2.0.9"
+import importlib.metadata
+
+try:
+    VERSION = importlib.metadata.version("label-studio-sdk")
+except importlib.metadata.PackageNotFoundError:
+    VERSION = "unknown"
 
 class BaseClientWrapper:
     def __init__(
