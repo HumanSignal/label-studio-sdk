@@ -12,6 +12,15 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
+  ActionsListResponseItemPermission:
+    discriminated: false
+    union:
+      - string
+      - docs: List of permissions (user needs any all of them)
+        type: list<string>
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   ActionsListResponseItem:
     properties:
       dialog:
@@ -23,7 +32,7 @@ types:
       order:
         type: optional<integer>
       permission:
-        type: optional<string>
+        type: optional<ActionsListResponseItemPermission>
       title:
         type: optional<string>
     source:

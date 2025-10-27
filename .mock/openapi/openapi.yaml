@@ -97,6 +97,89 @@ paths:
         - public
       x-fern-sdk-group-name: activity_logs
       x-fern-sdk-method-name: list
+  /api/analytics/kpis/:
+    get:
+      description: Returns metadata for all available KPI (Key Performance Indicator) classes. Each KPI includes its key, label, base class, dependencies, and configuration. This endpoint is useful for discovering available metrics and understanding their relationships and requirements.
+      operationId: api_analytics_kpis_retrieve
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/KPIMetadata'
+                type: array
+          description: List of available KPIs with metadata
+      security:
+        - Token: []
+      summary: List all available KPIs
+      tags:
+        - Analytics
+  /api/analytics/kpis/{kpi_key}:
+    get:
+      description: Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter).
+      operationId: api_analytics_kpis_retrieve_2
+      parameters:
+        - description: End date for filtering (ISO format)
+          in: query
+          name: end
+          schema:
+            format: date-time
+            type: string
+        - description: KPI identifier (key)
+          in: path
+          name: kpi_key
+          required: true
+          schema:
+            type: string
+        - description: Comma-separated user IDs. If empty, includes all organization members.
+          in: query
+          name: members
+          schema:
+            type: string
+        - description: Comma-separated project IDs. If empty, includes all organization projects.
+          in: query
+          name: projects
+          schema:
+            type: string
+        - description: 'Time granularity: hourly, daily, weekly, monthly, yearly'
+          in: query
+          name: segment_by_time
+          schema:
+            type: string
+        - description: Whether to segment results by user
+          in: query
+          name: segment_by_user
+          schema:
+            type: boolean
+        - description: Start date for filtering (ISO format)
+          in: query
+          name: start
+          schema:
+            format: date-time
+            type: string
+        - description: Timezone for date filtering (IANA timezone name, e.g., "America/New_York", "UTC"). The start and end dates will be interpreted in this timezone.
+          in: query
+          name: tz
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KPIDetailResponse'
+          description: KPI data with requested segmentation
+        '400':
+          description: Invalid parameters or unsupported KPI type
+        '404':
+          description: KPI not found or organization not found
+      security:
+        - Token: []
+      summary: Get KPI data with optional segmentation
+      tags:
+        - Analytics
   /api/annotation-history/:
     delete:
       description: |-
@@ -758,7 +841,6 @@ paths:
                         public_verify_alg:
                           - RS256
                         public_verify_key: '....'
-                      hide_storage_settings_for_manager: false
                       manual_role_management: false
                       manual_workspace_management: false
                       secure_mode: false
@@ -828,7 +910,6 @@ paths:
                         public_verify_alg:
                           - RS256
                         public_verify_key: '....'
-                      hide_storage_settings_for_manager: false
                       manual_role_management: false
                       manual_workspace_management: false
                       secure_mode: false
@@ -898,7 +979,6 @@ paths:
                         public_verify_alg:
                           - RS256
                         public_verify_key: '....'
-                      hide_storage_settings_for_manager: false
                       manual_role_management: true
                       manual_workspace_management: true
                       secure_mode: false
@@ -2971,8 +3051,12 @@ paths:
                       title: Order
                       type: integer
                     permission:
-                      title: Permission
-                      type: string
+                      oneOf:
+                        - type: string
+                        - description: List of permissions (user needs any all of them)
+                          items:
+                            type: string
+                          type: array
                     title:
                       title: Title
                       type: string
@@ -11775,6 +11859,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -12099,6 +12184,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -12364,6 +12450,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -12654,6 +12741,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -12944,6 +13032,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -13209,6 +13298,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -13467,6 +13557,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -13757,6 +13848,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -14015,6 +14107,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -14280,6 +14373,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -14572,6 +14666,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -14898,6 +14993,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -15184,6 +15280,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -15508,6 +15605,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -15766,6 +15864,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -16032,6 +16131,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -16325,6 +16425,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -16694,6 +16795,7 @@ paths:
         - description: Project ID
           in: query
           name: project
+          required: true
           schema:
             type: integer
       responses:
@@ -18950,6 +19052,10 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        user_session:
+          maxLength: 8
+          nullable: true
+          type: string
         workspace_owner_id:
           description: Owner id of workspace where action performed
           maximum: 2147483647
@@ -20728,6 +20834,8 @@ components:
           type: boolean
         allow_invite_project_experts:
           type: boolean
+        allow_nda:
+          type: boolean
         allow_organization_webhooks:
           type: boolean
         allow_sso:
@@ -20756,8 +20864,6 @@ components:
         embed_settings:
           additionalProperties: {}
           type: object
-        hide_storage_settings_for_manager:
-          type: boolean
         manual_role_management:
           type: boolean
         manual_workspace_management:
@@ -20777,6 +20883,7 @@ components:
         - allow_data_credentials
         - allow_invite_people
         - allow_invite_project_experts
+        - allow_nda
         - allow_organization_webhooks
         - allow_sso
         - allow_storage_proxy
@@ -20787,7 +20894,6 @@ components:
         - disable_project_imports
         - early_adopter
         - embed_enabled
-        - hide_storage_settings_for_manager
         - manual_role_management
         - manual_workspace_management
         - secure_mode
@@ -22928,6 +23034,217 @@ components:
           description: Total cost of the inference (in USD)
           nullable: true
           type: string
+      type: object
+    KPIDetailResponse:
+      description: |-
+        Response serializer for KPI detail endpoint.
+        Structure varies based on segmentation parameters.
+      properties:
+        by_user:
+          allOf:
+            - $ref: '#/components/schemas/KPIUserSegment'
+          description: User-segmented data (compact format with parallel arrays)
+          nullable: true
+        kpi_key:
+          description: KPI identifier
+          type: string
+        kpi_label:
+          description: Human-readable KPI label
+          nullable: true
+          type: string
+        matrix:
+          allOf:
+            - $ref: '#/components/schemas/KPIMatrixSegment'
+          description: 2D matrix (time × user) in compact format
+          nullable: true
+        segmentation:
+          allOf:
+            - $ref: '#/components/schemas/SegmentationEnum'
+          description: |-
+            Type of segmentation applied
+
+            * `none` - none
+            * `time` - time
+            * `user` - user
+            * `matrix` - matrix
+        time_series:
+          allOf:
+            - $ref: '#/components/schemas/KPITimeSegment'
+          description: Time-segmented data (compact format with parallel arrays)
+          nullable: true
+        total:
+          allOf:
+            - $ref: '#/components/schemas/KPIValue'
+          description: Total value (no segmentation)
+          nullable: true
+        unit:
+          description: 'Unit of measurement: seconds, minutes, hours, count, or ratio'
+          type: string
+      required:
+        - kpi_key
+        - kpi_label
+        - segmentation
+        - unit
+      type: object
+    KPIMatrixSegment:
+      description: |-
+        Serializer for 2D matrix segmentation (time × user) in compact format.
+        Returns a 2D array where values[user_index][time_index] corresponds to
+        users[user_index] at interval_start[time_index].
+      properties:
+        interval_start:
+          description: Array of time period start timestamps
+          items:
+            format: date-time
+            type: string
+          type: array
+        users:
+          description: Array of user information
+          items:
+            $ref: '#/components/schemas/KPIUserInfo'
+          type: array
+        values:
+          description: '2D array of values: values[user_index][time_index]'
+          items:
+            items:
+              format: double
+              nullable: true
+              type: number
+            type: array
+          type: array
+      required:
+        - interval_start
+        - users
+        - values
+      type: object
+    KPIMetadata:
+      description: |-
+        Serializer for KPI metadata information.
+        Provides information about available KPIs including their keys, labels,
+        dependencies, and configuration.
+      properties:
+        base_class:
+          description: Base class name that the KPI inherits from
+          type: string
+        calculation_formula:
+          additionalProperties: {}
+          description: 'Formula for calculated KPIs defining how to derive the value from component KPIs. Structure: {"type": "ratio|sum|difference|product", "numerator": "kpi_key", "denominator": "kpi_key"}'
+          nullable: true
+          type: object
+        date_column:
+          description: Database column used for date filtering and aggregation
+          nullable: true
+          type: string
+        depends_on_kpis:
+          description: List of other KPI keys that this KPI depends on
+          items:
+            type: string
+          type: array
+        is_calculated:
+          description: Whether this KPI is calculated from other KPIs (has dependencies)
+          type: boolean
+        is_label_type:
+          description: Whether this KPI is a label/filter type that does not show a value per se
+          type: boolean
+        key:
+          description: Unique identifier for the KPI
+          type: string
+        label:
+          description: Human-readable label for the KPI
+          nullable: true
+          type: string
+        percentage:
+          description: 'Whether the KPI value is a percentage (DEPRECATED: use unit)'
+          type: boolean
+        unit:
+          description: 'Unit of measurement: seconds, minutes, hours, count, or ratio'
+          type: string
+      required:
+        - base_class
+        - date_column
+        - depends_on_kpis
+        - is_calculated
+        - is_label_type
+        - key
+        - label
+        - percentage
+        - unit
+      type: object
+    KPITimeSegment:
+      description: |-
+        Serializer for time-segmented KPI data (compact format).
+        Returns parallel arrays: interval_start and values.
+      properties:
+        interval_start:
+          description: Array of time period start timestamps
+          items:
+            format: date-time
+            type: string
+          type: array
+        values:
+          description: Array of KPI values, one per time period (parallel to interval_start)
+          items:
+            format: double
+            nullable: true
+            type: number
+          type: array
+      required:
+        - interval_start
+        - values
+      type: object
+    KPIUserInfo:
+      description: Serializer for user information (compact format).
+      properties:
+        user_email:
+          description: User email
+          format: email
+          type: string
+        user_id:
+          description: User ID
+          type: integer
+        username:
+          description: Username
+          type: string
+      required:
+        - user_email
+        - user_id
+        - username
+      type: object
+    KPIUserSegment:
+      description: |-
+        Serializer for user-segmented KPI data (compact format).
+        Returns parallel arrays: users and values.
+      properties:
+        users:
+          description: Array of user information
+          items:
+            $ref: '#/components/schemas/KPIUserInfo'
+          type: array
+        values:
+          description: Array of KPI values, one per user (parallel to users array)
+          items:
+            format: double
+            nullable: true
+            type: number
+          type: array
+      required:
+        - users
+        - values
+      type: object
+    KPIValue:
+      description: Serializer for a single KPI value (no segmentation).
+      properties:
+        unit:
+          description: 'Unit of measurement: seconds, minutes, hours, count, or ratio'
+          type: string
+        value:
+          description: The KPI value in its native unit
+          format: double
+          nullable: true
+          type: number
+      required:
+        - unit
+        - value
       type: object
     LSAPITokenBlacklistRequest:
       properties:
@@ -31304,6 +31621,18 @@ components:
         - Organization
         - User
         - Model
+      type: string
+    SegmentationEnum:
+      description: |-
+        * `none` - none
+        * `time` - time
+        * `user` - user
+        * `matrix` - matrix
+      enum:
+        - none
+        - time
+        - user
+        - matrix
       type: string
     SelectedItemsRequest:
       properties:

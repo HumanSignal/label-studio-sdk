@@ -13056,7 +13056,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.export_storage.azure.list()
+client.export_storage.azure.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -13072,7 +13074,7 @@ client.export_storage.azure.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -13080,7 +13082,7 @@ client.export_storage.azure.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -13739,7 +13741,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.export_storage.azure_spi.list()
+client.export_storage.azure_spi.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -13755,7 +13759,7 @@ client.export_storage.azure_spi.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -13763,7 +13767,7 @@ client.export_storage.azure_spi.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -14742,7 +14746,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.export_storage.databricks.list()
+client.export_storage.databricks.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -14758,7 +14764,7 @@ client.export_storage.databricks.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -14766,7 +14772,7 @@ client.export_storage.databricks.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -15795,7 +15801,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.export_storage.gcs.list()
+client.export_storage.gcs.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -15811,7 +15819,7 @@ client.export_storage.gcs.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -15819,7 +15827,7 @@ client.export_storage.gcs.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -16478,7 +16486,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.export_storage.gcswif.list()
+client.export_storage.gcswif.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -16494,7 +16504,7 @@ client.export_storage.gcswif.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -16502,7 +16512,7 @@ client.export_storage.gcswif.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -17499,7 +17509,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.export_storage.local.list()
+client.export_storage.local.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -17515,7 +17527,7 @@ client.export_storage.local.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -17523,7 +17535,7 @@ client.export_storage.local.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -18128,7 +18140,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.export_storage.redis.list()
+client.export_storage.redis.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -18144,7 +18158,7 @@ client.export_storage.redis.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -18152,7 +18166,7 @@ client.export_storage.redis.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -18829,7 +18843,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.export_storage.s3.list()
+client.export_storage.s3.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -18845,7 +18861,7 @@ client.export_storage.s3.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -18853,7 +18869,7 @@ client.export_storage.s3.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -19608,7 +19624,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.export_storage.s3s.list()
+client.export_storage.s3s.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -19624,7 +19642,7 @@ client.export_storage.s3s.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -19632,7 +19650,7 @@ client.export_storage.s3s.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -20703,7 +20721,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.azure.list()
+client.import_storage.azure.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -20719,7 +20739,7 @@ client.import_storage.azure.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -20727,7 +20747,7 @@ client.import_storage.azure.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -21458,7 +21478,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.azure_spi.list()
+client.import_storage.azure_spi.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -21474,7 +21496,7 @@ client.import_storage.azure_spi.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -21482,7 +21504,7 @@ client.import_storage.azure_spi.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -22509,7 +22531,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.databricks.list()
+client.import_storage.databricks.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -22525,7 +22549,7 @@ client.import_storage.databricks.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -22533,7 +22557,7 @@ client.import_storage.databricks.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -23610,7 +23634,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.gcs.list()
+client.import_storage.gcs.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -23626,7 +23652,7 @@ client.import_storage.gcs.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -23634,7 +23660,7 @@ client.import_storage.gcs.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -24365,7 +24391,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.gcswif.list()
+client.import_storage.gcswif.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -24381,7 +24409,7 @@ client.import_storage.gcswif.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -24389,7 +24417,7 @@ client.import_storage.gcswif.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -25434,7 +25462,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.local.list()
+client.import_storage.local.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -25450,7 +25480,7 @@ client.import_storage.local.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -25458,7 +25488,7 @@ client.import_storage.local.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -26063,7 +26093,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.redis.list()
+client.import_storage.redis.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -26079,7 +26111,7 @@ client.import_storage.redis.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -26087,7 +26119,7 @@ client.import_storage.redis.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -26764,7 +26796,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.s3.list()
+client.import_storage.s3.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -26780,7 +26814,7 @@ client.import_storage.s3.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -26788,7 +26822,7 @@ client.import_storage.s3.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -27639,7 +27673,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.s3s.list()
+client.import_storage.s3s.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -27655,7 +27691,7 @@ client.import_storage.s3s.list()
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -27663,7 +27699,7 @@ client.import_storage.s3s.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
