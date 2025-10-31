@@ -25,6 +25,7 @@ class BillingFlags(UncheckedBaseModel):
     disable_members_page: bool
     disable_project_imports: bool
     early_adopter: bool
+    email_configured: bool
     embed_domains: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = None
     embed_enabled: bool
     embed_settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None

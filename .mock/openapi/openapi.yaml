@@ -20854,6 +20854,8 @@ components:
           type: boolean
         early_adopter:
           type: boolean
+        email_configured:
+          type: boolean
         embed_domains:
           items:
             additionalProperties: {}
@@ -20893,6 +20895,7 @@ components:
         - disable_members_page
         - disable_project_imports
         - early_adopter
+        - email_configured
         - embed_enabled
         - manual_role_management
         - manual_workspace_management
