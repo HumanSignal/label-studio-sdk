@@ -1443,6 +1443,7 @@ types:
       disable_members_page: boolean
       disable_project_imports: boolean
       early_adopter: boolean
+      email_configured: boolean
       embed_domains: optional<list<map<string, unknown>>>
       embed_enabled: boolean
       embed_settings: optional<map<string, unknown>>
