@@ -2,11 +2,13 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .roles.client import RolesClient
 from .exports.client import ExportsClient
+from .members.client import MembersClient
+from .metrics.client import MetricsClient
 from .stats.client import StatsClient
 from .assignments.client import AssignmentsClient
 from .pauses.client import PausesClient
-from .types.projects_list_request_filter import ProjectsListRequestFilter
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
 from ..types.all_roles_project_list import AllRolesProjectList
@@ -20,21 +22,28 @@ from .types.lse_project_create_request_sampling import LseProjectCreateRequestSa
 from .types.lse_project_create_request_skip_queue import LseProjectCreateRequestSkipQueue
 from ..types.lse_project_create import LseProjectCreate
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..types.project import Project
+from ..types.paginated_lse_project_counts_list import PaginatedLseProjectCountsList
+from ..types.lse_project_response import LseProjectResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.assignment_settings_request import AssignmentSettingsRequest
 from ..types.review_settings_request import ReviewSettingsRequest
 from .types.patched_lse_project_update_request_sampling import PatchedLseProjectUpdateRequestSampling
 from .types.patched_lse_project_update_request_skip_queue import PatchedLseProjectUpdateRequestSkipQueue
 from ..types.lse_project_update import LseProjectUpdate
+from ..types.user_simple import UserSimple
 from ..types.mode_enum import ModeEnum
 from .types.projects_duplicate_response import ProjectsDuplicateResponse
 from ..types.import_api_request import ImportApiRequest
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from ..errors.bad_request_error import BadRequestError
+from ..types.prediction_request import PredictionRequest
+from .types.projects_import_predictions_response import ProjectsImportPredictionsResponse
 from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
+from .roles.client import AsyncRolesClient
 from .exports.client import AsyncExportsClient
+from .members.client import AsyncMembersClient
+from .metrics.client import AsyncMetricsClient
 from .stats.client import AsyncStatsClient
 from .assignments.client import AsyncAssignmentsClient
 from .pauses.client import AsyncPausesClient
@@ -47,7 +56,10 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.roles = RolesClient(client_wrapper=self._client_wrapper)
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
+        self.members = MembersClient(client_wrapper=self._client_wrapper)
+        self.metrics = MetricsClient(client_wrapper=self._client_wrapper)
         self.stats = StatsClient(client_wrapper=self._client_wrapper)
         self.assignments = AssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = PausesClient(client_wrapper=self._client_wrapper)
@@ -55,15 +67,16 @@ class ProjectsClient:
     def list(
         self,
         *,
-        filter: typing.Optional[ProjectsListRequestFilter] = None,
+        filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
         members_limit: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
-        workspaces: typing.Optional[int] = None,
+        workspaces: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AllRolesProjectList]:
         """
@@ -71,17 +84,17 @@ class ProjectsClient:
 
         Parameters
         ----------
-        filter : typing.Optional[ProjectsListRequestFilter]
+        filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            ids
+            Filter id by in list
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
 
         members_limit : typing.Optional[int]
-            Maximum number of members to return.
+            Maximum number of members to return
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -92,11 +105,14 @@ class ProjectsClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        title : typing.Optional[str]
-            title
+        search : typing.Optional[str]
+            Search term for project title and description
 
-        workspaces : typing.Optional[int]
-            workspaces
+        title : typing.Optional[str]
+            Filter title by contains (case-insensitive)
+
+        workspaces : typing.Optional[float]
+            Filter workspaces by exact match
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -132,6 +148,7 @@ class ProjectsClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "search": search,
                 "title": title,
                 "workspaces": workspaces,
             },
@@ -155,6 +172,7 @@ class ProjectsClient:
                     ordering=ordering,
                     page=page + 1,
                     page_size=page_size,
+                    search=search,
                     title=title,
                     workspaces=workspaces,
                     request_options=request_options,
@@ -261,6 +279,7 @@ class ProjectsClient:
             If set, the annotator can view model predictions
 
         show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
 
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
@@ -360,7 +379,106 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
+    def list_counts(
+        self,
+        *,
+        filter: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        include: typing.Optional[str] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        workspaces: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedLseProjectCountsList:
+        """
+        Returns a list of projects with their counts. For example, task_number which is the total task number in project
+
+        Parameters
+        ----------
+        filter : typing.Optional[str]
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+
+        ids : typing.Optional[str]
+            Filter id by in list
+
+        include : typing.Optional[str]
+            Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        search : typing.Optional[str]
+            Search term for project title and description
+
+        title : typing.Optional[str]
+            Filter title by contains (case-insensitive)
+
+        workspaces : typing.Optional[float]
+            Filter workspaces by exact match
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedLseProjectCountsList
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.list_counts()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/projects/counts/",
+            method="GET",
+            params={
+                "filter": filter,
+                "ids": ids,
+                "include": include,
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "search": search,
+                "title": title,
+                "workspaces": workspaces,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedLseProjectCountsList,
+                    construct_type(
+                        type_=PaginatedLseProjectCountsList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(
+        self,
+        id: int,
+        *,
+        members_limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseProjectResponse:
         """
         Retrieve information about a project by project ID.
 
@@ -368,13 +486,16 @@ class ProjectsClient:
         ----------
         id : int
 
+        members_limit : typing.Optional[int]
+            Maximum number of members to return
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Project
-            Project information
+        LseProjectResponse
+            Project information. Not all fields are available for all roles.
 
         Examples
         --------
@@ -390,14 +511,17 @@ class ProjectsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/",
             method="GET",
+            params={
+                "members_limit": members_limit,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Project,
+                    LseProjectResponse,
                     construct_type(
-                        type_=Project,  # type: ignore
+                        type_=LseProjectResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -449,6 +573,7 @@ class ProjectsClient:
         self,
         id: int,
         *,
+        members_limit: typing.Optional[int] = None,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
@@ -484,6 +609,7 @@ class ProjectsClient:
         show_instruction: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
+        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[PatchedLseProjectUpdateRequestSkipQueue] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
@@ -497,6 +623,9 @@ class ProjectsClient:
         Parameters
         ----------
         id : int
+
+        members_limit : typing.Optional[int]
+            Maximum number of members to return
 
         annotation_limit_count : typing.Optional[int]
 
@@ -577,6 +706,7 @@ class ProjectsClient:
             If set, the annotator can view model predictions
 
         show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
 
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
@@ -585,6 +715,8 @@ class ProjectsClient:
 
         show_skip_button : typing.Optional[bool]
             Show a skip button in interface and allow annotators to skip the task
+
+        show_unused_data_columns_to_annotators : typing.Optional[bool]
 
         skip_queue : typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]
 
@@ -621,6 +753,9 @@ class ProjectsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/",
             method="PATCH",
+            params={
+                "members_limit": members_limit,
+            },
             json={
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,
@@ -665,6 +800,7 @@ class ProjectsClient:
                 "show_instruction": show_instruction,
                 "show_overlap_first": show_overlap_first,
                 "show_skip_button": show_skip_button,
+                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "skip_queue": convert_and_respect_annotation_metadata(
                     object_=skip_queue, annotation=PatchedLseProjectUpdateRequestSkipQueue, direction="write"
                 ),
@@ -693,6 +829,54 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def list_unique_annotators(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[UserSimple]:
+        """
+        Return unique users who have submitted annotations in the specified project.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[UserSimple]
+            List of annotator users
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.list_unique_annotators(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/annotators/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[UserSimple],
+                    construct_type(
+                        type_=typing.List[UserSimple],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def duplicate(
         self,
         id: int,
@@ -704,6 +888,12 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsDuplicateResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Make a copy of project.
 
         Parameters
@@ -914,6 +1104,81 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def import_predictions(
+        self,
+        id: int,
+        *,
+        request: typing.Sequence[PredictionRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsImportPredictionsResponse:
+        """
+        Import model predictions for tasks in the specified project.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        request : typing.Sequence[PredictionRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectsImportPredictionsResponse
+            Predictions successfully imported
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio, PredictionRequest
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.import_predictions(
+            id=1,
+            request=[
+                PredictionRequest(
+                    result=[{"key": "value"}],
+                    task=1,
+                )
+            ],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/import/predictions",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[PredictionRequest], direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ProjectsImportPredictionsResponse,
+                    construct_type(
+                        type_=ProjectsImportPredictionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def validate_label_config(
         self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectLabelConfig:
@@ -975,7 +1240,10 @@ class ProjectsClient:
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.roles = AsyncRolesClient(client_wrapper=self._client_wrapper)
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
+        self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
+        self.metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         self.stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
         self.assignments = AsyncAssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)
@@ -983,15 +1251,16 @@ class AsyncProjectsClient:
     async def list(
         self,
         *,
-        filter: typing.Optional[ProjectsListRequestFilter] = None,
+        filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
         members_limit: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
-        workspaces: typing.Optional[int] = None,
+        workspaces: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AllRolesProjectList]:
         """
@@ -999,17 +1268,17 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
-        filter : typing.Optional[ProjectsListRequestFilter]
+        filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            ids
+            Filter id by in list
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
 
         members_limit : typing.Optional[int]
-            Maximum number of members to return.
+            Maximum number of members to return
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -1020,11 +1289,14 @@ class AsyncProjectsClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        title : typing.Optional[str]
-            title
+        search : typing.Optional[str]
+            Search term for project title and description
 
-        workspaces : typing.Optional[int]
-            workspaces
+        title : typing.Optional[str]
+            Filter title by contains (case-insensitive)
+
+        workspaces : typing.Optional[float]
+            Filter workspaces by exact match
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1068,6 +1340,7 @@ class AsyncProjectsClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "search": search,
                 "title": title,
                 "workspaces": workspaces,
             },
@@ -1091,6 +1364,7 @@ class AsyncProjectsClient:
                     ordering=ordering,
                     page=page + 1,
                     page_size=page_size,
+                    search=search,
                     title=title,
                     workspaces=workspaces,
                     request_options=request_options,
@@ -1197,6 +1471,7 @@ class AsyncProjectsClient:
             If set, the annotator can view model predictions
 
         show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
 
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
@@ -1304,7 +1579,114 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
+    async def list_counts(
+        self,
+        *,
+        filter: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        include: typing.Optional[str] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        workspaces: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedLseProjectCountsList:
+        """
+        Returns a list of projects with their counts. For example, task_number which is the total task number in project
+
+        Parameters
+        ----------
+        filter : typing.Optional[str]
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+
+        ids : typing.Optional[str]
+            Filter id by in list
+
+        include : typing.Optional[str]
+            Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        search : typing.Optional[str]
+            Search term for project title and description
+
+        title : typing.Optional[str]
+            Filter title by contains (case-insensitive)
+
+        workspaces : typing.Optional[float]
+            Filter workspaces by exact match
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedLseProjectCountsList
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.list_counts()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/projects/counts/",
+            method="GET",
+            params={
+                "filter": filter,
+                "ids": ids,
+                "include": include,
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "search": search,
+                "title": title,
+                "workspaces": workspaces,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedLseProjectCountsList,
+                    construct_type(
+                        type_=PaginatedLseProjectCountsList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(
+        self,
+        id: int,
+        *,
+        members_limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseProjectResponse:
         """
         Retrieve information about a project by project ID.
 
@@ -1312,13 +1694,16 @@ class AsyncProjectsClient:
         ----------
         id : int
 
+        members_limit : typing.Optional[int]
+            Maximum number of members to return
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Project
-            Project information
+        LseProjectResponse
+            Project information. Not all fields are available for all roles.
 
         Examples
         --------
@@ -1342,14 +1727,17 @@ class AsyncProjectsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/",
             method="GET",
+            params={
+                "members_limit": members_limit,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Project,
+                    LseProjectResponse,
                     construct_type(
-                        type_=Project,  # type: ignore
+                        type_=LseProjectResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1409,6 +1797,7 @@ class AsyncProjectsClient:
         self,
         id: int,
         *,
+        members_limit: typing.Optional[int] = None,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
@@ -1444,6 +1833,7 @@ class AsyncProjectsClient:
         show_instruction: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
+        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[PatchedLseProjectUpdateRequestSkipQueue] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
@@ -1457,6 +1847,9 @@ class AsyncProjectsClient:
         Parameters
         ----------
         id : int
+
+        members_limit : typing.Optional[int]
+            Maximum number of members to return
 
         annotation_limit_count : typing.Optional[int]
 
@@ -1537,6 +1930,7 @@ class AsyncProjectsClient:
             If set, the annotator can view model predictions
 
         show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
 
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
@@ -1545,6 +1939,8 @@ class AsyncProjectsClient:
 
         show_skip_button : typing.Optional[bool]
             Show a skip button in interface and allow annotators to skip the task
+
+        show_unused_data_columns_to_annotators : typing.Optional[bool]
 
         skip_queue : typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]
 
@@ -1589,6 +1985,9 @@ class AsyncProjectsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/",
             method="PATCH",
+            params={
+                "members_limit": members_limit,
+            },
             json={
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,
@@ -1633,6 +2032,7 @@ class AsyncProjectsClient:
                 "show_instruction": show_instruction,
                 "show_overlap_first": show_overlap_first,
                 "show_skip_button": show_skip_button,
+                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "skip_queue": convert_and_respect_annotation_metadata(
                     object_=skip_queue, annotation=PatchedLseProjectUpdateRequestSkipQueue, direction="write"
                 ),
@@ -1661,6 +2061,62 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def list_unique_annotators(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[UserSimple]:
+        """
+        Return unique users who have submitted annotations in the specified project.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[UserSimple]
+            List of annotator users
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.list_unique_annotators(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/annotators/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[UserSimple],
+                    construct_type(
+                        type_=typing.List[UserSimple],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def duplicate(
         self,
         id: int,
@@ -1672,6 +2128,12 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsDuplicateResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Make a copy of project.
 
         Parameters
@@ -1880,6 +2342,89 @@ class AsyncProjectsClient:
                     ProjectsImportTasksResponse,
                     construct_type(
                         type_=ProjectsImportTasksResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def import_predictions(
+        self,
+        id: int,
+        *,
+        request: typing.Sequence[PredictionRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsImportPredictionsResponse:
+        """
+        Import model predictions for tasks in the specified project.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        request : typing.Sequence[PredictionRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectsImportPredictionsResponse
+            Predictions successfully imported
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio, PredictionRequest
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.import_predictions(
+                id=1,
+                request=[
+                    PredictionRequest(
+                        result=[{"key": "value"}],
+                        task=1,
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/import/predictions",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[PredictionRequest], direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ProjectsImportPredictionsResponse,
+                    construct_type(
+                        type_=ProjectsImportPredictionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

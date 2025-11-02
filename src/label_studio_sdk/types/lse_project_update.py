@@ -144,7 +144,11 @@ class LseProjectUpdate(UncheckedBaseModel):
     If set, the annotator can view model predictions
     """
 
-    show_ground_truth_first: typing.Optional[bool] = None
+    show_ground_truth_first: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Onboarding mode (true): show ground truth tasks first in the labeling stream
+    """
+
     show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Show instructions to the annotator before they start
@@ -156,6 +160,7 @@ class LseProjectUpdate(UncheckedBaseModel):
     Show a skip button in interface and allow annotators to skip the task
     """
 
+    show_unused_data_columns_to_annotators: typing.Optional[bool] = None
     skip_queue: typing.Optional[LseProjectUpdateSkipQueue] = None
     skipped_annotations_number: int = pydantic.Field()
     """

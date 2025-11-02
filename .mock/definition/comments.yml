@@ -8,10 +8,17 @@ service:
       path: /api/comments/
       method: GET
       auth: true
-      docs: List all comments for a specific annotation ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all comments for a specific annotation ID.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List comments
+      display-name: ✨ List comments
       request:
         name: CommentsListRequest
         query-parameters:
@@ -50,10 +57,17 @@ service:
       path: /api/comments/
       method: POST
       auth: true
-      docs: Create a comment for a specific annotation ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a comment for a specific annotation ID.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create comment
+      display-name: ✨ Create comment
       request:
         body: root.CommentRequest
         query-parameters:
@@ -90,10 +104,17 @@ service:
       path: /api/comments/export/
       method: GET
       auth: true
-      docs: Export comments to CSV file
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Export comments to CSV file
       source:
         openapi: openapi/openapi.yaml
-      display-name: Export comments to CSV
+      display-name: ✨ Export comments to CSV
       request:
         name: CommentsExportRequest
         query-parameters:
@@ -116,12 +137,19 @@ service:
       path: /api/comments/{id}/
       method: GET
       auth: true
-      docs: Retrieve a specific comment by ID for an annotation.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific comment by ID for an annotation.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Get comment
+      display-name: ✨ Get comment
       request:
         name: CommentsGetRequest
         query-parameters:
@@ -157,12 +185,19 @@ service:
       path: /api/comments/{id}/
       method: PUT
       auth: true
-      docs: Overwrite a specific comment by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific comment by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Put comment
+      display-name: ✨ Put comment
       request:
         body: root.CommentRequest
         query-parameters:
@@ -201,12 +236,19 @@ service:
       path: /api/comments/{id}/
       method: DELETE
       auth: true
-      docs: Delete a comment by ID
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a comment by ID
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Delete comment
+      display-name: ✨ Delete comment
       request:
         name: CommentsDeleteRequest
         query-parameters:
@@ -222,12 +264,19 @@ service:
       path: /api/comments/{id}/
       method: PATCH
       auth: true
-      docs: Update a specific comment by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific comment by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Update comment
+      display-name: ✨ Update comment
       request:
         name: PatchedCommentRequest
         query-parameters:

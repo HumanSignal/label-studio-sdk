@@ -1,24 +1,21 @@
 """
-This script is meant to automatically tag tasks within a project using a random distribution and
-then assign those that receive a specific tag to a reviewer for further reviewing.
-
-**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
-The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
-[`label_studio_sdk._legacy`](../../README.md) in your script.
+This script automatically tags tasks using a random distribution and assigns those with a specific tag
+to a reviewer for further review.
 """
 
-from label_studio_sdk import Client
+import os
+from label_studio_sdk import LabelStudio
 from label_studio_sdk.data_manager import Filters, Column, Operator, Type
+from label_studio_sdk.projects.assignments import (
+    AssignmentsBulkAssignRequestSelectedItemsIncluded,
+)
 
-# Initialize the Label Studio SDK Client
-LABEL_STUDIO_URL = "https://app.heartex.com"  # Replace with your Label Studio URL
-API_KEY = "<ls-api-key>"  # Replace with your API key
-ls = Client(url=LABEL_STUDIO_URL, api_key=API_KEY)
+LABEL_STUDIO_URL = os.getenv("LABEL_STUDIO_URL", "https://app.heartex.com")
+API_KEY = os.getenv("LABEL_STUDIO_API_KEY", "<ls-api-key>")
+ls = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=API_KEY)
 
 
-def create_tags_with_random_distribution(
-    project_id: int, column_name: str, choices: list, weights: list
-):
+def create_tags_with_random_distribution(project_id: int, column_name: str, choices: list, weights: list):
     """Generate a new task column with tags randomly distributed by weights (percents).
     For example, if column_name='tags', choices=['to-be-reviewed', 'others'] and weights=[0.1, 0.9],
     10% of tasks will have 'to-be-reviewed' in newly created 'tags' column.
@@ -43,16 +40,15 @@ def create_tags_with_random_distribution(
         "value": f"choices({choices}, {weights})",
         "project": project_id,
     }
-    response = ls.make_request(
-        "post", f"/api/dm/actions?id=add_data_field&project={project_id}", json=data
+    # make a raw request, because this API is not exposed
+    response = ls._client_wrapper.httpx_client.request(
+        method="post", path=f"/api/dm/actions?id=add_data_field&project={project_id}", json=data
     )
     print("Tag sampling is done")
     return response
 
 
-def assign_reviewer_by_tag(
-    project_id: int, reviewer_email: str, filter_column: str, filter_value: str
-):
+def assign_reviewer_by_tag(project_id: int, reviewer_email: str, filter_column: str, filter_value: str):
     """Function to assign a reviewer to tasks filtered by a specific tag
 
     :param project_id: project id
@@ -62,7 +58,7 @@ def assign_reviewer_by_tag(
     :return: API response for the reviewer assignment
     """
     # Get the user ID of the reviewer by their email
-    users = ls.get_users()
+    users = ls.users.list()
     reviewer = next((user for user in users if user.email == reviewer_email), None)
     if not reviewer:
         raise ValueError(f"Reviewer with email {reviewer_email} not found.")
@@ -81,11 +77,18 @@ def assign_reviewer_by_tag(
     )
 
     # Retrieve the filtered tasks
-    project = ls.get_project(project_id)
-    task_ids = project.get_tasks_ids(filters=filters)
+    project = ls.projects.get(id=project_id)
+    # get task ids matching filters
+    tasks = ls.tasks.list(project=project_id, query=filters, fields='id')
+    task_ids = [t.id for t in tasks]
 
     # Assign the reviewer to the filtered tasks
-    response = project.assign_reviewers([reviewer], task_ids)
+    response = ls.projects.assignments.bulk_assign(
+        id=project_id,
+        selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(all_=False, included=task_ids),
+        users=[reviewer.id],
+        type='RE'
+    )
     print(f"Assigned reviewer {reviewer_email} to {len(task_ids)} tasks")
     return response
 
@@ -99,8 +102,8 @@ def run():
     2. Calls assign_reviewer_by_tag to assign the specified reviewer to all tasks
      that have been tagged as 'to-be-reviewed'.
     """
-    project_id = 12716  # Replace with your actual project ID
-    reviewer_email = "your@email.com"  # Replace with the reviewer's email
+    project_id = int(os.getenv("LABEL_STUDIO_PROJECT_ID", "12716"))
+    reviewer_email = os.getenv("LABEL_STUDIO_REVIEWER_EMAIL", "your@email.com")
 
     create_tags_with_random_distribution(
         project_id, "tags", choices=["to-be-reviewed", "other"], weights=[0.1, 0.9]

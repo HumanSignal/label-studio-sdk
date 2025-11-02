@@ -8,12 +8,19 @@ service:
       path: /api/workspaces/{id}/memberships/
       method: GET
       auth: true
-      docs: Get a list of all members in a specific workspace.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all members in a specific workspace.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: List workspace memberships
+      display-name: ✨ List workspace memberships
       response:
         docs: A list of workspace memberships
         type: list<root.WorkspaceMemberList>
@@ -44,6 +51,10 @@ service:
                     - active: active
                       organization_id: 1
                       role: role
+                  organization_membership:
+                    active: active
+                    organization_id: 1
+                    role: role
                   pause: pause
                   phone: phone
                   username: username
@@ -54,12 +65,19 @@ service:
       path: /api/workspaces/{id}/memberships/
       method: POST
       auth: true
-      docs: Add a new workspace member by user ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Add a new workspace member by user ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Create workspace membership
+      display-name: ✨ Create workspace membership
       request:
         name: WorkspaceMemberCreateRequest
         body:
@@ -90,13 +108,19 @@ service:
       method: DELETE
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Remove a specific member by ID from a workspace. This endpoint expects
         an object like `{"user_id": 123}`.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete workspace membership
+      display-name: ✨ Delete workspace membership
       examples:
         - path-parameters:
             id: 1

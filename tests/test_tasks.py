@@ -4,6 +4,7 @@ from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
 import typing
 from .utilities import validate_response
+import datetime
 
 
 async def test_create_many_status(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
@@ -76,174 +77,7 @@ async def test_delete_all_tasks(client: LabelStudio, async_client: AsyncLabelStu
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "agreement": "agreement",
-        "annotations": "annotations",
-        "annotations_ids": "annotations_ids",
-        "annotations_results": "annotations_results",
-        "annotators": [1, 1],
-        "annotators_count": 1,
-        "avg_lead_time": 1.1,
-        "cancelled_annotations": 1,
-        "comment_authors": [{"comment_authors": {"key": "value"}}, {"comment_authors": {"key": "value"}}],
-        "comment_authors_count": 1,
-        "comment_count": 2147483647,
-        "comments": "comments",
-        "completed_at": "2024-01-15T09:30:00Z",
-        "created_at": "2024-01-15T09:30:00Z",
-        "data": {"key": "value"},
-        "draft_exists": True,
-        "drafts": [
-            {
-                "created_at": "2024-01-15T09:30:00Z",
-                "result": [{"result": {"key": "value"}}, {"result": {"key": "value"}}],
-                "updated_at": "2024-01-15T09:30:00Z",
-            },
-            {
-                "created_at": "2024-01-15T09:30:00Z",
-                "result": [{"result": {"key": "value"}}, {"result": {"key": "value"}}],
-                "updated_at": "2024-01-15T09:30:00Z",
-            },
-        ],
-        "file_upload": "file_upload",
-        "ground_truth": True,
-        "id": 1,
-        "inner_id": 1,
-        "is_labeled": True,
-        "last_comment_updated_at": "2024-01-15T09:30:00Z",
-        "meta": {"key": "value"},
-        "overlap": 2147483647,
-        "predictions": [
-            {
-                "created_at": "2024-01-15T09:30:00Z",
-                "model": {"model": {"key": "value"}},
-                "model_run": {"model_run": {"key": "value"}},
-                "model_version": "model_version",
-                "project": 1,
-                "result": [{"result": {"key": "value"}}, {"result": {"key": "value"}}],
-                "score": 1.1,
-                "task": 1,
-                "updated_at": "2024-01-15T09:30:00Z",
-            },
-            {
-                "created_at": "2024-01-15T09:30:00Z",
-                "model": {"model": {"key": "value"}},
-                "model_run": {"model_run": {"key": "value"}},
-                "model_version": "model_version",
-                "project": 1,
-                "result": [{"result": {"key": "value"}}, {"result": {"key": "value"}}],
-                "score": 1.1,
-                "task": 1,
-                "updated_at": "2024-01-15T09:30:00Z",
-            },
-        ],
-        "predictions_model_versions": "predictions_model_versions",
-        "predictions_results": "predictions_results",
-        "predictions_score": 1.1,
-        "project": 1,
-        "reviewed": True,
-        "reviewers": [{"reviewers": {"key": "value"}}, {"reviewers": {"key": "value"}}],
-        "reviewers_count": 1,
-        "reviews_accepted": 1,
-        "reviews_rejected": 1,
-        "storage_filename": "storage_filename",
-        "total_annotations": 1,
-        "total_predictions": 1,
-        "unresolved_comment_count": 2147483647,
-        "updated_at": "2024-01-15T09:30:00Z",
-        "updated_by": [{"updated_by": {"key": "value"}}, {"updated_by": {"key": "value"}}],
-    }
-    expected_types: typing.Any = {
-        "agreement": None,
-        "annotations": None,
-        "annotations_ids": None,
-        "annotations_results": None,
-        "annotators": ("list", {0: "integer", 1: "integer"}),
-        "annotators_count": "integer",
-        "avg_lead_time": None,
-        "cancelled_annotations": "integer",
-        "comment_authors": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
-        "comment_authors_count": "integer",
-        "comment_count": "integer",
-        "comments": None,
-        "completed_at": "datetime",
-        "created_at": "datetime",
-        "data": None,
-        "draft_exists": None,
-        "drafts": (
-            "list",
-            {
-                0: {
-                    "created_at": "datetime",
-                    "result": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
-                    "updated_at": "datetime",
-                },
-                1: {
-                    "created_at": "datetime",
-                    "result": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
-                    "updated_at": "datetime",
-                },
-            },
-        ),
-        "file_upload": None,
-        "ground_truth": None,
-        "id": "integer",
-        "inner_id": "integer",
-        "is_labeled": None,
-        "last_comment_updated_at": "datetime",
-        "meta": None,
-        "overlap": "integer",
-        "predictions": (
-            "list",
-            {
-                0: {
-                    "created_at": "datetime",
-                    "model": ("dict", {0: (None, None)}),
-                    "model_run": ("dict", {0: (None, None)}),
-                    "model_version": None,
-                    "project": "integer",
-                    "result": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
-                    "score": None,
-                    "task": "integer",
-                    "updated_at": "datetime",
-                },
-                1: {
-                    "created_at": "datetime",
-                    "model": ("dict", {0: (None, None)}),
-                    "model_run": ("dict", {0: (None, None)}),
-                    "model_version": None,
-                    "project": "integer",
-                    "result": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
-                    "score": None,
-                    "task": "integer",
-                    "updated_at": "datetime",
-                },
-            },
-        ),
-        "predictions_model_versions": None,
-        "predictions_results": None,
-        "predictions_score": None,
-        "project": "integer",
-        "reviewed": None,
-        "reviewers": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
-        "reviewers_count": "integer",
-        "reviews_accepted": "integer",
-        "reviews_rejected": "integer",
-        "storage_filename": None,
-        "total_annotations": "integer",
-        "total_predictions": "integer",
-        "unresolved_comment_count": "integer",
-        "updated_at": "datetime",
-        "updated_by": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
-    }
-    response = client.tasks.create(data={"key": "value"})
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.tasks.create(data={"key": "value"})
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
-        "agreement": "agreement",
+        "agreement_selected": "agreement_selected",
         "annotations": "annotations",
         "annotations_ids": "annotations_ids",
         "annotations_results": "annotations_results",
@@ -270,6 +104,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "meta": {"key": "value"},
         "overlap": 1,
+        "precomputed_agreement": 1.1,
         "predictions": [
             {
                 "created_at": "2024-01-15T09:30:00Z",
@@ -287,6 +122,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "predictions_results": "predictions_results",
         "predictions_score": 1.1,
         "project": 1,
+        "review_time": 1,
         "reviewed": True,
         "reviewers": [{"key": "value"}],
         "reviewers_count": 1,
@@ -301,6 +137,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     }
     expected_types: typing.Any = {
         "agreement": None,
+        "agreement_selected": None,
         "annotations": None,
         "annotations_ids": None,
         "annotations_results": None,
@@ -334,6 +171,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "last_comment_updated_at": "datetime",
         "meta": None,
         "overlap": "integer",
+        "precomputed_agreement": None,
         "predictions": (
             "list",
             {
@@ -354,6 +192,147 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "predictions_results": None,
         "predictions_score": None,
         "project": "integer",
+        "review_time": "integer",
+        "reviewed": None,
+        "reviewers": ("list", {0: ("dict", {0: (None, None)})}),
+        "reviewers_count": "integer",
+        "reviews_accepted": "integer",
+        "reviews_rejected": "integer",
+        "storage_filename": None,
+        "total_annotations": "integer",
+        "total_predictions": "integer",
+        "unresolved_comment_count": "integer",
+        "updated_at": "datetime",
+        "updated_by": ("list", {0: ("dict", {0: (None, None)})}),
+    }
+    response = client.tasks.create(data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.tasks.create(
+        data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1
+    )
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "agreement": "agreement",
+        "agreement_selected": "agreement_selected",
+        "annotations": "annotations",
+        "annotations_ids": "annotations_ids",
+        "annotations_results": "annotations_results",
+        "annotators": [1],
+        "annotators_count": 1,
+        "avg_lead_time": 1.1,
+        "cancelled_annotations": 1,
+        "comment_authors": [{"key": "value"}],
+        "comment_authors_count": 1,
+        "comment_count": 1,
+        "comments": "comments",
+        "completed_at": "2024-01-15T09:30:00Z",
+        "created_at": "2024-01-15T09:30:00Z",
+        "data": {"key": "value"},
+        "draft_exists": True,
+        "drafts": [
+            {"created_at": "2024-01-15T09:30:00Z", "result": [{"key": "value"}], "updated_at": "2024-01-15T09:30:00Z"}
+        ],
+        "file_upload": "file_upload",
+        "ground_truth": True,
+        "id": 1,
+        "inner_id": 1,
+        "is_labeled": True,
+        "last_comment_updated_at": "2024-01-15T09:30:00Z",
+        "meta": {"key": "value"},
+        "overlap": 1,
+        "precomputed_agreement": 1.1,
+        "predictions": [
+            {
+                "created_at": "2024-01-15T09:30:00Z",
+                "model": {"key": "value"},
+                "model_run": {"key": "value"},
+                "model_version": "model_version",
+                "project": 1,
+                "result": [{"key": "value"}],
+                "score": 1.1,
+                "task": 1,
+                "updated_at": "2024-01-15T09:30:00Z",
+            }
+        ],
+        "predictions_model_versions": "predictions_model_versions",
+        "predictions_results": "predictions_results",
+        "predictions_score": 1.1,
+        "project": 1,
+        "review_time": 1,
+        "reviewed": True,
+        "reviewers": [{"key": "value"}],
+        "reviewers_count": 1,
+        "reviews_accepted": 1,
+        "reviews_rejected": 1,
+        "storage_filename": "storage_filename",
+        "total_annotations": 1,
+        "total_predictions": 1,
+        "unresolved_comment_count": 1,
+        "updated_at": "2024-01-15T09:30:00Z",
+        "updated_by": [{"key": "value"}],
+    }
+    expected_types: typing.Any = {
+        "agreement": None,
+        "agreement_selected": None,
+        "annotations": None,
+        "annotations_ids": None,
+        "annotations_results": None,
+        "annotators": ("list", {0: "integer"}),
+        "annotators_count": "integer",
+        "avg_lead_time": None,
+        "cancelled_annotations": "integer",
+        "comment_authors": ("list", {0: ("dict", {0: (None, None)})}),
+        "comment_authors_count": "integer",
+        "comment_count": "integer",
+        "comments": None,
+        "completed_at": "datetime",
+        "created_at": "datetime",
+        "data": None,
+        "draft_exists": None,
+        "drafts": (
+            "list",
+            {
+                0: {
+                    "created_at": "datetime",
+                    "result": ("list", {0: ("dict", {0: (None, None)})}),
+                    "updated_at": "datetime",
+                }
+            },
+        ),
+        "file_upload": None,
+        "ground_truth": None,
+        "id": "integer",
+        "inner_id": "integer",
+        "is_labeled": None,
+        "last_comment_updated_at": "datetime",
+        "meta": None,
+        "overlap": "integer",
+        "precomputed_agreement": None,
+        "predictions": (
+            "list",
+            {
+                0: {
+                    "created_at": "datetime",
+                    "model": ("dict", {0: (None, None)}),
+                    "model_run": ("dict", {0: (None, None)}),
+                    "model_version": None,
+                    "project": "integer",
+                    "result": ("list", {0: ("dict", {0: (None, None)})}),
+                    "score": None,
+                    "task": "integer",
+                    "updated_at": "datetime",
+                }
+            },
+        ),
+        "predictions_model_versions": None,
+        "predictions_results": None,
+        "predictions_score": None,
+        "project": "integer",
+        "review_time": "integer",
         "reviewed": None,
         "reviewers": ("list", {0: ("dict", {0: (None, None)})}),
         "reviewers_count": "integer",
@@ -389,6 +368,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "agreement": "agreement",
+        "agreement_selected": "agreement_selected",
         "annotations": "annotations",
         "annotations_ids": "annotations_ids",
         "annotations_results": "annotations_results",
@@ -415,6 +395,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "meta": {"key": "value"},
         "overlap": 1,
+        "precomputed_agreement": 1.1,
         "predictions": [
             {
                 "created_at": "2024-01-15T09:30:00Z",
@@ -432,6 +413,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "predictions_results": "predictions_results",
         "predictions_score": 1.1,
         "project": 1,
+        "review_time": 1,
         "reviewed": True,
         "reviewers": [{"key": "value"}],
         "reviewers_count": 1,
@@ -446,6 +428,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     }
     expected_types: typing.Any = {
         "agreement": None,
+        "agreement_selected": None,
         "annotations": None,
         "annotations_ids": None,
         "annotations_results": None,
@@ -479,6 +462,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "last_comment_updated_at": "datetime",
         "meta": None,
         "overlap": "integer",
+        "precomputed_agreement": None,
         "predictions": (
             "list",
             {
@@ -499,6 +483,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "predictions_results": None,
         "predictions_score": None,
         "project": "integer",
+        "review_time": "integer",
         "reviewed": None,
         "reviewers": ("list", {0: ("dict", {0: (None, None)})}),
         "reviewers_count": "integer",
@@ -515,4 +500,44 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.tasks.update(id="id")
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_create_event(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "actor": 1,
+        "annotation": 1,
+        "annotation_draft": 1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "event_key": "event_key",
+        "event_time": "2024-01-15T09:30:00Z",
+        "id": 1,
+        "meta": {"key": "value"},
+        "organization": 1,
+        "project": 1,
+        "review": 1,
+        "task": 1,
+    }
+    expected_types: typing.Any = {
+        "actor": "integer",
+        "annotation": "integer",
+        "annotation_draft": "integer",
+        "created_at": "datetime",
+        "event_key": None,
+        "event_time": "datetime",
+        "id": "integer",
+        "meta": None,
+        "organization": "integer",
+        "project": "integer",
+        "review": "integer",
+        "task": "integer",
+    }
+    response = client.tasks.create_event(
+        id=1, event_key="event_key", event_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00")
+    )
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.tasks.create_event(
+        id=1, event_key="event_key", event_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00")
+    )
     validate_response(async_response, expected_response, expected_types)

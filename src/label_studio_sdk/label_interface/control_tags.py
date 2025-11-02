@@ -39,6 +39,7 @@ _TAG_TO_CLASS = {
     "taxonomy": "TaxonomyTag",
     "textarea": "TextAreaTag",
     "timeserieslabels": "TimeSeriesLabelsTag",
+    "chatmessage": "ChatMessageTag",
 }
 
 
@@ -502,8 +503,8 @@ class ControlTag(LabelStudioTag):
 
 
 class SpanSelection(BaseModel):
-    start: Union[int, str]
-    end: Union[int, str]
+    start: Union[float, int, str]
+    end: Union[float, int, str]
 
 
 class SpanSelectionOffsets(SpanSelection):
@@ -560,6 +561,7 @@ class LabelsTag(ControlTag):
     _label_attr_name: str = "labels"
     _value_class: Type[LabelsValue] = LabelsValue
 
+
     def to_json_schema(self):
         """
         Converts the current LabelsTag instance into a JSON Schema.
@@ -574,13 +576,17 @@ class LabelsTag(ControlTag):
                 "required": ["start", "end", "labels"],
                 "properties": {
                     "start": {
-                        "type": "integer",
+                        "oneOf": [
+                            {"type": "integer", "minimum": 0},
+                            {"type": "number", "minimum": 0}
+                        ],
                         # TODO: this is incompatible with the OpenAI API using PredictedOutputs
-                        "minimum": 0
                     },
                     "end": {
-                        "type": "integer",
-                        "minimum": 0
+                        "oneOf": [
+                            {"type": "integer", "minimum": 0},
+                            {"type": "number", "minimum": 0}
+                        ]
                     },
                     "labels": {
                         "type": "array",
@@ -777,7 +783,7 @@ class VideoRectangleTag(ControlTag):
     
     
 class NumberValue(BaseModel):
-    number: int = Field(..., ge=0)
+    number: float = Field(..., ge=0)
     
 
 class NumberTag(ControlTag):
@@ -947,6 +953,44 @@ class RatingTag(ControlTag):
             "minimum": 0,
             "maximum": max_rating,
             "description": f"Rating for {self.to_name[0]} (0 to {max_rating})"
+        }
+
+
+class ChatMessageContent(BaseModel):
+    role: str
+    content: str
+    createdAt: Optional[int] = None
+
+
+class ChatMessageValue(BaseModel):
+    chatmessage: ChatMessageContent
+
+
+class ChatMessageTag(ControlTag):
+    """Control tag for chat messages targeting a `<Chat>` object.
+
+    This tag is a hybrid where `from_name == to_name` and `type == 'chatmessage'`.
+    """
+    tag: str = "ChatMessage"
+    _value_class: Type[ChatMessageValue] = ChatMessageValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "required": ["chatmessage"],
+            "properties": {
+                "chatmessage": {
+                    "type": "object",
+                    "required": ["role", "content"],
+                    "properties": {
+                        "role": {"type": "string"},
+                        "content": {"type": "string"},
+                        "createdAt": {"type": "number"}
+                    },
+                    "additionalProperties": True
+                }
+            },
+            "description": f"Chat message for {self.to_name[0]}"
         }
 
 

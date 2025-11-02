@@ -62,7 +62,7 @@ class JwtSettingsClient:
     def update(
         self,
         *,
-        api_token_ttl_days: typing.Optional[int] = OMIT,
+        api_token_ttl_days: int,
         api_tokens_enabled: typing.Optional[bool] = OMIT,
         legacy_api_tokens_enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -72,8 +72,7 @@ class JwtSettingsClient:
 
         Parameters
         ----------
-        api_token_ttl_days : typing.Optional[int]
-            Number of days before JWT API tokens expire
+        api_token_ttl_days : int
 
         api_tokens_enabled : typing.Optional[bool]
             Enable JWT API token authentication for this organization
@@ -96,7 +95,9 @@ class JwtSettingsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.jwt_settings.update()
+        client.jwt_settings.update(
+            api_token_ttl_days=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/jwt/settings",
@@ -184,7 +185,7 @@ class AsyncJwtSettingsClient:
     async def update(
         self,
         *,
-        api_token_ttl_days: typing.Optional[int] = OMIT,
+        api_token_ttl_days: int,
         api_tokens_enabled: typing.Optional[bool] = OMIT,
         legacy_api_tokens_enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -194,8 +195,7 @@ class AsyncJwtSettingsClient:
 
         Parameters
         ----------
-        api_token_ttl_days : typing.Optional[int]
-            Number of days before JWT API tokens expire
+        api_token_ttl_days : int
 
         api_tokens_enabled : typing.Optional[bool]
             Enable JWT API token authentication for this organization
@@ -223,7 +223,9 @@ class AsyncJwtSettingsClient:
 
 
         async def main() -> None:
-            await client.jwt_settings.update()
+            await client.jwt_settings.update(
+                api_token_ttl_days=1,
+            )
 
 
         asyncio.run(main())

@@ -16,13 +16,20 @@ service:
       path: /api/prompts/{prompt_id}/versions/{version_id}/inference-runs
       method: GET
       auth: true
-      docs: Get information (status, metadata, etc) about an existing inference run
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get information (status, metadata, etc) about an existing inference run
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: Get inference run info
+      display-name: ✨ Get inference run info
       request:
         name: RunsListRequest
         query-parameters:
@@ -71,13 +78,20 @@ service:
       path: /api/prompts/{prompt_id}/versions/{version_id}/inference-runs
       method: POST
       auth: true
-      docs: Run a prompt inference.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Run a prompt inference.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: Run prompt inference
+      display-name: ✨ Run prompt inference
       request:
         name: ModelRunRequest
         body:
@@ -133,6 +147,39 @@ service:
               total_predictions: 1
               total_tasks: 1
               triggered_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
+    cancel:
+      path: >-
+        /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel
+      method: POST
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel the inference run for the given api
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        inference_run_id: integer
+        prompt_id: integer
+        version_id: integer
+      display-name: ✨ Cancel Inference Run API
+      response:
+        docs: ''
+        type: root.CancelModelRunResponse
+      examples:
+        - path-parameters:
+            inference_run_id: 1
+            prompt_id: 1
+            version_id: 1
+          response:
+            body:
+              detail: detail
       audiences:
         - public
   source:

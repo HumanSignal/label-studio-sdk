@@ -21,8 +21,8 @@ class GcsClient:
     def list(
         self,
         *,
+        project: int,
         ordering: typing.Optional[str] = None,
-        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[GcsImportStorage]:
         """
@@ -30,11 +30,11 @@ class GcsClient:
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        project : typing.Optional[int]
-            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,7 +51,9 @@ class GcsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.gcs.list()
+        client.import_storage.gcs.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/gcs/",
@@ -540,8 +542,8 @@ class AsyncGcsClient:
     async def list(
         self,
         *,
+        project: int,
         ordering: typing.Optional[str] = None,
-        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[GcsImportStorage]:
         """
@@ -549,11 +551,11 @@ class AsyncGcsClient:
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        project : typing.Optional[int]
-            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -575,7 +577,9 @@ class AsyncGcsClient:
 
 
         async def main() -> None:
-            await client.import_storage.gcs.list()
+            await client.import_storage.gcs.list(
+                project=1,
+            )
 
 
         asyncio.run(main())

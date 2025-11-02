@@ -9,11 +9,17 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a list of all S3 export storage connections that were set up with
         IAM role access.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List S3s export storage
+      display-name: ✨ List S3s export storage
       request:
         name: S3SListRequest
         query-parameters:
@@ -21,13 +27,15 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
           project:
-            type: optional<integer>
+            type: integer
             docs: Project ID
       response:
         docs: ''
         type: list<root.LseS3ExportStorage>
       examples:
-        - response:
+        - query-parameters:
+            project: 1
+          response:
             body:
               - aws_access_key_id: aws_access_key_id
                 aws_secret_access_key: aws_secret_access_key
@@ -64,11 +72,17 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create an S3 export storage connection with IAM role access to store
         annotations.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create export storage
+      display-name: ✨ Create export storage
       request:
         body: root.LseS3ExportStorageRequest
         content-type: application/json
@@ -116,11 +130,17 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Validate a specific S3 export storage connection that was set up with
         IAM role access.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Validate export storage
+      display-name: ✨ Validate export storage
       request:
         body: root.LseS3ExportStorageRequest
         content-type: application/json
@@ -135,13 +155,19 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a specific S3 export storage connection that was set up with IAM
         role access.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get export storage
+      display-name: ✨ Get export storage
       response:
         docs: ''
         type: root.LseS3ExportStorage
@@ -185,13 +211,19 @@ service:
       method: DELETE
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a specific S3 export storage connection that was set up with IAM
         role access.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete export storage
+      display-name: ✨ Delete export storage
       examples:
         - path-parameters:
             id: 1
@@ -202,13 +234,19 @@ service:
       method: PATCH
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific S3 export storage connection that was set up with IAM
         role access.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update export storage
+      display-name: ✨ Update export storage
       request:
         name: PatchedLseS3ExportStorageRequest
         body:
@@ -332,12 +370,19 @@ service:
       path: /api/storages/export/s3s/{id}/sync
       method: POST
       auth: true
-      docs: Sync tasks from an S3 export storage.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from an S3 export storage.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Sync export storage
+      display-name: ✨ Sync export storage
       response:
         docs: ''
         type: root.LseS3ExportStorage

@@ -52,6 +52,11 @@ class ImportApiRequest(UncheckedBaseModel):
     Number of distinct annotators that processed the current task
     """
 
+    precomputed_agreement: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Average agreement score for the task
+    """
+
     predictions: typing.Optional[typing.List[PredictionRequest]] = None
     total_annotations: typing.Optional[int] = pydantic.Field(default=None)
     """

@@ -8,10 +8,17 @@ service:
       path: /api/model-run/batch-failed-predictions
       method: POST
       auth: true
-      docs: Create a new batch of failed predictions.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new batch of failed predictions.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create batch of failed predictions
+      display-name: ✨ Create batch of failed predictions
       request:
         name: BatchFailedPredictionsRequestRequest
         query-parameters:
@@ -48,10 +55,17 @@ service:
       path: /api/model-run/batch-predictions
       method: POST
       auth: true
-      docs: Create a new batch prediction.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new batch prediction.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create batch predictions
+      display-name: ✨ Create batch predictions
       request:
         name: BatchPredictionsRequestRequest
         query-parameters:
@@ -84,6 +98,112 @@ service:
                 - key: value
       audiences:
         - public
+    subset_tasks:
+      path: /api/projects/{project_pk}/subset-tasks
+      method: GET
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+
+                Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        project_pk: integer
+      display-name: ✨ Get Project Subset Task List with Predictions and Accuracy details
+      request:
+        name: PromptsSubsetTasksRequest
+        query-parameters:
+          include_total:
+            type: optional<boolean>
+            docs: >-
+              If true (default), includes task_count in response; if false,
+              omits it.
+          model_run:
+            type: optional<integer>
+            docs: A unique ID of a ModelRun
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
+          parent_model:
+            type: optional<integer>
+            docs: The ID of the parent model (ModelInterface) for this Inference Run
+          project_subset:
+            type: optional<string>
+            docs: The project subset to retrieve tasks for
+      response:
+        docs: ''
+        type: root.PaginatedProjectSubsetTasksResponseList
+      errors:
+        - root.BadRequestError
+      examples:
+        - path-parameters:
+            project_pk: 1
+          response:
+            body:
+              count: 123
+              next: http://api.example.org/accounts/?page=4
+              previous: http://api.example.org/accounts/?page=2
+              results:
+                - next_cursor: next_cursor
+                  previous_cursor: previous_cursor
+                  task_count: 1
+                  task_result_list:
+                    - data:
+                        key: value
+      audiences:
+        - public
+    subsets:
+      path: /api/projects/{project_pk}/subsets
+      method: GET
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+
+                Provides list of available subsets for a project along with count of tasks in each subset
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        project_pk: integer
+      display-name: ✨ Get available subsets of a project (for prompts usage)
+      request:
+        name: PromptsSubsetsRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.ProjectSubsetItem>
+      examples:
+        - path-parameters:
+            project_pk: 1
+          response:
+            body:
+              - columns_schema:
+                  - key: value
+                count: 1
+                subset: subset
+      audiences:
+        - public
     list:
       path: /api/prompts/
       method: GET
@@ -91,7 +211,7 @@ service:
       docs: List all prompts.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List prompts
+      display-name: ✨ List prompts
       request:
         name: PromptsListRequest
         query-parameters:
@@ -129,10 +249,17 @@ service:
       path: /api/prompts/
       method: POST
       auth: true
-      docs: Create a new prompt.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new prompt.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create prompt
+      display-name: ✨ Create prompt
       request:
         body: root.ModelInterfaceRequest
         content-type: application/json
@@ -172,7 +299,7 @@ service:
       docs: Retrieve a list of compatible project for prompt.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List projects compatible with prompt
+      display-name: ✨ List projects compatible with prompt
       request:
         name: PromptsCompatibleProjectsRequest
         query-parameters:
@@ -199,7 +326,7 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - allow_stream: allow_stream
+                - allow_stream: true
                   annotation_limit_count: 1
                   annotation_limit_percent: annotation_limit_percent
                   annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -234,7 +361,6 @@ service:
                   expert_instruction: expert_instruction
                   finished_task_number: 1
                   ground_truth_number: 1
-                  has_blueprints: has_blueprints
                   id: 1
                   is_draft: true
                   is_published: true
@@ -244,7 +370,7 @@ service:
                   members_count: 1
                   min_annotations_to_start_training: 1
                   model_version: model_version
-                  num_tasks_with_annotations: num_tasks_with_annotations
+                  num_tasks_with_annotations: 1
                   organization: 1
                   overlap_cohort_percentage: 1
                   parsed_label_config:
@@ -252,19 +378,19 @@ service:
                   pause_on_failed_annotator_evaluation: true
                   pinned_at: '2024-01-15T09:30:00Z'
                   prompts: prompts
-                  queue_done: queue_done
-                  queue_left: queue_left
+                  queue_done: 1
+                  queue_left: 1
                   queue_total: queue_total
-                  ready: ready
-                  rejected: rejected
+                  ready: true
+                  rejected: 1
                   require_comment_on_skip: true
                   reveal_preannotations_interactively: true
                   review_settings:
                     id: 1
                     requeue_rejected_tasks_to_annotator: true
-                  review_total_tasks: review_total_tasks
-                  reviewed_number: reviewed_number
-                  reviewer_queue_total: reviewer_queue_total
+                  review_total_tasks: 1
+                  reviewed_number: 1
+                  reviewer_queue_total: 1
                   sampling: Sequential sampling
                   show_annotation_history: true
                   show_collab_predictions: true
@@ -272,6 +398,7 @@ service:
                   show_instruction: true
                   show_overlap_first: true
                   show_skip_button: true
+                  show_unused_data_columns_to_annotators: true
                   skip_queue: REQUEUE_FOR_ME
                   skipped_annotations_number: skipped_annotations_number
                   start_training_on_annotation_update: true
@@ -279,7 +406,7 @@ service:
                   title: title
                   total_annotations_number: total_annotations_number
                   total_predictions_number: 1
-                  useful_annotation_number: useful_annotation_number
+                  useful_annotation_number: 1
                   workspace: workspace
                   workspace_title: workspace_title
       audiences:
@@ -288,12 +415,19 @@ service:
       path: /api/prompts/{id}/
       method: GET
       auth: true
-      docs: Retrieve a specific prompt.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific prompt.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Get prompt
+      display-name: ✨ Get prompt
       response:
         docs: ''
         type: root.ModelInterfaceSerializerGet
@@ -328,12 +462,19 @@ service:
       path: /api/prompts/{id}/
       method: PUT
       auth: true
-      docs: Overwrite a specific prompt by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific prompt by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Put prompt
+      display-name: ✨ Put prompt
       request:
         body: root.ModelInterfaceRequest
         content-type: application/json
@@ -372,12 +513,19 @@ service:
       path: /api/prompts/{id}/
       method: DELETE
       auth: true
-      docs: Delete a prompt by ID
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a prompt by ID
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Delete prompt
+      display-name: ✨ Delete prompt
       examples:
         - path-parameters:
             id: id
@@ -387,12 +535,19 @@ service:
       path: /api/prompts/{id}/
       method: PATCH
       auth: true
-      docs: Update a specific prompt by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific prompt by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Update prompt
+      display-name: ✨ Update prompt
       request:
         name: PatchedModelInterfaceRequest
         body:
@@ -449,13 +604,20 @@ service:
       path: /api/prompts/{prompt_id}/versions/{version_id}
       method: PUT
       auth: true
-      docs: Overwrite a specific prompt version by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific prompt version by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: Put prompt version
+      display-name: ✨ Put prompt version
       request:
         body: root.ThirdPartyModelVersionRequest
         content-type: application/json
@@ -491,24 +653,6 @@ service:
               updated_at: '2024-01-15T09:30:00Z'
       audiences:
         - internal
-    api_prompts_versions_inference_runs_cancel_create:
-      path: >-
-        /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel
-      method: POST
-      auth: true
-      docs: Cancel the inference run for the given api
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        inference_run_id: integer
-        prompt_id: integer
-        version_id: integer
-      display-name: Cancel Inference Run API
-      examples:
-        - path-parameters:
-            inference_run_id: 1
-            prompt_id: 1
-            version_id: 1
   source:
     openapi: openapi/openapi.yaml
 types:

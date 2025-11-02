@@ -44,6 +44,7 @@ service:
                 prefix: prefix
                 presign: true
                 presign_ttl: 1
+                recursive_scan: true
                 regex_filter: regex_filter
                 status: initialized
                 synced: true
@@ -52,6 +53,8 @@ service:
                 traceback: traceback
                 type: type
                 use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_create:
       path: /api/dataset-storages/gcs/
       method: POST
@@ -88,6 +91,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -96,6 +100,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_check_for_records_create:
       path: /api/dataset-storages/gcs/check-for-records/
       method: POST
@@ -134,6 +140,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -142,6 +149,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_validate_create:
       path: /api/dataset-storages/gcs/validate/
       method: POST
@@ -178,6 +187,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -186,6 +196,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_retrieve:
       path: /api/dataset-storages/gcs/{id}/
       method: GET
@@ -221,6 +233,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -229,6 +242,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_destroy:
       path: /api/dataset-storages/gcs/{id}/
       method: DELETE
@@ -242,6 +257,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - internal
     api_dataset_storages_gcs_partial_update:
       path: /api/dataset-storages/gcs/{id}/
       method: PATCH
@@ -301,6 +318,9 @@ service:
               validation:
                 min: 0
                 max: 32767
+            recursive_scan:
+              type: optional<boolean>
+              docs: Perform recursive scan over the bucket content
             regex_filter:
               type: optional<string>
               docs: Cloud storage regex for filtering objects
@@ -349,6 +369,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -357,6 +378,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_columns_retrieve:
       path: /api/dataset-storages/gcs/{id}/columns/
       method: GET
@@ -370,6 +393,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - internal
     api_dataset_storages_gcs_sync_create:
       path: /api/dataset-storages/gcs/{id}/sync/
       method: POST
@@ -410,6 +435,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -418,5 +444,7 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
   source:
     openapi: openapi/openapi.yaml

@@ -1,0 +1,92 @@
+types:
+  ActivityLogsListRequestMethod:
+    enum:
+      - DELETE
+      - GET
+      - PATCH
+      - POST
+      - PUT
+      - all
+    default: all
+    source:
+      openapi: openapi/openapi.yaml
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/activity-logs/
+      method: GET
+      auth: true
+      docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve activity logs filtered by workspace, project, user, HTTP
+        method, date range or search query.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: ✨ Get activity logs
+      request:
+        name: ActivityLogsListRequest
+        query-parameters:
+          end_date:
+            type: optional<string>
+            docs: End date/time (ISO-8601) for log filtering.
+          method:
+            type: optional<ActivityLogsListRequestMethod>
+            default: all
+            docs: HTTP request method used in the log.
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+          page:
+            type: optional<integer>
+            docs: '[or "start"] Current page index.'
+          page_size:
+            type: optional<integer>
+            docs: >-
+              [or "length"] Logs per page, use -1 to obtain all logs (might be
+              slow).
+          project:
+            type: optional<integer>
+            docs: Project ID to filter logs.
+          search:
+            type: optional<string>
+            docs: Search expression using "AND"/"OR" to filter by request URL.
+          start_date:
+            type: optional<string>
+            docs: Start date/time (ISO-8601) for log filtering.
+          user:
+            type: optional<integer>
+            docs: User ID to filter logs.
+          workspace:
+            type: optional<integer>
+            docs: Workspace owner ID to filter logs.
+      response:
+        docs: Activity logs
+        type: list<root.ActivityLogResponse>
+      errors:
+        - root.NotFoundError
+      examples:
+        - response:
+            body:
+              - data:
+                  - datetime: '2024-01-15T09:30:00Z'
+                    email: email
+                    id: 1
+                    request_method: request_method
+                    request_url: request_url
+                    response_code: response_code
+                    user_id: 1
+                recordsFiltered: 1
+                recordsTotal: 1
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

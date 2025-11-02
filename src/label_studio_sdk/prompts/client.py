@@ -11,6 +11,10 @@ from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.batch_predictions import BatchPredictions
+from ..types.paginated_project_subset_tasks_response_list import PaginatedProjectSubsetTasksResponseList
+from ..core.jsonable_encoder import jsonable_encoder
+from ..errors.bad_request_error import BadRequestError
+from ..types.project_subset_item import ProjectSubsetItem
 from ..types.model_interface_serializer_get import ModelInterfaceSerializerGet
 from ..types.user_simple_request import UserSimpleRequest
 from ..types.skill_name_enum import SkillNameEnum
@@ -18,7 +22,6 @@ from ..types.model_interface import ModelInterface
 from ..core.serialization import convert_and_respect_annotation_metadata
 from .types.prompts_compatible_projects_request_project_type import PromptsCompatibleProjectsRequestProjectType
 from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
 from .indicators.client import AsyncIndicatorsClient
 from .versions.client import AsyncVersionsClient
@@ -45,6 +48,12 @@ class PromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchFailedPredictions:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new batch of failed predictions.
 
         Parameters
@@ -119,6 +128,12 @@ class PromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchPredictions:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new batch prediction.
 
         Parameters
@@ -175,6 +190,178 @@ class PromptsClient:
                     BatchPredictions,
                     construct_type(
                         type_=BatchPredictions,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def subset_tasks(
+        self,
+        project_pk: int,
+        *,
+        include_total: typing.Optional[bool] = None,
+        model_run: typing.Optional[int] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        parent_model: typing.Optional[int] = None,
+        project_subset: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedProjectSubsetTasksResponseList:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+
+                Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
+
+
+        Parameters
+        ----------
+        project_pk : int
+
+        include_total : typing.Optional[bool]
+            If true (default), includes task_count in response; if false, omits it.
+
+        model_run : typing.Optional[int]
+            A unique ID of a ModelRun
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        parent_model : typing.Optional[int]
+            The ID of the parent model (ModelInterface) for this Inference Run
+
+        project_subset : typing.Optional[str]
+            The project subset to retrieve tasks for
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedProjectSubsetTasksResponseList
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.subset_tasks(
+            project_pk=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(project_pk)}/subset-tasks",
+            method="GET",
+            params={
+                "include_total": include_total,
+                "model_run": model_run,
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "parent_model": parent_model,
+                "project_subset": project_subset,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedProjectSubsetTasksResponseList,
+                    construct_type(
+                        type_=PaginatedProjectSubsetTasksResponseList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def subsets(
+        self,
+        project_pk: int,
+        *,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[ProjectSubsetItem]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+
+                Provides list of available subsets for a project along with count of tasks in each subset
+
+
+        Parameters
+        ----------
+        project_pk : int
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ProjectSubsetItem]
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.subsets(
+            project_pk=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(project_pk)}/subsets",
+            method="GET",
+            params={
+                "ordering": ordering,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[ProjectSubsetItem],
+                    construct_type(
+                        type_=typing.List[ProjectSubsetItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -247,6 +434,12 @@ class PromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new prompt.
 
         Parameters
@@ -391,6 +584,12 @@ class PromptsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelInterfaceSerializerGet:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve a specific prompt.
 
         Parameters
@@ -437,6 +636,12 @@ class PromptsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a prompt by ID
 
         Parameters
@@ -489,6 +694,12 @@ class PromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific prompt by ID.
 
         Parameters
@@ -586,6 +797,12 @@ class AsyncPromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchFailedPredictions:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new batch of failed predictions.
 
         Parameters
@@ -668,6 +885,12 @@ class AsyncPromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchPredictions:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new batch prediction.
 
         Parameters
@@ -732,6 +955,194 @@ class AsyncPromptsClient:
                     BatchPredictions,
                     construct_type(
                         type_=BatchPredictions,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def subset_tasks(
+        self,
+        project_pk: int,
+        *,
+        include_total: typing.Optional[bool] = None,
+        model_run: typing.Optional[int] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        parent_model: typing.Optional[int] = None,
+        project_subset: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedProjectSubsetTasksResponseList:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+
+                Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
+
+
+        Parameters
+        ----------
+        project_pk : int
+
+        include_total : typing.Optional[bool]
+            If true (default), includes task_count in response; if false, omits it.
+
+        model_run : typing.Optional[int]
+            A unique ID of a ModelRun
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        parent_model : typing.Optional[int]
+            The ID of the parent model (ModelInterface) for this Inference Run
+
+        project_subset : typing.Optional[str]
+            The project subset to retrieve tasks for
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedProjectSubsetTasksResponseList
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.subset_tasks(
+                project_pk=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(project_pk)}/subset-tasks",
+            method="GET",
+            params={
+                "include_total": include_total,
+                "model_run": model_run,
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "parent_model": parent_model,
+                "project_subset": project_subset,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedProjectSubsetTasksResponseList,
+                    construct_type(
+                        type_=PaginatedProjectSubsetTasksResponseList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def subsets(
+        self,
+        project_pk: int,
+        *,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[ProjectSubsetItem]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+
+                Provides list of available subsets for a project along with count of tasks in each subset
+
+
+        Parameters
+        ----------
+        project_pk : int
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ProjectSubsetItem]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.subsets(
+                project_pk=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(project_pk)}/subsets",
+            method="GET",
+            params={
+                "ordering": ordering,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[ProjectSubsetItem],
+                    construct_type(
+                        type_=typing.List[ProjectSubsetItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -812,6 +1223,12 @@ class AsyncPromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new prompt.
 
         Parameters
@@ -974,6 +1391,12 @@ class AsyncPromptsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ModelInterfaceSerializerGet:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve a specific prompt.
 
         Parameters
@@ -1028,6 +1451,12 @@ class AsyncPromptsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a prompt by ID
 
         Parameters
@@ -1088,6 +1517,12 @@ class AsyncPromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific prompt by ID.
 
         Parameters

@@ -10,6 +10,12 @@
     "Header": "Task header",
     "Paragraphs":  [{"author": "Alice", "text": "Hi, Bob."}, {"author": "Bob", "text": "Hello, Alice!"}, {"author": "Alice", "text": "What's up?"}, {"author": "Bob", "text": "Good. Ciao!"}, {"author": "Alice", "text": "Bye, Bob."}],
     "ParagraphsUrl": "<HOSTNAME>/samples/paragraphs.json?",
+    "Chat": [
+      {"role": "user", "content": "Hi there!", "createdAt": 1710000000000},
+      {"role": "assistant", "content": "Hello! How can I help you today?", "createdAt": 1710000005000},
+      {"role": "user", "content": "Can you summarize our onboarding checklist?", "createdAt": 1710000010000},
+      {"role": "assistant", "content": "Sure. It includes account setup, roles, labeling instructions, GT tasks, overlap and review.", "createdAt": 1710000015000}
+    ],
     "Table": {"Card number": 18799210, "First name": "Max", "Last name":  "Nobel"},
     "$videoHack": "<video src='<HOSTNAME>/static/samples/opossum_snow.mp4' width=100% controls>",
     "Video": "<HOSTNAME>/static/samples/opossum_snow.mp4",
@@ -85,6 +91,10 @@
     "AudioPlus": "<HOSTNAME>/static/samples/game.wav",
     "Header": "Task header",
     "Paragraphs":  [{"author": "Alice", "text": "Hi, Bob."}, {"author": "Bob", "text": "Hello, Alice!"}, {"author": "Alice", "text": "What's up?"}, {"author": "Bob", "text": "Good. Ciao!"}, {"author": "Alice", "text": "Bye, Bob."}],
+    "Chat": [
+      {"role": "user", "content": "Hello!", "createdAt": 1710000000000},
+      {"role": "assistant", "content": "Hi! What can I do for you?", "createdAt": 1710000004000}
+    ],
     "Table": {"Card number": 18799210, "First name": "Max", "Last name":  "Nobel"},
     "$videoHack": "<video src='static/samples/opossum_snow.mp4' width=100% controls>",
     "Video": "<HOSTNAME>/static/samples/opossum_snow.mp4",

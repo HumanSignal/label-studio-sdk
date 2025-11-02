@@ -14,6 +14,7 @@ from .types import (
     ActionsCreateRequestSelectedItemsIncluded,
     ActionsListResponseItem,
     ActionsListResponseItemDialog,
+    ActionsListResponseItemPermission,
 )
 
 __all__ = [
@@ -30,4 +31,5 @@ __all__ = [
     "ActionsCreateRequestSelectedItemsIncluded",
     "ActionsListResponseItem",
     "ActionsListResponseItemDialog",
+    "ActionsListResponseItemPermission",
 ]

@@ -2,7 +2,10 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 from .azure.client import AzureClient
+from .azure_spi.client import AzureSpiClient
+from .databricks.client import DatabricksClient
 from .gcs.client import GcsClient
+from .gcswif.client import GcswifClient
 from .local.client import LocalClient
 from .redis.client import RedisClient
 from .s3.client import S3Client
@@ -15,7 +18,10 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
 from .azure.client import AsyncAzureClient
+from .azure_spi.client import AsyncAzureSpiClient
+from .databricks.client import AsyncDatabricksClient
 from .gcs.client import AsyncGcsClient
+from .gcswif.client import AsyncGcswifClient
 from .local.client import AsyncLocalClient
 from .redis.client import AsyncRedisClient
 from .s3.client import AsyncS3Client
@@ -26,7 +32,10 @@ class ImportStorageClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.azure = AzureClient(client_wrapper=self._client_wrapper)
+        self.azure_spi = AzureSpiClient(client_wrapper=self._client_wrapper)
+        self.databricks = DatabricksClient(client_wrapper=self._client_wrapper)
         self.gcs = GcsClient(client_wrapper=self._client_wrapper)
+        self.gcswif = GcswifClient(client_wrapper=self._client_wrapper)
         self.local = LocalClient(client_wrapper=self._client_wrapper)
         self.redis = RedisClient(client_wrapper=self._client_wrapper)
         self.s3 = S3Client(client_wrapper=self._client_wrapper)
@@ -81,7 +90,10 @@ class AsyncImportStorageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.azure = AsyncAzureClient(client_wrapper=self._client_wrapper)
+        self.azure_spi = AsyncAzureSpiClient(client_wrapper=self._client_wrapper)
+        self.databricks = AsyncDatabricksClient(client_wrapper=self._client_wrapper)
         self.gcs = AsyncGcsClient(client_wrapper=self._client_wrapper)
+        self.gcswif = AsyncGcswifClient(client_wrapper=self._client_wrapper)
         self.local = AsyncLocalClient(client_wrapper=self._client_wrapper)
         self.redis = AsyncRedisClient(client_wrapper=self._client_wrapper)
         self.s3 = AsyncS3Client(client_wrapper=self._client_wrapper)

@@ -309,6 +309,53 @@ service:
             task: 1
       audiences:
         - public
+    predict_all_tasks:
+      path: /api/ml/{id}/predict
+      method: POST
+      auth: true
+      docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+
+
+        Create predictions for all tasks using a specific ML backend so that you
+        can set up an active learning strategy based on the confidence or
+        uncertainty scores associated with the predictions. Creating predictions
+        requires a Label Studio ML backend set up and configured for your
+        project. 
+
+
+        See [Set up machine learning](https://labelstud.io/guide/ml.html) for
+        more details about a Label Studio ML backend. 
+
+
+        Reference the ML backend ID in the path of this API call. Get the ML
+        backend ID by [listing the ML backends for a
+        project](https://labelstud.io/api/#operation/api_ml_list).
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this ML backend.
+      display-name: ✨ Create predictions for all tasks
+      request:
+        name: MlPredictAllTasksRequest
+        query-parameters:
+          batch_size:
+            type: optional<integer>
+            docs: >-
+              Computed number of tasks without predictions that the ML backend
+              needs to predict.
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
     test_predict:
       path: /api/ml/{id}/predict/test
       method: POST

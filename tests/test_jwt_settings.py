@@ -35,8 +35,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "api_tokens_enabled": None,
         "legacy_api_tokens_enabled": None,
     }
-    response = client.jwt_settings.update()
+    response = client.jwt_settings.update(api_token_ttl_days=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.jwt_settings.update()
+    async_response = await async_client.jwt_settings.update(api_token_ttl_days=1)
     validate_response(async_response, expected_response, expected_types)

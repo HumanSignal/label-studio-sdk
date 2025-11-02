@@ -1,0 +1,128 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_analytics_kpis_retrieve:
+      path: /api/analytics/kpis/
+      method: GET
+      auth: true
+      docs: >-
+        Returns metadata for all available KPI (Key Performance Indicator)
+        classes. Each KPI includes its key, label, base class, dependencies, and
+        configuration. This endpoint is useful for discovering available metrics
+        and understanding their relationships and requirements.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List all available KPIs
+      response:
+        docs: List of available KPIs with metadata
+        type: list<root.KpiMetadata>
+      examples:
+        - response:
+            body:
+              - base_class: base_class
+                calculation_formula:
+                  key: value
+                date_column: date_column
+                depends_on_kpis:
+                  - depends_on_kpis
+                is_calculated: true
+                is_label_type: true
+                key: key
+                label: label
+                percentage: true
+                unit: unit
+    api_analytics_kpis_retrieve_2:
+      path: /api/analytics/kpis/{kpi_key}
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve data for a specific KPI with support for filtering and
+        segmentation. Can segment by time (hourly, daily, weekly, monthly,
+        yearly), by user, or both (2D matrix). If no segmentation is specified,
+        returns a single total value. Supports filtering by projects, members,
+        and date range. Date filters are interpreted in the specified timezone
+        (required parameter).
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        kpi_key:
+          type: string
+          docs: KPI identifier (key)
+      display-name: Get KPI data with optional segmentation
+      request:
+        name: ApiAnalyticsKpisRetrieve2Request
+        query-parameters:
+          end:
+            type: optional<datetime>
+            docs: End date for filtering (ISO format)
+          members:
+            type: optional<string>
+            docs: >-
+              Comma-separated user IDs. If empty, includes all organization
+              members.
+          projects:
+            type: optional<string>
+            docs: >-
+              Comma-separated project IDs. If empty, includes all organization
+              projects.
+          segment_by_time:
+            type: optional<string>
+            docs: 'Time granularity: hourly, daily, weekly, monthly, yearly'
+          segment_by_user:
+            type: optional<boolean>
+            docs: Whether to segment results by user
+          start:
+            type: optional<datetime>
+            docs: Start date for filtering (ISO format)
+          tz:
+            type: string
+            docs: >-
+              Timezone for date filtering (IANA timezone name, e.g.,
+              "America/New_York", "UTC"). The start and end dates will be
+              interpreted in this timezone.
+      response:
+        docs: KPI data with requested segmentation
+        type: root.KpiDetailResponse
+      errors:
+        - root.BadRequestError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            kpi_key: kpi_key
+          query-parameters:
+            tz: tz
+          response:
+            body:
+              by_user:
+                users:
+                  - user_email: user_email
+                    user_id: 1
+                    username: username
+                values:
+                  - 1.1
+              kpi_key: kpi_key
+              kpi_label: kpi_label
+              matrix:
+                interval_start:
+                  - '2024-01-15T09:30:00Z'
+                users:
+                  - user_email: user_email
+                    user_id: 1
+                    username: username
+                values:
+                  - []
+              segmentation: none
+              time_series:
+                interval_start:
+                  - '2024-01-15T09:30:00Z'
+                values:
+                  - 1.1
+              total:
+                unit: unit
+                value: 1.1
+              unit: unit
+  source:
+    openapi: openapi/openapi.yaml

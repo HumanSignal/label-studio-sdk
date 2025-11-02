@@ -38,7 +38,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             "manual_workspace_management": "manual_workspace_management",
         },
         "created_at": "2024-01-15T09:30:00Z",
-        "custom_scripts_editable_by": "AD",
         "custom_scripts_enabled": "custom_scripts_enabled",
         "default_role": "OW",
         "email_notification_settings": "email_notification_settings",
@@ -52,7 +51,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_types: typing.Any = {
         "billing": {"manual_role_management": None, "manual_workspace_management": None},
         "created_at": "datetime",
-        "custom_scripts_editable_by": None,
         "custom_scripts_enabled": None,
         "default_role": None,
         "email_notification_settings": None,
@@ -67,4 +65,75 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.organizations.get(id=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "billing": {
+            "manual_role_management": "manual_role_management",
+            "manual_workspace_management": "manual_workspace_management",
+        },
+        "created_at": "2024-01-15T09:30:00Z",
+        "custom_scripts_enabled": "custom_scripts_enabled",
+        "default_role": "OW",
+        "email_notification_settings": "email_notification_settings",
+        "embed_domains": {"key": "value"},
+        "embed_settings": {"key": "value"},
+        "external_id": "external_id",
+        "id": 1,
+        "title": "title",
+        "token": "token",
+    }
+    expected_types: typing.Any = {
+        "billing": {"manual_role_management": None, "manual_workspace_management": None},
+        "created_at": "datetime",
+        "custom_scripts_enabled": None,
+        "default_role": None,
+        "email_notification_settings": None,
+        "embed_domains": None,
+        "embed_settings": None,
+        "external_id": None,
+        "id": "integer",
+        "title": None,
+        "token": None,
+    }
+    response = client.organizations.update(id=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.organizations.update(id=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_update_default_role(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "annotator_reviewer_firewall_enabled_at": "2024-01-15T09:30:00Z",
+        "custom_scripts_enabled_at": "2024-01-15T09:30:00Z",
+        "default_role": "OW",
+        "email_notification_settings": {"key": "value"},
+        "embed_domains": {"key": "value"},
+        "embed_settings": {"key": "value"},
+        "external_id": "external_id",
+        "extra_data_on_activity_logs": True,
+        "label_stream_navigation_disabled_at": "2024-01-15T09:30:00Z",
+        "organization": 1,
+        "read_only_quick_view_enabled_at": "2024-01-15T09:30:00Z",
+    }
+    expected_types: typing.Any = {
+        "annotator_reviewer_firewall_enabled_at": "datetime",
+        "custom_scripts_enabled_at": "datetime",
+        "default_role": None,
+        "email_notification_settings": None,
+        "embed_domains": None,
+        "embed_settings": None,
+        "external_id": None,
+        "extra_data_on_activity_logs": None,
+        "label_stream_navigation_disabled_at": "datetime",
+        "organization": "integer",
+        "read_only_quick_view_enabled_at": "datetime",
+    }
+    response = client.organizations.update_default_role(id=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.organizations.update_default_role(id=1)
     validate_response(async_response, expected_response, expected_types)

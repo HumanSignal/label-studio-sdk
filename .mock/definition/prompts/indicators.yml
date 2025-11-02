@@ -13,12 +13,19 @@ service:
       path: /api/inference-runs/{id}/indicators/
       method: GET
       auth: true
-      docs: Get key indicators for the Prompt dashboard.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get key indicators for the Prompt dashboard.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get key indicators
+      display-name: ✨ Get key indicators
       response:
         docs: Key indicators
         type: list<IndicatorsListResponseItem>
@@ -36,13 +43,20 @@ service:
       path: /api/inference-runs/{id}/indicators/{indicator_key}
       method: GET
       auth: true
-      docs: Get a specific key indicator for the Prompt dashboard.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific key indicator for the Prompt dashboard.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
         indicator_key: string
-      display-name: Get key indicator
+      display-name: ✨ Get key indicator
       response:
         docs: Key indicator
         type: root.LseKeyIndicatorValue

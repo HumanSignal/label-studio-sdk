@@ -4,6 +4,12 @@ import httpx
 
 from .http_client import AsyncHttpClient, HttpClient
 
+import importlib.metadata
+
+try:
+    VERSION = importlib.metadata.version("label-studio-sdk")
+except importlib.metadata.PackageNotFoundError:
+    VERSION = "unknown"
 
 class BaseClientWrapper:
     def __init__(
@@ -33,7 +39,7 @@ class BaseClientWrapper:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "label-studio-sdk",
-            "X-Fern-SDK-Version": "1.0.11",
+            "X-Fern-SDK-Version": VERSION,
         }
         if self._tokens_client._use_legacy_token:
             headers["Authorization"] = f"Token {self._tokens_client.api_key}"

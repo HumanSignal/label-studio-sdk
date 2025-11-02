@@ -19,7 +19,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     make sure, that you use correct one(Project.objects.with_counts())
     """
 
-    allow_stream: str
+    allow_stream: bool
     annotation_limit_count: typing.Optional[int] = None
     annotation_limit_percent: typing.Optional[str] = None
     annotator_evaluation_minimum_score: typing.Optional[str] = None
@@ -81,7 +81,6 @@ class AllRolesProjectList(UncheckedBaseModel):
     Honeypot annotation number in project
     """
 
-    has_blueprints: str
     id: int
     is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """
@@ -115,7 +114,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     Machine learning model version
     """
 
-    num_tasks_with_annotations: str
+    num_tasks_with_annotations: typing.Optional[int] = None
     organization: typing.Optional[int] = None
     overlap_cohort_percentage: typing.Optional[int] = None
     parsed_label_config: typing.Optional[typing.Any] = None
@@ -126,11 +125,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     """
 
     prompts: str
-    queue_done: str
-    queue_left: str
+    queue_done: int
+    queue_left: int
     queue_total: str
-    ready: str
-    rejected: str
+    ready: bool
+    rejected: int
     require_comment_on_skip: typing.Optional[bool] = None
     reveal_preannotations_interactively: typing.Optional[bool] = pydantic.Field(default=None)
     """
@@ -138,9 +137,9 @@ class AllRolesProjectList(UncheckedBaseModel):
     """
 
     review_settings: ReviewSettings
-    review_total_tasks: str
-    reviewed_number: str
-    reviewer_queue_total: str
+    review_total_tasks: int
+    reviewed_number: int
+    reviewer_queue_total: int
     sampling: typing.Optional[AllRolesProjectListSampling] = None
     show_annotation_history: typing.Optional[bool] = pydantic.Field(default=None)
     """
@@ -152,7 +151,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     If set, the annotator can view model predictions
     """
 
-    show_ground_truth_first: typing.Optional[bool] = None
+    show_ground_truth_first: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Onboarding mode (true): show ground truth tasks first in the labeling stream
+    """
+
     show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Show instructions to the annotator before they start
@@ -164,6 +167,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     Show a skip button in interface and allow annotators to skip the task
     """
 
+    show_unused_data_columns_to_annotators: typing.Optional[bool] = None
     skip_queue: typing.Optional[AllRolesProjectListSkipQueue] = None
     skipped_annotations_number: str
     start_training_on_annotation_update: bool = pydantic.Field()
@@ -183,7 +187,7 @@ class AllRolesProjectList(UncheckedBaseModel):
 
     total_annotations_number: str
     total_predictions_number: int
-    useful_annotation_number: str
+    useful_annotation_number: typing.Optional[int] = None
     workspace: str
     workspace_title: str
 

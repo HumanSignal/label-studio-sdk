@@ -16,6 +16,7 @@ from .assignments_bulk_assign_request_selected_items_excluded import Assignments
 from .assignments_bulk_assign_request_selected_items_included import AssignmentsBulkAssignRequestSelectedItemsIncluded
 from .assignments_bulk_assign_request_type import AssignmentsBulkAssignRequestType
 from .assignments_bulk_assign_response import AssignmentsBulkAssignResponse
+from .assignments_delete_request_type import AssignmentsDeleteRequestType
 from .assignments_update_request_type import AssignmentsUpdateRequestType
 
 __all__ = [
@@ -31,5 +32,6 @@ __all__ = [
     "AssignmentsBulkAssignRequestSelectedItemsIncluded",
     "AssignmentsBulkAssignRequestType",
     "AssignmentsBulkAssignResponse",
+    "AssignmentsDeleteRequestType",
     "AssignmentsUpdateRequestType",
 ]

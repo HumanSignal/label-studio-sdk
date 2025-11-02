@@ -17,6 +17,8 @@ from ..errors.unauthorized_error import UnauthorizedError
 from ..errors.forbidden_error import ForbiddenError
 import datetime as dt
 from ..types.lse_task import LseTask
+from ..types.task_event import TaskEvent
+from ..errors.not_found_error import NotFoundError
 from ..core.client_wrapper import AsyncClientWrapper
 from ..core.pagination import AsyncPager
 
@@ -370,7 +372,8 @@ class TasksClient:
             api_key="YOUR_API_KEY",
         )
         client.tasks.create(
-            data={"key": "value"},
+            data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
+            project=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -516,6 +519,7 @@ class TasksClient:
         last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         overlap: typing.Optional[int] = OMIT,
+        precomputed_agreement: typing.Optional[float] = OMIT,
         predictions_score: typing.Optional[float] = OMIT,
         project: typing.Optional[int] = OMIT,
         reviewed: typing.Optional[bool] = OMIT,
@@ -561,6 +565,9 @@ class TasksClient:
 
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
+
+        precomputed_agreement : typing.Optional[float]
+            Average agreement score for the task
 
         predictions_score : typing.Optional[float]
 
@@ -615,6 +622,7 @@ class TasksClient:
                 "last_comment_updated_at": last_comment_updated_at,
                 "meta": meta,
                 "overlap": overlap,
+                "precomputed_agreement": precomputed_agreement,
                 "predictions_score": predictions_score,
                 "project": project,
                 "reviewed": reviewed,
@@ -638,6 +646,187 @@ class TasksClient:
                         type_=RoleBasedTask,  # type: ignore
                         object_=_response.json(),
                     ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def create_event(
+        self,
+        id: int,
+        *,
+        event_key: str,
+        event_time: dt.datetime,
+        annotation: typing.Optional[int] = OMIT,
+        annotation_draft: typing.Optional[int] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        review: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TaskEvent:
+        """
+
+            Create a new task event to track user interactions and system events during annotation.
+
+            This endpoint is designed to receive events from the frontend labeling interface to enable
+            accurate lead time calculation and detailed annotation analytics.
+
+            ## Event Types
+
+            **Core Annotation Events:**
+            - `annotation_loaded` - When annotation interface is loaded
+            - `annotation_submitted` - When annotation is submitted
+            - `annotation_updated` - When annotation is modified
+            - `annotation_reviewed` - When annotation is reviewed
+
+            **User Activity Events:**
+            - `visibility_change` - When page visibility changes (tab switch, minimize)
+            - `idle_detected` - When user goes idle
+            - `idle_resumed` - When user returns from idle
+
+            **Interaction Events:**
+            - `region_finished_drawing` - When annotation region is completed
+            - `region_deleted` - When annotation regions are removed
+            - `hotkey_pressed` - When keyboard shortcuts are used
+
+            **Media Events:**
+            - `video_playback_start/end` - Video playback control
+            - `audio_playback_start/end` - Audio playback control
+            - `video_scrub` - Video timeline scrubbing
+
+            ## Usage
+
+            Events are automatically associated with the task specified in the URL path.
+            The current user is automatically set as the actor. Project and organization
+            are derived from the task context.
+
+            ## Example Request
+
+            ```json
+            {
+                "event_key": "annotation_loaded",
+                "event_time": "2024-01-15T10:30:00Z",
+                "annotation": 123,
+                "meta": {
+                    "annotation_count": 5,
+                    "estimated_time": 300
+                }
+            }
+            ```
+
+
+        Parameters
+        ----------
+        id : int
+            Task ID to associate the event with
+
+        event_key : str
+            Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
+
+        event_time : dt.datetime
+            Timestamp when the event occurred (frontend time)
+
+        annotation : typing.Optional[int]
+            Annotation ID associated with this event
+
+        annotation_draft : typing.Optional[int]
+            Draft annotation ID associated with this event
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        review : typing.Optional[int]
+            Review ID associated with this event
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TaskEvent
+
+
+        Examples
+        --------
+        import datetime
+
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.tasks.create_event(
+            id=1,
+            event_key="event_key",
+            event_time=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/tasks/{jsonable_encoder(id)}/events/",
+            method="POST",
+            json={
+                "annotation": annotation,
+                "annotation_draft": annotation_draft,
+                "event_key": event_key,
+                "event_time": event_time,
+                "meta": meta,
+                "review": review,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    TaskEvent,
+                    construct_type(
+                        type_=TaskEvent,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1020,7 +1209,11 @@ class AsyncTasksClient:
 
         async def main() -> None:
             await client.tasks.create(
-                data={"key": "value"},
+                data={
+                    "image": "https://example.com/image.jpg",
+                    "text": "Hello, world!",
+                },
+                project=1,
             )
 
 
@@ -1185,6 +1378,7 @@ class AsyncTasksClient:
         last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         overlap: typing.Optional[int] = OMIT,
+        precomputed_agreement: typing.Optional[float] = OMIT,
         predictions_score: typing.Optional[float] = OMIT,
         project: typing.Optional[int] = OMIT,
         reviewed: typing.Optional[bool] = OMIT,
@@ -1230,6 +1424,9 @@ class AsyncTasksClient:
 
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
+
+        precomputed_agreement : typing.Optional[float]
+            Average agreement score for the task
 
         predictions_score : typing.Optional[float]
 
@@ -1292,6 +1489,7 @@ class AsyncTasksClient:
                 "last_comment_updated_at": last_comment_updated_at,
                 "meta": meta,
                 "overlap": overlap,
+                "precomputed_agreement": precomputed_agreement,
                 "predictions_score": predictions_score,
                 "project": project,
                 "reviewed": reviewed,
@@ -1315,6 +1513,194 @@ class AsyncTasksClient:
                         type_=RoleBasedTask,  # type: ignore
                         object_=_response.json(),
                     ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def create_event(
+        self,
+        id: int,
+        *,
+        event_key: str,
+        event_time: dt.datetime,
+        annotation: typing.Optional[int] = OMIT,
+        annotation_draft: typing.Optional[int] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        review: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TaskEvent:
+        """
+
+            Create a new task event to track user interactions and system events during annotation.
+
+            This endpoint is designed to receive events from the frontend labeling interface to enable
+            accurate lead time calculation and detailed annotation analytics.
+
+            ## Event Types
+
+            **Core Annotation Events:**
+            - `annotation_loaded` - When annotation interface is loaded
+            - `annotation_submitted` - When annotation is submitted
+            - `annotation_updated` - When annotation is modified
+            - `annotation_reviewed` - When annotation is reviewed
+
+            **User Activity Events:**
+            - `visibility_change` - When page visibility changes (tab switch, minimize)
+            - `idle_detected` - When user goes idle
+            - `idle_resumed` - When user returns from idle
+
+            **Interaction Events:**
+            - `region_finished_drawing` - When annotation region is completed
+            - `region_deleted` - When annotation regions are removed
+            - `hotkey_pressed` - When keyboard shortcuts are used
+
+            **Media Events:**
+            - `video_playback_start/end` - Video playback control
+            - `audio_playback_start/end` - Audio playback control
+            - `video_scrub` - Video timeline scrubbing
+
+            ## Usage
+
+            Events are automatically associated with the task specified in the URL path.
+            The current user is automatically set as the actor. Project and organization
+            are derived from the task context.
+
+            ## Example Request
+
+            ```json
+            {
+                "event_key": "annotation_loaded",
+                "event_time": "2024-01-15T10:30:00Z",
+                "annotation": 123,
+                "meta": {
+                    "annotation_count": 5,
+                    "estimated_time": 300
+                }
+            }
+            ```
+
+
+        Parameters
+        ----------
+        id : int
+            Task ID to associate the event with
+
+        event_key : str
+            Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
+
+        event_time : dt.datetime
+            Timestamp when the event occurred (frontend time)
+
+        annotation : typing.Optional[int]
+            Annotation ID associated with this event
+
+        annotation_draft : typing.Optional[int]
+            Draft annotation ID associated with this event
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        review : typing.Optional[int]
+            Review ID associated with this event
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TaskEvent
+
+
+        Examples
+        --------
+        import asyncio
+        import datetime
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.tasks.create_event(
+                id=1,
+                event_key="event_key",
+                event_time=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/tasks/{jsonable_encoder(id)}/events/",
+            method="POST",
+            json={
+                "annotation": annotation,
+                "annotation_draft": annotation_draft,
+                "event_key": event_key,
+                "event_time": event_time,
+                "meta": meta,
+                "review": review,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    TaskEvent,
+                    construct_type(
+                        type_=TaskEvent,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:

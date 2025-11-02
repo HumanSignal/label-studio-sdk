@@ -20,6 +20,12 @@ class IndicatorsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[IndicatorsListResponseItem]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get key indicators for the Prompt dashboard.
 
         Parameters
@@ -68,6 +74,12 @@ class IndicatorsClient:
         self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LseKeyIndicatorValue:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a specific key indicator for the Prompt dashboard.
 
         Parameters
@@ -124,6 +136,12 @@ class AsyncIndicatorsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[IndicatorsListResponseItem]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get key indicators for the Prompt dashboard.
 
         Parameters
@@ -180,6 +198,12 @@ class AsyncIndicatorsClient:
         self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LseKeyIndicatorValue:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a specific key indicator for the Prompt dashboard.
 
         Parameters

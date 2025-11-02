@@ -15,6 +15,7 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     """
 
     agreement: str
+    agreement_selected: str
     annotations: str
     annotations_ids: str
     annotations_results: str
@@ -71,6 +72,11 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     Number of distinct annotators that processed the current task
     """
 
+    precomputed_agreement: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Average agreement score for the task
+    """
+
     predictions: typing.List[LseTaskSerializerForReviewersPredictionsItem] = pydantic.Field()
     """
     Predictions for this task
@@ -82,6 +88,12 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     project: typing.Optional[int] = pydantic.Field(default=None)
     """
     Project ID for this task
+    """
+
+    review_time: int = pydantic.Field()
+    """
+    Calculate total review time for this task from MetricInTimeBucket records.
+    Returns time in seconds.
     """
 
     reviewed: typing.Optional[bool] = None

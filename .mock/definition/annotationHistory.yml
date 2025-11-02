@@ -4,21 +4,30 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_annotation_history_list:
+    list:
       path: /api/annotation-history/
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List annotation history items for an annotation. Annotation history logs
         all actions performed with annotations, such as: imports, submits,
         updates, reviews, and more. Users can view annotation history items in
         the Annotation History panel during labeling.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List all annotation history items for annotation
+      display-name: ✨ List all annotation history items for annotation
       request:
-        name: ApiAnnotationHistoryListRequest
+        name: AnnotationHistoryListRequest
         query-parameters:
+          annotation:
+            type: optional<integer>
+            docs: Annotation ID to get annotation history items for.
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
@@ -44,36 +53,65 @@ service:
                 review_id: 1
                 started_at: '2024-01-15T09:30:00Z'
                 task_id: 1
-    api_annotation_history_destroy:
+      audiences:
+        - public
+    delete:
       path: /api/annotation-history/
       method: DELETE
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete all annotation history items for a specific annotation, task or
         project. This method is available only for users with administrator
         roles.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Delete annotation history items
+      display-name: ✨ Delete annotation history items
+      request:
+        name: AnnotationHistoryDeleteRequest
+        query-parameters:
+          annotation:
+            type: optional<integer>
+            docs: Annotation ID to delete annotation history items for.
+          project:
+            type: optional<integer>
+            docs: Project ID to delete annotation history items for.
+          task:
+            type: optional<integer>
+            docs: Task ID to delete annotation history items for.
       response:
         docs: Returns a dict containing the count of removed items.
-        type: ApiAnnotationHistoryDestroyResponse
+        type: AnnotationHistoryDeleteResponse
       examples:
         - response:
             body:
               removed: 1
-    api_projects_annotation_history_list:
+      audiences:
+        - public
+    list_for_project:
       path: /api/projects/{id}/annotation-history/
       method: GET
       auth: true
-      docs: List all annotation history items for the project with pagination.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all annotation history items for the project with pagination.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: List annotation history items for project
+      display-name: ✨ List annotation history items for project
       request:
-        name: ApiProjectsAnnotationHistoryListRequest
+        name: AnnotationHistoryListForProjectRequest
         query-parameters:
           page:
             type: optional<integer>
@@ -109,10 +147,12 @@ service:
                   review_id: 1
                   started_at: '2024-01-15T09:30:00Z'
                   task_id: 1
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml
 types:
-  ApiAnnotationHistoryDestroyResponse:
+  AnnotationHistoryDeleteResponse:
     properties:
       removed:
         type: optional<integer>
