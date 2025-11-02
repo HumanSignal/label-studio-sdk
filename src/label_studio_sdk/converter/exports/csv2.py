@@ -82,14 +82,6 @@ def prepare_annotation(item):
         record["id"] = item["id"]
 
     for name, value in item["output"].items():
-        # Check if this is a Chat tag before prettify_result removes the type field
-        is_chat = False
-        if isinstance(value, list):
-            is_chat = any(
-                isinstance(result, dict) and result.get("type") == "Chat"
-                for result in value
-            )
-        
         pretty_value = prettify_result(value)
         record[name] = (
             pretty_value
@@ -97,10 +89,16 @@ def prepare_annotation(item):
             else json.dumps(pretty_value, ensure_ascii=False)
         )
 
-        if is_chat:
+        if any(
+            isinstance(result, dict) and result.get("type") == "Chat"
+            for result in value
+        ):
             record[f"{name}_transcript"] = generate_chat_transcript(pretty_value)
 
     for name, value in item["input"].items():
+        # Do not overwrite output columns with input data on name collision
+        if name in record:
+            continue
         if isinstance(value, dict) or isinstance(value, list):
             # flat dicts and arrays from task.data to json strings
             record[name] = json.dumps(value, ensure_ascii=False)
