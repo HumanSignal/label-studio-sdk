@@ -10,6 +10,17 @@ INPUT_JSON_PATH_REPEATER = os.path.join(BASE_DIR, TEST_DATA_PATH, "data_repeater
 LABEL_CONFIG_JSON_PATH_REPEATER = os.path.join(
     BASE_DIR, TEST_DATA_PATH, "label_config_repeater.json"
 )
+CHAT_JSON_PATH = os.path.join(TEST_DATA_PATH, "chat_data.json")
+
+CHAT_SCHEMA = {
+    "chat": {
+        "type": "Chat",
+        "to_name": ["chat"],
+        "inputs": [{"type": "Chat", "value": "chat"}],
+        "labels": [],
+        "labels_attrs": {},
+    }
+}
 
 
 def test_simple_json_min():
@@ -40,3 +51,24 @@ def test_repeater_json_min():
     assert len(loaded_json_min) == 1
     assert "labels_0" in loaded_json_min[0]
     assert "categories_0" in loaded_json_min[0]
+
+
+def test_chat_json_min():
+    converter = Converter(CHAT_SCHEMA, "/tmp")
+    output_dir = "/tmp/lsc-pytest"
+    result_json = os.path.join(output_dir, "result.json")
+    input_data = CHAT_JSON_PATH
+
+    converter.convert_to_json_min(input_data, output_dir, is_dir=False)
+
+    loaded_json_min = json.load(open(result_json, "r"))
+
+    assert len(loaded_json_min) == 1
+    assert "chat" in loaded_json_min[0]
+    messages = loaded_json_min[0]["chat"]
+    assert isinstance(messages, list)
+    assert len(messages) == 4
+    assert messages[0]["role"] == "user"
+    assert messages[1]["content"].startswith("Hello! How can I assist you today?")
+    assert "tool_calls" in messages[1]
+    assert messages[1]["tool_calls"] is None

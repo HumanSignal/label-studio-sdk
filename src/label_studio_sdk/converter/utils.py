@@ -388,6 +388,8 @@ def prettify_result(v):
             out.append(j["choices"][0])
         elif tag_type == "TextArea" and len(j["text"]) == 1:
             out.append(j["text"][0])
+        elif tag_type == "Chat":
+            out.append(j.get("chatmessage", j))
         else:
             out.append(j)
     return out[0] if tag_type in ("Choices", "TextArea") and len(out) == 1 else out

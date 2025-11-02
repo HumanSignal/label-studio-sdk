@@ -13,6 +13,8 @@ https://github.com/HumanSignal/label-studio-sdk/tree/master/src/label_studio_sdk
 - [Examples](#examples)
     - [JSON](#json)
     - [CSV](#csv)
+    - [JSON-MIN](#json-min)
+    - [CSV Chat Transcript](#csv-chat-transcript)
     - [CoNLL 2003](#conll-2003)
     - [COCO](#coco)
     - [Pascal VOC XML](#pascal-voc-xml)
@@ -88,6 +90,58 @@ The goose neck needs a little coaxing	Neutral
 ```
 
 Use cases: any tasks
+
+#### JSON-MIN
+JSON-MIN exports now flatten `<Chat>` conversations into plain message objects while preserving metadata such as `createdAt` and `tool_calls`.
+
+**Input snippet:**
+```json
+{
+  "annotations": [
+    {
+      "result": [
+        {
+          "type": "chatmessage",
+          "from_name": "chat",
+          "to_name": "chat",
+          "value": {
+            "chatmessage": {
+              "role": "user",
+              "content": "hi",
+              "createdAt": 1761626717856
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+**JSON-MIN output:**
+```json
+[
+  {
+    "chat": [
+      {"role": "user", "content": "hi", "createdAt": 1761626717856}
+    ]
+  }
+]
+```
+
+Message order is preserved and additional keys remain intact in the exported list.
+
+#### CSV Chat Transcript
+CSV exports keep the original Chat payload as JSON in the `{tag}` column and also add a human-readable `{tag}_transcript` column. The transcript joins each line as `role: content` separated by newline characters.
+
+Example row:
+
+```
+chat,"[{\"role\": \"user\", \"content\": \"hi\"},{\"role\": \"assistant\", \"content\": \"Hello! How can I assist you today?\"}]"
+chat_transcript,"user: hi\nassistant: Hello! How can I assist you today?"
+```
+
+Every Chat tag always generates a transcript column. When no responses exist yet, the transcript cell is empty.
 
 #### CoNLL 2003
 

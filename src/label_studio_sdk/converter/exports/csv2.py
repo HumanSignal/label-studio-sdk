@@ -64,6 +64,25 @@ def prepare_annotation(item):
             else json.dumps(pretty_value, ensure_ascii=False)
         )
 
+        if any(
+            isinstance(result, dict) and result.get("type") == "Chat"
+            for result in value
+        ):
+            transcript_lines = []
+            if isinstance(pretty_value, list):
+                for message in pretty_value:
+                    if not isinstance(message, dict):
+                        continue
+                    role = str(message.get("role", ""))
+                    content = str(message.get("content", ""))
+                    if role:
+                        transcript_lines.append(
+                            f"{role}: {content}" if content else f"{role}:"
+                        )
+                    else:
+                        transcript_lines.append(content)
+            record[f"{name}_transcript"] = "\n".join(transcript_lines)
+
     for name, value in item["input"].items():
         if isinstance(value, dict) or isinstance(value, list):
             # flat dicts and arrays from task.data to json strings
@@ -93,6 +112,11 @@ def prepare_annotation_keys(item):
 
     for name, value in item["output"].items():
         record.add(name)
+        if any(
+            isinstance(result, dict) and result.get("type") == "Chat"
+            for result in value
+        ):
+            record.add(f"{name}_transcript")
 
     if "agreement" in item:
         record.add("agreement")
