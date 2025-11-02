@@ -379,14 +379,16 @@ def prettify_result(v):
     :param v: list of regions or results
     :return: label name as is if there is only 1 item in result `v`, else list of label names
     """
+    if not v:
+        return []
     out = []
     tag_type = None
     for i in v:
         j = deepcopy(i)
-        tag_type = j.pop("type")
-        if tag_type == "Choices" and len(j["choices"]) == 1:
+        tag_type = j.pop("type", None)
+        if tag_type == "Choices" and len(j.get("choices", [])) == 1:
             out.append(j["choices"][0])
-        elif tag_type == "TextArea" and len(j["text"]) == 1:
+        elif tag_type == "TextArea" and len(j.get("text", [])) == 1:
             out.append(j["text"][0])
         elif tag_type == "Chat":
             out.append(j.get("chatmessage", j))

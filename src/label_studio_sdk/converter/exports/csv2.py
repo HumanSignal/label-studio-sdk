@@ -82,6 +82,14 @@ def prepare_annotation(item):
         record["id"] = item["id"]
 
     for name, value in item["output"].items():
+        # Check if this is a Chat tag before prettify_result removes the type field
+        is_chat = False
+        if isinstance(value, list):
+            is_chat = any(
+                isinstance(result, dict) and result.get("type") == "Chat"
+                for result in value
+            )
+        
         pretty_value = prettify_result(value)
         record[name] = (
             pretty_value
@@ -89,10 +97,7 @@ def prepare_annotation(item):
             else json.dumps(pretty_value, ensure_ascii=False)
         )
 
-        if any(
-            isinstance(result, dict) and result.get("type") == "Chat"
-            for result in value
-        ):
+        if is_chat:
             record[f"{name}_transcript"] = generate_chat_transcript(pretty_value)
 
     for name, value in item["input"].items():
