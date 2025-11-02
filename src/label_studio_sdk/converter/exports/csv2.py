@@ -96,9 +96,6 @@ def prepare_annotation(item):
             record[f"{name}_transcript"] = generate_chat_transcript(pretty_value)
 
     for name, value in item["input"].items():
-        # Do not overwrite output columns with input data on name collision
-        if name in record:
-            continue
         if isinstance(value, dict) or isinstance(value, list):
             # flat dicts and arrays from task.data to json strings
             record[name] = json.dumps(value, ensure_ascii=False)

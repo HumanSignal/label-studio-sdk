@@ -2,7 +2,7 @@
   "id": 226650350,
   "data": {
     "scenario_prompt": "Crisis Check-In - Suicidal Thoughts: A 20-year-old college student tells you they've been having thoughts of 'not wanting to be here anymore.' Agent role: Crisis counselor or mental health clinician. Patient's role: Distressed student, uncertain about seeking help and fearing judgment. Goal: Use active listening, assess immediate safety, validate their feelings, and gently guide toward crisis resources or safety planning.",
-    "chat": []
+    "input_chat": []
   },
   "annotations": [
     {
