@@ -90,7 +90,8 @@ def prepare_annotation(item):
         )
 
         if any(
-            isinstance(result, dict) and result.get("type") == "Chat"
+            isinstance(result, dict)
+            and result.get("type") in ("Chat", "chatmessage")
             for result in value
         ):
             record[f"{name}_transcript"] = generate_chat_transcript(pretty_value)
@@ -125,7 +126,8 @@ def prepare_annotation_keys(item):
     for name, value in item["output"].items():
         record.add(name)
         if any(
-            isinstance(result, dict) and result.get("type") == "Chat"
+            isinstance(result, dict)
+            and result.get("type") in ("Chat", "chatmessage")
             for result in value
         ):
             record.add(f"{name}_transcript")

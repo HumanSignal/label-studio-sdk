@@ -560,19 +560,8 @@ class Converter(object):
                         v['parentID'] = r.get('parentID')
                     
                 elif from_name and r.get("type") == "chatmessage":
-                    # Fallback for Chat: schema has no control tag for <Chat>, but results should be exported
-                    """ 
-                    The converter only serializes outputs it can map from the label config schema. 
-                    <Chat> is an object tag, not a control tag; its result entries come as regions with type 
-                    "chatmessage" at the top level, but there’s no control tag for the schema to match. 
-                    Without a special case, these results are ignored.
-
-                    Minimal fix: when we see r["type"] == "chatmessage", treat it as an output under 
-                    from_name and set v["type"] = "Chat". Then prettify_result recognizes type == "Chat" 
-                    and returns the list of {role, content, createdAt, tool_calls?}; CSV/JSON_MIN work as-is.
-                    """
                     v = deepcopy(r.get("value", {}))
-                    v["type"] = "Chat"
+                    v["type"] = "chatmessage"
                     outputs[from_name].append(v)
                     
                 else:
