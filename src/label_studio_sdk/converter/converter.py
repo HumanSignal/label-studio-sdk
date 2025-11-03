@@ -426,9 +426,19 @@ class Converter(object):
             and "TextArea" in output_tag_types
         ):
             all_formats.remove(Format.ASR_MANIFEST.name)
-        if is_mig or ('Video' in input_tag_types and 'TimelineLabels' in output_tag_types):
-            all_formats.remove(Format.YOLO_OBB.name)
-            all_formats.remove(Format.YOLO_OBB_WITH_IMAGES.name)
+        # YOLO OBB formats are applicable only for image tasks with rectangle-based annotations.
+        # Exclude them for migrations and for any non-image/non-rectangle setups.
+        if is_mig or not (
+            "Image" in input_tag_types
+            and (
+                "RectangleLabels" in output_tag_types
+                or ("Rectangle" in output_tag_types and "Labels" in output_tag_types)
+            )
+        ):
+            if Format.YOLO_OBB.name in all_formats:
+                all_formats.remove(Format.YOLO_OBB.name)
+            if Format.YOLO_OBB_WITH_IMAGES.name in all_formats:
+                all_formats.remove(Format.YOLO_OBB_WITH_IMAGES.name)
 
         return all_formats
 
