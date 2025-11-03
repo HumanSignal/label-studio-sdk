@@ -541,19 +541,42 @@ class Converter(object):
 
             # get results only as output
             for r in result:
-                if "from_name" in r and (
-                    tag_name := self._maybe_matching_tag_from_schema(r["from_name"])
-                ):
+                from_name = r.get("from_name")
+                tag_name = (
+                    self._maybe_matching_tag_from_schema(from_name)
+                    if from_name is not None
+                    else None
+                )
+                if from_name and tag_name:
                     v = deepcopy(r["value"])
                     v["type"] = self._schema[tag_name]["type"]
                     if "original_width" in r:
                         v["original_width"] = r["original_width"]
                     if "original_height" in r:
                         v["original_height"] = r["original_height"]
-                    outputs[r["from_name"]].append(v)
+                    outputs[from_name].append(v)
                     if self.is_keypoints:
                         v['id'] = r.get('id')
                         v['parentID'] = r.get('parentID')
+                    
+                elif from_name and r.get("type") == "chatmessage":
+                    # Fallback for Chat: schema has no control tag for <Chat>, but results should be exported
+                    """ 
+                    The converter only serializes outputs it can map from the label config schema. 
+                    <Chat> is an object tag, not a control tag; its result entries come as regions with type 
+                    "chatmessage" at the top level, but there’s no control tag for the schema to match. 
+                    Without a special case, these results are ignored.
+
+                    Minimal fix: when we see r["type"] == "chatmessage", treat it as an output under 
+                    from_name and set v["type"] = "Chat". Then prettify_result recognizes type == "Chat" 
+                    and returns the list of {role, content, createdAt, tool_calls?}; CSV/JSON_MIN work as-is.
+                    """
+                    v = deepcopy(r.get("value", {}))
+                    v["type"] = "Chat"
+                    outputs[from_name].append(v)
+                    
+                else:
+                    pass
 
             data = Converter.get_data(task, outputs, annotation)
             if "agreement" in task:

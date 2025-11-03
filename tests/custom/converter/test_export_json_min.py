@@ -14,9 +14,9 @@ CHAT_JSON_PATH = os.path.join(TEST_DATA_PATH, "chat_data.json")
 
 CHAT_SCHEMA = {
     "chat": {
-        "type": "Chat",
+        "type": "chatmessage",
         "to_name": ["chat"],
-        "inputs": [{"type": "Chat", "value": "chat"}],
+        "inputs": [{"type": "chatmessage", "value": "chat"}],
         "labels": [],
         "labels_attrs": {},
     }
