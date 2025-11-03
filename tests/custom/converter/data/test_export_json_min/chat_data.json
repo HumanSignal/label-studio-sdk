@@ -1,0 +1,82 @@
+[{
+  "id": 226650350,
+  "data": {
+    "scenario_prompt": "Crisis Check-In - Suicidal Thoughts: A 20-year-old college student tells you they've been having thoughts of 'not wanting to be here anymore.' Agent role: Crisis counselor or mental health clinician. Patient's role: Distressed student, uncertain about seeking help and fearing judgment. Goal: Use active listening, assess immediate safety, validate their feelings, and gently guide toward crisis resources or safety planning.",
+    "input_chat": []
+  },
+  "annotations": [
+    {
+      "id": 76858371,
+      "completed_by": {
+        "id": 22798,
+        "email": "test@example.com",
+        "first_name": "",
+        "last_name": ""
+      },
+      "result": [
+        {
+          "id": "vUGtu-x8aA",
+          "type": "chatmessage",
+          "value": {
+            "chatmessage": {
+              "role": "user",
+              "content": "hi",
+              "createdAt": 1761626717856
+            }
+          },
+          "origin": "manual",
+          "to_name": "chat",
+          "from_name": "chat"
+        },
+        {
+          "id": "PXAWKkeCVc",
+          "type": "chatmessage",
+          "value": {
+            "chatmessage": {
+              "role": "assistant",
+              "content": "Hello! How can I assist you today?",
+              "createdAt": 1761626719486,
+              "tool_calls": null
+            }
+          },
+          "origin": "manual",
+          "to_name": "chat",
+          "from_name": "chat"
+        },
+        {
+          "id": "uG5A9G8pun",
+          "type": "chatmessage",
+          "value": {
+            "chatmessage": {
+              "role": "user",
+              "content": "i dont want to be here anymore",
+              "createdAt": 1761626728808
+            }
+          },
+          "origin": "manual",
+          "to_name": "chat",
+          "from_name": "chat"
+        },
+        {
+          "id": "dLRrQVf1HQ",
+          "type": "chatmessage",
+          "value": {
+            "chatmessage": {
+              "role": "assistant",
+              "content": "I'm sorry you're feeling this way. If you'd like to talk about what's going on, I'm here to listen. Remember, you're not alone, and reaching out to a trusted friend, family member, or a mental health professional can make a big difference.",
+              "createdAt": 1761626730907,
+              "tool_calls": null
+            }
+          },
+          "origin": "manual",
+          "to_name": "chat",
+          "from_name": "chat"
+        }
+      ],
+      "created_at": "2025-10-28T05:34:18.522508Z",
+      "updated_at": "2025-10-28T05:34:18.522521Z",
+      "lead_time": 912.131
+    }
+  ]
+}]
+

@@ -51,6 +51,31 @@ def convert(item_iterator, input_data, output_dir, **kwargs):
     logger.debug(f"CSV conversion finished in {time.time()-start_time:0.2f} sec")
 
 
+def generate_chat_transcript(pretty_value):
+    """Generate a human-readable transcript from Chat messages.
+    
+    Args:
+        pretty_value: List of message objects, each containing 'role' and 'content' keys.
+    
+    Returns:
+        str: Newline-separated transcript with format "role: content" for each message.
+    """
+    transcript_lines = []
+    if isinstance(pretty_value, list):
+        for message in pretty_value:
+            if not isinstance(message, dict):
+                continue
+            role = str(message.get("role", ""))
+            content = str(message.get("content", ""))
+            if role:
+                transcript_lines.append(
+                    f"{role}: {content}" if content else f"{role}:"
+                )
+            else:
+                transcript_lines.append(content)
+    return "\n".join(transcript_lines)
+
+
 def prepare_annotation(item):
     record = {}
     if item.get("id") is not None:
@@ -63,6 +88,13 @@ def prepare_annotation(item):
             if isinstance(pretty_value, str)
             else json.dumps(pretty_value, ensure_ascii=False)
         )
+
+        if any(
+            isinstance(result, dict)
+            and result.get("type") in ("Chat", "chatmessage")
+            for result in value
+        ):
+            record[f"{name}_transcript"] = generate_chat_transcript(pretty_value)
 
     for name, value in item["input"].items():
         if isinstance(value, dict) or isinstance(value, list):
@@ -93,6 +125,12 @@ def prepare_annotation_keys(item):
 
     for name, value in item["output"].items():
         record.add(name)
+        if any(
+            isinstance(result, dict)
+            and result.get("type") in ("Chat", "chatmessage")
+            for result in value
+        ):
+            record.add(f"{name}_transcript")
 
     if "agreement" in item:
         record.add("agreement")
