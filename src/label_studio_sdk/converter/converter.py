@@ -542,7 +542,7 @@ class Converter(object):
         )
 
         for annotation in annotations:
-            result = annotation["result"]
+            result = annotation.get("result") or []
             outputs = defaultdict(list)
 
             # get results only as output
