@@ -55,7 +55,7 @@ service:
         id: integer
       display-name: ✨ Update project metrics configuration
       request:
-        name: ProjectMetricParamUpdateRequest
+        name: MetricParamUpdateRequest
         body:
           properties:
             additional_params: optional<map<string, unknown>>
@@ -64,10 +64,12 @@ service:
               validation:
                 min: 0
                 max: 100
+              availability: deprecated
             max_additional_annotators_assignable:
               type: optional<integer>
               validation:
                 min: 0
+              availability: deprecated
             metric_name:
               type: optional<string>
               validation:

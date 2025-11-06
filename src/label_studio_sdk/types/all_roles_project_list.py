@@ -2,9 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+import pydantic
 from .assignment_settings import AssignmentSettings
 from .blueprint_list import BlueprintList
-import pydantic
 import datetime as dt
 from .user_simple import UserSimple
 from .review_settings import ReviewSettings
@@ -17,6 +17,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     """
     Serializer get numbers from project queryset annotation,
     make sure, that you use correct one(Project.objects.with_counts())
+    """
+
+    agreement_threshold: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Minimum percent agreement threshold for which minimum number of annotators must agree
     """
 
     allow_stream: bool
@@ -95,6 +100,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     label_config: typing.Optional[str] = pydantic.Field(default=None)
     """
     Label config in XML format. See more about it in documentation
+    """
+
+    max_additional_annotators_assignable: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of additional annotators that can be assigned to a low agreement task
     """
 
     maximum_annotations: typing.Optional[int] = pydantic.Field(default=None)

@@ -338,6 +338,7 @@ service:
             workspace_id: 1
           response:
             body:
+              agreement_threshold: agreement_threshold
               annotation_limit_count: 1
               annotation_limit_percent: annotation_limit_percent
               annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -375,6 +376,7 @@ service:
               is_draft: true
               is_published: true
               label_config: label_config
+              max_additional_annotators_assignable: 1
               maximum_annotations: 1
               members: members
               members_count: 1
