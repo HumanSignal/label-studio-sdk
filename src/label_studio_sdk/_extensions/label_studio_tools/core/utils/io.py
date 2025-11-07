@@ -7,6 +7,7 @@ import base64
 from contextlib import contextmanager
 from tempfile import mkdtemp
 from urllib.parse import urlparse
+import jwt
 
 import requests
 from appdirs import user_cache_dir, user_data_dir
@@ -49,30 +50,13 @@ def safe_build_path(base_dir: str, user_path: str) -> str:
     return absolute_path
 
 
-def is_jwt_well_formed(jwt: str):
-    """Check if JWT is well formed
+def is_jwt_well_formed(token: str) -> bool:
+    try:
+        jwt.get_unverified_header(token)
+        return True
+    except Exception:
+        return False
 
-    Args:
-        jwt (str): Json Web Token
-
-    Returns:
-        Boolean: True if JWT is well formed, otherwise False
-    """
-    if isinstance(jwt, str):
-        # JWT should contain three segments, separated by two period ('.') characters.
-        jwt_segments = jwt.split('.')
-        if len(jwt_segments) == 3:
-            jose_header = jwt_segments[0]
-            # base64-encoded string length should be a multiple of 4
-            if len(jose_header) % 4 == 0:
-                try:
-                    jh_decoded = base64.b64decode(jose_header).decode('utf-8')
-                    if jh_decoded and jh_decoded.find('JWT') > -1:
-                        return True
-                except Exception:
-                    return False
-    # If tests not passed return False
-    return False
 
 
 def get_local_path(
