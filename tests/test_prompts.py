@@ -170,6 +170,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
         "previous": "http://api.example.org/accounts/?page=2",
         "results": [
             {
+                "agreement_threshold": "agreement_threshold",
                 "allow_stream": True,
                 "annotation_limit_count": 1,
                 "annotation_limit_percent": "annotation_limit_percent",
@@ -202,6 +203,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                 "is_draft": True,
                 "is_published": True,
                 "label_config": "label_config",
+                "max_additional_annotators_assignable": 1,
                 "maximum_annotations": 1,
                 "members": "members",
                 "members_count": 1,
@@ -254,6 +256,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
             "list",
             {
                 0: {
+                    "agreement_threshold": None,
                     "allow_stream": None,
                     "annotation_limit_count": "integer",
                     "annotation_limit_percent": None,
@@ -287,6 +290,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                     "is_draft": None,
                     "is_published": None,
                     "label_config": None,
+                    "max_additional_annotators_assignable": "integer",
                     "maximum_annotations": "integer",
                     "members": None,
                     "members_count": "integer",

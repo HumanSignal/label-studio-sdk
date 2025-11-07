@@ -8578,13 +8578,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+              $ref: '#/components/schemas/MetricParamUpdateRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+              $ref: '#/components/schemas/MetricParamUpdateRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+              $ref: '#/components/schemas/MetricParamUpdateRequest'
       responses:
         '200':
           content:
@@ -19092,6 +19092,12 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        agreement_threshold:
+          description: Minimum percent agreement threshold for which minimum number of annotators must agree
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
+          type: string
         allow_stream:
           readOnly: true
           type: boolean
@@ -19201,6 +19207,10 @@ components:
           description: Label config in XML format. See more about it in documentation
           nullable: true
           type: string
+        max_additional_annotators_assignable:
+          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          nullable: true
+          type: integer
         maximum_annotations:
           description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
           maximum: 2147483647
@@ -24071,6 +24081,12 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        agreement_threshold:
+          description: Minimum percent agreement threshold for which minimum number of annotators must agree
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
+          type: string
         annotation_limit_count:
           minimum: 1
           nullable: true
@@ -24170,6 +24186,10 @@ components:
           description: Label config in XML format. See more about it in documentation
           nullable: true
           type: string
+        max_additional_annotators_assignable:
+          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          nullable: true
+          type: integer
         maximum_annotations:
           description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
           maximum: 2147483647
@@ -24747,6 +24767,12 @@ components:
     LseProjectResponse:
       description: Serializer for project response, combining all the serializers for different roles. Don't use it except for Spectacular/Fern definitions.
       properties:
+        agreement_threshold:
+          description: Minimum percent agreement threshold for which minimum number of annotators must agree
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
+          type: string
         allow_stream:
           readOnly: true
           type: boolean
@@ -24849,6 +24875,10 @@ components:
           description: Label config in XML format. See more about it in documentation
           nullable: true
           type: string
+        max_additional_annotators_assignable:
+          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          nullable: true
+          type: integer
         maximum_annotations:
           description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
           maximum: 2147483647
@@ -25040,6 +25070,12 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        agreement_threshold:
+          description: Minimum percent agreement threshold for which minimum number of annotators must agree
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
+          type: string
         annotation_limit_count:
           minimum: 1
           nullable: true
@@ -25131,6 +25167,10 @@ components:
           description: Label config in XML format. See more about it in documentation
           nullable: true
           type: string
+        max_additional_annotators_assignable:
+          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          nullable: true
+          type: integer
         maximum_annotations:
           description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
           maximum: 2147483647
@@ -26896,12 +26936,14 @@ components:
     MetricParam:
       properties:
         agreement_threshold:
+          deprecated: true
           readOnly: true
           type: string
         allowed:
           readOnly: true
           type: string
         max_additional_annotators_assignable:
+          deprecated: true
           description: Maximum number of additional annotators that can be assigned to a low agreement task
           maximum: 2147483647
           minimum: -2147483648
@@ -26917,6 +26959,25 @@ components:
       required:
         - agreement_threshold
         - allowed
+      type: object
+    MetricParamUpdateRequest:
+      properties:
+        additional_params:
+          additionalProperties: {}
+          nullable: true
+          type: object
+        agreement_threshold:
+          deprecated: true
+          maximum: 100
+          minimum: 0
+          type: integer
+        max_additional_annotators_assignable:
+          deprecated: true
+          minimum: 0
+          type: integer
+        metric_name:
+          minLength: 1
+          type: string
       type: object
     ModeEnum:
       description: |-
@@ -28832,6 +28893,12 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        agreement_threshold:
+          description: Minimum percent agreement threshold for which minimum number of annotators must agree
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
+          type: string
         annotation_limit_count:
           minimum: 1
           nullable: true
@@ -28900,6 +28967,10 @@ components:
           description: Label config in XML format. See more about it in documentation
           nullable: true
           type: string
+        max_additional_annotators_assignable:
+          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          nullable: true
+          type: integer
         maximum_annotations:
           description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
           maximum: 2147483647
@@ -30291,23 +30362,6 @@ components:
           type: integer
       required:
         - user
-      type: object
-    ProjectMetricParamUpdateRequest:
-      properties:
-        additional_params:
-          additionalProperties: {}
-          nullable: true
-          type: object
-        agreement_threshold:
-          maximum: 100
-          minimum: 0
-          type: integer
-        max_additional_annotators_assignable:
-          minimum: 0
-          type: integer
-        metric_name:
-          minLength: 1
-          type: string
       type: object
     ProjectReimport:
       properties:

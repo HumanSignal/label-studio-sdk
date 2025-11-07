@@ -574,6 +574,7 @@ class ProjectsClient:
         id: int,
         *,
         members_limit: typing.Optional[int] = None,
+        agreement_threshold: typing.Optional[str] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
@@ -592,6 +593,7 @@ class ProjectsClient:
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
+        max_additional_annotators_assignable: typing.Optional[int] = OMIT,
         maximum_annotations: typing.Optional[int] = OMIT,
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
@@ -626,6 +628,9 @@ class ProjectsClient:
 
         members_limit : typing.Optional[int]
             Maximum number of members to return
+
+        agreement_threshold : typing.Optional[str]
+            Minimum percent agreement threshold for which minimum number of annotators must agree
 
         annotation_limit_count : typing.Optional[int]
 
@@ -671,6 +676,9 @@ class ProjectsClient:
 
         label_config : typing.Optional[str]
             Label config in XML format. See more about it in documentation
+
+        max_additional_annotators_assignable : typing.Optional[int]
+            Maximum number of additional annotators that can be assigned to a low agreement task
 
         maximum_annotations : typing.Optional[int]
             Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
@@ -757,6 +765,7 @@ class ProjectsClient:
                 "members_limit": members_limit,
             },
             json={
+                "agreement_threshold": agreement_threshold,
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,
                 "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
@@ -779,6 +788,7 @@ class ProjectsClient:
                 "is_draft": is_draft,
                 "is_published": is_published,
                 "label_config": label_config,
+                "max_additional_annotators_assignable": max_additional_annotators_assignable,
                 "maximum_annotations": maximum_annotations,
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "model_version": model_version,
@@ -1798,6 +1808,7 @@ class AsyncProjectsClient:
         id: int,
         *,
         members_limit: typing.Optional[int] = None,
+        agreement_threshold: typing.Optional[str] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
@@ -1816,6 +1827,7 @@ class AsyncProjectsClient:
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
+        max_additional_annotators_assignable: typing.Optional[int] = OMIT,
         maximum_annotations: typing.Optional[int] = OMIT,
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
@@ -1850,6 +1862,9 @@ class AsyncProjectsClient:
 
         members_limit : typing.Optional[int]
             Maximum number of members to return
+
+        agreement_threshold : typing.Optional[str]
+            Minimum percent agreement threshold for which minimum number of annotators must agree
 
         annotation_limit_count : typing.Optional[int]
 
@@ -1895,6 +1910,9 @@ class AsyncProjectsClient:
 
         label_config : typing.Optional[str]
             Label config in XML format. See more about it in documentation
+
+        max_additional_annotators_assignable : typing.Optional[int]
+            Maximum number of additional annotators that can be assigned to a low agreement task
 
         maximum_annotations : typing.Optional[int]
             Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
@@ -1989,6 +2007,7 @@ class AsyncProjectsClient:
                 "members_limit": members_limit,
             },
             json={
+                "agreement_threshold": agreement_threshold,
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,
                 "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
@@ -2011,6 +2030,7 @@ class AsyncProjectsClient:
                 "is_draft": is_draft,
                 "is_published": is_published,
                 "label_config": label_config,
+                "max_additional_annotators_assignable": max_additional_annotators_assignable,
                 "maximum_annotations": maximum_annotations,
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "model_version": model_version,
