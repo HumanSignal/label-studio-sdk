@@ -187,6 +187,13 @@ types:
       Serializer get numbers from project queryset annotation,
       make sure, that you use correct one(Project.objects.with_counts())
     properties:
+      agreement_threshold:
+        type: optional<string>
+        docs: >-
+          Minimum percent agreement threshold for which minimum number of
+          annotators must agree
+        validation:
+          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
       allow_stream: boolean
       annotation_limit_count:
         type: optional<integer>
@@ -263,6 +270,11 @@ types:
       label_config:
         type: optional<string>
         docs: Label config in XML format. See more about it in documentation
+      max_additional_annotators_assignable:
+        type: optional<integer>
+        docs: >-
+          Maximum number of additional annotators that can be assigned to a low
+          agreement task
       maximum_annotations:
         type: optional<integer>
         docs: >-
@@ -3815,6 +3827,13 @@ types:
       Serializer get numbers from project queryset annotation,
       make sure, that you use correct one(Project.objects.with_counts())
     properties:
+      agreement_threshold:
+        type: optional<string>
+        docs: >-
+          Minimum percent agreement threshold for which minimum number of
+          annotators must agree
+        validation:
+          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
       annotation_limit_count:
         type: optional<integer>
         validation:
@@ -3890,6 +3909,11 @@ types:
       label_config:
         type: optional<string>
         docs: Label config in XML format. See more about it in documentation
+      max_additional_annotators_assignable:
+        type: optional<integer>
+        docs: >-
+          Maximum number of additional annotators that can be assigned to a low
+          agreement task
       maximum_annotations:
         type: optional<integer>
         docs: >-
@@ -4230,6 +4254,13 @@ types:
       Serializer for project response, combining all the serializers for
       different roles. Don't use it except for Spectacular/Fern definitions.
     properties:
+      agreement_threshold:
+        type: optional<string>
+        docs: >-
+          Minimum percent agreement threshold for which minimum number of
+          annotators must agree
+        validation:
+          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
       allow_stream: boolean
       annotation_limit_count:
         type: optional<integer>
@@ -4306,6 +4337,11 @@ types:
       label_config:
         type: optional<string>
         docs: Label config in XML format. See more about it in documentation
+      max_additional_annotators_assignable:
+        type: optional<integer>
+        docs: >-
+          Maximum number of additional annotators that can be assigned to a low
+          agreement task
       maximum_annotations:
         type: optional<integer>
         docs: >-
@@ -4430,6 +4466,13 @@ types:
       Serializer get numbers from project queryset annotation,
       make sure, that you use correct one(Project.objects.with_counts())
     properties:
+      agreement_threshold:
+        type: optional<string>
+        docs: >-
+          Minimum percent agreement threshold for which minimum number of
+          annotators must agree
+        validation:
+          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
       annotation_limit_count:
         type: optional<integer>
         validation:
@@ -4500,6 +4543,11 @@ types:
       label_config:
         type: optional<string>
         docs: Label config in XML format. See more about it in documentation
+      max_additional_annotators_assignable:
+        type: optional<integer>
+        docs: >-
+          Maximum number of additional annotators that can be assigned to a low
+          agreement task
       maximum_annotations:
         type: optional<integer>
         docs: >-
@@ -5741,7 +5789,9 @@ types:
       openapi: openapi/openapi.yaml
   MetricParam:
     properties:
-      agreement_threshold: string
+      agreement_threshold:
+        type: string
+        availability: deprecated
       allowed: string
       max_additional_annotators_assignable:
         type: optional<integer>
@@ -5751,6 +5801,7 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
+        availability: deprecated
       metric_name:
         type: optional<string>
         docs: Evaluation metric chosen for this project

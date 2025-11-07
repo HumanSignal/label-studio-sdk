@@ -70,7 +70,8 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - allow_stream: true
+                - agreement_threshold: agreement_threshold
+                  allow_stream: true
                   annotation_limit_count: 1
                   annotation_limit_percent: annotation_limit_percent
                   annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -109,6 +110,7 @@ service:
                   is_draft: true
                   is_published: true
                   label_config: label_config
+                  max_additional_annotators_assignable: 1
                   maximum_annotations: 1
                   members: members
                   members_count: 1
@@ -450,6 +452,7 @@ service:
             id: 1
           response:
             body:
+              agreement_threshold: agreement_threshold
               allow_stream: true
               annotation_limit_count: 1
               annotation_limit_percent: annotation_limit_percent
@@ -488,6 +491,7 @@ service:
               is_draft: true
               is_published: true
               label_config: label_config
+              max_additional_annotators_assignable: 1
               maximum_annotations: 1
               members: members
               members_count: 1
@@ -584,6 +588,13 @@ service:
             docs: Maximum number of members to return
         body:
           properties:
+            agreement_threshold:
+              type: optional<string>
+              docs: >-
+                Minimum percent agreement threshold for which minimum number of
+                annotators must agree
+              validation:
+                pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
             annotation_limit_count:
               type: optional<integer>
               validation:
@@ -640,6 +651,11 @@ service:
             label_config:
               type: optional<string>
               docs: Label config in XML format. See more about it in documentation
+            max_additional_annotators_assignable:
+              type: optional<integer>
+              docs: >-
+                Maximum number of additional annotators that can be assigned to
+                a low agreement task
             maximum_annotations:
               type: optional<integer>
               docs: >-
@@ -729,6 +745,7 @@ service:
           request: {}
           response:
             body:
+              agreement_threshold: agreement_threshold
               annotation_limit_count: 1
               annotation_limit_percent: annotation_limit_percent
               annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -762,6 +779,7 @@ service:
               is_draft: true
               is_published: true
               label_config: label_config
+              max_additional_annotators_assignable: 1
               maximum_annotations: 1
               min_annotations_to_start_training: 1
               model_version: model_version

@@ -9543,6 +9543,14 @@ client.projects.update(
 <dl>
 <dd>
 
+**agreement_threshold:** `typing.Optional[str]` — Minimum percent agreement threshold for which minimum number of annotators must agree
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **annotation_limit_count:** `typing.Optional[int]` 
     
 </dd>
@@ -9680,6 +9688,14 @@ client.projects.update(
 <dd>
 
 **label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_additional_annotators_assignable:** `typing.Optional[int]` — Maximum number of additional annotators that can be assigned to a low agreement task
     
 </dd>
 </dl>
