@@ -7,6 +7,7 @@ import base64
 from contextlib import contextmanager
 from tempfile import mkdtemp
 from urllib.parse import urlparse
+import jwt
 
 import requests
 from appdirs import user_cache_dir, user_data_dir
@@ -47,6 +48,15 @@ def safe_build_path(base_dir: str, user_path: str) -> str:
         raise ValueError(f"Invalid path: {user_path}")
 
     return absolute_path
+
+
+def is_jwt_well_formed(token: str) -> bool:
+    try:
+        jwt.get_unverified_header(token)
+        return True
+    except Exception:
+        return False
+
 
 
 def get_local_path(
@@ -230,7 +240,10 @@ def download_and_cache(
                 and hostname
                 and parsed_url.netloc == urlparse(hostname).netloc
             ):
-                headers["Authorization"] = "Token " + access_token
+                if is_jwt_well_formed(access_token):
+                    headers["Authorization"] = "Bearer " + access_token
+                else:
+                    headers["Authorization"] = "Token " + access_token
                 logger.debug("Authorization token is used for download_and_cache")
             try:
                 r = requests.get(url, stream=True, headers=headers, verify=VERIFY_SSL)
@@ -368,7 +381,10 @@ def get_base64_content(
     # check if url matches hostname - then uses access token to this Label Studio instance
     parsed_url = urlparse(url)
     if access_token and hostname and parsed_url.netloc == urlparse(hostname).netloc:
-        headers["Authorization"] = "Token " + access_token
+        if is_jwt_well_formed(access_token):
+            headers["Authorization"] = "Bearer " + access_token
+        else:
+            headers["Authorization"] = "Token " + access_token
         logger.debug("Authorization token is used for get_base64_content")
 
     try:
