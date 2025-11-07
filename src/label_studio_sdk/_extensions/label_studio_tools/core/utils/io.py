@@ -49,6 +49,32 @@ def safe_build_path(base_dir: str, user_path: str) -> str:
     return absolute_path
 
 
+def is_jwt_well_formed(jwt: str):
+    """Check if JWT is well formed
+
+    Args:
+        jwt (str): Json Web Token
+
+    Returns:
+        Boolean: True if JWT is well formed, otherwise False
+    """
+    if isinstance(jwt, str):
+        # JWT should contain three segments, separated by two period ('.') characters.
+        jwt_segments = jwt.split('.')
+        if len(jwt_segments) == 3:
+            jose_header = jwt_segments[0]
+            # base64-encoded string length should be a multiple of 4
+            if len(jose_header) % 4 == 0:
+                try:
+                    jh_decoded = base64.b64decode(jose_header).decode('utf-8')
+                    if jh_decoded and jh_decoded.find('JWT') > -1:
+                        return True
+                except Exception:
+                    return False
+    # If tests not passed return False
+    return False
+
+
 def get_local_path(
     url,
     cache_dir=None,
@@ -230,7 +256,10 @@ def download_and_cache(
                 and hostname
                 and parsed_url.netloc == urlparse(hostname).netloc
             ):
-                headers["Authorization"] = "Token " + access_token
+                if is_jwt_well_formed(access_token):
+                    headers["Authorization"] = "Bearer " + access_token
+                else:
+                    headers["Authorization"] = "Token " + access_token
                 logger.debug("Authorization token is used for download_and_cache")
             try:
                 r = requests.get(url, stream=True, headers=headers, verify=VERIFY_SSL)
@@ -368,7 +397,10 @@ def get_base64_content(
     # check if url matches hostname - then uses access token to this Label Studio instance
     parsed_url = urlparse(url)
     if access_token and hostname and parsed_url.netloc == urlparse(hostname).netloc:
-        headers["Authorization"] = "Token " + access_token
+        if is_jwt_well_formed(access_token):
+            headers["Authorization"] = "Bearer " + access_token
+        else:
+            headers["Authorization"] = "Token " + access_token
         logger.debug("Authorization token is used for get_base64_content")
 
     try:
