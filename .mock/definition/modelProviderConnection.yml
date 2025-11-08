@@ -20,7 +20,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: ✨ Put model provider connection
+      display-name: Put model provider connection
       request:
         body: root.ModelProviderConnectionRequest
         content-type: application/json

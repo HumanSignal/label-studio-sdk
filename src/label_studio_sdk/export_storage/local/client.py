@@ -21,8 +21,8 @@ class LocalClient:
     def list(
         self,
         *,
-        project: int,
         ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[LocalFilesExportStorage]:
         """
@@ -30,11 +30,11 @@ class LocalClient:
 
         Parameters
         ----------
-        project : int
-            Project ID
-
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
+
+        project : typing.Optional[int]
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,9 +51,7 @@ class LocalClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.local.list(
-            project=1,
-        )
+        client.export_storage.local.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/export/localfiles",
@@ -466,8 +464,8 @@ class AsyncLocalClient:
     async def list(
         self,
         *,
-        project: int,
         ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[LocalFilesExportStorage]:
         """
@@ -475,11 +473,11 @@ class AsyncLocalClient:
 
         Parameters
         ----------
-        project : int
-            Project ID
-
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
+
+        project : typing.Optional[int]
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -501,9 +499,7 @@ class AsyncLocalClient:
 
 
         async def main() -> None:
-            await client.export_storage.local.list(
-                project=1,
-            )
+            await client.export_storage.local.list()
 
 
         asyncio.run(main())

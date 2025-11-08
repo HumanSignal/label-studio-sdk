@@ -22,7 +22,7 @@ service:
         id:
           type: integer
           docs: A unique integer value identifying this organization.
-      display-name: ✨ Get organization members/roles
+      display-name: Get organization members/roles
       request:
         name: MembersListRequest
         query-parameters:
@@ -131,7 +131,7 @@ service:
         id:
           type: integer
           docs: A unique integer value identifying this organization.
-      display-name: ✨ Update organization member/role
+      display-name: Update organization member/role
       request:
         name: PatchedOrganizationMemberCreateUpdateRequest
         body:

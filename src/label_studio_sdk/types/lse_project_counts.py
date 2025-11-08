@@ -19,7 +19,7 @@ class LseProjectCounts(UncheckedBaseModel):
     """
 
     id: int
-    num_tasks_with_annotations: typing.Optional[int] = None
+    num_tasks_with_annotations: int
     queue_done: int
     queue_left: int
     queue_total: str

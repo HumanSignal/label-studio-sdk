@@ -18,7 +18,7 @@ service:
         List all reviews for a specific annotation ID.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ List reviews
+      display-name: List reviews
       request:
         name: AnnotationReviewsListRequest
         query-parameters:
@@ -61,7 +61,7 @@ service:
         Create a review for a specific annotation ID.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Create review
+      display-name: Create review
       request:
         body: root.AnnotationReviewRequest
         query-parameters:
@@ -110,7 +110,7 @@ service:
         id:
           type: integer
           docs: A unique integer value identifying this annotation review.
-      display-name: ✨ Get review
+      display-name: Get review
       response:
         docs: ''
         type: root.AnnotationReview
@@ -151,7 +151,7 @@ service:
         id:
           type: integer
           docs: A unique integer value identifying this annotation review.
-      display-name: ✨ Put review
+      display-name: Put review
       request:
         body: root.AnnotationReviewRequest
         content-type: application/json
@@ -197,7 +197,7 @@ service:
         id:
           type: integer
           docs: A unique integer value identifying this annotation review.
-      display-name: ✨ Delete review
+      display-name: Delete review
       examples:
         - path-parameters:
             id: 1
@@ -221,7 +221,7 @@ service:
         id:
           type: integer
           docs: A unique integer value identifying this annotation review.
-      display-name: ✨ Update review
+      display-name: Update review
       request:
         name: PatchedAnnotationReviewRequest
         body:

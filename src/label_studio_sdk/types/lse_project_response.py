@@ -2,8 +2,8 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-import pydantic
 from .assignment_settings import AssignmentSettings
+import pydantic
 import datetime as dt
 from .user_simple import UserSimple
 from .review_settings import ReviewSettings
@@ -15,11 +15,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 class LseProjectResponse(UncheckedBaseModel):
     """
     Serializer for project response, combining all the serializers for different roles. Don't use it except for Spectacular/Fern definitions.
-    """
-
-    agreement_threshold: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Minimum percent agreement threshold for which minimum number of annotators must agree
     """
 
     allow_stream: bool
@@ -100,11 +95,6 @@ class LseProjectResponse(UncheckedBaseModel):
     label_config: typing.Optional[str] = pydantic.Field(default=None)
     """
     Label config in XML format. See more about it in documentation
-    """
-
-    max_additional_annotators_assignable: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Maximum number of additional annotators that can be assigned to a low agreement task
     """
 
     maximum_annotations: typing.Optional[int] = pydantic.Field(default=None)

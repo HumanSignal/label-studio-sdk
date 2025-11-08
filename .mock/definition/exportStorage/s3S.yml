@@ -19,7 +19,7 @@ service:
         IAM role access.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ List S3s export storage
+      display-name: List S3s export storage
       request:
         name: S3SListRequest
         query-parameters:
@@ -27,15 +27,13 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
           project:
-            type: integer
+            type: optional<integer>
             docs: Project ID
       response:
         docs: ''
         type: list<root.LseS3ExportStorage>
       examples:
-        - query-parameters:
-            project: 1
-          response:
+        - response:
             body:
               - aws_access_key_id: aws_access_key_id
                 aws_secret_access_key: aws_secret_access_key
@@ -82,7 +80,7 @@ service:
         annotations.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Create export storage
+      display-name: Create export storage
       request:
         body: root.LseS3ExportStorageRequest
         content-type: application/json
@@ -140,7 +138,7 @@ service:
         IAM role access.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Validate export storage
+      display-name: Validate export storage
       request:
         body: root.LseS3ExportStorageRequest
         content-type: application/json
@@ -167,7 +165,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get export storage
+      display-name: Get export storage
       response:
         docs: ''
         type: root.LseS3ExportStorage
@@ -223,7 +221,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Delete export storage
+      display-name: Delete export storage
       examples:
         - path-parameters:
             id: 1
@@ -246,7 +244,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Update export storage
+      display-name: Update export storage
       request:
         name: PatchedLseS3ExportStorageRequest
         body:
@@ -382,7 +380,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Sync export storage
+      display-name: Sync export storage
       response:
         docs: ''
         type: root.LseS3ExportStorage

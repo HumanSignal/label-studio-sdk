@@ -237,14 +237,6 @@ class PermissionsClient:
         self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> OrganizationPermission:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve the organization-level permission override for a given permission key.
-
         Parameters
         ----------
         id : int
@@ -418,14 +410,6 @@ class PermissionsClient:
 
     def delete(self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Delete the organization-level permission override for a given permission key.
-
         Parameters
         ----------
         id : int
@@ -833,14 +817,6 @@ class AsyncPermissionsClient:
         self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> OrganizationPermission:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve the organization-level permission override for a given permission key.
-
         Parameters
         ----------
         id : int
@@ -1032,14 +1008,6 @@ class AsyncPermissionsClient:
         self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Delete the organization-level permission override for a given permission key.
-
         Parameters
         ----------
         id : int

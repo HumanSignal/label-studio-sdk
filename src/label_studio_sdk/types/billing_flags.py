@@ -15,7 +15,6 @@ class BillingFlags(UncheckedBaseModel):
     allow_data_credentials: bool
     allow_invite_people: bool
     allow_invite_project_experts: bool
-    allow_nda: bool
     allow_organization_webhooks: bool
     allow_sso: bool
     allow_storage_proxy: bool
@@ -25,10 +24,10 @@ class BillingFlags(UncheckedBaseModel):
     disable_members_page: bool
     disable_project_imports: bool
     early_adopter: bool
-    email_configured: bool
     embed_domains: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = None
     embed_enabled: bool
     embed_settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    hide_storage_settings_for_manager: bool
     manual_role_management: bool
     manual_workspace_management: bool
     secure_mode: bool

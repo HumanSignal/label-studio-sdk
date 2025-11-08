@@ -11,7 +11,6 @@ from ...core.api_error import ApiError
 from .types.stats_model_version_ground_truth_agreement_response import StatsModelVersionGroundTruthAgreementResponse
 from .types.stats_model_version_prediction_agreement_response import StatsModelVersionPredictionAgreementResponse
 from .types.stats_iaa_response import StatsIaaResponse
-from .types.stats_users_ground_truth_agreement_response import StatsUsersGroundTruthAgreementResponse
 from .types.stats_agreement_annotator_response import StatsAgreementAnnotatorResponse
 from .types.stats_agreement_annotators_response import StatsAgreementAnnotatorsResponse
 from .types.stats_data_filters_response import StatsDataFiltersResponse
@@ -19,7 +18,6 @@ from .types.stats_finished_tasks_response import StatsFinishedTasksResponse
 from .types.stats_lead_time_response import StatsLeadTimeResponse
 from .types.stats_total_agreement_response import StatsTotalAgreementResponse
 from .types.stats_users_prediction_agreement_response import StatsUsersPredictionAgreementResponse
-from .types.stats_users_review_score_response import StatsUsersReviewScoreResponse
 from .types.stats_user_prediction_agreement_response import StatsUserPredictionAgreementResponse
 from .types.stats_user_review_score_response import StatsUserReviewScoreResponse
 from .types.stats_user_ground_truth_agreement_response import StatsUserGroundTruthAgreementResponse
@@ -302,76 +300,6 @@ class StatsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def users_ground_truth_agreement(
-        self,
-        id: int,
-        *,
-        ids: str,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersGroundTruthAgreementResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get ground truth agreement statistics for multiple users within a project.
-
-        Parameters
-        ----------
-        id : int
-
-        ids : str
-            Comma separated list of user IDs to get ground truth agreement for
-
-        per_label : typing.Optional[bool]
-            Per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        StatsUsersGroundTruthAgreementResponse
-            Ground truth agreement statistics for multiple users
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.stats.users_ground_truth_agreement(
-            id=1,
-            ids="ids",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/agreement-groundtruth",
-            method="GET",
-            params={
-                "ids": ids,
-                "per_label": per_label,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    StatsUsersGroundTruthAgreementResponse,
-                    construct_type(
-                        type_=StatsUsersGroundTruthAgreementResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     def agreement_annotator(
         self, id: int, user_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsAgreementAnnotatorResponse:
@@ -494,12 +422,6 @@ class StatsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsDataFiltersResponse:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Get statistics about user data filters and their usage within a project.
 
         Parameters
@@ -548,12 +470,6 @@ class StatsClient:
         self, id: int, *, user_pk: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsFinishedTasksResponse:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Get statistics about finished tasks for a project.
 
         Parameters
@@ -606,12 +522,6 @@ class StatsClient:
 
     def lead_time(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> StatsLeadTimeResponse:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Get lead time statistics across the project, including average annotation time.
 
         Parameters
@@ -730,12 +640,6 @@ class StatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, typing.Optional[typing.Any]]:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Start stats recalculation for given project
 
         Parameters
@@ -848,76 +752,6 @@ class StatsClient:
                     StatsUsersPredictionAgreementResponse,
                     construct_type(
                         type_=StatsUsersPredictionAgreementResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def users_review_score(
-        self,
-        id: int,
-        *,
-        ids: str,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersReviewScoreResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get review score and performance score statistics for multiple annotators within a project.
-
-        Parameters
-        ----------
-        id : int
-
-        ids : str
-            Comma separated list of annotator user IDs to get review scores for
-
-        per_label : typing.Optional[bool]
-            Per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        StatsUsersReviewScoreResponse
-            Review scores and performance scores for multiple annotators
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.stats.users_review_score(
-            id=1,
-            ids="ids",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/review_score",
-            method="GET",
-            params={
-                "ids": ids,
-                "per_label": per_label,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    StatsUsersReviewScoreResponse,
-                    construct_type(
-                        type_=StatsUsersReviewScoreResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1439,84 +1273,6 @@ class AsyncStatsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def users_ground_truth_agreement(
-        self,
-        id: int,
-        *,
-        ids: str,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersGroundTruthAgreementResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get ground truth agreement statistics for multiple users within a project.
-
-        Parameters
-        ----------
-        id : int
-
-        ids : str
-            Comma separated list of user IDs to get ground truth agreement for
-
-        per_label : typing.Optional[bool]
-            Per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        StatsUsersGroundTruthAgreementResponse
-            Ground truth agreement statistics for multiple users
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.stats.users_ground_truth_agreement(
-                id=1,
-                ids="ids",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/agreement-groundtruth",
-            method="GET",
-            params={
-                "ids": ids,
-                "per_label": per_label,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    StatsUsersGroundTruthAgreementResponse,
-                    construct_type(
-                        type_=StatsUsersGroundTruthAgreementResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     async def agreement_annotator(
         self, id: int, user_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsAgreementAnnotatorResponse:
@@ -1655,12 +1411,6 @@ class AsyncStatsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsDataFiltersResponse:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Get statistics about user data filters and their usage within a project.
 
         Parameters
@@ -1717,12 +1467,6 @@ class AsyncStatsClient:
         self, id: int, *, user_pk: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsFinishedTasksResponse:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Get statistics about finished tasks for a project.
 
         Parameters
@@ -1785,12 +1529,6 @@ class AsyncStatsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsLeadTimeResponse:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Get lead time statistics across the project, including average annotation time.
 
         Parameters
@@ -1925,12 +1663,6 @@ class AsyncStatsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, typing.Optional[typing.Any]]:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Start stats recalculation for given project
 
         Parameters
@@ -2059,84 +1791,6 @@ class AsyncStatsClient:
                     StatsUsersPredictionAgreementResponse,
                     construct_type(
                         type_=StatsUsersPredictionAgreementResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def users_review_score(
-        self,
-        id: int,
-        *,
-        ids: str,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersReviewScoreResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get review score and performance score statistics for multiple annotators within a project.
-
-        Parameters
-        ----------
-        id : int
-
-        ids : str
-            Comma separated list of annotator user IDs to get review scores for
-
-        per_label : typing.Optional[bool]
-            Per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        StatsUsersReviewScoreResponse
-            Review scores and performance scores for multiple annotators
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.stats.users_review_score(
-                id=1,
-                ids="ids",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/review_score",
-            method="GET",
-            params={
-                "ids": ids,
-                "per_label": per_label,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    StatsUsersReviewScoreResponse,
-                    construct_type(
-                        type_=StatsUsersReviewScoreResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

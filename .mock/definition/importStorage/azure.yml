@@ -19,15 +19,13 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
           project:
-            type: integer
+            type: optional<integer>
             docs: Project ID
       response:
         docs: ''
         type: list<root.AzureBlobImportStorage>
       examples:
-        - query-parameters:
-            project: 1
-          response:
+        - response:
             body:
               - account_key: account_key
                 account_name: account_name

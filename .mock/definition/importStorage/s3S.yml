@@ -19,7 +19,7 @@ service:
         access.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ List S3s import storage
+      display-name: List S3s import storage
       request:
         name: S3SListRequest
         query-parameters:
@@ -27,15 +27,13 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
           project:
-            type: integer
+            type: optional<integer>
             docs: Project ID
       response:
         docs: ''
         type: list<root.LseS3ImportStorage>
       examples:
-        - query-parameters:
-            project: 1
-          response:
+        - response:
             body:
               - aws_access_key_id: aws_access_key_id
                 aws_secret_access_key: aws_secret_access_key
@@ -83,7 +81,7 @@ service:
         Create S3 import storage with IAM role access.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Create import storage
+      display-name: Create import storage
       request:
         body: root.LseS3ImportStorageRequest
         content-type: application/json
@@ -143,7 +141,7 @@ service:
         IAM role access.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Validate import storage
+      display-name: Validate import storage
       request:
         body: root.LseS3ImportStorageRequest
         content-type: application/json
@@ -170,7 +168,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get import storage
+      display-name: Get import storage
       response:
         docs: ''
         type: root.LseS3ImportStorage
@@ -228,7 +226,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Delete import storage
+      display-name: Delete import storage
       examples:
         - path-parameters:
             id: 1
@@ -251,7 +249,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Update import storage
+      display-name: Update import storage
       request:
         name: PatchedLseS3ImportStorageRequest
         body:
@@ -399,7 +397,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Sync import storage
+      display-name: Sync import storage
       response:
         docs: ''
         type: root.LseS3ImportStorage

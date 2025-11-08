@@ -68,10 +68,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.import_storage.azure_spi.list(project=1)
+    response = client.import_storage.azure_spi.list()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.import_storage.azure_spi.list(project=1)
+    async_response = await async_client.import_storage.azure_spi.list()
     validate_response(async_response, expected_response, expected_types)
 
 

@@ -29,7 +29,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Bulk assign workspace members
+      display-name: Bulk assign workspace members
       request:
         name: WorkspaceMemberBulkAssignRequest
         body:
@@ -68,7 +68,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Bulk unassign workspace members
+      display-name: Bulk unassign workspace members
       response:
         docs: ''
         type: BulkDeleteResponse

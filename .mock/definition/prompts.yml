@@ -18,7 +18,7 @@ service:
         Create a new batch of failed predictions.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Create batch of failed predictions
+      display-name: Create batch of failed predictions
       request:
         name: BatchFailedPredictionsRequestRequest
         query-parameters:
@@ -65,7 +65,7 @@ service:
         Create a new batch prediction.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Create batch predictions
+      display-name: Create batch predictions
       request:
         name: BatchPredictionsRequestRequest
         query-parameters:
@@ -116,7 +116,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         project_pk: integer
-      display-name: ✨ Get Project Subset Task List with Predictions and Accuracy details
+      display-name: Get Project Subset Task List with Predictions and Accuracy details
       request:
         name: PromptsSubsetTasksRequest
         query-parameters:
@@ -183,7 +183,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         project_pk: integer
-      display-name: ✨ Get available subsets of a project (for prompts usage)
+      display-name: Get available subsets of a project (for prompts usage)
       request:
         name: PromptsSubsetsRequest
         query-parameters:
@@ -211,7 +211,7 @@ service:
       docs: List all prompts.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ List prompts
+      display-name: List prompts
       request:
         name: PromptsListRequest
         query-parameters:
@@ -259,7 +259,7 @@ service:
         Create a new prompt.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Create prompt
+      display-name: Create prompt
       request:
         body: root.ModelInterfaceRequest
         content-type: application/json
@@ -299,7 +299,7 @@ service:
       docs: Retrieve a list of compatible project for prompt.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ List projects compatible with prompt
+      display-name: List projects compatible with prompt
       request:
         name: PromptsCompatibleProjectsRequest
         query-parameters:
@@ -326,8 +326,7 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - agreement_threshold: agreement_threshold
-                  allow_stream: true
+                - allow_stream: true
                   annotation_limit_count: 1
                   annotation_limit_percent: annotation_limit_percent
                   annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -366,7 +365,6 @@ service:
                   is_draft: true
                   is_published: true
                   label_config: label_config
-                  max_additional_annotators_assignable: 1
                   maximum_annotations: 1
                   members: members
                   members_count: 1
@@ -429,7 +427,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: ✨ Get prompt
+      display-name: Get prompt
       response:
         docs: ''
         type: root.ModelInterfaceSerializerGet
@@ -476,7 +474,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: ✨ Put prompt
+      display-name: Put prompt
       request:
         body: root.ModelInterfaceRequest
         content-type: application/json
@@ -527,7 +525,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: ✨ Delete prompt
+      display-name: Delete prompt
       examples:
         - path-parameters:
             id: id
@@ -549,7 +547,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: ✨ Update prompt
+      display-name: Update prompt
       request:
         name: PatchedModelInterfaceRequest
         body:
@@ -619,7 +617,7 @@ service:
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: ✨ Put prompt version
+      display-name: Put prompt version
       request:
         body: root.ThirdPartyModelVersionRequest
         content-type: application/json

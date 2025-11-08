@@ -200,7 +200,6 @@ service:
                   meta:
                     key: value
                   overlap: 1
-                  precomputed_agreement: 1.1
                   predictions:
                     - {}
                   predictions_model_versions: predictions_model_versions
@@ -350,7 +349,6 @@ service:
               meta:
                 key: value
               overlap: 1
-              precomputed_agreement: 1.1
               predictions:
                 - created_at: '2024-01-15T09:30:00Z'
                   model:
@@ -440,7 +438,6 @@ service:
               meta:
                 key: value
               overlap: 1
-              precomputed_agreement: 1.1
               predictions:
                 - created_at: '2024-01-15T09:30:00Z'
                   model:
@@ -535,9 +532,6 @@ service:
               validation:
                 min: -2147483648
                 max: 2147483647
-            precomputed_agreement:
-              type: optional<double>
-              docs: Average agreement score for the task
             predictions_score: optional<double>
             project:
               type: optional<integer>
@@ -599,7 +593,6 @@ service:
               meta:
                 key: value
               overlap: 1
-              precomputed_agreement: 1.1
               predictions:
                 - created_at: '2024-01-15T09:30:00Z'
                   model:

@@ -4,6 +4,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import datetime as dt
 import pydantic
+from .default_role_custom_scripts_editable_by import DefaultRoleCustomScriptsEditableBy
 from .role9e7enum import Role9E7Enum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -12,6 +13,14 @@ class DefaultRole(UncheckedBaseModel):
     annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
+    """
+
+    custom_scripts_editable_by: typing.Optional[DefaultRoleCustomScriptsEditableBy] = pydantic.Field(default=None)
+    """
+    Set the minimum user role that can edit custom scripts (Plugins) in the UI.
+    
+    * `AD` - Administrator
+    * `MA` - Manager
     """
 
     custom_scripts_enabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)

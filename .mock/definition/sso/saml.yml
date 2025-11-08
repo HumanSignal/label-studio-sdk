@@ -18,7 +18,7 @@ service:
         Retrieve SAML2 settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Retrieve SAML2 Settings
+      display-name: Retrieve SAML2 Settings
       response:
         docs: ''
         type: root.SamlSettings
@@ -52,7 +52,7 @@ service:
         Update SAML2 settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Update SAML2 Settings
+      display-name: Update SAML2 Settings
       request:
         name: SamlSettingsUpdateRequest
         body:

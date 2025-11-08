@@ -176,7 +176,6 @@ async def test_list_counts(client: LabelStudio, async_client: AsyncLabelStudio) 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "agreement_threshold": "agreement_threshold",
         "allow_stream": True,
         "annotation_limit_count": 1,
         "annotation_limit_percent": "annotation_limit_percent",
@@ -211,7 +210,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "is_draft": True,
         "is_published": True,
         "label_config": "label_config",
-        "max_additional_annotators_assignable": 1,
         "maximum_annotations": 1,
         "members": "members",
         "members_count": 1,
@@ -274,7 +272,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "workspace_title": "workspace_title",
     }
     expected_types: typing.Any = {
-        "agreement_threshold": None,
         "allow_stream": None,
         "annotation_limit_count": "integer",
         "annotation_limit_percent": None,
@@ -303,7 +300,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "is_draft": None,
         "is_published": None,
         "label_config": None,
-        "max_additional_annotators_assignable": "integer",
         "maximum_annotations": "integer",
         "members": None,
         "members_count": "integer",
@@ -387,7 +383,6 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "agreement_threshold": "agreement_threshold",
         "annotation_limit_count": 1,
         "annotation_limit_percent": "annotation_limit_percent",
         "annotator_evaluation_minimum_score": "annotator_evaluation_minimum_score",
@@ -418,7 +413,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "is_draft": True,
         "is_published": True,
         "label_config": "label_config",
-        "max_additional_annotators_assignable": 1,
         "maximum_annotations": 1,
         "min_annotations_to_start_training": 1,
         "model_version": "model_version",
@@ -473,7 +467,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "workspace_title": "workspace_title",
     }
     expected_types: typing.Any = {
-        "agreement_threshold": None,
         "annotation_limit_count": "integer",
         "annotation_limit_percent": None,
         "annotator_evaluation_minimum_score": None,
@@ -498,7 +491,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "is_draft": None,
         "is_published": None,
         "label_config": None,
-        "max_additional_annotators_assignable": "integer",
         "maximum_annotations": "integer",
         "min_annotations_to_start_training": "integer",
         "model_version": None,

@@ -76,25 +76,6 @@ types:
         docs: List of users in the matrix
     source:
       openapi: openapi/openapi.yaml
-  StatsUsersGroundTruthAgreementResponseAgreementValue:
-    discriminated: false
-    union:
-      - type: double
-        docs: Ground truth agreement score for the user (0-1) when per_label=False
-      - type: map<string, double>
-        docs: Ground truth agreement scores per label when per_label=True
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  StatsUsersGroundTruthAgreementResponse:
-    properties:
-      agreement:
-        type: >-
-          optional<map<string,
-          StatsUsersGroundTruthAgreementResponseAgreementValue>>
-        docs: Dictionary mapping user IDs to their ground truth agreement scores
-    source:
-      openapi: openapi/openapi.yaml
   StatsAgreementAnnotatorResponse:
     properties:
       Agreement_per_annotator:
@@ -217,38 +198,6 @@ types:
         docs: Dictionary mapping user IDs to their prediction agreement scores
     source:
       openapi: openapi/openapi.yaml
-  StatsUsersReviewScoreResponsePerformanceScoreValue:
-    discriminated: false
-    union:
-      - type: double
-        docs: Performance score for the annotator when per_label=False
-      - type: map<string, double>
-        docs: Performance score per label for the annotator when per_label=True
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  StatsUsersReviewScoreResponseReviewScoreValue:
-    discriminated: false
-    union:
-      - type: double
-        docs: Average review score for the annotator when per_label=False
-      - type: map<string, double>
-        docs: Review score per label for the annotator when per_label=True
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  StatsUsersReviewScoreResponse:
-    properties:
-      performance_score:
-        type: >-
-          optional<map<string,
-          StatsUsersReviewScoreResponsePerformanceScoreValue>>
-        docs: Performance scores mapped by annotator ID
-      review_score:
-        type: optional<map<string, StatsUsersReviewScoreResponseReviewScoreValue>>
-        docs: Review scores mapped by annotator ID
-    source:
-      openapi: openapi/openapi.yaml
   StatsUserPredictionAgreementResponseAveragePredictionAgreementPerUser:
     discriminated: false
     union:
@@ -332,7 +281,7 @@ service:
       path-parameters:
         id: integer
         model_version: string
-      display-name: ✨ Get model-version overall agreement vs annotators
+      display-name: Get model-version overall agreement vs annotators
       response:
         docs: Model-version overall agreement vs annotators
         type: StatsModelVersionAnnotatorAgreementResponse
@@ -363,7 +312,7 @@ service:
       path-parameters:
         id: integer
         model_version: string
-      display-name: ✨ Get model-version ground truth agreement
+      display-name: Get model-version ground truth agreement
       request:
         name: StatsModelVersionGroundTruthAgreementRequest
         query-parameters:
@@ -401,7 +350,7 @@ service:
       path-parameters:
         id: integer
         model_version: string
-      display-name: ✨ Get model-version prediction agreement
+      display-name: Get model-version prediction agreement
       request:
         name: StatsModelVersionPredictionAgreementRequest
         query-parameters:
@@ -438,7 +387,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get Inter-Annotator Agreement matrix
+      display-name: Get Inter-Annotator Agreement matrix
       request:
         name: StatsIaaRequest
         query-parameters:
@@ -518,48 +467,6 @@ service:
                   id: 2
       audiences:
         - public
-    users_ground_truth_agreement:
-      path: /api/projects/{id}/stats/agreement-groundtruth
-      method: GET
-      auth: true
-      docs: >-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get ground truth agreement statistics for multiple users within a
-        project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: ✨ Get ground truth agreement for multiple users
-      request:
-        name: StatsUsersGroundTruthAgreementRequest
-        query-parameters:
-          ids:
-            type: string
-            docs: Comma separated list of user IDs to get ground truth agreement for
-          per_label:
-            type: optional<boolean>
-            default: false
-            docs: Per label
-      response:
-        docs: Ground truth agreement statistics for multiple users
-        type: StatsUsersGroundTruthAgreementResponse
-      examples:
-        - path-parameters:
-            id: 1
-          query-parameters:
-            ids: ids
-          response:
-            body:
-              agreement:
-                key: 1.1
-      audiences:
-        - public
     agreement_annotator:
       path: /api/projects/{id}/stats/agreement_annotator/{user_id}
       method: GET
@@ -577,7 +484,7 @@ service:
       path-parameters:
         id: integer
         user_id: integer
-      display-name: ✨ Get individual annotator agreement stats
+      display-name: Get individual annotator agreement stats
       response:
         docs: Individual annotator agreement statistics
         type: StatsAgreementAnnotatorResponse
@@ -606,7 +513,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get agreement statistics for multiple annotators
+      display-name: Get agreement statistics for multiple annotators
       request:
         name: StatsAgreementAnnotatorsRequest
         query-parameters:
@@ -633,19 +540,12 @@ service:
       path: /api/projects/{id}/stats/data_filter
       method: GET
       auth: true
-      docs: |-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get statistics about user data filters and their usage within a project.
+      docs: Get statistics about user data filters and their usage within a project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get user data filter statistics
+      display-name: Get user data filter statistics
       response:
         docs: User data filter statistics
         type: StatsDataFiltersResponse
@@ -665,19 +565,12 @@ service:
       path: /api/projects/{id}/stats/finished
       method: GET
       auth: true
-      docs: |-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get statistics about finished tasks for a project.
+      docs: Get statistics about finished tasks for a project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get finished tasks statistics
+      display-name: Get finished tasks statistics
       request:
         name: StatsFinishedTasksRequest
         query-parameters:
@@ -702,19 +595,13 @@ service:
       method: GET
       auth: true
       docs: >-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Get lead time statistics across the project, including average
         annotation time.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get lead time statistics
+      display-name: Get lead time statistics
       response:
         docs: Lead time statistics
         type: StatsLeadTimeResponse
@@ -751,7 +638,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get total agreement for project
+      display-name: Get total agreement for project
       request:
         name: StatsTotalAgreementRequest
         query-parameters:
@@ -773,19 +660,12 @@ service:
       path: /api/projects/{id}/update-stats
       method: GET
       auth: true
-      docs: |-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Start stats recalculation for given project
+      docs: Start stats recalculation for given project
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Start stats recalculation
+      display-name: Start stats recalculation
       request:
         name: StatsUpdateStatsRequest
         query-parameters:
@@ -820,7 +700,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get prediction agreement statistics for multiple annotators
+      display-name: Get prediction agreement statistics for multiple annotators
       request:
         name: StatsUsersPredictionAgreementRequest
         query-parameters:
@@ -847,51 +727,6 @@ service:
                 key: 1.1
       audiences:
         - public
-    users_review_score:
-      path: /api/projects/{id}/user-stats/review_score
-      method: GET
-      auth: true
-      docs: >-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get review score and performance score statistics for multiple
-        annotators within a project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: ✨ Get review scores for multiple annotators
-      request:
-        name: StatsUsersReviewScoreRequest
-        query-parameters:
-          ids:
-            type: string
-            docs: >-
-              Comma separated list of annotator user IDs to get review scores
-              for
-          per_label:
-            type: optional<boolean>
-            docs: Per label
-      response:
-        docs: Review scores and performance scores for multiple annotators
-        type: StatsUsersReviewScoreResponse
-      examples:
-        - path-parameters:
-            id: 1
-          query-parameters:
-            ids: ids
-          response:
-            body:
-              performance_score:
-                key: 1.1
-              review_score:
-                key: 1.1
-      audiences:
-        - public
     user_prediction_agreement:
       path: /api/projects/{id}/user-stats/{user_pk}/prediction
       method: GET
@@ -910,7 +745,7 @@ service:
       path-parameters:
         id: integer
         user_pk: integer
-      display-name: ✨ Get individual user prediction agreement
+      display-name: Get individual user prediction agreement
       request:
         name: StatsUserPredictionAgreementRequest
         query-parameters:
@@ -946,7 +781,7 @@ service:
       path-parameters:
         id: integer
         user_pk: integer
-      display-name: ✨ Get individual user review scores
+      display-name: Get individual user review scores
       request:
         name: StatsUserReviewScoreRequest
         query-parameters:
@@ -984,7 +819,7 @@ service:
       path-parameters:
         id: integer
         user_pk: integer
-      display-name: ✨ Get individual user ground truth agreement
+      display-name: Get individual user ground truth agreement
       request:
         name: StatsUserGroundTruthAgreementRequest
         query-parameters:

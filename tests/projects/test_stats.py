@@ -65,16 +65,6 @@ async def test_iaa(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_users_ground_truth_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"agreement": {"key": 1.1}}
-    expected_types: typing.Any = {"agreement": ("dict", {0: (None, None)})}
-    response = client.projects.stats.users_ground_truth_agreement(id=1, ids="ids")
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.stats.users_ground_truth_agreement(id=1, ids="ids")
-    validate_response(async_response, expected_response, expected_types)
-
-
 async def test_agreement_annotator(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"Agreement_per_annotator": 1.1}
     expected_types: typing.Any = {"Agreement_per_annotator": None}
@@ -161,19 +151,6 @@ async def test_users_prediction_agreement(client: LabelStudio, async_client: Asy
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.projects.stats.users_prediction_agreement(id=1, ids="ids")
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_users_review_score(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"performance_score": {"key": 1.1}, "review_score": {"key": 1.1}}
-    expected_types: typing.Any = {
-        "performance_score": ("dict", {0: (None, None)}),
-        "review_score": ("dict", {0: (None, None)}),
-    }
-    response = client.projects.stats.users_review_score(id=1, ids="ids")
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.stats.users_review_score(id=1, ids="ids")
     validate_response(async_response, expected_response, expected_types)
 
 

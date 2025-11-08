@@ -23,7 +23,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get workspace members paginated
+      display-name: Get workspace members paginated
       request:
         name: PaginatedListRequest
         query-parameters:

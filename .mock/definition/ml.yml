@@ -342,7 +342,7 @@ service:
         id:
           type: integer
           docs: A unique integer value identifying this ML backend.
-      display-name: ✨ Create predictions for all tasks
+      display-name: Create predictions for all tasks
       request:
         name: MlPredictAllTasksRequest
         query-parameters:

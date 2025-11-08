@@ -75,6 +75,7 @@ service:
                 manual_role_management: manual_role_management
                 manual_workspace_management: manual_workspace_management
               created_at: '2024-01-15T09:30:00Z'
+              custom_scripts_editable_by: AD
               custom_scripts_enabled: custom_scripts_enabled
               default_role: OW
               email_notification_settings: email_notification_settings
@@ -105,7 +106,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Update organization
+      display-name: Update organization
       request:
         name: PatchedLseOrganizationSerializerUpdateRequest
         body:
@@ -116,6 +117,10 @@ service:
                 format: email
                 maxLength: 254
             created_by: optional<integer>
+            custom_scripts_editable_by:
+              type: optional<string>
+              validation:
+                minLength: 1
             custom_scripts_enabled: optional<boolean>
             email_notification_settings: optional<unknown>
             embed_domains: optional<list<map<string, string>>>
@@ -146,6 +151,7 @@ service:
                 manual_role_management: manual_role_management
                 manual_workspace_management: manual_workspace_management
               created_at: '2024-01-15T09:30:00Z'
+              custom_scripts_editable_by: AD
               custom_scripts_enabled: custom_scripts_enabled
               default_role: OW
               email_notification_settings: email_notification_settings
@@ -175,7 +181,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Update default role
+      display-name: Update default role
       request:
         name: PatchedDefaultRoleRequest
         body:
@@ -188,6 +194,16 @@ service:
                 notifications (which will be disabled). In these settings,
                 information about annotator and reviewer identity is suppressed
                 in the UI.
+            custom_scripts_editable_by:
+              type: optional<PatchedDefaultRoleRequestCustomScriptsEditableBy>
+              docs: >-
+                Set the minimum user role that can edit custom scripts (Plugins)
+                in the UI.
+
+
+                * `AD` - Administrator
+
+                * `MA` - Manager
             custom_scripts_enabled_at:
               type: optional<datetime>
               docs: >-
@@ -240,6 +256,7 @@ service:
           response:
             body:
               annotator_reviewer_firewall_enabled_at: '2024-01-15T09:30:00Z'
+              custom_scripts_editable_by: AD
               custom_scripts_enabled_at: '2024-01-15T09:30:00Z'
               default_role: OW
               email_notification_settings:
@@ -257,3 +274,20 @@ service:
         - public
   source:
     openapi: openapi/openapi.yaml
+types:
+  PatchedDefaultRoleRequestCustomScriptsEditableBy:
+    discriminated: false
+    docs: >-
+      Set the minimum user role that can edit custom scripts (Plugins) in the
+      UI.
+
+
+      * `AD` - Administrator
+
+      * `MA` - Manager
+    union:
+      - root.CustomScriptsEditableByEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true

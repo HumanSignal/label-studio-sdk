@@ -18,7 +18,7 @@ service:
         Retrieve SCIM settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Retrieve SCIM Settings
+      display-name: Retrieve SCIM Settings
       response:
         docs: ''
         type: root.ScimSettings
@@ -52,7 +52,7 @@ service:
         Update SCIM settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Update SCIM Settings
+      display-name: Update SCIM Settings
       request:
         name: ScimSettingsUpdateRequest
         body:

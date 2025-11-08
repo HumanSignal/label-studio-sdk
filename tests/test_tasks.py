@@ -104,7 +104,6 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "meta": {"key": "value"},
         "overlap": 1,
-        "precomputed_agreement": 1.1,
         "predictions": [
             {
                 "created_at": "2024-01-15T09:30:00Z",
@@ -171,7 +170,6 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "last_comment_updated_at": "datetime",
         "meta": None,
         "overlap": "integer",
-        "precomputed_agreement": None,
         "predictions": (
             "list",
             {
@@ -244,7 +242,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "meta": {"key": "value"},
         "overlap": 1,
-        "precomputed_agreement": 1.1,
         "predictions": [
             {
                 "created_at": "2024-01-15T09:30:00Z",
@@ -311,7 +308,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "last_comment_updated_at": "datetime",
         "meta": None,
         "overlap": "integer",
-        "precomputed_agreement": None,
         "predictions": (
             "list",
             {
@@ -395,7 +391,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "meta": {"key": "value"},
         "overlap": 1,
-        "precomputed_agreement": 1.1,
         "predictions": [
             {
                 "created_at": "2024-01-15T09:30:00Z",
@@ -462,7 +457,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "last_comment_updated_at": "datetime",
         "meta": None,
         "overlap": "integer",
-        "precomputed_agreement": None,
         "predictions": (
             "list",
             {

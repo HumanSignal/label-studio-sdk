@@ -29,7 +29,7 @@ service:
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: ✨ Get inference run info
+      display-name: Get inference run info
       request:
         name: RunsListRequest
         query-parameters:
@@ -91,7 +91,7 @@ service:
       path-parameters:
         prompt_id: integer
         version_id: integer
-      display-name: ✨ Run prompt inference
+      display-name: Run prompt inference
       request:
         name: ModelRunRequest
         body:
@@ -168,7 +168,7 @@ service:
         inference_run_id: integer
         prompt_id: integer
         version_id: integer
-      display-name: ✨ Cancel Inference Run API
+      display-name: Cancel Inference Run API
       response:
         docs: ''
         type: root.CancelModelRunResponse

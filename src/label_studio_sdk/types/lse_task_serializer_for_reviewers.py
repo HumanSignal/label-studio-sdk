@@ -72,11 +72,6 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     Number of distinct annotators that processed the current task
     """
 
-    precomputed_agreement: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Average agreement score for the task
-    """
-
     predictions: typing.List[LseTaskSerializerForReviewersPredictionsItem] = pydantic.Field()
     """
     Predictions for this task

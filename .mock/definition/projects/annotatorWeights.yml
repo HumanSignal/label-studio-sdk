@@ -21,7 +21,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get annotator weights
+      display-name: Get annotator weights
       response:
         docs: Annotator weights retrieved
         type: root.LseProjectParams
@@ -53,7 +53,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Create annotator weights for statistics
+      display-name: Create annotator weights for statistics
       request:
         name: LseProjectParamsRequest
         body:

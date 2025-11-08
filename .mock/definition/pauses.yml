@@ -22,7 +22,7 @@ service:
         id: string
         project_pk: integer
         user_pk: integer
-      display-name: ✨ Put pause
+      display-name: Put pause
       request:
         body: root.PauseRequest
         content-type: application/json

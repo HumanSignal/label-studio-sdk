@@ -13,7 +13,6 @@ from .actions_create_request_selected_items_excluded import ActionsCreateRequest
 from .actions_create_request_selected_items_included import ActionsCreateRequestSelectedItemsIncluded
 from .actions_list_response_item import ActionsListResponseItem
 from .actions_list_response_item_dialog import ActionsListResponseItemDialog
-from .actions_list_response_item_permission import ActionsListResponseItemPermission
 
 __all__ = [
     "ActionsCreateRequestFilters",
@@ -29,5 +28,4 @@ __all__ = [
     "ActionsCreateRequestSelectedItemsIncluded",
     "ActionsListResponseItem",
     "ActionsListResponseItemDialog",
-    "ActionsListResponseItemPermission",
 ]

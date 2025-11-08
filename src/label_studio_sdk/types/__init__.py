@@ -47,12 +47,14 @@ from .configurable_permission_option import ConfigurablePermissionOption
 from .converted_format import ConvertedFormat
 from .converted_format_request import ConvertedFormatRequest
 from .count_limit import CountLimit
+from .custom_scripts_editable_by_enum import CustomScriptsEditableByEnum
 from .databricks_export_storage import DatabricksExportStorage
 from .databricks_export_storage_request import DatabricksExportStorageRequest
 from .databricks_import_storage import DatabricksImportStorage
 from .databricks_import_storage_request import DatabricksImportStorageRequest
 from .default165enum import Default165Enum
 from .default_role import DefaultRole
+from .default_role_custom_scripts_editable_by import DefaultRoleCustomScriptsEditableBy
 from .edition_enum import EditionEnum
 from .export import Export
 from .file_upload import FileUpload
@@ -82,6 +84,7 @@ from .lse_fields_onboarding_state import LseFieldsOnboardingState
 from .lse_fields_trial_role import LseFieldsTrialRole
 from .lse_key_indicator_value import LseKeyIndicatorValue
 from .lse_organization import LseOrganization
+from .lse_organization_custom_scripts_editable_by import LseOrganizationCustomScriptsEditableBy
 from .lse_organization_member_list import LseOrganizationMemberList
 from .lse_project import LseProject
 from .lse_project_counts import LseProjectCounts
@@ -286,12 +289,14 @@ __all__ = [
     "ConvertedFormat",
     "ConvertedFormatRequest",
     "CountLimit",
+    "CustomScriptsEditableByEnum",
     "DatabricksExportStorage",
     "DatabricksExportStorageRequest",
     "DatabricksImportStorage",
     "DatabricksImportStorageRequest",
     "Default165Enum",
     "DefaultRole",
+    "DefaultRoleCustomScriptsEditableBy",
     "EditionEnum",
     "Export",
     "FileUpload",
@@ -321,6 +326,7 @@ __all__ = [
     "LseFieldsTrialRole",
     "LseKeyIndicatorValue",
     "LseOrganization",
+    "LseOrganizationCustomScriptsEditableBy",
     "LseOrganizationMemberList",
     "LseProject",
     "LseProjectCounts",

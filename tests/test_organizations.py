@@ -38,6 +38,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             "manual_workspace_management": "manual_workspace_management",
         },
         "created_at": "2024-01-15T09:30:00Z",
+        "custom_scripts_editable_by": "AD",
         "custom_scripts_enabled": "custom_scripts_enabled",
         "default_role": "OW",
         "email_notification_settings": "email_notification_settings",
@@ -51,6 +52,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_types: typing.Any = {
         "billing": {"manual_role_management": None, "manual_workspace_management": None},
         "created_at": "datetime",
+        "custom_scripts_editable_by": None,
         "custom_scripts_enabled": None,
         "default_role": None,
         "email_notification_settings": None,
@@ -75,6 +77,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "manual_workspace_management": "manual_workspace_management",
         },
         "created_at": "2024-01-15T09:30:00Z",
+        "custom_scripts_editable_by": "AD",
         "custom_scripts_enabled": "custom_scripts_enabled",
         "default_role": "OW",
         "email_notification_settings": "email_notification_settings",
@@ -88,6 +91,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_types: typing.Any = {
         "billing": {"manual_role_management": None, "manual_workspace_management": None},
         "created_at": "datetime",
+        "custom_scripts_editable_by": None,
         "custom_scripts_enabled": None,
         "default_role": None,
         "email_notification_settings": None,
@@ -108,6 +112,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_update_default_role(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "annotator_reviewer_firewall_enabled_at": "2024-01-15T09:30:00Z",
+        "custom_scripts_editable_by": "AD",
         "custom_scripts_enabled_at": "2024-01-15T09:30:00Z",
         "default_role": "OW",
         "email_notification_settings": {"key": "value"},
@@ -121,6 +126,7 @@ async def test_update_default_role(client: LabelStudio, async_client: AsyncLabel
     }
     expected_types: typing.Any = {
         "annotator_reviewer_firewall_enabled_at": "datetime",
+        "custom_scripts_editable_by": None,
         "custom_scripts_enabled_at": "datetime",
         "default_role": None,
         "email_notification_settings": None,

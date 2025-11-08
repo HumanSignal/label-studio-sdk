@@ -19,7 +19,7 @@ service:
         WIF authentication.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Get all GCS WIF export storage
+      display-name: Get all GCS WIF export storage
       request:
         name: GcswifListRequest
         query-parameters:
@@ -27,15 +27,13 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
           project:
-            type: integer
+            type: optional<integer>
             docs: Project ID
       response:
         docs: ''
         type: list<root.GcswifExportStorage>
       examples:
-        - query-parameters:
-            project: 1
-          response:
+        - response:
             body:
               - bucket: bucket
                 can_delete_objects: true
@@ -79,7 +77,7 @@ service:
         annotations.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Create GCS export storage with WIF authentication
+      display-name: Create GCS export storage with WIF authentication
       request:
         body: root.GcswifExportStorageRequest
         content-type: application/json
@@ -133,7 +131,7 @@ service:
         WIF authentication.
       source:
         openapi: openapi/openapi.yaml
-      display-name: ✨ Validate GCS WIF export storage
+      display-name: Validate GCS WIF export storage
       request:
         body: root.GcswifExportStorageRequest
         content-type: application/json
@@ -159,7 +157,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Get GCS WIF export storage
+      display-name: Get GCS WIF export storage
       response:
         docs: ''
         type: root.GcswifExportStorage
@@ -212,7 +210,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Delete GCS WIF export storage
+      display-name: Delete GCS WIF export storage
       examples:
         - path-parameters:
             id: 1
@@ -235,7 +233,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Update GCS WIF export storage
+      display-name: Update GCS WIF export storage
       request:
         name: PatchedGcswifExportStorageRequest
         body:
@@ -359,7 +357,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Sync GCS WIF export storage
+      display-name: Sync GCS WIF export storage
       response:
         docs: ''
         type: root.GcswifExportStorage

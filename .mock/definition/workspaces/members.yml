@@ -20,7 +20,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ List workspace memberships
+      display-name: List workspace memberships
       response:
         docs: A list of workspace memberships
         type: list<root.WorkspaceMemberList>
@@ -77,7 +77,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Create workspace membership
+      display-name: Create workspace membership
       request:
         name: WorkspaceMemberCreateRequest
         body:
@@ -120,7 +120,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: ✨ Delete workspace membership
+      display-name: Delete workspace membership
       examples:
         - path-parameters:
             id: 1

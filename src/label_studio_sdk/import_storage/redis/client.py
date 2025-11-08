@@ -21,8 +21,8 @@ class RedisClient:
     def list(
         self,
         *,
-        project: int,
         ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[RedisImportStorage]:
         """
@@ -30,11 +30,11 @@ class RedisClient:
 
         Parameters
         ----------
-        project : int
-            Project ID
-
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
+
+        project : typing.Optional[int]
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,9 +51,7 @@ class RedisClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.redis.list(
-            project=1,
-        )
+        client.import_storage.redis.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/redis/",
@@ -512,8 +510,8 @@ class AsyncRedisClient:
     async def list(
         self,
         *,
-        project: int,
         ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[RedisImportStorage]:
         """
@@ -521,11 +519,11 @@ class AsyncRedisClient:
 
         Parameters
         ----------
-        project : int
-            Project ID
-
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
+
+        project : typing.Optional[int]
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -547,9 +545,7 @@ class AsyncRedisClient:
 
 
         async def main() -> None:
-            await client.import_storage.redis.list(
-                project=1,
-            )
+            await client.import_storage.redis.list()
 
 
         asyncio.run(main())

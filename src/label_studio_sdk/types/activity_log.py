@@ -34,7 +34,6 @@ class ActivityLog(UncheckedBaseModel):
     response_code: str
     user_agent: typing.Optional[str] = None
     user_id: int
-    user_session: typing.Optional[str] = None
     workspace_owner_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Owner id of workspace where action performed

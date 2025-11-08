@@ -23,8 +23,8 @@ class DatabricksClient:
     def list(
         self,
         *,
-        project: int,
         ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[DatabricksImportStorage]:
         """
@@ -38,11 +38,11 @@ class DatabricksClient:
 
         Parameters
         ----------
-        project : int
-            Project ID
-
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
+
+        project : typing.Optional[int]
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -59,9 +59,7 @@ class DatabricksClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.databricks.list(
-            project=1,
-        )
+        client.import_storage.databricks.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/databricks/",
@@ -763,8 +761,8 @@ class AsyncDatabricksClient:
     async def list(
         self,
         *,
-        project: int,
         ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[DatabricksImportStorage]:
         """
@@ -778,11 +776,11 @@ class AsyncDatabricksClient:
 
         Parameters
         ----------
-        project : int
-            Project ID
-
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
+
+        project : typing.Optional[int]
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -804,9 +802,7 @@ class AsyncDatabricksClient:
 
 
         async def main() -> None:
-            await client.import_storage.databricks.list(
-                project=1,
-            )
+            await client.import_storage.databricks.list()
 
 
         asyncio.run(main())
