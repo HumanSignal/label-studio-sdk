@@ -197,7 +197,12 @@ from .review_settings_sampling import ReviewSettingsSampling
 from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
 from .reviewed_enum import ReviewedEnum
 from .role9e7enum import Role9E7Enum
-from .role_based_task import RoleBasedTask
+from .role_based_task import (
+    RoleBasedTask,
+    RoleBasedTask_LseTask,
+    RoleBasedTask_LseTaskSerializerForAnnotators,
+    RoleBasedTask_LseTaskSerializerForReviewers,
+)
 from .s3export_storage import S3ExportStorage
 from .s3import_storage import S3ImportStorage
 from .saml_settings import SamlSettings
@@ -437,6 +442,9 @@ __all__ = [
     "ReviewedEnum",
     "Role9E7Enum",
     "RoleBasedTask",
+    "RoleBasedTask_LseTask",
+    "RoleBasedTask_LseTaskSerializerForAnnotators",
+    "RoleBasedTask_LseTaskSerializerForReviewers",
     "S3ExportStorage",
     "S3ImportStorage",
     "SamlSettings",
