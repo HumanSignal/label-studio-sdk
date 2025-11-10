@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class LseTaskSerializerForReviewers(UncheckedBaseModel):
     """
-    Task Serializer with project scheme configs validation
+    Data Manager Task Serializer with FSM state support.
     """
 
     agreement: str
@@ -101,6 +101,7 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     reviewers_count: int
     reviews_accepted: typing.Optional[int] = None
     reviews_rejected: typing.Optional[int] = None
+    state: str
     storage_filename: str
     total_annotations: typing.Optional[int] = None
     total_predictions: typing.Optional[int] = None

@@ -169,11 +169,12 @@ service:
         - response:
             body:
               tasks:
-                - agreement: agreement
-                  agreement_selected: agreement_selected
-                  annotations: annotations
-                  annotations_ids: annotations_ids
-                  annotations_results: annotations_results
+                - user_role: LseTaskSerializerForReviewers
+                  agreement: tasks
+                  agreement_selected: tasks
+                  annotations: tasks
+                  annotations_ids: tasks
+                  annotations_results: tasks
                   annotators:
                     - 1
                   annotators_count: 1
@@ -183,7 +184,7 @@ service:
                     - key: value
                   comment_authors_count: 1
                   comment_count: 1
-                  comments: comments
+                  comments: tasks
                   completed_at: '2024-01-15T09:30:00Z'
                   created_at: '2024-01-15T09:30:00Z'
                   data:
@@ -191,7 +192,7 @@ service:
                   draft_exists: true
                   drafts:
                     - {}
-                  file_upload: file_upload
+                  file_upload: tasks
                   ground_truth: true
                   id: 1
                   inner_id: 1
@@ -203,8 +204,8 @@ service:
                   precomputed_agreement: 1.1
                   predictions:
                     - {}
-                  predictions_model_versions: predictions_model_versions
-                  predictions_results: predictions_results
+                  predictions_model_versions: tasks
+                  predictions_results: tasks
                   predictions_score: 1.1
                   project: 1
                   review_time: 1
@@ -214,7 +215,8 @@ service:
                   reviewers_count: 1
                   reviews_accepted: 1
                   reviews_rejected: 1
-                  storage_filename: storage_filename
+                  state: tasks
+                  storage_filename: tasks
                   total_annotations: 1
                   total_predictions: 1
                   unresolved_comment_count: 1
@@ -375,6 +377,7 @@ service:
               reviewers_count: 1
               reviews_accepted: 1
               reviews_rejected: 1
+              state: state
               storage_filename: storage_filename
               total_annotations: 1
               total_predictions: 1
@@ -406,11 +409,12 @@ service:
             id: id
           response:
             body:
-              agreement: agreement
-              agreement_selected: agreement_selected
-              annotations: annotations
-              annotations_ids: annotations_ids
-              annotations_results: annotations_results
+              user_role: LseTaskSerializerForReviewers
+              agreement: string
+              agreement_selected: string
+              annotations: string
+              annotations_ids: string
+              annotations_results: string
               annotators:
                 - 1
               annotators_count: 1
@@ -420,7 +424,7 @@ service:
                 - key: value
               comment_authors_count: 1
               comment_count: 1
-              comments: comments
+              comments: string
               completed_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
               data:
@@ -431,7 +435,7 @@ service:
                   result:
                     - key: value
                   updated_at: '2024-01-15T09:30:00Z'
-              file_upload: file_upload
+              file_upload: string
               ground_truth: true
               id: 1
               inner_id: 1
@@ -454,8 +458,8 @@ service:
                   score: 1.1
                   task: 1
                   updated_at: '2024-01-15T09:30:00Z'
-              predictions_model_versions: predictions_model_versions
-              predictions_results: predictions_results
+              predictions_model_versions: string
+              predictions_results: string
               predictions_score: 1.1
               project: 1
               review_time: 1
@@ -465,7 +469,8 @@ service:
               reviewers_count: 1
               reviews_accepted: 1
               reviews_rejected: 1
-              storage_filename: storage_filename
+              state: string
+              storage_filename: string
               total_annotations: 1
               total_predictions: 1
               unresolved_comment_count: 1
@@ -565,11 +570,12 @@ service:
           request: {}
           response:
             body:
-              agreement: agreement
-              agreement_selected: agreement_selected
-              annotations: annotations
-              annotations_ids: annotations_ids
-              annotations_results: annotations_results
+              user_role: LseTaskSerializerForReviewers
+              agreement: string
+              agreement_selected: string
+              annotations: string
+              annotations_ids: string
+              annotations_results: string
               annotators:
                 - 1
               annotators_count: 1
@@ -579,7 +585,7 @@ service:
                 - key: value
               comment_authors_count: 1
               comment_count: 1
-              comments: comments
+              comments: string
               completed_at: '2024-01-15T09:30:00Z'
               created_at: '2024-01-15T09:30:00Z'
               data:
@@ -590,7 +596,7 @@ service:
                   result:
                     - key: value
                   updated_at: '2024-01-15T09:30:00Z'
-              file_upload: file_upload
+              file_upload: string
               ground_truth: true
               id: 1
               inner_id: 1
@@ -613,8 +619,8 @@ service:
                   score: 1.1
                   task: 1
                   updated_at: '2024-01-15T09:30:00Z'
-              predictions_model_versions: predictions_model_versions
-              predictions_results: predictions_results
+              predictions_model_versions: string
+              predictions_results: string
               predictions_score: 1.1
               project: 1
               review_time: 1
@@ -624,7 +630,8 @@ service:
               reviewers_count: 1
               reviews_accepted: 1
               reviews_rejected: 1
-              storage_filename: storage_filename
+              state: string
+              storage_filename: string
               total_annotations: 1
               total_predictions: 1
               unresolved_comment_count: 1

@@ -9,6 +9,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class TaskAssignment(UncheckedBaseModel):
+    """
+    TaskAssignment Serializer with FSM state support.
+
+    Note: The 'state' field will be populated from the queryset annotation
+    if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+    The state field display is controlled by both:
+    - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+    - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
+    """
+
     assignee: int = pydantic.Field()
     """
     Assigned user
@@ -20,6 +31,7 @@ class TaskAssignment(UncheckedBaseModel):
     """
 
     id: int
+    state: str
     task: int = pydantic.Field()
     """
     Assigned task

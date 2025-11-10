@@ -9,10 +9,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class AnnotationReviewRequest(UncheckedBaseModel):
     """
-    A ModelSerializer that takes additional arguments for
-    "fields", "omit" and "expand" in order to
-    control which fields are displayed, and whether to replace simple
-    values with complex, nested serializations
+    AnnotationReview Serializer with FSM state support.
+
+    Note: The 'state' field will be populated from the queryset annotation
+    if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+    The state field display is controlled by both:
+    - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+    - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     """
 
     accepted: typing.Optional[bool] = pydantic.Field(default=None)

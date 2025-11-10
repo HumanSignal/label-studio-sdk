@@ -8,6 +8,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Comment(UncheckedBaseModel):
+    """
+    Comment Serializer with FSM state support.
+
+    Note: The 'state' field will be populated from the queryset annotation
+    if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+    The state field display is controlled by both:
+    - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+    - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
+    """
+
     annotation: typing.Optional[int] = None
     classifications: typing.Optional[typing.Optional[typing.Any]] = None
     created_at: dt.datetime = pydantic.Field()
@@ -34,6 +45,7 @@ class Comment(UncheckedBaseModel):
     Resolving time
     """
 
+    state: str
     task: typing.Optional[int] = None
     text: typing.Optional[str] = pydantic.Field(default=None)
     """

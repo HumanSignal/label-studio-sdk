@@ -23,11 +23,20 @@ async def test_bulk_assign(client: LabelStudio, async_client: AsyncLabelStudio) 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
-        {"assignee": 1, "created_at": "2024-01-15T09:30:00Z", "id": 1, "task": 1, "type": "AN"}
+        {"assignee": 1, "created_at": "2024-01-15T09:30:00Z", "id": 1, "state": "state", "task": 1, "type": "AN"}
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
-        {0: {"assignee": "integer", "created_at": "datetime", "id": "integer", "task": "integer", "type": None}},
+        {
+            0: {
+                "assignee": "integer",
+                "created_at": "datetime",
+                "id": "integer",
+                "state": None,
+                "task": "integer",
+                "type": None,
+            }
+        },
     )
     response = client.projects.assignments.list(id=1, task_pk=1)
     validate_response(response, expected_response, expected_types)
@@ -41,6 +50,7 @@ async def test_assign(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "assignee": 1,
         "created_at": "2024-01-15T09:30:00Z",
         "id": 1,
+        "state": "state",
         "task": 1,
         "type": "AN",
     }
@@ -48,6 +58,7 @@ async def test_assign(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "assignee": "integer",
         "created_at": "datetime",
         "id": "integer",
+        "state": None,
         "task": "integer",
         "type": None,
     }
@@ -76,6 +87,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "assignee": 1,
         "created_at": "2024-01-15T09:30:00Z",
         "id": 1,
+        "state": "state",
         "task": 1,
         "type": "AN",
     }
@@ -83,6 +95,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "assignee": "integer",
         "created_at": "datetime",
         "id": "integer",
+        "state": None,
         "task": "integer",
         "type": None,
     }

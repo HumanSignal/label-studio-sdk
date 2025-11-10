@@ -45,6 +45,7 @@ service:
                 result:
                   key: value
                 started_at: '2024-01-15T09:30:00Z'
+                state: state
       audiences:
         - public
     create:
@@ -90,6 +91,7 @@ service:
               result:
                 key: value
               started_at: '2024-01-15T09:30:00Z'
+              state: state
       audiences:
         - public
     get:
@@ -131,6 +133,7 @@ service:
               result:
                 key: value
               started_at: '2024-01-15T09:30:00Z'
+              state: state
       audiences:
         - public
     api_annotation_reviews_update:
@@ -177,6 +180,7 @@ service:
               result:
                 key: value
               started_at: '2024-01-15T09:30:00Z'
+              state: state
       audiences:
         - internal
     delete:
@@ -262,6 +266,7 @@ service:
               result:
                 key: value
               started_at: '2024-01-15T09:30:00Z'
+              state: state
       audiences:
         - public
   source:
