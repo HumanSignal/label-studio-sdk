@@ -23,6 +23,12 @@ class MetricsClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> MetricParam:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get the current metrics configuration for a project.
 
         Parameters
@@ -78,6 +84,12 @@ class MetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MetricParam:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update metrics strategy and parameters for a project.
 
         Parameters
@@ -148,6 +160,12 @@ class AsyncMetricsClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> MetricParam:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get the current metrics configuration for a project.
 
         Parameters
@@ -211,6 +229,12 @@ class AsyncMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MetricParam:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update metrics strategy and parameters for a project.
 
         Parameters

@@ -2,7 +2,6 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .lse_user_active_organization_meta import LseUserActiveOrganizationMeta
 import pydantic
 import datetime as dt
 from .lse_fields import LseFields
@@ -19,11 +18,7 @@ class LseUser(UncheckedBaseModel):
     """
 
     active_organization: typing.Optional[int] = None
-    active_organization_meta: LseUserActiveOrganizationMeta = pydantic.Field()
-    """
-    Active organization metadata
-    """
-
+    active_organization_meta: str
     allow_newsletters: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Allow sending newsletters to user
@@ -40,6 +35,7 @@ class LseUser(UncheckedBaseModel):
     last_name: typing.Optional[str] = None
     lse_fields: LseFields
     org_membership: typing.List[OrganizationMembership]
+    organization_membership: OrganizationMembership
     pause: str
     phone: typing.Optional[str] = None
     username: str

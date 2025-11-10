@@ -8,7 +8,14 @@ service:
       path: /api/workspaces/{id}/memberships/paginated/
       method: GET
       auth: true
-      docs: Retrieve the members for a specific workspace.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the members for a specific workspace.
       pagination:
         offset: $request.page
         results: $response.results
@@ -16,7 +23,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get workspace members paginated
+      display-name: ✨ Get workspace members paginated
       request:
         name: PaginatedListRequest
         query-parameters:
@@ -45,9 +52,7 @@ service:
               previous: http://api.example.org/accounts/?page=2
               results:
                 - active_organization: 1
-                  active_organization_meta:
-                    email: email
-                    title: title
+                  active_organization_meta: active_organization_meta
                   allow_newsletters: true
                   avatar: avatar
                   custom_hotkeys:
@@ -67,6 +72,10 @@ service:
                     - active: active
                       organization_id: 1
                       role: role
+                  organization_membership:
+                    active: active
+                    organization_id: 1
+                    role: role
                   pause: pause
                   phone: phone
                   username: username

@@ -126,7 +126,11 @@ class Project(UncheckedBaseModel):
     If set, the annotator can view model predictions
     """
 
-    show_ground_truth_first: typing.Optional[bool] = None
+    show_ground_truth_first: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Onboarding mode (true): show ground truth tasks first in the labeling stream
+    """
+
     show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Show instructions to the annotator before they start

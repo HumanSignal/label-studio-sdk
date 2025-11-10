@@ -8,10 +8,17 @@ service:
       path: /api/scim/settings
       method: GET
       auth: true
-      docs: Retrieve SCIM settings for the currently active organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve SCIM settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Retrieve SCIM Settings
+      display-name: ✨ Retrieve SCIM Settings
       response:
         docs: ''
         type: root.ScimSettings
@@ -35,10 +42,17 @@ service:
       path: /api/scim/settings
       method: POST
       auth: true
-      docs: Update SCIM settings for the currently active organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update SCIM settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Update SCIM Settings
+      display-name: ✨ Update SCIM Settings
       request:
         name: ScimSettingsUpdateRequest
         body:

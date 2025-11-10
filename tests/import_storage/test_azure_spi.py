@@ -24,6 +24,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "presign": True,
             "presign_ttl": 1,
             "project": 1,
+            "recursive_scan": True,
             "regex_filter": "regex_filter",
             "status": "initialized",
             "synchronizable": True,
@@ -54,6 +55,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "presign": None,
                 "presign_ttl": "integer",
                 "project": "integer",
+                "recursive_scan": None,
                 "regex_filter": None,
                 "status": None,
                 "synchronizable": None,
@@ -66,10 +68,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.import_storage.azure_spi.list()
+    response = client.import_storage.azure_spi.list(project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.import_storage.azure_spi.list()
+    async_response = await async_client.import_storage.azure_spi.list(project=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -90,6 +92,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "presign": True,
         "presign_ttl": 1,
         "project": 1,
+        "recursive_scan": True,
         "regex_filter": "regex_filter",
         "status": "initialized",
         "synchronizable": True,
@@ -116,6 +119,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "presign": None,
         "presign_ttl": "integer",
         "project": "integer",
+        "recursive_scan": None,
         "regex_filter": None,
         "status": None,
         "synchronizable": None,
@@ -163,6 +167,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "presign": True,
         "presign_ttl": 1,
         "project": 1,
+        "recursive_scan": True,
         "regex_filter": "regex_filter",
         "status": "initialized",
         "synchronizable": True,
@@ -189,6 +194,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "presign": None,
         "presign_ttl": "integer",
         "project": "integer",
+        "recursive_scan": None,
         "regex_filter": None,
         "status": None,
         "synchronizable": None,
@@ -236,6 +242,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "presign": True,
         "presign_ttl": 1,
         "project": 1,
+        "recursive_scan": True,
         "regex_filter": "regex_filter",
         "status": "initialized",
         "synchronizable": True,
@@ -262,6 +269,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "presign": None,
         "presign_ttl": "integer",
         "project": "integer",
+        "recursive_scan": None,
         "regex_filter": None,
         "status": None,
         "synchronizable": None,
@@ -296,6 +304,7 @@ async def test_sync(client: LabelStudio, async_client: AsyncLabelStudio) -> None
         "presign": True,
         "presign_ttl": 1,
         "project": 1,
+        "recursive_scan": True,
         "regex_filter": "regex_filter",
         "status": "initialized",
         "synchronizable": True,
@@ -322,6 +331,7 @@ async def test_sync(client: LabelStudio, async_client: AsyncLabelStudio) -> None
         "presign": None,
         "presign_ttl": "integer",
         "project": "integer",
+        "recursive_scan": None,
         "regex_filter": None,
         "status": None,
         "synchronizable": None,

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from .review_settings_request_requeue_rejected_tasks_mode import ReviewSettingsRequestRequeueRejectedTasksMode
 from .review_settings_request_review_criteria import ReviewSettingsRequestReviewCriteria
+from .review_settings_request_sampling import ReviewSettingsRequestSampling
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -52,6 +53,19 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     review_only_manual_assignments: typing.Optional[bool] = pydantic.Field(default=None)
     """
     When set True, review queue is built only from manually assigned tasks
+    """
+
+    review_task_limit_percent: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Percent of tasks to include in review stream (0-100). Null/0 disables.
+    """
+
+    sampling: typing.Optional[ReviewSettingsRequestSampling] = pydantic.Field(default=None)
+    """
+    Task sampling strategy in the review stream (by task id or random)
+    
+    * `task_id` - By Task ID
+    * `random` - Random
     """
 
     show_agreement_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)

@@ -8,10 +8,17 @@ service:
       path: /api/billing/info
       method: GET
       auth: true
-      docs: Retrieve billing checks and feature flags for the active organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve billing checks and feature flags for the active organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get billing info
+      display-name: ✨ Get billing info
       response:
         docs: Billing information for the active organization
         type: root.BillingInfoResponse
@@ -67,6 +74,7 @@ service:
                 allow_data_credentials: true
                 allow_invite_people: true
                 allow_invite_project_experts: true
+                allow_nda: true
                 allow_organization_webhooks: true
                 allow_sso: false
                 allow_storage_proxy: true
@@ -76,6 +84,7 @@ service:
                 disable_members_page: false
                 disable_project_imports: false
                 early_adopter: false
+                email_configured: true
                 embed_domains:
                   - domain: http://localhost:3000
                   - domain: https://example.com
@@ -84,7 +93,6 @@ service:
                   public_verify_alg:
                     - RS256
                   public_verify_key: ....
-                hide_storage_settings_for_manager: false
                 manual_role_management: false
                 manual_workspace_management: false
                 secure_mode: false
@@ -141,6 +149,7 @@ service:
                 allow_data_credentials: true
                 allow_invite_people: true
                 allow_invite_project_experts: true
+                allow_nda: true
                 allow_organization_webhooks: true
                 allow_sso: true
                 allow_storage_proxy: true
@@ -150,6 +159,7 @@ service:
                 disable_members_page: false
                 disable_project_imports: false
                 early_adopter: true
+                email_configured: true
                 embed_domains:
                   - domain: http://localhost:3000
                   - domain: https://example.com
@@ -158,7 +168,6 @@ service:
                   public_verify_alg:
                     - RS256
                   public_verify_key: ....
-                hide_storage_settings_for_manager: false
                 manual_role_management: false
                 manual_workspace_management: false
                 secure_mode: false
@@ -215,6 +224,7 @@ service:
                 allow_data_credentials: false
                 allow_invite_people: true
                 allow_invite_project_experts: true
+                allow_nda: true
                 allow_organization_webhooks: false
                 allow_sso: true
                 allow_storage_proxy: true
@@ -224,6 +234,7 @@ service:
                 disable_members_page: false
                 disable_project_imports: false
                 early_adopter: true
+                email_configured: true
                 embed_domains:
                   - domain: http://localhost:3000
                   - domain: https://purple-zoos-flash.loca.lt
@@ -232,7 +243,6 @@ service:
                   public_verify_alg:
                     - RS256
                   public_verify_key: ....
-                hide_storage_settings_for_manager: false
                 manual_role_management: true
                 manual_workspace_management: true
                 secure_mode: false

@@ -9,11 +9,17 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get list of all GCS import storage connections set up with WIF
         authentication.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get GCS WIF import storage
+      display-name: ✨ Get GCS WIF import storage
       request:
         name: GcswifListRequest
         query-parameters:
@@ -21,13 +27,15 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
           project:
-            type: optional<integer>
+            type: integer
             docs: Project ID
       response:
         docs: ''
         type: list<root.GcswifImportStorage>
       examples:
-        - response:
+        - query-parameters:
+            project: 1
+          response:
             body:
               - bucket: bucket
                 created_at: '2024-01-15T09:30:00Z'
@@ -48,6 +56,7 @@ service:
                 presign: true
                 presign_ttl: 1
                 project: 1
+                recursive_scan: true
                 regex_filter: regex_filter
                 status: initialized
                 synchronizable: true
@@ -61,10 +70,17 @@ service:
       path: /api/storages/gcswif/
       method: POST
       auth: true
-      docs: Create GCS import storage with WIF.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create GCS import storage with WIF.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create GCS import storage with WIF
+      display-name: ✨ Create GCS import storage with WIF
       request:
         body: root.GcswifImportStorageRequest
         content-type: application/json
@@ -95,6 +111,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -109,11 +126,17 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Validate a specific GCS import storage connection that was set up with
         WIF authentication.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Validate GCS WIF import storage
+      display-name: ✨ Validate GCS WIF import storage
       request:
         body: root.GcswifImportStorageRequest
         content-type: application/json
@@ -126,12 +149,19 @@ service:
       path: /api/storages/gcswif/{id}
       method: GET
       auth: true
-      docs: Get a specific GCS import storage connection that was set up with WIF.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific GCS import storage connection that was set up with WIF.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get GCS WIF import storage
+      display-name: ✨ Get GCS WIF import storage
       response:
         docs: ''
         type: root.GcswifImportStorage
@@ -159,6 +189,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -173,13 +204,19 @@ service:
       method: DELETE
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a specific GCS import storage connection that was set up with WIF
         authentication.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete GCS WIF import storage
+      display-name: ✨ Delete GCS WIF import storage
       examples:
         - path-parameters:
             id: 1
@@ -190,13 +227,19 @@ service:
       method: PATCH
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific GCS import storage connection that was set up with WIF
         authentication.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update GCS WIF import storage
+      display-name: ✨ Update GCS WIF import storage
       request:
         name: PatchedGcswifImportStorageRequest
         body:
@@ -255,6 +298,9 @@ service:
             project:
               type: optional<integer>
               docs: A unique integer value identifying this project.
+            recursive_scan:
+              type: optional<boolean>
+              docs: Perform recursive scan over the bucket content
             regex_filter:
               type: optional<string>
               docs: Cloud storage regex for filtering objects
@@ -302,6 +348,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -316,13 +363,19 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Sync tasks from an GCS import storage connection that was set up with
         WIF authentication.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Sync GCS WIF import storage
+      display-name: ✨ Sync GCS WIF import storage
       response:
         docs: ''
         type: root.GcswifImportStorage
@@ -350,6 +403,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true

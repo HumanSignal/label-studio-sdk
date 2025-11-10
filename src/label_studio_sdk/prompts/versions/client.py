@@ -23,6 +23,12 @@ class VersionsClient:
 
     def get_default_version_name(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get default prompt version name
 
         Parameters
@@ -62,21 +68,23 @@ class VersionsClient:
 
     def list(
         self,
-        prompt_id_: int,
-        *,
         prompt_id: int,
+        *,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ThirdPartyModelVersion]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all versions of a prompt.
 
         Parameters
         ----------
-        prompt_id_ : int
-
         prompt_id : int
-            A unique integer value identifying the model ID to list versions for.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -97,16 +105,14 @@ class VersionsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.versions.list(
-            prompt_id_=1,
             prompt_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id_)}/versions",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions",
             method="GET",
             params={
                 "ordering": ordering,
-                "prompt_id": prompt_id,
             },
             request_options=request_options,
         )
@@ -138,6 +144,12 @@ class VersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ThirdPartyModelVersion:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new version of a prompt.
 
         Parameters
@@ -226,6 +238,12 @@ class VersionsClient:
         self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ThirdPartyModelVersion:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve a specific prompt of a model.
 
         Parameters
@@ -277,6 +295,12 @@ class VersionsClient:
         self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a prompt version by ID
 
         Parameters
@@ -332,6 +356,12 @@ class VersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ThirdPartyModelVersion:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific prompt version by ID.
 
         Parameters
@@ -423,6 +453,12 @@ class VersionsClient:
         self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> InferenceRunCostEstimate:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get an estimate of the cost for making an inference run on the selected Prompt Version and Project/ProjectSubset
 
         Parameters
@@ -479,6 +515,12 @@ class VersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get the refined prompt based on the `refinement_job_id`.
 
         Parameters
@@ -544,6 +586,12 @@ class VersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Refine a prompt version using a teacher model and save the refined prompt as a new version.
 
         Parameters
@@ -627,6 +675,12 @@ class AsyncVersionsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get default prompt version name
 
         Parameters
@@ -674,21 +728,23 @@ class AsyncVersionsClient:
 
     async def list(
         self,
-        prompt_id_: int,
-        *,
         prompt_id: int,
+        *,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ThirdPartyModelVersion]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all versions of a prompt.
 
         Parameters
         ----------
-        prompt_id_ : int
-
         prompt_id : int
-            A unique integer value identifying the model ID to list versions for.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -714,7 +770,6 @@ class AsyncVersionsClient:
 
         async def main() -> None:
             await client.prompts.versions.list(
-                prompt_id_=1,
                 prompt_id=1,
             )
 
@@ -722,11 +777,10 @@ class AsyncVersionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id_)}/versions",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions",
             method="GET",
             params={
                 "ordering": ordering,
-                "prompt_id": prompt_id,
             },
             request_options=request_options,
         )
@@ -758,6 +812,12 @@ class AsyncVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ThirdPartyModelVersion:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new version of a prompt.
 
         Parameters
@@ -854,6 +914,12 @@ class AsyncVersionsClient:
         self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ThirdPartyModelVersion:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve a specific prompt of a model.
 
         Parameters
@@ -913,6 +979,12 @@ class AsyncVersionsClient:
         self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a prompt version by ID
 
         Parameters
@@ -976,6 +1048,12 @@ class AsyncVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ThirdPartyModelVersion:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific prompt version by ID.
 
         Parameters
@@ -1075,6 +1153,12 @@ class AsyncVersionsClient:
         self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> InferenceRunCostEstimate:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get an estimate of the cost for making an inference run on the selected Prompt Version and Project/ProjectSubset
 
         Parameters
@@ -1139,6 +1223,12 @@ class AsyncVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get the refined prompt based on the `refinement_job_id`.
 
         Parameters
@@ -1212,6 +1302,12 @@ class AsyncVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Refine a prompt version using a teacher model and save the refined prompt as a new version.
 
         Parameters

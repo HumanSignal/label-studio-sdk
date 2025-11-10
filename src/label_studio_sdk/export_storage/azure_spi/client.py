@@ -23,20 +23,26 @@ class AzureSpiClient:
     def list(
         self,
         *,
+        project: int,
         ordering: typing.Optional[str] = None,
-        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[AzureServicePrincipalExportStorage]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a list of all Azure export storage connections that were set up with Service Principal authentication.
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        project : typing.Optional[int]
-            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -53,7 +59,9 @@ class AzureSpiClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.azure_spi.list()
+        client.export_storage.azure_spi.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/export/azure_spi",
@@ -104,6 +112,12 @@ class AzureSpiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureServicePrincipalExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create an Azure export storage connection with Service Principal authentication to store annotations.
 
         Parameters
@@ -252,6 +266,12 @@ class AzureSpiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Validate a specific Azure export storage connection that was set up with Service Principal authentication.
 
         Parameters
@@ -371,6 +391,12 @@ class AzureSpiClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AzureServicePrincipalExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a specific Azure export storage connection that was set up with Service Principal authentication.
 
         Parameters
@@ -417,6 +443,12 @@ class AzureSpiClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a specific Azure export storage connection that was set up with Service Principal authentication.
 
         Parameters
@@ -481,6 +513,12 @@ class AzureSpiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureServicePrincipalExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific Azure export storage connection that was set up with Service Principal authentication.
 
         Parameters
@@ -612,6 +650,12 @@ class AzureSpiClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AzureServicePrincipalExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Sync tasks from an Azure SPI export storage.
 
         Parameters
@@ -664,20 +708,26 @@ class AsyncAzureSpiClient:
     async def list(
         self,
         *,
+        project: int,
         ordering: typing.Optional[str] = None,
-        project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[AzureServicePrincipalExportStorage]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a list of all Azure export storage connections that were set up with Service Principal authentication.
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        project : typing.Optional[int]
-            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -699,7 +749,9 @@ class AsyncAzureSpiClient:
 
 
         async def main() -> None:
-            await client.export_storage.azure_spi.list()
+            await client.export_storage.azure_spi.list(
+                project=1,
+            )
 
 
         asyncio.run(main())
@@ -753,6 +805,12 @@ class AsyncAzureSpiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureServicePrincipalExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create an Azure export storage connection with Service Principal authentication to store annotations.
 
         Parameters
@@ -909,6 +967,12 @@ class AsyncAzureSpiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Validate a specific Azure export storage connection that was set up with Service Principal authentication.
 
         Parameters
@@ -1036,6 +1100,12 @@ class AsyncAzureSpiClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AzureServicePrincipalExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a specific Azure export storage connection that was set up with Service Principal authentication.
 
         Parameters
@@ -1090,6 +1160,12 @@ class AsyncAzureSpiClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a specific Azure export storage connection that was set up with Service Principal authentication.
 
         Parameters
@@ -1162,6 +1238,12 @@ class AsyncAzureSpiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureServicePrincipalExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific Azure export storage connection that was set up with Service Principal authentication.
 
         Parameters
@@ -1301,6 +1383,12 @@ class AsyncAzureSpiClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AzureServicePrincipalExportStorage:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Sync tasks from an Azure SPI export storage.
 
         Parameters

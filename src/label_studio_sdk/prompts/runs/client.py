@@ -11,6 +11,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 import datetime as dt
 from ...types.project_subset_enum import ProjectSubsetEnum
+from ...types.cancel_model_run_response import CancelModelRunResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -33,6 +34,12 @@ class RunsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ModelRun]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get information (status, metadata, etc) about an existing inference run
 
         Parameters
@@ -114,6 +121,12 @@ class RunsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelRun:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Run a prompt inference.
 
         Parameters
@@ -193,6 +206,71 @@ class RunsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def cancel(
+        self,
+        inference_run_id: int,
+        prompt_id: int,
+        version_id: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CancelModelRunResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel the inference run for the given api
+
+        Parameters
+        ----------
+        inference_run_id : int
+
+        prompt_id : int
+
+        version_id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CancelModelRunResponse
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.runs.cancel(
+            inference_run_id=1,
+            prompt_id=1,
+            version_id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs/{jsonable_encoder(inference_run_id)}/cancel",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    CancelModelRunResponse,
+                    construct_type(
+                        type_=CancelModelRunResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncRunsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -210,6 +288,12 @@ class AsyncRunsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ModelRun]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get information (status, metadata, etc) about an existing inference run
 
         Parameters
@@ -299,6 +383,12 @@ class AsyncRunsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelRun:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Run a prompt inference.
 
         Parameters
@@ -378,6 +468,79 @@ class AsyncRunsClient:
                     ModelRun,
                     construct_type(
                         type_=ModelRun,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def cancel(
+        self,
+        inference_run_id: int,
+        prompt_id: int,
+        version_id: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CancelModelRunResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel the inference run for the given api
+
+        Parameters
+        ----------
+        inference_run_id : int
+
+        prompt_id : int
+
+        version_id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CancelModelRunResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.runs.cancel(
+                inference_run_id=1,
+                prompt_id=1,
+                version_id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs/{jsonable_encoder(inference_run_id)}/cancel",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    CancelModelRunResponse,
+                    construct_type(
+                        type_=CancelModelRunResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

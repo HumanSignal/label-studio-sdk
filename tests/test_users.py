@@ -9,7 +9,7 @@ from .utilities import validate_response
 async def test_get_current_user(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": {"email": "email", "title": "title"},
+        "active_organization_meta": "active_organization_meta",
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -21,12 +21,13 @@ async def test_get_current_user(client: LabelStudio, async_client: AsyncLabelStu
         "last_activity": "2024-01-15T09:30:00Z",
         "last_name": "last_name",
         "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
+        "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "phone": "phone",
         "username": "username",
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": {"email": None, "title": None},
+        "active_organization_meta": None,
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -38,6 +39,7 @@ async def test_get_current_user(client: LabelStudio, async_client: AsyncLabelStu
         "last_activity": "datetime",
         "last_name": None,
         "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
+        "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "phone": None,
         "username": None,
     }
@@ -51,7 +53,7 @@ async def test_get_current_user(client: LabelStudio, async_client: AsyncLabelStu
 async def test_update_current_user(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": {"email": "email", "title": "title"},
+        "active_organization_meta": "active_organization_meta",
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -63,12 +65,13 @@ async def test_update_current_user(client: LabelStudio, async_client: AsyncLabel
         "last_activity": "2024-01-15T09:30:00Z",
         "last_name": "last_name",
         "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
+        "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "phone": "phone",
         "username": "username",
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": {"email": None, "title": None},
+        "active_organization_meta": None,
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -80,6 +83,7 @@ async def test_update_current_user(client: LabelStudio, async_client: AsyncLabel
         "last_activity": "datetime",
         "last_name": None,
         "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
+        "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "phone": None,
         "username": None,
     }
@@ -133,7 +137,7 @@ async def test_get_token(client: LabelStudio, async_client: AsyncLabelStudio) ->
 async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": {"email": "email", "title": "title"},
+        "active_organization_meta": "active_organization_meta",
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -161,13 +165,15 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_role": "annotator",
         },
         "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
+        "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "pause": "pause",
+        "permissions": ["permissions"],
         "phone": "phone",
         "username": "username",
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": {"email": None, "title": None},
+        "active_organization_meta": None,
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -195,7 +201,9 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_role": None,
         },
         "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
+        "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "pause": None,
+        "permissions": ("list", {0: None}),
         "phone": None,
         "username": None,
     }
@@ -210,7 +218,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
     expected_response: typing.Any = [
         {
             "active_organization": 1,
-            "active_organization_meta": {"email": "email", "title": "title"},
+            "active_organization_meta": "active_organization_meta",
             "allow_newsletters": True,
             "avatar": "avatar",
             "custom_hotkeys": {"key": "value"},
@@ -222,6 +230,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "last_activity": "2024-01-15T09:30:00Z",
             "last_name": "last_name",
             "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
+            "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
             "phone": "phone",
             "username": "username",
         }
@@ -231,7 +240,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         {
             0: {
                 "active_organization": "integer",
-                "active_organization_meta": {"email": None, "title": None},
+                "active_organization_meta": None,
                 "allow_newsletters": None,
                 "avatar": None,
                 "custom_hotkeys": None,
@@ -243,6 +252,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "last_activity": "datetime",
                 "last_name": None,
                 "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
+                "organization_membership": {"active": None, "organization_id": "integer", "role": None},
                 "phone": None,
                 "username": None,
             }
@@ -258,7 +268,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": {"email": "email", "title": "title"},
+        "active_organization_meta": "active_organization_meta",
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -285,13 +295,14 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_role": "annotator",
         },
         "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
+        "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "pause": "pause",
         "phone": "phone",
         "username": "username",
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": {"email": None, "title": None},
+        "active_organization_meta": None,
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -318,6 +329,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_role": None,
         },
         "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
+        "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "pause": None,
         "phone": None,
         "username": None,
@@ -332,7 +344,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": {"email": "email", "title": "title"},
+        "active_organization_meta": "active_organization_meta",
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -359,13 +371,14 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             "trial_role": "annotator",
         },
         "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
+        "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "pause": "pause",
         "phone": "phone",
         "username": "username",
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": {"email": None, "title": None},
+        "active_organization_meta": None,
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -392,6 +405,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             "trial_role": None,
         },
         "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
+        "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "pause": None,
         "phone": None,
         "username": None,
@@ -419,7 +433,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": {"email": "email", "title": "title"},
+        "active_organization_meta": "active_organization_meta",
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -446,13 +460,14 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_role": "annotator",
         },
         "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
+        "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "pause": "pause",
         "phone": "phone",
         "username": "username",
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": {"email": None, "title": None},
+        "active_organization_meta": None,
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -479,6 +494,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_role": None,
         },
         "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
+        "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "pause": None,
         "phone": None,
         "username": None,

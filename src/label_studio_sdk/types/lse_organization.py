@@ -4,25 +4,16 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .organization_billing import OrganizationBilling
 import datetime as dt
 import typing
-from .lse_organization_custom_scripts_editable_by import LseOrganizationCustomScriptsEditableBy
+from .role9e7enum import Role9E7Enum
 import pydantic
-from .default_role_enum import DefaultRoleEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LseOrganization(UncheckedBaseModel):
     billing: OrganizationBilling
     created_at: dt.datetime
-    custom_scripts_editable_by: typing.Optional[LseOrganizationCustomScriptsEditableBy] = pydantic.Field(default=None)
-    """
-    Set the minimum user role that can edit custom scripts in the UI.
-    
-    * `AD` - Administrator
-    * `MA` - Manager
-    """
-
     custom_scripts_enabled: str
-    default_role: typing.Optional[DefaultRoleEnum] = pydantic.Field(default=None)
+    default_role: typing.Optional[Role9E7Enum] = pydantic.Field(default=None)
     """
     Default membership role for invited users
     

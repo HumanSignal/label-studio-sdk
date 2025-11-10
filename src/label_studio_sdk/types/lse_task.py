@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class LseTask(UncheckedBaseModel):
     """
-    Task Serializer with project scheme configs validation
+    Data Manager Task Serializer with FSM state support.
     """
 
     agreement: str
@@ -72,6 +72,11 @@ class LseTask(UncheckedBaseModel):
     Number of distinct annotators that processed the current task
     """
 
+    precomputed_agreement: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Average agreement score for the task
+    """
+
     predictions: typing.List[LseTaskPredictionsItem] = pydantic.Field()
     """
     Predictions for this task
@@ -85,11 +90,18 @@ class LseTask(UncheckedBaseModel):
     Project ID for this task
     """
 
+    review_time: int = pydantic.Field()
+    """
+    Calculate total review time for this task from MetricInTimeBucket records.
+    Returns time in seconds.
+    """
+
     reviewed: typing.Optional[bool] = None
     reviewers: typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
     reviewers_count: int
     reviews_accepted: typing.Optional[int] = None
     reviews_rejected: typing.Optional[int] = None
+    state: str
     storage_filename: str
     total_annotations: typing.Optional[int] = None
     total_predictions: typing.Optional[int] = None

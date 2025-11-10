@@ -2,8 +2,8 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .assignment_settings import AssignmentSettings
 import pydantic
+from .assignment_settings import AssignmentSettings
 import datetime as dt
 from .user_simple import UserSimple
 from .review_settings import ReviewSettings
@@ -16,6 +16,11 @@ class LseProject(UncheckedBaseModel):
     """
     Serializer get numbers from project queryset annotation,
     make sure, that you use correct one(Project.objects.with_counts())
+    """
+
+    agreement_threshold: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Minimum percent agreement threshold for which minimum number of annotators must agree
     """
 
     annotation_limit_count: typing.Optional[int] = None
@@ -97,6 +102,11 @@ class LseProject(UncheckedBaseModel):
     Label config in XML format. See more about it in documentation
     """
 
+    max_additional_annotators_assignable: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of additional annotators that can be assigned to a low agreement task
+    """
+
     maximum_annotations: typing.Optional[int] = pydantic.Field(default=None)
     """
     Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
@@ -114,11 +124,7 @@ class LseProject(UncheckedBaseModel):
     Machine learning model version
     """
 
-    num_tasks_with_annotations: int = pydantic.Field()
-    """
-    Tasks with annotations count
-    """
-
+    num_tasks_with_annotations: typing.Optional[int] = None
     organization: typing.Optional[int] = None
     overlap_cohort_percentage: typing.Optional[int] = None
     parsed_label_config: typing.Optional[typing.Any] = None
@@ -151,7 +157,11 @@ class LseProject(UncheckedBaseModel):
     If set, the annotator can view model predictions
     """
 
-    show_ground_truth_first: typing.Optional[bool] = None
+    show_ground_truth_first: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Onboarding mode (true): show ground truth tasks first in the labeling stream
+    """
+
     show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Show instructions to the annotator before they start

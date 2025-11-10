@@ -8,10 +8,17 @@ service:
       path: /api/project-templates/
       method: GET
       auth: true
-      docs: Get a list of all project templates for an organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all project templates for an organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get project templates
+      display-name: ✨ Get project templates
       request:
         name: ProjectTemplatesListRequest
         query-parameters:
@@ -48,10 +55,17 @@ service:
       path: /api/project-templates/
       method: POST
       auth: true
-      docs: Create a project template for an organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a project template for an organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create project template
+      display-name: ✨ Create project template
       request:
         body: root.ProjectTemplateRequest
         content-type: application/json
@@ -88,12 +102,19 @@ service:
       path: /api/project-templates/{id}
       method: GET
       auth: true
-      docs: Get a specific project template by ID for an organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific project template by ID for an organization.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get a project template
+      display-name: ✨ Get a project template
       response:
         docs: ''
         type: root.ProjectTemplate
@@ -126,12 +147,19 @@ service:
       path: /api/project-templates/{id}
       method: PUT
       auth: true
-      docs: Overwrite a specific project template by ID for an organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific project template by ID for an organization.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Overwrite a project template
+      display-name: ✨ Overwrite a project template
       request:
         body: root.ProjectTemplateRequest
         content-type: application/json
@@ -170,12 +198,19 @@ service:
       path: /api/project-templates/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific project template by ID for an organization.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific project template by ID for an organization.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete a project template
+      display-name: ✨ Delete a project template
       examples:
         - path-parameters:
             id: 1
@@ -186,13 +221,19 @@ service:
       method: PATCH
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update the details of a specific project template by ID for an
         organization.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update a project template
+      display-name: ✨ Update a project template
       request:
         name: PatchedProjectTemplateRequest
         body:
@@ -201,7 +242,7 @@ service:
             created_by: optional<integer>
             custom_script:
               type: optional<string>
-              docs: custom script for projects created from this template
+              docs: custom script (Plugin) for projects created from this template
               validation:
                 minLength: 1
             description:
@@ -257,13 +298,19 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a project from a specific project template by ID for an
         organization.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Create project from template
+      display-name: ✨ Create project from template
       request:
         name: ProjectTemplatesCreateProjectFromTemplateRequest
         body:
@@ -291,6 +338,7 @@ service:
             workspace_id: 1
           response:
             body:
+              agreement_threshold: agreement_threshold
               annotation_limit_count: 1
               annotation_limit_percent: annotation_limit_percent
               annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -328,6 +376,7 @@ service:
               is_draft: true
               is_published: true
               label_config: label_config
+              max_additional_annotators_assignable: 1
               maximum_annotations: 1
               members: members
               members_count: 1
@@ -357,6 +406,8 @@ service:
                 require_comment_on_reject: true
                 review_criteria: all
                 review_only_manual_assignments: true
+                review_task_limit_percent: review_task_limit_percent
+                sampling: task_id
                 show_agreement_to_reviewers: true
                 show_data_manager_to_reviewers: true
                 show_instruction: true

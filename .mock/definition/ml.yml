@@ -314,7 +314,12 @@ service:
       method: POST
       auth: true
       docs: >-
-        Note: not available in the community edition of Label Studio. 
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
 
 
         Create predictions for all tasks using a specific ML backend so that you
@@ -337,7 +342,7 @@ service:
         id:
           type: integer
           docs: A unique integer value identifying this ML backend.
-      display-name: Create predictions for all tasks
+      display-name: ✨ Create predictions for all tasks
       request:
         name: MlPredictAllTasksRequest
         query-parameters:

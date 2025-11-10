@@ -26,6 +26,56 @@ async def test_batch_predictions(client: LabelStudio, async_client: AsyncLabelSt
     validate_response(async_response, expected_response, expected_types)
 
 
+async def test_subset_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "count": 123,
+        "next": "http://api.example.org/accounts/?page=4",
+        "previous": "http://api.example.org/accounts/?page=2",
+        "results": [
+            {
+                "next_cursor": "next_cursor",
+                "previous_cursor": "previous_cursor",
+                "task_count": 1,
+                "task_result_list": [{"data": {"key": "value"}}],
+            }
+        ],
+    }
+    expected_types: typing.Any = {
+        "count": "integer",
+        "next": None,
+        "previous": None,
+        "results": (
+            "list",
+            {
+                0: {
+                    "next_cursor": None,
+                    "previous_cursor": None,
+                    "task_count": "integer",
+                    "task_result_list": ("list", {0: {"data": ("dict", {0: (None, None)})}}),
+                }
+            },
+        ),
+    }
+    response = client.prompts.subset_tasks(project_pk=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.subset_tasks(project_pk=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_subsets(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = [{"columns_schema": [{"key": "value"}], "count": 1, "subset": "subset"}]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {0: {"columns_schema": ("list", {0: ("dict", {0: (None, None)})}), "count": "integer", "subset": None}},
+    )
+    response = client.prompts.subsets(project_pk=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.subsets(project_pk=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
@@ -120,7 +170,8 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
         "previous": "http://api.example.org/accounts/?page=2",
         "results": [
             {
-                "allow_stream": "allow_stream",
+                "agreement_threshold": "agreement_threshold",
+                "allow_stream": True,
                 "annotation_limit_count": 1,
                 "annotation_limit_percent": "annotation_limit_percent",
                 "annotator_evaluation_minimum_score": "annotator_evaluation_minimum_score",
@@ -152,29 +203,30 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                 "is_draft": True,
                 "is_published": True,
                 "label_config": "label_config",
+                "max_additional_annotators_assignable": 1,
                 "maximum_annotations": 1,
                 "members": "members",
                 "members_count": 1,
                 "min_annotations_to_start_training": 1,
                 "model_version": "model_version",
-                "num_tasks_with_annotations": "num_tasks_with_annotations",
+                "num_tasks_with_annotations": 1,
                 "organization": 1,
                 "overlap_cohort_percentage": 1,
                 "parsed_label_config": {"key": "value"},
                 "pause_on_failed_annotator_evaluation": True,
                 "pinned_at": "2024-01-15T09:30:00Z",
                 "prompts": "prompts",
-                "queue_done": "queue_done",
-                "queue_left": "queue_left",
+                "queue_done": 1,
+                "queue_left": 1,
                 "queue_total": "queue_total",
-                "ready": "ready",
-                "rejected": "rejected",
+                "ready": True,
+                "rejected": 1,
                 "require_comment_on_skip": True,
                 "reveal_preannotations_interactively": True,
                 "review_settings": {"id": 1, "requeue_rejected_tasks_to_annotator": True},
-                "review_total_tasks": "review_total_tasks",
-                "reviewed_number": "reviewed_number",
-                "reviewer_queue_total": "reviewer_queue_total",
+                "review_total_tasks": 1,
+                "reviewed_number": 1,
+                "reviewer_queue_total": 1,
                 "sampling": "Sequential sampling",
                 "show_annotation_history": True,
                 "show_collab_predictions": True,
@@ -190,7 +242,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                 "title": "title",
                 "total_annotations_number": "total_annotations_number",
                 "total_predictions_number": 1,
-                "useful_annotation_number": "useful_annotation_number",
+                "useful_annotation_number": 1,
                 "workspace": "workspace",
                 "workspace_title": "workspace_title",
             }
@@ -204,6 +256,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
             "list",
             {
                 0: {
+                    "agreement_threshold": None,
                     "allow_stream": None,
                     "annotation_limit_count": "integer",
                     "annotation_limit_percent": None,
@@ -237,29 +290,30 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                     "is_draft": None,
                     "is_published": None,
                     "label_config": None,
+                    "max_additional_annotators_assignable": "integer",
                     "maximum_annotations": "integer",
                     "members": None,
                     "members_count": "integer",
                     "min_annotations_to_start_training": "integer",
                     "model_version": None,
-                    "num_tasks_with_annotations": None,
+                    "num_tasks_with_annotations": "integer",
                     "organization": "integer",
                     "overlap_cohort_percentage": "integer",
                     "parsed_label_config": None,
                     "pause_on_failed_annotator_evaluation": None,
                     "pinned_at": "datetime",
                     "prompts": None,
-                    "queue_done": None,
-                    "queue_left": None,
+                    "queue_done": "integer",
+                    "queue_left": "integer",
                     "queue_total": None,
                     "ready": None,
-                    "rejected": None,
+                    "rejected": "integer",
                     "require_comment_on_skip": None,
                     "reveal_preannotations_interactively": None,
                     "review_settings": {"id": "integer", "requeue_rejected_tasks_to_annotator": None},
-                    "review_total_tasks": None,
-                    "reviewed_number": None,
-                    "reviewer_queue_total": None,
+                    "review_total_tasks": "integer",
+                    "reviewed_number": "integer",
+                    "reviewer_queue_total": "integer",
                     "sampling": None,
                     "show_annotation_history": None,
                     "show_collab_predictions": None,
@@ -275,7 +329,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                     "title": None,
                     "total_annotations_number": None,
                     "total_predictions_number": "integer",
-                    "useful_annotation_number": None,
+                    "useful_annotation_number": "integer",
                     "workspace": None,
                     "workspace_title": None,
                 }

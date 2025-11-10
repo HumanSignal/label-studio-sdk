@@ -2,9 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+import pydantic
 from .assignment_settings import AssignmentSettings
 from .blueprint_list import BlueprintList
-import pydantic
 import datetime as dt
 from .user_simple import UserSimple
 from .review_settings import ReviewSettings
@@ -19,7 +19,12 @@ class AllRolesProjectList(UncheckedBaseModel):
     make sure, that you use correct one(Project.objects.with_counts())
     """
 
-    allow_stream: str
+    agreement_threshold: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Minimum percent agreement threshold for which minimum number of annotators must agree
+    """
+
+    allow_stream: bool
     annotation_limit_count: typing.Optional[int] = None
     annotation_limit_percent: typing.Optional[str] = None
     annotator_evaluation_minimum_score: typing.Optional[str] = None
@@ -97,6 +102,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     Label config in XML format. See more about it in documentation
     """
 
+    max_additional_annotators_assignable: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of additional annotators that can be assigned to a low agreement task
+    """
+
     maximum_annotations: typing.Optional[int] = pydantic.Field(default=None)
     """
     Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
@@ -114,7 +124,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     Machine learning model version
     """
 
-    num_tasks_with_annotations: str
+    num_tasks_with_annotations: typing.Optional[int] = None
     organization: typing.Optional[int] = None
     overlap_cohort_percentage: typing.Optional[int] = None
     parsed_label_config: typing.Optional[typing.Any] = None
@@ -125,11 +135,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     """
 
     prompts: str
-    queue_done: str
-    queue_left: str
+    queue_done: int
+    queue_left: int
     queue_total: str
-    ready: str
-    rejected: str
+    ready: bool
+    rejected: int
     require_comment_on_skip: typing.Optional[bool] = None
     reveal_preannotations_interactively: typing.Optional[bool] = pydantic.Field(default=None)
     """
@@ -137,9 +147,9 @@ class AllRolesProjectList(UncheckedBaseModel):
     """
 
     review_settings: ReviewSettings
-    review_total_tasks: str
-    reviewed_number: str
-    reviewer_queue_total: str
+    review_total_tasks: int
+    reviewed_number: int
+    reviewer_queue_total: int
     sampling: typing.Optional[AllRolesProjectListSampling] = None
     show_annotation_history: typing.Optional[bool] = pydantic.Field(default=None)
     """
@@ -151,7 +161,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     If set, the annotator can view model predictions
     """
 
-    show_ground_truth_first: typing.Optional[bool] = None
+    show_ground_truth_first: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Onboarding mode (true): show ground truth tasks first in the labeling stream
+    """
+
     show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Show instructions to the annotator before they start
@@ -183,7 +197,7 @@ class AllRolesProjectList(UncheckedBaseModel):
 
     total_annotations_number: str
     total_predictions_number: int
-    useful_annotation_number: str
+    useful_annotation_number: typing.Optional[int] = None
     workspace: str
     workspace_title: str
 

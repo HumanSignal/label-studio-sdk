@@ -8,6 +8,7 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.forbidden_error import ForbiddenError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from ...types.role9e7enum import Role9E7Enum
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -72,6 +73,12 @@ class InvitesClient:
 
     def revoke_invite(self, *, email: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Revoke invite to organization
 
         Parameters
@@ -117,16 +124,32 @@ class InvitesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def send_email(
-        self, *, emails: typing.Sequence[str], role: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        emails: typing.Sequence[str],
+        role: Role9E7Enum,
+        projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Send email with invite to organization
 
         Parameters
         ----------
         emails : typing.Sequence[str]
 
-        role : str
+        role : Role9E7Enum
+
+        projects : typing.Optional[typing.Sequence[int]]
+
+        workspaces : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -144,7 +167,7 @@ class InvitesClient:
         )
         client.organizations.invites.send_email(
             emails=["emails"],
-            role="role",
+            role="OW",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -152,7 +175,9 @@ class InvitesClient:
             method="POST",
             json={
                 "emails": emails,
+                "projects": projects,
                 "role": role,
+                "workspaces": workspaces,
             },
             headers={
                 "content-type": "application/json",
@@ -245,6 +270,12 @@ class AsyncInvitesClient:
 
     async def revoke_invite(self, *, email: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Revoke invite to organization
 
         Parameters
@@ -298,16 +329,32 @@ class AsyncInvitesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def send_email(
-        self, *, emails: typing.Sequence[str], role: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        emails: typing.Sequence[str],
+        role: Role9E7Enum,
+        projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Send email with invite to organization
 
         Parameters
         ----------
         emails : typing.Sequence[str]
 
-        role : str
+        role : Role9E7Enum
+
+        projects : typing.Optional[typing.Sequence[int]]
+
+        workspaces : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -330,7 +377,7 @@ class AsyncInvitesClient:
         async def main() -> None:
             await client.organizations.invites.send_email(
                 emails=["emails"],
-                role="role",
+                role="OW",
             )
 
 
@@ -341,7 +388,9 @@ class AsyncInvitesClient:
             method="POST",
             json={
                 "emails": emails,
+                "projects": projects,
                 "role": role,
+                "workspaces": workspaces,
             },
             headers={
                 "content-type": "application/json",

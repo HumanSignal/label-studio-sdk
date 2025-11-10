@@ -4,6 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .invites.client import InvitesClient
 from .members.client import MembersClient
+from .permissions.client import PermissionsClient
 from ..core.request_options import RequestOptions
 from ..types.organization_invite import OrganizationInvite
 from ..core.unchecked_base_model import construct_type
@@ -16,15 +17,12 @@ from ..errors.bad_request_error import BadRequestError
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.not_found_error import NotFoundError
 import datetime as dt
-from .types.patched_default_role_request_custom_scripts_editable_by import (
-    PatchedDefaultRoleRequestCustomScriptsEditableBy,
-)
-from ..types.default_role_enum import DefaultRoleEnum
+from ..types.role9e7enum import Role9E7Enum
 from ..types.default_role import DefaultRole
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 from .invites.client import AsyncInvitesClient
 from .members.client import AsyncMembersClient
+from .permissions.client import AsyncPermissionsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,6 +33,7 @@ class OrganizationsClient:
         self._client_wrapper = client_wrapper
         self.invites = InvitesClient(client_wrapper=self._client_wrapper)
         self.members = MembersClient(client_wrapper=self._client_wrapper)
+        self.permissions = PermissionsClient(client_wrapper=self._client_wrapper)
 
     def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationInvite:
         """
@@ -182,7 +181,6 @@ class OrganizationsClient:
         *,
         contact_info: typing.Optional[str] = OMIT,
         created_by: typing.Optional[int] = OMIT,
-        custom_scripts_editable_by: typing.Optional[str] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
         email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
@@ -192,7 +190,13 @@ class OrganizationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganization:
         """
-        Update organization details including title, embed domains, and custom scripts settings.
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update organization details including title, embed domains, and Plugins settings.
 
         Parameters
         ----------
@@ -201,8 +205,6 @@ class OrganizationsClient:
         contact_info : typing.Optional[str]
 
         created_by : typing.Optional[int]
-
-        custom_scripts_editable_by : typing.Optional[str]
 
         custom_scripts_enabled : typing.Optional[bool]
 
@@ -241,7 +243,6 @@ class OrganizationsClient:
             json={
                 "contact_info": contact_info,
                 "created_by": created_by,
-                "custom_scripts_editable_by": custom_scripts_editable_by,
                 "custom_scripts_enabled": custom_scripts_enabled,
                 "email_notification_settings": email_notification_settings,
                 "embed_domains": embed_domains,
@@ -304,9 +305,8 @@ class OrganizationsClient:
         id: int,
         *,
         annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        custom_scripts_editable_by: typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy] = OMIT,
         custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        default_role: typing.Optional[DefaultRoleEnum] = OMIT,
+        default_role: typing.Optional[Role9E7Enum] = OMIT,
         email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_domains: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
@@ -318,6 +318,12 @@ class OrganizationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DefaultRole:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update the default role for members of a specific organization.
 
         Parameters
@@ -327,16 +333,10 @@ class OrganizationsClient:
         annotator_reviewer_firewall_enabled_at : typing.Optional[dt.datetime]
             Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
 
-        custom_scripts_editable_by : typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy]
-            Set the minimum user role that can edit custom scripts in the UI.
-
-            * `AD` - Administrator
-            * `MA` - Manager
-
         custom_scripts_enabled_at : typing.Optional[dt.datetime]
-            Set to current time to enabled custom scripts for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts.
+            Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
 
-        default_role : typing.Optional[DefaultRoleEnum]
+        default_role : typing.Optional[Role9E7Enum]
             Default membership role for invited users
 
             * `OW` - Owner
@@ -391,11 +391,6 @@ class OrganizationsClient:
             method="PATCH",
             json={
                 "annotator_reviewer_firewall_enabled_at": annotator_reviewer_firewall_enabled_at,
-                "custom_scripts_editable_by": convert_and_respect_annotation_metadata(
-                    object_=custom_scripts_editable_by,
-                    annotation=PatchedDefaultRoleRequestCustomScriptsEditableBy,
-                    direction="write",
-                ),
                 "custom_scripts_enabled_at": custom_scripts_enabled_at,
                 "default_role": default_role,
                 "email_notification_settings": email_notification_settings,
@@ -433,6 +428,7 @@ class AsyncOrganizationsClient:
         self._client_wrapper = client_wrapper
         self.invites = AsyncInvitesClient(client_wrapper=self._client_wrapper)
         self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
+        self.permissions = AsyncPermissionsClient(client_wrapper=self._client_wrapper)
 
     async def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationInvite:
         """
@@ -604,7 +600,6 @@ class AsyncOrganizationsClient:
         *,
         contact_info: typing.Optional[str] = OMIT,
         created_by: typing.Optional[int] = OMIT,
-        custom_scripts_editable_by: typing.Optional[str] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
         email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
@@ -614,7 +609,13 @@ class AsyncOrganizationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganization:
         """
-        Update organization details including title, embed domains, and custom scripts settings.
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update organization details including title, embed domains, and Plugins settings.
 
         Parameters
         ----------
@@ -623,8 +624,6 @@ class AsyncOrganizationsClient:
         contact_info : typing.Optional[str]
 
         created_by : typing.Optional[int]
-
-        custom_scripts_editable_by : typing.Optional[str]
 
         custom_scripts_enabled : typing.Optional[bool]
 
@@ -671,7 +670,6 @@ class AsyncOrganizationsClient:
             json={
                 "contact_info": contact_info,
                 "created_by": created_by,
-                "custom_scripts_editable_by": custom_scripts_editable_by,
                 "custom_scripts_enabled": custom_scripts_enabled,
                 "email_notification_settings": email_notification_settings,
                 "embed_domains": embed_domains,
@@ -734,9 +732,8 @@ class AsyncOrganizationsClient:
         id: int,
         *,
         annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        custom_scripts_editable_by: typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy] = OMIT,
         custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        default_role: typing.Optional[DefaultRoleEnum] = OMIT,
+        default_role: typing.Optional[Role9E7Enum] = OMIT,
         email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_domains: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
@@ -748,6 +745,12 @@ class AsyncOrganizationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DefaultRole:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update the default role for members of a specific organization.
 
         Parameters
@@ -757,16 +760,10 @@ class AsyncOrganizationsClient:
         annotator_reviewer_firewall_enabled_at : typing.Optional[dt.datetime]
             Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
 
-        custom_scripts_editable_by : typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy]
-            Set the minimum user role that can edit custom scripts in the UI.
-
-            * `AD` - Administrator
-            * `MA` - Manager
-
         custom_scripts_enabled_at : typing.Optional[dt.datetime]
-            Set to current time to enabled custom scripts for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts.
+            Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
 
-        default_role : typing.Optional[DefaultRoleEnum]
+        default_role : typing.Optional[Role9E7Enum]
             Default membership role for invited users
 
             * `OW` - Owner
@@ -829,11 +826,6 @@ class AsyncOrganizationsClient:
             method="PATCH",
             json={
                 "annotator_reviewer_firewall_enabled_at": annotator_reviewer_firewall_enabled_at,
-                "custom_scripts_editable_by": convert_and_respect_annotation_metadata(
-                    object_=custom_scripts_editable_by,
-                    annotation=PatchedDefaultRoleRequestCustomScriptsEditableBy,
-                    direction="write",
-                ),
                 "custom_scripts_enabled_at": custom_scripts_enabled_at,
                 "default_role": default_role,
                 "email_notification_settings": email_notification_settings,

@@ -19,13 +19,15 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
           project:
-            type: optional<integer>
+            type: integer
             docs: Project ID
       response:
         docs: ''
         type: list<root.AzureBlobImportStorage>
       examples:
-        - response:
+        - query-parameters:
+            project: 1
+          response:
             body:
               - account_key: account_key
                 account_name: account_name
@@ -42,6 +44,7 @@ service:
                 presign: true
                 presign_ttl: 1
                 project: 1
+                recursive_scan: true
                 regex_filter: regex_filter
                 status: initialized
                 synchronizable: true
@@ -130,6 +133,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -236,6 +240,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -343,6 +348,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -387,6 +393,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true

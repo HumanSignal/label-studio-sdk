@@ -11,7 +11,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         {
             "user": {
                 "active_organization": 1,
-                "active_organization_meta": {"email": "email", "title": "title"},
+                "active_organization_meta": "active_organization_meta",
                 "allow_newsletters": True,
                 "avatar": "avatar",
                 "custom_hotkeys": {"key": "value"},
@@ -28,6 +28,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                     "invite_expired_at": "invite_expired_at",
                 },
                 "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
+                "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
                 "pause": "pause",
                 "phone": "phone",
                 "username": "username",
@@ -41,7 +42,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             0: {
                 "user": {
                     "active_organization": "integer",
-                    "active_organization_meta": {"email": None, "title": None},
+                    "active_organization_meta": None,
                     "allow_newsletters": None,
                     "avatar": None,
                     "custom_hotkeys": None,
@@ -58,6 +59,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                         "invite_expired_at": None,
                     },
                     "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
+                    "organization_membership": {"active": None, "organization_id": "integer", "role": None},
                     "pause": None,
                     "phone": None,
                     "username": None,

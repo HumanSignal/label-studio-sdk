@@ -26,6 +26,12 @@ class UsersClient:
 
     def get_current_user(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUserApi:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get info about the currently authenticated user.
 
         Parameters
@@ -84,6 +90,12 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUserApi:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update details for the currently authenticated user.
 
         Parameters
@@ -351,7 +363,7 @@ class UsersClient:
 
     def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> WhoAmIUser:
         """
-        Make the whoami call on behalf of the user you are using to access the API.
+        Retrieve details of the account that you are using to access the API.
 
         Parameters
         ----------
@@ -739,6 +751,12 @@ class AsyncUsersClient:
 
     async def get_current_user(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUserApi:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get info about the currently authenticated user.
 
         Parameters
@@ -805,6 +823,12 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUserApi:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update details for the currently authenticated user.
 
         Parameters
@@ -1112,7 +1136,7 @@ class AsyncUsersClient:
 
     async def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> WhoAmIUser:
         """
-        Make the whoami call on behalf of the user you are using to access the API.
+        Retrieve details of the account that you are using to access the API.
 
         Parameters
         ----------

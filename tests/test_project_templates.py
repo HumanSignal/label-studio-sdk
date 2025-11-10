@@ -188,6 +188,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_create_project_from_template(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
+        "agreement_threshold": "agreement_threshold",
         "annotation_limit_count": 1,
         "annotation_limit_percent": "annotation_limit_percent",
         "annotator_evaluation_minimum_score": "annotator_evaluation_minimum_score",
@@ -221,6 +222,7 @@ async def test_create_project_from_template(client: LabelStudio, async_client: A
         "is_draft": True,
         "is_published": True,
         "label_config": "label_config",
+        "max_additional_annotators_assignable": 1,
         "maximum_annotations": 1,
         "members": "members",
         "members_count": 1,
@@ -249,6 +251,8 @@ async def test_create_project_from_template(client: LabelStudio, async_client: A
             "require_comment_on_reject": True,
             "review_criteria": "all",
             "review_only_manual_assignments": True,
+            "review_task_limit_percent": "review_task_limit_percent",
+            "sampling": "task_id",
             "show_agreement_to_reviewers": True,
             "show_data_manager_to_reviewers": True,
             "show_instruction": True,
@@ -277,6 +281,7 @@ async def test_create_project_from_template(client: LabelStudio, async_client: A
         "workspace_title": "workspace_title",
     }
     expected_types: typing.Any = {
+        "agreement_threshold": None,
         "annotation_limit_count": "integer",
         "annotation_limit_percent": None,
         "annotator_evaluation_minimum_score": None,
@@ -304,6 +309,7 @@ async def test_create_project_from_template(client: LabelStudio, async_client: A
         "is_draft": None,
         "is_published": None,
         "label_config": None,
+        "max_additional_annotators_assignable": "integer",
         "maximum_annotations": "integer",
         "members": None,
         "members_count": "integer",
@@ -332,6 +338,8 @@ async def test_create_project_from_template(client: LabelStudio, async_client: A
             "require_comment_on_reject": None,
             "review_criteria": None,
             "review_only_manual_assignments": None,
+            "review_task_limit_percent": None,
+            "sampling": None,
             "show_agreement_to_reviewers": None,
             "show_data_manager_to_reviewers": None,
             "show_instruction": None,

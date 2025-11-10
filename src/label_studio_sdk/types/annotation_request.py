@@ -10,10 +10,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class AnnotationRequest(UncheckedBaseModel):
     """
-    A ModelSerializer that takes additional arguments for
-    "fields", "omit" and "expand" in order to
-    control which fields are displayed, and whether to replace simple
-    values with complex, nested serializations
+    Annotation Serializer with FSM state support.
+
+    Note: The 'state' field will be populated from the queryset annotation
+    if present, preventing N+1 queries. Use .with_state() on your queryset.
     """
 
     bulk_created: typing.Optional[bool] = pydantic.Field(default=None)

@@ -372,7 +372,8 @@ class TasksClient:
             api_key="YOUR_API_KEY",
         )
         client.tasks.create(
-            data={"key": "value"},
+            data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
+            project=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -518,6 +519,7 @@ class TasksClient:
         last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         overlap: typing.Optional[int] = OMIT,
+        precomputed_agreement: typing.Optional[float] = OMIT,
         predictions_score: typing.Optional[float] = OMIT,
         project: typing.Optional[int] = OMIT,
         reviewed: typing.Optional[bool] = OMIT,
@@ -563,6 +565,9 @@ class TasksClient:
 
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
+
+        precomputed_agreement : typing.Optional[float]
+            Average agreement score for the task
 
         predictions_score : typing.Optional[float]
 
@@ -617,6 +622,7 @@ class TasksClient:
                 "last_comment_updated_at": last_comment_updated_at,
                 "meta": meta,
                 "overlap": overlap,
+                "precomputed_agreement": precomputed_agreement,
                 "predictions_score": predictions_score,
                 "project": project,
                 "reviewed": reviewed,
@@ -1203,7 +1209,11 @@ class AsyncTasksClient:
 
         async def main() -> None:
             await client.tasks.create(
-                data={"key": "value"},
+                data={
+                    "image": "https://example.com/image.jpg",
+                    "text": "Hello, world!",
+                },
+                project=1,
             )
 
 
@@ -1368,6 +1378,7 @@ class AsyncTasksClient:
         last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         overlap: typing.Optional[int] = OMIT,
+        precomputed_agreement: typing.Optional[float] = OMIT,
         predictions_score: typing.Optional[float] = OMIT,
         project: typing.Optional[int] = OMIT,
         reviewed: typing.Optional[bool] = OMIT,
@@ -1413,6 +1424,9 @@ class AsyncTasksClient:
 
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
+
+        precomputed_agreement : typing.Optional[float]
+            Average agreement score for the task
 
         predictions_score : typing.Optional[float]
 
@@ -1475,6 +1489,7 @@ class AsyncTasksClient:
                 "last_comment_updated_at": last_comment_updated_at,
                 "meta": meta,
                 "overlap": overlap,
+                "precomputed_agreement": precomputed_agreement,
                 "predictions_score": predictions_score,
                 "project": project,
                 "reviewed": reviewed,

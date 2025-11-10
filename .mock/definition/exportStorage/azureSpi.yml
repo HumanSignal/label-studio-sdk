@@ -9,11 +9,17 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a list of all Azure export storage connections that were set up with
         Service Principal authentication.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get all Azure SPI export storage
+      display-name: ✨ Get all Azure SPI export storage
       request:
         name: AzureSpiListRequest
         query-parameters:
@@ -21,13 +27,15 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
           project:
-            type: optional<integer>
+            type: integer
             docs: Project ID
       response:
         docs: ''
         type: list<root.AzureServicePrincipalExportStorage>
       examples:
-        - response:
+        - query-parameters:
+            project: 1
+          response:
             body:
               - account_name: account_name
                 can_delete_objects: true
@@ -60,11 +68,17 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create an Azure export storage connection with Service Principal
         authentication to store annotations.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create Azure export storage with SPI authentication
+      display-name: ✨ Create Azure export storage with SPI authentication
       request:
         body: root.AzureServicePrincipalExportStorageRequest
         content-type: application/json
@@ -107,11 +121,17 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Validate a specific Azure export storage connection that was set up with
         Service Principal authentication.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Validate Azure SPI export storage
+      display-name: ✨ Validate Azure SPI export storage
       request:
         body: root.AzureServicePrincipalExportStorageRequest
         content-type: application/json
@@ -125,13 +145,19 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get a specific Azure export storage connection that was set up with
         Service Principal authentication.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Get Azure SPI export storage
+      display-name: ✨ Get Azure SPI export storage
       response:
         docs: ''
         type: root.AzureServicePrincipalExportStorage
@@ -171,13 +197,19 @@ service:
       method: DELETE
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete a specific Azure export storage connection that was set up with
         Service Principal authentication.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Delete Azure SPI export storage
+      display-name: ✨ Delete Azure SPI export storage
       examples:
         - path-parameters:
             id: 1
@@ -188,13 +220,19 @@ service:
       method: PATCH
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update a specific Azure export storage connection that was set up with
         Service Principal authentication.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Update Azure SPI export storage
+      display-name: ✨ Update Azure SPI export storage
       request:
         name: PatchedAzureServicePrincipalExportStorageRequest
         body:
@@ -302,12 +340,19 @@ service:
       path: /api/storages/export/azure_spi/{id}/sync
       method: POST
       auth: true
-      docs: Sync tasks from an Azure SPI export storage.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from an Azure SPI export storage.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Sync Azure SPI export storage
+      display-name: ✨ Sync Azure SPI export storage
       response:
         docs: ''
         type: root.AzureServicePrincipalExportStorage

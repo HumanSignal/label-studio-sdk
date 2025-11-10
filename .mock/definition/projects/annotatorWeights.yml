@@ -1,0 +1,89 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /api/projects/{id}/project-extra-params/
+      method: GET
+      auth: true
+      docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the annotator weights for statistics and Cohen's Kappa for a
+        specific project. Affects dashboard-members stats, but old and unused.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: ✨ Get annotator weights
+      response:
+        docs: Annotator weights retrieved
+        type: root.LseProjectParams
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              annotator_params:
+                key: value
+              use_kappa: true
+      audiences:
+        - internal
+    create:
+      path: /api/projects/{id}/project-extra-params/
+      method: POST
+      auth: true
+      docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create annotator weights to be used in the annotation statistics for a
+        project, such as when calculating kappa metrics for inter-annotator
+        agreement. Affects dashboard-members stats, but old and unused.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: ✨ Create annotator weights for statistics
+      request:
+        name: LseProjectParamsRequest
+        body:
+          properties:
+            annotator_params: optional<unknown>
+            use_kappa:
+              type: optional<boolean>
+              docs: >-
+                If categorical variables are used in labeling (e.g. choices),
+                Cohen's Kappa statistic is computed to measure inter-rater
+                reliability instead of basic agreement
+        content-type: application/json
+      response:
+        docs: Annotator weights created/updated
+        type: root.LseProjectParams
+      examples:
+        - name: payload format for annotator_params
+          path-parameters:
+            id: 1
+          request:
+            annotator_params:
+              '123': 1
+              '456': 0.75
+            use_kappa: true
+          response:
+            body:
+              annotator_params:
+                key: value
+              use_kappa: true
+      audiences:
+        - internal
+  source:
+    openapi: openapi/openapi.yaml

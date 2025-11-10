@@ -1,101 +1,3 @@
-types:
-  ProjectsListRequestFilter:
-    enum:
-      - all
-      - exclude_pinned
-      - pinned_only
-    source:
-      openapi: openapi/openapi.yaml
-  LseProjectCreateRequestSampling:
-    discriminated: false
-    union:
-      - root.SamplingEnum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseProjectCreateRequestSkipQueue:
-    discriminated: false
-    union:
-      - root.SkipQueueEnum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  PatchedLseProjectUpdateRequestSampling:
-    discriminated: false
-    union:
-      - root.SamplingEnum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  PatchedLseProjectUpdateRequestSkipQueue:
-    discriminated: false
-    union:
-      - root.SkipQueueEnum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ProjectsDuplicateResponse:
-    properties:
-      id:
-        type: integer
-        docs: The ID of the duplicated project.
-    source:
-      openapi: openapi/openapi.yaml
-  ProjectsImportTasksResponse:
-    docs: Task creation response
-    properties:
-      annotation_count:
-        type: optional<integer>
-        docs: Number of annotations added
-      could_be_tasks_list:
-        type: optional<boolean>
-        docs: Whether uploaded files can contain lists of tasks, like CSV/TSV files
-      data_columns:
-        type: optional<list<string>>
-        docs: The list of found data columns
-      duration:
-        type: optional<double>
-        docs: Time in seconds to create
-      file_upload_ids:
-        type: optional<list<integer>>
-        docs: Database IDs of uploaded files
-      found_formats:
-        type: optional<list<string>>
-        docs: The list of found file formats
-      predictions_count:
-        type: optional<integer>
-        docs: Number of predictions added
-      task_count:
-        type: optional<integer>
-        docs: Number of tasks added
-    source:
-      openapi: openapi/openapi.yaml
-  ApiProjectsProjectExtraParamsRetrieveResponse:
-    docs: Create or change annotator weights for statistics
-    properties:
-      annotator_params:
-        type: optional<list<map<string, unknown>>>
-        docs: Dict of users with weights
-      use_kappa:
-        type: optional<boolean>
-        docs: If project uses Cohen's Kappa in calculation
-    source:
-      openapi: openapi/openapi.yaml
-  ApiProjectsProjectExtraParamsCreateResponse:
-    docs: Create or change annotator weights for statistics
-    properties:
-      annotator_params:
-        type: optional<list<map<string, unknown>>>
-        docs: Dict of users with weights
-      use_kappa:
-        type: optional<boolean>
-        docs: If project uses Cohen's Kappa in calculation
-    source:
-      openapi: openapi/openapi.yaml
 imports:
   root: __package__.yml
 service:
@@ -117,14 +19,15 @@ service:
         name: ProjectsListRequest
         query-parameters:
           filter:
-            type: optional<ProjectsListRequestFilter>
+            type: optional<string>
+            default: all
             docs: >-
               Filter projects by pinned status. Use 'pinned_only' to return only
               pinned projects, 'exclude_pinned' to return only non-pinned
               projects, or 'all' to return all projects.
           ids:
             type: optional<string>
-            docs: ids
+            docs: Filter id by in list
           include:
             type: optional<string>
             docs: >-
@@ -138,7 +41,7 @@ service:
           members_limit:
             type: optional<integer>
             default: 10
-            docs: Maximum number of members to return.
+            docs: Maximum number of members to return
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
@@ -148,12 +51,15 @@ service:
           page_size:
             type: optional<integer>
             docs: Number of results to return per page.
+          search:
+            type: optional<string>
+            docs: Search term for project title and description
           title:
             type: optional<string>
-            docs: title
+            docs: Filter title by contains (case-insensitive)
           workspaces:
-            type: optional<integer>
-            docs: workspaces
+            type: optional<double>
+            docs: Filter workspaces by exact match
       response:
         docs: ''
         type: root.PaginatedAllRolesProjectListList
@@ -164,7 +70,8 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - allow_stream: allow_stream
+                - agreement_threshold: agreement_threshold
+                  allow_stream: true
                   annotation_limit_count: 1
                   annotation_limit_percent: annotation_limit_percent
                   annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -203,12 +110,13 @@ service:
                   is_draft: true
                   is_published: true
                   label_config: label_config
+                  max_additional_annotators_assignable: 1
                   maximum_annotations: 1
                   members: members
                   members_count: 1
                   min_annotations_to_start_training: 1
                   model_version: model_version
-                  num_tasks_with_annotations: num_tasks_with_annotations
+                  num_tasks_with_annotations: 1
                   organization: 1
                   overlap_cohort_percentage: 1
                   parsed_label_config:
@@ -216,19 +124,19 @@ service:
                   pause_on_failed_annotator_evaluation: true
                   pinned_at: '2024-01-15T09:30:00Z'
                   prompts: prompts
-                  queue_done: queue_done
-                  queue_left: queue_left
+                  queue_done: 1
+                  queue_left: 1
                   queue_total: queue_total
-                  ready: ready
-                  rejected: rejected
+                  ready: true
+                  rejected: 1
                   require_comment_on_skip: true
                   reveal_preannotations_interactively: true
                   review_settings:
                     id: 1
                     requeue_rejected_tasks_to_annotator: true
-                  review_total_tasks: review_total_tasks
-                  reviewed_number: reviewed_number
-                  reviewer_queue_total: reviewer_queue_total
+                  review_total_tasks: 1
+                  reviewed_number: 1
+                  reviewer_queue_total: 1
                   sampling: Sequential sampling
                   show_annotation_history: true
                   show_collab_predictions: true
@@ -244,7 +152,7 @@ service:
                   title: title
                   total_annotations_number: total_annotations_number
                   total_predictions_number: 1
-                  useful_annotation_number: useful_annotation_number
+                  useful_annotation_number: 1
                   workspace: workspace
                   workspace_title: workspace_title
       audiences:
@@ -329,7 +237,11 @@ service:
             show_collab_predictions:
               type: optional<boolean>
               docs: If set, the annotator can view model predictions
-            show_ground_truth_first: optional<boolean>
+            show_ground_truth_first:
+              type: optional<boolean>
+              docs: >-
+                Onboarding mode (true): show ground truth tasks first in the
+                labeling stream
             show_instruction:
               type: optional<boolean>
               docs: Show instructions to the annotator before they start
@@ -419,7 +331,7 @@ service:
               workspace: 1
       audiences:
         - public
-    api_projects_counts_list:
+    list_counts:
       path: /api/projects/counts/
       method: GET
       auth: true
@@ -428,10 +340,30 @@ service:
         which is the total task number in project
       source:
         openapi: openapi/openapi.yaml
-      display-name: List project's counts
+      display-name: List projects' counts
       request:
-        name: ApiProjectsCountsListRequest
+        name: ProjectsListCountsRequest
         query-parameters:
+          filter:
+            type: optional<string>
+            default: all
+            docs: >-
+              Filter projects by pinned status. Use 'pinned_only' to return only
+              pinned projects, 'exclude_pinned' to return only non-pinned
+              projects, or 'all' to return all projects.
+          ids:
+            type: optional<string>
+            docs: Filter id by in list
+          include:
+            type: optional<string>
+            docs: >-
+              Comma-separated list of count fields to include in the response to
+              optimize performance. Available fields: task_number,
+              finished_task_number, total_predictions_number,
+              total_annotations_number, num_tasks_with_annotations,
+              useful_annotation_number, ground_truth_number,
+              skipped_annotations_number. If not specified, all count fields are
+              included.
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
@@ -441,6 +373,15 @@ service:
           page_size:
             type: optional<integer>
             docs: Number of results to return per page.
+          search:
+            type: optional<string>
+            docs: Search term for project title and description
+          title:
+            type: optional<string>
+            docs: Filter title by contains (case-insensitive)
+          workspaces:
+            type: optional<double>
+            docs: Filter workspaces by exact match
       response:
         docs: ''
         type: root.PaginatedLseProjectCountsList
@@ -454,18 +395,20 @@ service:
                 - finished_task_number: 1
                   ground_truth_number: 1
                   id: 1
-                  num_tasks_with_annotations: num_tasks_with_annotations
-                  queue_done: queue_done
-                  queue_left: queue_left
+                  num_tasks_with_annotations: 1
+                  queue_done: 1
+                  queue_left: 1
                   queue_total: queue_total
-                  rejected: rejected
-                  review_total_tasks: review_total_tasks
-                  reviewed_number: reviewed_number
+                  rejected: 1
+                  review_total_tasks: 1
+                  reviewed_number: 1
                   skipped_annotations_number: skipped_annotations_number
                   task_number: 1
                   total_annotations_number: total_annotations_number
                   total_predictions_number: 1
-                  useful_annotation_number: useful_annotation_number
+                  useful_annotation_number: 1
+      audiences:
+        - public
     api_projects_validate_create:
       path: /api/projects/validate/
       method: POST
@@ -494,47 +437,101 @@ service:
       path-parameters:
         id: integer
       display-name: Get project by ID
+      request:
+        name: ProjectsGetRequest
+        query-parameters:
+          members_limit:
+            type: optional<integer>
+            default: 10
+            docs: Maximum number of members to return
       response:
-        docs: Project information
-        type: root.Project
+        docs: Project information. Not all fields are available for all roles.
+        type: root.LseProjectResponse
       examples:
-        - name: response
-          path-parameters:
+        - path-parameters:
             id: 1
           response:
             body:
-              color: '#FF0000'
+              agreement_threshold: agreement_threshold
+              allow_stream: true
+              annotation_limit_count: 1
+              annotation_limit_percent: annotation_limit_percent
+              annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+              annotator_evaluation_minimum_tasks: 1
+              assignment_settings:
+                id: 1
+                label_stream_task_distribution: auto_distribution
+                project: 1
+              color: color
+              comment_classification_config: comment_classification_config
               config_has_control_tags: true
               config_suitable_for_bulk_annotation: true
-              control_weights: {}
-              created_at: '2023-08-24T14:15:22Z'
+              control_weights:
+                key: value
+              created_at: '2024-01-15T09:30:00Z'
               created_by:
                 avatar: avatar
-                email: manager@humansignal.com
-                first_name: Jo
+                email: email
+                first_name: first_name
                 id: 1
-                last_name: Doe
-              description: My first project
+                last_name: last_name
+              custom_script: custom_script
+              custom_task_lock_ttl: 1
+              data_types:
+                key: value
+              description: description
+              duplication_done: true
+              duplication_status: duplication_status
               enable_empty_annotation: true
-              evaluate_predictions_automatically: false
-              expert_instruction: Label all cats
-              finished_task_number: 10
-              ground_truth_number: 5
+              evaluate_predictions_automatically: true
+              expert_instruction: expert_instruction
+              finished_task_number: 1
+              ground_truth_number: 1
               id: 1
-              is_draft: false
+              is_draft: true
               is_published: true
-              label_config: <View>[...]</View>
+              label_config: label_config
+              max_additional_annotators_assignable: 1
               maximum_annotations: 1
-              min_annotations_to_start_training: 0
-              model_version: 1.0.0
-              num_tasks_with_annotations: 10
+              members: members
+              members_count: 1
+              min_annotations_to_start_training: 1
+              model_version: model_version
+              num_tasks_with_annotations: 1
               organization: 1
-              overlap_cohort_percentage: 100
-              parsed_label_config: '{"tag": {...}}'
-              pinned_at: '2023-08-24T14:15:22Z'
-              queue_done: 100
-              queue_total: 10
+              overlap_cohort_percentage: 1
+              parsed_label_config:
+                key: value
+              pause_on_failed_annotator_evaluation: true
+              pinned_at: '2024-01-15T09:30:00Z'
+              prompts: prompts
+              queue_done: 1
+              queue_left: 1
+              queue_total: 1
+              ready: true
+              rejected: 1
+              require_comment_on_skip: true
               reveal_preannotations_interactively: true
+              review_settings:
+                anonymize_annotations: true
+                id: 1
+                instruction: instruction
+                only_finished_tasks: true
+                project: 1
+                requeue_rejected_tasks_mode: requeue
+                requeue_rejected_tasks_to_annotator: true
+                require_comment_on_reject: true
+                review_criteria: all
+                review_only_manual_assignments: true
+                review_task_limit_percent: review_task_limit_percent
+                sampling: task_id
+                show_agreement_to_reviewers: true
+                show_data_manager_to_reviewers: true
+                show_instruction: true
+                show_unused_data_columns_to_reviewers: true
+              review_total_tasks: 1
+              reviewed_number: 1
+              reviewer_queue_total: 1
               sampling: Sequential sampling
               show_annotation_history: true
               show_collab_predictions: true
@@ -542,16 +539,19 @@ service:
               show_instruction: true
               show_overlap_first: true
               show_skip_button: true
+              show_unused_data_columns_to_annotators: true
               skip_queue: REQUEUE_FOR_ME
-              skipped_annotations_number: 0
+              skipped_annotations_number: 1
               start_training_on_annotation_update: true
-              task_data_login: user
-              task_data_password: secret
-              task_number: 100
-              title: My project
-              total_annotations_number: 10
-              total_predictions_number: 0
-              useful_annotation_number: 10
+              task_data_login: task_data_login
+              task_data_password: task_data_password
+              task_number: 1
+              title: title
+              total_annotations_number: 1
+              total_predictions_number: 1
+              useful_annotation_number: 1
+              workspace: workspace
+              workspace_title: workspace_title
       audiences:
         - public
     delete:
@@ -581,8 +581,20 @@ service:
       display-name: Update project details
       request:
         name: PatchedLseProjectUpdateRequest
+        query-parameters:
+          members_limit:
+            type: optional<integer>
+            default: 10
+            docs: Maximum number of members to return
         body:
           properties:
+            agreement_threshold:
+              type: optional<string>
+              docs: >-
+                Minimum percent agreement threshold for which minimum number of
+                annotators must agree
+              validation:
+                pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
             annotation_limit_count:
               type: optional<integer>
               validation:
@@ -639,6 +651,11 @@ service:
             label_config:
               type: optional<string>
               docs: Label config in XML format. See more about it in documentation
+            max_additional_annotators_assignable:
+              type: optional<integer>
+              docs: >-
+                Maximum number of additional annotators that can be assigned to
+                a low agreement task
             maximum_annotations:
               type: optional<integer>
               docs: >-
@@ -685,7 +702,11 @@ service:
             show_collab_predictions:
               type: optional<boolean>
               docs: If set, the annotator can view model predictions
-            show_ground_truth_first: optional<boolean>
+            show_ground_truth_first:
+              type: optional<boolean>
+              docs: >-
+                Onboarding mode (true): show ground truth tasks first in the
+                labeling stream
             show_instruction:
               type: optional<boolean>
               docs: Show instructions to the annotator before they start
@@ -724,6 +745,7 @@ service:
           request: {}
           response:
             body:
+              agreement_threshold: agreement_threshold
               annotation_limit_count: 1
               annotation_limit_percent: annotation_limit_percent
               annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -757,6 +779,7 @@ service:
               is_draft: true
               is_published: true
               label_config: label_config
+              max_additional_annotators_assignable: 1
               maximum_annotations: 1
               min_annotations_to_start_training: 1
               model_version: model_version
@@ -783,6 +806,8 @@ service:
                 require_comment_on_reject: true
                 review_criteria: all
                 review_only_manual_assignments: true
+                review_task_limit_percent: review_task_limit_percent
+                sampling: task_id
                 show_agreement_to_reviewers: true
                 show_data_manager_to_reviewers: true
                 show_instruction: true
@@ -809,16 +834,50 @@ service:
               workspace_title: workspace_title
       audiences:
         - public
-    duplicate:
-      path: /api/projects/{id}/duplicate/
-      method: POST
+    list_unique_annotators:
+      path: /api/projects/{id}/annotators/
+      method: GET
       auth: true
-      docs: Make a copy of project.
+      docs: >-
+        Return unique users who have submitted annotations in the specified
+        project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Duplicate project
+      display-name: List unique annotators for project
+      response:
+        docs: List of annotator users
+        type: list<root.UserSimple>
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              - avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
+      audiences:
+        - public
+    duplicate:
+      path: /api/projects/{id}/duplicate/
+      method: POST
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Make a copy of project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: ✨ Duplicate project
       request:
         name: ProjectDuplicateRequest
         body:
@@ -972,112 +1031,38 @@ service:
               task_count: 1
       audiences:
         - public
-    api_projects_members_create:
-      path: /api/projects/{id}/members/
+    import_predictions:
+      path: /api/projects/{id}/import/predictions
       method: POST
       auth: true
-      docs: Add a member to a specific project.
+      docs: Import model predictions for tasks in the specified project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id: integer
-      display-name: Add project member
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+      display-name: Import predictions
       request:
-        name: ProjectMemberRequest
-        body:
-          properties:
-            user: integer
+        body: list<root.PredictionRequest>
         content-type: application/json
       response:
-        docs: ''
-        type: root.ProjectMember
+        docs: Predictions successfully imported
+        type: ProjectsImportPredictionsResponse
+      errors:
+        - root.BadRequestError
       examples:
         - path-parameters:
             id: 1
           request:
-            user: 1
-          response:
-            body:
-              user: 1
-    api_projects_members_destroy:
-      path: /api/projects/{id}/members/
-      method: DELETE
-      auth: true
-      docs: Remove a member from a specific project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: Remove member from project
-      request:
-        name: ApiProjectsMembersDestroyRequest
-        query-parameters:
-          project_member:
-            type: optional<integer>
-            docs: A unique integer value identifying this project member.
-      examples:
-        - path-parameters:
-            id: 1
-    api_projects_project_extra_params_retrieve:
-      path: /api/projects/{id}/project-extra-params/
-      method: GET
-      auth: true
-      docs: >-
-        Retrieve the annotator weights for statistics and Cohen's Kappa for a
-        specific project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: Get annotator weights
-      response:
-        docs: Annotator weights retrieved
-        type: ApiProjectsProjectExtraParamsRetrieveResponse
-      examples:
-        - path-parameters:
-            id: 1
-          response:
-            body:
-              annotator_params:
+            - result:
                 - key: value
-              use_kappa: true
-    api_projects_project_extra_params_create:
-      path: /api/projects/{id}/project-extra-params/
-      method: POST
-      auth: true
-      docs: >-
-        Create annotator weights to be used in the annotation statistics for a
-        project, such as when calculating kappa metrics for inter-annotator
-        agreement.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: Create annotator weights for statistics
-      request:
-        name: LseProjectParamsRequest
-        body:
-          properties:
-            annotator_params: optional<unknown>
-            use_kappa:
-              type: optional<boolean>
-              docs: >-
-                If categorical variables are used in labeling (e.g. choices),
-                Cohen's Kappa statistic is computed to measure inter-rater
-                reliability instead of basic agreement
-        content-type: application/json
-      response:
-        docs: Annotator weights created/updated
-        type: ApiProjectsProjectExtraParamsCreateResponse
-      examples:
-        - path-parameters:
-            id: 1
-          request: {}
+              task: 1
           response:
             body:
-              annotator_params:
-                - key: value
-              use_kappa: true
+              created: 1
+      audiences:
+        - public
     api_projects_reimports_retrieve:
       path: /api/projects/{id}/reimports/{reimport_pk}/
       method: GET
@@ -1162,6 +1147,7 @@ service:
                     created_at: '2024-01-15T09:30:00Z'
                     created_username: created_username
                     id: 1
+                    state: state
                     updated_at: '2024-01-15T09:30:00Z'
                 cancelled_annotations: 1
                 comment_authors:
@@ -1224,57 +1210,82 @@ service:
               label_config: label_config
       audiences:
         - public
-    api_projects_subset_tasks_list:
-      path: /api/projects/{project_pk}/subset-tasks
-      method: GET
-      auth: true
-      docs: |2-
-
-                Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
-                
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        project_pk: integer
-      display-name: Get Project Subset Task List with Predictions and Accuracy details
-      request:
-        name: ApiProjectsSubsetTasksListRequest
-        query-parameters:
-          model_run:
-            type: optional<integer>
-            docs: A unique ID of a ModelRun
-          ordering:
-            type: optional<string>
-            docs: Which field to use when ordering the results.
-          page:
-            type: optional<integer>
-            docs: A page number within the paginated result set.
-          page_size:
-            type: optional<integer>
-            docs: Number of results to return per page.
-          project_subset:
-            type: optional<string>
-            docs: The project subset to retrieve tasks for
-      errors:
-        - root.BadRequestError
-      examples:
-        - path-parameters:
-            project_pk: 1
-    api_projects_subsets_retrieve:
-      path: /api/projects/{project_pk}/subsets
-      method: GET
-      auth: true
-      docs: |2-
-
-                Provides list of available subsets for a project along with count of tasks in each subset
-                
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        project_pk: integer
-      display-name: Get available subsets of a project (for prompts usage)
-      examples:
-        - path-parameters:
-            project_pk: 1
   source:
     openapi: openapi/openapi.yaml
+types:
+  LseProjectCreateRequestSampling:
+    discriminated: false
+    union:
+      - root.SamplingDe5Enum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  LseProjectCreateRequestSkipQueue:
+    discriminated: false
+    union:
+      - root.SkipQueueEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  PatchedLseProjectUpdateRequestSampling:
+    discriminated: false
+    union:
+      - root.SamplingDe5Enum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  PatchedLseProjectUpdateRequestSkipQueue:
+    discriminated: false
+    union:
+      - root.SkipQueueEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  ProjectsDuplicateResponse:
+    properties:
+      id:
+        type: integer
+        docs: The ID of the duplicated project.
+    source:
+      openapi: openapi/openapi.yaml
+  ProjectsImportTasksResponse:
+    docs: Task creation response
+    properties:
+      annotation_count:
+        type: optional<integer>
+        docs: Number of annotations added
+      could_be_tasks_list:
+        type: optional<boolean>
+        docs: Whether uploaded files can contain lists of tasks, like CSV/TSV files
+      data_columns:
+        type: optional<list<string>>
+        docs: The list of found data columns
+      duration:
+        type: optional<double>
+        docs: Time in seconds to create
+      file_upload_ids:
+        type: optional<list<integer>>
+        docs: Database IDs of uploaded files
+      found_formats:
+        type: optional<list<string>>
+        docs: The list of found file formats
+      predictions_count:
+        type: optional<integer>
+        docs: Number of predictions added
+      task_count:
+        type: optional<integer>
+        docs: Number of tasks added
+    source:
+      openapi: openapi/openapi.yaml
+  ProjectsImportPredictionsResponse:
+    docs: Import result
+    properties:
+      created:
+        type: optional<integer>
+        docs: Number of predictions created
+    source:
+      openapi: openapi/openapi.yaml

@@ -87,6 +87,11 @@ class GcswifImportStorage(UncheckedBaseModel):
     A unique integer value identifying this project.
     """
 
+    recursive_scan: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Perform recursive scan over the bucket content
+    """
+
     regex_filter: typing.Optional[str] = pydantic.Field(default=None)
     """
     Cloud storage regex for filtering objects

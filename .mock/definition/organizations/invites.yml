@@ -28,10 +28,17 @@ service:
       path: /api/invite/revoke
       method: POST
       auth: true
-      docs: Revoke invite to organization
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Revoke invite to organization
       source:
         openapi: openapi/openapi.yaml
-      display-name: Revoke invite
+      display-name: ✨ Revoke invite
       request:
         name: RevokeInviteRequest
         body:
@@ -50,19 +57,25 @@ service:
       path: /api/invite/send-email
       method: POST
       auth: true
-      docs: Send email with invite to organization
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Send email with invite to organization
       source:
         openapi: openapi/openapi.yaml
-      display-name: Send email with invite
+      display-name: ✨ Send email with invite
       request:
         name: SendInviteRequest
         body:
           properties:
             emails: list<string>
-            role:
-              type: string
-              validation:
-                minLength: 1
+            projects: optional<list<integer>>
+            role: root.Role9E7Enum
+            workspaces: optional<list<integer>>
         content-type: application/json
       errors:
         - root.ForbiddenError
@@ -70,7 +83,7 @@ service:
         - request:
             emails:
               - emails
-            role: role
+            role: OW
       audiences:
         - public
   source:

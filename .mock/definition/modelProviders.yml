@@ -8,10 +8,17 @@ service:
       path: /api/model-provider-connections/
       method: GET
       auth: true
-      docs: List all model provider connections.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all model provider connections.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List model provider connections
+      display-name: ✨ List model provider connections
       request:
         name: ModelProvidersListRequest
         query-parameters:
@@ -54,10 +61,17 @@ service:
       path: /api/model-provider-connections/
       method: POST
       auth: true
-      docs: Create a new model provider connection.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new model provider connection.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create model provider connection
+      display-name: ✨ Create model provider connection
       request:
         body: root.ModelProviderConnectionRequest
         content-type: application/json
@@ -98,10 +112,17 @@ service:
       path: /api/model-provider-connections/provider-choices
       method: GET
       auth: true
-      docs: List all possible model provider choices
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all possible model provider choices
       source:
         openapi: openapi/openapi.yaml
-      display-name: List model provider choices
+      display-name: ✨ List model provider choices
       response:
         docs: List of model provider choices
         type: ModelProvidersListModelProviderChoicesResponse
@@ -116,12 +137,19 @@ service:
       path: /api/model-provider-connections/{id}/
       method: GET
       auth: true
-      docs: Retrieve a specific model provider connection.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific model provider connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Get model provider connection
+      display-name: ✨ Get model provider connection
       response:
         docs: ''
         type: root.ModelProviderConnection
@@ -160,12 +188,19 @@ service:
       path: /api/model-provider-connections/{id}/
       method: DELETE
       auth: true
-      docs: Delete a model provider connection by ID
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a model provider connection by ID
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Delete model provider connection
+      display-name: ✨ Delete model provider connection
       examples:
         - path-parameters:
             id: id
@@ -175,12 +210,19 @@ service:
       path: /api/model-provider-connections/{id}/
       method: PATCH
       auth: true
-      docs: Update a specific model provider connection by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific model provider connection by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
-      display-name: Update model provider connection
+      display-name: ✨ Update model provider connection
       request:
         name: PatchedModelProviderConnectionRequest
         body:

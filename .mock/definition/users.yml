@@ -8,10 +8,17 @@ service:
       path: /api/current-user
       method: GET
       auth: true
-      docs: Get info about the currently authenticated user.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get info about the currently authenticated user.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get current user info
+      display-name: ✨ Get current user info
       response:
         docs: ''
         type: root.LseUserApi
@@ -19,9 +26,7 @@ service:
         - response:
             body:
               active_organization: 1
-              active_organization_meta:
-                email: email
-                title: title
+              active_organization_meta: active_organization_meta
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -37,6 +42,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               phone: phone
               username: username
       audiences:
@@ -45,10 +54,17 @@ service:
       path: /api/current-user
       method: PATCH
       auth: true
-      docs: Update details for the currently authenticated user.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update details for the currently authenticated user.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Update current user
+      display-name: ✨ Update current user
       request:
         name: PatchedLseUserSerializerUpdateRequest
         body:
@@ -95,9 +111,7 @@ service:
           response:
             body:
               active_organization: 1
-              active_organization_meta:
-                email: email
-                title: title
+              active_organization_meta: active_organization_meta
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -113,6 +127,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               phone: phone
               username: username
       audiences:
@@ -198,12 +216,10 @@ service:
       path: /api/current-user/whoami
       method: GET
       auth: true
-      docs: >-
-        Make the whoami call on behalf of the user you are using to access the
-        API.
+      docs: Retrieve details of the account that you are using to access the API.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Whoami for current user
+      display-name: Retrieve my user
       response:
         docs: ''
         type: root.WhoAmIUser
@@ -211,9 +227,7 @@ service:
         - response:
             body:
               active_organization: 1
-              active_organization_meta:
-                email: email
-                title: title
+              active_organization_meta: active_organization_meta
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -244,7 +258,13 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               pause: pause
+              permissions:
+                - permissions
               phone: phone
               username: username
       audiences:
@@ -270,9 +290,7 @@ service:
         - response:
             body:
               - active_organization: 1
-                active_organization_meta:
-                  email: email
-                  title: title
+                active_organization_meta: active_organization_meta
                 allow_newsletters: true
                 avatar: avatar
                 custom_hotkeys:
@@ -288,6 +306,10 @@ service:
                   - active: active
                     organization_id: 1
                     role: role
+                organization_membership:
+                  active: active
+                  organization_id: 1
+                  role: role
                 phone: phone
                 username: username
       audiences:
@@ -340,9 +362,7 @@ service:
           response:
             body:
               active_organization: 1
-              active_organization_meta:
-                email: email
-                title: title
+              active_organization_meta: active_organization_meta
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -372,6 +392,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               pause: pause
               phone: phone
               username: username
@@ -398,9 +422,7 @@ service:
           response:
             body:
               active_organization: 1
-              active_organization_meta:
-                email: email
-                title: title
+              active_organization_meta: active_organization_meta
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -430,6 +452,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               pause: pause
               phone: phone
               username: username
@@ -517,9 +543,7 @@ service:
           response:
             body:
               active_organization: 1
-              active_organization_meta:
-                email: email
-                title: title
+              active_organization_meta: active_organization_meta
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -549,6 +573,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               pause: pause
               phone: phone
               username: username
