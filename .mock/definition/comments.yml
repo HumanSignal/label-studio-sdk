@@ -48,6 +48,7 @@ service:
                 region_ref:
                   key: value
                 resolved_at: '2024-01-15T09:30:00Z'
+                state: state
                 task: 1
                 text: text
                 updated_at: '2024-01-15T09:30:00Z'
@@ -95,6 +96,7 @@ service:
               region_ref:
                 key: value
               resolved_at: '2024-01-15T09:30:00Z'
+              state: state
               task: 1
               text: text
               updated_at: '2024-01-15T09:30:00Z'
@@ -176,6 +178,7 @@ service:
               region_ref:
                 key: value
               resolved_at: '2024-01-15T09:30:00Z'
+              state: state
               task: 1
               text: text
               updated_at: '2024-01-15T09:30:00Z'
@@ -227,6 +230,7 @@ service:
               region_ref:
                 key: value
               resolved_at: '2024-01-15T09:30:00Z'
+              state: state
               task: 1
               text: text
               updated_at: '2024-01-15T09:30:00Z'
@@ -317,6 +321,7 @@ service:
               region_ref:
                 key: value
               resolved_at: '2024-01-15T09:30:00Z'
+              state: state
               task: 1
               text: text
               updated_at: '2024-01-15T09:30:00Z'

@@ -51,6 +51,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
                 },
             }
         ],
+        "state": "state",
         "task": 1,
         "updated_at": "2024-01-15T09:30:00Z",
         "updated_by": 1,
@@ -89,6 +90,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
                 )
             },
         ),
+        "state": None,
         "task": "integer",
         "updated_at": "datetime",
         "updated_by": "integer",
@@ -149,6 +151,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                 },
             }
         ],
+        "state": "state",
         "task": 1,
         "updated_at": "2024-01-15T09:30:00Z",
         "updated_by": 1,
@@ -187,6 +190,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                 )
             },
         ),
+        "state": None,
         "task": "integer",
         "updated_at": "datetime",
         "updated_by": "integer",
@@ -262,6 +266,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "parent_prediction": 1,
             "project": 1,
             "result": [{"key": "value"}],
+            "state": "state",
             "task": 1,
             "updated_at": "2024-01-15T09:30:00Z",
             "updated_by": 1,
@@ -288,6 +293,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "parent_prediction": "integer",
                 "project": "integer",
                 "result": ("list", {0: ("dict", {0: (None, None)})}),
+                "state": None,
                 "task": "integer",
                 "updated_at": "datetime",
                 "updated_by": "integer",
@@ -337,6 +343,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                 },
             }
         ],
+        "state": "state",
         "task": 1,
         "updated_at": "2024-01-15T09:30:00Z",
         "updated_by": 1,
@@ -375,6 +382,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                 )
             },
         ),
+        "state": None,
         "task": "integer",
         "updated_at": "datetime",
         "updated_by": "integer",

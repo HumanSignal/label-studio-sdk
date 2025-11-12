@@ -214,6 +214,7 @@ service:
                   reviewers_count: 1
                   reviews_accepted: 1
                   reviews_rejected: 1
+                  state: state
                   storage_filename: storage_filename
                   total_annotations: 1
                   total_predictions: 1
@@ -375,6 +376,7 @@ service:
               reviewers_count: 1
               reviews_accepted: 1
               reviews_rejected: 1
+              state: state
               storage_filename: storage_filename
               total_annotations: 1
               total_predictions: 1
@@ -465,6 +467,7 @@ service:
               reviewers_count: 1
               reviews_accepted: 1
               reviews_rejected: 1
+              state: state
               storage_filename: storage_filename
               total_annotations: 1
               total_predictions: 1
@@ -624,6 +627,7 @@ service:
               reviewers_count: 1
               reviews_accepted: 1
               reviews_rejected: 1
+              state: state
               storage_filename: storage_filename
               total_annotations: 1
               total_predictions: 1

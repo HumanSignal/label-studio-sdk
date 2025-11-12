@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class LseTaskSerializerForAnnotators(UncheckedBaseModel):
     """
-    Task Serializer with project scheme configs validation
+    Data Manager Task Serializer with FSM state support.
     """
 
     annotations: str

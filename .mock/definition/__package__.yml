@@ -401,10 +401,10 @@ types:
     inline: true
   Annotation:
     docs: |-
-      A ModelSerializer that takes additional arguments for
-      "fields", "omit" and "expand" in order to
-      control which fields are displayed, and whether to replace simple
-      values with complex, nested serializations
+      Annotation Serializer with FSM state support.
+
+      Note: The 'state' field will be populated from the queryset annotation
+      if present, preventing N+1 queries. Use .with_state() on your queryset.
     properties:
       bulk_created:
         type: optional<boolean>
@@ -466,6 +466,7 @@ types:
       result:
         type: optional<list<map<string, unknown>>>
         docs: List of annotation results for the task
+      state: string
       task:
         type: optional<integer>
         docs: Corresponding task for this annotation
@@ -581,10 +582,10 @@ types:
     inline: true
   AnnotationRequest:
     docs: |-
-      A ModelSerializer that takes additional arguments for
-      "fields", "omit" and "expand" in order to
-      control which fields are displayed, and whether to replace simple
-      values with complex, nested serializations
+      Annotation Serializer with FSM state support.
+
+      Note: The 'state' field will be populated from the queryset annotation
+      if present, preventing N+1 queries. Use .with_state() on your queryset.
     properties:
       bulk_created:
         type: optional<boolean>
@@ -651,10 +652,14 @@ types:
       openapi: openapi/openapi.yaml
   AnnotationReview:
     docs: |-
-      A ModelSerializer that takes additional arguments for
-      "fields", "omit" and "expand" in order to
-      control which fields are displayed, and whether to replace simple
-      values with complex, nested serializations
+      AnnotationReview Serializer with FSM state support.
+
+      Note: The 'state' field will be populated from the queryset annotation
+      if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+      The state field display is controlled by both:
+      - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+      - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     properties:
       accepted:
         type: optional<boolean>
@@ -679,14 +684,19 @@ types:
       remove_from_queue: optional<boolean>
       result: optional<unknown>
       started_at: optional<datetime>
+      state: string
     source:
       openapi: openapi/openapi.yaml
   AnnotationReviewRequest:
     docs: |-
-      A ModelSerializer that takes additional arguments for
-      "fields", "omit" and "expand" in order to
-      control which fields are displayed, and whether to replace simple
-      values with complex, nested serializations
+      AnnotationReview Serializer with FSM state support.
+
+      Note: The 'state' field will be populated from the queryset annotation
+      if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+      The state field display is controlled by both:
+      - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+      - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     properties:
       accepted:
         type: optional<boolean>
@@ -1592,6 +1602,15 @@ types:
     source:
       openapi: openapi/openapi.yaml
   Comment:
+    docs: |-
+      Comment Serializer with FSM state support.
+
+      Note: The 'state' field will be populated from the queryset annotation
+      if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+      The state field display is controlled by both:
+      - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+      - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     properties:
       annotation: optional<integer>
       classifications: optional<unknown>
@@ -1611,6 +1630,7 @@ types:
       resolved_at:
         type: optional<datetime>
         docs: Resolving time
+      state: string
       task: optional<integer>
       text:
         type: optional<string>
@@ -1621,6 +1641,15 @@ types:
     source:
       openapi: openapi/openapi.yaml
   CommentRequest:
+    docs: |-
+      Comment Serializer with FSM state support.
+
+      Note: The 'state' field will be populated from the queryset annotation
+      if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+      The state field display is controlled by both:
+      - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+      - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     properties:
       annotation: optional<integer>
       classifications: optional<unknown>
@@ -1635,6 +1664,15 @@ types:
     source:
       openapi: openapi/openapi.yaml
   CommentSerializerWithExpandedUser:
+    docs: |-
+      Comment Serializer with FSM state support.
+
+      Note: The 'state' field will be populated from the queryset annotation
+      if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+      The state field display is controlled by both:
+      - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+      - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     properties:
       annotation: optional<integer>
       classifications: optional<unknown>
@@ -1652,6 +1690,7 @@ types:
       resolved_at:
         type: optional<datetime>
         docs: Resolving time
+      state: string
       task: optional<integer>
       text:
         type: optional<string>
@@ -5040,7 +5079,7 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   LseTask:
-    docs: Task Serializer with project scheme configs validation
+    docs: Data Manager Task Serializer with FSM state support.
     properties:
       agreement: string
       agreement_selected: string
@@ -5119,6 +5158,7 @@ types:
       reviewers_count: integer
       reviews_accepted: optional<integer>
       reviews_rejected: optional<integer>
+      state: string
       storage_filename: string
       total_annotations: optional<integer>
       total_predictions: optional<integer>
@@ -5435,7 +5475,7 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   LseTaskSerializerForAnnotators:
-    docs: Task Serializer with project scheme configs validation
+    docs: Data Manager Task Serializer with FSM state support.
     properties:
       annotations: string
       annotations_results: string
@@ -5497,7 +5537,7 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   LseTaskSerializerForReviewers:
-    docs: Task Serializer with project scheme configs validation
+    docs: Data Manager Task Serializer with FSM state support.
     properties:
       agreement: string
       agreement_selected: string
@@ -5576,6 +5616,7 @@ types:
       reviewers_count: integer
       reviews_accepted: optional<integer>
       reviews_rejected: optional<integer>
+      state: string
       storage_filename: string
       total_annotations: optional<integer>
       total_predictions: optional<integer>
@@ -8030,6 +8071,15 @@ types:
     source:
       openapi: openapi/openapi.yaml
   TaskAssignment:
+    docs: |-
+      TaskAssignment Serializer with FSM state support.
+
+      Note: The 'state' field will be populated from the queryset annotation
+      if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+      The state field display is controlled by both:
+      - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+      - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     properties:
       assignee:
         type: integer
@@ -8038,6 +8088,7 @@ types:
         type: datetime
         docs: Time of assignment
       id: integer
+      state: string
       task:
         type: integer
         docs: Assigned task

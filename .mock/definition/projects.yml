@@ -1147,6 +1147,7 @@ service:
                     created_at: '2024-01-15T09:30:00Z'
                     created_username: created_username
                     id: 1
+                    state: state
                     updated_at: '2024-01-15T09:30:00Z'
                 cancelled_annotations: 1
                 comment_authors:

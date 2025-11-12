@@ -19399,10 +19399,10 @@ components:
         - exclude
     Annotation:
       description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields", "omit" and "expand" in order to
-        control which fields are displayed, and whether to replace simple
-        values with complex, nested serializations
+        Annotation Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -19490,6 +19490,9 @@ components:
             type: object
           title: Annotation result list
           type: array
+        state:
+          readOnly: true
+          type: string
         task:
           description: Corresponding task for this annotation
           nullable: true
@@ -19511,14 +19514,15 @@ components:
         - created_at
         - created_username
         - id
+        - state
         - updated_at
       type: object
     AnnotationBulkSerializerWithSelectedItemsRequest:
       description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields", "omit" and "expand" in order to
-        control which fields are displayed, and whether to replace simple
-        values with complex, nested serializations
+        Annotation Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -19703,10 +19707,10 @@ components:
       type: object
     AnnotationRequest:
       description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields", "omit" and "expand" in order to
-        control which fields are displayed, and whether to replace simple
-        values with complex, nested serializations
+        Annotation Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -19794,10 +19798,14 @@ components:
       type: object
     AnnotationReview:
       description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields", "omit" and "expand" in order to
-        control which fields are displayed, and whether to replace simple
-        values with complex, nested serializations
+        AnnotationReview Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+        The state field display is controlled by both:
+        - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+        - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
       properties:
         accepted:
           description: Accepted or rejected (if false) flag
@@ -19839,6 +19847,9 @@ components:
           format: date-time
           nullable: true
           type: string
+        state:
+          readOnly: true
+          type: string
       required:
         - annotation
         - created_at
@@ -19846,13 +19857,18 @@ components:
         - fixed_annotation_history
         - id
         - previous_annotation_history
+        - state
       type: object
     AnnotationReviewRequest:
       description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields", "omit" and "expand" in order to
-        control which fields are displayed, and whether to replace simple
-        values with complex, nested serializations
+        AnnotationReview Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+        The state field display is controlled by both:
+        - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+        - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
       properties:
         accepted:
           description: Accepted or rejected (if false) flag
@@ -21119,6 +21135,15 @@ components:
         - type
       type: object
     Comment:
+      description: |-
+        Comment Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+        The state field display is controlled by both:
+        - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+        - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
       properties:
         annotation:
           nullable: true
@@ -21157,6 +21182,9 @@ components:
           nullable: true
           readOnly: true
           type: string
+        state:
+          readOnly: true
+          type: string
         task:
           nullable: true
           readOnly: true
@@ -21176,10 +21204,20 @@ components:
         - id
         - project
         - resolved_at
+        - state
         - task
         - updated_at
       type: object
     CommentRequest:
+      description: |-
+        Comment Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+        The state field display is controlled by both:
+        - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+        - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
       properties:
         annotation:
           nullable: true
@@ -21202,6 +21240,15 @@ components:
           type: string
       type: object
     CommentSerializerWithExpandedUser:
+      description: |-
+        Comment Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+        The state field display is controlled by both:
+        - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+        - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
       properties:
         annotation:
           nullable: true
@@ -21238,6 +21285,9 @@ components:
           nullable: true
           readOnly: true
           type: string
+        state:
+          readOnly: true
+          type: string
         task:
           nullable: true
           readOnly: true
@@ -21257,6 +21307,7 @@ components:
         - id
         - project
         - resolved_at
+        - state
         - task
         - updated_at
       type: object
@@ -25772,7 +25823,7 @@ components:
         - role_arn
       type: object
     LseTask:
-      description: Task Serializer with project scheme configs validation
+      description: Data Manager Task Serializer with FSM state support.
       properties:
         agreement:
           readOnly: true
@@ -25964,6 +26015,9 @@ components:
           type: integer
         reviews_rejected:
           type: integer
+        state:
+          readOnly: true
+          type: string
         storage_filename:
           readOnly: true
           type: string
@@ -26011,6 +26065,7 @@ components:
         - review_time
         - reviewers
         - reviewers_count
+        - state
         - storage_filename
         - updated_at
         - updated_by
@@ -26195,7 +26250,7 @@ components:
         - data
       type: object
     LseTaskSerializerForAnnotators:
-      description: Task Serializer with project scheme configs validation
+      description: Data Manager Task Serializer with FSM state support.
       properties:
         annotations:
           default: []
@@ -26317,7 +26372,7 @@ components:
         - unresolved_comment_count
       type: object
     LseTaskSerializerForReviewers:
-      description: Task Serializer with project scheme configs validation
+      description: Data Manager Task Serializer with FSM state support.
       properties:
         agreement:
           readOnly: true
@@ -26509,6 +26564,9 @@ components:
           type: integer
         reviews_rejected:
           type: integer
+        state:
+          readOnly: true
+          type: string
         storage_filename:
           readOnly: true
           type: string
@@ -26556,6 +26614,7 @@ components:
         - review_time
         - reviewers
         - reviewers_count
+        - state
         - storage_filename
         - updated_at
         - updated_by
@@ -27913,10 +27972,14 @@ components:
       type: object
     PatchedAnnotationReviewRequest:
       description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields", "omit" and "expand" in order to
-        control which fields are displayed, and whether to replace simple
-        values with complex, nested serializations
+        AnnotationReview Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+        The state field display is controlled by both:
+        - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+        - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
       properties:
         accepted:
           description: Accepted or rejected (if false) flag
@@ -28200,6 +28263,15 @@ components:
           type: string
       type: object
     PatchedCommentRequest:
+      description: |-
+        Comment Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+        The state field display is controlled by both:
+        - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+        - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
       properties:
         annotation:
           nullable: true
@@ -29264,7 +29336,7 @@ components:
           type: boolean
       type: object
     PatchedLseTaskRequest:
-      description: Task Serializer with project scheme configs validation
+      description: Data Manager Task Serializer with FSM state support.
       properties:
         avg_lead_time:
           format: double
@@ -31882,6 +31954,15 @@ components:
         - completed_with_errors
       type: string
     TaskAssignment:
+      description: |-
+        TaskAssignment Serializer with FSM state support.
+
+        Note: The 'state' field will be populated from the queryset annotation
+        if present, preventing N+1 queries. Use .with_state() on your queryset.
+
+        The state field display is controlled by both:
+        - fflag_feat_fit_568_finite_state_management (FSM background calculations)
+        - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
       properties:
         assignee:
           description: Assigned user
@@ -31894,6 +31975,9 @@ components:
         id:
           readOnly: true
           type: integer
+        state:
+          readOnly: true
+          type: string
         task:
           description: Assigned task
           type: integer
@@ -31910,6 +31994,7 @@ components:
         - assignee
         - created_at
         - id
+        - state
         - task
       type: object
     TaskEvent:
