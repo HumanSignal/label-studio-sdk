@@ -3966,6 +3966,88 @@ paths:
         - Data Manager
       x-fern-audiences:
         - internal
+  /api/fsm/entities/{entity_name}/{entity_id}/history:
+    get:
+      description: Get the state history of an entity
+      operationId: api_fsm_entities_history_list
+      parameters:
+        - description: Filter for state history items created at or after the ISO 8601 formatted date (YYYY-MM-DDTHH:MM:SS)
+          in: query
+          name: created_at_from
+          schema:
+            type: string
+        - description: Filter for state history items created at or before the ISO 8601 formatted date (YYYY-MM-DDTHH:MM:SS)
+          in: query
+          name: created_at_to
+          schema:
+            type: string
+        - in: path
+          name: entity_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: entity_name
+          required: true
+          schema:
+            type: string
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: Filter previous_state by exact match (case-insensitive)
+          in: query
+          name: previous_state
+          schema:
+            type: string
+        - description: Filter state by exact match (case-insensitive)
+          in: query
+          name: state
+          schema:
+            type: string
+        - description: Filter transition_name by exact match (case-insensitive)
+          in: query
+          name: transition_name
+          schema:
+            type: string
+        - description: Filter triggered_by by exact match
+          in: query
+          name: triggered_by
+          schema:
+            type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStateModelList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get entity state history
+      tags:
+        - FSM
+      x-fern-audiences:
+        - internal
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name: fsm
+      x-fern-sdk-method-name: state_history
   /api/import/file-upload/{id}:
     delete:
       description: Delete a specific uploaded file.
@@ -27970,6 +28052,29 @@ components:
         - total_annotations
         - total_predictions
       type: object
+    PaginatedStateModelList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/StateModel'
+          type: array
+      required:
+        - count
+        - results
+      type: object
     PatchedAnnotationReviewRequest:
       description: |-
         AnnotationReview Serializer with FSM state support.
@@ -31925,6 +32030,48 @@ components:
         - TR
         - PR
       type: string
+    StateModel:
+      description: |-
+        Serializer for FSM state models.
+
+        Uses Serializer instead of ModelSerializer because BaseState is abstract.
+        Works with any concrete state model that inherits from BaseState.
+      properties:
+        context_data:
+          readOnly: true
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        previous_state:
+          nullable: true
+          readOnly: true
+          type: string
+        state:
+          readOnly: true
+          type: string
+        transition_name:
+          nullable: true
+          readOnly: true
+          type: string
+        triggered_by:
+          allOf:
+            - $ref: '#/components/schemas/TriggeredBy'
+          nullable: true
+          readOnly: true
+      required:
+        - context_data
+        - created_at
+        - id
+        - previous_state
+        - state
+        - transition_name
+        - triggered_by
+      type: object
     Status7bfEnum:
       description: |-
         * `created` - Created
@@ -32342,6 +32489,24 @@ components:
         - data_scientist
         - other
       type: string
+    TriggeredBy:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
+      properties:
+        email:
+          format: email
+          maxLength: 254
+          title: Email address
+          type: string
+        id:
+          readOnly: true
+          type: integer
+      required:
+        - id
+      type: object
     TypeEnum:
       description: |-
         * `AN` - Annotate

@@ -6435,6 +6435,20 @@ types:
         docs: Total number of predictions
     source:
       openapi: openapi/openapi.yaml
+  PaginatedStateModelList:
+    properties:
+      count: integer
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      previous:
+        type: optional<string>
+        validation:
+          format: uri
+      results: list<StateModel>
+    source:
+      openapi: openapi/openapi.yaml
   Pause:
     docs: |-
       A ModelSerializer that takes additional arguments for
@@ -8040,6 +8054,25 @@ types:
       * `PR` - Predicting
     source:
       openapi: openapi/openapi.yaml
+  StateModel:
+    docs: |-
+      Serializer for FSM state models.
+
+      Uses Serializer instead of ModelSerializer because BaseState is abstract.
+      Works with any concrete state model that inherits from BaseState.
+    properties:
+      context_data: unknown
+      created_at: datetime
+      id:
+        type: string
+        validation:
+          format: uuid
+      previous_state: optional<string>
+      state: string
+      transition_name: optional<string>
+      triggered_by: optional<TriggeredBy>
+    source:
+      openapi: openapi/openapi.yaml
   Status7BfEnum:
     enum:
       - created
@@ -8324,6 +8357,21 @@ types:
       * `data_engineer_platform_engineer` - Data Engineer Platform Engineer
       * `data_scientist` - Data Scientist
       * `other` - Other
+    source:
+      openapi: openapi/openapi.yaml
+  TriggeredBy:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
+    properties:
+      email:
+        type: optional<string>
+        validation:
+          format: email
+          maxLength: 254
+      id: integer
     source:
       openapi: openapi/openapi.yaml
   TypeEnum:
