@@ -20,6 +20,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "remove_from_queue": True,
             "result": {"key": "value"},
             "started_at": "2024-01-15T09:30:00Z",
+            "state": "state",
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
@@ -37,6 +38,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "remove_from_queue": None,
                 "result": None,
                 "started_at": "datetime",
+                "state": None,
             }
         },
     )
@@ -60,6 +62,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "remove_from_queue": True,
         "result": {"key": "value"},
         "started_at": "2024-01-15T09:30:00Z",
+        "state": "state",
     }
     expected_types: typing.Any = {
         "accepted": None,
@@ -73,6 +76,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "remove_from_queue": None,
         "result": None,
         "started_at": "datetime",
+        "state": None,
     }
     response = client.annotation_reviews.create(annotation=1)
     validate_response(response, expected_response, expected_types)
@@ -94,6 +98,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "remove_from_queue": True,
         "result": {"key": "value"},
         "started_at": "2024-01-15T09:30:00Z",
+        "state": "state",
     }
     expected_types: typing.Any = {
         "accepted": None,
@@ -107,6 +112,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "remove_from_queue": None,
         "result": None,
         "started_at": "datetime",
+        "state": None,
     }
     response = client.annotation_reviews.get(id=1)
     validate_response(response, expected_response, expected_types)
@@ -141,6 +147,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "remove_from_queue": True,
         "result": {"key": "value"},
         "started_at": "2024-01-15T09:30:00Z",
+        "state": "state",
     }
     expected_types: typing.Any = {
         "accepted": None,
@@ -154,6 +161,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "remove_from_queue": None,
         "result": None,
         "started_at": "datetime",
+        "state": None,
     }
     response = client.annotation_reviews.update(id=1)
     validate_response(response, expected_response, expected_types)
