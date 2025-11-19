@@ -76,5 +76,52 @@ service:
                     id: 1
       audiences:
         - internal
+    execute_transition:
+      path: /api/fsm/entities/{entity_name}/{entity_id}/transition/
+      method: POST
+      auth: true
+      docs: Execute a registered manual transition for an entity.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        entity_id: integer
+        entity_name: string
+      display-name: Execute manual FSM transition
+      request:
+        name: FsmTransitionExecuteRequestRequest
+        body:
+          properties:
+            transition_data: optional<map<string, unknown>>
+            transition_name:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.FsmTransitionExecuteResponse
+      examples:
+        - path-parameters:
+            entity_id: 1
+            entity_name: entity_name
+          request:
+            transition_name: transition_name
+          response:
+            body:
+              new_state: new_state
+              state_record:
+                context_data:
+                  key: value
+                created_at: '2024-01-15T09:30:00Z'
+                id: id
+                previous_state: previous_state
+                state: state
+                transition_name: transition_name
+                triggered_by:
+                  email: email
+                  id: 1
+              success: true
+      audiences:
+        - internal
   source:
     openapi: openapi/openapi.yaml

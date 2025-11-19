@@ -4048,6 +4048,49 @@ paths:
         results: $response.results
       x-fern-sdk-group-name: fsm
       x-fern-sdk-method-name: state_history
+  /api/fsm/entities/{entity_name}/{entity_id}/transition/:
+    post:
+      description: Execute a registered manual transition for an entity.
+      operationId: api_fsm_entities_transition_create
+      parameters:
+        - in: path
+          name: entity_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: entity_name
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FSMTransitionExecuteRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FSMTransitionExecuteRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FSMTransitionExecuteRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FSMTransitionExecuteResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: Execute manual FSM transition
+      tags:
+        - FSM
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name: fsm
+      x-fern-sdk-method-name: execute_transition
   /api/import/file-upload/{id}:
     delete:
       description: Delete a specific uploaded file.
@@ -22153,6 +22196,37 @@ components:
           type: string
       required:
         - export_type
+      type: object
+    FSMTransitionExecuteRequestRequest:
+      description: Request body serializer for executing a manual FSM transition.
+      properties:
+        transition_data:
+          additionalProperties: {}
+          nullable: true
+          type: object
+        transition_name:
+          minLength: 1
+          type: string
+      required:
+        - transition_name
+      type: object
+    FSMTransitionExecuteResponse:
+      description: Response serializer for manual FSM transition execution.
+      properties:
+        new_state:
+          readOnly: true
+          type: string
+        state_record:
+          allOf:
+            - $ref: '#/components/schemas/StateModel'
+          readOnly: true
+        success:
+          readOnly: true
+          type: boolean
+      required:
+        - new_state
+        - state_record
+        - success
       type: object
     FileUpload:
       properties:
