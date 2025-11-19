@@ -22214,11 +22214,13 @@ components:
       description: Response serializer for manual FSM transition execution.
       properties:
         new_state:
+          nullable: true
           readOnly: true
           type: string
         state_record:
           allOf:
             - $ref: '#/components/schemas/StateModel'
+          nullable: true
           readOnly: true
         success:
           readOnly: true

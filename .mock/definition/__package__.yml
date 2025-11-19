@@ -2301,8 +2301,8 @@ types:
   FsmTransitionExecuteResponse:
     docs: Response serializer for manual FSM transition execution.
     properties:
-      new_state: string
-      state_record: StateModel
+      new_state: optional<string>
+      state_record: optional<StateModel>
       success: boolean
     source:
       openapi: openapi/openapi.yaml
