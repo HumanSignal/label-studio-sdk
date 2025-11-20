@@ -2298,6 +2298,14 @@ types:
           maxLength: 2048
     source:
       openapi: openapi/openapi.yaml
+  FsmTransitionExecuteResponse:
+    docs: Response serializer for manual FSM transition execution.
+    properties:
+      new_state: optional<string>
+      state_record: optional<StateModel>
+      success: boolean
+    source:
+      openapi: openapi/openapi.yaml
   FileUpload:
     properties:
       file: string
