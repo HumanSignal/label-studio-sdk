@@ -54,7 +54,7 @@ jobs:
           chmod +x /usr/local/bin/gitleaks
 
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           submodules: 'recursive'
           token: ${{ secrets.GIT_PAT }}
