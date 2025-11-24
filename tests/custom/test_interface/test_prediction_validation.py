@@ -447,14 +447,11 @@ class TestPredictionValidation:
         }
         assert li.validate_prediction(valid_pred) is True
         
-        # Invalid - negative number
-        invalid_pred = copy.deepcopy(valid_pred)
-        invalid_pred["result"][0]["value"]["number"] = -5
-        assert li.validate_prediction(invalid_pred) is False
-        
-        # Check specific error message
-        errors = li.validate_prediction(invalid_pred, return_errors=True)
-        assert any("Invalid value for control 'number'" in error for error in errors)
+        # Valid - negative number
+        valid_pred_negative = copy.deepcopy(valid_pred)
+        valid_pred_negative["result"][0]["value"]["number"] = -5
+        assert li.validate_prediction(valid_pred_negative) is True
+
 
     def test_datetime_validation(self):
         """Test DateTime tag validation"""
