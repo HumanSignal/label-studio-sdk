@@ -783,7 +783,7 @@ class VideoRectangleTag(ControlTag):
     
     
 class NumberValue(BaseModel):
-    number: float = Field(..., ge=0)
+    number: float
     
 
 class NumberTag(ControlTag):
