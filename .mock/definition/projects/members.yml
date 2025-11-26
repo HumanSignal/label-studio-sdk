@@ -7,7 +7,8 @@ service:
     get:
       path: /api/projects/{id}/members/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Retrieve the members for a specific project. Optionally filter by user
         IDs (comma-separated).
@@ -30,10 +31,13 @@ service:
       response:
         docs: List of users with membership information
         type: list<root.LseUser>
+        status-code: 200
       availability: deprecated
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            user_ids: user_ids
           response:
             body:
               - active_organization: 1
@@ -63,10 +67,6 @@ service:
                   trial_license_enterprise: true
                   trial_models_in_production: trial_models_in_production
                   trial_role: annotator
-                org_membership:
-                  - active: active
-                    organization_id: 1
-                    role: role
                 organization_membership:
                   active: active
                   organization_id: 1
@@ -79,7 +79,8 @@ service:
     add:
       path: /api/projects/{id}/members/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -102,6 +103,7 @@ service:
       response:
         docs: ''
         type: root.ProjectMember
+        status-code: 201
       examples:
         - path-parameters:
             id: 1
@@ -115,7 +117,8 @@ service:
     remove:
       path: /api/projects/{id}/members/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>

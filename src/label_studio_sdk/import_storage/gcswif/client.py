@@ -60,6 +60,7 @@ class GcswifClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.gcswif.list(
+            ordering="ordering",
             project=1,
         )
         """
@@ -162,6 +163,7 @@ class GcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix
@@ -330,6 +332,7 @@ class GcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix
@@ -588,6 +591,7 @@ class GcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix
@@ -788,6 +792,7 @@ class AsyncGcswifClient:
 
         async def main() -> None:
             await client.import_storage.gcswif.list(
+                ordering="ordering",
                 project=1,
             )
 
@@ -893,6 +898,7 @@ class AsyncGcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix
@@ -1069,6 +1075,7 @@ class AsyncGcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix
@@ -1351,6 +1358,7 @@ class AsyncGcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix

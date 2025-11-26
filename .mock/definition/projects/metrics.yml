@@ -7,7 +7,8 @@ service:
     get:
       path: /api/projects/{id}/metricparam/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -24,14 +25,13 @@ service:
       response:
         docs: Current metrics configuration
         type: root.MetricParam
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
           response:
             body:
-              agreement_threshold: agreement_threshold
               allowed: allowed
-              max_additional_annotators_assignable: 1
               metric_name: metric_name
               metric_params:
                 key: value
@@ -40,7 +40,8 @@ service:
     update:
       path: /api/projects/{id}/metricparam/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -78,15 +79,14 @@ service:
       response:
         docs: Updated metrics configuration
         type: root.MetricParam
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
-              agreement_threshold: agreement_threshold
               allowed: allowed
-              max_additional_annotators_assignable: 1
               metric_name: metric_name
               metric_params:
                 key: value

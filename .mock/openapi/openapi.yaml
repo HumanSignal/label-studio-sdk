@@ -5750,6 +5750,25 @@ paths:
           required: false
           schema:
             type: integer
+        - description: |
+            Filter members by organization role. Accepts single role or comma-separated list of roles.
+
+            **Format:**
+            - Single role: `?role=RE`
+            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+            **Role Codes:**
+            - `OW` = Owner
+            - `AD` = Administrator
+            - `MA` = Manager
+            - `RE` = Reviewer
+            - `AN` = Annotator
+            - `NO` = Not Activated
+            - `DI` = Disabled
+          in: query
+          name: role
+          schema:
+            type: string
         - description: A search term.
           in: query
           name: search
@@ -7057,6 +7076,11 @@ paths:
           name: search
           schema:
             type: string
+        - description: Filter current_state by exact match
+          in: query
+          name: state
+          schema:
+            type: string
         - description: Filter title by contains (case-insensitive)
           in: query
           name: title
@@ -7158,6 +7182,11 @@ paths:
         - description: Search term for project title and description
           in: query
           name: search
+          schema:
+            type: string
+        - description: Filter current_state by exact match
+          in: query
+          name: state
           schema:
             type: string
         - description: Filter title by contains (case-insensitive)
@@ -8490,6 +8519,16 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Filter by last activity (ISO 8601 formatted date). Only when all=True.
+          in: query
+          name: last_activity__gte
+          schema:
+            type: string
+        - description: Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+          in: query
+          name: role
+          schema:
+            type: string
         - description: Search term for filtering members by name, email, or username. Only when all=True.
           in: query
           name: search
@@ -8533,6 +8572,16 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Filter by last activity (ISO 8601 formatted date). Only when all=True.
+          in: query
+          name: last_activity__gte
+          schema:
+            type: string
+        - description: Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+          in: query
+          name: role
+          schema:
+            type: string
         - description: Search term for filtering members by name, email, or username. Only when all=True.
           in: query
           name: search
@@ -8582,6 +8631,14 @@ paths:
                 </p>
             </Card>
         Retrieve the members for a specific project.
+
+        **Response Fields:**
+        - `implicit_member` (boolean): Indicates if the user is an implicit member.
+          - `true`: User has access via workspace membership or organization role (Administrator/Owner)
+          - `false`: User is an explicit project member (added directly to the project)
+        - `project_role` (string|null): Project-specific role override if assigned, null otherwise
+
+        **Note:** Users can have both explicit membership AND implicit access. The `implicit_member` field is `false` if the user has an explicit ProjectMember entry, regardless of whether they also have implicit access via workspace or org role.
       operationId: api_projects_members_paginated_list
       parameters:
         - in: path
@@ -8599,11 +8656,30 @@ paths:
           name: implicit
           schema:
             type: boolean
+        - description: Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
+          in: query
+          name: last_activity__gte
+          schema:
+            format: date-time
+            type: string
         - description: Exclude annotators from the results
           in: query
           name: no_annotators
           schema:
             type: boolean
+        - description: |-
+            Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
+
+            **Note on role ordering:**
+            When ordering by "role", the system uses the effective role:
+            - Project-specific role if assigned (takes precedence)
+            - Organization role if no project role is assigned
+
+            Roles are sorted alphabetically by their code: AD (Administrator), AN (Annotator), DI (Disabled), MA (Manager), NO (Not Activated), OW (Owner), RE (Reviewer)
+          in: query
+          name: ordering
+          schema:
+            type: string
         - description: A page number within the paginated result set.
           in: query
           name: page
@@ -8616,6 +8692,30 @@ paths:
           required: false
           schema:
             type: integer
+        - description: |-
+            Filter members by role. Accepts single role or comma-separated list of roles.
+
+            **Format:**
+            - Single role: `?role=RE`
+            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+            **Role Codes:**
+            - `OW` = Owner
+            - `AD` = Administrator
+            - `MA` = Manager
+            - `RE` = Reviewer
+            - `AN` = Annotator
+
+            **Matching Logic:**
+            Returns users who have any of the specified roles either:
+            1. As their **project-specific role** (from project role assignments), OR
+            2. As their **organization role** (if they have no project-specific role override)
+
+            **Note:** Project-specific roles take precedence. If a user has a project role assigned, their organization role is ignored for filtering purposes.
+          in: query
+          name: role
+          schema:
+            type: string
         - description: Search term for filtering members by name, email, or username
           in: query
           name: search
@@ -19416,10 +19516,9 @@ components:
           readOnly: true
           type: integer
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -19442,10 +19541,9 @@ components:
           nullable: true
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           readOnly: true
           type: string
@@ -19453,6 +19551,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_number:
           description: Total task number in project
           readOnly: true
@@ -19507,6 +19608,7 @@ components:
         - reviewer_queue_total
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -19569,6 +19671,8 @@ components:
           nullable: true
           type: integer
         last_action:
+          allOf:
+            - $ref: '#/components/schemas/LastActionEnum'
           description: |-
             Action which was performed in the last annotation history item
 
@@ -19583,9 +19687,6 @@ components:
             * `fixed_and_accepted` - Fixed and accepted
             * `deleted_review` - Deleted review
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/LastActionEnum'
-            - $ref: '#/components/schemas/NullEnum'
         last_created_by:
           description: User who created the last annotation history item
           nullable: true
@@ -19671,6 +19772,8 @@ components:
           nullable: true
           type: integer
         last_action:
+          allOf:
+            - $ref: '#/components/schemas/LastActionEnum'
           description: |-
             Action which was performed in the last annotation history item
 
@@ -19685,9 +19788,6 @@ components:
             * `fixed_and_accepted` - Fixed and accepted
             * `deleted_review` - Deleted review
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/LastActionEnum'
-            - $ref: '#/components/schemas/NullEnum'
         last_created_by:
           description: User who created the last annotation history item
           nullable: true
@@ -19749,10 +19849,9 @@ components:
         values with complex, nested serializations
       properties:
         action:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/ActionEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         annotation_id:
           description: Corresponding annotation for this historical annotation
           maximum: 2147483647
@@ -19859,6 +19958,8 @@ components:
           nullable: true
           type: integer
         last_action:
+          allOf:
+            - $ref: '#/components/schemas/LastActionEnum'
           description: |-
             Action which was performed in the last annotation history item
 
@@ -19873,9 +19974,6 @@ components:
             * `fixed_and_accepted` - Fixed and accepted
             * `deleted_review` - Deleted review
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/LastActionEnum'
-            - $ref: '#/components/schemas/NullEnum'
         last_created_by:
           description: User who created the last annotation history item
           nullable: true
@@ -20027,15 +20125,14 @@ components:
           readOnly: true
           type: integer
         label_stream_task_distribution:
+          allOf:
+            - $ref: '#/components/schemas/LabelStreamTaskDistributionEnum'
           description: |-
             Modes for distributing tasks to annotators
 
             * `auto_distribution` - Label Stream distributes tasks automatically to annotators
             * `assigned_only` - Label Stream shows tasks only to assigned users
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/LabelStreamTaskDistributionEnum'
-            - $ref: '#/components/schemas/NullEnum'
         project:
           nullable: true
           type: integer
@@ -20045,15 +20142,14 @@ components:
     AssignmentSettingsRequest:
       properties:
         label_stream_task_distribution:
+          allOf:
+            - $ref: '#/components/schemas/LabelStreamTaskDistributionEnum'
           description: |-
             Modes for distributing tasks to annotators
 
             * `auto_distribution` - Label Stream distributes tasks automatically to annotators
             * `assigned_only` - Label Stream shows tasks only to assigned users
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/LabelStreamTaskDistributionEnum'
-            - $ref: '#/components/schemas/NullEnum'
         project:
           nullable: true
           type: integer
@@ -21064,9 +21160,6 @@ components:
         - billing_checks
         - billing_flags
       type: object
-    BlankEnum:
-      enum:
-        - ''
     Blueprint:
       properties:
         created_at:
@@ -23964,6 +24057,8 @@ components:
           nullable: true
           type: boolean
         reviewed:
+          allOf:
+            - $ref: '#/components/schemas/ReviewedEnum'
           description: |-
             `only` - include all tasks with at least one not reviewed annotation<br>`exclude` - exclude with at least one not reviewed annotation
 
@@ -23971,9 +24066,6 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         skipped:
           description: Include skipped annotations
           nullable: true
@@ -23991,6 +24083,8 @@ components:
           nullable: true
           type: boolean
         reviewed:
+          allOf:
+            - $ref: '#/components/schemas/ReviewedEnum'
           description: |-
             `only` - include all tasks with at least one not reviewed annotation<br>`exclude` - exclude with at least one not reviewed annotation
 
@@ -23998,9 +24092,6 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         skipped:
           description: Include skipped annotations
           nullable: true
@@ -24111,6 +24202,8 @@ components:
           nullable: true
           type: integer
         onboarding_state:
+          allOf:
+            - $ref: '#/components/schemas/OnboardingStateEnum'
           description: |-
             The current stage of user onboarding
 
@@ -24121,10 +24214,6 @@ components:
             * `in_app_guidance` - In App Guidance
             * `complete` - Complete
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/OnboardingStateEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         social_auth_finished:
           description: Is user finished social authentication
           nullable: true
@@ -24145,11 +24234,9 @@ components:
           nullable: true
           type: string
         trial_role:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/TrialRoleEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
       required:
         - email_notification_settings
         - invite_expired
@@ -24168,6 +24255,8 @@ components:
           nullable: true
           type: integer
         onboarding_state:
+          allOf:
+            - $ref: '#/components/schemas/OnboardingStateEnum'
           description: |-
             The current stage of user onboarding
 
@@ -24178,10 +24267,6 @@ components:
             * `in_app_guidance` - In App Guidance
             * `complete` - Complete
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/OnboardingStateEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         social_auth_finished:
           description: Is user finished social authentication
           nullable: true
@@ -24202,11 +24287,9 @@ components:
           nullable: true
           type: string
         trial_role:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/TrialRoleEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
       type: object
     LseOrganization:
       properties:
@@ -24467,10 +24550,9 @@ components:
           readOnly: true
           type: string
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -24493,10 +24575,9 @@ components:
           nullable: true
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           description: Skipped by collaborators annotation number in project
           readOnly: true
@@ -24505,6 +24586,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -24564,6 +24648,7 @@ components:
         - reviewer_queue_total
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -24750,10 +24835,9 @@ components:
           description: Reveal pre-annotations interactively
           type: boolean
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -24773,10 +24857,9 @@ components:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           description: Skipped by collaborators annotation number in project
           readOnly: true
@@ -24785,6 +24868,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -24832,6 +24918,7 @@ components:
         - queue_total
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -24909,10 +24996,9 @@ components:
           description: Reveal pre-annotations interactively
           type: boolean
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -24932,10 +25018,9 @@ components:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -25167,10 +25252,9 @@ components:
           readOnly: true
           type: integer
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -25193,10 +25277,9 @@ components:
           nullable: true
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           readOnly: true
           type: integer
@@ -25204,6 +25287,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -25267,6 +25353,7 @@ components:
         - reviewer_queue_total
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -25436,10 +25523,9 @@ components:
         review_settings:
           $ref: '#/components/schemas/ReviewSettings'
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -25462,10 +25548,9 @@ components:
           nullable: true
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           description: Skipped by collaborators annotation number in project
           readOnly: true
@@ -25474,6 +25559,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -25527,6 +25615,7 @@ components:
         - review_settings
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -26231,6 +26320,8 @@ components:
     LseTaskFilterOptions:
       properties:
         annotated:
+          allOf:
+            - $ref: '#/components/schemas/AnnotatedEnum'
           description: |-
             `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
 
@@ -26238,10 +26329,9 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/AnnotatedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         finished:
+          allOf:
+            - $ref: '#/components/schemas/FinishedEnum'
           description: |-
             `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
 
@@ -26249,13 +26339,12 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/FinishedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         only_with_annotations:
           default: false
           type: boolean
         reviewed:
+          allOf:
+            - $ref: '#/components/schemas/ReviewedEnum'
           description: |-
             `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
 
@@ -26263,10 +26352,9 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         skipped:
+          allOf:
+            - $ref: '#/components/schemas/SkippedEnum'
           description: |-
             `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
 
@@ -26274,9 +26362,6 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/SkippedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         view:
           description: Apply filters from the view ID (a tab from the Data Manager)
           type: integer
@@ -26284,6 +26369,8 @@ components:
     LseTaskFilterOptionsRequest:
       properties:
         annotated:
+          allOf:
+            - $ref: '#/components/schemas/AnnotatedEnum'
           description: |-
             `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
 
@@ -26291,10 +26378,9 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/AnnotatedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         finished:
+          allOf:
+            - $ref: '#/components/schemas/FinishedEnum'
           description: |-
             `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
 
@@ -26302,13 +26388,12 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/FinishedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         only_with_annotations:
           default: false
           type: boolean
         reviewed:
+          allOf:
+            - $ref: '#/components/schemas/ReviewedEnum'
           description: |-
             `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
 
@@ -26316,10 +26401,9 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         skipped:
+          allOf:
+            - $ref: '#/components/schemas/SkippedEnum'
           description: |-
             `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
 
@@ -26327,9 +26411,6 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/SkippedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         view:
           description: Apply filters from the view ID (a tab from the Data Manager)
           type: integer
@@ -27344,15 +27425,14 @@ components:
           readOnly: true
           type: number
         budget_reset_period:
+          allOf:
+            - $ref: '#/components/schemas/BudgetResetPeriodEnum'
           description: |-
             Budget reset period for the model provider connection (null if not reset)
 
             * `Monthly` - Monthly
             * `Yearly` - Yearly
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/BudgetResetPeriodEnum'
-            - $ref: '#/components/schemas/NullEnum'
           readOnly: true
         budget_total_spent:
           description: Tracked total budget spent for the given provider connection within the current budget period
@@ -27599,9 +27679,6 @@ components:
         - Failed
         - Canceled
       type: string
-    NullEnum:
-      enum:
-        - null
     OnboardingStateEnum:
       description: |-
         * `not_started` - Not Started
@@ -28031,6 +28108,9 @@ components:
         id:
           readOnly: true
           type: integer
+        implicit_member:
+          readOnly: true
+          type: boolean
         initials:
           default: '?'
           readOnly: true
@@ -28072,6 +28152,7 @@ components:
         - active_organization_meta
         - avatar
         - id
+        - implicit_member
         - initials
         - last_activity
         - lse_fields
@@ -29264,10 +29345,9 @@ components:
         review_settings:
           $ref: '#/components/schemas/ReviewSettingsRequest'
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -29290,10 +29370,9 @@ components:
           nullable: true
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -30335,10 +30414,9 @@ components:
           description: Reveal pre-annotations interactively
           type: boolean
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -30358,10 +30436,9 @@ components:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           description: Skipped by collaborators annotation number in project
           readOnly: true
@@ -30370,6 +30447,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -30415,6 +30495,7 @@ components:
         - queue_total
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -31185,6 +31266,8 @@ components:
           nullable: true
           type: integer
         requeue_rejected_tasks_mode:
+          allOf:
+            - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
           description: |-
             Requeue mode for rejected tasks
 
@@ -31192,10 +31275,6 @@ components:
             * `remove` - Remove
             * `flexible` - Flexible
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         requeue_rejected_tasks_to_annotator:
           readOnly: true
           type: boolean
@@ -31203,15 +31282,14 @@ components:
           description: If set, the reviewer must leave a comment on reject
           type: boolean
         review_criteria:
+          allOf:
+            - $ref: '#/components/schemas/ReviewCriteriaEnum'
           description: |-
             Criteria to mark task as reviewed
 
             * `all` - Task is reviewed if all annotations are reviewed
             * `one` - Task is reviewed if at least one annotation is reviewed
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewCriteriaEnum'
-            - $ref: '#/components/schemas/NullEnum'
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
@@ -31222,16 +31300,14 @@ components:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         sampling:
+          allOf:
+            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
           description: |-
             Task sampling strategy in the review stream (by task id or random)
 
             * `task_id` - By Task ID
             * `random` - Random
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -31265,6 +31341,8 @@ components:
           nullable: true
           type: integer
         requeue_rejected_tasks_mode:
+          allOf:
+            - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
           description: |-
             Requeue mode for rejected tasks
 
@@ -31272,23 +31350,18 @@ components:
             * `remove` - Remove
             * `flexible` - Flexible
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         require_comment_on_reject:
           description: If set, the reviewer must leave a comment on reject
           type: boolean
         review_criteria:
+          allOf:
+            - $ref: '#/components/schemas/ReviewCriteriaEnum'
           description: |-
             Criteria to mark task as reviewed
 
             * `all` - Task is reviewed if all annotations are reviewed
             * `one` - Task is reviewed if at least one annotation is reviewed
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewCriteriaEnum'
-            - $ref: '#/components/schemas/NullEnum'
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
@@ -31299,16 +31372,14 @@ components:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         sampling:
+          allOf:
+            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
           description: |-
             Task sampling strategy in the review stream (by task id or random)
 
             * `task_id` - By Task ID
             * `random` - Random
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -32933,6 +33004,8 @@ components:
           nullable: true
           type: integer
         onboarding_state:
+          allOf:
+            - $ref: '#/components/schemas/OnboardingStateEnum'
           description: |-
             The current stage of user onboarding
 
@@ -32943,10 +33016,6 @@ components:
             * `in_app_guidance` - In App Guidance
             * `complete` - Complete
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/OnboardingStateEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         social_auth_finished:
           description: Is user finished social authentication
           nullable: true
@@ -32967,11 +33036,9 @@ components:
           nullable: true
           type: string
         trial_role:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/TrialRoleEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
       required:
         - active_organization_external_id
         - email_notification_settings

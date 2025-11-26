@@ -29,12 +29,12 @@ class AnnotationReview(UncheckedBaseModel):
     Corresponding annotation
     """
 
-    created_at: dt.datetime = pydantic.Field()
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
     """
 
-    created_by: int = pydantic.Field()
+    created_by: typing.Optional[int] = pydantic.Field(default=None)
     """
     User who made this review
     """
@@ -44,7 +44,7 @@ class AnnotationReview(UncheckedBaseModel):
     Fixed annotation history item by the reviewer
     """
 
-    id: int
+    id: typing.Optional[int] = None
     last_annotation_history: typing.Optional[int] = None
     previous_annotation_history: typing.Optional[int] = pydantic.Field(default=None)
     """
@@ -54,7 +54,7 @@ class AnnotationReview(UncheckedBaseModel):
     remove_from_queue: typing.Optional[bool] = None
     result: typing.Optional[typing.Optional[typing.Any]] = None
     started_at: typing.Optional[dt.datetime] = None
-    state: str
+    state: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

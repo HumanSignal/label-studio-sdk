@@ -7,7 +7,8 @@ service:
     list:
       path: /api/workspaces/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -35,8 +36,12 @@ service:
       response:
         docs: ''
         type: list<root.Workspace>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            is_personal: true
+            ordering: ordering
+          response:
             body:
               - color: color
                 created_by: 1
@@ -50,7 +55,8 @@ service:
     create:
       path: /api/workspaces/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -93,6 +99,7 @@ service:
       response:
         docs: ''
         type: root.Workspace
+        status-code: 201
       examples:
         - request:
             title: title
@@ -110,7 +117,8 @@ service:
     get:
       path: /api/workspaces/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -127,6 +135,7 @@ service:
       response:
         docs: ''
         type: root.Workspace
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -144,7 +153,8 @@ service:
     delete:
       path: /api/workspaces/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -166,7 +176,8 @@ service:
     update:
       path: /api/workspaces/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -207,6 +218,7 @@ service:
       response:
         docs: ''
         type: root.Workspace
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

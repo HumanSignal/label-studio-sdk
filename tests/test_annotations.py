@@ -301,10 +301,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.annotations.list(id=1)
+    response = client.annotations.list(id=1, ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.annotations.list(id=1)
+    async_response = await async_client.annotations.list(id=1, ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 

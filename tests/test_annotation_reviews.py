@@ -42,10 +42,12 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.annotation_reviews.list()
+    response = client.annotation_reviews.list(annotation=1, annotation_task_project=1, ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.annotation_reviews.list()
+    async_response = await async_client.annotation_reviews.list(
+        annotation=1, annotation_task_project=1, ordering="ordering"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -78,10 +80,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "started_at": "datetime",
         "state": None,
     }
-    response = client.annotation_reviews.create(annotation=1)
+    response = client.annotation_reviews.create(async_postprocess=True, annotation=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.annotation_reviews.create(annotation=1)
+    async_response = await async_client.annotation_reviews.create(async_postprocess=True, annotation=1)
     validate_response(async_response, expected_response, expected_types)
 
 

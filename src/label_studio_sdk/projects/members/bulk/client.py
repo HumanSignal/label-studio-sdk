@@ -26,6 +26,8 @@ class BulkClient:
         id: int,
         *,
         all_: bool,
+        last_activity_gte: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
@@ -46,6 +48,12 @@ class BulkClient:
         id : int
 
         all_ : bool
+
+        last_activity_gte : typing.Optional[str]
+            Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        role : typing.Optional[str]
+            Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
 
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
@@ -73,6 +81,9 @@ class BulkClient:
         )
         client.projects.members.bulk.post(
             id=1,
+            last_activity_gte="last_activity__gte",
+            role="role",
+            search="search",
             all_=True,
         )
         """
@@ -80,6 +91,8 @@ class BulkClient:
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="POST",
             params={
+                "last_activity__gte": last_activity_gte,
+                "role": role,
                 "search": search,
             },
             json={
@@ -111,7 +124,13 @@ class BulkClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, id: int, *, search: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        last_activity_gte: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkDeleteResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -125,6 +144,12 @@ class BulkClient:
         Parameters
         ----------
         id : int
+
+        last_activity_gte : typing.Optional[str]
+            Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        role : typing.Optional[str]
+            Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
 
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
@@ -146,12 +171,17 @@ class BulkClient:
         )
         client.projects.members.bulk.delete(
             id=1,
+            last_activity_gte="last_activity__gte",
+            role="role",
+            search="search",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="DELETE",
             params={
+                "last_activity__gte": last_activity_gte,
+                "role": role,
                 "search": search,
             },
             request_options=request_options,
@@ -180,6 +210,8 @@ class AsyncBulkClient:
         id: int,
         *,
         all_: bool,
+        last_activity_gte: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
@@ -200,6 +232,12 @@ class AsyncBulkClient:
         id : int
 
         all_ : bool
+
+        last_activity_gte : typing.Optional[str]
+            Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        role : typing.Optional[str]
+            Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
 
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
@@ -232,6 +270,9 @@ class AsyncBulkClient:
         async def main() -> None:
             await client.projects.members.bulk.post(
                 id=1,
+                last_activity_gte="last_activity__gte",
+                role="role",
+                search="search",
                 all_=True,
             )
 
@@ -242,6 +283,8 @@ class AsyncBulkClient:
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="POST",
             params={
+                "last_activity__gte": last_activity_gte,
+                "role": role,
                 "search": search,
             },
             json={
@@ -273,7 +316,13 @@ class AsyncBulkClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, id: int, *, search: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        last_activity_gte: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkDeleteResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -287,6 +336,12 @@ class AsyncBulkClient:
         Parameters
         ----------
         id : int
+
+        last_activity_gte : typing.Optional[str]
+            Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        role : typing.Optional[str]
+            Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
 
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
@@ -313,6 +368,9 @@ class AsyncBulkClient:
         async def main() -> None:
             await client.projects.members.bulk.delete(
                 id=1,
+                last_activity_gte="last_activity__gte",
+                role="role",
+                search="search",
             )
 
 
@@ -322,6 +380,8 @@ class AsyncBulkClient:
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="DELETE",
             params={
+                "last_activity__gte": last_activity_gte,
+                "role": role,
                 "search": search,
             },
             request_options=request_options,

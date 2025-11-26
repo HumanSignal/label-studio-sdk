@@ -72,12 +72,12 @@ async def test_assign(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.assignments.delete(id=1, task_pk=1)  # type: ignore[func-returns-value]
+        client.projects.assignments.delete(id=1, task_pk=1, type="AN", users="users")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.assignments.delete(id=1, task_pk=1)  # type: ignore[func-returns-value]
+        await async_client.projects.assignments.delete(id=1, task_pk=1, type="AN", users="users")  # type: ignore[func-returns-value]
         is None
     )
 

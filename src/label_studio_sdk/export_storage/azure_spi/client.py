@@ -60,6 +60,7 @@ class AzureSpiClient:
             api_key="YOUR_API_KEY",
         )
         client.export_storage.azure_spi.list(
+            ordering="ordering",
             project=1,
         )
         """
@@ -153,6 +154,7 @@ class AzureSpiClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Azure blob prefix name
@@ -307,6 +309,7 @@ class AzureSpiClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Azure blob prefix name
@@ -553,6 +556,7 @@ class AzureSpiClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Azure blob prefix name
@@ -750,6 +754,7 @@ class AsyncAzureSpiClient:
 
         async def main() -> None:
             await client.export_storage.azure_spi.list(
+                ordering="ordering",
                 project=1,
             )
 
@@ -846,6 +851,7 @@ class AsyncAzureSpiClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Azure blob prefix name
@@ -1008,6 +1014,7 @@ class AsyncAzureSpiClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Azure blob prefix name
@@ -1278,6 +1285,7 @@ class AsyncAzureSpiClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Azure blob prefix name

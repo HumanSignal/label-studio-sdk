@@ -7,7 +7,8 @@ service:
     list:
       path: /api/workspaces/{id}/projects/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -24,6 +25,7 @@ service:
       response:
         docs: Projects list
         type: list<root.Project>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -73,6 +75,7 @@ service:
                 skip_queue: REQUEUE_FOR_ME
                 skipped_annotations_number: 1
                 start_training_on_annotation_update: true
+                state: state
                 task_data_login: task_data_login
                 task_data_password: task_data_password
                 task_number: 1
@@ -85,7 +88,8 @@ service:
     add:
       path: /api/workspaces/{id}/projects/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -115,7 +119,8 @@ service:
     remove:
       path: /api/workspaces/{id}/projects/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>

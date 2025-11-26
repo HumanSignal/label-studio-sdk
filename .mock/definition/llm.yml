@@ -28,7 +28,8 @@ service:
     api_llm_openai_chat_completions_create:
       path: /api/llm/openai/chat/completions
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Proxy requests to OpenAI-compatible chat completions APIs and return the
         full response payload. Supports multiple providers via model parameter
@@ -54,6 +55,7 @@ service:
       response:
         docs: ''
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
       examples:

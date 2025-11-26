@@ -1,27 +1,6 @@
 imports:
   root: __package__.yml
 types:
-  AnnotationBulkSerializerWithSelectedItemsRequestLastAction:
-    discriminated: false
-    docs: |-
-      Action which was performed in the last annotation history item
-
-      * `prediction` - Created from prediction
-      * `propagated_annotation` - Created from another annotation
-      * `imported` - Imported
-      * `submitted` - Submitted
-      * `updated` - Updated
-      * `skipped` - Skipped
-      * `accepted` - Accepted
-      * `rejected` - Rejected
-      * `fixed_and_accepted` - Fixed and accepted
-      * `deleted_review` - Deleted review
-    union:
-      - root.LastActionEnum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   AnnotationsCreateBulkResponseItem:
     properties:
       id:
@@ -36,7 +15,8 @@ service:
     create_bulk:
       path: /api/annotations/bulk/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create multiple annotations at once
       source:
         openapi: openapi/openapi.yaml
@@ -61,8 +41,7 @@ service:
                 Original annotation ID that was at the import step or NULL if
                 this annotation wasn't imported
             last_action:
-              type: >-
-                optional<AnnotationBulkSerializerWithSelectedItemsRequestLastAction>
+              type: optional<root.LastActionEnum>
               docs: |-
                 Action which was performed in the last annotation history item
 
@@ -115,6 +94,7 @@ service:
       response:
         docs: Bulk annotations created successfully
         type: list<AnnotationsCreateBulkResponseItem>
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -125,7 +105,8 @@ service:
     get:
       path: /api/annotations/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Retrieve a specific annotation for a task using the annotation result
         ID.
@@ -137,6 +118,7 @@ service:
       response:
         docs: Retrieved annotation
         type: root.Annotation
+        status-code: 200
       examples:
         - name: response
           path-parameters:
@@ -184,7 +166,8 @@ service:
     delete:
       path: /api/annotations/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete an annotation. This action can't be undone!
       source:
         openapi: openapi/openapi.yaml
@@ -199,7 +182,8 @@ service:
     update:
       path: /api/annotations/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update existing attributes on an annotation.
       source:
         openapi: openapi/openapi.yaml
@@ -241,6 +225,7 @@ service:
       response:
         docs: Updated annotation
         type: root.Annotation
+        status-code: 200
       examples:
         - name: response
           path-parameters:
@@ -307,7 +292,8 @@ service:
     api_annotations_convert_to_draft_create:
       path: /api/annotations/{id}/convert-to-draft
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Convert annotation to draft
       source:
         openapi: openapi/openapi.yaml
@@ -322,7 +308,8 @@ service:
     list:
       path: /api/tasks/{id}/annotations/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: List all annotations for a task.
       source:
         openapi: openapi/openapi.yaml
@@ -340,10 +327,13 @@ service:
       response:
         docs: Annotation
         type: list<root.Annotation>
+        status-code: 200
       examples:
         - name: response
           path-parameters:
             id: 1
+          query-parameters:
+            ordering: ordering
           response:
             body:
               - bulk_created: true
@@ -373,7 +363,8 @@ service:
     create:
       path: /api/tasks/{id}/annotations/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 Add annotations to a task like an annotator does. The content of the result field depends on your 
@@ -433,6 +424,7 @@ service:
       response:
         docs: Created annotation
         type: root.Annotation
+        status-code: 201
       examples:
         - name: response
           path-parameters:

@@ -59,6 +59,7 @@ class PermissionsClient:
         )
         client.organizations.permissions.list(
             id=1,
+            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -209,6 +210,7 @@ class PermissionsClient:
         )
         client.organizations.permissions.get_options(
             id=1,
+            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -636,6 +638,7 @@ class AsyncPermissionsClient:
         async def main() -> None:
             await client.organizations.permissions.list(
                 id=1,
+                ordering="ordering",
             )
 
 
@@ -802,6 +805,7 @@ class AsyncPermissionsClient:
         async def main() -> None:
             await client.organizations.permissions.get_options(
                 id=1,
+                ordering="ordering",
             )
 
 

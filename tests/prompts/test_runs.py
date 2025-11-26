@@ -48,10 +48,14 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.prompts.runs.list(prompt_id=1, version_id=1)
+    response = client.prompts.runs.list(
+        prompt_id=1, version_id=1, ordering="ordering", parent_model=1, project=1, project_subset="All"
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.runs.list(prompt_id=1, version_id=1)
+    async_response = await async_client.prompts.runs.list(
+        prompt_id=1, version_id=1, ordering="ordering", parent_model=1, project=1, project_subset="All"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -100,8 +104,8 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_cancel(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"detail": "detail"}
     expected_types: typing.Any = {"detail": None}
-    response = client.prompts.runs.cancel(inference_run_id=1, prompt_id=1, version_id=1)
+    response = client.prompts.runs.cancel(prompt_id=1, version_id=1, inference_run_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.runs.cancel(inference_run_id=1, prompt_id=1, version_id=1)
+    async_response = await async_client.prompts.runs.cancel(prompt_id=1, version_id=1, inference_run_id=1)
     validate_response(async_response, expected_response, expected_types)

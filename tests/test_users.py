@@ -20,7 +20,6 @@ async def test_get_current_user(client: LabelStudio, async_client: AsyncLabelStu
         "initials": "initials",
         "last_activity": "2024-01-15T09:30:00Z",
         "last_name": "last_name",
-        "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
         "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "phone": "phone",
         "username": "username",
@@ -38,7 +37,6 @@ async def test_get_current_user(client: LabelStudio, async_client: AsyncLabelStu
         "initials": None,
         "last_activity": "datetime",
         "last_name": None,
-        "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
         "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "phone": None,
         "username": None,
@@ -64,7 +62,6 @@ async def test_update_current_user(client: LabelStudio, async_client: AsyncLabel
         "initials": "initials",
         "last_activity": "2024-01-15T09:30:00Z",
         "last_name": "last_name",
-        "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
         "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "phone": "phone",
         "username": "username",
@@ -82,7 +79,6 @@ async def test_update_current_user(client: LabelStudio, async_client: AsyncLabel
         "initials": None,
         "last_activity": "datetime",
         "last_name": None,
-        "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
         "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "phone": None,
         "username": None,
@@ -164,7 +160,6 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_models_in_production": "trial_models_in_production",
             "trial_role": "annotator",
         },
-        "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
         "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "pause": "pause",
         "permissions": ["permissions"],
@@ -200,7 +195,6 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_models_in_production": None,
             "trial_role": None,
         },
-        "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
         "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "pause": None,
         "permissions": ("list", {0: None}),
@@ -229,7 +223,6 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "initials": "initials",
             "last_activity": "2024-01-15T09:30:00Z",
             "last_name": "last_name",
-            "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
             "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
             "phone": "phone",
             "username": "username",
@@ -251,17 +244,16 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "initials": None,
                 "last_activity": "datetime",
                 "last_name": None,
-                "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
                 "organization_membership": {"active": None, "organization_id": "integer", "role": None},
                 "phone": None,
                 "username": None,
             }
         },
     )
-    response = client.users.list()
+    response = client.users.list(ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.users.list()
+    async_response = await async_client.users.list(ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -294,7 +286,6 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_models_in_production": "trial_models_in_production",
             "trial_role": "annotator",
         },
-        "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
         "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "pause": "pause",
         "phone": "phone",
@@ -328,7 +319,6 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_models_in_production": None,
             "trial_role": None,
         },
-        "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
         "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "pause": None,
         "phone": None,
@@ -370,7 +360,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             "trial_models_in_production": "trial_models_in_production",
             "trial_role": "annotator",
         },
-        "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
         "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "pause": "pause",
         "phone": "phone",
@@ -404,7 +393,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             "trial_models_in_production": None,
             "trial_role": None,
         },
-        "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
         "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "pause": None,
         "phone": None,
@@ -459,7 +447,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_models_in_production": "trial_models_in_production",
             "trial_role": "annotator",
         },
-        "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
         "organization_membership": {"active": "active", "organization_id": 1, "role": "role"},
         "pause": "pause",
         "phone": "phone",
@@ -493,7 +480,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "trial_models_in_production": None,
             "trial_role": None,
         },
-        "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
         "organization_membership": {"active": None, "organization_id": "integer", "role": None},
         "pause": None,
         "phone": None,

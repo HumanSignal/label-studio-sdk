@@ -7,7 +7,8 @@ service:
     list:
       path: /api/annotation-history/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -34,8 +35,12 @@ service:
       response:
         docs: ''
         type: list<root.AnnotationHistory>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            annotation: 1
+            ordering: ordering
+          response:
             body:
               - action: prediction
                 annotation_id: 1
@@ -58,7 +63,8 @@ service:
     delete:
       path: /api/annotation-history/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -87,8 +93,13 @@ service:
       response:
         docs: Returns a dict containing the count of removed items.
         type: AnnotationHistoryDeleteResponse
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            annotation: 1
+            project: 1
+            task: 1
+          response:
             body:
               removed: 1
       audiences:
@@ -96,7 +107,8 @@ service:
     list_for_project:
       path: /api/projects/{id}/annotation-history/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -122,9 +134,13 @@ service:
       response:
         docs: ''
         type: root.PaginatedAnnotationHistoryList
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            page: 1
+            page_size: 1
           response:
             body:
               count: 123

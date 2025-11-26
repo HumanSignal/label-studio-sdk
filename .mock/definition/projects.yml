@@ -7,7 +7,8 @@ service:
     list:
       path: /api/projects/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve a list of projects.
       pagination:
         offset: $request.page
@@ -54,6 +55,9 @@ service:
           search:
             type: optional<string>
             docs: Search term for project title and description
+          state:
+            type: optional<string>
+            docs: Filter current_state by exact match
           title:
             type: optional<string>
             docs: Filter title by contains (case-insensitive)
@@ -63,8 +67,21 @@ service:
       response:
         docs: ''
         type: root.PaginatedAllRolesProjectListList
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            filter: filter
+            ids: ids
+            include: include
+            members_limit: 1
+            ordering: ordering
+            page: 1
+            page_size: 1
+            search: search
+            state: state
+            title: title
+            workspaces: 1.1
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -76,13 +93,9 @@ service:
                   annotation_limit_percent: annotation_limit_percent
                   annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
                   annotator_evaluation_minimum_tasks: 1
-                  assignment_settings:
-                    id: 1
+                  assignment_settings: {}
                   blueprints:
-                    - created_at: '2024-01-15T09:30:00Z'
-                      id: 1
-                      share_id: share_id
-                      short_url: short_url
+                    - {}
                   color: color
                   comment_classification_config: comment_classification_config
                   config_has_control_tags: true
@@ -90,9 +103,6 @@ service:
                   control_weights:
                     key: value
                   created_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    avatar: avatar
-                    id: 1
                   custom_script: custom_script
                   custom_task_lock_ttl: 1
                   data_types:
@@ -131,9 +141,7 @@ service:
                   rejected: 1
                   require_comment_on_skip: true
                   reveal_preannotations_interactively: true
-                  review_settings:
-                    id: 1
-                    requeue_rejected_tasks_to_annotator: true
+                  review_settings: {}
                   review_total_tasks: 1
                   reviewed_number: 1
                   reviewer_queue_total: 1
@@ -148,6 +156,7 @@ service:
                   skip_queue: REQUEUE_FOR_ME
                   skipped_annotations_number: skipped_annotations_number
                   start_training_on_annotation_update: true
+                  state: state
                   task_number: 1
                   title: title
                   total_annotations_number: total_annotations_number
@@ -160,7 +169,8 @@ service:
     create:
       path: /api/projects/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create a project for a specific organization.
       source:
         openapi: openapi/openapi.yaml
@@ -173,7 +183,18 @@ service:
               type: optional<string>
               validation:
                 maxLength: 16
-            control_weights: optional<unknown>
+            control_weights:
+              type: optional<unknown>
+              docs: >-
+                Dict of weights for each control tag in metric calculation. Each
+                control tag (e.g. label or choice) will have it's own key in
+                control weight dict with weight for each label and overall
+                weight.For example, if bounding box annotation with control tag
+                named my_bbox should be included with 0.33 weight in agreement
+                calculation, and the first label Car should be twice more
+                important than Airplaine, then you have to need the specify:
+                {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
+                'Airplaine': 0.5}, 'overall': 0.33}
             created_by:
               type: optional<root.UserSimpleRequest>
               docs: Project owner
@@ -230,7 +251,7 @@ service:
             reveal_preannotations_interactively:
               type: optional<boolean>
               docs: Reveal pre-annotations interactively
-            sampling: optional<LseProjectCreateRequestSampling>
+            sampling: optional<root.SamplingDe5Enum>
             show_annotation_history:
               type: optional<boolean>
               docs: Show annotation history to annotator
@@ -251,7 +272,7 @@ service:
               docs: >-
                 Show a skip button in interface and allow annotators to skip the
                 task
-            skip_queue: optional<LseProjectCreateRequestSkipQueue>
+            skip_queue: optional<root.SkipQueueEnum>
             task_data_login:
               type: optional<string>
               docs: 'Task data credentials: login'
@@ -273,6 +294,7 @@ service:
       response:
         docs: ''
         type: root.LseProjectCreate
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -321,6 +343,7 @@ service:
               skip_queue: REQUEUE_FOR_ME
               skipped_annotations_number: 1
               start_training_on_annotation_update: true
+              state: state
               task_data_login: task_data_login
               task_data_password: task_data_password
               task_number: 1
@@ -334,7 +357,8 @@ service:
     list_counts:
       path: /api/projects/counts/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Returns a list of projects with their counts. For example, task_number
         which is the total task number in project
@@ -376,6 +400,9 @@ service:
           search:
             type: optional<string>
             docs: Search term for project title and description
+          state:
+            type: optional<string>
+            docs: Filter current_state by exact match
           title:
             type: optional<string>
             docs: Filter title by contains (case-insensitive)
@@ -385,8 +412,20 @@ service:
       response:
         docs: ''
         type: root.PaginatedLseProjectCountsList
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            filter: filter
+            ids: ids
+            include: include
+            ordering: ordering
+            page: 1
+            page_size: 1
+            search: search
+            state: state
+            title: title
+            workspaces: 1.1
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -412,7 +451,9 @@ service:
     api_projects_validate_create:
       path: /api/projects/validate/
       method: POST
-      auth: true
+      auth:
+        - Token: []
+        - {}
       docs: Validate an arbitrary labeling configuration.
       source:
         openapi: openapi/openapi.yaml
@@ -430,7 +471,8 @@ service:
     get:
       path: /api/projects/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve information about a project by project ID.
       source:
         openapi: openapi/openapi.yaml
@@ -447,9 +489,12 @@ service:
       response:
         docs: Project information. Not all fields are available for all roles.
         type: root.LseProjectResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            members_limit: 1
           response:
             body:
               agreement_threshold: agreement_threshold
@@ -543,6 +588,7 @@ service:
               skip_queue: REQUEUE_FOR_ME
               skipped_annotations_number: 1
               start_training_on_annotation_update: true
+              state: state
               task_data_login: task_data_login
               task_data_password: task_data_password
               task_number: 1
@@ -557,7 +603,8 @@ service:
     delete:
       path: /api/projects/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete a project by specified project ID.
       source:
         openapi: openapi/openapi.yaml
@@ -572,7 +619,8 @@ service:
     update:
       path: /api/projects/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update the details of a specific project.
       source:
         openapi: openapi/openapi.yaml
@@ -619,7 +667,18 @@ service:
               validation:
                 maxLength: 16
             comment_classification_config: optional<string>
-            control_weights: optional<unknown>
+            control_weights:
+              type: optional<unknown>
+              docs: >-
+                Dict of weights for each control tag in metric calculation. Each
+                control tag (e.g. label or choice) will have it's own key in
+                control weight dict with weight for each label and overall
+                weight.For example, if bounding box annotation with control tag
+                named my_bbox should be included with 0.33 weight in agreement
+                calculation, and the first label Car should be twice more
+                important than Airplaine, then you have to need the specify:
+                {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
+                'Airplaine': 0.5}, 'overall': 0.33}
             created_by:
               type: optional<root.UserSimpleRequest>
               docs: Project owner
@@ -695,7 +754,7 @@ service:
               type: optional<boolean>
               docs: Reveal pre-annotations interactively
             review_settings: optional<root.ReviewSettingsRequest>
-            sampling: optional<PatchedLseProjectUpdateRequestSampling>
+            sampling: optional<root.SamplingDe5Enum>
             show_annotation_history:
               type: optional<boolean>
               docs: Show annotation history to annotator
@@ -717,7 +776,7 @@ service:
                 Show a skip button in interface and allow annotators to skip the
                 task
             show_unused_data_columns_to_annotators: optional<boolean>
-            skip_queue: optional<PatchedLseProjectUpdateRequestSkipQueue>
+            skip_queue: optional<root.SkipQueueEnum>
             task_data_login:
               type: optional<string>
               docs: 'Task data credentials: login'
@@ -739,9 +798,12 @@ service:
       response:
         docs: ''
         type: root.LseProjectUpdate
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            members_limit: 1
           request: {}
           response:
             body:
@@ -823,6 +885,7 @@ service:
               skip_queue: REQUEUE_FOR_ME
               skipped_annotations_number: 1
               start_training_on_annotation_update: true
+              state: state
               task_data_login: task_data_login
               task_data_password: task_data_password
               task_number: 1
@@ -837,7 +900,8 @@ service:
     list_unique_annotators:
       path: /api/projects/{id}/annotators/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Return unique users who have submitted annotations in the specified
         project.
@@ -849,6 +913,7 @@ service:
       response:
         docs: List of annotator users
         type: list<root.UserSimple>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -864,7 +929,8 @@ service:
     duplicate:
       path: /api/projects/{id}/duplicate/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -909,6 +975,7 @@ service:
       response:
         docs: Project duplicated
         type: ProjectsDuplicateResponse
+        status-code: 201
       examples:
         - path-parameters:
             id: 1
@@ -924,7 +991,8 @@ service:
     import_tasks:
       path: /api/projects/{id}/import
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                     Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
@@ -1010,11 +1078,15 @@ service:
       response:
         docs: Tasks successfully imported
         type: ProjectsImportTasksResponse
+        status-code: 201
       errors:
         - root.BadRequestError
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            commit_to_project: true
+            return_task_ids: true
           request: []
           response:
             body:
@@ -1034,7 +1106,8 @@ service:
     import_predictions:
       path: /api/projects/{id}/import/predictions
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Import model predictions for tasks in the specified project.
       source:
         openapi: openapi/openapi.yaml
@@ -1049,6 +1122,7 @@ service:
       response:
         docs: Predictions successfully imported
         type: ProjectsImportPredictionsResponse
+        status-code: 201
       errors:
         - root.BadRequestError
       examples:
@@ -1066,7 +1140,8 @@ service:
     api_projects_reimports_retrieve:
       path: /api/projects/{id}/reimports/{reimport_pk}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Return data related to async project reimport operation
       source:
         openapi: openapi/openapi.yaml
@@ -1079,6 +1154,7 @@ service:
       response:
         docs: ''
         type: root.ProjectReimport
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -1105,7 +1181,8 @@ service:
     api_projects_tasks_list:
       path: /api/projects/{id}/tasks/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                     Retrieve a paginated list of tasks for a specific project. For example, use the following cURL command:
@@ -1137,18 +1214,18 @@ service:
       response:
         docs: ''
         type: list<root.TaskSimple>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            ordering: ordering
+            page: 1
+            page_size: 1
           response:
             body:
               - annotations:
-                  - created_ago: created_ago
-                    created_at: '2024-01-15T09:30:00Z'
-                    created_username: created_username
-                    id: 1
-                    state: state
-                    updated_at: '2024-01-15T09:30:00Z'
+                  - {}
                 cancelled_annotations: 1
                 comment_authors:
                   - 1
@@ -1165,13 +1242,9 @@ service:
                   key: value
                 overlap: 1
                 predictions:
-                  - created_ago: created_ago
-                    created_at: '2024-01-15T09:30:00Z'
-                    id: 1
-                    result:
+                  - result:
                       - key: value
                     task: 1
-                    updated_at: '2024-01-15T09:30:00Z'
                 project: 1
                 total_annotations: 1
                 total_predictions: 1
@@ -1183,7 +1256,8 @@ service:
     validate_label_config:
       path: /api/projects/{id}/validate/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Determine whether the label configuration for a specific project is
         valid.
@@ -1200,6 +1274,7 @@ service:
       response:
         docs: ''
         type: root.ProjectLabelConfig
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -1213,38 +1288,6 @@ service:
   source:
     openapi: openapi/openapi.yaml
 types:
-  LseProjectCreateRequestSampling:
-    discriminated: false
-    union:
-      - root.SamplingDe5Enum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseProjectCreateRequestSkipQueue:
-    discriminated: false
-    union:
-      - root.SkipQueueEnum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  PatchedLseProjectUpdateRequestSampling:
-    discriminated: false
-    union:
-      - root.SamplingDe5Enum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  PatchedLseProjectUpdateRequestSkipQueue:
-    discriminated: false
-    union:
-      - root.SkipQueueEnum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   ProjectsDuplicateResponse:
     properties:
       id:

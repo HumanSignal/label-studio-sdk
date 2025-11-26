@@ -11,28 +11,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         "count": 123,
         "next": "http://api.example.org/accounts/?page=4",
         "previous": "http://api.example.org/accounts/?page=2",
-        "results": [
-            {
-                "id": 1,
-                "organization": 1,
-                "role": "role",
-                "user": {
-                    "avatar": "avatar",
-                    "contributed_to_projects": "contributed_to_projects",
-                    "created_projects": "created_projects",
-                    "id": 1,
-                    "initials": "initials",
-                    "last_activity": "2024-01-15T09:30:00Z",
-                    "lse_fields": {
-                        "email_notification_settings": "email_notification_settings",
-                        "invite_expired": "invite_expired",
-                        "invite_expired_at": "invite_expired_at",
-                    },
-                    "pause": "pause",
-                    "username": "username",
-                },
-            }
-        ],
+        "results": [{"id": 1, "organization": 1, "role": "role", "user": {"username": "username"}}],
     }
     expected_types: typing.Any = {
         "count": "integer",
@@ -40,34 +19,31 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         "previous": None,
         "results": (
             "list",
-            {
-                0: {
-                    "id": "integer",
-                    "organization": "integer",
-                    "role": None,
-                    "user": {
-                        "avatar": None,
-                        "contributed_to_projects": None,
-                        "created_projects": None,
-                        "id": "integer",
-                        "initials": None,
-                        "last_activity": "datetime",
-                        "lse_fields": {
-                            "email_notification_settings": None,
-                            "invite_expired": None,
-                            "invite_expired_at": None,
-                        },
-                        "pause": None,
-                        "username": None,
-                    },
-                }
-            },
+            {0: {"id": "integer", "organization": "integer", "role": None, "user": {"username": None}}},
         ),
     }
-    response = client.organizations.members.list(id=1)
+    response = client.organizations.members.list(
+        id=1,
+        exclude_project_id=1,
+        exclude_workspace_id=1,
+        ordering="ordering",
+        page=1,
+        page_size=1,
+        role="role",
+        search="search",
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.organizations.members.list(id=1)
+    async_response = await async_client.organizations.members.list(
+        id=1,
+        exclude_project_id=1,
+        exclude_workspace_id=1,
+        ordering="ordering",
+        page=1,
+        page_size=1,
+        role="role",
+        search="search",
+    )
     validate_response(async_response, expected_response, expected_types)
 
 

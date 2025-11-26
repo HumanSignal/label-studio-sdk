@@ -7,7 +7,8 @@ service:
     list:
       path: /api/labels/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         List all custom labels added to your project separately from the
         labeling configuration.
@@ -26,8 +27,12 @@ service:
       response:
         docs: ''
         type: root.PaginatedLabelList
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            ordering: ordering
+            page: 1
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -53,7 +58,8 @@ service:
     create:
       path: /api/labels/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Add labels to your project without updating the labeling configuration.
       source:
         openapi: openapi/openapi.yaml
@@ -72,8 +78,12 @@ service:
       response:
         docs: ''
         type: root.PaginatedLabelCreateList
+        status-code: 201
       examples:
-        - request: []
+        - query-parameters:
+            ordering: ordering
+            page: 1
+          request: []
           response:
             body:
               count: 123
@@ -100,7 +110,8 @@ service:
     get:
       path: /api/labels/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 Retrieve a specific custom label used for your project by its ID.
@@ -113,6 +124,7 @@ service:
       response:
         docs: ''
         type: root.Label
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -138,7 +150,8 @@ service:
     delete:
       path: /api/labels/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Remove labels from your project without updating the labeling
         configuration.
@@ -155,7 +168,8 @@ service:
     update:
       path: /api/labels/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Update labels used for your project without updating the labeling
         configuration.
@@ -187,11 +201,14 @@ service:
               validation:
                 minLength: 1
                 maxLength: 2048
-            value: optional<unknown>
+            value:
+              type: optional<unknown>
+              docs: Label value
         content-type: application/json
       response:
         docs: ''
         type: root.Label
+        status-code: 200
       examples:
         - path-parameters:
             id: id

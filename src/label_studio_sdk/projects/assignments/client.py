@@ -321,6 +321,8 @@ class AssignmentsClient:
         client.projects.assignments.delete(
             id=1,
             task_pk=1,
+            type="AN",
+            users="users",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -749,6 +751,8 @@ class AsyncAssignmentsClient:
             await client.projects.assignments.delete(
                 id=1,
                 task_pk=1,
+                type="AN",
+                users="users",
             )
 
 

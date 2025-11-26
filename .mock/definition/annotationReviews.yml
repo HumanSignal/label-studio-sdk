@@ -7,7 +7,8 @@ service:
     list:
       path: /api/annotation-reviews/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -30,8 +31,13 @@ service:
       response:
         docs: ''
         type: list<root.AnnotationReview>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            annotation: 1
+            annotation__task__project: 1
+            ordering: ordering
+          response:
             body:
               - accepted: true
                 annotation: 1
@@ -51,7 +57,8 @@ service:
     create:
       path: /api/annotation-reviews/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -74,8 +81,11 @@ service:
       response:
         docs: ''
         type: root.AnnotationReview
+        status-code: 201
       examples:
-        - request:
+        - query-parameters:
+            async_postprocess: true
+          request:
             annotation: 1
           response:
             body:
@@ -97,7 +107,8 @@ service:
     get:
       path: /api/annotation-reviews/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -116,6 +127,7 @@ service:
       response:
         docs: ''
         type: root.AnnotationReview
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -139,7 +151,8 @@ service:
     api_annotation_reviews_update:
       path: /api/annotation-reviews/{id}/
       method: PUT
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -161,6 +174,7 @@ service:
       response:
         docs: ''
         type: root.AnnotationReview
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -186,7 +200,8 @@ service:
     delete:
       path: /api/annotation-reviews/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -210,7 +225,8 @@ service:
     update:
       path: /api/annotation-reviews/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -248,6 +264,7 @@ service:
       response:
         docs: ''
         type: root.AnnotationReview
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

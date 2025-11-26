@@ -7,7 +7,8 @@ service:
     list:
       path: /api/organizations/{id}/memberships
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -47,15 +48,53 @@ service:
           page_size:
             type: optional<integer>
             docs: Number of results to return per page.
+          role:
+            type: optional<string>
+            docs: >
+              Filter members by organization role. Accepts single role or
+              comma-separated list of roles.
+
+
+              **Format:**
+
+              - Single role: `?role=RE`
+
+              - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+
+              **Role Codes:**
+
+              - `OW` = Owner
+
+              - `AD` = Administrator
+
+              - `MA` = Manager
+
+              - `RE` = Reviewer
+
+              - `AN` = Annotator
+
+              - `NO` = Not Activated
+
+              - `DI` = Disabled
           search:
             type: optional<string>
             docs: A search term.
       response:
         docs: ''
         type: root.PaginatedLseOrganizationMemberListList
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            exclude_project_id: 1
+            exclude_workspace_id: 1
+            ordering: ordering
+            page: 1
+            page_size: 1
+            role: role
+            search: search
           response:
             body:
               count: 123
@@ -66,24 +105,14 @@ service:
                   organization: 1
                   role: role
                   user:
-                    avatar: avatar
-                    contributed_to_projects: contributed_to_projects
-                    created_projects: created_projects
-                    id: 1
-                    initials: initials
-                    last_activity: '2024-01-15T09:30:00Z'
-                    lse_fields:
-                      email_notification_settings: email_notification_settings
-                      invite_expired: invite_expired
-                      invite_expired_at: invite_expired_at
-                    pause: pause
                     username: username
       audiences:
         - public
     update:
       path: /api/organizations/{id}/memberships
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: >+
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -142,6 +171,7 @@ service:
       response:
         docs: ''
         type: root.LseOrganizationMemberList
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -188,7 +218,8 @@ service:
     get:
       path: /api/organizations/{id}/memberships/{user_pk}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get organization member details by user ID.
       source:
         openapi: openapi/openapi.yaml
@@ -203,6 +234,7 @@ service:
       response:
         docs: ''
         type: root.OrganizationMember
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -219,7 +251,8 @@ service:
     delete:
       path: /api/organizations/{id}/memberships/{user_pk}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Soft delete a member from the organization.
       source:
         openapi: openapi/openapi.yaml

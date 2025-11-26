@@ -47,7 +47,9 @@ class ViewsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.views.list()
+        client.views.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/dm/views/",
@@ -424,7 +426,9 @@ class AsyncViewsClient:
 
 
         async def main() -> None:
-            await client.views.list()
+            await client.views.list(
+                project=1,
+            )
 
 
         asyncio.run(main())

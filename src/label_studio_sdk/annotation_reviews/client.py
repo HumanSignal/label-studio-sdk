@@ -60,7 +60,11 @@ class AnnotationReviewsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.annotation_reviews.list()
+        client.annotation_reviews.list(
+            annotation=1,
+            annotation_task_project=1,
+            ordering="ordering",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/annotation-reviews/",
@@ -145,6 +149,7 @@ class AnnotationReviewsClient:
             api_key="YOUR_API_KEY",
         )
         client.annotation_reviews.create(
+            async_postprocess=True,
             annotation=1,
         )
         """
@@ -424,7 +429,11 @@ class AsyncAnnotationReviewsClient:
 
 
         async def main() -> None:
-            await client.annotation_reviews.list()
+            await client.annotation_reviews.list(
+                annotation=1,
+                annotation_task_project=1,
+                ordering="ordering",
+            )
 
 
         asyncio.run(main())
@@ -517,6 +526,7 @@ class AsyncAnnotationReviewsClient:
 
         async def main() -> None:
             await client.annotation_reviews.create(
+                async_postprocess=True,
                 annotation=1,
             )
 

@@ -130,6 +130,7 @@ class ActionsClient:
         client.actions.create(
             id="delete_annotators",
             project=1,
+            view=1,
             filters=ActionsCreateRequestFilters(
                 conjunction="or",
                 items=[
@@ -305,6 +306,7 @@ class AsyncActionsClient:
             await client.actions.create(
                 id="delete_annotators",
                 project=1,
+                view=1,
                 filters=ActionsCreateRequestFilters(
                     conjunction="or",
                     items=[

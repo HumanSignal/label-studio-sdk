@@ -7,7 +7,8 @@ service:
     api_dataset_storages_azure_list:
       path: /api/dataset-storages/azure/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a list of all Azure import storage connections.
       source:
         openapi: openapi/openapi.yaml
@@ -24,8 +25,12 @@ service:
       response:
         docs: ''
         type: list<root.AzureDatasetStorage>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            dataset: 1
+            ordering: ordering
+          response:
             body:
               - account_key: account_key
                 account_name: account_name
@@ -58,7 +63,8 @@ service:
     api_dataset_storages_azure_create:
       path: /api/dataset-storages/azure/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create a new Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -69,6 +75,7 @@ service:
       response:
         docs: ''
         type: root.AzureDatasetStorage
+        status-code: 201
       examples:
         - request:
             dataset: 1
@@ -105,7 +112,8 @@ service:
     api_dataset_storages_azure_check_for_records_create:
       path: /api/dataset-storages/azure/check-for-records/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Checks for existence of records matching the file pattern in the
         bucket/prefix
@@ -118,6 +126,7 @@ service:
       response:
         docs: ''
         type: root.AzureDatasetStorage
+        status-code: 201
       examples:
         - request:
             dataset: 1
@@ -154,7 +163,8 @@ service:
     api_dataset_storages_azure_validate_create:
       path: /api/dataset-storages/azure/validate/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Validate a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -165,6 +175,7 @@ service:
       response:
         docs: ''
         type: root.AzureDatasetStorage
+        status-code: 201
       examples:
         - request:
             dataset: 1
@@ -201,7 +212,8 @@ service:
     api_dataset_storages_azure_retrieve:
       path: /api/dataset-storages/azure/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -211,6 +223,7 @@ service:
       response:
         docs: ''
         type: root.AzureDatasetStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -247,7 +260,8 @@ service:
     api_dataset_storages_azure_destroy:
       path: /api/dataset-storages/azure/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -262,7 +276,8 @@ service:
     api_dataset_storages_azure_partial_update:
       path: /api/dataset-storages/azure/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -305,7 +320,9 @@ service:
               docs: Last sync job ID
               validation:
                 maxLength: 256
-            meta: optional<unknown>
+            meta:
+              type: optional<unknown>
+              docs: Meta and debug information about storage processes
             prefix:
               type: optional<string>
               docs: Azure blob prefix name
@@ -346,6 +363,7 @@ service:
       response:
         docs: ''
         type: root.AzureDatasetStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -383,7 +401,8 @@ service:
     api_dataset_storages_azure_columns_retrieve:
       path: /api/dataset-storages/azure/{id}/columns/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieves column names from users JSON/blob data in bucket
       source:
         openapi: openapi/openapi.yaml
@@ -398,7 +417,8 @@ service:
     api_dataset_storages_azure_sync_create:
       path: /api/dataset-storages/azure/{id}/sync/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Sync tasks from an Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -411,6 +431,7 @@ service:
       response:
         docs: ''
         type: root.AzureDatasetStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

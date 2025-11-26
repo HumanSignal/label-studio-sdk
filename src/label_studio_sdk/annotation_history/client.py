@@ -56,7 +56,10 @@ class AnnotationHistoryClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.annotation_history.list()
+        client.annotation_history.list(
+            annotation=1,
+            ordering="ordering",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/annotation-history/",
@@ -124,7 +127,11 @@ class AnnotationHistoryClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.annotation_history.delete()
+        client.annotation_history.delete(
+            annotation=1,
+            project=1,
+            task=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/annotation-history/",
@@ -194,6 +201,8 @@ class AnnotationHistoryClient:
         )
         client.annotation_history.list_for_project(
             id=1,
+            page=1,
+            page_size=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -268,7 +277,10 @@ class AsyncAnnotationHistoryClient:
 
 
         async def main() -> None:
-            await client.annotation_history.list()
+            await client.annotation_history.list(
+                annotation=1,
+                ordering="ordering",
+            )
 
 
         asyncio.run(main())
@@ -344,7 +356,11 @@ class AsyncAnnotationHistoryClient:
 
 
         async def main() -> None:
-            await client.annotation_history.delete()
+            await client.annotation_history.delete(
+                annotation=1,
+                project=1,
+                task=1,
+            )
 
 
         asyncio.run(main())
@@ -422,6 +438,8 @@ class AsyncAnnotationHistoryClient:
         async def main() -> None:
             await client.annotation_history.list_for_project(
                 id=1,
+                page=1,
+                page_size=1,
             )
 
 

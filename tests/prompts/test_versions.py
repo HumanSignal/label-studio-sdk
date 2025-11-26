@@ -61,10 +61,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.prompts.versions.list(prompt_id=1)
+    response = client.prompts.versions.list(prompt_id=1, ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.list(prompt_id=1)
+    async_response = await async_client.prompts.versions.list(prompt_id=1, ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -286,10 +286,14 @@ async def test_get_refined_prompt(client: LabelStudio, async_client: AsyncLabelS
         "title": None,
         "total_cost": None,
     }
-    response = client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1)
+    response = client.prompts.versions.get_refined_prompt(
+        prompt_id=1, version_id=1, refinement_job_id="refinement_job_id"
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1)
+    async_response = await async_client.prompts.versions.get_refined_prompt(
+        prompt_id=1, version_id=1, refinement_job_id="refinement_job_id"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -347,6 +351,7 @@ async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio
     response = client.prompts.versions.refine_prompt(
         prompt_id=1,
         version_id=1,
+        async_=True,
         project_id=1,
         teacher_model_name="teacher_model_name",
         teacher_model_provider_connection_id=1,
@@ -356,6 +361,7 @@ async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio
     async_response = await async_client.prompts.versions.refine_prompt(
         prompt_id=1,
         version_id=1,
+        async_=True,
         project_id=1,
         teacher_model_name="teacher_model_name",
         teacher_model_provider_connection_id=1,

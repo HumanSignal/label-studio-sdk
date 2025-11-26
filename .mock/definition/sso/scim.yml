@@ -7,7 +7,8 @@ service:
     get:
       path: /api/scim/settings
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -22,6 +23,7 @@ service:
       response:
         docs: ''
         type: root.ScimSettings
+        status-code: 200
       examples:
         - name: response
           response:
@@ -41,7 +43,8 @@ service:
     update:
       path: /api/scim/settings
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -64,6 +67,7 @@ service:
       response:
         docs: ''
         type: root.ScimSettingsUpdate
+        status-code: 201
       examples:
         - name: response
           request:

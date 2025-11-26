@@ -7,7 +7,8 @@ service:
     batch_failed_predictions:
       path: /api/model-run/batch-failed-predictions
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -40,8 +41,11 @@ service:
       response:
         docs: ''
         type: root.BatchFailedPredictions
+        status-code: 201
       examples:
-        - request:
+        - query-parameters:
+            num_failed_predictions: 1
+          request:
             failed_predictions: []
             modelrun_id: 1
           response:
@@ -54,7 +58,8 @@ service:
     batch_predictions:
       path: /api/model-run/batch-predictions
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -87,8 +92,11 @@ service:
       response:
         docs: ''
         type: root.BatchPredictions
+        status-code: 201
       examples:
-        - request:
+        - query-parameters:
+            num_predictions: 1
+          request:
             modelrun_id: 1
             results: []
           response:
@@ -101,7 +109,8 @@ service:
     subset_tasks:
       path: /api/projects/{project_pk}/subset-tasks
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -146,11 +155,20 @@ service:
       response:
         docs: ''
         type: root.PaginatedProjectSubsetTasksResponseList
+        status-code: 200
       errors:
         - root.BadRequestError
       examples:
         - path-parameters:
             project_pk: 1
+          query-parameters:
+            include_total: true
+            model_run: 1
+            ordering: ordering
+            page: 1
+            page_size: 1
+            parent_model: 1
+            project_subset: project_subset
           response:
             body:
               count: 123
@@ -168,7 +186,8 @@ service:
     subsets:
       path: /api/projects/{project_pk}/subsets
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -193,9 +212,12 @@ service:
       response:
         docs: ''
         type: list<root.ProjectSubsetItem>
+        status-code: 200
       examples:
         - path-parameters:
             project_pk: 1
+          query-parameters:
+            ordering: ordering
           response:
             body:
               - columns_schema:
@@ -207,7 +229,8 @@ service:
     list:
       path: /api/prompts/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: List all prompts.
       source:
         openapi: openapi/openapi.yaml
@@ -221,11 +244,14 @@ service:
       response:
         docs: ''
         type: list<root.ModelInterfaceSerializerGet>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            ordering: ordering
+          response:
             body:
               - associated_projects:
-                  - id: 1
+                  - {}
                 created_at: '2024-01-15T09:30:00Z'
                 created_by:
                   avatar: avatar
@@ -248,7 +274,8 @@ service:
     create:
       path: /api/prompts/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -266,6 +293,7 @@ service:
       response:
         docs: ''
         type: root.ModelInterface
+        status-code: 201
       examples:
         - request:
             title: title
@@ -295,7 +323,8 @@ service:
     compatible_projects:
       path: /api/prompts/compatible-projects
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve a list of compatible project for prompt.
       source:
         openapi: openapi/openapi.yaml
@@ -319,8 +348,14 @@ service:
       response:
         docs: ''
         type: root.PaginatedAllRolesProjectListList
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            ordering: ordering
+            page: 1
+            page_size: 1
+            project_type: NamedEntityRecognition
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -332,13 +367,9 @@ service:
                   annotation_limit_percent: annotation_limit_percent
                   annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
                   annotator_evaluation_minimum_tasks: 1
-                  assignment_settings:
-                    id: 1
+                  assignment_settings: {}
                   blueprints:
-                    - created_at: '2024-01-15T09:30:00Z'
-                      id: 1
-                      share_id: share_id
-                      short_url: short_url
+                    - {}
                   color: color
                   comment_classification_config: comment_classification_config
                   config_has_control_tags: true
@@ -346,9 +377,6 @@ service:
                   control_weights:
                     key: value
                   created_at: '2024-01-15T09:30:00Z'
-                  created_by:
-                    avatar: avatar
-                    id: 1
                   custom_script: custom_script
                   custom_task_lock_ttl: 1
                   data_types:
@@ -387,9 +415,7 @@ service:
                   rejected: 1
                   require_comment_on_skip: true
                   reveal_preannotations_interactively: true
-                  review_settings:
-                    id: 1
-                    requeue_rejected_tasks_to_annotator: true
+                  review_settings: {}
                   review_total_tasks: 1
                   reviewed_number: 1
                   reviewer_queue_total: 1
@@ -404,6 +430,7 @@ service:
                   skip_queue: REQUEUE_FOR_ME
                   skipped_annotations_number: skipped_annotations_number
                   start_training_on_annotation_update: true
+                  state: state
                   task_number: 1
                   title: title
                   total_annotations_number: total_annotations_number
@@ -416,7 +443,8 @@ service:
     get:
       path: /api/prompts/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -433,6 +461,7 @@ service:
       response:
         docs: ''
         type: root.ModelInterfaceSerializerGet
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -463,7 +492,8 @@ service:
     api_prompts_update:
       path: /api/prompts/{id}/
       method: PUT
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -483,6 +513,7 @@ service:
       response:
         docs: ''
         type: root.ModelInterface
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -514,7 +545,8 @@ service:
     delete:
       path: /api/prompts/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -536,7 +568,8 @@ service:
     update:
       path: /api/prompts/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -575,6 +608,7 @@ service:
       response:
         docs: ''
         type: root.ModelInterface
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -605,7 +639,8 @@ service:
     api_prompts_versions_update:
       path: /api/prompts/{prompt_id}/versions/{version_id}
       method: PUT
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -626,6 +661,7 @@ service:
       response:
         docs: ''
         type: root.ThirdPartyModelVersion
+        status-code: 200
       examples:
         - path-parameters:
             prompt_id: 1

@@ -7,7 +7,8 @@ service:
     list:
       path: /api/storages/export/s3s
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -32,8 +33,10 @@ service:
       response:
         docs: ''
         type: list<root.LseS3ExportStorage>
+        status-code: 200
       examples:
         - query-parameters:
+            ordering: ordering
             project: 1
           response:
             body:
@@ -70,7 +73,8 @@ service:
     create:
       path: /api/storages/export/s3s
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -89,6 +93,7 @@ service:
       response:
         docs: ''
         type: root.LseS3ExportStorage
+        status-code: 201
       examples:
         - request:
             project: 1
@@ -128,7 +133,8 @@ service:
     validate:
       path: /api/storages/export/s3s/validate
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -153,7 +159,8 @@ service:
     get:
       path: /api/storages/export/s3s/{id}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -171,6 +178,7 @@ service:
       response:
         docs: ''
         type: root.LseS3ExportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -209,7 +217,8 @@ service:
     delete:
       path: /api/storages/export/s3s/{id}
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -232,7 +241,8 @@ service:
     update:
       path: /api/storages/export/s3s/{id}
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -290,7 +300,9 @@ service:
               validation:
                 maxLength: 256
             legacy_auth: optional<boolean>
-            meta: optional<unknown>
+            meta:
+              type: optional<unknown>
+              docs: Meta and debug information about storage processes
             prefix:
               type: optional<string>
               docs: S3 bucket prefix
@@ -330,6 +342,7 @@ service:
       response:
         docs: ''
         type: root.LseS3ExportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -369,7 +382,8 @@ service:
     sync:
       path: /api/storages/export/s3s/{id}/sync
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -386,6 +400,7 @@ service:
       response:
         docs: ''
         type: root.LseS3ExportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

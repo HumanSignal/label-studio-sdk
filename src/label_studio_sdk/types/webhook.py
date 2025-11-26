@@ -10,19 +10,23 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class Webhook(UncheckedBaseModel):
     actions: typing.Optional[typing.List[ActionsEnum]] = None
-    created_at: dt.datetime = pydantic.Field()
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
     """
 
-    headers: typing.Optional[typing.Optional[typing.Any]] = None
-    id: int
+    headers: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Key Value Json of headers
+    """
+
+    id: typing.Optional[int] = None
     is_active: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If value is False the webhook is disabled
     """
 
-    organization: int
+    organization: typing.Optional[int] = None
     project: typing.Optional[int] = None
     send_for_all_actions: typing.Optional[bool] = pydantic.Field(default=None)
     """
@@ -34,7 +38,7 @@ class Webhook(UncheckedBaseModel):
     If value is False send only action
     """
 
-    updated_at: dt.datetime = pydantic.Field()
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last update time
     """

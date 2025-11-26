@@ -18,7 +18,8 @@ service:
     post:
       path: /api/projects/{id}/members/bulk/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -35,6 +36,16 @@ service:
       request:
         name: ProjectMemberBulkAssignRequest
         query-parameters:
+          last_activity__gte:
+            type: optional<string>
+            docs: >-
+              Filter by last activity (ISO 8601 formatted date). Only when
+              all=True.
+          role:
+            type: optional<string>
+            docs: >-
+              Filter by role, project roles take precedence over organization
+              roles. Only when all=True. (comma-separated values)
           search:
             type: optional<string>
             docs: >-
@@ -50,9 +61,14 @@ service:
       response:
         docs: ''
         type: BulkPostResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            last_activity__gte: last_activity__gte
+            role: role
+            search: search
           request:
             all: true
           response:
@@ -63,7 +79,8 @@ service:
     delete:
       path: /api/projects/{id}/members/bulk/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -81,6 +98,16 @@ service:
       request:
         name: BulkDeleteRequest
         query-parameters:
+          last_activity__gte:
+            type: optional<string>
+            docs: >-
+              Filter by last activity (ISO 8601 formatted date). Only when
+              all=True.
+          role:
+            type: optional<string>
+            docs: >-
+              Filter by role, project roles take precedence over organization
+              roles. Only when all=True. (comma-separated values)
           search:
             type: optional<string>
             docs: >-
@@ -89,9 +116,14 @@ service:
       response:
         docs: ''
         type: BulkDeleteResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            last_activity__gte: last_activity__gte
+            role: role
+            search: search
           response:
             body:
               unassignments: 1

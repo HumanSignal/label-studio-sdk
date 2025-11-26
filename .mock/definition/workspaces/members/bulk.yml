@@ -16,7 +16,8 @@ service:
     post:
       path: /api/workspaces/{id}/memberships/bulk/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -41,6 +42,7 @@ service:
       response:
         docs: ''
         type: BulkPostResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -54,7 +56,8 @@ service:
     delete:
       path: /api/workspaces/{id}/memberships/bulk/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -72,6 +75,7 @@ service:
       response:
         docs: ''
         type: BulkDeleteResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

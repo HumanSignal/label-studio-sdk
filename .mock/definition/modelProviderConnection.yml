@@ -7,7 +7,8 @@ service:
     api_model_provider_connections_update:
       path: /api/model-provider-connections/{id}/
       method: PUT
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -27,6 +28,7 @@ service:
       response:
         docs: ''
         type: root.ModelProviderConnection
+        status-code: 200
       examples:
         - path-parameters:
             id: id

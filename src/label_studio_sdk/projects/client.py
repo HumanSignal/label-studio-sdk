@@ -18,8 +18,8 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.user_simple_request import UserSimpleRequest
 import datetime as dt
-from .types.lse_project_create_request_sampling import LseProjectCreateRequestSampling
-from .types.lse_project_create_request_skip_queue import LseProjectCreateRequestSkipQueue
+from ..types.sampling_de5enum import SamplingDe5Enum
+from ..types.skip_queue_enum import SkipQueueEnum
 from ..types.lse_project_create import LseProjectCreate
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.paginated_lse_project_counts_list import PaginatedLseProjectCountsList
@@ -27,8 +27,6 @@ from ..types.lse_project_response import LseProjectResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.assignment_settings_request import AssignmentSettingsRequest
 from ..types.review_settings_request import ReviewSettingsRequest
-from .types.patched_lse_project_update_request_sampling import PatchedLseProjectUpdateRequestSampling
-from .types.patched_lse_project_update_request_skip_queue import PatchedLseProjectUpdateRequestSkipQueue
 from ..types.lse_project_update import LseProjectUpdate
 from ..types.user_simple import UserSimple
 from ..types.mode_enum import ModeEnum
@@ -75,6 +73,7 @@ class ProjectsClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        state: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
         workspaces: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -108,6 +107,9 @@ class ProjectsClient:
         search : typing.Optional[str]
             Search term for project title and description
 
+        state : typing.Optional[str]
+            Filter current_state by exact match
+
         title : typing.Optional[str]
             Filter title by contains (case-insensitive)
 
@@ -129,7 +131,19 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        response = client.projects.list()
+        response = client.projects.list(
+            filter="filter",
+            ids="ids",
+            include="include",
+            members_limit=1,
+            ordering="ordering",
+            page=1,
+            page_size=1,
+            search="search",
+            state="state",
+            title="title",
+            workspaces=1.1,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -149,6 +163,7 @@ class ProjectsClient:
                 "page": page,
                 "page_size": page_size,
                 "search": search,
+                "state": state,
                 "title": title,
                 "workspaces": workspaces,
             },
@@ -173,6 +188,7 @@ class ProjectsClient:
                     page=page + 1,
                     page_size=page_size,
                     search=search,
+                    state=state,
                     title=title,
                     workspaces=workspaces,
                     request_options=request_options,
@@ -204,14 +220,14 @@ class ProjectsClient:
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        sampling: typing.Optional[LseProjectCreateRequestSampling] = OMIT,
+        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
         show_instruction: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[LseProjectCreateRequestSkipQueue] = OMIT,
+        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -226,6 +242,7 @@ class ProjectsClient:
         color : typing.Optional[str]
 
         control_weights : typing.Optional[typing.Optional[typing.Any]]
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -270,7 +287,7 @@ class ProjectsClient:
         reveal_preannotations_interactively : typing.Optional[bool]
             Reveal pre-annotations interactively
 
-        sampling : typing.Optional[LseProjectCreateRequestSampling]
+        sampling : typing.Optional[SamplingDe5Enum]
 
         show_annotation_history : typing.Optional[bool]
             Show annotation history to annotator
@@ -289,7 +306,7 @@ class ProjectsClient:
         show_skip_button : typing.Optional[bool]
             Show a skip button in interface and allow annotators to skip the task
 
-        skip_queue : typing.Optional[LseProjectCreateRequestSkipQueue]
+        skip_queue : typing.Optional[SkipQueueEnum]
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -342,18 +359,14 @@ class ProjectsClient:
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pinned_at": pinned_at,
                 "reveal_preannotations_interactively": reveal_preannotations_interactively,
-                "sampling": convert_and_respect_annotation_metadata(
-                    object_=sampling, annotation=LseProjectCreateRequestSampling, direction="write"
-                ),
+                "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
                 "show_ground_truth_first": show_ground_truth_first,
                 "show_instruction": show_instruction,
                 "show_overlap_first": show_overlap_first,
                 "show_skip_button": show_skip_button,
-                "skip_queue": convert_and_respect_annotation_metadata(
-                    object_=skip_queue, annotation=LseProjectCreateRequestSkipQueue, direction="write"
-                ),
+                "skip_queue": skip_queue,
                 "task_data_login": task_data_login,
                 "task_data_password": task_data_password,
                 "title": title,
@@ -389,6 +402,7 @@ class ProjectsClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        state: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
         workspaces: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -419,6 +433,9 @@ class ProjectsClient:
         search : typing.Optional[str]
             Search term for project title and description
 
+        state : typing.Optional[str]
+            Filter current_state by exact match
+
         title : typing.Optional[str]
             Filter title by contains (case-insensitive)
 
@@ -440,7 +457,18 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.list_counts()
+        client.projects.list_counts(
+            filter="filter",
+            ids="ids",
+            include="include",
+            ordering="ordering",
+            page=1,
+            page_size=1,
+            search="search",
+            state="state",
+            title="title",
+            workspaces=1.1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/projects/counts/",
@@ -453,6 +481,7 @@ class ProjectsClient:
                 "page": page,
                 "page_size": page_size,
                 "search": search,
+                "state": state,
                 "title": title,
                 "workspaces": workspaces,
             },
@@ -506,6 +535,7 @@ class ProjectsClient:
         )
         client.projects.get(
             id=1,
+            members_limit=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -604,7 +634,7 @@ class ProjectsClient:
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
         review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
-        sampling: typing.Optional[PatchedLseProjectUpdateRequestSampling] = OMIT,
+        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
@@ -612,7 +642,7 @@ class ProjectsClient:
         show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
         show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[PatchedLseProjectUpdateRequestSkipQueue] = OMIT,
+        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -647,6 +677,7 @@ class ProjectsClient:
         comment_classification_config : typing.Optional[str]
 
         control_weights : typing.Optional[typing.Optional[typing.Any]]
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -705,7 +736,7 @@ class ProjectsClient:
 
         review_settings : typing.Optional[ReviewSettingsRequest]
 
-        sampling : typing.Optional[PatchedLseProjectUpdateRequestSampling]
+        sampling : typing.Optional[SamplingDe5Enum]
 
         show_annotation_history : typing.Optional[bool]
             Show annotation history to annotator
@@ -726,7 +757,7 @@ class ProjectsClient:
 
         show_unused_data_columns_to_annotators : typing.Optional[bool]
 
-        skip_queue : typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]
+        skip_queue : typing.Optional[SkipQueueEnum]
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -756,6 +787,7 @@ class ProjectsClient:
         )
         client.projects.update(
             id=1,
+            members_limit=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -801,9 +833,7 @@ class ProjectsClient:
                 "review_settings": convert_and_respect_annotation_metadata(
                     object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
                 ),
-                "sampling": convert_and_respect_annotation_metadata(
-                    object_=sampling, annotation=PatchedLseProjectUpdateRequestSampling, direction="write"
-                ),
+                "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
                 "show_ground_truth_first": show_ground_truth_first,
@@ -811,9 +841,7 @@ class ProjectsClient:
                 "show_overlap_first": show_overlap_first,
                 "show_skip_button": show_skip_button,
                 "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
-                "skip_queue": convert_and_respect_annotation_metadata(
-                    object_=skip_queue, annotation=PatchedLseProjectUpdateRequestSkipQueue, direction="write"
-                ),
+                "skip_queue": skip_queue,
                 "task_data_login": task_data_login,
                 "task_data_password": task_data_password,
                 "title": title,
@@ -1073,6 +1101,8 @@ class ProjectsClient:
         )
         client.projects.import_tasks(
             id=1,
+            commit_to_project=True,
+            return_task_ids=True,
             request=[],
         )
         """
@@ -1269,6 +1299,7 @@ class AsyncProjectsClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        state: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
         workspaces: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1302,6 +1333,9 @@ class AsyncProjectsClient:
         search : typing.Optional[str]
             Search term for project title and description
 
+        state : typing.Optional[str]
+            Filter current_state by exact match
+
         title : typing.Optional[str]
             Filter title by contains (case-insensitive)
 
@@ -1328,7 +1362,19 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            response = await client.projects.list()
+            response = await client.projects.list(
+                filter="filter",
+                ids="ids",
+                include="include",
+                members_limit=1,
+                ordering="ordering",
+                page=1,
+                page_size=1,
+                search="search",
+                state="state",
+                title="title",
+                workspaces=1.1,
+            )
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1351,6 +1397,7 @@ class AsyncProjectsClient:
                 "page": page,
                 "page_size": page_size,
                 "search": search,
+                "state": state,
                 "title": title,
                 "workspaces": workspaces,
             },
@@ -1375,6 +1422,7 @@ class AsyncProjectsClient:
                     page=page + 1,
                     page_size=page_size,
                     search=search,
+                    state=state,
                     title=title,
                     workspaces=workspaces,
                     request_options=request_options,
@@ -1406,14 +1454,14 @@ class AsyncProjectsClient:
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        sampling: typing.Optional[LseProjectCreateRequestSampling] = OMIT,
+        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
         show_instruction: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[LseProjectCreateRequestSkipQueue] = OMIT,
+        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -1428,6 +1476,7 @@ class AsyncProjectsClient:
         color : typing.Optional[str]
 
         control_weights : typing.Optional[typing.Optional[typing.Any]]
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -1472,7 +1521,7 @@ class AsyncProjectsClient:
         reveal_preannotations_interactively : typing.Optional[bool]
             Reveal pre-annotations interactively
 
-        sampling : typing.Optional[LseProjectCreateRequestSampling]
+        sampling : typing.Optional[SamplingDe5Enum]
 
         show_annotation_history : typing.Optional[bool]
             Show annotation history to annotator
@@ -1491,7 +1540,7 @@ class AsyncProjectsClient:
         show_skip_button : typing.Optional[bool]
             Show a skip button in interface and allow annotators to skip the task
 
-        skip_queue : typing.Optional[LseProjectCreateRequestSkipQueue]
+        skip_queue : typing.Optional[SkipQueueEnum]
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -1552,18 +1601,14 @@ class AsyncProjectsClient:
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pinned_at": pinned_at,
                 "reveal_preannotations_interactively": reveal_preannotations_interactively,
-                "sampling": convert_and_respect_annotation_metadata(
-                    object_=sampling, annotation=LseProjectCreateRequestSampling, direction="write"
-                ),
+                "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
                 "show_ground_truth_first": show_ground_truth_first,
                 "show_instruction": show_instruction,
                 "show_overlap_first": show_overlap_first,
                 "show_skip_button": show_skip_button,
-                "skip_queue": convert_and_respect_annotation_metadata(
-                    object_=skip_queue, annotation=LseProjectCreateRequestSkipQueue, direction="write"
-                ),
+                "skip_queue": skip_queue,
                 "task_data_login": task_data_login,
                 "task_data_password": task_data_password,
                 "title": title,
@@ -1599,6 +1644,7 @@ class AsyncProjectsClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        state: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
         workspaces: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1629,6 +1675,9 @@ class AsyncProjectsClient:
         search : typing.Optional[str]
             Search term for project title and description
 
+        state : typing.Optional[str]
+            Filter current_state by exact match
+
         title : typing.Optional[str]
             Filter title by contains (case-insensitive)
 
@@ -1655,7 +1704,18 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.list_counts()
+            await client.projects.list_counts(
+                filter="filter",
+                ids="ids",
+                include="include",
+                ordering="ordering",
+                page=1,
+                page_size=1,
+                search="search",
+                state="state",
+                title="title",
+                workspaces=1.1,
+            )
 
 
         asyncio.run(main())
@@ -1671,6 +1731,7 @@ class AsyncProjectsClient:
                 "page": page,
                 "page_size": page_size,
                 "search": search,
+                "state": state,
                 "title": title,
                 "workspaces": workspaces,
             },
@@ -1729,6 +1790,7 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.projects.get(
                 id=1,
+                members_limit=1,
             )
 
 
@@ -1838,7 +1900,7 @@ class AsyncProjectsClient:
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
         review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
-        sampling: typing.Optional[PatchedLseProjectUpdateRequestSampling] = OMIT,
+        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
@@ -1846,7 +1908,7 @@ class AsyncProjectsClient:
         show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
         show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[PatchedLseProjectUpdateRequestSkipQueue] = OMIT,
+        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -1881,6 +1943,7 @@ class AsyncProjectsClient:
         comment_classification_config : typing.Optional[str]
 
         control_weights : typing.Optional[typing.Optional[typing.Any]]
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -1939,7 +2002,7 @@ class AsyncProjectsClient:
 
         review_settings : typing.Optional[ReviewSettingsRequest]
 
-        sampling : typing.Optional[PatchedLseProjectUpdateRequestSampling]
+        sampling : typing.Optional[SamplingDe5Enum]
 
         show_annotation_history : typing.Optional[bool]
             Show annotation history to annotator
@@ -1960,7 +2023,7 @@ class AsyncProjectsClient:
 
         show_unused_data_columns_to_annotators : typing.Optional[bool]
 
-        skip_queue : typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]
+        skip_queue : typing.Optional[SkipQueueEnum]
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -1995,6 +2058,7 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.projects.update(
                 id=1,
+                members_limit=1,
             )
 
 
@@ -2043,9 +2107,7 @@ class AsyncProjectsClient:
                 "review_settings": convert_and_respect_annotation_metadata(
                     object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
                 ),
-                "sampling": convert_and_respect_annotation_metadata(
-                    object_=sampling, annotation=PatchedLseProjectUpdateRequestSampling, direction="write"
-                ),
+                "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
                 "show_ground_truth_first": show_ground_truth_first,
@@ -2053,9 +2115,7 @@ class AsyncProjectsClient:
                 "show_overlap_first": show_overlap_first,
                 "show_skip_button": show_skip_button,
                 "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
-                "skip_queue": convert_and_respect_annotation_metadata(
-                    object_=skip_queue, annotation=PatchedLseProjectUpdateRequestSkipQueue, direction="write"
-                ),
+                "skip_queue": skip_queue,
                 "task_data_login": task_data_login,
                 "task_data_password": task_data_password,
                 "title": title,
@@ -2336,6 +2396,8 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.projects.import_tasks(
                 id=1,
+                commit_to_project=True,
+                return_task_ids=True,
                 request=[],
             )
         

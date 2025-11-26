@@ -317,7 +317,8 @@ service:
     model_version_annotator_agreement:
       path: /api/projects/{id}/model-stats/{model_version}/agreement
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -336,6 +337,7 @@ service:
       response:
         docs: Model-version overall agreement vs annotators
         type: StatsModelVersionAnnotatorAgreementResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -348,7 +350,8 @@ service:
     model_version_ground_truth_agreement:
       path: /api/projects/{id}/model-stats/{model_version}/agreement-groundtruth
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -374,10 +377,13 @@ service:
       response:
         docs: Model-version ground truth agreement
         type: StatsModelVersionGroundTruthAgreementResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
             model_version: model_version
+          query-parameters:
+            per_label: true
           response:
             body:
               agreement: 1.1
@@ -386,7 +392,8 @@ service:
     model_version_prediction_agreement:
       path: /api/projects/{id}/model-stats/{model_version}/prediction
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -412,10 +419,13 @@ service:
       response:
         docs: Model-version prediction agreement
         type: StatsModelVersionPredictionAgreementResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
             model_version: model_version
+          query-parameters:
+            per_label: true
           response:
             body:
               average_prediction_agreement_per_model: 1.1
@@ -424,7 +434,8 @@ service:
     iaa:
       path: /api/projects/{id}/stats/IAA
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -459,10 +470,16 @@ service:
       response:
         docs: Inter-Annotator Agreement matrix
         type: StatsIaaResponse
+        status-code: 200
       examples:
         - name: Inter-Annotator Agreement Matrix (per_label=false)
           path-parameters:
             id: 1
+          query-parameters:
+            expand: expand
+            per_label: true
+            std: true
+            task: task
           response:
             body:
               IAA:
@@ -484,6 +501,11 @@ service:
         - name: Inter-Annotator Agreement Matrix (per_label=true)
           path-parameters:
             id: 1
+          query-parameters:
+            expand: expand
+            per_label: true
+            std: true
+            task: task
           response:
             body:
               IAA:
@@ -521,7 +543,8 @@ service:
     users_ground_truth_agreement:
       path: /api/projects/{id}/stats/agreement-groundtruth
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -549,11 +572,13 @@ service:
       response:
         docs: Ground truth agreement statistics for multiple users
         type: StatsUsersGroundTruthAgreementResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
           query-parameters:
             ids: ids
+            per_label: true
           response:
             body:
               agreement:
@@ -563,7 +588,8 @@ service:
     agreement_annotator:
       path: /api/projects/{id}/stats/agreement_annotator/{user_id}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -581,6 +607,7 @@ service:
       response:
         docs: Individual annotator agreement statistics
         type: StatsAgreementAnnotatorResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -593,7 +620,8 @@ service:
     agreement_annotators:
       path: /api/projects/{id}/stats/agreement_annotators
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -618,6 +646,7 @@ service:
       response:
         docs: Multiple annotator agreement statistics
         type: StatsAgreementAnnotatorsResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -632,7 +661,8 @@ service:
     data_filters:
       path: /api/projects/{id}/stats/data_filter
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -649,6 +679,7 @@ service:
       response:
         docs: User data filter statistics
         type: StatsDataFiltersResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -664,7 +695,8 @@ service:
     finished_tasks:
       path: /api/projects/{id}/stats/finished
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -687,9 +719,12 @@ service:
       response:
         docs: Finished tasks statistics
         type: StatsFinishedTasksResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            user_pk: 1
           response:
             body:
               finished: 1
@@ -700,7 +735,8 @@ service:
     lead_time:
       path: /api/projects/{id}/stats/lead_time
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -718,6 +754,7 @@ service:
       response:
         docs: Lead time statistics
         type: StatsLeadTimeResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -733,7 +770,8 @@ service:
     total_agreement:
       path: /api/projects/{id}/stats/total_agreement
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -761,9 +799,12 @@ service:
       response:
         docs: Total agreement
         type: StatsTotalAgreementResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            per_label: true
           response:
             body:
               total_agreement: 1.1
@@ -772,7 +813,8 @@ service:
     update_stats:
       path: /api/projects/{id}/update-stats
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -795,9 +837,12 @@ service:
       response:
         docs: Successful response returns job id
         type: map<string, unknown>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            stat_type: stat_type
           response:
             body:
               key: value
@@ -806,7 +851,8 @@ service:
     users_prediction_agreement:
       path: /api/projects/{id}/user-stats/prediction
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -836,11 +882,13 @@ service:
       response:
         docs: Prediction agreement statistics for multiple annotators
         type: StatsUsersPredictionAgreementResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
           query-parameters:
             ids: ids
+            per_label: true
           response:
             body:
               agreement:
@@ -850,7 +898,8 @@ service:
     users_review_score:
       path: /api/projects/{id}/user-stats/review_score
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -879,11 +928,13 @@ service:
       response:
         docs: Review scores and performance scores for multiple annotators
         type: StatsUsersReviewScoreResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
           query-parameters:
             ids: ids
+            per_label: true
           response:
             body:
               performance_score:
@@ -895,7 +946,8 @@ service:
     user_prediction_agreement:
       path: /api/projects/{id}/user-stats/{user_pk}/prediction
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -920,10 +972,13 @@ service:
       response:
         docs: Individual user prediction agreement statistics
         type: StatsUserPredictionAgreementResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
             user_pk: 1
+          query-parameters:
+            per_label: true
           response:
             body:
               average_prediction_agreement_per_user: 1.1
@@ -932,7 +987,8 @@ service:
     user_review_score:
       path: /api/projects/{id}/user-stats/{user_pk}/review_score
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -956,10 +1012,13 @@ service:
       response:
         docs: Individual user review score statistics
         type: StatsUserReviewScoreResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
             user_pk: 1
+          query-parameters:
+            per_label: true
           response:
             body:
               performance_score: 1.1
@@ -969,7 +1028,8 @@ service:
     user_ground_truth_agreement:
       path: /api/projects/{id}/users/{user_pk}/stats/agreement-groundtruth
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -994,10 +1054,13 @@ service:
       response:
         docs: Individual user ground truth agreement statistics
         type: StatsUserGroundTruthAgreementResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
             user_pk: 1
+          query-parameters:
+            per_label: true
           response:
             body:
               agreement: 1.1

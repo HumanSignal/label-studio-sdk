@@ -31,8 +31,7 @@ types:
         type: optional<string>
       order:
         type: optional<integer>
-      permission:
-        type: optional<ActionsListResponseItemPermission>
+      permission: optional<ActionsListResponseItemPermission>
       title:
         type: optional<string>
     source:
@@ -405,7 +404,8 @@ service:
     list:
       path: /api/dm/actions/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Retrieve all the registered actions with descriptions that data manager
         can use.
@@ -421,6 +421,7 @@ service:
       response:
         docs: Actions retrieved successfully
         type: list<ActionsListResponseItem>
+        status-code: 200
       examples:
         - name: response
           query-parameters:
@@ -446,7 +447,8 @@ service:
     create:
       path: /api/dm/actions/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Perform a Data Manager action with the selected tasks and filters. Note:
         More complex actions require additional parameters in the request body.
@@ -501,6 +503,7 @@ service:
         - query-parameters:
             id: delete_annotators
             project: 1
+            view: 1
           request:
             filters:
               conjunction: or

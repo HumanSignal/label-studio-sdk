@@ -106,6 +106,7 @@ class VersionsClient:
         )
         client.prompts.versions.list(
             prompt_id=1,
+            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -550,6 +551,7 @@ class VersionsClient:
         client.prompts.versions.get_refined_prompt(
             prompt_id=1,
             version_id=1,
+            refinement_job_id="refinement_job_id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -630,6 +632,7 @@ class VersionsClient:
         client.prompts.versions.refine_prompt(
             prompt_id=1,
             version_id=1,
+            async_=True,
             project_id=1,
             teacher_model_name="teacher_model_name",
             teacher_model_provider_connection_id=1,
@@ -771,6 +774,7 @@ class AsyncVersionsClient:
         async def main() -> None:
             await client.prompts.versions.list(
                 prompt_id=1,
+                ordering="ordering",
             )
 
 
@@ -1263,6 +1267,7 @@ class AsyncVersionsClient:
             await client.prompts.versions.get_refined_prompt(
                 prompt_id=1,
                 version_id=1,
+                refinement_job_id="refinement_job_id",
             )
 
 
@@ -1351,6 +1356,7 @@ class AsyncVersionsClient:
             await client.prompts.versions.refine_prompt(
                 prompt_id=1,
                 version_id=1,
+                async_=True,
                 project_id=1,
                 teacher_model_name="teacher_model_name",
                 teacher_model_provider_connection_id=1,

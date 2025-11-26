@@ -7,7 +7,8 @@ service:
     list:
       path: /api/ml/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
             List all configured ML backends for a specific project by ID.
@@ -27,8 +28,11 @@ service:
       response:
         docs: ''
         type: list<root.MlBackend>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            project: 1
+          response:
             body:
               - auth_method: NONE
                 auto_update: true
@@ -54,7 +58,8 @@ service:
     create:
       path: /api/ml/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
             Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
@@ -104,6 +109,7 @@ service:
       response:
         docs: ''
         type: root.MlBackend
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -132,7 +138,8 @@ service:
     get:
       path: /api/ml/{id}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
             Get details about a specific ML backend connection by ID. For example, make a GET request using the
@@ -148,6 +155,7 @@ service:
       response:
         docs: ''
         type: root.MlBackend
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -177,7 +185,8 @@ service:
     delete:
       path: /api/ml/{id}
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
             Remove an existing ML backend connection by ID. For example, use the
@@ -198,7 +207,8 @@ service:
     update:
       path: /api/ml/{id}
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
             Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
@@ -249,6 +259,7 @@ service:
       response:
         docs: ''
         type: root.MlBackend
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -279,7 +290,8 @@ service:
     predict_interactive:
       path: /api/ml/{id}/interactive-annotating
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 Send a request to the machine learning backend set up to be used for interactive preannotations to retrieve a
@@ -297,7 +309,9 @@ service:
         name: MlInteractiveAnnotatingRequestRequest
         body:
           properties:
-            context: optional<unknown>
+            context:
+              type: optional<unknown>
+              docs: Context for ML model
             task:
               type: integer
               docs: ID of task to annotate
@@ -312,7 +326,8 @@ service:
     predict_all_tasks:
       path: /api/ml/{id}/predict
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -354,12 +369,15 @@ service:
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            batch_size: 1
       audiences:
         - public
     test_predict:
       path: /api/ml/{id}/predict/test
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 After you add an ML backend, call this API with the ML backend ID to run a test prediction on specific task data               
@@ -391,7 +409,9 @@ service:
             error_message:
               type: optional<string>
               docs: Error message in error state
-            extra_params: optional<unknown>
+            extra_params:
+              type: optional<unknown>
+              docs: Any extra parameters passed to the ML Backend during the setup
             is_interactive:
               type: optional<boolean>
               docs: >-
@@ -429,7 +449,8 @@ service:
     train:
       path: /api/ml/{id}/train
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 After you add an ML backend, call this API with the ML backend ID to start training with 
@@ -463,7 +484,8 @@ service:
     list_model_versions:
       path: /api/ml/{id}/versions
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get available versions of the model.
       source:
         openapi: openapi/openapi.yaml
@@ -473,6 +495,7 @@ service:
       response:
         docs: List of available versions.
         type: MlListModelVersionsResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

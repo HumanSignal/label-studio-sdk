@@ -7,7 +7,8 @@ service:
     create_many_status:
       path: /api/projects/{id}/imports/{import_pk}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Return data related to async project import operation
       source:
         openapi: openapi/openapi.yaml
@@ -20,6 +21,7 @@ service:
       response:
         docs: ''
         type: root.ProjectImport
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -58,7 +60,8 @@ service:
     delete_all_tasks:
       path: /api/projects/{id}/tasks/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete all tasks from a specific project.
       source:
         openapi: openapi/openapi.yaml
@@ -75,7 +78,8 @@ service:
     list:
       path: /api/tasks/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Retrieve a paginated list of tasks. The response format varies based on
         the user's role in the organization:
@@ -161,12 +165,25 @@ service:
       response:
         docs: ''
         type: root.PaginatedRoleBasedTaskList
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
         - root.ForbiddenError
       examples:
-        - response:
+        - query-parameters:
+            fields: all
+            include: include
+            only_annotated: true
+            page: 1
+            page_size: 1
+            project: 1
+            query: query
+            resolve_uri: true
+            review: true
+            selectedItems: selectedItems
+            view: 1
+          response:
             body:
               tasks:
                 - agreement: agreement
@@ -230,7 +247,8 @@ service:
     create:
       path: /api/tasks/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create a new task
       source:
         openapi: openapi/openapi.yaml
@@ -269,7 +287,12 @@ service:
             last_comment_updated_at:
               type: optional<datetime>
               docs: When the last comment was updated
-            meta: optional<unknown>
+            meta:
+              type: optional<unknown>
+              docs: >-
+                Meta is user imported (uploaded) data and can be useful as input
+                for an ML Backend for embeddings, advanced vectors, and other
+                info. It is passed to ML during training/predicting steps.
             overlap:
               type: optional<integer>
               docs: Number of distinct annotators that processed the current task
@@ -308,6 +331,7 @@ service:
       response:
         docs: ''
         type: root.LseTask
+        status-code: 201
       examples:
         - name: Create Task
           request:
@@ -389,7 +413,8 @@ service:
     get:
       path: /api/tasks/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Get task data, metadata, annotations and other attributes for a specific
         labeling task by task ID.
@@ -403,6 +428,7 @@ service:
       response:
         docs: ''
         type: root.RoleBasedTask
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -480,7 +506,8 @@ service:
     delete:
       path: /api/tasks/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete a task in Label Studio. This action cannot be undone!
       source:
         openapi: openapi/openapi.yaml
@@ -497,7 +524,8 @@ service:
     update:
       path: /api/tasks/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update the attributes of an existing labeling task.
       source:
         openapi: openapi/openapi.yaml
@@ -519,7 +547,13 @@ service:
                 min: -2147483648
                 max: 2147483647
             completed_at: optional<datetime>
-            data: optional<unknown>
+            data:
+              type: optional<unknown>
+              docs: >-
+                User imported or uploaded data for a task. Data is formatted
+                according to the project label config. You can find examples of
+                data for your project on the Import page in the Label Studio
+                Data Manager UI.
             draft_exists: optional<boolean>
             ground_truth: optional<boolean>
             inner_id: optional<integer>
@@ -531,7 +565,12 @@ service:
             last_comment_updated_at:
               type: optional<datetime>
               docs: When the last comment was updated
-            meta: optional<unknown>
+            meta:
+              type: optional<unknown>
+              docs: >-
+                Meta is user imported (uploaded) data and can be useful as input
+                for an ML Backend for embeddings, advanced vectors, and other
+                info. It is passed to ML during training/predicting steps.
             overlap:
               type: optional<integer>
               docs: Number of distinct annotators that processed the current task
@@ -562,6 +601,7 @@ service:
       response:
         docs: ''
         type: root.RoleBasedTask
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -640,7 +680,8 @@ service:
     create_event:
       path: /api/tasks/{id}/events/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
             Create a new task event to track user interactions and system events during annotation.
@@ -719,7 +760,9 @@ service:
             event_time:
               type: datetime
               docs: Timestamp when the event occurred (frontend time)
-            meta: optional<unknown>
+            meta:
+              type: optional<unknown>
+              docs: Additional event metadata (region data, hotkey info, etc.)
             review:
               type: optional<integer>
               docs: Review ID associated with this event
@@ -727,6 +770,7 @@ service:
       response:
         docs: ''
         type: root.TaskEvent
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

@@ -9,18 +9,26 @@ from ...utilities import validate_response
 async def test_post(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"assignments": 1}
     expected_types: typing.Any = {"assignments": "integer"}
-    response = client.projects.members.bulk.post(id=1, all_=True)
+    response = client.projects.members.bulk.post(
+        id=1, last_activity_gte="last_activity__gte", role="role", search="search", all_=True
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.members.bulk.post(id=1, all_=True)
+    async_response = await async_client.projects.members.bulk.post(
+        id=1, last_activity_gte="last_activity__gte", role="role", search="search", all_=True
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"unassignments": 1}
     expected_types: typing.Any = {"unassignments": "integer"}
-    response = client.projects.members.bulk.delete(id=1)
+    response = client.projects.members.bulk.delete(
+        id=1, last_activity_gte="last_activity__gte", role="role", search="search"
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.members.bulk.delete(id=1)
+    async_response = await async_client.projects.members.bulk.delete(
+        id=1, last_activity_gte="last_activity__gte", role="role", search="search"
+    )
     validate_response(async_response, expected_response, expected_types)

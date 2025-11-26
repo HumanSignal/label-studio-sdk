@@ -7,7 +7,8 @@ service:
     list:
       path: /api/project-templates/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -28,8 +29,11 @@ service:
       response:
         docs: ''
         type: list<root.ProjectTemplate>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            ordering: ordering
+          response:
             body:
               - assignment_settings:
                   key: value
@@ -54,7 +58,8 @@ service:
     create:
       path: /api/project-templates/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -72,6 +77,7 @@ service:
       response:
         docs: ''
         type: root.ProjectTemplate
+        status-code: 201
       examples:
         - request:
             name: name
@@ -101,7 +107,8 @@ service:
     get:
       path: /api/project-templates/{id}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -118,6 +125,7 @@ service:
       response:
         docs: ''
         type: root.ProjectTemplate
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -146,7 +154,8 @@ service:
     api_project_templates_update:
       path: /api/project-templates/{id}
       method: PUT
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -166,6 +175,7 @@ service:
       response:
         docs: ''
         type: root.ProjectTemplate
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -197,7 +207,8 @@ service:
     delete:
       path: /api/project-templates/{id}
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -219,7 +230,8 @@ service:
     update:
       path: /api/project-templates/{id}
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -238,7 +250,9 @@ service:
         name: PatchedProjectTemplateRequest
         body:
           properties:
-            assignment_settings: optional<unknown>
+            assignment_settings:
+              type: optional<unknown>
+              docs: general dict serialized assignment settings
             created_by: optional<integer>
             custom_script:
               type: optional<string>
@@ -256,17 +270,22 @@ service:
                 maxLength: 1000
             organization: optional<integer>
             project_id: optional<integer>
-            project_settings: optional<unknown>
+            project_settings:
+              type: optional<unknown>
+              docs: general dict serialized project settings
             require_comment_on_skip:
               type: optional<boolean>
               docs: flag to require comment on skip
-            review_settings: optional<unknown>
+            review_settings:
+              type: optional<unknown>
+              docs: general dict serialized review settings
             show_unused_data_columns_to_annotators: optional<boolean>
             tags: optional<unknown>
         content-type: application/json
       response:
         docs: ''
         type: root.ProjectTemplate
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -296,7 +315,8 @@ service:
     create_project_from_template:
       path: /api/project-templates/{id}/create-project
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -330,6 +350,7 @@ service:
       response:
         docs: Project created successfully
         type: root.LseProject
+        status-code: 201
       examples:
         - path-parameters:
             id: 1
@@ -424,6 +445,7 @@ service:
               skip_queue: REQUEUE_FOR_ME
               skipped_annotations_number: 1
               start_training_on_annotation_update: true
+              state: state
               task_data_login: task_data_login
               task_data_password: task_data_password
               task_number: 1

@@ -106,6 +106,7 @@ class UsersClient:
             Allow sending newsletters to user
 
         custom_hotkeys : typing.Optional[typing.Optional[typing.Any]]
+            Custom keyboard shortcuts configuration for the user interface
 
         date_joined : typing.Optional[dt.datetime]
 
@@ -429,7 +430,9 @@ class UsersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.list()
+        client.users.list(
+            ordering="ordering",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/users/",
@@ -839,6 +842,7 @@ class AsyncUsersClient:
             Allow sending newsletters to user
 
         custom_hotkeys : typing.Optional[typing.Optional[typing.Any]]
+            Custom keyboard shortcuts configuration for the user interface
 
         date_joined : typing.Optional[dt.datetime]
 
@@ -1215,7 +1219,9 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            await client.users.list()
+            await client.users.list(
+                ordering="ordering",
+            )
 
 
         asyncio.run(main())

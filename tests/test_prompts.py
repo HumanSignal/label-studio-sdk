@@ -9,20 +9,22 @@ from .utilities import validate_response
 async def test_batch_failed_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"failed_predictions": [{"key": "value"}], "job_id": "job_id"}
     expected_types: typing.Any = {"failed_predictions": ("list", {0: None}), "job_id": None}
-    response = client.prompts.batch_failed_predictions(failed_predictions=[], modelrun_id=1)
+    response = client.prompts.batch_failed_predictions(num_failed_predictions=1, failed_predictions=[], modelrun_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.batch_failed_predictions(failed_predictions=[], modelrun_id=1)
+    async_response = await async_client.prompts.batch_failed_predictions(
+        num_failed_predictions=1, failed_predictions=[], modelrun_id=1
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_batch_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"job_id": "job_id", "results": [{"key": "value"}]}
     expected_types: typing.Any = {"job_id": None, "results": ("list", {0: None})}
-    response = client.prompts.batch_predictions(modelrun_id=1, results=[])
+    response = client.prompts.batch_predictions(num_predictions=1, modelrun_id=1, results=[])
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.batch_predictions(modelrun_id=1, results=[])
+    async_response = await async_client.prompts.batch_predictions(num_predictions=1, modelrun_id=1, results=[])
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -56,10 +58,28 @@ async def test_subset_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
             },
         ),
     }
-    response = client.prompts.subset_tasks(project_pk=1)
+    response = client.prompts.subset_tasks(
+        project_pk=1,
+        include_total=True,
+        model_run=1,
+        ordering="ordering",
+        page=1,
+        page_size=1,
+        parent_model=1,
+        project_subset="project_subset",
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.subset_tasks(project_pk=1)
+    async_response = await async_client.prompts.subset_tasks(
+        project_pk=1,
+        include_total=True,
+        model_run=1,
+        ordering="ordering",
+        page=1,
+        page_size=1,
+        parent_model=1,
+        project_subset="project_subset",
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -69,17 +89,17 @@ async def test_subsets(client: LabelStudio, async_client: AsyncLabelStudio) -> N
         "list",
         {0: {"columns_schema": ("list", {0: ("dict", {0: (None, None)})}), "count": "integer", "subset": None}},
     )
-    response = client.prompts.subsets(project_pk=1)
+    response = client.prompts.subsets(project_pk=1, ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.subsets(project_pk=1)
+    async_response = await async_client.prompts.subsets(project_pk=1, ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "associated_projects": [{"id": 1}],
+            "associated_projects": [{}],
             "created_at": "2024-01-15T09:30:00Z",
             "created_by": {
                 "avatar": "avatar",
@@ -102,7 +122,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         "list",
         {
             0: {
-                "associated_projects": ("list", {0: {"id": "integer"}}),
+                "associated_projects": ("list", {0: {}}),
                 "created_at": "datetime",
                 "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
                 "description": None,
@@ -116,10 +136,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.prompts.list()
+    response = client.prompts.list(ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.list()
+    async_response = await async_client.prompts.list(ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -176,17 +196,14 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                 "annotation_limit_percent": "annotation_limit_percent",
                 "annotator_evaluation_minimum_score": "annotator_evaluation_minimum_score",
                 "annotator_evaluation_minimum_tasks": 1,
-                "assignment_settings": {"id": 1},
-                "blueprints": [
-                    {"created_at": "2024-01-15T09:30:00Z", "id": 1, "share_id": "share_id", "short_url": "short_url"}
-                ],
+                "assignment_settings": {},
+                "blueprints": [{}],
                 "color": "color",
                 "comment_classification_config": "comment_classification_config",
                 "config_has_control_tags": True,
                 "config_suitable_for_bulk_annotation": True,
                 "control_weights": {"key": "value"},
                 "created_at": "2024-01-15T09:30:00Z",
-                "created_by": {"avatar": "avatar", "id": 1},
                 "custom_script": "custom_script",
                 "custom_task_lock_ttl": 1,
                 "data_types": {"key": "value"},
@@ -223,7 +240,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                 "rejected": 1,
                 "require_comment_on_skip": True,
                 "reveal_preannotations_interactively": True,
-                "review_settings": {"id": 1, "requeue_rejected_tasks_to_annotator": True},
+                "review_settings": {},
                 "review_total_tasks": 1,
                 "reviewed_number": 1,
                 "reviewer_queue_total": 1,
@@ -238,6 +255,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                 "skip_queue": "REQUEUE_FOR_ME",
                 "skipped_annotations_number": "skipped_annotations_number",
                 "start_training_on_annotation_update": True,
+                "state": "state",
                 "task_number": 1,
                 "title": "title",
                 "total_annotations_number": "total_annotations_number",
@@ -262,18 +280,14 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                     "annotation_limit_percent": None,
                     "annotator_evaluation_minimum_score": None,
                     "annotator_evaluation_minimum_tasks": "integer",
-                    "assignment_settings": {"id": "integer"},
-                    "blueprints": (
-                        "list",
-                        {0: {"created_at": "datetime", "id": "integer", "share_id": None, "short_url": None}},
-                    ),
+                    "assignment_settings": {},
+                    "blueprints": ("list", {0: {}}),
                     "color": None,
                     "comment_classification_config": None,
                     "config_has_control_tags": None,
                     "config_suitable_for_bulk_annotation": None,
                     "control_weights": None,
                     "created_at": "datetime",
-                    "created_by": {"avatar": None, "id": "integer"},
                     "custom_script": None,
                     "custom_task_lock_ttl": "integer",
                     "data_types": None,
@@ -310,7 +324,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                     "rejected": "integer",
                     "require_comment_on_skip": None,
                     "reveal_preannotations_interactively": None,
-                    "review_settings": {"id": "integer", "requeue_rejected_tasks_to_annotator": None},
+                    "review_settings": {},
                     "review_total_tasks": "integer",
                     "reviewed_number": "integer",
                     "reviewer_queue_total": "integer",
@@ -325,6 +339,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                     "skip_queue": None,
                     "skipped_annotations_number": None,
                     "start_training_on_annotation_update": None,
+                    "state": None,
                     "task_number": "integer",
                     "title": None,
                     "total_annotations_number": None,
@@ -336,10 +351,14 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
             },
         ),
     }
-    response = client.prompts.compatible_projects()
+    response = client.prompts.compatible_projects(
+        ordering="ordering", page=1, page_size=1, project_type="NamedEntityRecognition"
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.compatible_projects()
+    async_response = await async_client.prompts.compatible_projects(
+        ordering="ordering", page=1, page_size=1, project_type="NamedEntityRecognition"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 

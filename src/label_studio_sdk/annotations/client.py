@@ -3,9 +3,7 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 import datetime as dt
-from .types.annotation_bulk_serializer_with_selected_items_request_last_action import (
-    AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
-)
+from ..types.last_action_enum import LastActionEnum
 from ..types.selected_items_request import SelectedItemsRequest
 from ..core.request_options import RequestOptions
 from .types.annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
@@ -33,7 +31,7 @@ class AnnotationsClient:
         draft_created_at: typing.Optional[dt.datetime] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
         import_id: typing.Optional[int] = OMIT,
-        last_action: typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction] = OMIT,
+        last_action: typing.Optional[LastActionEnum] = OMIT,
         last_created_by: typing.Optional[int] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
         parent_annotation: typing.Optional[int] = OMIT,
@@ -67,7 +65,7 @@ class AnnotationsClient:
         import_id : typing.Optional[int]
             Original annotation ID that was at the import step or NULL if this annotation wasn't imported
 
-        last_action : typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]
+        last_action : typing.Optional[LastActionEnum]
             Action which was performed in the last annotation history item
 
             * `prediction` - Created from prediction
@@ -140,11 +138,7 @@ class AnnotationsClient:
                 "draft_created_at": draft_created_at,
                 "ground_truth": ground_truth,
                 "import_id": import_id,
-                "last_action": convert_and_respect_annotation_metadata(
-                    object_=last_action,
-                    annotation=AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
-                    direction="write",
-                ),
+                "last_action": last_action,
                 "last_created_by": last_created_by,
                 "lead_time": lead_time,
                 "parent_annotation": parent_annotation,
@@ -413,6 +407,7 @@ class AnnotationsClient:
         )
         client.annotations.list(
             id=1,
+            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -583,7 +578,7 @@ class AsyncAnnotationsClient:
         draft_created_at: typing.Optional[dt.datetime] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
         import_id: typing.Optional[int] = OMIT,
-        last_action: typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction] = OMIT,
+        last_action: typing.Optional[LastActionEnum] = OMIT,
         last_created_by: typing.Optional[int] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
         parent_annotation: typing.Optional[int] = OMIT,
@@ -617,7 +612,7 @@ class AsyncAnnotationsClient:
         import_id : typing.Optional[int]
             Original annotation ID that was at the import step or NULL if this annotation wasn't imported
 
-        last_action : typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]
+        last_action : typing.Optional[LastActionEnum]
             Action which was performed in the last annotation history item
 
             * `prediction` - Created from prediction
@@ -698,11 +693,7 @@ class AsyncAnnotationsClient:
                 "draft_created_at": draft_created_at,
                 "ground_truth": ground_truth,
                 "import_id": import_id,
-                "last_action": convert_and_respect_annotation_metadata(
-                    object_=last_action,
-                    annotation=AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
-                    direction="write",
-                ),
+                "last_action": last_action,
                 "last_created_by": last_created_by,
                 "lead_time": lead_time,
                 "parent_annotation": parent_annotation,
@@ -1000,6 +991,7 @@ class AsyncAnnotationsClient:
         async def main() -> None:
             await client.annotations.list(
                 id=1,
+                ordering="ordering",
             )
 
 

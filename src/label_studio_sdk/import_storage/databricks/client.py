@@ -60,6 +60,7 @@ class DatabricksClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.databricks.list(
+            ordering="ordering",
             project=1,
         )
         """
@@ -154,6 +155,7 @@ class DatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume
@@ -329,6 +331,7 @@ class DatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume
@@ -588,6 +591,7 @@ class DatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume
@@ -805,6 +809,7 @@ class AsyncDatabricksClient:
 
         async def main() -> None:
             await client.import_storage.databricks.list(
+                ordering="ordering",
                 project=1,
             )
 
@@ -902,6 +907,7 @@ class AsyncDatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume
@@ -1085,6 +1091,7 @@ class AsyncDatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume
@@ -1368,6 +1375,7 @@ class AsyncDatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume

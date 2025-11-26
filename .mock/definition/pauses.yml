@@ -7,7 +7,8 @@ service:
     api_projects_members_pauses_update:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
       method: PUT
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -19,9 +20,9 @@ service:
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id: string
         project_pk: integer
         user_pk: integer
+        id: string
       display-name: ✨ Put pause
       request:
         body: root.PauseRequest
@@ -29,11 +30,12 @@ service:
       response:
         docs: ''
         type: root.Pause
+        status-code: 200
       examples:
         - path-parameters:
-            id: id
             project_pk: 1
             user_pk: 1
+            id: id
           request:
             reason: MANUAL
           response:

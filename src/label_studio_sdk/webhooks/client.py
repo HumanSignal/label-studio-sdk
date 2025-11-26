@@ -47,7 +47,9 @@ class WebhooksClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.webhooks.list()
+        client.webhooks.list(
+            project="project",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/webhooks/",
@@ -94,6 +96,7 @@ class WebhooksClient:
         actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Optional[typing.Any]]
+            Key Value Json of headers
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
@@ -186,7 +189,9 @@ class WebhooksClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.webhooks.info()
+        client.webhooks.info(
+            organization_only=True,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/webhooks/info/",
@@ -311,6 +316,7 @@ class WebhooksClient:
         actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Optional[typing.Any]]
+            Key Value Json of headers
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
@@ -410,7 +416,9 @@ class AsyncWebhooksClient:
 
 
         async def main() -> None:
-            await client.webhooks.list()
+            await client.webhooks.list(
+                project="project",
+            )
 
 
         asyncio.run(main())
@@ -460,6 +468,7 @@ class AsyncWebhooksClient:
         actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Optional[typing.Any]]
+            Key Value Json of headers
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
@@ -565,7 +574,9 @@ class AsyncWebhooksClient:
 
 
         async def main() -> None:
-            await client.webhooks.info()
+            await client.webhooks.info(
+                organization_only=True,
+            )
 
 
         asyncio.run(main())
@@ -709,6 +720,7 @@ class AsyncWebhooksClient:
         actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Optional[typing.Any]]
+            Key Value Json of headers
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled

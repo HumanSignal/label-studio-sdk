@@ -7,7 +7,8 @@ service:
     get_current_user:
       path: /api/current-user
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -22,6 +23,7 @@ service:
       response:
         docs: ''
         type: root.LseUserApi
+        status-code: 200
       examples:
         - response:
             body:
@@ -38,10 +40,6 @@ service:
               initials: initials
               last_activity: '2024-01-15T09:30:00Z'
               last_name: last_name
-              org_membership:
-                - active: active
-                  organization_id: 1
-                  role: role
               organization_membership:
                 active: active
                 organization_id: 1
@@ -53,7 +51,8 @@ service:
     update_current_user:
       path: /api/current-user
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -73,7 +72,9 @@ service:
             allow_newsletters:
               type: optional<boolean>
               docs: Allow sending newsletters to user
-            custom_hotkeys: optional<unknown>
+            custom_hotkeys:
+              type: optional<unknown>
+              docs: Custom keyboard shortcuts configuration for the user interface
             date_joined: optional<datetime>
             email_notification_settings: optional<unknown>
             first_name:
@@ -106,6 +107,7 @@ service:
       response:
         docs: ''
         type: root.LseUserApi
+        status-code: 200
       examples:
         - request: {}
           response:
@@ -123,10 +125,6 @@ service:
               initials: initials
               last_activity: '2024-01-15T09:30:00Z'
               last_name: last_name
-              org_membership:
-                - active: active
-                  organization_id: 1
-                  role: role
               organization_membership:
                 active: active
                 organization_id: 1
@@ -138,7 +136,8 @@ service:
     get_hotkeys:
       path: /api/current-user/hotkeys/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve the custom hotkeys configuration for the current user.
       source:
         openapi: openapi/openapi.yaml
@@ -146,6 +145,7 @@ service:
       response:
         docs: ''
         type: root.Hotkeys
+        status-code: 200
       examples:
         - response:
             body:
@@ -156,7 +156,8 @@ service:
     update_hotkeys:
       path: /api/current-user/hotkeys/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update the custom hotkeys configuration for the current user.
       source:
         openapi: openapi/openapi.yaml
@@ -170,6 +171,7 @@ service:
       response:
         docs: ''
         type: root.Hotkeys
+        status-code: 200
       examples:
         - request: {}
           response:
@@ -181,7 +183,8 @@ service:
     reset_token:
       path: /api/current-user/reset-token/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Reset the user token for the current user.
       source:
         openapi: openapi/openapi.yaml
@@ -189,6 +192,7 @@ service:
       response:
         docs: User token response
         type: UsersResetTokenResponse
+        status-code: 201
       examples:
         - response:
             body:
@@ -198,7 +202,8 @@ service:
     get_token:
       path: /api/current-user/token
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a user token to authenticate to the API as the current user.
       source:
         openapi: openapi/openapi.yaml
@@ -206,6 +211,7 @@ service:
       response:
         docs: User token response
         type: UsersGetTokenResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -215,7 +221,8 @@ service:
     whoami:
       path: /api/current-user/whoami
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve details of the account that you are using to access the API.
       source:
         openapi: openapi/openapi.yaml
@@ -223,6 +230,7 @@ service:
       response:
         docs: ''
         type: root.WhoAmIUser
+        status-code: 200
       examples:
         - response:
             body:
@@ -254,10 +262,6 @@ service:
                 trial_license_enterprise: true
                 trial_models_in_production: trial_models_in_production
                 trial_role: annotator
-              org_membership:
-                - active: active
-                  organization_id: 1
-                  role: role
               organization_membership:
                 active: active
                 organization_id: 1
@@ -272,7 +276,8 @@ service:
     list:
       path: /api/users/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: List the users that exist on the Label Studio server.
       source:
         openapi: openapi/openapi.yaml
@@ -286,8 +291,11 @@ service:
       response:
         docs: ''
         type: list<root.LseUserApi>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            ordering: ordering
+          response:
             body:
               - active_organization: 1
                 active_organization_meta: active_organization_meta
@@ -302,10 +310,6 @@ service:
                 initials: initials
                 last_activity: '2024-01-15T09:30:00Z'
                 last_name: last_name
-                org_membership:
-                  - active: active
-                    organization_id: 1
-                    role: role
                 organization_membership:
                   active: active
                   organization_id: 1
@@ -317,7 +321,8 @@ service:
     create:
       path: /api/users/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create a user in Label Studio.
       source:
         openapi: openapi/openapi.yaml
@@ -357,6 +362,7 @@ service:
       response:
         docs: ''
         type: root.LseUser
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -388,10 +394,6 @@ service:
                 trial_license_enterprise: true
                 trial_models_in_production: trial_models_in_production
                 trial_role: annotator
-              org_membership:
-                - active: active
-                  organization_id: 1
-                  role: role
               organization_membership:
                 active: active
                 organization_id: 1
@@ -404,7 +406,8 @@ service:
     get:
       path: /api/users/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get info about a specific Label Studio user, based on the user ID.
       source:
         openapi: openapi/openapi.yaml
@@ -416,6 +419,7 @@ service:
       response:
         docs: ''
         type: root.LseUser
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -448,10 +452,6 @@ service:
                 trial_license_enterprise: true
                 trial_models_in_production: trial_models_in_production
                 trial_role: annotator
-              org_membership:
-                - active: active
-                  organization_id: 1
-                  role: role
               organization_membership:
                 active: active
                 organization_id: 1
@@ -464,7 +464,8 @@ service:
     delete:
       path: /api/users/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Delete a specific Label Studio user. Only available in community
         edition.
@@ -488,7 +489,8 @@ service:
     update:
       path: /api/users/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 Update details for a specific user, such as their name or contact information, in Label Studio.
@@ -536,6 +538,7 @@ service:
       response:
         docs: ''
         type: root.LseUser
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -569,10 +572,6 @@ service:
                 trial_license_enterprise: true
                 trial_models_in_production: trial_models_in_production
                 trial_role: annotator
-              org_membership:
-                - active: active
-                  organization_id: 1
-                  role: role
               organization_membership:
                 active: active
                 organization_id: 1

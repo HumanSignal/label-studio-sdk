@@ -33,6 +33,7 @@ class MembersClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedLseOrganizationMemberListList:
@@ -65,6 +66,22 @@ class MembersClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
+        role : typing.Optional[str]
+            Filter members by organization role. Accepts single role or comma-separated list of roles.
+
+            **Format:**
+            - Single role: `?role=RE`
+            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+            **Role Codes:**
+            - `OW` = Owner
+            - `AD` = Administrator
+            - `MA` = Manager
+            - `RE` = Reviewer
+            - `AN` = Annotator
+            - `NO` = Not Activated
+            - `DI` = Disabled
+
         search : typing.Optional[str]
             A search term.
 
@@ -85,6 +102,13 @@ class MembersClient:
         )
         client.organizations.members.list(
             id=1,
+            exclude_project_id=1,
+            exclude_workspace_id=1,
+            ordering="ordering",
+            page=1,
+            page_size=1,
+            role="role",
+            search="search",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -96,6 +120,7 @@ class MembersClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "role": role,
                 "search": search,
             },
             request_options=request_options,
@@ -337,6 +362,7 @@ class AsyncMembersClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedLseOrganizationMemberListList:
@@ -369,6 +395,22 @@ class AsyncMembersClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
+        role : typing.Optional[str]
+            Filter members by organization role. Accepts single role or comma-separated list of roles.
+
+            **Format:**
+            - Single role: `?role=RE`
+            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+            **Role Codes:**
+            - `OW` = Owner
+            - `AD` = Administrator
+            - `MA` = Manager
+            - `RE` = Reviewer
+            - `AN` = Annotator
+            - `NO` = Not Activated
+            - `DI` = Disabled
+
         search : typing.Optional[str]
             A search term.
 
@@ -394,6 +436,13 @@ class AsyncMembersClient:
         async def main() -> None:
             await client.organizations.members.list(
                 id=1,
+                exclude_project_id=1,
+                exclude_workspace_id=1,
+                ordering="ordering",
+                page=1,
+                page_size=1,
+                role="role",
+                search="search",
             )
 
 
@@ -408,6 +457,7 @@ class AsyncMembersClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "role": role,
                 "search": search,
             },
             request_options=request_options,

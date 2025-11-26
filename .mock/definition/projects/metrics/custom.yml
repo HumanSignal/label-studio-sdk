@@ -11,7 +11,8 @@ service:
     get_lambda:
       path: /api/projects/{id}/aws-custom-function
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -29,6 +30,7 @@ service:
       response:
         docs: Lambda code
         type: CustomGetLambdaResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -40,7 +42,8 @@ service:
     update_lambda:
       path: /api/projects/{id}/aws-custom-function
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -78,7 +81,8 @@ service:
     logs:
       path: /api/projects/{id}/aws-custom-function-logs
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -109,9 +113,14 @@ service:
       response:
         docs: Successful response returns list of AWS lambda logs
         type: map<string, unknown>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            end_date: end_date
+            limit: 1
+            start_date: start_date
           response:
             body:
               key: value
@@ -120,7 +129,8 @@ service:
     check_function:
       path: /api/projects/{id}/check-function
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>

@@ -28,7 +28,8 @@ service:
     api_projects_dashboard_retrieve:
       path: /api/projects/{id}/dashboard
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get dashboard data for project, including annotations and tasks stats.
       source:
         openapi: openapi/openapi.yaml
@@ -38,6 +39,7 @@ service:
       response:
         docs: Successful response returns project-related annotation statistics
         type: ApiProjectsDashboardRetrieveResponse
+        status-code: 200
       availability: deprecated
       examples:
         - path-parameters:

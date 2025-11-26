@@ -7,7 +7,8 @@ service:
     api_analytics_kpis_retrieve:
       path: /api/analytics/kpis/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Returns metadata for all available KPI (Key Performance Indicator)
         classes. Each KPI includes its key, label, base class, dependencies, and
@@ -19,6 +20,7 @@ service:
       response:
         docs: List of available KPIs with metadata
         type: list<root.KpiMetadata>
+        status-code: 200
       examples:
         - response:
             body:
@@ -37,7 +39,8 @@ service:
     api_analytics_kpis_retrieve_2:
       path: /api/analytics/kpis/{kpi_key}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Retrieve data for a specific KPI with support for filtering and
         segmentation. Can segment by time (hourly, daily, weekly, monthly,
@@ -86,6 +89,7 @@ service:
       response:
         docs: KPI data with requested segmentation
         type: root.KpiDetailResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -93,6 +97,12 @@ service:
         - path-parameters:
             kpi_key: kpi_key
           query-parameters:
+            end: '2024-01-15T09:30:00Z'
+            members: members
+            projects: projects
+            segment_by_time: segment_by_time
+            segment_by_user: true
+            start: '2024-01-15T09:30:00Z'
             tz: tz
           response:
             body:
@@ -113,7 +123,7 @@ service:
                     user_id: 1
                     username: username
                 values:
-                  - []
+                  - - null
               segmentation: none
               time_series:
                 interval_start:

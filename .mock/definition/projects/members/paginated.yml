@@ -7,8 +7,9 @@ service:
     list:
       path: /api/projects/{id}/members/paginated/
       method: GET
-      auth: true
-      docs: |-
+      auth:
+        - Token: []
+      docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
                 <p style="margin-top: 10px; font-size: 14px;">
@@ -16,6 +17,22 @@ service:
                 </p>
             </Card>
         Retrieve the members for a specific project.
+
+
+        **Response Fields:**
+
+        - `implicit_member` (boolean): Indicates if the user is an implicit
+        member.
+          - `true`: User has access via workspace membership or organization role (Administrator/Owner)
+          - `false`: User is an explicit project member (added directly to the project)
+        - `project_role` (string|null): Project-specific role override if
+        assigned, null otherwise
+
+
+        **Note:** Users can have both explicit membership AND implicit access.
+        The `implicit_member` field is `false` if the user has an explicit
+        ProjectMember entry, regardless of whether they also have implicit
+        access via workspace or org role.
       pagination:
         offset: $request.page
         results: $response.results
@@ -35,15 +52,81 @@ service:
             docs: >-
               Include/Exclude implicit project members in the results. If not
               provided, explicit + implicit members are returned.
+          last_activity__gte:
+            type: optional<datetime>
+            docs: >-
+              Filter by last activity time (ISO 8601 datetime). Returns users
+              with last activity greater than or equal to this time.
           no_annotators:
             type: optional<boolean>
             docs: Exclude annotators from the results
+          ordering:
+            type: optional<string>
+            docs: >-
+              Ordering field. Prefix with "-" for descending order. Allowed
+              fields: id, email, first_name, last_name, username, last_activity,
+              role, date_joined
+
+
+              **Note on role ordering:**
+
+              When ordering by "role", the system uses the effective role:
+
+              - Project-specific role if assigned (takes precedence)
+
+              - Organization role if no project role is assigned
+
+
+              Roles are sorted alphabetically by their code: AD (Administrator),
+              AN (Annotator), DI (Disabled), MA (Manager), NO (Not Activated),
+              OW (Owner), RE (Reviewer)
           page:
             type: optional<integer>
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
             docs: Number of results to return per page.
+          role:
+            type: optional<string>
+            docs: >-
+              Filter members by role. Accepts single role or comma-separated
+              list of roles.
+
+
+              **Format:**
+
+              - Single role: `?role=RE`
+
+              - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+
+              **Role Codes:**
+
+              - `OW` = Owner
+
+              - `AD` = Administrator
+
+              - `MA` = Manager
+
+              - `RE` = Reviewer
+
+              - `AN` = Annotator
+
+
+              **Matching Logic:**
+
+              Returns users who have any of the specified roles either:
+
+              1. As their **project-specific role** (from project role
+              assignments), OR
+
+              2. As their **organization role** (if they have no
+              project-specific role override)
+
+
+              **Note:** Project-specific roles take precedence. If a user has a
+              project role assigned, their organization role is ignored for
+              filtering purposes.
           search:
             type: optional<string>
             docs: Search term for filtering members by name, email, or username
@@ -53,9 +136,21 @@ service:
       response:
         docs: ''
         type: root.PaginatedPaginatedProjectMemberList
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            ids: ids
+            implicit: true
+            last_activity__gte: '2024-01-15T09:30:00Z'
+            no_annotators: true
+            ordering: ordering
+            page: 1
+            page_size: 1
+            role: role
+            search: search
+            with_deleted: true
           response:
             body:
               count: 123
@@ -72,20 +167,11 @@ service:
                   email: email
                   first_name: first_name
                   id: 1
+                  implicit_member: true
                   initials: initials
                   last_activity: '2024-01-15T09:30:00Z'
                   last_name: last_name
-                  lse_fields:
-                    email_notification_settings: email_notification_settings
-                    invite_expired: invite_expired
-                    invite_expired_at: invite_expired_at
-                  org_membership:
-                    - active: active
-                      organization_id: 1
-                      role: role
                   organization_membership:
-                    active: active
-                    organization_id: 1
                     role: role
                   pause: pause
                   phone: phone

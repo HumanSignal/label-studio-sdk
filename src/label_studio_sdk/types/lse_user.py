@@ -18,25 +18,29 @@ class LseUser(UncheckedBaseModel):
     """
 
     active_organization: typing.Optional[int] = None
-    active_organization_meta: str
+    active_organization_meta: typing.Optional[str] = None
     allow_newsletters: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Allow sending newsletters to user
     """
 
-    avatar: str
-    custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = None
+    avatar: typing.Optional[str] = None
+    custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Custom keyboard shortcuts configuration for the user interface
+    """
+
     date_joined: typing.Optional[dt.datetime] = None
     email: typing.Optional[str] = None
     first_name: typing.Optional[str] = None
-    id: int
-    initials: str
-    last_activity: dt.datetime
+    id: typing.Optional[int] = None
+    initials: typing.Optional[str] = None
+    last_activity: typing.Optional[dt.datetime] = None
     last_name: typing.Optional[str] = None
-    lse_fields: LseFields
-    org_membership: typing.List[OrganizationMembership]
-    organization_membership: OrganizationMembership
-    pause: str
+    lse_fields: typing.Optional[LseFields] = None
+    org_membership: typing.Optional[typing.List[OrganizationMembership]] = None
+    organization_membership: typing.Optional[OrganizationMembership] = None
+    pause: typing.Optional[str] = None
     phone: typing.Optional[str] = None
     username: str
 

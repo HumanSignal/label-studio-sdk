@@ -7,7 +7,8 @@ service:
     list:
       path: /api/storages/export/redis
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a list of all Redis export storage connections.
       source:
         openapi: openapi/openapi.yaml
@@ -24,8 +25,10 @@ service:
       response:
         docs: ''
         type: list<root.RedisExportStorage>
+        status-code: 200
       examples:
         - query-parameters:
+            ordering: ordering
             project: 1
           response:
             body:
@@ -56,7 +59,8 @@ service:
     create:
       path: /api/storages/export/redis
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create a new Redis export storage connection to store annotations.
       source:
         openapi: openapi/openapi.yaml
@@ -99,6 +103,7 @@ service:
       response:
         docs: ''
         type: root.RedisExportStorage
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -130,7 +135,8 @@ service:
     validate:
       path: /api/storages/export/redis/validate
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Validate a specific Redis export storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -180,7 +186,8 @@ service:
     get:
       path: /api/storages/export/redis/{id}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a specific Redis export storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -190,6 +197,7 @@ service:
       response:
         docs: ''
         type: root.RedisExportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -222,7 +230,8 @@ service:
     delete:
       path: /api/storages/export/redis/{id}
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete a specific Redis export storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -237,7 +246,8 @@ service:
     update:
       path: /api/storages/export/redis/{id}
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update a specific Redis export storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -282,6 +292,7 @@ service:
       response:
         docs: ''
         type: root.RedisExportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -315,7 +326,8 @@ service:
     sync:
       path: /api/storages/export/redis/{id}/sync
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Sync tasks from a Redis export storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -325,6 +337,7 @@ service:
       response:
         docs: ''
         type: root.RedisExportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

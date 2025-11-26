@@ -54,10 +54,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.ml.list()
+    response = client.ml.list(project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.ml.list()
+    async_response = await async_client.ml.list(project=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -234,12 +234,12 @@ async def test_predict_interactive(client: LabelStudio, async_client: AsyncLabel
 async def test_predict_all_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.ml.predict_all_tasks(id=1)  # type: ignore[func-returns-value]
+        client.ml.predict_all_tasks(id=1, batch_size=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.ml.predict_all_tasks(id=1)  # type: ignore[func-returns-value]
+        await async_client.ml.predict_all_tasks(id=1, batch_size=1)  # type: ignore[func-returns-value]
         is None
     )
 

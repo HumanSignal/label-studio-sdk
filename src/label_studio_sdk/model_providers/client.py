@@ -53,7 +53,9 @@ class ModelProvidersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.model_providers.list()
+        client.model_providers.list(
+            ordering="ordering",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/model-provider-connections/",
@@ -500,7 +502,9 @@ class AsyncModelProvidersClient:
 
 
         async def main() -> None:
-            await client.model_providers.list()
+            await client.model_providers.list(
+                ordering="ordering",
+            )
 
 
         asyncio.run(main())

@@ -5,7 +5,8 @@ service:
     api_dm_actions_form_retrieve:
       path: /api/dm/actions/{action_id}/form/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get the form configuration for a specific action.
       source:
         openapi: openapi/openapi.yaml
@@ -21,6 +22,7 @@ service:
       response:
         docs: Action form configuration returned successfully
         type: map<string, unknown>
+        status-code: 200
       examples:
         - path-parameters:
             action_id: action_id
@@ -34,7 +36,8 @@ service:
     api_dm_project_retrieve:
       path: /api/dm/project/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve the project state for the data manager.
       source:
         openapi: openapi/openapi.yaml
@@ -46,7 +49,8 @@ service:
     api_dm_views_update:
       path: /api/dm/views/{id}/
       method: PUT
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Overwrite view data with updated filters and other information for a
         specific project.
@@ -71,6 +75,7 @@ service:
       response:
         docs: ''
         type: root.View
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -83,7 +88,6 @@ service:
                 conjunction: conjunction
                 filters:
                   - column: column
-                    id: 1
                     operator: operator
                     type: type
                 id: 1

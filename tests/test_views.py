@@ -12,7 +12,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "data": {"key": "value"},
             "filter_group": {
                 "conjunction": "conjunction",
-                "filters": [{"column": "column", "id": 1, "operator": "operator", "type": "type"}],
+                "filters": [{"column": "column", "operator": "operator", "type": "type"}],
                 "id": 1,
             },
             "id": 1,
@@ -30,7 +30,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "data": None,
                 "filter_group": {
                     "conjunction": None,
-                    "filters": ("list", {0: {"column": None, "id": "integer", "operator": None, "type": None}}),
+                    "filters": ("list", {0: {"column": None, "operator": None, "type": None}}),
                     "id": "integer",
                 },
                 "id": "integer",
@@ -42,10 +42,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.views.list()
+    response = client.views.list(project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.views.list()
+    async_response = await async_client.views.list(project=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -54,7 +54,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "data": {"key": "value"},
         "filter_group": {
             "conjunction": "conjunction",
-            "filters": [{"column": "column", "id": 1, "operator": "operator", "type": "type"}],
+            "filters": [{"column": "column", "operator": "operator", "type": "type"}],
             "id": 1,
         },
         "id": 1,
@@ -68,7 +68,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "data": None,
         "filter_group": {
             "conjunction": None,
-            "filters": ("list", {0: {"column": None, "id": "integer", "operator": None, "type": None}}),
+            "filters": ("list", {0: {"column": None, "operator": None, "type": None}}),
             "id": "integer",
         },
         "id": "integer",
@@ -116,7 +116,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "data": {"key": "value"},
         "filter_group": {
             "conjunction": "conjunction",
-            "filters": [{"column": "column", "id": 1, "operator": "operator", "type": "type"}],
+            "filters": [{"column": "column", "operator": "operator", "type": "type"}],
             "id": 1,
         },
         "id": 1,
@@ -130,7 +130,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "data": None,
         "filter_group": {
             "conjunction": None,
-            "filters": ("list", {0: {"column": None, "id": "integer", "operator": None, "type": None}}),
+            "filters": ("list", {0: {"column": None, "operator": None, "type": None}}),
             "id": "integer",
         },
         "id": "integer",
@@ -165,7 +165,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "data": {"key": "value"},
         "filter_group": {
             "conjunction": "conjunction",
-            "filters": [{"column": "column", "id": 1, "operator": "operator", "type": "type"}],
+            "filters": [{"column": "column", "operator": "operator", "type": "type"}],
             "id": 1,
         },
         "id": 1,
@@ -179,7 +179,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "data": None,
         "filter_group": {
             "conjunction": None,
-            "filters": ("list", {0: {"column": None, "id": "integer", "operator": None, "type": None}}),
+            "filters": ("list", {0: {"column": None, "operator": None, "type": None}}),
             "id": "integer",
         },
         "id": "integer",

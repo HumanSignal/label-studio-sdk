@@ -7,7 +7,8 @@ service:
     list:
       path: /api/label_links/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: List label links for a specific label and project.
       source:
         openapi: openapi/openapi.yaml
@@ -21,8 +22,11 @@ service:
       response:
         docs: ''
         type: root.PaginatedLabelLinkList
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -38,7 +42,8 @@ service:
     create:
       path: /api/label_links/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Create label links to link new custom labels to your project labeling
         configuration.
@@ -61,6 +66,7 @@ service:
       response:
         docs: ''
         type: root.LabelLink
+        status-code: 201
       examples:
         - request:
             from_name: from_name
@@ -78,7 +84,8 @@ service:
     get:
       path: /api/label_links/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: 'Get label links for a specific project configuration. '
       source:
         openapi: openapi/openapi.yaml
@@ -88,6 +95,7 @@ service:
       response:
         docs: ''
         type: root.LabelLink
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -103,7 +111,8 @@ service:
     delete:
       path: /api/label_links/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 Remove a label link that links custom labels to your project labeling configuration. If you remove a label link,
@@ -122,7 +131,8 @@ service:
     update:
       path: /api/label_links/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 Update a label link that links custom labels to a project labeling configuration, for example if the fromName,  
@@ -149,6 +159,7 @@ service:
       response:
         docs: ''
         type: root.LabelLink
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -165,7 +176,8 @@ service:
     update_many:
       path: /api/labels/bulk
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 If you want to update the labels in saved annotations, use this endpoint.

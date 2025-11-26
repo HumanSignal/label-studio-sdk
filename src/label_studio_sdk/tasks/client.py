@@ -201,7 +201,19 @@ class TasksClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        response = client.tasks.list()
+        response = client.tasks.list(
+            fields="all",
+            include="include",
+            only_annotated=True,
+            page=1,
+            page_size=1,
+            project=1,
+            query="query",
+            resolve_uri=True,
+            review=True,
+            selected_items="selectedItems",
+            view=1,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -337,6 +349,7 @@ class TasksClient:
             When the last comment was updated
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
 
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
@@ -548,6 +561,7 @@ class TasksClient:
         completed_at : typing.Optional[dt.datetime]
 
         data : typing.Optional[typing.Optional[typing.Any]]
+            User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
 
         draft_exists : typing.Optional[bool]
 
@@ -562,6 +576,7 @@ class TasksClient:
             When the last comment was updated
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
 
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
@@ -733,6 +748,7 @@ class TasksClient:
             Draft annotation ID associated with this event
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Additional event metadata (region data, hotkey info, etc.)
 
         review : typing.Optional[int]
             Review ID associated with this event
@@ -1030,7 +1046,19 @@ class AsyncTasksClient:
 
 
         async def main() -> None:
-            response = await client.tasks.list()
+            response = await client.tasks.list(
+                fields="all",
+                include="include",
+                only_annotated=True,
+                page=1,
+                page_size=1,
+                project=1,
+                query="query",
+                resolve_uri=True,
+                review=True,
+                selected_items="selectedItems",
+                view=1,
+            )
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1169,6 +1197,7 @@ class AsyncTasksClient:
             When the last comment was updated
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
 
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
@@ -1407,6 +1436,7 @@ class AsyncTasksClient:
         completed_at : typing.Optional[dt.datetime]
 
         data : typing.Optional[typing.Optional[typing.Any]]
+            User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
 
         draft_exists : typing.Optional[bool]
 
@@ -1421,6 +1451,7 @@ class AsyncTasksClient:
             When the last comment was updated
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
 
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
@@ -1600,6 +1631,7 @@ class AsyncTasksClient:
             Draft annotation ID associated with this event
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Additional event metadata (region data, hotkey info, etc.)
 
         review : typing.Optional[int]
             Review ID associated with this event

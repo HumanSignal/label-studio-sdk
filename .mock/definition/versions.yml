@@ -7,7 +7,9 @@ service:
     get:
       path: /api/version/
       method: GET
-      auth: true
+      auth:
+        - Token: []
+        - {}
       docs: Get version information about the Label Studio instance.
       source:
         openapi: openapi/openapi.yaml
@@ -15,6 +17,7 @@ service:
       response:
         docs: ''
         type: root.VersionResponse
+        status-code: 200
       examples:
         - response:
             body:

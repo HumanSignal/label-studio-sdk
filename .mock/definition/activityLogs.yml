@@ -19,7 +19,8 @@ service:
     list:
       path: /api/activity-logs/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -71,15 +72,25 @@ service:
       response:
         docs: Activity logs
         type: list<root.ActivityLogResponse>
+        status-code: 200
       errors:
         - root.NotFoundError
       examples:
-        - response:
+        - query-parameters:
+            end_date: end_date
+            method: DELETE
+            ordering: ordering
+            page: 1
+            page_size: 1
+            project: 1
+            search: search
+            start_date: start_date
+            user: 1
+            workspace: 1
+          response:
             body:
               - data:
-                  - datetime: '2024-01-15T09:30:00Z'
-                    email: email
-                    id: 1
+                  - email: email
                     request_method: request_method
                     request_url: request_url
                     response_code: response_code

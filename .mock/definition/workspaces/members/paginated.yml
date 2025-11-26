@@ -7,7 +7,8 @@ service:
     list:
       path: /api/workspaces/{id}/memberships/paginated/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -42,9 +43,15 @@ service:
       response:
         docs: ''
         type: root.PaginatedLseUserList
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            ids: ids
+            page: 1
+            page_size: 1
+            search: search
           response:
             body:
               count: 123
@@ -64,17 +71,7 @@ service:
                   initials: initials
                   last_activity: '2024-01-15T09:30:00Z'
                   last_name: last_name
-                  lse_fields:
-                    email_notification_settings: email_notification_settings
-                    invite_expired: invite_expired
-                    invite_expired_at: invite_expired_at
-                  org_membership:
-                    - active: active
-                      organization_id: 1
-                      role: role
                   organization_membership:
-                    active: active
-                    organization_id: 1
                     role: role
                   pause: pause
                   phone: phone

@@ -7,7 +7,8 @@ service:
     state_history:
       path: /api/fsm/entities/{entity_name}/{entity_id}/history
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get the state history of an entity
       pagination:
         offset: $request.page
@@ -15,8 +16,8 @@ service:
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        entity_id: integer
         entity_name: string
+        entity_id: integer
       display-name: Get entity state history
       request:
         name: FsmStateHistoryRequest
@@ -55,10 +56,21 @@ service:
       response:
         docs: ''
         type: root.PaginatedStateModelList
+        status-code: 200
       examples:
         - path-parameters:
-            entity_id: 1
             entity_name: entity_name
+            entity_id: 1
+          query-parameters:
+            created_at_from: created_at_from
+            created_at_to: created_at_to
+            ordering: ordering
+            page: 1
+            page_size: 1
+            previous_state: previous_state
+            state: state
+            transition_name: transition_name
+            triggered_by: 1.1
           response:
             body:
               count: 123
@@ -72,20 +84,19 @@ service:
                   previous_state: previous_state
                   state: state
                   transition_name: transition_name
-                  triggered_by:
-                    id: 1
       audiences:
         - internal
     execute_transition:
       path: /api/fsm/entities/{entity_name}/{entity_id}/transition/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Execute a registered manual transition for an entity.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        entity_id: integer
         entity_name: string
+        entity_id: integer
       display-name: Execute manual FSM transition
       request:
         name: FsmTransitionExecuteRequestRequest
@@ -100,10 +111,11 @@ service:
       response:
         docs: ''
         type: root.FsmTransitionExecuteResponse
+        status-code: 200
       examples:
         - path-parameters:
-            entity_id: 1
             entity_name: entity_name
+            entity_id: 1
           request:
             transition_name: transition_name
           response:

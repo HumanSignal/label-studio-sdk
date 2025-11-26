@@ -78,6 +78,10 @@ class RunsClient:
         client.prompts.runs.list(
             prompt_id=1,
             version_id=1,
+            ordering="ordering",
+            parent_model=1,
+            project=1,
+            project_subset="All",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -208,9 +212,9 @@ class RunsClient:
 
     def cancel(
         self,
-        inference_run_id: int,
         prompt_id: int,
         version_id: int,
+        inference_run_id: int,
         *,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CancelModelRunResponse:
@@ -225,11 +229,11 @@ class RunsClient:
 
         Parameters
         ----------
-        inference_run_id : int
-
         prompt_id : int
 
         version_id : int
+
+        inference_run_id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -247,9 +251,9 @@ class RunsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.runs.cancel(
-            inference_run_id=1,
             prompt_id=1,
             version_id=1,
+            inference_run_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -337,6 +341,10 @@ class AsyncRunsClient:
             await client.prompts.runs.list(
                 prompt_id=1,
                 version_id=1,
+                ordering="ordering",
+                parent_model=1,
+                project=1,
+                project_subset="All",
             )
 
 
@@ -478,9 +486,9 @@ class AsyncRunsClient:
 
     async def cancel(
         self,
-        inference_run_id: int,
         prompt_id: int,
         version_id: int,
+        inference_run_id: int,
         *,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CancelModelRunResponse:
@@ -495,11 +503,11 @@ class AsyncRunsClient:
 
         Parameters
         ----------
-        inference_run_id : int
-
         prompt_id : int
 
         version_id : int
+
+        inference_run_id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -522,9 +530,9 @@ class AsyncRunsClient:
 
         async def main() -> None:
             await client.prompts.runs.cancel(
-                inference_run_id=1,
                 prompt_id=1,
                 version_id=1,
+                inference_run_id=1,
             )
 
 

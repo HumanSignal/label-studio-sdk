@@ -95,7 +95,9 @@ types:
       openapi: openapi/openapi.yaml
   ActivityLog:
     properties:
-      datetime: datetime
+      datetime:
+        type: optional<datetime>
+        access: read-only
       duration:
         type: optional<integer>
         docs: Duration of response generation in ms
@@ -111,8 +113,11 @@ types:
         type: optional<string>
         validation:
           maxLength: 1024
-      id: integer
-      ip_address: optional<string>
+      id:
+        type: optional<integer>
+        access: read-only
+      ip_address:
+        type: optional<string>
       organization_id:
         type: optional<integer>
         docs: Organization id
@@ -166,22 +171,6 @@ types:
       recordsTotal: integer
     source:
       openapi: openapi/openapi.yaml
-  AllRolesProjectListSampling:
-    discriminated: false
-    union:
-      - SamplingDe5Enum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  AllRolesProjectListSkipQueue:
-    discriminated: false
-    union:
-      - SkipQueueEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   AllRolesProjectList:
     docs: |-
       Serializer get numbers from project queryset annotation,
@@ -194,7 +183,9 @@ types:
           annotators must agree
         validation:
           pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
-      allow_stream: boolean
+      allow_stream:
+        type: optional<boolean>
+        access: read-only
       annotation_limit_count:
         type: optional<integer>
         validation:
@@ -214,20 +205,36 @@ types:
         validation:
           min: 0
       assignment_settings: AssignmentSettings
-      blueprints: list<BlueprintList>
+      blueprints:
+        type: optional<list<BlueprintList>>
+        access: read-only
       color:
         type: optional<string>
         validation:
           maxLength: 16
       comment_classification_config: optional<string>
       config_has_control_tags:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for labeling
+        access: read-only
       config_suitable_for_bulk_annotation:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for bulk annotation
-      control_weights: optional<unknown>
-      created_at: datetime
+        access: read-only
+      control_weights:
+        type: optional<unknown>
+        docs: >-
+          Dict of weights for each control tag in metric calculation. Each
+          control tag (e.g. label or choice) will have it's own key in control
+          weight dict with weight for each label and overall weight.For example,
+          if bounding box annotation with control tag named my_bbox should be
+          included with 0.33 weight in agreement calculation, and the first
+          label Car should be twice more important than Airplaine, then you have
+          to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by:
         type: optional<UserSimple>
         docs: Project owner
@@ -238,11 +245,15 @@ types:
         validation:
           min: 1
           max: 86400
-      data_types: unknown
+      data_types:
+        type: optional<unknown>
+        access: read-only
       description:
         type: optional<string>
         docs: Project description
-      description_short: string
+      description_short:
+        type: optional<string>
+        access: read-only
       duplication_done:
         type: optional<boolean>
         default: false
@@ -256,11 +267,16 @@ types:
       expert_instruction:
         type: optional<string>
         docs: Labeling instructions in HTML format
-      finished_task_number: integer
+      finished_task_number:
+        type: optional<integer>
+        access: read-only
       ground_truth_number:
-        type: integer
+        type: optional<integer>
         docs: Honeypot annotation number in project
-      id: integer
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       is_draft:
         type: optional<boolean>
         docs: Whether or not the project is in the middle of being created
@@ -284,8 +300,12 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      members: string
-      members_count: integer
+      members:
+        type: optional<string>
+        access: read-only
+      members_count:
+        type: optional<integer>
+        access: read-only
       min_annotations_to_start_training:
         type: optional<integer>
         docs: >-
@@ -297,26 +317,43 @@ types:
       model_version:
         type: optional<string>
         docs: Machine learning model version
-      num_tasks_with_annotations: optional<integer>
+      num_tasks_with_annotations:
+        type: optional<integer>
+        access: read-only
       organization: optional<integer>
       overlap_cohort_percentage:
         type: optional<integer>
         validation:
           min: -2147483648
           max: 2147483647
-      parsed_label_config: unknown
+      parsed_label_config:
+        type: optional<unknown>
+        docs: JSON-formatted labeling configuration
+        access: read-only
       pause_on_failed_annotator_evaluation:
         type: optional<boolean>
         default: false
       pinned_at:
         type: optional<datetime>
         docs: Pinned date and time
-      prompts: string
-      queue_done: integer
-      queue_left: integer
-      queue_total: string
-      ready: boolean
-      rejected: integer
+      prompts:
+        type: optional<string>
+        access: read-only
+      queue_done:
+        type: optional<integer>
+        access: read-only
+      queue_left:
+        type: optional<integer>
+        access: read-only
+      queue_total:
+        type: optional<string>
+        access: read-only
+      ready:
+        type: optional<boolean>
+        access: read-only
+      rejected:
+        type: optional<integer>
+        access: read-only
       require_comment_on_skip:
         type: optional<boolean>
         default: false
@@ -324,10 +361,16 @@ types:
         type: optional<boolean>
         docs: Reveal pre-annotations interactively
       review_settings: ReviewSettings
-      review_total_tasks: integer
-      reviewed_number: integer
-      reviewer_queue_total: integer
-      sampling: optional<AllRolesProjectListSampling>
+      review_total_tasks:
+        type: optional<integer>
+        access: read-only
+      reviewed_number:
+        type: optional<integer>
+        access: read-only
+      reviewer_queue_total:
+        type: optional<integer>
+        access: read-only
+      sampling: optional<SamplingDe5Enum>
       show_annotation_history:
         type: optional<boolean>
         docs: Show annotation history to annotator
@@ -347,25 +390,42 @@ types:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
       show_unused_data_columns_to_annotators: optional<boolean>
-      skip_queue: optional<AllRolesProjectListSkipQueue>
-      skipped_annotations_number: string
+      skip_queue: optional<SkipQueueEnum>
+      skipped_annotations_number:
+        type: optional<string>
+        access: read-only
       start_training_on_annotation_update:
-        type: boolean
+        type: optional<boolean>
         docs: Start model training after any annotations are submitted or updated
+        access: read-only
+      state:
+        type: optional<string>
+        access: read-only
       task_number:
-        type: integer
+        type: optional<integer>
         docs: Total task number in project
+        access: read-only
       title:
         type: optional<string>
         docs: Project name. Must be between 3 and 50 characters long.
         validation:
           minLength: 3
           maxLength: 50
-      total_annotations_number: string
-      total_predictions_number: integer
-      useful_annotation_number: optional<integer>
-      workspace: string
-      workspace_title: string
+      total_annotations_number:
+        type: optional<string>
+        access: read-only
+      total_predictions_number:
+        type: optional<integer>
+        access: read-only
+      useful_annotation_number:
+        type: optional<integer>
+        access: read-only
+      workspace:
+        type: optional<string>
+        access: read-only
+      workspace_title:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   AnnotatedEnum:
@@ -378,27 +438,6 @@ types:
       * `None` - None
     source:
       openapi: openapi/openapi.yaml
-  AnnotationLastAction:
-    discriminated: false
-    docs: |-
-      Action which was performed in the last annotation history item
-
-      * `prediction` - Created from prediction
-      * `propagated_annotation` - Created from another annotation
-      * `imported` - Imported
-      * `submitted` - Submitted
-      * `updated` - Updated
-      * `skipped` - Skipped
-      * `accepted` - Accepted
-      * `rejected` - Rejected
-      * `fixed_and_accepted` - Fixed and accepted
-      * `deleted_review` - Deleted review
-    union:
-      - LastActionEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   Annotation:
     docs: |-
       Annotation Serializer with FSM state support.
@@ -411,30 +450,35 @@ types:
         docs: Annotation was created in bulk mode
       completed_by: optional<integer>
       created_ago:
-        type: string
+        type: optional<string>
         docs: Time delta from creation time
         default: ''
+        access: read-only
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       created_username:
-        type: string
+        type: optional<string>
         docs: Username string
         default: ''
+        access: read-only
       draft_created_at:
         type: optional<datetime>
         docs: Draft creation time
       ground_truth:
         type: optional<boolean>
         docs: This annotation is a Ground Truth (ground_truth)
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       import_id:
         type: optional<long>
         docs: >-
           Original annotation ID that was at the import step or NULL if this
           annotation wasn't imported
       last_action:
-        type: optional<AnnotationLastAction>
+        type: optional<LastActionEnum>
         docs: |-
           Action which was performed in the last annotation history item
 
@@ -466,13 +510,16 @@ types:
       result:
         type: optional<list<map<string, unknown>>>
         docs: List of annotation results for the task
-      state: string
+      state:
+        type: optional<string>
+        access: read-only
       task:
         type: optional<integer>
         docs: Corresponding task for this annotation
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Last updated time
+        access: read-only
       updated_by:
         type: optional<integer>
         docs: Last user who updated this annotation
@@ -481,14 +528,6 @@ types:
         docs: User skipped the task
     source:
       openapi: openapi/openapi.yaml
-  AnnotationHistoryAction:
-    discriminated: false
-    union:
-      - ActionEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   AnnotationHistory:
     docs: |-
       A ModelSerializer that takes additional arguments for
@@ -496,21 +535,25 @@ types:
       control which fields are displayed, and whether to replace simple
       values with complex, nested serializations
     properties:
-      action: optional<AnnotationHistoryAction>
+      action: optional<ActionEnum>
       annotation_id:
         type: optional<integer>
         docs: Corresponding annotation for this historical annotation
         validation:
           min: -2147483648
           max: 2147483647
-      comment: optional<string>
+      comment:
+        type: optional<string>
+        access: read-only
       comment_id:
         type: optional<integer>
         docs: Comment id sent with result
         validation:
           min: -2147483648
           max: 2147483647
-      created_at: datetime
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by:
         type: optional<integer>
         docs: Created by user id
@@ -523,7 +566,9 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       lead_time:
         type: optional<double>
         docs: How much time it took to annotate the task
@@ -539,7 +584,9 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      result: optional<unknown>
+      result:
+        type: optional<unknown>
+        docs: Labeling result
       review_id:
         type: optional<integer>
         docs: AnnotationReview ID, using with review field
@@ -559,27 +606,6 @@ types:
           max: 2147483647
     source:
       openapi: openapi/openapi.yaml
-  AnnotationRequestLastAction:
-    discriminated: false
-    docs: |-
-      Action which was performed in the last annotation history item
-
-      * `prediction` - Created from prediction
-      * `propagated_annotation` - Created from another annotation
-      * `imported` - Imported
-      * `submitted` - Submitted
-      * `updated` - Updated
-      * `skipped` - Skipped
-      * `accepted` - Accepted
-      * `rejected` - Rejected
-      * `fixed_and_accepted` - Fixed and accepted
-      * `deleted_review` - Deleted review
-    union:
-      - LastActionEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   AnnotationRequest:
     docs: |-
       Annotation Serializer with FSM state support.
@@ -603,7 +629,7 @@ types:
           Original annotation ID that was at the import step or NULL if this
           annotation wasn't imported
       last_action:
-        type: optional<AnnotationRequestLastAction>
+        type: optional<LastActionEnum>
         docs: |-
           Action which was performed in the last annotation history item
 
@@ -642,6 +668,7 @@ types:
         type: optional<string>
         validation:
           minLength: 1
+        access: write-only
       updated_by:
         type: optional<integer>
         docs: Last user who updated this annotation
@@ -668,23 +695,31 @@ types:
         type: integer
         docs: Corresponding annotation
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       created_by:
-        type: integer
+        type: optional<integer>
         docs: User who made this review
+        access: read-only
       fixed_annotation_history:
         type: optional<integer>
         docs: Fixed annotation history item by the reviewer
-      id: integer
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       last_annotation_history: optional<integer>
       previous_annotation_history:
         type: optional<integer>
         docs: Previous annotation history item by the annotator
+        access: read-only
       remove_from_queue: optional<boolean>
       result: optional<unknown>
       started_at: optional<datetime>
-      state: string
+      state:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   AnnotationReviewRequest:
@@ -708,33 +743,20 @@ types:
         type: optional<string>
         validation:
           minLength: 1
+        access: write-only
       last_annotation_history: optional<integer>
       remove_from_queue: optional<boolean>
       result: optional<unknown>
       started_at: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
-  AssignmentSettingsLabelStreamTaskDistribution:
-    discriminated: false
-    docs: >-
-      Modes for distributing tasks to annotators
-
-
-      * `auto_distribution` - Label Stream distributes tasks automatically to
-      annotators
-
-      * `assigned_only` - Label Stream shows tasks only to assigned users
-    union:
-      - LabelStreamTaskDistributionEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   AssignmentSettings:
     properties:
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       label_stream_task_distribution:
-        type: optional<AssignmentSettingsLabelStreamTaskDistribution>
+        type: optional<LabelStreamTaskDistributionEnum>
         docs: >-
           Modes for distributing tasks to annotators
 
@@ -746,26 +768,10 @@ types:
       project: optional<integer>
     source:
       openapi: openapi/openapi.yaml
-  AssignmentSettingsRequestLabelStreamTaskDistribution:
-    discriminated: false
-    docs: >-
-      Modes for distributing tasks to annotators
-
-
-      * `auto_distribution` - Label Stream distributes tasks automatically to
-      annotators
-
-      * `assigned_only` - Label Stream shows tasks only to assigned users
-    union:
-      - LabelStreamTaskDistributionEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   AssignmentSettingsRequest:
     properties:
       label_stream_task_distribution:
-        type: optional<AssignmentSettingsRequestLabelStreamTaskDistribution>
+        type: optional<LabelStreamTaskDistributionEnum>
         docs: >-
           Modes for distributing tasks to annotators
 
@@ -784,7 +790,9 @@ types:
       control which fields are displayed, and whether to replace simple
       values with complex, nested serializations
     properties:
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       title:
         type: optional<string>
         docs: Project name. Must be between 3 and 50 characters long.
@@ -817,12 +825,15 @@ types:
         type: optional<string>
         docs: Azure blob container
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -837,7 +848,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Azure blob prefix name
@@ -860,8 +873,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: azure
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -879,12 +893,15 @@ types:
         type: optional<string>
         docs: Azure blob container
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -899,7 +916,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Azure blob prefix name
@@ -934,8 +953,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: azure
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -953,8 +973,9 @@ types:
         type: optional<string>
         docs: Azure blob container
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       dataset:
         type: integer
         docs: A unique integer value identifying this dataset.
@@ -964,9 +985,12 @@ types:
       glob_pattern:
         type: optional<string>
         docs: Glob pattern for syncing from bucket
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       job_id:
         type: optional<string>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -981,7 +1005,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Azure blob prefix name
@@ -1016,8 +1042,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: azure
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -1057,7 +1084,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Azure blob prefix name
@@ -1114,12 +1143,15 @@ types:
         type: optional<string>
         docs: Azure blob container
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -1134,7 +1166,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Azure blob prefix name
@@ -1160,8 +1194,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: azure_spi
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -1204,7 +1239,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Azure blob prefix name
@@ -1252,12 +1289,15 @@ types:
         type: optional<string>
         docs: Azure blob container
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -1272,7 +1312,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Azure blob prefix name
@@ -1310,8 +1352,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: azure_spi
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -1351,7 +1394,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Azure blob prefix name
@@ -1482,38 +1527,55 @@ types:
       billing_flags: BillingFlags
     source:
       openapi: openapi/openapi.yaml
-  BlankEnum: literal<"">
   Blueprint:
     properties:
-      created_at: datetime
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by: optional<integer>
       description:
         type: optional<string>
         docs: Project description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       label_config:
         type: optional<string>
         docs: Labeling configuration in XML format
       project: integer
-      share_id: string
-      short_url: string
+      share_id:
+        type: optional<string>
+        access: read-only
+      short_url:
+        type: optional<string>
+        access: read-only
       title:
         type: optional<string>
         docs: Blueprint name. Must be between 3 and 50 characters long.
         validation:
           maxLength: 50
-      updated_at: datetime
+      updated_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   BlueprintList:
     properties:
-      created_at: datetime
+      created_at:
+        type: optional<datetime>
+        access: read-only
       description:
         type: optional<string>
         docs: Project description
-      id: integer
-      share_id: string
-      short_url: string
+      id:
+        type: optional<integer>
+        access: read-only
+      share_id:
+        type: optional<string>
+        access: read-only
+      short_url:
+        type: optional<string>
+        access: read-only
       title:
         type: optional<string>
         docs: Blueprint name. Must be between 3 and 50 characters long.
@@ -1542,7 +1604,9 @@ types:
         docs: Field name
         validation:
           maxLength: 1024
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       index:
         type: optional<integer>
         docs: Display order among root filters only
@@ -1564,7 +1628,9 @@ types:
         docs: Field type
         validation:
           maxLength: 1024
-      value: optional<unknown>
+      value:
+        type: optional<unknown>
+        docs: Filter value
     source:
       openapi: openapi/openapi.yaml
   ChildFilterRequest:
@@ -1598,7 +1664,9 @@ types:
         validation:
           minLength: 1
           maxLength: 1024
-      value: optional<unknown>
+      value:
+        type: optional<unknown>
+        docs: Filter value
     source:
       openapi: openapi/openapi.yaml
   Comment:
@@ -1613,31 +1681,49 @@ types:
       - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     properties:
       annotation: optional<integer>
-      classifications: optional<unknown>
+      classifications:
+        type: optional<unknown>
+        docs: Classifications applied by a reviewer or annotator
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       created_by:
-        type: integer
+        type: optional<integer>
         docs: User who made this comment
+        access: read-only
       draft: optional<integer>
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       is_resolved:
         type: optional<boolean>
         docs: True if the comment is resolved
-      project: optional<integer>
-      region_ref: optional<unknown>
+      project:
+        type: optional<integer>
+        access: read-only
+      region_ref:
+        type: optional<unknown>
+        docs: >-
+          Set if this comment is related to a specific part of the annotation.
+          Normally contains region ID and control name.
       resolved_at:
         type: optional<datetime>
         docs: Resolving time
-      state: string
-      task: optional<integer>
+        access: read-only
+      state:
+        type: optional<string>
+        access: read-only
+      task:
+        type: optional<integer>
+        access: read-only
       text:
         type: optional<string>
         docs: Reviewer or annotator comment
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Last updated time
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   CommentRequest:
@@ -1652,12 +1738,18 @@ types:
       - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     properties:
       annotation: optional<integer>
-      classifications: optional<unknown>
+      classifications:
+        type: optional<unknown>
+        docs: Classifications applied by a reviewer or annotator
       draft: optional<integer>
       is_resolved:
         type: optional<boolean>
         docs: True if the comment is resolved
-      region_ref: optional<unknown>
+      region_ref:
+        type: optional<unknown>
+        docs: >-
+          Set if this comment is related to a specific part of the annotation.
+          Normally contains region ID and control name.
       text:
         type: optional<string>
         docs: Reviewer or annotator comment
@@ -1675,29 +1767,46 @@ types:
       - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     properties:
       annotation: optional<integer>
-      classifications: optional<unknown>
+      classifications:
+        type: optional<unknown>
+        docs: Classifications applied by a reviewer or annotator
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       created_by: LseUser
       draft: optional<integer>
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       is_resolved:
         type: optional<boolean>
         docs: True if the comment is resolved
-      project: optional<integer>
-      region_ref: optional<unknown>
+      project:
+        type: optional<integer>
+        access: read-only
+      region_ref:
+        type: optional<unknown>
+        docs: >-
+          Set if this comment is related to a specific part of the annotation.
+          Normally contains region ID and control name.
       resolved_at:
         type: optional<datetime>
         docs: Resolving time
-      state: string
-      task: optional<integer>
+        access: read-only
+      state:
+        type: optional<string>
+        access: read-only
+      task:
+        type: optional<integer>
+        access: read-only
       text:
         type: optional<string>
         docs: Reviewer or annotator comment
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Last updated time
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   ConfigurablePermissionOption:
@@ -1716,7 +1825,9 @@ types:
         type: string
         validation:
           maxLength: 64
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       status: optional<Status7BfEnum>
       traceback:
         type: optional<string>
@@ -1753,15 +1864,18 @@ types:
         type: string
         docs: UC catalog name
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
       host:
         type: string
         docs: Databricks workspace base URL (https://...)
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -1776,7 +1890,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Export path prefix under the volume
@@ -1812,8 +1928,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: databricks
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Generate blob URLs in tasks
@@ -1857,7 +1974,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Export path prefix under the volume
@@ -1891,7 +2010,9 @@ types:
         docs: Cloud storage title
         validation:
           maxLength: 256
-      token: optional<string>
+      token:
+        type: optional<string>
+        access: write-only
       traceback:
         type: optional<string>
         docs: Traceback report for the last failed sync
@@ -1914,15 +2035,18 @@ types:
         type: string
         docs: UC catalog name
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
       host:
         type: string
         docs: Databricks workspace base URL (https://...)
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -1937,7 +2061,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Path under the volume
@@ -1985,8 +2111,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: databricks
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Generate blob URLs in tasks
@@ -2027,7 +2154,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: Path under the volume
@@ -2073,7 +2202,9 @@ types:
         docs: Cloud storage title
         validation:
           maxLength: 256
-      token: optional<string>
+      token:
+        type: optional<string>
+        access: write-only
       traceback:
         type: optional<string>
         docs: Traceback report for the last failed sync
@@ -2092,17 +2223,22 @@ types:
       openapi: openapi/openapi.yaml
   Dataset:
     properties:
-      columns: optional<unknown>
+      columns:
+        type: optional<unknown>
+        docs: All data columns found in Dataset tasks
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       created_by:
         type: optional<UserSimple>
         docs: User who created Dataset
       description:
         type: optional<string>
         docs: Dataset description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       organization: optional<integer>
       title:
         type: string
@@ -2115,8 +2251,9 @@ types:
           min: -2147483648
           max: 2147483647
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Last updated time
+        access: read-only
       vector_db_dataset_name:
         type: optional<string>
         docs: Dataset name for weaviate schema
@@ -2131,7 +2268,9 @@ types:
       openapi: openapi/openapi.yaml
   DatasetRequest:
     properties:
-      columns: optional<unknown>
+      columns:
+        type: optional<unknown>
+        docs: All data columns found in Dataset tasks
       created_by:
         type: optional<UserSimpleRequest>
         docs: User who created Dataset
@@ -2160,12 +2299,16 @@ types:
       openapi: openapi/openapi.yaml
   DatasetView:
     properties:
-      data: optional<unknown>
+      data:
+        type: optional<unknown>
+        docs: Custom view data
       dataset:
         type: integer
         docs: Dataset ID
       filter_group: optional<FilterGroup>
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       order:
         type: optional<integer>
         docs: >-
@@ -2174,8 +2317,12 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      ordering: optional<unknown>
-      selected_items: optional<unknown>
+      ordering:
+        type: optional<unknown>
+        docs: Ordering parameters
+      selected_items:
+        type: optional<unknown>
+        docs: Selected items
       user:
         type: optional<integer>
         docs: User who made this view
@@ -2183,7 +2330,9 @@ types:
       openapi: openapi/openapi.yaml
   DatasetViewRequest:
     properties:
-      data: optional<unknown>
+      data:
+        type: optional<unknown>
+        docs: Custom view data
       dataset:
         type: integer
         docs: Dataset ID
@@ -2196,8 +2345,12 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      ordering: optional<unknown>
-      selected_items: optional<unknown>
+      ordering:
+        type: optional<unknown>
+        docs: Ordering parameters
+      selected_items:
+        type: optional<unknown>
+        docs: Selected items
       user:
         type: optional<integer>
         docs: User who made this view
@@ -2243,9 +2396,20 @@ types:
           * `AN` - Annotator
           * `DI` - Deactivated
           * `NO` - Not Activated
-      email_notification_settings: optional<unknown>
-      embed_domains: optional<unknown>
-      embed_settings: optional<unknown>
+      email_notification_settings:
+        type: optional<unknown>
+        docs: >-
+          Email notification settings for this organization. Controls which
+          email notifications users can receive. Structure:
+          {"notifications_allowed": {"notification_type": bool}}
+      embed_domains:
+        type: optional<unknown>
+        docs: >-
+          List of objects: {"domain": "example.com"}. Used for CSP header on
+          /embed routes.
+      embed_settings:
+        type: optional<unknown>
+        docs: Embed settings for this organization
       external_id:
         type: optional<string>
         docs: External ID to uniquely identify this organization
@@ -2278,15 +2442,19 @@ types:
   Export:
     properties:
       converted_formats: optional<list<ConvertedFormat>>
-      counters: optional<unknown>
+      counters:
+        type: optional<unknown>
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       created_by: optional<UserSimple>
       finished_at:
         type: optional<datetime>
         docs: Complete or fail time
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       md5:
         type: optional<string>
         validation:
@@ -2301,16 +2469,26 @@ types:
   FsmTransitionExecuteResponse:
     docs: Response serializer for manual FSM transition execution.
     properties:
-      new_state: optional<string>
-      state_record: optional<StateModel>
-      success: boolean
+      new_state:
+        type: optional<string>
+        access: read-only
+      state_record:
+        type: optional<StateModel>
+        access: read-only
+      success:
+        type: optional<boolean>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   FileUpload:
     properties:
       file: string
-      id: integer
-      size: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
+      size:
+        type: optional<integer>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   Filter:
@@ -2321,7 +2499,9 @@ types:
         docs: Field name
         validation:
           maxLength: 1024
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       index:
         type: optional<integer>
         docs: Display order among root filters only
@@ -2343,7 +2523,9 @@ types:
         docs: Field type
         validation:
           maxLength: 1024
-      value: optional<unknown>
+      value:
+        type: optional<unknown>
+        docs: Filter value
     source:
       openapi: openapi/openapi.yaml
   FilterGroup:
@@ -2354,7 +2536,9 @@ types:
         validation:
           maxLength: 1024
       filters: list<Filter>
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   FilterGroupRequest:
@@ -2400,7 +2584,9 @@ types:
         validation:
           minLength: 1
           maxLength: 1024
-      value: optional<unknown>
+      value:
+        type: optional<unknown>
+        docs: Filter value
     source:
       openapi: openapi/openapi.yaml
   FinishedEnum:
@@ -2419,8 +2605,9 @@ types:
         type: optional<string>
         docs: GCS bucket name
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       dataset:
         type: integer
         docs: A unique integer value identifying this dataset.
@@ -2436,9 +2623,12 @@ types:
       google_project_id:
         type: optional<string>
         docs: Google project ID
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       job_id:
         type: optional<string>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -2453,7 +2643,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: GCS bucket prefix
@@ -2488,8 +2680,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: gcs
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -2529,7 +2722,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: GCS bucket prefix
@@ -2577,8 +2772,9 @@ types:
         type: optional<boolean>
         docs: Deletion from storage enabled
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
@@ -2588,7 +2784,9 @@ types:
       google_project_id:
         type: optional<string>
         docs: Google project ID
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -2603,7 +2801,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: GCS bucket prefix
@@ -2626,8 +2826,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: gcs
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -2639,8 +2840,9 @@ types:
         type: optional<string>
         docs: GCS bucket name
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
@@ -2650,7 +2852,9 @@ types:
       google_project_id:
         type: optional<string>
         docs: Google project ID
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -2665,7 +2869,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: GCS bucket prefix
@@ -2700,8 +2906,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: gcs
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -2716,8 +2923,9 @@ types:
         type: optional<boolean>
         docs: Deletion from storage enabled
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
@@ -2739,7 +2947,9 @@ types:
       google_wif_provider_id:
         type: optional<string>
         docs: Google WIF provider ID
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -2754,7 +2964,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: GCS bucket prefix
@@ -2777,8 +2989,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: gcswif
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -2827,7 +3040,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: GCS bucket prefix
@@ -2860,8 +3075,9 @@ types:
         type: optional<string>
         docs: GCS bucket name
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
@@ -2883,7 +3099,9 @@ types:
       google_wif_provider_id:
         type: optional<string>
         docs: Google WIF provider ID
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -2898,7 +3116,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: GCS bucket prefix
@@ -2933,8 +3153,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: gcswif
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -2980,7 +3201,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: GCS bucket prefix
@@ -3053,7 +3276,12 @@ types:
       last_comment_updated_at:
         type: optional<datetime>
         docs: When the last comment was updated
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: >-
+          Meta is user imported (uploaded) data and can be useful as input for
+          an ML Backend for embeddings, advanced vectors, and other info. It is
+          passed to ML during training/predicting steps.
       overlap:
         type: optional<integer>
         docs: Number of distinct annotators that processed the current task
@@ -3263,16 +3491,28 @@ types:
       openapi: openapi/openapi.yaml
   LseapiTokenCreate:
     properties:
-      created_at: string
-      expires_at: string
-      token: string
+      created_at:
+        type: optional<string>
+        access: read-only
+      expires_at:
+        type: optional<string>
+        access: read-only
+      token:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   LseapiTokenList:
     properties:
-      created_at: string
-      expires_at: string
-      token: string
+      created_at:
+        type: optional<string>
+        access: read-only
+      expires_at:
+        type: optional<string>
+        access: read-only
+      token:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   LsejwtSettings:
@@ -3320,26 +3560,34 @@ types:
         type: optional<integer>
         docs: User who approved this label
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Time of label creation
+        access: read-only
       created_by:
         type: integer
         docs: User who made this label
       description:
         type: optional<string>
         docs: Label description
-      id: integer
-      links: list<integer>
+      id:
+        type: optional<integer>
+        access: read-only
+      links:
+        type: optional<list<integer>>
+        access: read-only
       organization: integer
-      projects: list<integer>
+      projects:
+        type: optional<list<integer>>
+        access: read-only
       title:
         type: string
         docs: Label title
         validation:
           maxLength: 2048
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Time of label modification
+        access: read-only
       value: unknown
     source:
       openapi: openapi/openapi.yaml
@@ -3352,25 +3600,35 @@ types:
         type: optional<integer>
         docs: User who approved this label
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Time of label creation
-      created_by: integer
+        access: read-only
+      created_by:
+        type: optional<integer>
+        access: read-only
       description:
         type: optional<string>
         docs: Label description
       from_name: string
-      id: integer
-      organization: integer
+      id:
+        type: optional<integer>
+        access: read-only
+      organization:
+        type: optional<integer>
+        access: read-only
       project: integer
-      projects: list<integer>
+      projects:
+        type: optional<list<integer>>
+        access: read-only
       title:
         type: string
         docs: Label title
         validation:
           maxLength: 2048
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Time of label modification
+        access: read-only
       value: unknown
     source:
       openapi: openapi/openapi.yaml
@@ -3406,13 +3664,17 @@ types:
       control which fields are displayed, and whether to replace simple
       values with complex, nested serializations
     properties:
-      annotations_count: integer
+      annotations_count:
+        type: optional<integer>
+        access: read-only
       from_name:
         type: string
         docs: Tag name
         validation:
           maxLength: 2048
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       label: integer
       project: integer
     source:
@@ -3459,12 +3721,15 @@ types:
         type: optional<boolean>
         docs: Deletion from storage enabled
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -3479,7 +3744,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       path:
         type: optional<string>
         docs: Local path
@@ -3502,8 +3769,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: localfiles
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -3512,12 +3780,15 @@ types:
   LocalFilesImportStorage:
     properties:
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -3532,7 +3803,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       path:
         type: optional<string>
         docs: Local path
@@ -3558,39 +3831,21 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: localfiles
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
     source:
       openapi: openapi/openapi.yaml
-  LseAnnotationFilterOptionsReviewed:
-    discriminated: false
-    docs: >-
-      `only` - include all tasks with at least one not reviewed
-      annotation<br>`exclude` - exclude with at least one not reviewed
-      annotation
-
-
-      * `only` - only
-
-      * `exclude` - exclude
-
-      * `None` - None
-    union:
-      - ReviewedEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseAnnotationFilterOptions:
     properties:
       ground_truth:
         type: optional<boolean>
         docs: Include ground truth annotations
       reviewed:
-        type: optional<LseAnnotationFilterOptionsReviewed>
+        type: optional<ReviewedEnum>
         docs: >-
           `only` - include all tasks with at least one not reviewed
           annotation<br>`exclude` - exclude with at least one not reviewed
@@ -3611,32 +3866,13 @@ types:
         default: true
     source:
       openapi: openapi/openapi.yaml
-  LseAnnotationFilterOptionsRequestReviewed:
-    discriminated: false
-    docs: >-
-      `only` - include all tasks with at least one not reviewed
-      annotation<br>`exclude` - exclude with at least one not reviewed
-      annotation
-
-
-      * `only` - only
-
-      * `exclude` - exclude
-
-      * `None` - None
-    union:
-      - ReviewedEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseAnnotationFilterOptionsRequest:
     properties:
       ground_truth:
         type: optional<boolean>
         docs: Include ground truth annotations
       reviewed:
-        type: optional<LseAnnotationFilterOptionsRequestReviewed>
+        type: optional<ReviewedEnum>
         docs: >-
           `only` - include all tasks with at least one not reviewed
           annotation<br>`exclude` - exclude with at least one not reviewed
@@ -3661,15 +3897,19 @@ types:
     properties:
       annotation_filter_options: optional<LseAnnotationFilterOptions>
       converted_formats: optional<list<ConvertedFormat>>
-      counters: optional<unknown>
+      counters:
+        type: optional<unknown>
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       created_by: optional<UserSimple>
       finished_at:
         type: optional<datetime>
         docs: Complete or fail time
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       md5:
         type: optional<string>
         validation:
@@ -3683,43 +3923,22 @@ types:
           maxLength: 2048
     source:
       openapi: openapi/openapi.yaml
-  LseFieldsOnboardingState:
-    discriminated: false
-    docs: |-
-      The current stage of user onboarding
-
-      * `not_started` - Not Started
-      * `signup` - Signup
-      * `trial_signup` - Trial Signup
-      * `first_tutorial` - First Tutorial
-      * `in_app_guidance` - In App Guidance
-      * `complete` - Complete
-    union:
-      - OnboardingStateEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseFieldsTrialRole:
-    discriminated: false
-    union:
-      - TrialRoleEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseFields:
     properties:
-      email_notification_settings: string
+      email_notification_settings:
+        type: optional<string>
+        access: read-only
       invite_activated: optional<boolean>
-      invite_expired: string
-      invite_expired_at: string
+      invite_expired:
+        type: optional<string>
+        access: read-only
+      invite_expired_at:
+        type: optional<string>
+        access: read-only
       invited_at: optional<datetime>
       invited_by: optional<integer>
       onboarding_state:
-        type: optional<LseFieldsOnboardingState>
+        type: optional<OnboardingStateEnum>
         docs: |-
           The current stage of user onboarding
 
@@ -3745,43 +3964,16 @@ types:
         type: optional<string>
         validation:
           maxLength: 1000
-      trial_role: optional<LseFieldsTrialRole>
+      trial_role: optional<TrialRoleEnum>
     source:
       openapi: openapi/openapi.yaml
-  LseFieldsRequestOnboardingState:
-    discriminated: false
-    docs: |-
-      The current stage of user onboarding
-
-      * `not_started` - Not Started
-      * `signup` - Signup
-      * `trial_signup` - Trial Signup
-      * `first_tutorial` - First Tutorial
-      * `in_app_guidance` - In App Guidance
-      * `complete` - Complete
-    union:
-      - OnboardingStateEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseFieldsRequestTrialRole:
-    discriminated: false
-    union:
-      - TrialRoleEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseFieldsRequest:
     properties:
       invite_activated: optional<boolean>
       invited_at: optional<datetime>
       invited_by: optional<integer>
       onboarding_state:
-        type: optional<LseFieldsRequestOnboardingState>
+        type: optional<OnboardingStateEnum>
         docs: |-
           The current stage of user onboarding
 
@@ -3807,14 +3999,18 @@ types:
         type: optional<string>
         validation:
           maxLength: 1000
-      trial_role: optional<LseFieldsRequestTrialRole>
+      trial_role: optional<TrialRoleEnum>
     source:
       openapi: openapi/openapi.yaml
   LseOrganization:
     properties:
       billing: OrganizationBilling
-      created_at: datetime
-      custom_scripts_enabled: string
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      custom_scripts_enabled:
+        type: optional<string>
+        access: read-only
       default_role:
         type: optional<Role9E7Enum>
         docs: |-
@@ -3827,15 +4023,29 @@ types:
           * `AN` - Annotator
           * `DI` - Deactivated
           * `NO` - Not Activated
-      email_notification_settings: string
-      embed_domains: optional<unknown>
-      embed_settings: optional<unknown>
+      email_notification_settings:
+        type: optional<string>
+        access: read-only
+      embed_domains:
+        type: optional<unknown>
+        docs: >-
+          List of objects: {"domain": "example.com"}. Used for CSP header on
+          /embed routes.
+      embed_settings:
+        type: optional<unknown>
+        docs: Embed settings for this organization
       external_id:
         type: optional<string>
         docs: External ID to uniquely identify this organization
-      id: integer
-      title: string
-      token: string
+      id:
+        type: optional<integer>
+        access: read-only
+      title:
+        type: optional<string>
+        access: read-only
+      token:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   LseOrganizationMemberList:
@@ -3845,30 +4055,18 @@ types:
 
       which fields should be displayed.
     properties:
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       organization:
         type: integer
         docs: Organization ID
-      role: string
+      role:
+        type: optional<string>
+        access: read-only
       user: LseUserOrganizationMemberList
     source:
       openapi: openapi/openapi.yaml
-  LseProjectSampling:
-    discriminated: false
-    union:
-      - SamplingDe5Enum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseProjectSkipQueue:
-    discriminated: false
-    union:
-      - SkipQueueEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseProject:
     docs: |-
       Serializer get numbers from project queryset annotation,
@@ -3906,13 +4104,27 @@ types:
           maxLength: 16
       comment_classification_config: optional<string>
       config_has_control_tags:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for labeling
+        access: read-only
       config_suitable_for_bulk_annotation:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for bulk annotation
-      control_weights: optional<unknown>
-      created_at: datetime
+        access: read-only
+      control_weights:
+        type: optional<unknown>
+        docs: >-
+          Dict of weights for each control tag in metric calculation. Each
+          control tag (e.g. label or choice) will have it's own key in control
+          weight dict with weight for each label and overall weight.For example,
+          if bounding box annotation with control tag named my_bbox should be
+          included with 0.33 weight in agreement calculation, and the first
+          label Car should be twice more important than Airplaine, then you have
+          to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by:
         type: optional<UserSimple>
         docs: Project owner
@@ -3923,7 +4135,9 @@ types:
         validation:
           min: 1
           max: 86400
-      data_types: unknown
+      data_types:
+        type: optional<unknown>
+        access: read-only
       description:
         type: optional<string>
         docs: Project description
@@ -3941,12 +4155,16 @@ types:
         type: optional<string>
         docs: Labeling instructions in HTML format
       finished_task_number:
-        type: integer
+        type: optional<integer>
         docs: Finished tasks
+        access: read-only
       ground_truth_number:
-        type: integer
+        type: optional<integer>
         docs: Honeypot annotation number in project
-      id: integer
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       is_draft:
         type: optional<boolean>
         docs: Whether or not the project is in the middle of being created
@@ -3970,8 +4188,12 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      members: string
-      members_count: integer
+      members:
+        type: optional<string>
+        access: read-only
+      members_count:
+        type: optional<integer>
+        access: read-only
       min_annotations_to_start_training:
         type: optional<integer>
         docs: >-
@@ -3983,24 +4205,37 @@ types:
       model_version:
         type: optional<string>
         docs: Machine learning model version
-      num_tasks_with_annotations: optional<integer>
+      num_tasks_with_annotations:
+        type: optional<integer>
+        access: read-only
       organization: optional<integer>
       overlap_cohort_percentage:
         type: optional<integer>
         validation:
           min: -2147483648
           max: 2147483647
-      parsed_label_config: unknown
+      parsed_label_config:
+        type: optional<unknown>
+        docs: JSON-formatted labeling configuration
+        access: read-only
       pause_on_failed_annotator_evaluation:
         type: optional<boolean>
         default: false
       pinned_at:
         type: optional<datetime>
         docs: Pinned date and time
-      prompts: string
-      queue_done: string
-      queue_left: string
-      queue_total: string
+      prompts:
+        type: optional<string>
+        access: read-only
+      queue_done:
+        type: optional<string>
+        access: read-only
+      queue_left:
+        type: optional<string>
+        access: read-only
+      queue_total:
+        type: optional<string>
+        access: read-only
       require_comment_on_skip:
         type: optional<boolean>
         default: false
@@ -4008,8 +4243,10 @@ types:
         type: optional<boolean>
         docs: Reveal pre-annotations interactively
       review_settings: ReviewSettings
-      reviewer_queue_total: string
-      sampling: optional<LseProjectSampling>
+      reviewer_queue_total:
+        type: optional<string>
+        access: read-only
+      sampling: optional<SamplingDe5Enum>
       show_annotation_history:
         type: optional<boolean>
         docs: Show annotation history to annotator
@@ -4029,13 +4266,18 @@ types:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
       show_unused_data_columns_to_annotators: optional<boolean>
-      skip_queue: optional<LseProjectSkipQueue>
+      skip_queue: optional<SkipQueueEnum>
       skipped_annotations_number:
-        type: integer
+        type: optional<integer>
         docs: Skipped by collaborators annotation number in project
+        access: read-only
       start_training_on_annotation_update:
-        type: boolean
+        type: optional<boolean>
         docs: Start model training after any annotations are submitted or updated
+        access: read-only
+      state:
+        type: optional<string>
+        access: read-only
       task_data_login:
         type: optional<string>
         docs: 'Task data credentials: login'
@@ -4047,8 +4289,9 @@ types:
         validation:
           maxLength: 256
       task_number:
-        type: integer
+        type: optional<integer>
         docs: Total task number in project
+        access: read-only
       title:
         type: optional<string>
         docs: Project name. Must be between 3 and 50 characters long.
@@ -4056,24 +4299,31 @@ types:
           minLength: 3
           maxLength: 50
       total_annotations_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Total annotations number in project including
           skipped_annotations_number and ground_truth_number.
+        access: read-only
       total_predictions_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Total predictions number in project including
           skipped_annotations_number, ground_truth_number, and
           useful_annotation_number.
+        access: read-only
       useful_annotation_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Useful annotation number in project not including
           skipped_annotations_number and ground_truth_number. Total annotations
           = annotation_number + skipped_annotations_number + ground_truth_number
-      workspace: string
-      workspace_title: string
+        access: read-only
+      workspace:
+        type: optional<string>
+        access: read-only
+      workspace_title:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   LseProjectCounts:
@@ -4081,43 +4331,55 @@ types:
       Serializer get numbers from project queryset annotation,
       make sure, that you use correct one(Project.objects.with_counts())
     properties:
-      finished_task_number: integer
+      finished_task_number:
+        type: optional<integer>
+        access: read-only
       ground_truth_number:
-        type: integer
+        type: optional<integer>
         docs: Honeypot annotation number in project
-      id: integer
-      num_tasks_with_annotations: optional<integer>
-      queue_done: integer
-      queue_left: integer
-      queue_total: string
-      rejected: integer
-      review_total_tasks: integer
-      reviewed_number: integer
-      skipped_annotations_number: string
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
+      num_tasks_with_annotations:
+        type: optional<integer>
+        access: read-only
+      queue_done:
+        type: optional<integer>
+        access: read-only
+      queue_left:
+        type: optional<integer>
+        access: read-only
+      queue_total:
+        type: optional<string>
+        access: read-only
+      rejected:
+        type: optional<integer>
+        access: read-only
+      review_total_tasks:
+        type: optional<integer>
+        access: read-only
+      reviewed_number:
+        type: optional<integer>
+        access: read-only
+      skipped_annotations_number:
+        type: optional<string>
+        access: read-only
       task_number:
-        type: integer
+        type: optional<integer>
         docs: Total task number in project
-      total_annotations_number: string
-      total_predictions_number: integer
-      useful_annotation_number: optional<integer>
+        access: read-only
+      total_annotations_number:
+        type: optional<string>
+        access: read-only
+      total_predictions_number:
+        type: optional<integer>
+        access: read-only
+      useful_annotation_number:
+        type: optional<integer>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
-  LseProjectCreateSampling:
-    discriminated: false
-    union:
-      - SamplingDe5Enum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseProjectCreateSkipQueue:
-    discriminated: false
-    union:
-      - SkipQueueEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseProjectCreate:
     docs: |-
       Serializer get numbers from project queryset annotation,
@@ -4128,13 +4390,27 @@ types:
         validation:
           maxLength: 16
       config_has_control_tags:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for labeling
+        access: read-only
       config_suitable_for_bulk_annotation:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for bulk annotation
-      control_weights: optional<unknown>
-      created_at: datetime
+        access: read-only
+      control_weights:
+        type: optional<unknown>
+        docs: >-
+          Dict of weights for each control tag in metric calculation. Each
+          control tag (e.g. label or choice) will have it's own key in control
+          weight dict with weight for each label and overall weight.For example,
+          if bounding box annotation with control tag named my_bbox should be
+          included with 0.33 weight in agreement calculation, and the first
+          label Car should be twice more important than Airplaine, then you have
+          to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by:
         type: optional<UserSimple>
         docs: Project owner
@@ -4151,12 +4427,16 @@ types:
         type: optional<string>
         docs: Labeling instructions in HTML format
       finished_task_number:
-        type: integer
+        type: optional<integer>
         docs: Finished tasks
+        access: read-only
       ground_truth_number:
-        type: integer
+        type: optional<integer>
         docs: Honeypot annotation number in project
-      id: integer
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       is_draft:
         type: optional<boolean>
         docs: Whether or not the project is in the middle of being created
@@ -4187,24 +4467,32 @@ types:
         type: optional<string>
         docs: Machine learning model version
       num_tasks_with_annotations:
-        type: integer
+        type: optional<integer>
         docs: Tasks with annotations count
+        access: read-only
       organization: optional<integer>
       overlap_cohort_percentage:
         type: optional<integer>
         validation:
           min: -2147483648
           max: 2147483647
-      parsed_label_config: unknown
+      parsed_label_config:
+        type: optional<unknown>
+        docs: JSON-formatted labeling configuration
+        access: read-only
       pinned_at:
         type: optional<datetime>
         docs: Pinned date and time
-      queue_done: integer
-      queue_total: integer
+      queue_done:
+        type: optional<integer>
+        access: read-only
+      queue_total:
+        type: optional<integer>
+        access: read-only
       reveal_preannotations_interactively:
         type: optional<boolean>
         docs: Reveal pre-annotations interactively
-      sampling: optional<LseProjectCreateSampling>
+      sampling: optional<SamplingDe5Enum>
       show_annotation_history:
         type: optional<boolean>
         docs: Show annotation history to annotator
@@ -4223,13 +4511,18 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
-      skip_queue: optional<LseProjectCreateSkipQueue>
+      skip_queue: optional<SkipQueueEnum>
       skipped_annotations_number:
-        type: integer
+        type: optional<integer>
         docs: Skipped by collaborators annotation number in project
+        access: read-only
       start_training_on_annotation_update:
-        type: boolean
+        type: optional<boolean>
         docs: Start model training after any annotations are submitted or updated
+        access: read-only
+      state:
+        type: optional<string>
+        access: read-only
       task_data_login:
         type: optional<string>
         docs: 'Task data credentials: login'
@@ -4241,8 +4534,9 @@ types:
         validation:
           maxLength: 256
       task_number:
-        type: integer
+        type: optional<integer>
         docs: Total task number in project
+        access: read-only
       title:
         type: optional<string>
         docs: Project name. Must be between 3 and 50 characters long.
@@ -4250,28 +4544,35 @@ types:
           minLength: 3
           maxLength: 50
       total_annotations_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Total annotations number in project including
           skipped_annotations_number and ground_truth_number.
+        access: read-only
       total_predictions_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Total predictions number in project including
           skipped_annotations_number, ground_truth_number, and
           useful_annotation_number.
+        access: read-only
       useful_annotation_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Useful annotation number in project not including
           skipped_annotations_number and ground_truth_number. Total annotations
           = annotation_number + skipped_annotations_number + ground_truth_number
+        access: read-only
       workspace: optional<integer>
     source:
       openapi: openapi/openapi.yaml
   LseProjectParams:
     properties:
-      annotator_params: optional<unknown>
+      annotator_params:
+        type: optional<unknown>
+        docs: >-
+          user ID and user weight in score calculation. Format {user_id[int]:
+          weight[Float[0..1]]}
       use_kappa:
         type: optional<boolean>
         docs: >-
@@ -4280,22 +4581,6 @@ types:
           of basic agreement
     source:
       openapi: openapi/openapi.yaml
-  LseProjectResponseSampling:
-    discriminated: false
-    union:
-      - SamplingDe5Enum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseProjectResponseSkipQueue:
-    discriminated: false
-    union:
-      - SkipQueueEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseProjectResponse:
     docs: >-
       Serializer for project response, combining all the serializers for
@@ -4308,7 +4593,9 @@ types:
           annotators must agree
         validation:
           pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
-      allow_stream: boolean
+      allow_stream:
+        type: optional<boolean>
+        access: read-only
       annotation_limit_count:
         type: optional<integer>
         validation:
@@ -4334,13 +4621,27 @@ types:
           maxLength: 16
       comment_classification_config: optional<string>
       config_has_control_tags:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for labeling
+        access: read-only
       config_suitable_for_bulk_annotation:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for bulk annotation
-      control_weights: optional<unknown>
-      created_at: datetime
+        access: read-only
+      control_weights:
+        type: optional<unknown>
+        docs: >-
+          Dict of weights for each control tag in metric calculation. Each
+          control tag (e.g. label or choice) will have it's own key in control
+          weight dict with weight for each label and overall weight.For example,
+          if bounding box annotation with control tag named my_bbox should be
+          included with 0.33 weight in agreement calculation, and the first
+          label Car should be twice more important than Airplaine, then you have
+          to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by:
         type: optional<UserSimple>
         docs: Project owner
@@ -4351,7 +4652,9 @@ types:
         validation:
           min: 1
           max: 86400
-      data_types: unknown
+      data_types:
+        type: optional<unknown>
+        access: read-only
       description:
         type: optional<string>
         docs: Project description
@@ -4369,12 +4672,16 @@ types:
         type: optional<string>
         docs: Labeling instructions in HTML format
       finished_task_number:
-        type: integer
+        type: optional<integer>
         docs: Finished tasks
+        access: read-only
       ground_truth_number:
-        type: integer
+        type: optional<integer>
         docs: Honeypot annotation number in project
-      id: integer
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       is_draft:
         type: optional<boolean>
         docs: Whether or not the project is in the middle of being created
@@ -4398,8 +4705,12 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      members: string
-      members_count: integer
+      members:
+        type: optional<string>
+        access: read-only
+      members_count:
+        type: optional<integer>
+        access: read-only
       min_annotations_to_start_training:
         type: optional<integer>
         docs: >-
@@ -4411,26 +4722,43 @@ types:
       model_version:
         type: optional<string>
         docs: Machine learning model version
-      num_tasks_with_annotations: integer
+      num_tasks_with_annotations:
+        type: optional<integer>
+        access: read-only
       organization: optional<integer>
       overlap_cohort_percentage:
         type: optional<integer>
         validation:
           min: -2147483648
           max: 2147483647
-      parsed_label_config: unknown
+      parsed_label_config:
+        type: optional<unknown>
+        docs: JSON-formatted labeling configuration
+        access: read-only
       pause_on_failed_annotator_evaluation:
         type: optional<boolean>
         default: false
       pinned_at:
         type: optional<datetime>
         docs: Pinned date and time
-      prompts: string
-      queue_done: integer
-      queue_left: integer
-      queue_total: integer
-      ready: boolean
-      rejected: integer
+      prompts:
+        type: optional<string>
+        access: read-only
+      queue_done:
+        type: optional<integer>
+        access: read-only
+      queue_left:
+        type: optional<integer>
+        access: read-only
+      queue_total:
+        type: optional<integer>
+        access: read-only
+      ready:
+        type: optional<boolean>
+        access: read-only
+      rejected:
+        type: optional<integer>
+        access: read-only
       require_comment_on_skip:
         type: optional<boolean>
         default: false
@@ -4438,10 +4766,16 @@ types:
         type: optional<boolean>
         docs: Reveal pre-annotations interactively
       review_settings: ReviewSettings
-      review_total_tasks: integer
-      reviewed_number: integer
-      reviewer_queue_total: integer
-      sampling: optional<LseProjectResponseSampling>
+      review_total_tasks:
+        type: optional<integer>
+        access: read-only
+      reviewed_number:
+        type: optional<integer>
+        access: read-only
+      reviewer_queue_total:
+        type: optional<integer>
+        access: read-only
+      sampling: optional<SamplingDe5Enum>
       show_annotation_history:
         type: optional<boolean>
         docs: Show annotation history to annotator
@@ -4461,11 +4795,17 @@ types:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
       show_unused_data_columns_to_annotators: optional<boolean>
-      skip_queue: optional<LseProjectResponseSkipQueue>
-      skipped_annotations_number: integer
+      skip_queue: optional<SkipQueueEnum>
+      skipped_annotations_number:
+        type: optional<integer>
+        access: read-only
       start_training_on_annotation_update:
-        type: boolean
+        type: optional<boolean>
         docs: Start model training after any annotations are submitted or updated
+        access: read-only
+      state:
+        type: optional<string>
+        access: read-only
       task_data_login:
         type: optional<string>
         docs: 'Task data credentials: login'
@@ -4477,37 +4817,32 @@ types:
         validation:
           maxLength: 256
       task_number:
-        type: integer
+        type: optional<integer>
         docs: Total task number in project
+        access: read-only
       title:
         type: optional<string>
         docs: Project name. Must be between 3 and 50 characters long.
         validation:
           minLength: 3
           maxLength: 50
-      total_annotations_number: integer
-      total_predictions_number: optional<integer>
-      useful_annotation_number: optional<integer>
-      workspace: string
-      workspace_title: string
+      total_annotations_number:
+        type: optional<integer>
+        access: read-only
+      total_predictions_number:
+        type: optional<integer>
+        access: read-only
+      useful_annotation_number:
+        type: optional<integer>
+        access: read-only
+      workspace:
+        type: optional<string>
+        access: read-only
+      workspace_title:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
-  LseProjectUpdateSampling:
-    discriminated: false
-    union:
-      - SamplingDe5Enum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseProjectUpdateSkipQueue:
-    discriminated: false
-    union:
-      - SkipQueueEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseProjectUpdate:
     docs: |-
       Serializer get numbers from project queryset annotation,
@@ -4545,13 +4880,27 @@ types:
           maxLength: 16
       comment_classification_config: optional<string>
       config_has_control_tags:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for labeling
+        access: read-only
       config_suitable_for_bulk_annotation:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for bulk annotation
-      control_weights: optional<unknown>
-      created_at: datetime
+        access: read-only
+      control_weights:
+        type: optional<unknown>
+        docs: >-
+          Dict of weights for each control tag in metric calculation. Each
+          control tag (e.g. label or choice) will have it's own key in control
+          weight dict with weight for each label and overall weight.For example,
+          if bounding box annotation with control tag named my_bbox should be
+          included with 0.33 weight in agreement calculation, and the first
+          label Car should be twice more important than Airplaine, then you have
+          to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by:
         type: optional<UserSimple>
         docs: Project owner
@@ -4575,12 +4924,16 @@ types:
         type: optional<string>
         docs: Labeling instructions in HTML format
       finished_task_number:
-        type: integer
+        type: optional<integer>
         docs: Finished tasks
+        access: read-only
       ground_truth_number:
-        type: integer
+        type: optional<integer>
         docs: Honeypot annotation number in project
-      id: integer
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       is_draft:
         type: optional<boolean>
         docs: Whether or not the project is in the middle of being created
@@ -4616,24 +4969,34 @@ types:
         type: optional<string>
         docs: Machine learning model version
       num_tasks_with_annotations:
-        type: integer
+        type: optional<integer>
         docs: Tasks with annotations count
+        access: read-only
       organization: optional<integer>
       overlap_cohort_percentage:
         type: optional<integer>
         validation:
           min: -2147483648
           max: 2147483647
-      parsed_label_config: unknown
+      parsed_label_config:
+        type: optional<unknown>
+        docs: JSON-formatted labeling configuration
+        access: read-only
       pause_on_failed_annotator_evaluation:
         type: optional<boolean>
         default: false
       pinned_at:
         type: optional<datetime>
         docs: Pinned date and time
-      prompts: string
-      queue_done: integer
-      queue_total: integer
+      prompts:
+        type: optional<string>
+        access: read-only
+      queue_done:
+        type: optional<integer>
+        access: read-only
+      queue_total:
+        type: optional<integer>
+        access: read-only
       require_comment_on_skip:
         type: optional<boolean>
         default: false
@@ -4641,7 +5004,7 @@ types:
         type: optional<boolean>
         docs: Reveal pre-annotations interactively
       review_settings: ReviewSettings
-      sampling: optional<LseProjectUpdateSampling>
+      sampling: optional<SamplingDe5Enum>
       show_annotation_history:
         type: optional<boolean>
         docs: Show annotation history to annotator
@@ -4661,13 +5024,18 @@ types:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
       show_unused_data_columns_to_annotators: optional<boolean>
-      skip_queue: optional<LseProjectUpdateSkipQueue>
+      skip_queue: optional<SkipQueueEnum>
       skipped_annotations_number:
-        type: integer
+        type: optional<integer>
         docs: Skipped by collaborators annotation number in project
+        access: read-only
       start_training_on_annotation_update:
-        type: boolean
+        type: optional<boolean>
         docs: Start model training after any annotations are submitted or updated
+        access: read-only
+      state:
+        type: optional<string>
+        access: read-only
       task_data_login:
         type: optional<string>
         docs: 'Task data credentials: login'
@@ -4679,8 +5047,9 @@ types:
         validation:
           maxLength: 256
       task_number:
-        type: integer
+        type: optional<integer>
         docs: Total task number in project
+        access: read-only
       title:
         type: optional<string>
         docs: Project name. Must be between 3 and 50 characters long.
@@ -4688,24 +5057,29 @@ types:
           minLength: 3
           maxLength: 50
       total_annotations_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Total annotations number in project including
           skipped_annotations_number and ground_truth_number.
+        access: read-only
       total_predictions_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Total predictions number in project including
           skipped_annotations_number, ground_truth_number, and
           useful_annotation_number.
+        access: read-only
       useful_annotation_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Useful annotation number in project not including
           skipped_annotations_number and ground_truth_number. Total annotations
           = annotation_number + skipped_annotations_number + ground_truth_number
+        access: read-only
       workspace: integer
-      workspace_title: string
+      workspace_title:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   LseS3ExportStorage:
@@ -4729,15 +5103,18 @@ types:
         type: optional<boolean>
         docs: Deletion from storage enabled
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
       external_id:
         type: optional<string>
         docs: AWS ExternalId
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -4753,7 +5130,9 @@ types:
         validation:
           maxLength: 256
       legacy_auth: optional<boolean>
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
@@ -4785,8 +5164,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: s3s
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -4833,7 +5213,9 @@ types:
         validation:
           maxLength: 256
       legacy_auth: optional<boolean>
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
@@ -4889,15 +5271,18 @@ types:
         type: optional<string>
         docs: S3 bucket name
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
       external_id:
         type: optional<string>
         docs: AWS ExternalId
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -4913,7 +5298,9 @@ types:
         validation:
           maxLength: 256
       legacy_auth: optional<boolean>
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
@@ -4957,8 +5344,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: s3s
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -5002,7 +5390,9 @@ types:
         validation:
           maxLength: 256
       legacy_auth: optional<boolean>
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
@@ -5089,43 +5479,67 @@ types:
   LseTask:
     docs: Data Manager Task Serializer with FSM state support.
     properties:
-      agreement: string
-      agreement_selected: string
-      annotations: string
-      annotations_ids: string
-      annotations_results: string
+      agreement:
+        type: optional<string>
+        access: read-only
+      agreement_selected:
+        type: optional<string>
+        access: read-only
+      annotations:
+        type: optional<string>
+        access: read-only
+      annotations_ids:
+        type: optional<string>
+        access: read-only
+      annotations_results:
+        type: optional<string>
+        access: read-only
       annotators:
+        type: optional<list<integer>>
         docs: Annotators IDs who annotated this task
-        type: list<integer>
+        access: read-only
       annotators_count:
-        type: integer
+        type: optional<integer>
         docs: >-
           The annotators_count is calculated as the number of users with
           annotations (can be repeated, so same as the number of annotations) +
           the number of assignees without annotations.
+        access: read-only
       avg_lead_time: optional<double>
       cancelled_annotations: optional<integer>
-      comment_authors: list<map<string, unknown>>
-      comment_authors_count: integer
+      comment_authors:
+        type: optional<list<map<string, unknown>>>
+        access: read-only
+      comment_authors_count:
+        type: optional<integer>
+        access: read-only
       comment_count:
         type: optional<integer>
         docs: Number of comments in the task including all annotations
         validation:
           min: -2147483648
           max: 2147483647
-      comments: string
+      comments:
+        type: optional<string>
+        access: read-only
       completed_at: optional<datetime>
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Time a task was created
+        access: read-only
       data: unknown
       draft_exists: optional<boolean>
       drafts:
+        type: optional<list<LseTaskDraftsItem>>
         docs: Drafts for this task
-        type: list<LseTaskDraftsItem>
-      file_upload: string
+        access: read-only
+      file_upload:
+        type: optional<string>
+        access: read-only
       ground_truth: optional<boolean>
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       inner_id: optional<integer>
       is_labeled:
         type: optional<boolean>
@@ -5135,7 +5549,12 @@ types:
       last_comment_updated_at:
         type: optional<datetime>
         docs: When the last comment was updated
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: >-
+          Meta is user imported (uploaded) data and can be useful as input for
+          an ML Backend for embeddings, advanced vectors, and other info. It is
+          passed to ML during training/predicting steps.
       overlap:
         type: optional<integer>
         docs: Number of distinct annotators that processed the current task
@@ -5146,28 +5565,42 @@ types:
         type: optional<double>
         docs: Average agreement score for the task
       predictions:
+        type: optional<list<LseTaskPredictionsItem>>
         docs: Predictions for this task
-        type: list<LseTaskPredictionsItem>
-      predictions_model_versions: string
-      predictions_results: string
+        access: read-only
+      predictions_model_versions:
+        type: optional<string>
+        access: read-only
+      predictions_results:
+        type: optional<string>
+        access: read-only
       predictions_score: optional<double>
       project:
         type: optional<integer>
         docs: Project ID for this task
       review_time:
-        type: integer
+        type: optional<integer>
         docs: >-
           Calculate total review time for this task from MetricInTimeBucket
           records.
 
           Returns time in seconds.
+        access: read-only
       reviewed: optional<boolean>
-      reviewers: list<map<string, unknown>>
-      reviewers_count: integer
+      reviewers:
+        type: optional<list<map<string, unknown>>>
+        access: read-only
+      reviewers_count:
+        type: optional<integer>
+        access: read-only
       reviews_accepted: optional<integer>
       reviews_rejected: optional<integer>
-      state: string
-      storage_filename: string
+      state:
+        type: optional<string>
+        access: read-only
+      storage_filename:
+        type: optional<string>
+        access: read-only
       total_annotations: optional<integer>
       total_predictions: optional<integer>
       unresolved_comment_count:
@@ -5177,90 +5610,19 @@ types:
           min: -2147483648
           max: 2147483647
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Last time a task was updated
+        access: read-only
       updated_by:
+        type: optional<list<map<string, unknown>>>
         docs: User IDs who updated this task
-        type: list<map<string, unknown>>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
-  LseTaskFilterOptionsAnnotated:
-    discriminated: false
-    docs: >-
-      `only` - include all tasks with at least one not skipped
-      annotation<br>`exclude` - exclude all tasks with at least one not skipped
-      annotation
-
-
-      * `only` - only
-
-      * `exclude` - exclude
-
-      * `None` - None
-    union:
-      - AnnotatedEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseTaskFilterOptionsFinished:
-    discriminated: false
-    docs: >-
-      `only` - include all finished tasks (is_labeled = true)<br>`exclude` -
-      exclude all finished tasks
-
-
-      * `only` - only
-
-      * `exclude` - exclude
-
-      * `None` - None
-    union:
-      - FinishedEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseTaskFilterOptionsReviewed:
-    discriminated: false
-    docs: >-
-      `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed
-      tasks
-
-
-      * `only` - only
-
-      * `exclude` - exclude
-
-      * `None` - None
-    union:
-      - ReviewedEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseTaskFilterOptionsSkipped:
-    discriminated: false
-    docs: >-
-      `only` - include all tasks with skipped annotations<br>`exclude` - exclude
-      all tasks with skipped annotations
-
-
-      * `only` - only
-
-      * `exclude` - exclude
-
-      * `None` - None
-    union:
-      - SkippedEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseTaskFilterOptions:
     properties:
       annotated:
-        type: optional<LseTaskFilterOptionsAnnotated>
+        type: optional<AnnotatedEnum>
         docs: >-
           `only` - include all tasks with at least one not skipped
           annotation<br>`exclude` - exclude all tasks with at least one not
@@ -5273,7 +5635,7 @@ types:
 
           * `None` - None
       finished:
-        type: optional<LseTaskFilterOptionsFinished>
+        type: optional<FinishedEnum>
         docs: >-
           `only` - include all finished tasks (is_labeled = true)<br>`exclude` -
           exclude all finished tasks
@@ -5288,7 +5650,7 @@ types:
         type: optional<boolean>
         default: false
       reviewed:
-        type: optional<LseTaskFilterOptionsReviewed>
+        type: optional<ReviewedEnum>
         docs: >-
           `only` - include all reviewed tasks<br>`exclude` - exclude all
           reviewed tasks
@@ -5300,7 +5662,7 @@ types:
 
           * `None` - None
       skipped:
-        type: optional<LseTaskFilterOptionsSkipped>
+        type: optional<SkippedEnum>
         docs: >-
           `only` - include all tasks with skipped annotations<br>`exclude` -
           exclude all tasks with skipped annotations
@@ -5316,83 +5678,10 @@ types:
         docs: Apply filters from the view ID (a tab from the Data Manager)
     source:
       openapi: openapi/openapi.yaml
-  LseTaskFilterOptionsRequestAnnotated:
-    discriminated: false
-    docs: >-
-      `only` - include all tasks with at least one not skipped
-      annotation<br>`exclude` - exclude all tasks with at least one not skipped
-      annotation
-
-
-      * `only` - only
-
-      * `exclude` - exclude
-
-      * `None` - None
-    union:
-      - AnnotatedEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseTaskFilterOptionsRequestFinished:
-    discriminated: false
-    docs: >-
-      `only` - include all finished tasks (is_labeled = true)<br>`exclude` -
-      exclude all finished tasks
-
-
-      * `only` - only
-
-      * `exclude` - exclude
-
-      * `None` - None
-    union:
-      - FinishedEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseTaskFilterOptionsRequestReviewed:
-    discriminated: false
-    docs: >-
-      `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed
-      tasks
-
-
-      * `only` - only
-
-      * `exclude` - exclude
-
-      * `None` - None
-    union:
-      - ReviewedEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  LseTaskFilterOptionsRequestSkipped:
-    discriminated: false
-    docs: >-
-      `only` - include all tasks with skipped annotations<br>`exclude` - exclude
-      all tasks with skipped annotations
-
-
-      * `only` - only
-
-      * `exclude` - exclude
-
-      * `None` - None
-    union:
-      - SkippedEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   LseTaskFilterOptionsRequest:
     properties:
       annotated:
-        type: optional<LseTaskFilterOptionsRequestAnnotated>
+        type: optional<AnnotatedEnum>
         docs: >-
           `only` - include all tasks with at least one not skipped
           annotation<br>`exclude` - exclude all tasks with at least one not
@@ -5405,7 +5694,7 @@ types:
 
           * `None` - None
       finished:
-        type: optional<LseTaskFilterOptionsRequestFinished>
+        type: optional<FinishedEnum>
         docs: >-
           `only` - include all finished tasks (is_labeled = true)<br>`exclude` -
           exclude all finished tasks
@@ -5420,7 +5709,7 @@ types:
         type: optional<boolean>
         default: false
       reviewed:
-        type: optional<LseTaskFilterOptionsRequestReviewed>
+        type: optional<ReviewedEnum>
         docs: >-
           `only` - include all reviewed tasks<br>`exclude` - exclude all
           reviewed tasks
@@ -5432,7 +5721,7 @@ types:
 
           * `None` - None
       skipped:
-        type: optional<LseTaskFilterOptionsRequestSkipped>
+        type: optional<SkippedEnum>
         docs: >-
           `only` - include all tasks with skipped annotations<br>`exclude` -
           exclude all tasks with skipped annotations
@@ -5485,29 +5774,46 @@ types:
   LseTaskSerializerForAnnotators:
     docs: Data Manager Task Serializer with FSM state support.
     properties:
-      annotations: string
-      annotations_results: string
+      annotations:
+        type: optional<string>
+        access: read-only
+      annotations_results:
+        type: optional<string>
+        access: read-only
       cancelled_annotations: optional<integer>
-      comment_count: string
-      comments: string
+      comment_count:
+        type: optional<string>
+        access: read-only
+      comments:
+        type: optional<string>
+        access: read-only
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Time a task was created
+        access: read-only
       data: unknown
       draft_exists: optional<boolean>
       drafts:
+        type: optional<list<LseTaskSerializerForAnnotatorsDraftsItem>>
         docs: Drafts for this task
-        type: list<LseTaskSerializerForAnnotatorsDraftsItem>
-      id: integer
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       predictions:
+        type: optional<list<LseTaskSerializerForAnnotatorsPredictionsItem>>
         docs: Predictions for this task
-        type: list<LseTaskSerializerForAnnotatorsPredictionsItem>
-      predictions_results: string
+        access: read-only
+      predictions_results:
+        type: optional<string>
+        access: read-only
       predictions_score: optional<double>
       reviews_rejected: optional<integer>
       total_annotations: optional<integer>
       total_predictions: optional<integer>
-      unresolved_comment_count: string
+      unresolved_comment_count:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   LseTaskSerializerForReviewersDraftsItem:
@@ -5547,43 +5853,67 @@ types:
   LseTaskSerializerForReviewers:
     docs: Data Manager Task Serializer with FSM state support.
     properties:
-      agreement: string
-      agreement_selected: string
-      annotations: string
-      annotations_ids: string
-      annotations_results: string
+      agreement:
+        type: optional<string>
+        access: read-only
+      agreement_selected:
+        type: optional<string>
+        access: read-only
+      annotations:
+        type: optional<string>
+        access: read-only
+      annotations_ids:
+        type: optional<string>
+        access: read-only
+      annotations_results:
+        type: optional<string>
+        access: read-only
       annotators:
+        type: optional<list<integer>>
         docs: Annotators IDs who annotated this task
-        type: list<integer>
+        access: read-only
       annotators_count:
-        type: integer
+        type: optional<integer>
         docs: >-
           The annotators_count is calculated as the number of users with
           annotations (can be repeated, so same as the number of annotations) +
           the number of assignees without annotations.
+        access: read-only
       avg_lead_time: optional<double>
       cancelled_annotations: optional<integer>
-      comment_authors: list<map<string, unknown>>
-      comment_authors_count: integer
+      comment_authors:
+        type: optional<list<map<string, unknown>>>
+        access: read-only
+      comment_authors_count:
+        type: optional<integer>
+        access: read-only
       comment_count:
         type: optional<integer>
         docs: Number of comments in the task including all annotations
         validation:
           min: -2147483648
           max: 2147483647
-      comments: string
+      comments:
+        type: optional<string>
+        access: read-only
       completed_at: optional<datetime>
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Time a task was created
+        access: read-only
       data: unknown
       draft_exists: optional<boolean>
       drafts:
+        type: optional<list<LseTaskSerializerForReviewersDraftsItem>>
         docs: Drafts for this task
-        type: list<LseTaskSerializerForReviewersDraftsItem>
-      file_upload: string
+        access: read-only
+      file_upload:
+        type: optional<string>
+        access: read-only
       ground_truth: optional<boolean>
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       inner_id: optional<integer>
       is_labeled:
         type: optional<boolean>
@@ -5593,7 +5923,12 @@ types:
       last_comment_updated_at:
         type: optional<datetime>
         docs: When the last comment was updated
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: >-
+          Meta is user imported (uploaded) data and can be useful as input for
+          an ML Backend for embeddings, advanced vectors, and other info. It is
+          passed to ML during training/predicting steps.
       overlap:
         type: optional<integer>
         docs: Number of distinct annotators that processed the current task
@@ -5604,28 +5939,42 @@ types:
         type: optional<double>
         docs: Average agreement score for the task
       predictions:
+        type: optional<list<LseTaskSerializerForReviewersPredictionsItem>>
         docs: Predictions for this task
-        type: list<LseTaskSerializerForReviewersPredictionsItem>
-      predictions_model_versions: string
-      predictions_results: string
+        access: read-only
+      predictions_model_versions:
+        type: optional<string>
+        access: read-only
+      predictions_results:
+        type: optional<string>
+        access: read-only
       predictions_score: optional<double>
       project:
         type: optional<integer>
         docs: Project ID for this task
       review_time:
-        type: integer
+        type: optional<integer>
         docs: >-
           Calculate total review time for this task from MetricInTimeBucket
           records.
 
           Returns time in seconds.
+        access: read-only
       reviewed: optional<boolean>
-      reviewers: list<map<string, unknown>>
-      reviewers_count: integer
+      reviewers:
+        type: optional<list<map<string, unknown>>>
+        access: read-only
+      reviewers_count:
+        type: optional<integer>
+        access: read-only
       reviews_accepted: optional<integer>
       reviews_rejected: optional<integer>
-      state: string
-      storage_filename: string
+      state:
+        type: optional<string>
+        access: read-only
+      storage_filename:
+        type: optional<string>
+        access: read-only
       total_annotations: optional<integer>
       total_predictions: optional<integer>
       unresolved_comment_count:
@@ -5635,11 +5984,13 @@ types:
           min: -2147483648
           max: 2147483647
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Last time a task was updated
+        access: read-only
       updated_by:
+        type: optional<list<map<string, unknown>>>
         docs: User IDs who updated this task
-        type: list<map<string, unknown>>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   LseUser:
@@ -5650,12 +6001,18 @@ types:
       values with complex, nested serializations
     properties:
       active_organization: optional<integer>
-      active_organization_meta: string
+      active_organization_meta:
+        type: optional<string>
+        access: read-only
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
-      avatar: string
-      custom_hotkeys: optional<unknown>
+      avatar:
+        type: optional<string>
+        access: read-only
+      custom_hotkeys:
+        type: optional<unknown>
+        docs: Custom keyboard shortcuts configuration for the user interface
       date_joined: optional<datetime>
       email:
         type: optional<string>
@@ -5666,21 +6023,33 @@ types:
         type: optional<string>
         validation:
           maxLength: 256
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       initials:
-        type: string
+        type: optional<string>
         default: '?'
-      last_activity: datetime
+        access: read-only
+      last_activity:
+        type: optional<datetime>
+        access: read-only
       last_name:
         type: optional<string>
         validation:
           maxLength: 256
-      lse_fields: LseFields
+      lse_fields:
+        type: optional<LseFields>
+        access: read-only
       org_membership:
-        type: list<OrganizationMembership>
+        type: optional<list<OrganizationMembership>>
         availability: deprecated
-      organization_membership: OrganizationMembership
-      pause: string
+        access: read-only
+      organization_membership:
+        type: optional<OrganizationMembership>
+        access: read-only
+      pause:
+        type: optional<string>
+        access: read-only
       phone:
         type: optional<string>
         validation:
@@ -5699,12 +6068,18 @@ types:
       values with complex, nested serializations
     properties:
       active_organization: optional<integer>
-      active_organization_meta: string
+      active_organization_meta:
+        type: optional<string>
+        access: read-only
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
-      avatar: string
-      custom_hotkeys: optional<unknown>
+      avatar:
+        type: optional<string>
+        access: read-only
+      custom_hotkeys:
+        type: optional<unknown>
+        docs: Custom keyboard shortcuts configuration for the user interface
       date_joined: optional<datetime>
       email:
         type: optional<string>
@@ -5715,19 +6090,27 @@ types:
         type: optional<string>
         validation:
           maxLength: 256
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       initials:
-        type: string
+        type: optional<string>
         default: '?'
-      last_activity: datetime
+        access: read-only
+      last_activity:
+        type: optional<datetime>
+        access: read-only
       last_name:
         type: optional<string>
         validation:
           maxLength: 256
       org_membership:
-        type: list<OrganizationMembership>
+        type: optional<list<OrganizationMembership>>
         availability: deprecated
-      organization_membership: OrganizationMembership
+        access: read-only
+      organization_membership:
+        type: optional<OrganizationMembership>
+        access: read-only
       phone:
         type: optional<string>
         validation:
@@ -5749,10 +6132,18 @@ types:
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
-      avatar: string
-      contributed_to_projects: string
-      created_projects: string
-      custom_hotkeys: optional<unknown>
+      avatar:
+        type: optional<string>
+        access: read-only
+      contributed_to_projects:
+        type: optional<string>
+        access: read-only
+      created_projects:
+        type: optional<string>
+        access: read-only
+      custom_hotkeys:
+        type: optional<unknown>
+        docs: Custom keyboard shortcuts configuration for the user interface
       date_joined: optional<datetime>
       email:
         type: optional<string>
@@ -5763,17 +6154,26 @@ types:
         type: optional<string>
         validation:
           maxLength: 256
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       initials:
-        type: string
+        type: optional<string>
         default: '?'
-      last_activity: datetime
+        access: read-only
+      last_activity:
+        type: optional<datetime>
+        access: read-only
       last_name:
         type: optional<string>
         validation:
           maxLength: 256
-      lse_fields: LseFields
-      pause: string
+      lse_fields:
+        type: optional<LseFields>
+        access: read-only
+      pause:
+        type: optional<string>
+        access: read-only
       phone:
         type: optional<string>
         validation:
@@ -5793,19 +6193,27 @@ types:
         docs: >-
           If false, model version is set by the user, if true - getting latest
           version from backend.
-      basic_auth_pass_is_set: string
+      basic_auth_pass_is_set:
+        type: optional<string>
+        access: read-only
       basic_auth_user:
         type: optional<string>
         docs: HTTP Basic Auth user
-      created_at: datetime
+      created_at:
+        type: optional<datetime>
+        access: read-only
       description:
         type: optional<string>
         docs: Description for the machine learning backend
       error_message:
         type: optional<string>
         docs: Error message in error state
-      extra_params: optional<unknown>
-      id: integer
+      extra_params:
+        type: optional<unknown>
+        docs: Any extra parameters passed to the ML Backend during the setup
+      id:
+        type: optional<integer>
+        access: read-only
       is_interactive:
         type: optional<boolean>
         docs: >-
@@ -5815,7 +6223,9 @@ types:
         type: optional<string>
         docs: Current model version associated with this machine learning backend
       project: integer
-      readable_state: string
+      readable_state:
+        type: optional<string>
+        access: read-only
       state: optional<StateEnum>
       timeout:
         type: optional<double>
@@ -5823,7 +6233,9 @@ types:
       title:
         type: optional<string>
         docs: Name of the machine learning backend
-      updated_at: datetime
+      updated_at:
+        type: optional<datetime>
+        access: read-only
       url:
         type: string
         docs: URL for the machine learning model server
@@ -5839,9 +6251,12 @@ types:
   MetricParam:
     properties:
       agreement_threshold:
-        type: string
+        type: optional<string>
         availability: deprecated
-      allowed: string
+        access: read-only
+      allowed:
+        type: optional<string>
+        access: read-only
       max_additional_annotators_assignable:
         type: optional<integer>
         docs: >-
@@ -5870,14 +6285,18 @@ types:
   ModelInterface:
     properties:
       associated_projects: optional<list<integer>>
-      created_at: datetime
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by:
         type: optional<UserSimple>
         docs: User who created Dataset
       description:
         type: optional<string>
         docs: Model description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       input_fields: optional<unknown>
       organization: optional<integer>
       output_classes: optional<unknown>
@@ -5887,7 +6306,9 @@ types:
         docs: Model name
         validation:
           maxLength: 500
-      updated_at: datetime
+      updated_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   ModelInterfaceRequest:
@@ -5914,14 +6335,18 @@ types:
   ModelInterfaceSerializerGet:
     properties:
       associated_projects: optional<list<AssociatedProject>>
-      created_at: datetime
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by:
         type: optional<UserSimple>
         docs: User who created Dataset
       description:
         type: optional<string>
         docs: Model description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       input_fields: optional<unknown>
       organization: optional<integer>
       output_classes: optional<unknown>
@@ -5931,22 +6356,11 @@ types:
         docs: Model name
         validation:
           maxLength: 500
-      updated_at: datetime
+      updated_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
-  ModelProviderConnectionBudgetResetPeriod:
-    discriminated: false
-    docs: |-
-      Budget reset period for the model provider connection (null if not reset)
-
-      * `Monthly` - Monthly
-      * `Yearly` - Yearly
-    union:
-      - BudgetResetPeriodEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   ModelProviderConnection:
     properties:
       budget_alert_threshold:
@@ -5955,11 +6369,13 @@ types:
       budget_last_reset_date:
         type: optional<datetime>
         docs: Date and time the budget was last reset
+        access: read-only
       budget_limit:
         type: optional<double>
         docs: Budget limit for the model provider connection (null if unlimited)
+        access: read-only
       budget_reset_period:
-        type: optional<ModelProviderConnectionBudgetResetPeriod>
+        type: optional<BudgetResetPeriodEnum>
         docs: >-
           Budget reset period for the model provider connection (null if not
           reset)
@@ -5968,18 +6384,24 @@ types:
           * `Monthly` - Monthly
 
           * `Yearly` - Yearly
+        access: read-only
       budget_total_spent:
         type: optional<double>
         docs: >-
           Tracked total budget spent for the given provider connection within
           the current budget period
+        access: read-only
       cached_available_models:
         type: optional<string>
         docs: List of available models from the provider
         validation:
           maxLength: 4096
-      created_at: datetime
-      created_by: UserSimple
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      created_by:
+        type: optional<UserSimple>
+        access: read-only
       deployment_name:
         type: optional<string>
         docs: Azure OpenAI deployment name
@@ -6000,19 +6422,26 @@ types:
         docs: Google project ID
         validation:
           maxLength: 255
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       is_internal:
         type: optional<boolean>
         docs: >-
           Whether the model provider connection is internal, not visible to the
           user
       model_params:
-        type: string
+        type: optional<string>
         docs: JSON schema for the model parameters available for the provider
-      organization: optional<integer>
+        access: read-only
+      organization:
+        type: optional<integer>
+        access: read-only
       provider: optional<ProviderEnum>
       scope: optional<ScopeEnum>
-      updated_at: datetime
+      updated_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   ModelProviderConnectionRequest:
@@ -6020,9 +6449,11 @@ types:
       api_key:
         type: optional<string>
         docs: Model provider API key
+        access: write-only
       auth_token:
         type: optional<string>
         docs: Model provider Auth token
+        access: write-only
       budget_alert_threshold:
         type: optional<double>
         docs: Budget alert threshold for the given provider connection
@@ -6044,6 +6475,7 @@ types:
       google_application_credentials:
         type: optional<string>
         docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+        access: write-only
       google_location:
         type: optional<string>
         docs: Google project location
@@ -6065,21 +6497,33 @@ types:
       openapi: openapi/openapi.yaml
   ModelRun:
     properties:
-      completed_at: optional<datetime>
-      created_at: datetime
-      created_by: optional<integer>
-      id: integer
+      completed_at:
+        type: optional<datetime>
+        access: read-only
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      created_by:
+        type: optional<integer>
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       job_id:
         type: optional<string>
         docs: Job ID for inference job for a ModelRun e.g. Adala job ID
         validation:
           maxLength: 255
       organization: optional<integer>
-      parent_model: integer
+      parent_model:
+        type: optional<integer>
+        access: read-only
       predictions_updated_at: optional<datetime>
       project: integer
       project_subset: optional<ProjectSubsetEnum>
-      status: ModelRunStatusEnum
+      status:
+        type: optional<ModelRunStatusEnum>
+        access: read-only
       total_correct_predictions:
         type: optional<integer>
         validation:
@@ -6095,7 +6539,9 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      triggered_at: optional<datetime>
+      triggered_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   ModelRunStatusEnum:
@@ -6113,7 +6559,6 @@ types:
       * `Canceled` - Canceled
     source:
       openapi: openapi/openapi.yaml
-  NullEnum: string
   OnboardingStateEnum:
     enum:
       - not_started
@@ -6144,8 +6589,12 @@ types:
       openapi: openapi/openapi.yaml
   OrganizationBilling:
     properties:
-      manual_role_management: string
-      manual_workspace_management: string
+      manual_role_management:
+        type: optional<string>
+        access: read-only
+      manual_workspace_management:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   OrganizationId:
@@ -6160,8 +6609,12 @@ types:
         validation:
           format: email
           maxLength: 254
-      created_at: datetime
-      id: integer
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       title:
         type: string
         validation:
@@ -6181,9 +6634,15 @@ types:
 
       which fields should be displayed.
     properties:
-      annotations_count: string
-      contributed_projects_count: string
-      created_at: datetime
+      annotations_count:
+        type: optional<string>
+        access: read-only
+      contributed_projects_count:
+        type: optional<string>
+        access: read-only
+      created_at:
+        type: optional<datetime>
+        access: read-only
       organization:
         type: integer
         docs: Organization ID
@@ -6194,10 +6653,13 @@ types:
       openapi: openapi/openapi.yaml
   OrganizationMembership:
     properties:
-      active: string
+      active:
+        type: optional<string>
+        access: read-only
       organization_id:
-        type: integer
+        type: optional<integer>
         docs: Organization ID
+        access: read-only
       role: string
     source:
       openapi: openapi/openapi.yaml
@@ -6211,12 +6673,24 @@ types:
       openapi: openapi/openapi.yaml
   OrganizationPermission:
     properties:
-      default: list<Default165Enum>
-      group: optional<string>
-      id: integer
-      label: optional<string>
-      options: list<Options165Enum>
-      organization: integer
+      default:
+        type: optional<list<Default165Enum>>
+        access: read-only
+      group:
+        type: optional<string>
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
+      label:
+        type: optional<string>
+        access: read-only
+      options:
+        type: optional<list<Options165Enum>>
+        access: read-only
+      organization:
+        type: optional<integer>
+        access: read-only
       permission:
         type: string
         validation:
@@ -6224,7 +6698,9 @@ types:
       roles:
         type: optional<list<Role9E7Enum>>
         docs: Explicit roles that have this permission within the organization.
-      tooltip: optional<string>
+      tooltip:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   OrganizationPermissionRequest:
@@ -6373,12 +6849,18 @@ types:
       values with complex, nested serializations
     properties:
       active_organization: optional<integer>
-      active_organization_meta: string
+      active_organization_meta:
+        type: optional<string>
+        access: read-only
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
-      avatar: string
-      custom_hotkeys: optional<unknown>
+      avatar:
+        type: optional<string>
+        access: read-only
+      custom_hotkeys:
+        type: optional<unknown>
+        docs: Custom keyboard shortcuts configuration for the user interface
       date_joined: optional<datetime>
       email:
         type: optional<string>
@@ -6389,26 +6871,43 @@ types:
         type: optional<string>
         validation:
           maxLength: 256
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
+      implicit_member:
+        type: optional<boolean>
+        access: read-only
       initials:
-        type: string
+        type: optional<string>
         default: '?'
-      last_activity: datetime
+        access: read-only
+      last_activity:
+        type: optional<datetime>
+        access: read-only
       last_name:
         type: optional<string>
         validation:
           maxLength: 256
-      lse_fields: LseFields
+      lse_fields:
+        type: optional<LseFields>
+        access: read-only
       org_membership:
-        type: list<OrganizationMembership>
+        type: optional<list<OrganizationMembership>>
         availability: deprecated
-      organization_membership: OrganizationMembership
-      pause: string
+        access: read-only
+      organization_membership:
+        type: optional<OrganizationMembership>
+        access: read-only
+      pause:
+        type: optional<string>
+        access: read-only
       phone:
         type: optional<string>
         validation:
           maxLength: 256
-      project_role: string
+      project_role:
+        type: optional<string>
+        access: read-only
       username:
         type: string
         validation:
@@ -6465,19 +6964,27 @@ types:
       values with complex, nested serializations
     properties:
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Timestamp when this pause record was created
+        access: read-only
       deleted_at:
         type: optional<datetime>
         docs: Timestamp when this pause record was soft-deleted
+        access: read-only
       deleted_by:
         type: optional<integer>
         docs: User who soft-deleted this pause record
-      id: integer
-      paused_by: UserSimple
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
+      paused_by:
+        type: optional<UserSimple>
+        access: read-only
       project:
         type: optional<integer>
         docs: Related project for which the pause is set
+        access: read-only
       reason:
         type: ReasonEnum
         docs: |-
@@ -6489,11 +6996,13 @@ types:
           * `ANNOTATION_LIMIT` - Annotation limit
           * `CUSTOM_SCRIPT` - Custom script
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Timestamp when this pause record was last updated
+        access: read-only
       user:
         type: optional<integer>
         docs: User who is paused
+        access: read-only
       verbose_reason:
         type: optional<string>
         docs: >-
@@ -6534,11 +7043,16 @@ types:
           min: -2147483648
           max: 2147483647
       created_ago:
-        type: string
+        type: optional<string>
         docs: Delta time from creation time
         default: ''
-      created_at: datetime
-      id: integer
+        access: read-only
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       mislabeling:
         type: optional<double>
         docs: Related task mislabeling score
@@ -6554,7 +7068,9 @@ types:
           Model version - tag for predictions that can be used to filter tasks
           in Data Manager, as well as select specific model version for showing
           preannotations in the labeling interface
-      neighbors: optional<unknown>
+      neighbors:
+        type: optional<unknown>
+        docs: Array of task IDs of the closest neighbors
       project: optional<integer>
       result:
         docs: List of prediction results for the task
@@ -6563,7 +7079,9 @@ types:
         type: optional<double>
         docs: Prediction score
       task: integer
-      updated_at: datetime
+      updated_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   PredictionRequest:
@@ -6589,7 +7107,9 @@ types:
           Model version - tag for predictions that can be used to filter tasks
           in Data Manager, as well as select specific model version for showing
           preannotations in the labeling interface
-      neighbors: optional<unknown>
+      neighbors:
+        type: optional<unknown>
+        docs: Array of task IDs of the closest neighbors
       project: optional<integer>
       result:
         docs: List of prediction results for the task
@@ -6600,22 +7120,6 @@ types:
       task: integer
     source:
       openapi: openapi/openapi.yaml
-  ProjectSampling:
-    discriminated: false
-    union:
-      - SamplingDe5Enum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ProjectSkipQueue:
-    discriminated: false
-    union:
-      - SkipQueueEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   Project:
     docs: |-
       Serializer get numbers from project queryset annotation,
@@ -6626,13 +7130,27 @@ types:
         validation:
           maxLength: 16
       config_has_control_tags:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for labeling
+        access: read-only
       config_suitable_for_bulk_annotation:
-        type: boolean
+        type: optional<boolean>
         docs: Flag to detect is project ready for bulk annotation
-      control_weights: optional<unknown>
-      created_at: datetime
+        access: read-only
+      control_weights:
+        type: optional<unknown>
+        docs: >-
+          Dict of weights for each control tag in metric calculation. Each
+          control tag (e.g. label or choice) will have it's own key in control
+          weight dict with weight for each label and overall weight.For example,
+          if bounding box annotation with control tag named my_bbox should be
+          included with 0.33 weight in agreement calculation, and the first
+          label Car should be twice more important than Airplaine, then you have
+          to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by:
         type: optional<UserSimple>
         docs: Project owner
@@ -6649,12 +7167,16 @@ types:
         type: optional<string>
         docs: Labeling instructions in HTML format
       finished_task_number:
-        type: integer
+        type: optional<integer>
         docs: Finished tasks
+        access: read-only
       ground_truth_number:
-        type: integer
+        type: optional<integer>
         docs: Honeypot annotation number in project
-      id: integer
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       is_draft:
         type: optional<boolean>
         docs: Whether or not the project is in the middle of being created
@@ -6685,24 +7207,32 @@ types:
         type: optional<string>
         docs: Machine learning model version
       num_tasks_with_annotations:
-        type: integer
+        type: optional<integer>
         docs: Tasks with annotations count
+        access: read-only
       organization: optional<integer>
       overlap_cohort_percentage:
         type: optional<integer>
         validation:
           min: -2147483648
           max: 2147483647
-      parsed_label_config: unknown
+      parsed_label_config:
+        type: optional<unknown>
+        docs: JSON-formatted labeling configuration
+        access: read-only
       pinned_at:
         type: optional<datetime>
         docs: Pinned date and time
-      queue_done: integer
-      queue_total: integer
+      queue_done:
+        type: optional<integer>
+        access: read-only
+      queue_total:
+        type: optional<integer>
+        access: read-only
       reveal_preannotations_interactively:
         type: optional<boolean>
         docs: Reveal pre-annotations interactively
-      sampling: optional<ProjectSampling>
+      sampling: optional<SamplingDe5Enum>
       show_annotation_history:
         type: optional<boolean>
         docs: Show annotation history to annotator
@@ -6721,13 +7251,18 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
-      skip_queue: optional<ProjectSkipQueue>
+      skip_queue: optional<SkipQueueEnum>
       skipped_annotations_number:
-        type: integer
+        type: optional<integer>
         docs: Skipped by collaborators annotation number in project
+        access: read-only
       start_training_on_annotation_update:
-        type: boolean
+        type: optional<boolean>
         docs: Start model training after any annotations are submitted or updated
+        access: read-only
+      state:
+        type: optional<string>
+        access: read-only
       task_data_login:
         type: optional<string>
         docs: 'Task data credentials: login'
@@ -6739,8 +7274,9 @@ types:
         validation:
           maxLength: 256
       task_number:
-        type: integer
+        type: optional<integer>
         docs: Total task number in project
+        access: read-only
       title:
         type: optional<string>
         docs: Project name. Must be between 3 and 50 characters long.
@@ -6748,22 +7284,25 @@ types:
           minLength: 3
           maxLength: 50
       total_annotations_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Total annotations number in project including
           skipped_annotations_number and ground_truth_number.
+        access: read-only
       total_predictions_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Total predictions number in project including
           skipped_annotations_number, ground_truth_number, and
           useful_annotation_number.
+        access: read-only
       useful_annotation_number:
-        type: integer
+        type: optional<integer>
         docs: >-
           Useful annotation number in project not including
           skipped_annotations_number and ground_truth_number. Total annotations
           = annotation_number + skipped_annotations_number + ground_truth_number
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   ProjectGroup:
@@ -6806,6 +7345,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       data_columns: optional<unknown>
       duration:
         type: optional<integer>
@@ -6818,7 +7358,9 @@ types:
         type: optional<datetime>
         docs: Complete or fail time
       found_formats: optional<unknown>
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       preannotated_from_fields: optional<unknown>
       prediction_count:
         type: optional<integer>
@@ -6838,6 +7380,7 @@ types:
       updated_at:
         type: optional<datetime>
         docs: Updated time
+        access: read-only
       url:
         type: optional<string>
         validation:
@@ -6891,7 +7434,9 @@ types:
       file_upload_ids: optional<unknown>
       files_as_tasks_list: optional<boolean>
       found_formats: optional<unknown>
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       prediction_count:
         type: optional<integer>
         validation:
@@ -6908,7 +7453,9 @@ types:
       openapi: openapi/openapi.yaml
   ProjectRole:
     properties:
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       project: integer
       role:
         type: Role9E7Enum
@@ -6965,32 +7512,46 @@ types:
       openapi: openapi/openapi.yaml
   ProjectTemplate:
     properties:
-      assignment_settings: optional<unknown>
-      created_at: datetime
+      assignment_settings:
+        type: optional<unknown>
+        docs: general dict serialized assignment settings
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by: optional<integer>
       custom_script:
         type: optional<string>
         docs: custom script (Plugin) for projects created from this template
       description: optional<string>
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       name:
         type: string
         validation:
           maxLength: 1000
       organization: optional<integer>
-      project_settings: optional<unknown>
+      project_settings:
+        type: optional<unknown>
+        docs: general dict serialized project settings
       require_comment_on_skip:
         type: optional<boolean>
         docs: flag to require comment on skip
-      review_settings: optional<unknown>
+      review_settings:
+        type: optional<unknown>
+        docs: general dict serialized review settings
       show_unused_data_columns_to_annotators: optional<boolean>
       tags: optional<unknown>
-      updated_at: datetime
+      updated_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   ProjectTemplateRequest:
     properties:
-      assignment_settings: optional<unknown>
+      assignment_settings:
+        type: optional<unknown>
+        docs: general dict serialized assignment settings
       created_by: optional<integer>
       custom_script:
         type: optional<string>
@@ -7007,12 +7568,18 @@ types:
           minLength: 1
           maxLength: 1000
       organization: optional<integer>
-      project_id: integer
-      project_settings: optional<unknown>
+      project_id:
+        type: integer
+        access: write-only
+      project_settings:
+        type: optional<unknown>
+        docs: general dict serialized project settings
       require_comment_on_skip:
         type: optional<boolean>
         docs: flag to require comment on skip
-      review_settings: optional<unknown>
+      review_settings:
+        type: optional<unknown>
+        docs: general dict serialized review settings
       show_unused_data_columns_to_annotators: optional<boolean>
       tags: optional<unknown>
     source:
@@ -7089,8 +7656,9 @@ types:
         type: optional<boolean>
         docs: Deletion from storage enabled
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       db:
         type: optional<integer>
         docs: Server Database
@@ -7103,7 +7671,9 @@ types:
       host:
         type: optional<string>
         docs: Server Host IP (optional)
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -7118,7 +7688,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       password:
         type: optional<string>
         docs: Server Password (optional)
@@ -7147,8 +7719,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: redis
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -7157,8 +7730,9 @@ types:
   RedisImportStorage:
     properties:
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       db:
         type: optional<integer>
         docs: Server Database
@@ -7171,7 +7745,9 @@ types:
       host:
         type: optional<string>
         docs: Server Host IP (optional)
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -7186,7 +7762,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       password:
         type: optional<string>
         docs: Server Password (optional)
@@ -7215,8 +7793,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: redis
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -7267,54 +7846,14 @@ types:
       * `one` - Task is reviewed if at least one annotation is reviewed
     source:
       openapi: openapi/openapi.yaml
-  ReviewSettingsRequeueRejectedTasksMode:
-    discriminated: false
-    docs: |-
-      Requeue mode for rejected tasks
-
-      * `requeue` - Requeue
-      * `remove` - Remove
-      * `flexible` - Flexible
-    union:
-      - RequeueRejectedTasksModeEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ReviewSettingsReviewCriteria:
-    discriminated: false
-    docs: |-
-      Criteria to mark task as reviewed
-
-      * `all` - Task is reviewed if all annotations are reviewed
-      * `one` - Task is reviewed if at least one annotation is reviewed
-    union:
-      - ReviewCriteriaEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ReviewSettingsSampling:
-    discriminated: false
-    docs: |-
-      Task sampling strategy in the review stream (by task id or random)
-
-      * `task_id` - By Task ID
-      * `random` - Random
-    union:
-      - ReviewSettingsSamplingEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   ReviewSettings:
     properties:
       anonymize_annotations:
         type: optional<boolean>
         docs: Hide annotator names from annotations while review
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       instruction:
         type: optional<string>
         docs: Reviewer instructions in HTML format
@@ -7323,19 +7862,21 @@ types:
         docs: Show only finished tasks in the review stream
       project: optional<integer>
       requeue_rejected_tasks_mode:
-        type: optional<ReviewSettingsRequeueRejectedTasksMode>
+        type: optional<RequeueRejectedTasksModeEnum>
         docs: |-
           Requeue mode for rejected tasks
 
           * `requeue` - Requeue
           * `remove` - Remove
           * `flexible` - Flexible
-      requeue_rejected_tasks_to_annotator: boolean
+      requeue_rejected_tasks_to_annotator:
+        type: optional<boolean>
+        access: read-only
       require_comment_on_reject:
         type: optional<boolean>
         docs: If set, the reviewer must leave a comment on reject
       review_criteria:
-        type: optional<ReviewSettingsReviewCriteria>
+        type: optional<ReviewCriteriaEnum>
         docs: |-
           Criteria to mark task as reviewed
 
@@ -7350,7 +7891,7 @@ types:
         validation:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
       sampling:
-        type: optional<ReviewSettingsSampling>
+        type: optional<ReviewSettingsSamplingEnum>
         docs: |-
           Task sampling strategy in the review stream (by task id or random)
 
@@ -7372,48 +7913,6 @@ types:
           false, hides columns not referenced by the label interface
     source:
       openapi: openapi/openapi.yaml
-  ReviewSettingsRequestRequeueRejectedTasksMode:
-    discriminated: false
-    docs: |-
-      Requeue mode for rejected tasks
-
-      * `requeue` - Requeue
-      * `remove` - Remove
-      * `flexible` - Flexible
-    union:
-      - RequeueRejectedTasksModeEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ReviewSettingsRequestReviewCriteria:
-    discriminated: false
-    docs: |-
-      Criteria to mark task as reviewed
-
-      * `all` - Task is reviewed if all annotations are reviewed
-      * `one` - Task is reviewed if at least one annotation is reviewed
-    union:
-      - ReviewCriteriaEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ReviewSettingsRequestSampling:
-    discriminated: false
-    docs: |-
-      Task sampling strategy in the review stream (by task id or random)
-
-      * `task_id` - By Task ID
-      * `random` - Random
-    union:
-      - ReviewSettingsSamplingEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   ReviewSettingsRequest:
     properties:
       anonymize_annotations:
@@ -7427,7 +7926,7 @@ types:
         docs: Show only finished tasks in the review stream
       project: optional<integer>
       requeue_rejected_tasks_mode:
-        type: optional<ReviewSettingsRequestRequeueRejectedTasksMode>
+        type: optional<RequeueRejectedTasksModeEnum>
         docs: |-
           Requeue mode for rejected tasks
 
@@ -7438,7 +7937,7 @@ types:
         type: optional<boolean>
         docs: If set, the reviewer must leave a comment on reject
       review_criteria:
-        type: optional<ReviewSettingsRequestReviewCriteria>
+        type: optional<ReviewCriteriaEnum>
         docs: |-
           Criteria to mark task as reviewed
 
@@ -7453,7 +7952,7 @@ types:
         validation:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
       sampling:
-        type: optional<ReviewSettingsRequestSampling>
+        type: optional<ReviewSettingsSamplingEnum>
         docs: |-
           Task sampling strategy in the review stream (by task id or random)
 
@@ -7539,8 +8038,9 @@ types:
         type: optional<string>
         docs: S3 bucket name
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       dataset:
         type: integer
         docs: A unique integer value identifying this dataset.
@@ -7550,9 +8050,12 @@ types:
       glob_pattern:
         type: optional<string>
         docs: Glob pattern for syncing from bucket
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       job_id:
         type: optional<string>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -7567,7 +8070,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
@@ -7608,8 +8113,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: s3
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -7655,7 +8161,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
@@ -7721,12 +8229,15 @@ types:
         type: optional<boolean>
         docs: Deletion from storage enabled
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -7741,7 +8252,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
@@ -7770,8 +8283,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: s3
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -7795,12 +8309,15 @@ types:
         type: optional<string>
         docs: S3 bucket name
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
+        access: read-only
       description:
         type: optional<string>
         docs: Cloud storage description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -7815,7 +8332,9 @@ types:
         docs: Last sync job ID
         validation:
           maxLength: 256
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: Meta and debug information about storage processes
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
@@ -7856,8 +8375,9 @@ types:
         type: optional<string>
         docs: Traceback report for the last failed sync
       type:
-        type: string
+        type: optional<string>
         default: s3
+        access: read-only
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
@@ -7865,9 +8385,15 @@ types:
       openapi: openapi/openapi.yaml
   SamlSettings:
     properties:
-      projects_groups: optional<unknown>
-      roles_groups: optional<unknown>
-      workspaces_groups: optional<unknown>
+      projects_groups:
+        type: optional<unknown>
+        docs: Projects to groups mapping
+      roles_groups:
+        type: optional<unknown>
+        docs: Roles to groups mapping
+      workspaces_groups:
+        type: optional<unknown>
+        docs: Workspaces to groups mapping
     source:
       openapi: openapi/openapi.yaml
   SamlSettingsUpdate:
@@ -7896,9 +8422,15 @@ types:
       openapi: openapi/openapi.yaml
   ScimSettings:
     properties:
-      projects_groups: optional<unknown>
-      roles_groups: optional<unknown>
-      workspaces_groups: optional<unknown>
+      projects_groups:
+        type: optional<unknown>
+        docs: Projects to groups mapping
+      roles_groups:
+        type: optional<unknown>
+        docs: Roles to groups mapping
+      workspaces_groups:
+        type: optional<unknown>
+        docs: Workspaces to groups mapping
     source:
       openapi: openapi/openapi.yaml
   ScimSettingsUpdate:
@@ -7999,7 +8531,9 @@ types:
       openapi: openapi/openapi.yaml
   SessionTimeoutPolicy:
     properties:
-      created_at: datetime
+      created_at:
+        type: optional<datetime>
+        access: read-only
       max_session_age:
         type: optional<integer>
         docs: >-
@@ -8014,7 +8548,9 @@ types:
         validation:
           min: 1
           max: 2147483647
-      updated_at: datetime
+      updated_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   SkillNameEnum:
@@ -8069,16 +8605,29 @@ types:
       Uses Serializer instead of ModelSerializer because BaseState is abstract.
       Works with any concrete state model that inherits from BaseState.
     properties:
-      context_data: unknown
-      created_at: datetime
+      context_data:
+        type: optional<unknown>
+        access: read-only
+      created_at:
+        type: optional<datetime>
+        access: read-only
       id:
-        type: string
+        type: optional<string>
         validation:
           format: uuid
-      previous_state: optional<string>
-      state: string
-      transition_name: optional<string>
-      triggered_by: optional<TriggeredBy>
+        access: read-only
+      previous_state:
+        type: optional<string>
+        access: read-only
+      state:
+        type: optional<string>
+        access: read-only
+      transition_name:
+        type: optional<string>
+        access: read-only
+      triggered_by:
+        type: optional<TriggeredBy>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   Status7BfEnum:
@@ -8126,10 +8675,15 @@ types:
         type: integer
         docs: Assigned user
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Time of assignment
-      id: integer
-      state: string
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
+      state:
+        type: optional<string>
+        access: read-only
       task:
         type: integer
         docs: Assigned task
@@ -8153,14 +8707,18 @@ types:
       ensuring proper data format and automatically setting required
       relationships.
     properties:
-      actor: integer
+      actor:
+        type: optional<integer>
+        access: read-only
       annotation:
         type: optional<integer>
         docs: Annotation ID associated with this event
       annotation_draft:
         type: optional<integer>
         docs: Draft annotation ID associated with this event
-      created_at: datetime
+      created_at:
+        type: optional<datetime>
+        access: read-only
       event_key:
         type: string
         docs: >-
@@ -8171,21 +8729,32 @@ types:
       event_time:
         type: datetime
         docs: Timestamp when the event occurred (frontend time)
-      id: integer
-      meta: optional<unknown>
-      organization: integer
-      project: integer
+      id:
+        type: optional<integer>
+        access: read-only
+      meta:
+        type: optional<unknown>
+        docs: Additional event metadata (region data, hotkey info, etc.)
+      organization:
+        type: optional<integer>
+        access: read-only
+      project:
+        type: optional<integer>
+        access: read-only
       review:
         type: optional<integer>
         docs: Review ID associated with this event
       task:
-        type: integer
+        type: optional<integer>
         docs: Task this event is associated with
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   TaskSimple:
     properties:
-      annotations: list<Annotation>
+      annotations:
+        type: optional<list<Annotation>>
+        access: read-only
       cancelled_annotations:
         type: optional<integer>
         docs: Number of total cancelled annotations for the current task
@@ -8202,13 +8771,16 @@ types:
           min: -2147483648
           max: 2147483647
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Time a task was created
+        access: read-only
       data: unknown
       file_upload:
         type: optional<integer>
         docs: Uploaded file used as data source for this task
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       inner_id:
         type: optional<long>
         docs: Internal task ID in the project, starts with 1
@@ -8220,14 +8792,21 @@ types:
       last_comment_updated_at:
         type: optional<datetime>
         docs: When the last comment was updated
-      meta: optional<unknown>
+      meta:
+        type: optional<unknown>
+        docs: >-
+          Meta is user imported (uploaded) data and can be useful as input for
+          an ML Backend for embeddings, advanced vectors, and other info. It is
+          passed to ML during training/predicting steps.
       overlap:
         type: optional<integer>
         docs: Number of distinct annotators that processed the current task
         validation:
           min: -2147483648
           max: 2147483647
-      predictions: list<Prediction>
+      predictions:
+        type: optional<list<Prediction>>
+        access: read-only
       project:
         type: optional<integer>
         docs: Project ID for this task
@@ -8252,8 +8831,9 @@ types:
           min: -2147483648
           max: 2147483647
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Last time a task was updated
+        access: read-only
       updated_by:
         type: optional<integer>
         docs: Last annotator or reviewer who updated this task
@@ -8261,11 +8841,16 @@ types:
       openapi: openapi/openapi.yaml
   ThirdPartyModelVersion:
     properties:
-      created_at: datetime
+      created_at:
+        type: optional<datetime>
+        access: read-only
       created_by:
-        type: UserSimple
+        type: optional<UserSimple>
         docs: User who created Dataset
-      id: integer
+        access: read-only
+      id:
+        type: optional<integer>
+        access: read-only
       model_provider_connection: optional<integer>
       organization: optional<integer>
       parent_model:
@@ -8291,13 +8876,17 @@ types:
         docs: The model ID to use within the given provider, e.g. gpt-3.5
         validation:
           maxLength: 255
-      score: string
+      score:
+        type: optional<string>
+        access: read-only
       title:
         type: string
         docs: Model name
         validation:
           maxLength: 500
-      updated_at: datetime
+      updated_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   ThirdPartyModelVersionRequest:
@@ -8379,7 +8968,9 @@ types:
         validation:
           format: email
           maxLength: 254
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   TypeEnum:
@@ -8398,7 +8989,9 @@ types:
       control which fields are displayed, and whether to replace simple
       values with complex, nested serializations
     properties:
-      avatar: string
+      avatar:
+        type: optional<string>
+        access: read-only
       email:
         type: optional<string>
         validation:
@@ -8408,7 +9001,9 @@ types:
         type: optional<string>
         validation:
           maxLength: 256
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       last_name:
         type: optional<string>
         validation:
@@ -8460,9 +9055,13 @@ types:
       openapi: openapi/openapi.yaml
   View:
     properties:
-      data: optional<unknown>
+      data:
+        type: optional<unknown>
+        docs: Custom view data
       filter_group: optional<FilterGroup>
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       order:
         type: optional<integer>
         docs: >-
@@ -8471,11 +9070,15 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      ordering: optional<unknown>
+      ordering:
+        type: optional<unknown>
+        docs: Ordering parameters
       project:
         type: integer
         docs: Project ID
-      selected_items: optional<unknown>
+      selected_items:
+        type: optional<unknown>
+        docs: Selected items
       user:
         type: optional<integer>
         docs: User who made this view
@@ -8485,14 +9088,21 @@ types:
     properties:
       actions: optional<list<ActionsEnum>>
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
-      headers: optional<unknown>
-      id: integer
+        access: read-only
+      headers:
+        type: optional<unknown>
+        docs: Key Value Json of headers
+      id:
+        type: optional<integer>
+        access: read-only
       is_active:
         type: optional<boolean>
         docs: If value is False the webhook is disabled
-      organization: integer
+      organization:
+        type: optional<integer>
+        access: read-only
       project: optional<integer>
       send_for_all_actions:
         type: optional<boolean>
@@ -8501,8 +9111,9 @@ types:
         type: optional<boolean>
         docs: If value is False send only action
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Last update time
+        access: read-only
       url:
         type: string
         docs: URL of webhook
@@ -8519,15 +9130,24 @@ types:
     properties:
       actions: optional<list<ActionsEnum>>
       created_at:
-        type: datetime
+        type: optional<datetime>
         docs: Creation time
-      headers: optional<unknown>
-      id: integer
+        access: read-only
+      headers:
+        type: optional<unknown>
+        docs: Key Value Json of headers
+      id:
+        type: optional<integer>
+        access: read-only
       is_active:
         type: optional<boolean>
         docs: If value is False the webhook is disabled
-      organization: integer
-      project: optional<integer>
+      organization:
+        type: optional<integer>
+        access: read-only
+      project:
+        type: optional<integer>
+        access: read-only
       send_for_all_actions:
         type: optional<boolean>
         docs: If value is False - used only for actions from WebhookAction
@@ -8535,8 +9155,9 @@ types:
         type: optional<boolean>
         docs: If value is False send only action
       updated_at:
-        type: datetime
+        type: optional<datetime>
         docs: Last update time
+        access: read-only
       url:
         type: string
         docs: URL of webhook
@@ -8545,44 +9166,25 @@ types:
           maxLength: 2048
     source:
       openapi: openapi/openapi.yaml
-  WhoAmILseFieldsOnboardingState:
-    discriminated: false
-    docs: |-
-      The current stage of user onboarding
-
-      * `not_started` - Not Started
-      * `signup` - Signup
-      * `trial_signup` - Trial Signup
-      * `first_tutorial` - First Tutorial
-      * `in_app_guidance` - In App Guidance
-      * `complete` - Complete
-    union:
-      - OnboardingStateEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  WhoAmILseFieldsTrialRole:
-    discriminated: false
-    union:
-      - TrialRoleEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   WhoAmILseFields:
     properties:
-      active_organization_external_id: optional<string>
-      email_notification_settings: string
+      active_organization_external_id:
+        type: optional<string>
+        access: read-only
+      email_notification_settings:
+        type: optional<string>
+        access: read-only
       invite_activated: optional<boolean>
-      invite_expired: string
-      invite_expired_at: string
+      invite_expired:
+        type: optional<string>
+        access: read-only
+      invite_expired_at:
+        type: optional<string>
+        access: read-only
       invited_at: optional<datetime>
       invited_by: optional<integer>
       onboarding_state:
-        type: optional<WhoAmILseFieldsOnboardingState>
+        type: optional<OnboardingStateEnum>
         docs: |-
           The current stage of user onboarding
 
@@ -8608,7 +9210,7 @@ types:
         type: optional<string>
         validation:
           maxLength: 1000
-      trial_role: optional<WhoAmILseFieldsTrialRole>
+      trial_role: optional<TrialRoleEnum>
     source:
       openapi: openapi/openapi.yaml
   WhoAmIUser:
@@ -8619,12 +9221,18 @@ types:
       values with complex, nested serializations
     properties:
       active_organization: optional<integer>
-      active_organization_meta: string
+      active_organization_meta:
+        type: optional<string>
+        access: read-only
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
-      avatar: string
-      custom_hotkeys: optional<unknown>
+      avatar:
+        type: optional<string>
+        access: read-only
+      custom_hotkeys:
+        type: optional<unknown>
+        docs: Custom keyboard shortcuts configuration for the user interface
       date_joined: optional<datetime>
       email:
         type: optional<string>
@@ -8635,22 +9243,36 @@ types:
         type: optional<string>
         validation:
           maxLength: 256
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       initials:
-        type: string
+        type: optional<string>
         default: '?'
-      last_activity: datetime
+        access: read-only
+      last_activity:
+        type: optional<datetime>
+        access: read-only
       last_name:
         type: optional<string>
         validation:
           maxLength: 256
-      lse_fields: WhoAmILseFields
+      lse_fields:
+        type: optional<WhoAmILseFields>
+        access: read-only
       org_membership:
-        type: list<OrganizationMembership>
+        type: optional<list<OrganizationMembership>>
         availability: deprecated
-      organization_membership: OrganizationMembership
-      pause: string
-      permissions: list<string>
+        access: read-only
+      organization_membership:
+        type: optional<OrganizationMembership>
+        access: read-only
+      pause:
+        type: optional<string>
+        access: read-only
+      permissions:
+        type: optional<list<string>>
+        access: read-only
       phone:
         type: optional<string>
         validation:
@@ -8672,11 +9294,15 @@ types:
         type: optional<string>
         validation:
           maxLength: 16
-      created_by: integer
+      created_by:
+        type: optional<integer>
+        access: read-only
       description:
         type: optional<string>
         docs: Workspace description
-      id: integer
+      id:
+        type: optional<integer>
+        access: read-only
       is_archived:
         type: optional<boolean>
         docs: Workspace is archived

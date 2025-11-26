@@ -7,7 +7,8 @@ service:
     list:
       path: /api/storages/azure/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get list of all Azure import storage connections.
       source:
         openapi: openapi/openapi.yaml
@@ -24,8 +25,10 @@ service:
       response:
         docs: ''
         type: list<root.AzureBlobImportStorage>
+        status-code: 200
       examples:
         - query-parameters:
+            ordering: ordering
             project: 1
           response:
             body:
@@ -57,7 +60,8 @@ service:
     create:
       path: /api/storages/azure/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create new Azure import storage
       source:
         openapi: openapi/openapi.yaml
@@ -114,6 +118,7 @@ service:
       response:
         docs: ''
         type: root.AzureBlobImportStorage
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -146,7 +151,8 @@ service:
     validate:
       path: /api/storages/azure/validate
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Validate a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -210,7 +216,8 @@ service:
     get:
       path: /api/storages/azure/{id}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -220,6 +227,7 @@ service:
       response:
         docs: ''
         type: root.AzureBlobImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -253,7 +261,8 @@ service:
     delete:
       path: /api/storages/azure/{id}
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -268,7 +277,8 @@ service:
     update:
       path: /api/storages/azure/{id}
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -327,6 +337,7 @@ service:
       response:
         docs: ''
         type: root.AzureBlobImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -361,7 +372,8 @@ service:
     sync:
       path: /api/storages/azure/{id}/sync
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Sync tasks from an Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -373,6 +385,7 @@ service:
       response:
         docs: ''
         type: root.AzureBlobImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

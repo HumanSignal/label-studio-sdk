@@ -60,6 +60,7 @@ class S3SClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.s3s.list(
+            ordering="ordering",
             project=1,
         )
         """
@@ -167,6 +168,7 @@ class S3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix
@@ -350,6 +352,7 @@ class S3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix
@@ -620,6 +623,7 @@ class S3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix
@@ -832,6 +836,7 @@ class AsyncS3SClient:
 
         async def main() -> None:
             await client.import_storage.s3s.list(
+                ordering="ordering",
                 project=1,
             )
 
@@ -942,6 +947,7 @@ class AsyncS3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix
@@ -1133,6 +1139,7 @@ class AsyncS3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix
@@ -1427,6 +1434,7 @@ class AsyncS3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix

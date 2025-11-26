@@ -184,6 +184,7 @@ class ExportsClient:
         )
         client.projects.exports.list(
             id=1,
+            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -317,17 +318,17 @@ class ExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
+    def get(self, id: int, export_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
         """
         Retrieve information about an export file by export ID for a specific project.
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -345,8 +346,8 @@ class ExportsClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.exports.get(
-            export_pk=1,
             id=1,
+            export_pk=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -368,17 +369,17 @@ class ExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: int, export_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete an export file by specified export ID.
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -395,8 +396,8 @@ class ExportsClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.exports.delete(
-            export_pk=1,
             id=1,
+            export_pk=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -414,8 +415,8 @@ class ExportsClient:
 
     def convert(
         self,
-        export_pk: int,
         id: int,
+        export_pk: int,
         *,
         export_type: str,
         download_resources: typing.Optional[bool] = OMIT,
@@ -426,11 +427,11 @@ class ExportsClient:
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         export_type : str
             Export file format.
@@ -454,8 +455,8 @@ class ExportsClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.exports.convert(
-            export_pk=1,
             id=1,
+            export_pk=1,
             export_type="export_type",
         )
         """
@@ -488,8 +489,8 @@ class ExportsClient:
 
     def download(
         self,
-        export_pk: int,
         id: int,
+        export_pk: int,
         *,
         export_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -506,11 +507,11 @@ class ExportsClient:
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         export_type : typing.Optional[str]
             Selected export format
@@ -719,6 +720,7 @@ class AsyncExportsClient:
         async def main() -> None:
             await client.projects.exports.list(
                 id=1,
+                ordering="ordering",
             )
 
 
@@ -863,17 +865,17 @@ class AsyncExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
+    async def get(self, id: int, export_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
         """
         Retrieve information about an export file by export ID for a specific project.
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -896,8 +898,8 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.get(
-                export_pk=1,
                 id=1,
+                export_pk=1,
             )
 
 
@@ -922,17 +924,17 @@ class AsyncExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: int, export_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete an export file by specified export ID.
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -954,8 +956,8 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.delete(
-                export_pk=1,
                 id=1,
+                export_pk=1,
             )
 
 
@@ -976,8 +978,8 @@ class AsyncExportsClient:
 
     async def convert(
         self,
-        export_pk: int,
         id: int,
+        export_pk: int,
         *,
         export_type: str,
         download_resources: typing.Optional[bool] = OMIT,
@@ -988,11 +990,11 @@ class AsyncExportsClient:
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         export_type : str
             Export file format.
@@ -1021,8 +1023,8 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.convert(
-                export_pk=1,
                 id=1,
+                export_pk=1,
                 export_type="export_type",
             )
 
@@ -1058,8 +1060,8 @@ class AsyncExportsClient:
 
     async def download(
         self,
-        export_pk: int,
         id: int,
+        export_pk: int,
         *,
         export_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1076,11 +1078,11 @@ class AsyncExportsClient:
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         export_type : typing.Optional[str]
             Selected export format

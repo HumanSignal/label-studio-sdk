@@ -7,7 +7,8 @@ service:
     list:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -34,10 +35,14 @@ service:
       response:
         docs: ''
         type: list<root.Pause>
+        status-code: 200
       examples:
         - path-parameters:
             project_pk: 1
             user_pk: 1
+          query-parameters:
+            include_deleted: true
+            ordering: ordering
           response:
             body:
               - created_at: '2024-01-15T09:30:00Z'
@@ -60,7 +65,8 @@ service:
     create:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -81,6 +87,7 @@ service:
       response:
         docs: ''
         type: root.Pause
+        status-code: 201
       examples:
         - path-parameters:
             project_pk: 1
@@ -109,7 +116,8 @@ service:
     get:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -121,18 +129,19 @@ service:
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id: string
         project_pk: integer
         user_pk: integer
+        id: string
       display-name: ✨ Get pause
       response:
         docs: ''
         type: root.Pause
+        status-code: 200
       examples:
         - path-parameters:
-            id: id
             project_pk: 1
             user_pk: 1
+            id: id
           response:
             body:
               created_at: '2024-01-15T09:30:00Z'
@@ -155,7 +164,8 @@ service:
     delete:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -167,21 +177,22 @@ service:
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id: string
         project_pk: integer
         user_pk: integer
+        id: string
       display-name: ✨ Delete pause
       examples:
         - path-parameters:
-            id: id
             project_pk: 1
             user_pk: 1
+            id: id
       audiences:
         - public
     update:
       path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -193,9 +204,9 @@ service:
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id: string
         project_pk: integer
         user_pk: integer
+        id: string
       display-name: ✨ Update pause
       request:
         name: PatchedPauseRequest
@@ -220,11 +231,12 @@ service:
       response:
         docs: ''
         type: root.Pause
+        status-code: 200
       examples:
         - path-parameters:
-            id: id
             project_pk: 1
             user_pk: 1
+            id: id
           request: {}
           response:
             body:

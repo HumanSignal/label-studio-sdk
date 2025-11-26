@@ -15,7 +15,8 @@ service:
     list:
       path: /api/prompts/{prompt_id}/versions/{version_id}/inference-runs
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -51,10 +52,16 @@ service:
       response:
         docs: ''
         type: list<root.ModelRun>
+        status-code: 200
       examples:
         - path-parameters:
             prompt_id: 1
             version_id: 1
+          query-parameters:
+            ordering: ordering
+            parent_model: 1
+            project: 1
+            project_subset: All
           response:
             body:
               - completed_at: '2024-01-15T09:30:00Z'
@@ -77,7 +84,8 @@ service:
     create:
       path: /api/prompts/{prompt_id}/versions/{version_id}/inference-runs
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -124,6 +132,7 @@ service:
       response:
         docs: ''
         type: root.ModelRun
+        status-code: 201
       examples:
         - path-parameters:
             prompt_id: 1
@@ -153,7 +162,8 @@ service:
       path: >-
         /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -165,18 +175,19 @@ service:
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        inference_run_id: integer
         prompt_id: integer
         version_id: integer
+        inference_run_id: integer
       display-name: ✨ Cancel Inference Run API
       response:
         docs: ''
         type: root.CancelModelRunResponse
+        status-code: 200
       examples:
         - path-parameters:
-            inference_run_id: 1
             prompt_id: 1
             version_id: 1
+            inference_run_id: 1
           response:
             body:
               detail: detail

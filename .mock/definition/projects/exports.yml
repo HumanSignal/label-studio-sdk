@@ -5,7 +5,8 @@ service:
     download_sync:
       path: /api/projects/{id}/export
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 <i>Note: if you have a large project it's recommended to use
@@ -57,12 +58,14 @@ service:
       response:
         docs: Exported data
         type: file
+        status-code: 200
       audiences:
         - public
     list_formats:
       path: /api/projects/{id}/export/formats
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve the available export formats for the current project by ID.
       source:
         openapi: openapi/openapi.yaml
@@ -74,6 +77,7 @@ service:
       response:
         docs: Export formats
         type: list<string>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -85,7 +89,8 @@ service:
     list:
       path: /api/projects/{id}/exports/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Returns a list of exported files for a specific project by ID.
       source:
         openapi: openapi/openapi.yaml
@@ -103,14 +108,16 @@ service:
       response:
         docs: ''
         type: list<root.Export>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
+          query-parameters:
+            ordering: ordering
           response:
             body:
               - converted_formats:
                   - export_type: export_type
-                    id: 1
                 counters:
                   key: value
                 created_at: '2024-01-15T09:30:00Z'
@@ -130,7 +137,8 @@ service:
     create:
       path: /api/projects/{id}/exports/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Create a new export request to start a background task and generate an
         export file for a specific project by ID.
@@ -147,7 +155,8 @@ service:
           properties:
             annotation_filter_options: optional<root.LseAnnotationFilterOptionsRequest>
             converted_formats: optional<list<root.ConvertedFormatRequest>>
-            counters: optional<unknown>
+            counters:
+              type: optional<unknown>
             created_by: optional<root.UserSimpleRequest>
             finished_at:
               type: optional<datetime>
@@ -168,6 +177,7 @@ service:
       response:
         docs: ''
         type: root.LseExportCreate
+        status-code: 201
       examples:
         - path-parameters:
             id: 1
@@ -219,27 +229,29 @@ service:
     get:
       path: /api/projects/{id}/exports/{export_pk}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Retrieve information about an export file by export ID for a specific
         project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        export_pk:
-          type: integer
-          docs: Primary key identifying the export file.
         id:
           type: integer
           docs: A unique integer value identifying this project.
+        export_pk:
+          type: integer
+          docs: Primary key identifying the export file.
       display-name: Get export snapshot by ID
       response:
         docs: ''
         type: root.Export
+        status-code: 200
       examples:
         - path-parameters:
-            export_pk: 1
             id: 1
+            export_pk: 1
           response:
             body:
               converted_formats:
@@ -266,38 +278,40 @@ service:
     delete:
       path: /api/projects/{id}/exports/{export_pk}
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete an export file by specified export ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        export_pk:
-          type: integer
-          docs: Primary key identifying the export file.
         id:
           type: integer
           docs: A unique integer value identifying this project.
+        export_pk:
+          type: integer
+          docs: Primary key identifying the export file.
       display-name: Delete export snapshot
       examples:
         - path-parameters:
-            export_pk: 1
             id: 1
+            export_pk: 1
       audiences:
         - public
     convert:
       path: /api/projects/{id}/exports/{export_pk}/convert
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Convert export snapshot to selected format
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        export_pk:
-          type: integer
-          docs: Primary key identifying the export file.
         id:
           type: integer
           docs: A unique integer value identifying this project.
+        export_pk:
+          type: integer
+          docs: Primary key identifying the export file.
       display-name: Export conversion
       request:
         name: ExportConvertRequest
@@ -315,10 +329,11 @@ service:
       response:
         docs: ''
         type: ExportsConvertResponse
+        status-code: 200
       examples:
         - path-parameters:
-            export_pk: 1
             id: 1
+            export_pk: 1
           request:
             export_type: export_type
           response:
@@ -330,7 +345,8 @@ service:
     download:
       path: /api/projects/{id}/exports/{export_pk}/download
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 Download an export file in the specified format for a specific project. Specify the project ID with the `id`
@@ -343,12 +359,12 @@ service:
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        export_pk:
-          type: integer
-          docs: Primary key identifying the export file.
         id:
           type: integer
           docs: A unique integer value identifying this project.
+        export_pk:
+          type: integer
+          docs: Primary key identifying the export file.
       display-name: Download export snapshot as file in specified format
       request:
         name: ExportsDownloadRequest
@@ -359,6 +375,7 @@ service:
       response:
         docs: Export file
         type: file
+        status-code: 200
       audiences:
         - public
   source:

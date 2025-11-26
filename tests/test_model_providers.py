@@ -62,10 +62,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.model_providers.list()
+    response = client.model_providers.list(ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.model_providers.list()
+    async_response = await async_client.model_providers.list(ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 

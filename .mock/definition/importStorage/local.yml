@@ -7,7 +7,8 @@ service:
     list:
       path: /api/storages/localfiles/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a list of all local file import storage connections.
       source:
         openapi: openapi/openapi.yaml
@@ -24,8 +25,10 @@ service:
       response:
         docs: ''
         type: list<root.LocalFilesImportStorage>
+        status-code: 200
       examples:
         - query-parameters:
+            ordering: ordering
             project: 1
           response:
             body:
@@ -52,7 +55,8 @@ service:
     create:
       path: /api/storages/localfiles/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create a new local file import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -90,6 +94,7 @@ service:
       response:
         docs: ''
         type: root.LocalFilesImportStorage
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -117,7 +122,8 @@ service:
     validate:
       path: /api/storages/localfiles/validate
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Validate a specific local file import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -162,7 +168,8 @@ service:
     get:
       path: /api/storages/localfiles/{id}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a specific local file import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -172,6 +179,7 @@ service:
       response:
         docs: ''
         type: root.LocalFilesImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -200,7 +208,8 @@ service:
     delete:
       path: /api/storages/localfiles/{id}
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete a specific local file import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -215,7 +224,8 @@ service:
     update:
       path: /api/storages/localfiles/{id}
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update a specific local file import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -255,6 +265,7 @@ service:
       response:
         docs: ''
         type: root.LocalFilesImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -284,7 +295,8 @@ service:
     sync:
       path: /api/storages/localfiles/{id}/sync
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Sync tasks from a local file import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -296,6 +308,7 @@ service:
       response:
         docs: ''
         type: root.LocalFilesImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

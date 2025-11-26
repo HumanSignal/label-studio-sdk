@@ -46,10 +46,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.project_templates.list()
+    response = client.project_templates.list(ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.project_templates.list()
+    async_response = await async_client.project_templates.list(ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -270,6 +270,7 @@ async def test_create_project_from_template(client: LabelStudio, async_client: A
         "skip_queue": "REQUEUE_FOR_ME",
         "skipped_annotations_number": 1,
         "start_training_on_annotation_update": True,
+        "state": "state",
         "task_data_login": "task_data_login",
         "task_data_password": "task_data_password",
         "task_number": 1,
@@ -357,6 +358,7 @@ async def test_create_project_from_template(client: LabelStudio, async_client: A
         "skip_queue": None,
         "skipped_annotations_number": "integer",
         "start_training_on_annotation_update": None,
+        "state": None,
         "task_data_login": None,
         "task_data_password": None,
         "task_number": "integer",

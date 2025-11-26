@@ -5,7 +5,8 @@ service:
     get_default_version_name:
       path: /api/prompts/{id}/get-default-version-name
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -27,7 +28,8 @@ service:
     list:
       path: /api/prompts/{prompt_id}/versions
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -50,9 +52,12 @@ service:
       response:
         docs: ''
         type: list<root.ThirdPartyModelVersion>
+        status-code: 200
       examples:
         - path-parameters:
             prompt_id: 1
+          query-parameters:
+            ordering: ordering
           response:
             body:
               - created_at: '2024-01-15T09:30:00Z'
@@ -77,7 +82,8 @@ service:
     create:
       path: /api/prompts/{prompt_id}/versions
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -97,6 +103,7 @@ service:
       response:
         docs: ''
         type: root.ThirdPartyModelVersion
+        status-code: 201
       examples:
         - path-parameters:
             prompt_id: 1
@@ -128,7 +135,8 @@ service:
     get:
       path: /api/prompts/{prompt_id}/versions/{version_id}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -146,6 +154,7 @@ service:
       response:
         docs: ''
         type: root.ThirdPartyModelVersion
+        status-code: 200
       examples:
         - path-parameters:
             prompt_id: 1
@@ -174,7 +183,8 @@ service:
     delete:
       path: /api/prompts/{prompt_id}/versions/{version_id}
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -198,7 +208,8 @@ service:
     update:
       path: /api/prompts/{prompt_id}/versions/{version_id}
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -255,6 +266,7 @@ service:
       response:
         docs: ''
         type: root.ThirdPartyModelVersion
+        status-code: 200
       examples:
         - path-parameters:
             prompt_id: 1
@@ -284,7 +296,8 @@ service:
     cost_estimate:
       path: /api/prompts/{prompt_id}/versions/{version_id}/cost-estimate
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -305,6 +318,7 @@ service:
       response:
         docs: Cost estimate response
         type: root.InferenceRunCostEstimate
+        status-code: 200
       examples:
         - path-parameters:
             prompt_id: 1
@@ -322,7 +336,8 @@ service:
     get_refined_prompt:
       path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -348,10 +363,13 @@ service:
       response:
         docs: Refined prompt response
         type: root.RefinedPromptResponse
+        status-code: 200
       examples:
         - path-parameters:
             prompt_id: 1
             version_id: 1
+          query-parameters:
+            refinement_job_id: refinement_job_id
           response:
             body:
               previous_version:
@@ -383,7 +401,8 @@ service:
     refine_prompt:
       path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -422,10 +441,13 @@ service:
       response:
         docs: Refined prompt response
         type: root.RefinedPromptResponse
+        status-code: 201
       examples:
         - path-parameters:
             prompt_id: 1
             version_id: 1
+          query-parameters:
+            async: true
           request:
             project_id: 1
             teacher_model_name: teacher_model_name

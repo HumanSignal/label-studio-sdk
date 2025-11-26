@@ -7,7 +7,8 @@ service:
     get:
       path: /api/jwt/settings
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve JWT settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
@@ -15,6 +16,7 @@ service:
       response:
         docs: ''
         type: root.LsejwtSettings
+        status-code: 200
       examples:
         - response:
             body:
@@ -26,7 +28,8 @@ service:
     update:
       path: /api/jwt/settings
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Update JWT settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
@@ -50,6 +53,7 @@ service:
       response:
         docs: ''
         type: root.LsejwtSettings
+        status-code: 201
       examples:
         - request:
             api_token_ttl_days: 1

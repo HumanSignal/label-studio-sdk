@@ -22,19 +22,23 @@ class LseUserOrganizationMemberList(UncheckedBaseModel):
     Allow sending newsletters to user
     """
 
-    avatar: str
-    contributed_to_projects: str
-    created_projects: str
-    custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = None
+    avatar: typing.Optional[str] = None
+    contributed_to_projects: typing.Optional[str] = None
+    created_projects: typing.Optional[str] = None
+    custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Custom keyboard shortcuts configuration for the user interface
+    """
+
     date_joined: typing.Optional[dt.datetime] = None
     email: typing.Optional[str] = None
     first_name: typing.Optional[str] = None
-    id: int
-    initials: str
-    last_activity: dt.datetime
+    id: typing.Optional[int] = None
+    initials: typing.Optional[str] = None
+    last_activity: typing.Optional[dt.datetime] = None
     last_name: typing.Optional[str] = None
-    lse_fields: LseFields
-    pause: str
+    lse_fields: typing.Optional[LseFields] = None
+    pause: typing.Optional[str] = None
     phone: typing.Optional[str] = None
     username: str
 

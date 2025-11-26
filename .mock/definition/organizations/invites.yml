@@ -7,7 +7,8 @@ service:
     get_invite_link:
       path: /api/invite
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get invite link for organization
       source:
         openapi: openapi/openapi.yaml
@@ -15,6 +16,7 @@ service:
       response:
         docs: ''
         type: root.OrganizationInvite
+        status-code: 200
       errors:
         - root.ForbiddenError
       examples:
@@ -27,7 +29,8 @@ service:
     revoke_invite:
       path: /api/invite/revoke
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -56,7 +59,8 @@ service:
     send_email:
       path: /api/invite/send-email
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>

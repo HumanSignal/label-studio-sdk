@@ -7,7 +7,8 @@ service:
     list:
       path: /api/token/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: List all API tokens for the current user.
       source:
         openapi: openapi/openapi.yaml
@@ -21,8 +22,11 @@ service:
       response:
         docs: ''
         type: list<root.LseapiTokenList>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            ordering: ordering
+          response:
             body:
               - created_at: created_at
                 expires_at: expires_at
@@ -32,7 +36,8 @@ service:
     create:
       path: /api/token/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create a new API token for the current user.
       source:
         openapi: openapi/openapi.yaml
@@ -40,6 +45,7 @@ service:
       response:
         docs: ''
         type: root.LseapiTokenCreate
+        status-code: 201
       examples:
         - response:
             body:
@@ -51,7 +57,6 @@ service:
     blacklist:
       path: /api/token/blacklist/
       method: POST
-      auth: false
       docs: >-
         Adds a JWT refresh token to the blacklist, preventing it from being used
         to obtain new access tokens.
@@ -70,6 +75,7 @@ service:
       response:
         docs: ''
         type: map<string, unknown>
+        status-code: 204
       errors:
         - root.NotFoundError
       examples:
@@ -83,7 +89,6 @@ service:
     refresh:
       path: /api/token/refresh/
       method: POST
-      auth: false
       docs: Get a new access token, using a refresh token.
       source:
         openapi: openapi/openapi.yaml
@@ -100,6 +105,7 @@ service:
       response:
         docs: ''
         type: root.TokenRefreshResponse
+        status-code: 200
       examples:
         - request:
             refresh: refresh
@@ -111,7 +117,8 @@ service:
     rotate:
       path: /api/token/rotate/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Creates a new JWT refresh token and blacklists the current one.
       source:
         openapi: openapi/openapi.yaml
@@ -128,6 +135,7 @@ service:
       response:
         docs: ''
         type: root.TokenRotateResponse
+        status-code: 200
       errors:
         - root.BadRequestError
       examples:

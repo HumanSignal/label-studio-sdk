@@ -131,6 +131,7 @@ class StatsClient:
         client.projects.stats.model_version_ground_truth_agreement(
             id=1,
             model_version="model_version",
+            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -199,6 +200,7 @@ class StatsClient:
         client.projects.stats.model_version_prediction_agreement(
             id=1,
             model_version="model_version",
+            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -275,6 +277,10 @@ class StatsClient:
         )
         client.projects.stats.iaa(
             id=1,
+            expand="expand",
+            per_label=True,
+            std=True,
+            task="task",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -347,6 +353,7 @@ class StatsClient:
         client.projects.stats.users_ground_truth_agreement(
             id=1,
             ids="ids",
+            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -580,6 +587,7 @@ class StatsClient:
         )
         client.projects.stats.finished_tasks(
             id=1,
+            user_pk=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -698,6 +706,7 @@ class StatsClient:
         )
         client.projects.stats.total_agreement(
             id=1,
+            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -762,6 +771,7 @@ class StatsClient:
         )
         client.projects.stats.update_stats(
             id=1,
+            stat_type="stat_type",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -831,6 +841,7 @@ class StatsClient:
         client.projects.stats.users_prediction_agreement(
             id=1,
             ids="ids",
+            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -901,6 +912,7 @@ class StatsClient:
         client.projects.stats.users_review_score(
             id=1,
             ids="ids",
+            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -970,6 +982,7 @@ class StatsClient:
         client.projects.stats.user_prediction_agreement(
             id=1,
             user_pk=1,
+            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1038,6 +1051,7 @@ class StatsClient:
         client.projects.stats.user_review_score(
             id=1,
             user_pk=1,
+            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1106,6 +1120,7 @@ class StatsClient:
         client.projects.stats.user_ground_truth_agreement(
             id=1,
             user_pk=1,
+            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1249,6 +1264,7 @@ class AsyncStatsClient:
             await client.projects.stats.model_version_ground_truth_agreement(
                 id=1,
                 model_version="model_version",
+                per_label=True,
             )
 
 
@@ -1325,6 +1341,7 @@ class AsyncStatsClient:
             await client.projects.stats.model_version_prediction_agreement(
                 id=1,
                 model_version="model_version",
+                per_label=True,
             )
 
 
@@ -1409,6 +1426,10 @@ class AsyncStatsClient:
         async def main() -> None:
             await client.projects.stats.iaa(
                 id=1,
+                expand="expand",
+                per_label=True,
+                std=True,
+                task="task",
             )
 
 
@@ -1489,6 +1510,7 @@ class AsyncStatsClient:
             await client.projects.stats.users_ground_truth_agreement(
                 id=1,
                 ids="ids",
+                per_label=True,
             )
 
 
@@ -1754,6 +1776,7 @@ class AsyncStatsClient:
         async def main() -> None:
             await client.projects.stats.finished_tasks(
                 id=1,
+                user_pk=1,
             )
 
 
@@ -1890,6 +1913,7 @@ class AsyncStatsClient:
         async def main() -> None:
             await client.projects.stats.total_agreement(
                 id=1,
+                per_label=True,
             )
 
 
@@ -1962,6 +1986,7 @@ class AsyncStatsClient:
         async def main() -> None:
             await client.projects.stats.update_stats(
                 id=1,
+                stat_type="stat_type",
             )
 
 
@@ -2039,6 +2064,7 @@ class AsyncStatsClient:
             await client.projects.stats.users_prediction_agreement(
                 id=1,
                 ids="ids",
+                per_label=True,
             )
 
 
@@ -2117,6 +2143,7 @@ class AsyncStatsClient:
             await client.projects.stats.users_review_score(
                 id=1,
                 ids="ids",
+                per_label=True,
             )
 
 
@@ -2194,6 +2221,7 @@ class AsyncStatsClient:
             await client.projects.stats.user_prediction_agreement(
                 id=1,
                 user_pk=1,
+                per_label=True,
             )
 
 
@@ -2270,6 +2298,7 @@ class AsyncStatsClient:
             await client.projects.stats.user_review_score(
                 id=1,
                 user_pk=1,
+                per_label=True,
             )
 
 
@@ -2346,6 +2375,7 @@ class AsyncStatsClient:
             await client.projects.stats.user_ground_truth_agreement(
                 id=1,
                 user_pk=1,
+                per_label=True,
             )
 
 

@@ -5,7 +5,8 @@ service:
     api_datasets_columns_retrieve:
       path: /api/datasets/columns
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve the data explorer columns available for a specific Dataset.
       source:
         openapi: openapi/openapi.yaml
@@ -17,13 +18,15 @@ service:
             type: optional<integer>
             docs: Dataset ID
       examples:
-        - {}
+        - query-parameters:
+            dataset: 1
       audiences:
         - internal
     api_datasets_import_create:
       path: /api/datasets/import
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
             Export Candidate task for a specific dataset to project.
@@ -53,13 +56,17 @@ service:
             type: optional<integer>
             docs: View ID
       examples:
-        - {}
+        - query-parameters:
+            dataset: 1
+            project: 1
+            view: 1
       audiences:
         - internal
     api_datasets_tasks_retrieve:
       path: /api/datasets/tasks
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
             Retrieve a list of Data Explorer tasks with pagination for a specific view or dataset, by using filters and ordering.
@@ -91,8 +98,16 @@ service:
       response:
         docs: ''
         type: root.DatasetView
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            dataset: 1
+            max_threshold: 1.1
+            min_threshold: 1.1
+            page: 1
+            page_size: 1
+            view: 1
+          response:
             body:
               data:
                 key: value
@@ -101,7 +116,6 @@ service:
                 conjunction: conjunction
                 filters:
                   - column: column
-                    id: 1
                     operator: operator
                     type: type
                 id: 1
@@ -117,7 +131,8 @@ service:
     api_datasets_tasks_metadata_retrieve:
       path: /api/datasets/tasks/metadata
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
             Retrieve Candidate task metadata for a specific dataset, by using candidate_task_id or weaviate_id.
@@ -138,7 +153,10 @@ service:
             type: optional<string>
             docs: Task ID from vectordb database
       examples:
-        - {}
+        - query-parameters:
+            candidate_task_id: candidate_task_id
+            dataset: 1
+            vectordb_id: vectordb_id
       audiences:
         - internal
   source:

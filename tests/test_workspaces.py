@@ -32,10 +32,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.workspaces.list()
+    response = client.workspaces.list(is_personal=True, ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.workspaces.list()
+    async_response = await async_client.workspaces.list(is_personal=True, ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 

@@ -53,7 +53,9 @@ class MlClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.ml.list()
+        client.ml.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/",
@@ -416,6 +418,7 @@ class MlClient:
             ID of task to annotate
 
         context : typing.Optional[typing.Optional[typing.Any]]
+            Context for ML model
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -503,6 +506,7 @@ class MlClient:
         )
         client.ml.predict_all_tasks(
             id=1,
+            batch_size=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -681,7 +685,9 @@ class AsyncMlClient:
 
 
         async def main() -> None:
-            await client.ml.list()
+            await client.ml.list(
+                project=1,
+            )
 
 
         asyncio.run(main())
@@ -1079,6 +1085,7 @@ class AsyncMlClient:
             ID of task to annotate
 
         context : typing.Optional[typing.Optional[typing.Any]]
+            Context for ML model
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1179,6 +1186,7 @@ class AsyncMlClient:
         async def main() -> None:
             await client.ml.predict_all_tasks(
                 id=1,
+                batch_size=1,
             )
 
 

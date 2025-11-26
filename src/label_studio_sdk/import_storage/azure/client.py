@@ -52,6 +52,7 @@ class AzureClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.azure.list(
+            ordering="ordering",
             project=1,
         )
         """
@@ -578,6 +579,7 @@ class AsyncAzureClient:
 
         async def main() -> None:
             await client.import_storage.azure.list(
+                ordering="ordering",
                 project=1,
             )
 

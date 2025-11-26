@@ -5,7 +5,8 @@ service:
     api_dataset_storages_list:
       path: /api/dataset-storages/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve a list of the dataset storages of all types with their IDs.
       source:
         openapi: openapi/openapi.yaml
@@ -17,13 +18,15 @@ service:
             type: optional<string>
             docs: Which field to use when ordering the results.
       examples:
-        - {}
+        - query-parameters:
+            ordering: ordering
       audiences:
         - internal
     api_dataset_storages_types_retrieve:
       path: /api/dataset-storages/types/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve a list of the dataset storages types.
       source:
         openapi: openapi/openapi.yaml

@@ -11,20 +11,20 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class ModelRun(UncheckedBaseModel):
     completed_at: typing.Optional[dt.datetime] = None
-    created_at: dt.datetime
+    created_at: typing.Optional[dt.datetime] = None
     created_by: typing.Optional[int] = None
-    id: int
+    id: typing.Optional[int] = None
     job_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Job ID for inference job for a ModelRun e.g. Adala job ID
     """
 
     organization: typing.Optional[int] = None
-    parent_model: int
+    parent_model: typing.Optional[int] = None
     predictions_updated_at: typing.Optional[dt.datetime] = None
     project: int
     project_subset: typing.Optional[ProjectSubsetEnum] = None
-    status: ModelRunStatusEnum
+    status: typing.Optional[ModelRunStatusEnum] = None
     total_correct_predictions: typing.Optional[int] = None
     total_predictions: typing.Optional[int] = None
     total_tasks: typing.Optional[int] = None

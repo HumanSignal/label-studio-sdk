@@ -52,6 +52,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "skip_queue": "REQUEUE_FOR_ME",
         "skipped_annotations_number": 1,
         "start_training_on_annotation_update": True,
+        "state": "state",
         "task_data_login": "task_data_login",
         "task_data_password": "task_data_password",
         "task_number": 1,
@@ -99,6 +100,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "skip_queue": None,
         "skipped_annotations_number": "integer",
         "start_training_on_annotation_update": None,
+        "state": None,
         "task_data_login": None,
         "task_data_password": None,
         "task_number": "integer",
@@ -167,10 +169,32 @@ async def test_list_counts(client: LabelStudio, async_client: AsyncLabelStudio) 
             },
         ),
     }
-    response = client.projects.list_counts()
+    response = client.projects.list_counts(
+        filter="filter",
+        ids="ids",
+        include="include",
+        ordering="ordering",
+        page=1,
+        page_size=1,
+        search="search",
+        state="state",
+        title="title",
+        workspaces=1.1,
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.list_counts()
+    async_response = await async_client.projects.list_counts(
+        filter="filter",
+        ids="ids",
+        include="include",
+        ordering="ordering",
+        page=1,
+        page_size=1,
+        search="search",
+        state="state",
+        title="title",
+        workspaces=1.1,
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -263,6 +287,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "skip_queue": "REQUEUE_FOR_ME",
         "skipped_annotations_number": 1,
         "start_training_on_annotation_update": True,
+        "state": "state",
         "task_data_login": "task_data_login",
         "task_data_password": "task_data_password",
         "task_number": 1,
@@ -355,6 +380,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "skip_queue": None,
         "skipped_annotations_number": "integer",
         "start_training_on_annotation_update": None,
+        "state": None,
         "task_data_login": None,
         "task_data_password": None,
         "task_number": "integer",
@@ -365,10 +391,10 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "workspace": None,
         "workspace_title": None,
     }
-    response = client.projects.get(id=1)
+    response = client.projects.get(id=1, members_limit=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.get(id=1)
+    async_response = await async_client.projects.get(id=1, members_limit=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -462,6 +488,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "skip_queue": "REQUEUE_FOR_ME",
         "skipped_annotations_number": 1,
         "start_training_on_annotation_update": True,
+        "state": "state",
         "task_data_login": "task_data_login",
         "task_data_password": "task_data_password",
         "task_number": 1,
@@ -542,6 +569,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "skip_queue": None,
         "skipped_annotations_number": "integer",
         "start_training_on_annotation_update": None,
+        "state": None,
         "task_data_login": None,
         "task_data_password": None,
         "task_number": "integer",
@@ -552,10 +580,10 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "workspace": "integer",
         "workspace_title": None,
     }
-    response = client.projects.update(id=1)
+    response = client.projects.update(id=1, members_limit=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.update(id=1)
+    async_response = await async_client.projects.update(id=1, members_limit=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -605,10 +633,12 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
         "predictions_count": "integer",
         "task_count": "integer",
     }
-    response = client.projects.import_tasks(id=1, request=[])
+    response = client.projects.import_tasks(id=1, commit_to_project=True, return_task_ids=True, request=[])
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.import_tasks(id=1, request=[])
+    async_response = await async_client.projects.import_tasks(
+        id=1, commit_to_project=True, return_task_ids=True, request=[]
+    )
     validate_response(async_response, expected_response, expected_types)
 
 

@@ -32,10 +32,12 @@ async def test_update_lambda(client: LabelStudio, async_client: AsyncLabelStudio
 async def test_logs(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"key": "value"}
     expected_types: typing.Tuple[typing.Any, typing.Any] = ("dict", {0: (None, None)})
-    response = client.projects.metrics.custom.logs(id=1)
+    response = client.projects.metrics.custom.logs(id=1, end_date="end_date", limit=1, start_date="start_date")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.metrics.custom.logs(id=1)
+    async_response = await async_client.projects.metrics.custom.logs(
+        id=1, end_date="end_date", limit=1, start_date="start_date"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 

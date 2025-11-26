@@ -87,7 +87,18 @@ class ActivityLogsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.activity_logs.list()
+        client.activity_logs.list(
+            end_date="end_date",
+            method="DELETE",
+            ordering="ordering",
+            page=1,
+            page_size=1,
+            project=1,
+            search="search",
+            start_date="start_date",
+            user=1,
+            workspace=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/activity-logs/",
@@ -211,7 +222,18 @@ class AsyncActivityLogsClient:
 
 
         async def main() -> None:
-            await client.activity_logs.list()
+            await client.activity_logs.list(
+                end_date="end_date",
+                method="DELETE",
+                ordering="ordering",
+                page=1,
+                page_size=1,
+                project=1,
+                search="search",
+                start_date="start_date",
+                user=1,
+                workspace=1,
+            )
 
 
         asyncio.run(main())

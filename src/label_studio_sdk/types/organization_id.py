@@ -14,8 +14,8 @@ class OrganizationId(UncheckedBaseModel):
     """
 
     contact_info: typing.Optional[str] = None
-    created_at: dt.datetime
-    id: int
+    created_at: typing.Optional[dt.datetime] = None
+    id: typing.Optional[int] = None
     title: str
 
     if IS_PYDANTIC_V2:

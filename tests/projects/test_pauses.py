@@ -44,10 +44,12 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.projects.pauses.list(project_pk=1, user_pk=1)
+    response = client.projects.pauses.list(project_pk=1, user_pk=1, include_deleted=True, ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.pauses.list(project_pk=1, user_pk=1)
+    async_response = await async_client.projects.pauses.list(
+        project_pk=1, user_pk=1, include_deleted=True, ordering="ordering"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -120,22 +122,22 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "user": "integer",
         "verbose_reason": None,
     }
-    response = client.projects.pauses.get(id="id", project_pk=1, user_pk=1)
+    response = client.projects.pauses.get(project_pk=1, user_pk=1, id="id")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.pauses.get(id="id", project_pk=1, user_pk=1)
+    async_response = await async_client.projects.pauses.get(project_pk=1, user_pk=1, id="id")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.pauses.delete(id="id", project_pk=1, user_pk=1)  # type: ignore[func-returns-value]
+        client.projects.pauses.delete(project_pk=1, user_pk=1, id="id")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.pauses.delete(id="id", project_pk=1, user_pk=1)  # type: ignore[func-returns-value]
+        await async_client.projects.pauses.delete(project_pk=1, user_pk=1, id="id")  # type: ignore[func-returns-value]
         is None
     )
 
@@ -171,8 +173,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "user": "integer",
         "verbose_reason": None,
     }
-    response = client.projects.pauses.update(id="id", project_pk=1, user_pk=1)
+    response = client.projects.pauses.update(project_pk=1, user_pk=1, id="id")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.pauses.update(id="id", project_pk=1, user_pk=1)
+    async_response = await async_client.projects.pauses.update(project_pk=1, user_pk=1, id="id")
     validate_response(async_response, expected_response, expected_types)

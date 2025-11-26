@@ -3,9 +3,9 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
-from .review_settings_request_requeue_rejected_tasks_mode import ReviewSettingsRequestRequeueRejectedTasksMode
-from .review_settings_request_review_criteria import ReviewSettingsRequestReviewCriteria
-from .review_settings_request_sampling import ReviewSettingsRequestSampling
+from .requeue_rejected_tasks_mode_enum import RequeueRejectedTasksModeEnum
+from .review_criteria_enum import ReviewCriteriaEnum
+from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -26,9 +26,7 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     """
 
     project: typing.Optional[int] = None
-    requeue_rejected_tasks_mode: typing.Optional[ReviewSettingsRequestRequeueRejectedTasksMode] = pydantic.Field(
-        default=None
-    )
+    requeue_rejected_tasks_mode: typing.Optional[RequeueRejectedTasksModeEnum] = pydantic.Field(default=None)
     """
     Requeue mode for rejected tasks
     
@@ -42,7 +40,7 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     If set, the reviewer must leave a comment on reject
     """
 
-    review_criteria: typing.Optional[ReviewSettingsRequestReviewCriteria] = pydantic.Field(default=None)
+    review_criteria: typing.Optional[ReviewCriteriaEnum] = pydantic.Field(default=None)
     """
     Criteria to mark task as reviewed
     
@@ -60,7 +58,7 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     Percent of tasks to include in review stream (0-100). Null/0 disables.
     """
 
-    sampling: typing.Optional[ReviewSettingsRequestSampling] = pydantic.Field(default=None)
+    sampling: typing.Optional[ReviewSettingsSamplingEnum] = pydantic.Field(default=None)
     """
     Task sampling strategy in the review stream (by task id or random)
     

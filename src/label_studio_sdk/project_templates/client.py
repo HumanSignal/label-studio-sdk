@@ -51,7 +51,9 @@ class ProjectTemplatesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.project_templates.list()
+        client.project_templates.list(
+            ordering="ordering",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/project-templates/",
@@ -108,6 +110,7 @@ class ProjectTemplatesClient:
         project_id : int
 
         assignment_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized assignment settings
 
         created_by : typing.Optional[int]
 
@@ -119,11 +122,13 @@ class ProjectTemplatesClient:
         organization : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized project settings
 
         require_comment_on_skip : typing.Optional[bool]
             flag to require comment on skip
 
         review_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized review settings
 
         show_unused_data_columns_to_annotators : typing.Optional[bool]
 
@@ -312,6 +317,7 @@ class ProjectTemplatesClient:
         id : int
 
         assignment_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized assignment settings
 
         created_by : typing.Optional[int]
 
@@ -327,11 +333,13 @@ class ProjectTemplatesClient:
         project_id : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized project settings
 
         require_comment_on_skip : typing.Optional[bool]
             flag to require comment on skip
 
         review_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized review settings
 
         show_unused_data_columns_to_annotators : typing.Optional[bool]
 
@@ -515,7 +523,9 @@ class AsyncProjectTemplatesClient:
 
 
         async def main() -> None:
-            await client.project_templates.list()
+            await client.project_templates.list(
+                ordering="ordering",
+            )
 
 
         asyncio.run(main())
@@ -575,6 +585,7 @@ class AsyncProjectTemplatesClient:
         project_id : int
 
         assignment_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized assignment settings
 
         created_by : typing.Optional[int]
 
@@ -586,11 +597,13 @@ class AsyncProjectTemplatesClient:
         organization : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized project settings
 
         require_comment_on_skip : typing.Optional[bool]
             flag to require comment on skip
 
         review_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized review settings
 
         show_unused_data_columns_to_annotators : typing.Optional[bool]
 
@@ -803,6 +816,7 @@ class AsyncProjectTemplatesClient:
         id : int
 
         assignment_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized assignment settings
 
         created_by : typing.Optional[int]
 
@@ -818,11 +832,13 @@ class AsyncProjectTemplatesClient:
         project_id : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized project settings
 
         require_comment_on_skip : typing.Optional[bool]
             flag to require comment on skip
 
         review_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized review settings
 
         show_unused_data_columns_to_annotators : typing.Optional[bool]
 

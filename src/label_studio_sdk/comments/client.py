@@ -68,7 +68,14 @@ class CommentsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.comments.list()
+        client.comments.list(
+            annotation=1,
+            annotators="annotators",
+            draft=1,
+            expand_created_by=True,
+            ordering="ordering",
+            projects="projects",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/comments/",
@@ -126,6 +133,7 @@ class CommentsClient:
         annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
+            Classifications applied by a reviewer or annotator
 
         draft : typing.Optional[int]
 
@@ -133,6 +141,7 @@ class CommentsClient:
             True if the comment is resolved
 
         region_ref : typing.Optional[typing.Optional[typing.Any]]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
         text : typing.Optional[str]
             Reviewer or annotator comment
@@ -152,7 +161,9 @@ class CommentsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.comments.create()
+        client.comments.create(
+            expand_created_by=True,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/comments/",
@@ -293,6 +304,7 @@ class CommentsClient:
         )
         client.comments.get(
             id="id",
+            expand_created_by=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -356,6 +368,7 @@ class CommentsClient:
         )
         client.comments.delete(
             id="id",
+            expand_created_by=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -406,6 +419,7 @@ class CommentsClient:
         annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
+            Classifications applied by a reviewer or annotator
 
         draft : typing.Optional[int]
 
@@ -413,6 +427,7 @@ class CommentsClient:
             True if the comment is resolved
 
         region_ref : typing.Optional[typing.Optional[typing.Any]]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
         text : typing.Optional[str]
             Reviewer or annotator comment
@@ -434,6 +449,7 @@ class CommentsClient:
         )
         client.comments.update(
             id="id",
+            expand_created_by=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -530,7 +546,14 @@ class AsyncCommentsClient:
 
 
         async def main() -> None:
-            await client.comments.list()
+            await client.comments.list(
+                annotation=1,
+                annotators="annotators",
+                draft=1,
+                expand_created_by=True,
+                ordering="ordering",
+                projects="projects",
+            )
 
 
         asyncio.run(main())
@@ -591,6 +614,7 @@ class AsyncCommentsClient:
         annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
+            Classifications applied by a reviewer or annotator
 
         draft : typing.Optional[int]
 
@@ -598,6 +622,7 @@ class AsyncCommentsClient:
             True if the comment is resolved
 
         region_ref : typing.Optional[typing.Optional[typing.Any]]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
         text : typing.Optional[str]
             Reviewer or annotator comment
@@ -622,7 +647,9 @@ class AsyncCommentsClient:
 
 
         async def main() -> None:
-            await client.comments.create()
+            await client.comments.create(
+                expand_created_by=True,
+            )
 
 
         asyncio.run(main())
@@ -771,6 +798,7 @@ class AsyncCommentsClient:
         async def main() -> None:
             await client.comments.get(
                 id="id",
+                expand_created_by=True,
             )
 
 
@@ -842,6 +870,7 @@ class AsyncCommentsClient:
         async def main() -> None:
             await client.comments.delete(
                 id="id",
+                expand_created_by=True,
             )
 
 
@@ -895,6 +924,7 @@ class AsyncCommentsClient:
         annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
+            Classifications applied by a reviewer or annotator
 
         draft : typing.Optional[int]
 
@@ -902,6 +932,7 @@ class AsyncCommentsClient:
             True if the comment is resolved
 
         region_ref : typing.Optional[typing.Optional[typing.Any]]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
         text : typing.Optional[str]
             Reviewer or annotator comment
@@ -928,6 +959,7 @@ class AsyncCommentsClient:
         async def main() -> None:
             await client.comments.update(
                 id="id",
+                expand_created_by=True,
             )
 
 

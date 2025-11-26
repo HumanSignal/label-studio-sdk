@@ -21,11 +21,13 @@ async def test_model_version_annotator_agreement(client: LabelStudio, async_clie
 async def test_model_version_ground_truth_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"agreement": 1.1}
     expected_types: typing.Any = {"agreement": None}
-    response = client.projects.stats.model_version_ground_truth_agreement(id=1, model_version="model_version")
+    response = client.projects.stats.model_version_ground_truth_agreement(
+        id=1, model_version="model_version", per_label=True
+    )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.projects.stats.model_version_ground_truth_agreement(
-        id=1, model_version="model_version"
+        id=1, model_version="model_version", per_label=True
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -33,11 +35,13 @@ async def test_model_version_ground_truth_agreement(client: LabelStudio, async_c
 async def test_model_version_prediction_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"average_prediction_agreement_per_model": 1.1}
     expected_types: typing.Any = {"average_prediction_agreement_per_model": None}
-    response = client.projects.stats.model_version_prediction_agreement(id=1, model_version="model_version")
+    response = client.projects.stats.model_version_prediction_agreement(
+        id=1, model_version="model_version", per_label=True
+    )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.projects.stats.model_version_prediction_agreement(
-        id=1, model_version="model_version"
+        id=1, model_version="model_version", per_label=True
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -58,20 +62,20 @@ async def test_iaa(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             {0: ("dict", {0: (None, None), 1: (None, None)}), 1: ("dict", {0: (None, None), 1: (None, None)})},
         ),
     }
-    response = client.projects.stats.iaa(id=1)
+    response = client.projects.stats.iaa(id=1, expand="expand", per_label=True, std=True, task="task")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.stats.iaa(id=1)
+    async_response = await async_client.projects.stats.iaa(id=1, expand="expand", per_label=True, std=True, task="task")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_users_ground_truth_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"agreement": {"key": 1.1}}
     expected_types: typing.Any = {"agreement": ("dict", {0: (None, None)})}
-    response = client.projects.stats.users_ground_truth_agreement(id=1, ids="ids")
+    response = client.projects.stats.users_ground_truth_agreement(id=1, ids="ids", per_label=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.stats.users_ground_truth_agreement(id=1, ids="ids")
+    async_response = await async_client.projects.stats.users_ground_truth_agreement(id=1, ids="ids", per_label=True)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -110,10 +114,10 @@ async def test_data_filters(client: LabelStudio, async_client: AsyncLabelStudio)
 async def test_finished_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"finished": 1, "id": 1, "progress": 1}
     expected_types: typing.Any = {"finished": "integer", "id": "integer", "progress": "integer"}
-    response = client.projects.stats.finished_tasks(id=1)
+    response = client.projects.stats.finished_tasks(id=1, user_pk=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.stats.finished_tasks(id=1)
+    async_response = await async_client.projects.stats.finished_tasks(id=1, user_pk=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -137,30 +141,30 @@ async def test_lead_time(client: LabelStudio, async_client: AsyncLabelStudio) ->
 async def test_total_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"total_agreement": 1.1}
     expected_types: typing.Any = {"total_agreement": None}
-    response = client.projects.stats.total_agreement(id=1)
+    response = client.projects.stats.total_agreement(id=1, per_label=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.stats.total_agreement(id=1)
+    async_response = await async_client.projects.stats.total_agreement(id=1, per_label=True)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_update_stats(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"key": "value"}
     expected_types: typing.Tuple[typing.Any, typing.Any] = ("dict", {0: (None, None)})
-    response = client.projects.stats.update_stats(id=1)
+    response = client.projects.stats.update_stats(id=1, stat_type="stat_type")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.stats.update_stats(id=1)
+    async_response = await async_client.projects.stats.update_stats(id=1, stat_type="stat_type")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_users_prediction_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"agreement": {"key": 1.1}}
     expected_types: typing.Any = {"agreement": ("dict", {0: (None, None)})}
-    response = client.projects.stats.users_prediction_agreement(id=1, ids="ids")
+    response = client.projects.stats.users_prediction_agreement(id=1, ids="ids", per_label=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.stats.users_prediction_agreement(id=1, ids="ids")
+    async_response = await async_client.projects.stats.users_prediction_agreement(id=1, ids="ids", per_label=True)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -170,38 +174,38 @@ async def test_users_review_score(client: LabelStudio, async_client: AsyncLabelS
         "performance_score": ("dict", {0: (None, None)}),
         "review_score": ("dict", {0: (None, None)}),
     }
-    response = client.projects.stats.users_review_score(id=1, ids="ids")
+    response = client.projects.stats.users_review_score(id=1, ids="ids", per_label=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.stats.users_review_score(id=1, ids="ids")
+    async_response = await async_client.projects.stats.users_review_score(id=1, ids="ids", per_label=True)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_user_prediction_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"average_prediction_agreement_per_user": 1.1}
     expected_types: typing.Any = {"average_prediction_agreement_per_user": None}
-    response = client.projects.stats.user_prediction_agreement(id=1, user_pk=1)
+    response = client.projects.stats.user_prediction_agreement(id=1, user_pk=1, per_label=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.stats.user_prediction_agreement(id=1, user_pk=1)
+    async_response = await async_client.projects.stats.user_prediction_agreement(id=1, user_pk=1, per_label=True)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_user_review_score(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"performance_score": 1.1, "review_score": 1.1}
     expected_types: typing.Any = {"performance_score": None, "review_score": None}
-    response = client.projects.stats.user_review_score(id=1, user_pk=1)
+    response = client.projects.stats.user_review_score(id=1, user_pk=1, per_label=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.stats.user_review_score(id=1, user_pk=1)
+    async_response = await async_client.projects.stats.user_review_score(id=1, user_pk=1, per_label=True)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_user_ground_truth_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"agreement": 1.1}
     expected_types: typing.Any = {"agreement": None}
-    response = client.projects.stats.user_ground_truth_agreement(id=1, user_pk=1)
+    response = client.projects.stats.user_ground_truth_agreement(id=1, user_pk=1, per_label=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.stats.user_ground_truth_agreement(id=1, user_pk=1)
+    async_response = await async_client.projects.stats.user_ground_truth_agreement(id=1, user_pk=1, per_label=True)
     validate_response(async_response, expected_response, expected_types)

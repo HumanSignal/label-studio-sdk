@@ -5,7 +5,8 @@ service:
     list:
       path: /api/storages/export
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve a list of the export storages of all types with their IDs.
       source:
         openapi: openapi/openapi.yaml
@@ -19,8 +20,11 @@ service:
       response:
         docs: ''
         type: list<map<string, unknown>>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            ordering: ordering
+          response:
             body:
               - key: value
       audiences:
@@ -28,7 +32,8 @@ service:
     list_types:
       path: /api/storages/export/types
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve a list of the export storages types.
       source:
         openapi: openapi/openapi.yaml
@@ -36,6 +41,7 @@ service:
       response:
         docs: List of export storage types
         type: list<ExportStorageListTypesResponseItem>
+        status-code: 200
       examples:
         - response:
             body:

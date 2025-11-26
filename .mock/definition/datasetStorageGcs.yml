@@ -7,7 +7,8 @@ service:
     api_dataset_storages_gcs_list:
       path: /api/dataset-storages/gcs/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a list of all GCS import storage connections.
       source:
         openapi: openapi/openapi.yaml
@@ -24,8 +25,12 @@ service:
       response:
         docs: ''
         type: list<root.GcsDatasetStorage>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            dataset: 1
+            ordering: ordering
+          response:
             body:
               - bucket: bucket
                 created_at: '2024-01-15T09:30:00Z'
@@ -58,7 +63,8 @@ service:
     api_dataset_storages_gcs_create:
       path: /api/dataset-storages/gcs/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create a new GCS import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -69,6 +75,7 @@ service:
       response:
         docs: ''
         type: root.GcsDatasetStorage
+        status-code: 201
       examples:
         - request:
             dataset: 1
@@ -105,7 +112,8 @@ service:
     api_dataset_storages_gcs_check_for_records_create:
       path: /api/dataset-storages/gcs/check-for-records/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Checks for existence of records matching the file pattern in the
         bucket/prefix
@@ -118,6 +126,7 @@ service:
       response:
         docs: ''
         type: root.GcsDatasetStorage
+        status-code: 201
       examples:
         - request:
             dataset: 1
@@ -154,7 +163,8 @@ service:
     api_dataset_storages_gcs_validate_create:
       path: /api/dataset-storages/gcs/validate/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Validate a specific GCS import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -165,6 +175,7 @@ service:
       response:
         docs: ''
         type: root.GcsDatasetStorage
+        status-code: 201
       examples:
         - request:
             dataset: 1
@@ -201,7 +212,8 @@ service:
     api_dataset_storages_gcs_retrieve:
       path: /api/dataset-storages/gcs/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a specific GCS import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -211,6 +223,7 @@ service:
       response:
         docs: ''
         type: root.GcsDatasetStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -247,7 +260,8 @@ service:
     api_dataset_storages_gcs_destroy:
       path: /api/dataset-storages/gcs/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete a specific GCS import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -262,7 +276,8 @@ service:
     api_dataset_storages_gcs_partial_update:
       path: /api/dataset-storages/gcs/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update a specific GCS import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -305,7 +320,9 @@ service:
               docs: Last sync job ID
               validation:
                 maxLength: 256
-            meta: optional<unknown>
+            meta:
+              type: optional<unknown>
+              docs: Meta and debug information about storage processes
             prefix:
               type: optional<string>
               docs: GCS bucket prefix
@@ -346,6 +363,7 @@ service:
       response:
         docs: ''
         type: root.GcsDatasetStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -383,7 +401,8 @@ service:
     api_dataset_storages_gcs_columns_retrieve:
       path: /api/dataset-storages/gcs/{id}/columns/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieves column names from users JSON/blob data in bucket
       source:
         openapi: openapi/openapi.yaml
@@ -398,7 +417,8 @@ service:
     api_dataset_storages_gcs_sync_create:
       path: /api/dataset-storages/gcs/{id}/sync/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Sync tasks from an GCS import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -411,6 +431,7 @@ service:
       response:
         docs: ''
         type: root.GcsDatasetStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

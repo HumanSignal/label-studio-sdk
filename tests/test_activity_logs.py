@@ -11,9 +11,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         {
             "data": [
                 {
-                    "datetime": "2024-01-15T09:30:00Z",
                     "email": "email",
-                    "id": 1,
                     "request_method": "request_method",
                     "request_url": "request_url",
                     "response_code": "response_code",
@@ -32,9 +30,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                     "list",
                     {
                         0: {
-                            "datetime": "datetime",
                             "email": None,
-                            "id": "integer",
                             "request_method": None,
                             "request_url": None,
                             "response_code": None,
@@ -47,8 +43,30 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.activity_logs.list()
+    response = client.activity_logs.list(
+        end_date="end_date",
+        method="DELETE",
+        ordering="ordering",
+        page=1,
+        page_size=1,
+        project=1,
+        search="search",
+        start_date="start_date",
+        user=1,
+        workspace=1,
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.activity_logs.list()
+    async_response = await async_client.activity_logs.list(
+        end_date="end_date",
+        method="DELETE",
+        ordering="ordering",
+        page=1,
+        page_size=1,
+        project=1,
+        search="search",
+        start_date="start_date",
+        user=1,
+        workspace=1,
+    )
     validate_response(async_response, expected_response, expected_types)

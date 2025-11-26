@@ -12,10 +12,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         "list",
         {0: {"id": "integer", "project": "integer", "role": None, "user": "integer"}},
     )
-    response = client.projects.roles.list()
+    response = client.projects.roles.list(ids=1, ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.roles.list()
+    async_response = await async_client.projects.roles.list(ids=1, ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 

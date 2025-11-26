@@ -46,10 +46,14 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.comments.list()
+    response = client.comments.list(
+        annotation=1, annotators="annotators", draft=1, expand_created_by=True, ordering="ordering", projects="projects"
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.comments.list()
+    async_response = await async_client.comments.list(
+        annotation=1, annotators="annotators", draft=1, expand_created_by=True, ordering="ordering", projects="projects"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -86,10 +90,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "text": None,
         "updated_at": "datetime",
     }
-    response = client.comments.create()
+    response = client.comments.create(expand_created_by=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.comments.create()
+    async_response = await async_client.comments.create(expand_created_by=True)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -126,22 +130,22 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "text": None,
         "updated_at": "datetime",
     }
-    response = client.comments.get(id="id")
+    response = client.comments.get(id="id", expand_created_by=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.comments.get(id="id")
+    async_response = await async_client.comments.get(id="id", expand_created_by=True)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.comments.delete(id="id")  # type: ignore[func-returns-value]
+        client.comments.delete(id="id", expand_created_by=True)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.comments.delete(id="id")  # type: ignore[func-returns-value]
+        await async_client.comments.delete(id="id", expand_created_by=True)  # type: ignore[func-returns-value]
         is None
     )
 
@@ -179,8 +183,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "text": None,
         "updated_at": "datetime",
     }
-    response = client.comments.update(id="id")
+    response = client.comments.update(id="id", expand_created_by=True)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.comments.update(id="id")
+    async_response = await async_client.comments.update(id="id", expand_created_by=True)
     validate_response(async_response, expected_response, expected_types)

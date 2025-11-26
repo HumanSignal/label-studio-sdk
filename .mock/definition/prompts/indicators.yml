@@ -12,7 +12,8 @@ service:
     list:
       path: /api/inference-runs/{id}/indicators/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -29,6 +30,7 @@ service:
       response:
         docs: Key indicators
         type: list<IndicatorsListResponseItem>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -42,7 +44,8 @@ service:
     get:
       path: /api/inference-runs/{id}/indicators/{indicator_key}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -60,6 +63,7 @@ service:
       response:
         docs: Key indicator
         type: root.LseKeyIndicatorValue
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

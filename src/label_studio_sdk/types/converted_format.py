@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class ConvertedFormat(UncheckedBaseModel):
     export_type: str
-    id: int
+    id: typing.Optional[int] = None
     status: typing.Optional[Status7BfEnum] = None
     traceback: typing.Optional[str] = pydantic.Field(default=None)
     """

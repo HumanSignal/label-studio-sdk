@@ -200,6 +200,9 @@ class CustomClient:
         )
         client.projects.metrics.custom.logs(
             id=1,
+            end_date="end_date",
+            limit=1,
+            start_date="start_date",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -488,6 +491,9 @@ class AsyncCustomClient:
         async def main() -> None:
             await client.projects.metrics.custom.logs(
                 id=1,
+                end_date="end_date",
+                limit=1,
+                start_date="start_date",
             )
 
 

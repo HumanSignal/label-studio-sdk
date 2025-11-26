@@ -52,6 +52,7 @@ class S3Client:
             api_key="YOUR_API_KEY",
         )
         client.export_storage.s3.list(
+            ordering="ordering",
             project=1,
         )
         """
@@ -592,6 +593,7 @@ class AsyncS3Client:
 
         async def main() -> None:
             await client.export_storage.s3.list(
+                ordering="ordering",
                 project=1,
             )
 

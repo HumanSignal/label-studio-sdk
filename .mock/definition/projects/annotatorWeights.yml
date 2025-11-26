@@ -7,7 +7,8 @@ service:
     get:
       path: /api/projects/{id}/project-extra-params/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -25,6 +26,7 @@ service:
       response:
         docs: Annotator weights retrieved
         type: root.LseProjectParams
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -38,7 +40,8 @@ service:
     create:
       path: /api/projects/{id}/project-extra-params/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -58,7 +61,11 @@ service:
         name: LseProjectParamsRequest
         body:
           properties:
-            annotator_params: optional<unknown>
+            annotator_params:
+              type: optional<unknown>
+              docs: >-
+                user ID and user weight in score calculation. Format
+                {user_id[int]: weight[Float[0..1]]}
             use_kappa:
               type: optional<boolean>
               docs: >-
@@ -69,6 +76,7 @@ service:
       response:
         docs: Annotator weights created/updated
         type: root.LseProjectParams
+        status-code: 200
       examples:
         - name: payload format for annotator_params
           path-parameters:

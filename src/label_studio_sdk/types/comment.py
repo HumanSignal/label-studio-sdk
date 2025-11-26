@@ -2,8 +2,8 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-import datetime as dt
 import pydantic
+import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -20,39 +20,47 @@ class Comment(UncheckedBaseModel):
     """
 
     annotation: typing.Optional[int] = None
-    classifications: typing.Optional[typing.Optional[typing.Any]] = None
-    created_at: dt.datetime = pydantic.Field()
+    classifications: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Classifications applied by a reviewer or annotator
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
     """
 
-    created_by: int = pydantic.Field()
+    created_by: typing.Optional[int] = pydantic.Field(default=None)
     """
     User who made this comment
     """
 
     draft: typing.Optional[int] = None
-    id: int
+    id: typing.Optional[int] = None
     is_resolved: typing.Optional[bool] = pydantic.Field(default=None)
     """
     True if the comment is resolved
     """
 
     project: typing.Optional[int] = None
-    region_ref: typing.Optional[typing.Optional[typing.Any]] = None
+    region_ref: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
+    """
+
     resolved_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Resolving time
     """
 
-    state: str
+    state: typing.Optional[str] = None
     task: typing.Optional[int] = None
     text: typing.Optional[str] = pydantic.Field(default=None)
     """
     Reviewer or annotator comment
     """
 
-    updated_at: dt.datetime = pydantic.Field()
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last updated time
     """

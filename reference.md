@@ -38,7 +38,18 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.activity_logs.list()
+client.activity_logs.list(
+    end_date="end_date",
+    method="DELETE",
+    ordering="ordering",
+    page=1,
+    page_size=1,
+    project=1,
+    search="search",
+    start_date="start_date",
+    user=1,
+    workspace=1,
+)
 
 ```
 </dd>
@@ -185,7 +196,10 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.annotation_history.list()
+client.annotation_history.list(
+    annotation=1,
+    ordering="ordering",
+)
 
 ```
 </dd>
@@ -267,7 +281,11 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.annotation_history.delete()
+client.annotation_history.delete(
+    annotation=1,
+    project=1,
+    task=1,
+)
 
 ```
 </dd>
@@ -359,6 +377,8 @@ client = LabelStudio(
 )
 client.annotation_history.list_for_project(
     id=1,
+    page=1,
+    page_size=1,
 )
 
 ```
@@ -450,7 +470,11 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.annotation_reviews.list()
+client.annotation_reviews.list(
+    annotation=1,
+    annotation_task_project=1,
+    ordering="ordering",
+)
 
 ```
 </dd>
@@ -541,6 +565,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.annotation_reviews.create(
+    async_postprocess=True,
     annotation=1,
 )
 
@@ -1007,7 +1032,7 @@ client.annotations.create_bulk()
 <dl>
 <dd>
 
-**last_action:** `typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]` 
+**last_action:** `typing.Optional[LastActionEnum]` 
 
 Action which was performed in the last annotation history item
 
@@ -1464,6 +1489,7 @@ client = LabelStudio(
 )
 client.annotations.list(
     id=1,
+    ordering="ordering",
 )
 
 ```
@@ -1783,7 +1809,14 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.comments.list()
+client.comments.list(
+    annotation=1,
+    annotators="annotators",
+    draft=1,
+    expand_created_by=True,
+    ordering="ordering",
+    projects="projects",
+)
 
 ```
 </dd>
@@ -1897,7 +1930,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.comments.create()
+client.comments.create(
+    expand_created_by=True,
+)
 
 ```
 </dd>
@@ -1929,7 +1964,7 @@ client.comments.create()
 <dl>
 <dd>
 
-**classifications:** `typing.Optional[typing.Optional[typing.Any]]` 
+**classifications:** `typing.Optional[typing.Optional[typing.Any]]` — Classifications applied by a reviewer or annotator
     
 </dd>
 </dl>
@@ -1953,7 +1988,7 @@ client.comments.create()
 <dl>
 <dd>
 
-**region_ref:** `typing.Optional[typing.Optional[typing.Any]]` 
+**region_ref:** `typing.Optional[typing.Optional[typing.Any]]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
     
 </dd>
 </dl>
@@ -2021,6 +2056,7 @@ client = LabelStudio(
 )
 client.comments.get(
     id="id",
+    expand_created_by=True,
 )
 
 ```
@@ -2105,6 +2141,7 @@ client = LabelStudio(
 )
 client.comments.delete(
     id="id",
+    expand_created_by=True,
 )
 
 ```
@@ -2189,6 +2226,7 @@ client = LabelStudio(
 )
 client.comments.update(
     id="id",
+    expand_created_by=True,
 )
 
 ```
@@ -2229,7 +2267,7 @@ client.comments.update(
 <dl>
 <dd>
 
-**classifications:** `typing.Optional[typing.Optional[typing.Any]]` 
+**classifications:** `typing.Optional[typing.Optional[typing.Any]]` — Classifications applied by a reviewer or annotator
     
 </dd>
 </dl>
@@ -2253,7 +2291,7 @@ client.comments.update(
 <dl>
 <dd>
 
-**region_ref:** `typing.Optional[typing.Optional[typing.Any]]` 
+**region_ref:** `typing.Optional[typing.Optional[typing.Any]]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
     
 </dd>
 </dl>
@@ -2418,7 +2456,7 @@ client.users.update_current_user()
 <dl>
 <dd>
 
-**custom_hotkeys:** `typing.Optional[typing.Optional[typing.Any]]` 
+**custom_hotkeys:** `typing.Optional[typing.Optional[typing.Any]]` — Custom keyboard shortcuts configuration for the user interface
     
 </dd>
 </dl>
@@ -2850,7 +2888,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.users.list()
+client.users.list(
+    ordering="ordering",
+)
 
 ```
 </dd>
@@ -3415,6 +3455,7 @@ client = LabelStudio(
 client.actions.create(
     id="delete_annotators",
     project=1,
+    view=1,
     filters=ActionsCreateRequestFilters(
         conjunction="or",
         items=[
@@ -3540,7 +3581,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.views.list()
+client.views.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -4284,6 +4327,8 @@ client = LabelStudio(
 )
 client.files.list(
     id=1,
+    all_=True,
+    ordering="ordering",
 )
 
 ```
@@ -4581,7 +4626,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.organizations.list()
+client.organizations.list(
+    ordering="ordering",
+)
 
 ```
 </dd>
@@ -4925,7 +4972,7 @@ Default membership role for invited users
 <dl>
 <dd>
 
-**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]` — Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
     
 </dd>
 </dl>
@@ -4933,7 +4980,7 @@ Default membership role for invited users
 <dl>
 <dd>
 
-**embed_domains:** `typing.Optional[typing.Optional[typing.Any]]` 
+**embed_domains:** `typing.Optional[typing.Optional[typing.Any]]` — List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
     
 </dd>
 </dl>
@@ -4941,7 +4988,7 @@ Default membership role for invited users
 <dl>
 <dd>
 
-**embed_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**embed_settings:** `typing.Optional[typing.Optional[typing.Any]]` — Embed settings for this organization
     
 </dd>
 </dl>
@@ -5186,7 +5233,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.ml.list()
+client.ml.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -5744,7 +5793,7 @@ client.ml.predict_interactive(
 <dl>
 <dd>
 
-**context:** `typing.Optional[typing.Optional[typing.Any]]` 
+**context:** `typing.Optional[typing.Optional[typing.Any]]` — Context for ML model
     
 </dd>
 </dl>
@@ -5810,6 +5859,7 @@ client = LabelStudio(
 )
 client.ml.predict_all_tasks(
     id=1,
+    batch_size=1,
 )
 
 ```
@@ -6046,7 +6096,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.model_providers.list()
+client.model_providers.list(
+    ordering="ordering",
+)
 
 ```
 </dd>
@@ -6674,6 +6726,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.batch_failed_predictions(
+    num_failed_predictions=1,
     failed_predictions=[],
     modelrun_id=1,
 )
@@ -6775,6 +6828,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.batch_predictions(
+    num_predictions=1,
     modelrun_id=1,
     results=[],
 )
@@ -6879,6 +6933,13 @@ client = LabelStudio(
 )
 client.prompts.subset_tasks(
     project_pk=1,
+    include_total=True,
+    model_run=1,
+    ordering="ordering",
+    page=1,
+    page_size=1,
+    parent_model=1,
+    project_subset="project_subset",
 )
 
 ```
@@ -7013,6 +7074,7 @@ client = LabelStudio(
 )
 client.prompts.subsets(
     project_pk=1,
+    ordering="ordering",
 )
 
 ```
@@ -7089,7 +7151,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.prompts.list()
+client.prompts.list(
+    ordering="ordering",
+)
 
 ```
 </dd>
@@ -7289,7 +7353,12 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.prompts.compatible_projects()
+client.prompts.compatible_projects(
+    ordering="ordering",
+    page=1,
+    page_size=1,
+    project_type="NamedEntityRecognition",
+)
 
 ```
 </dd>
@@ -7674,7 +7743,10 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.predictions.list()
+client.predictions.list(
+    project=1,
+    task=1,
+)
 
 ```
 </dd>
@@ -8132,7 +8204,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.project_templates.list()
+client.project_templates.list(
+    ordering="ordering",
+)
 
 ```
 </dd>
@@ -8241,7 +8315,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**assignment_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**assignment_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized assignment settings
     
 </dd>
 </dl>
@@ -8281,7 +8355,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**project_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**project_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized project settings
     
 </dd>
 </dl>
@@ -8297,7 +8371,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**review_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**review_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized review settings
     
 </dd>
 </dl>
@@ -8549,7 +8623,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**assignment_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**assignment_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized assignment settings
     
 </dd>
 </dl>
@@ -8605,7 +8679,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**project_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**project_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized project settings
     
 </dd>
 </dl>
@@ -8621,7 +8695,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**review_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**review_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized review settings
     
 </dd>
 </dl>
@@ -8792,7 +8866,19 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-response = client.projects.list()
+response = client.projects.list(
+    filter="filter",
+    ids="ids",
+    include="include",
+    members_limit=1,
+    ordering="ordering",
+    page=1,
+    page_size=1,
+    search="search",
+    state="state",
+    title="title",
+    workspaces=1.1,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -8870,6 +8956,14 @@ for page in response.iter_pages():
 <dd>
 
 **search:** `typing.Optional[str]` — Search term for project title and description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**state:** `typing.Optional[str]` — Filter current_state by exact match
     
 </dd>
 </dl>
@@ -8961,7 +9055,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` 
+**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
     
 </dd>
 </dl>
@@ -9089,7 +9183,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**sampling:** `typing.Optional[LseProjectCreateRequestSampling]` 
+**sampling:** `typing.Optional[SamplingDe5Enum]` 
     
 </dd>
 </dl>
@@ -9145,7 +9239,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**skip_queue:** `typing.Optional[LseProjectCreateRequestSkipQueue]` 
+**skip_queue:** `typing.Optional[SkipQueueEnum]` 
     
 </dd>
 </dl>
@@ -9229,7 +9323,18 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.list_counts()
+client.projects.list_counts(
+    filter="filter",
+    ids="ids",
+    include="include",
+    ordering="ordering",
+    page=1,
+    page_size=1,
+    search="search",
+    state="state",
+    title="title",
+    workspaces=1.1,
+)
 
 ```
 </dd>
@@ -9301,6 +9406,14 @@ client.projects.list_counts()
 <dl>
 <dd>
 
+**state:** `typing.Optional[str]` — Filter current_state by exact match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` — Filter title by contains (case-insensitive)
     
 </dd>
@@ -9363,6 +9476,7 @@ client = LabelStudio(
 )
 client.projects.get(
     id=1,
+    members_limit=1,
 )
 
 ```
@@ -9511,6 +9625,7 @@ client = LabelStudio(
 )
 client.projects.update(
     id=1,
+    members_limit=1,
 )
 
 ```
@@ -9607,7 +9722,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` 
+**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
     
 </dd>
 </dl>
@@ -9783,7 +9898,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**sampling:** `typing.Optional[PatchedLseProjectUpdateRequestSampling]` 
+**sampling:** `typing.Optional[SamplingDe5Enum]` 
     
 </dd>
 </dl>
@@ -9847,7 +9962,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**skip_queue:** `typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]` 
+**skip_queue:** `typing.Optional[SkipQueueEnum]` 
     
 </dd>
 </dl>
@@ -10170,6 +10285,8 @@ client = LabelStudio(
 )
 client.projects.import_tasks(
     id=1,
+    commit_to_project=True,
+    return_task_ids=True,
     request=[],
 )
 
@@ -10587,7 +10704,19 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-response = client.tasks.list()
+response = client.tasks.list(
+    fields="all",
+    include="include",
+    only_annotated=True,
+    page=1,
+    page_size=1,
+    project=1,
+    query="query",
+    resolve_uri=True,
+    review=True,
+    selected_items="selectedItems",
+    view=1,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -10832,7 +10961,7 @@ client.tasks.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
     
 </dd>
 </dl>
@@ -11130,7 +11259,7 @@ client.tasks.update(
 <dl>
 <dd>
 
-**data:** `typing.Optional[typing.Optional[typing.Any]]` 
+**data:** `typing.Optional[typing.Optional[typing.Any]]` — User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
     
 </dd>
 </dl>
@@ -11178,7 +11307,7 @@ client.tasks.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
     
 </dd>
 </dl>
@@ -11422,7 +11551,7 @@ client.tasks.create_event(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Additional event metadata (region data, hotkey info, etc.)
     
 </dd>
 </dl>
@@ -11742,7 +11871,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.tokens.list()
+client.tokens.list(
+    ordering="ordering",
+)
 
 ```
 </dd>
@@ -12142,7 +12273,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.webhooks.list()
+client.webhooks.list(
+    project="project",
+)
 
 ```
 </dd>
@@ -12244,7 +12377,7 @@ client.webhooks.create(
 <dl>
 <dd>
 
-**headers:** `typing.Optional[typing.Optional[typing.Any]]` 
+**headers:** `typing.Optional[typing.Optional[typing.Any]]` — Key Value Json of headers
     
 </dd>
 </dl>
@@ -12328,7 +12461,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.webhooks.info()
+client.webhooks.info(
+    organization_only=True,
+)
 
 ```
 </dd>
@@ -12528,7 +12663,7 @@ client.webhooks.update(
 <dl>
 <dd>
 
-**headers:** `typing.Optional[typing.Optional[typing.Any]]` 
+**headers:** `typing.Optional[typing.Optional[typing.Any]]` — Key Value Json of headers
     
 </dd>
 </dl>
@@ -12619,7 +12754,10 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.workspaces.list()
+client.workspaces.list(
+    is_personal=True,
+    ordering="ordering",
+)
 
 ```
 </dd>
@@ -13073,6 +13211,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.azure.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -13758,6 +13897,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.azure_spi.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -13939,7 +14079,7 @@ client.export_storage.azure_spi.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -14167,7 +14307,7 @@ client.export_storage.azure_spi.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -14547,7 +14687,7 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -14763,6 +14903,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.databricks.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -14948,7 +15089,7 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -15196,7 +15337,7 @@ client.export_storage.databricks.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -15576,7 +15717,7 @@ client.export_storage.databricks.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -15818,6 +15959,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.gcs.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -16503,6 +16645,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.gcswif.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -16708,7 +16851,7 @@ client.export_storage.gcswif.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -16944,7 +17087,7 @@ client.export_storage.gcswif.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -17332,7 +17475,7 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -17526,6 +17669,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.local.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -18157,6 +18301,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.redis.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -18860,6 +19005,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.s3.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -19641,6 +19787,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.s3s.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -19855,7 +20002,7 @@ client.export_storage.s3s.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -20116,7 +20263,7 @@ client.export_storage.s3s.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -20520,7 +20667,7 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -20738,6 +20885,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.azure.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -21495,6 +21643,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.azure_spi.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -21668,7 +21817,7 @@ client.import_storage.azure_spi.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -21912,7 +22061,7 @@ client.import_storage.azure_spi.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -22308,7 +22457,7 @@ client.import_storage.azure_spi.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -22548,6 +22697,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.databricks.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -22725,7 +22875,7 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -22989,7 +23139,7 @@ client.import_storage.databricks.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -23385,7 +23535,7 @@ client.import_storage.databricks.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -23651,6 +23801,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.gcs.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -24408,6 +24559,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.gcswif.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -24605,7 +24757,7 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -24857,7 +25009,7 @@ client.import_storage.gcswif.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -25261,7 +25413,7 @@ client.import_storage.gcswif.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -25479,6 +25631,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.local.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -26110,6 +26263,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.redis.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -26813,6 +26967,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.s3.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -27690,6 +27845,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.s3s.list(
+    ordering="ordering",
     project=1,
 )
 
@@ -27896,7 +28052,7 @@ client.import_storage.s3s.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -28173,7 +28329,7 @@ client.import_storage.s3s.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -28593,7 +28749,7 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -29080,6 +29236,13 @@ client = LabelStudio(
 )
 client.organizations.members.list(
     id=1,
+    exclude_project_id=1,
+    exclude_workspace_id=1,
+    ordering="ordering",
+    page=1,
+    page_size=1,
+    role="role",
+    search="search",
 )
 
 ```
@@ -29137,6 +29300,29 @@ client.organizations.members.list(
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` 
+
+Filter members by organization role. Accepts single role or comma-separated list of roles.
+
+**Format:**
+- Single role: `?role=RE`
+- Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+**Role Codes:**
+- `OW` = Owner
+- `AD` = Administrator
+- `MA` = Manager
+- `RE` = Reviewer
+- `AN` = Annotator
+- `NO` = Not Activated
+- `DI` = Disabled
     
 </dd>
 </dl>
@@ -29468,6 +29654,7 @@ client = LabelStudio(
 )
 client.organizations.permissions.list(
     id=1,
+    ordering="ordering",
 )
 
 ```
@@ -29645,6 +29832,7 @@ client = LabelStudio(
 )
 client.organizations.permissions.get_options(
     id=1,
+    ordering="ordering",
 )
 
 ```
@@ -30103,7 +30291,10 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.roles.list()
+client.projects.roles.list(
+    ids=1,
+    ordering="ordering",
+)
 
 ```
 </dd>
@@ -30515,6 +30706,7 @@ client = LabelStudio(
 )
 client.projects.exports.list(
     id=1,
+    ordering="ordering",
 )
 
 ```
@@ -30742,8 +30934,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.get(
-    export_pk=1,
     id=1,
+    export_pk=1,
 )
 
 ```
@@ -30760,7 +30952,7 @@ client.projects.exports.get(
 <dl>
 <dd>
 
-**export_pk:** `int` — Primary key identifying the export file.
+**id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -30768,7 +30960,7 @@ client.projects.exports.get(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**export_pk:** `int` — Primary key identifying the export file.
     
 </dd>
 </dl>
@@ -30821,8 +31013,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.delete(
-    export_pk=1,
     id=1,
+    export_pk=1,
 )
 
 ```
@@ -30839,7 +31031,7 @@ client.projects.exports.delete(
 <dl>
 <dd>
 
-**export_pk:** `int` — Primary key identifying the export file.
+**id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -30847,7 +31039,7 @@ client.projects.exports.delete(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**export_pk:** `int` — Primary key identifying the export file.
     
 </dd>
 </dl>
@@ -30900,8 +31092,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.convert(
-    export_pk=1,
     id=1,
+    export_pk=1,
     export_type="export_type",
 )
 
@@ -30919,7 +31111,7 @@ client.projects.exports.convert(
 <dl>
 <dd>
 
-**export_pk:** `int` — Primary key identifying the export file.
+**id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -30927,7 +31119,7 @@ client.projects.exports.convert(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**export_pk:** `int` — Primary key identifying the export file.
     
 </dd>
 </dl>
@@ -31437,6 +31629,7 @@ client = LabelStudio(
 client.projects.stats.model_version_ground_truth_agreement(
     id=1,
     model_version="model_version",
+    per_label=True,
 )
 
 ```
@@ -31530,6 +31723,7 @@ client = LabelStudio(
 client.projects.stats.model_version_prediction_agreement(
     id=1,
     model_version="model_version",
+    per_label=True,
 )
 
 ```
@@ -31622,6 +31816,10 @@ client = LabelStudio(
 )
 client.projects.stats.iaa(
     id=1,
+    expand="expand",
+    per_label=True,
+    std=True,
+    task="task",
 )
 
 ```
@@ -31731,6 +31929,7 @@ client = LabelStudio(
 client.projects.stats.users_ground_truth_agreement(
     id=1,
     ids="ids",
+    per_label=True,
 )
 
 ```
@@ -32069,6 +32268,7 @@ client = LabelStudio(
 )
 client.projects.stats.finished_tasks(
     id=1,
+    user_pk=1,
 )
 
 ```
@@ -32231,6 +32431,7 @@ client = LabelStudio(
 )
 client.projects.stats.total_agreement(
     id=1,
+    per_label=True,
 )
 
 ```
@@ -32315,6 +32516,7 @@ client = LabelStudio(
 )
 client.projects.stats.update_stats(
     id=1,
+    stat_type="stat_type",
 )
 
 ```
@@ -32400,6 +32602,7 @@ client = LabelStudio(
 client.projects.stats.users_prediction_agreement(
     id=1,
     ids="ids",
+    per_label=True,
 )
 
 ```
@@ -32493,6 +32696,7 @@ client = LabelStudio(
 client.projects.stats.users_review_score(
     id=1,
     ids="ids",
+    per_label=True,
 )
 
 ```
@@ -32586,6 +32790,7 @@ client = LabelStudio(
 client.projects.stats.user_prediction_agreement(
     id=1,
     user_pk=1,
+    per_label=True,
 )
 
 ```
@@ -32679,6 +32884,7 @@ client = LabelStudio(
 client.projects.stats.user_review_score(
     id=1,
     user_pk=1,
+    per_label=True,
 )
 
 ```
@@ -32772,6 +32978,7 @@ client = LabelStudio(
 client.projects.stats.user_ground_truth_agreement(
     id=1,
     user_pk=1,
+    per_label=True,
 )
 
 ```
@@ -33170,6 +33377,8 @@ client = LabelStudio(
 client.projects.assignments.delete(
     id=1,
     task_pk=1,
+    type="AN",
+    users="users",
 )
 
 ```
@@ -33375,6 +33584,8 @@ client = LabelStudio(
 client.projects.pauses.list(
     project_pk=1,
     user_pk=1,
+    include_deleted=True,
+    ordering="ordering",
 )
 
 ```
@@ -33584,9 +33795,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.pauses.get(
-    id="id",
     project_pk=1,
     user_pk=1,
+    id="id",
 )
 
 ```
@@ -33603,14 +33814,6 @@ client.projects.pauses.get(
 <dl>
 <dd>
 
-**id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **project_pk:** `int` 
     
 </dd>
@@ -33620,6 +33823,14 @@ client.projects.pauses.get(
 <dd>
 
 **user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `str` 
     
 </dd>
 </dl>
@@ -33678,9 +33889,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.pauses.delete(
-    id="id",
     project_pk=1,
     user_pk=1,
+    id="id",
 )
 
 ```
@@ -33697,14 +33908,6 @@ client.projects.pauses.delete(
 <dl>
 <dd>
 
-**id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **project_pk:** `int` 
     
 </dd>
@@ -33714,6 +33917,14 @@ client.projects.pauses.delete(
 <dd>
 
 **user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `str` 
     
 </dd>
 </dl>
@@ -33772,9 +33983,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.pauses.update(
-    id="id",
     project_pk=1,
     user_pk=1,
+    id="id",
 )
 
 ```
@@ -33791,14 +34002,6 @@ client.projects.pauses.update(
 <dl>
 <dd>
 
-**id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **project_pk:** `int` 
     
 </dd>
@@ -33808,6 +34011,14 @@ client.projects.pauses.update(
 <dd>
 
 **user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `str` 
     
 </dd>
 </dl>
@@ -33892,6 +34103,9 @@ client = LabelStudio(
 )
 client.projects.members.bulk.post(
     id=1,
+    last_activity_gte="last_activity__gte",
+    role="role",
+    search="search",
     all_=True,
 )
 
@@ -33918,6 +34132,22 @@ client.projects.members.bulk.post(
 <dd>
 
 **all_:** `bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_activity_gte:** `typing.Optional[str]` — Filter by last activity (ISO 8601 formatted date). Only when all=True.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` — Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
     
 </dd>
 </dl>
@@ -34009,6 +34239,9 @@ client = LabelStudio(
 )
 client.projects.members.bulk.delete(
     id=1,
+    last_activity_gte="last_activity__gte",
+    role="role",
+    search="search",
 )
 
 ```
@@ -34026,6 +34259,22 @@ client.projects.members.bulk.delete(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_activity_gte:** `typing.Optional[str]` — Filter by last activity (ISO 8601 formatted date). Only when all=True.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` — Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
     
 </dd>
 </dl>
@@ -34073,6 +34322,14 @@ client.projects.members.bulk.delete(
         </p>
     </Card>
 Retrieve the members for a specific project.
+
+**Response Fields:**
+- `implicit_member` (boolean): Indicates if the user is an implicit member.
+  - `true`: User has access via workspace membership or organization role (Administrator/Owner)
+  - `false`: User is an explicit project member (added directly to the project)
+- `project_role` (string|null): Project-specific role override if assigned, null otherwise
+
+**Note:** Users can have both explicit membership AND implicit access. The `implicit_member` field is `false` if the user has an explicit ProjectMember entry, regardless of whether they also have implicit access via workspace or org role.
 </dd>
 </dl>
 </dd>
@@ -34087,6 +34344,8 @@ Retrieve the members for a specific project.
 <dd>
 
 ```python
+import datetime
+
 from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
@@ -34094,6 +34353,18 @@ client = LabelStudio(
 )
 response = client.projects.members.paginated.list(
     id=1,
+    ids="ids",
+    implicit=True,
+    last_activity_gte=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    no_annotators=True,
+    ordering="ordering",
+    page=1,
+    page_size=1,
+    role="role",
+    search="search",
+    with_deleted=True,
 )
 for item in response:
     yield item
@@ -34139,7 +34410,32 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**last_activity_gte:** `typing.Optional[dt.datetime]` — Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **no_annotators:** `typing.Optional[bool]` — Exclude annotators from the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` 
+
+Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
+
+**Note on role ordering:**
+When ordering by "role", the system uses the effective role:
+- Project-specific role if assigned (takes precedence)
+- Organization role if no project role is assigned
+
+Roles are sorted alphabetically by their code: AD (Administrator), AN (Annotator), DI (Disabled), MA (Manager), NO (Not Activated), OW (Owner), RE (Reviewer)
     
 </dd>
 </dl>
@@ -34156,6 +34452,34 @@ for page in response.iter_pages():
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` 
+
+Filter members by role. Accepts single role or comma-separated list of roles.
+
+**Format:**
+- Single role: `?role=RE`
+- Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+**Role Codes:**
+- `OW` = Owner
+- `AD` = Administrator
+- `MA` = Manager
+- `RE` = Reviewer
+- `AN` = Annotator
+
+**Matching Logic:**
+Returns users who have any of the specified roles either:
+1. As their **project-specific role** (from project role assignments), OR
+2. As their **organization role** (if they have no project-specific role override)
+
+**Note:** Project-specific roles take precedence. If a user has a project role assigned, their organization role is ignored for filtering purposes.
     
 </dd>
 </dl>
@@ -34409,6 +34733,9 @@ client = LabelStudio(
 )
 client.projects.metrics.custom.logs(
     id=1,
+    end_date="end_date",
+    limit=1,
+    start_date="start_date",
 )
 
 ```
@@ -34833,6 +35160,7 @@ client = LabelStudio(
 )
 client.prompts.versions.list(
     prompt_id=1,
+    ordering="ordering",
 )
 
 ```
@@ -35469,6 +35797,7 @@ client = LabelStudio(
 client.prompts.versions.get_refined_prompt(
     prompt_id=1,
     version_id=1,
+    refinement_job_id="refinement_job_id",
 )
 
 ```
@@ -35562,6 +35891,7 @@ client = LabelStudio(
 client.prompts.versions.refine_prompt(
     prompt_id=1,
     version_id=1,
+    async_=True,
     project_id=1,
     teacher_model_name="teacher_model_name",
     teacher_model_provider_connection_id=1,
@@ -35683,6 +36013,10 @@ client = LabelStudio(
 client.prompts.runs.list(
     prompt_id=1,
     version_id=1,
+    ordering="ordering",
+    parent_model=1,
+    project=1,
+    project_subset="All",
 )
 
 ```
@@ -35948,9 +36282,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.runs.cancel(
-    inference_run_id=1,
     prompt_id=1,
     version_id=1,
+    inference_run_id=1,
 )
 
 ```
@@ -35967,14 +36301,6 @@ client.prompts.runs.cancel(
 <dl>
 <dd>
 
-**inference_run_id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **prompt_id:** `int` 
     
 </dd>
@@ -35984,6 +36310,14 @@ client.prompts.runs.cancel(
 <dd>
 
 **version_id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inference_run_id:** `int` 
     
 </dd>
 </dl>
@@ -37040,6 +37374,10 @@ client = LabelStudio(
 )
 response = client.workspaces.members.paginated.list(
     id=1,
+    ids="ids",
+    page=1,
+    page_size=1,
+    search="search",
 )
 for item in response:
     yield item

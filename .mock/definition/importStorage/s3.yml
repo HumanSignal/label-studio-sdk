@@ -7,7 +7,8 @@ service:
     list:
       path: /api/storages/s3/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a list of all S3 import storage connections.
       source:
         openapi: openapi/openapi.yaml
@@ -24,8 +25,10 @@ service:
       response:
         docs: ''
         type: list<root.S3ImportStorage>
+        status-code: 200
       examples:
         - query-parameters:
+            ordering: ordering
             project: 1
           response:
             body:
@@ -61,7 +64,8 @@ service:
     create:
       path: /api/storages/s3/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create new S3 import storage
       source:
         openapi: openapi/openapi.yaml
@@ -133,6 +137,7 @@ service:
       response:
         docs: ''
         type: root.S3ImportStorage
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -169,7 +174,8 @@ service:
     validate:
       path: /api/storages/s3/validate
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Validate a specific S3 import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -248,7 +254,8 @@ service:
     get:
       path: /api/storages/s3/{id}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get a specific S3 import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -258,6 +265,7 @@ service:
       response:
         docs: ''
         type: root.S3ImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -295,7 +303,8 @@ service:
     delete:
       path: /api/storages/s3/{id}
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete a specific S3 import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -310,7 +319,8 @@ service:
     update:
       path: /api/storages/s3/{id}
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update a specific S3 import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -384,6 +394,7 @@ service:
       response:
         docs: ''
         type: root.S3ImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -422,7 +433,8 @@ service:
     sync:
       path: /api/storages/s3/{id}/sync
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Sync tasks from an S3 import storage connection.
       source:
         openapi: openapi/openapi.yaml
@@ -434,6 +446,7 @@ service:
       response:
         docs: ''
         type: root.S3ImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

@@ -7,7 +7,8 @@ service:
     list:
       path: /api/webhooks/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: List all webhooks set up for your organization.
       source:
         openapi: openapi/openapi.yaml
@@ -21,8 +22,11 @@ service:
       response:
         docs: ''
         type: list<root.Webhook>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            project: project
+          response:
             body:
               - actions:
                   - PROJECT_CREATED
@@ -42,7 +46,8 @@ service:
     create:
       path: /api/webhooks/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create a webhook for your organization.
       source:
         openapi: openapi/openapi.yaml
@@ -52,7 +57,9 @@ service:
         body:
           properties:
             actions: optional<list<root.ActionsEnum>>
-            headers: optional<unknown>
+            headers:
+              type: optional<unknown>
+              docs: Key Value Json of headers
             is_active:
               type: optional<boolean>
               docs: If value is False the webhook is disabled
@@ -74,6 +81,7 @@ service:
       response:
         docs: ''
         type: root.Webhook
+        status-code: 201
       examples:
         - request:
             url: url
@@ -97,7 +105,9 @@ service:
     info:
       path: /api/webhooks/info/
       method: GET
-      auth: true
+      auth:
+        - Token: []
+        - {}
       docs: Get descriptions of all available webhook actions to set up webhooks.
       source:
         openapi: openapi/openapi.yaml
@@ -111,8 +121,11 @@ service:
       response:
         docs: Object with webhook action descriptions.
         type: WebhooksInfoResponse
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            organization-only: true
+          response:
             body:
               ANNOTATIONS_CREATED:
                 description: description
@@ -194,7 +207,8 @@ service:
     get:
       path: /api/webhooks/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -203,6 +217,7 @@ service:
       response:
         docs: ''
         type: root.Webhook
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -226,7 +241,8 @@ service:
     api_webhooks_update:
       path: /api/webhooks/{id}/
       method: PUT
-      auth: true
+      auth:
+        - Token: []
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -237,7 +253,9 @@ service:
         body:
           properties:
             actions: optional<list<root.ActionsEnum>>
-            headers: optional<unknown>
+            headers:
+              type: optional<unknown>
+              docs: Key Value Json of headers
             is_active:
               type: optional<boolean>
               docs: If value is False the webhook is disabled
@@ -258,6 +276,7 @@ service:
       response:
         docs: ''
         type: root.WebhookSerializerForUpdate
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -283,7 +302,8 @@ service:
     delete:
       path: /api/webhooks/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -297,7 +317,8 @@ service:
     update:
       path: /api/webhooks/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -308,7 +329,9 @@ service:
         body:
           properties:
             actions: optional<list<root.ActionsEnum>>
-            headers: optional<unknown>
+            headers:
+              type: optional<unknown>
+              docs: Key Value Json of headers
             is_active:
               type: optional<boolean>
               docs: If value is False the webhook is disabled
@@ -329,6 +352,7 @@ service:
       response:
         docs: ''
         type: root.WebhookSerializerForUpdate
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

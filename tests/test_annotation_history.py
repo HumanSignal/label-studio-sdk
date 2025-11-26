@@ -48,20 +48,20 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.annotation_history.list()
+    response = client.annotation_history.list(annotation=1, ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.annotation_history.list()
+    async_response = await async_client.annotation_history.list(annotation=1, ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"removed": 1}
     expected_types: typing.Any = {"removed": "integer"}
-    response = client.annotation_history.delete()
+    response = client.annotation_history.delete(annotation=1, project=1, task=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.annotation_history.delete()
+    async_response = await async_client.annotation_history.delete(annotation=1, project=1, task=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -117,8 +117,8 @@ async def test_list_for_project(client: LabelStudio, async_client: AsyncLabelStu
             },
         ),
     }
-    response = client.annotation_history.list_for_project(id=1)
+    response = client.annotation_history.list_for_project(id=1, page=1, page_size=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.annotation_history.list_for_project(id=1)
+    async_response = await async_client.annotation_history.list_for_project(id=1, page=1, page_size=1)
     validate_response(async_response, expected_response, expected_types)

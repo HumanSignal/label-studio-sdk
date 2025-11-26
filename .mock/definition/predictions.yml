@@ -7,7 +7,8 @@ service:
     list:
       path: /api/predictions/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: List all predictions and their IDs.
       source:
         openapi: openapi/openapi.yaml
@@ -24,8 +25,12 @@ service:
       response:
         docs: Predictions list
         type: list<root.Prediction>
+        status-code: 200
       examples:
         - name: response
+          query-parameters:
+            project: 1
+            task: 1
           response:
             body:
               - cluster: 1
@@ -49,7 +54,8 @@ service:
     create:
       path: /api/predictions/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: Create a prediction for a specific task.
       source:
         openapi: openapi/openapi.yaml
@@ -83,6 +89,7 @@ service:
       response:
         docs: Created prediction
         type: root.Prediction
+        status-code: 201
       examples:
         - name: response
           request:
@@ -141,7 +148,8 @@ service:
     get:
       path: /api/predictions/{id}/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Get details about a specific prediction by its ID.
       source:
         openapi: openapi/openapi.yaml
@@ -153,6 +161,7 @@ service:
       response:
         docs: Prediction details
         type: root.Prediction
+        status-code: 200
       examples:
         - name: response
           path-parameters:
@@ -194,7 +203,8 @@ service:
     api_predictions_update:
       path: /api/predictions/{id}/
       method: PUT
-      auth: true
+      auth:
+        - Token: []
       docs: Overwrite prediction data by prediction ID.
       source:
         openapi: openapi/openapi.yaml
@@ -232,6 +242,7 @@ service:
       response:
         docs: Updated prediction
         type: root.Prediction
+        status-code: 200
       examples:
         - name: response
           path-parameters:
@@ -292,7 +303,8 @@ service:
     delete:
       path: /api/predictions/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: Delete a prediction by prediction ID.
       source:
         openapi: openapi/openapi.yaml
@@ -309,7 +321,8 @@ service:
     update:
       path: /api/predictions/{id}/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update prediction data by prediction ID.
       source:
         openapi: openapi/openapi.yaml
@@ -347,6 +360,7 @@ service:
       response:
         docs: Updated prediction
         type: root.Prediction
+        status-code: 200
       examples:
         - name: response
           path-parameters:

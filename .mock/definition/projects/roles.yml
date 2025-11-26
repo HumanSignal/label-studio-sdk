@@ -7,7 +7,8 @@ service:
     list:
       path: /api/projects/roles/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -31,8 +32,12 @@ service:
       response:
         docs: ''
         type: list<root.ProjectRole>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            ids: 1
+            ordering: ordering
+          response:
             body:
               - id: 1
                 project: 1
@@ -43,7 +48,8 @@ service:
     add:
       path: /api/projects/roles/
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -79,6 +85,7 @@ service:
       response:
         docs: Role created
         type: root.ProjectRole
+        status-code: 201
       examples:
         - request:
             project: 1
@@ -95,7 +102,8 @@ service:
     remove:
       path: /api/projects/roles/{id}/
       method: DELETE
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -121,7 +129,8 @@ service:
     get:
       path: /api/projects/{id}/roles
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -141,6 +150,7 @@ service:
       response:
         docs: ''
         type: list<root.ProjectRole>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

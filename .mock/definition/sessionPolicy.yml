@@ -7,7 +7,8 @@ service:
     get:
       path: /api/session-policy/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve session timeout policy for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
@@ -15,6 +16,7 @@ service:
       response:
         docs: ''
         type: root.SessionTimeoutPolicy
+        status-code: 200
       examples:
         - response:
             body:
@@ -27,7 +29,8 @@ service:
     update:
       path: /api/session-policy/
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: Update session timeout policy for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
@@ -56,6 +59,7 @@ service:
       response:
         docs: ''
         type: root.SessionTimeoutPolicy
+        status-code: 200
       examples:
         - request: {}
           response:

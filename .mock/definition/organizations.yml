@@ -7,7 +7,8 @@ service:
     reset_token:
       path: /api/invite/reset-token
       method: POST
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         Reset the token used in the invitation link to invite someone to an
         organization.
@@ -17,6 +18,7 @@ service:
       response:
         docs: ''
         type: root.OrganizationInvite
+        status-code: 200
       examples:
         - response:
             body:
@@ -27,7 +29,8 @@ service:
     list:
       path: /api/organizations/
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: |2-
 
                 Return a list of the organizations you've created or that you have access to.
@@ -44,8 +47,11 @@ service:
       response:
         docs: ''
         type: list<root.OrganizationId>
+        status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            ordering: ordering
+          response:
             body:
               - contact_info: contact_info
                 created_at: '2024-01-15T09:30:00Z'
@@ -56,7 +62,8 @@ service:
     get:
       path: /api/organizations/{id}
       method: GET
-      auth: true
+      auth:
+        - Token: []
       docs: Retrieve the settings for a specific organization by ID.
       source:
         openapi: openapi/openapi.yaml
@@ -66,6 +73,7 @@ service:
       response:
         docs: ''
         type: root.LseOrganization
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -91,7 +99,8 @@ service:
     update:
       path: /api/organizations/{id}
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: >-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -132,6 +141,7 @@ service:
       response:
         docs: ''
         type: root.LseOrganization
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -162,7 +172,8 @@ service:
     update_default_role:
       path: /api/organizations/{id}/set-default-role
       method: PATCH
-      auth: true
+      auth:
+        - Token: []
       docs: |-
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -208,9 +219,20 @@ service:
                 * `AN` - Annotator
                 * `DI` - Deactivated
                 * `NO` - Not Activated
-            email_notification_settings: optional<unknown>
-            embed_domains: optional<unknown>
-            embed_settings: optional<unknown>
+            email_notification_settings:
+              type: optional<unknown>
+              docs: >-
+                Email notification settings for this organization. Controls
+                which email notifications users can receive. Structure:
+                {"notifications_allowed": {"notification_type": bool}}
+            embed_domains:
+              type: optional<unknown>
+              docs: >-
+                List of objects: {"domain": "example.com"}. Used for CSP header
+                on /embed routes.
+            embed_settings:
+              type: optional<unknown>
+              docs: Embed settings for this organization
             external_id:
               type: optional<string>
               docs: External ID to uniquely identify this organization
@@ -233,6 +255,7 @@ service:
       response:
         docs: ''
         type: root.DefaultRole
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

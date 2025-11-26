@@ -67,6 +67,8 @@ class PausesClient:
         client.projects.pauses.list(
             project_pk=1,
             user_pk=1,
+            include_deleted=True,
+            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -174,7 +176,7 @@ class PausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Pause:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -187,11 +189,11 @@ class PausesClient:
 
         Parameters
         ----------
-        id : str
-
         project_pk : int
 
         user_pk : int
+
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -209,9 +211,9 @@ class PausesClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.pauses.get(
-            id="id",
             project_pk=1,
             user_pk=1,
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -234,7 +236,7 @@ class PausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -247,11 +249,11 @@ class PausesClient:
 
         Parameters
         ----------
-        id : str
-
         project_pk : int
 
         user_pk : int
+
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -268,9 +270,9 @@ class PausesClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.pauses.delete(
-            id="id",
             project_pk=1,
             user_pk=1,
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -288,9 +290,9 @@ class PausesClient:
 
     def update(
         self,
-        id: str,
         project_pk: int,
         user_pk: int,
+        id: str,
         *,
         reason: typing.Optional[ReasonEnum] = OMIT,
         verbose_reason: typing.Optional[str] = OMIT,
@@ -307,11 +309,11 @@ class PausesClient:
 
         Parameters
         ----------
-        id : str
-
         project_pk : int
 
         user_pk : int
+
+        id : str
 
         reason : typing.Optional[ReasonEnum]
             Reason for pausing
@@ -341,9 +343,9 @@ class PausesClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.pauses.update(
-            id="id",
             project_pk=1,
             user_pk=1,
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -431,6 +433,8 @@ class AsyncPausesClient:
             await client.projects.pauses.list(
                 project_pk=1,
                 user_pk=1,
+                include_deleted=True,
+                ordering="ordering",
             )
 
 
@@ -549,7 +553,7 @@ class AsyncPausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Pause:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -562,11 +566,11 @@ class AsyncPausesClient:
 
         Parameters
         ----------
-        id : str
-
         project_pk : int
 
         user_pk : int
+
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -589,9 +593,9 @@ class AsyncPausesClient:
 
         async def main() -> None:
             await client.projects.pauses.get(
-                id="id",
                 project_pk=1,
                 user_pk=1,
+                id="id",
             )
 
 
@@ -617,7 +621,7 @@ class AsyncPausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -630,11 +634,11 @@ class AsyncPausesClient:
 
         Parameters
         ----------
-        id : str
-
         project_pk : int
 
         user_pk : int
+
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -656,9 +660,9 @@ class AsyncPausesClient:
 
         async def main() -> None:
             await client.projects.pauses.delete(
-                id="id",
                 project_pk=1,
                 user_pk=1,
+                id="id",
             )
 
 
@@ -679,9 +683,9 @@ class AsyncPausesClient:
 
     async def update(
         self,
-        id: str,
         project_pk: int,
         user_pk: int,
+        id: str,
         *,
         reason: typing.Optional[ReasonEnum] = OMIT,
         verbose_reason: typing.Optional[str] = OMIT,
@@ -698,11 +702,11 @@ class AsyncPausesClient:
 
         Parameters
         ----------
-        id : str
-
         project_pk : int
 
         user_pk : int
+
+        id : str
 
         reason : typing.Optional[ReasonEnum]
             Reason for pausing
@@ -737,9 +741,9 @@ class AsyncPausesClient:
 
         async def main() -> None:
             await client.projects.pauses.update(
-                id="id",
                 project_pk=1,
                 user_pk=1,
+                id="id",
             )
 
 

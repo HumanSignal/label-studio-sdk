@@ -56,6 +56,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         client.actions.create(
             id="delete_annotators",
             project=1,
+            view=1,
             filters=ActionsCreateRequestFilters(
                 conjunction="or",
                 items=[
@@ -74,6 +75,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         await async_client.actions.create(
             id="delete_annotators",
             project=1,
+            view=1,
             filters=ActionsCreateRequestFilters(
                 conjunction="or",
                 items=[

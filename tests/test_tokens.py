@@ -12,10 +12,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         "list",
         {0: {"created_at": None, "expires_at": None, "token": None}},
     )
-    response = client.tokens.list()
+    response = client.tokens.list(ordering="ordering")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.tokens.list()
+    async_response = await async_client.tokens.list(ordering="ordering")
     validate_response(async_response, expected_response, expected_types)
 
 
