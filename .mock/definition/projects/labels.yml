@@ -1,20 +1,5 @@
 imports:
   root: ../__package__.yml
-types:
-  LabelsListResponse:
-    properties:
-      count: integer
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: list<root.LabelLink>
-    source:
-      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
@@ -35,19 +20,19 @@ service:
             docs: A page number within the paginated result set.
       response:
         docs: ''
-        type: LabelsListResponse
+        type: root.PaginatedLabelLinkList
       examples:
         - response:
             body:
-              count: 1
-              next: next
-              previous: previous
+              count: 123
+              next: http://api.example.org/accounts/?page=4
+              previous: http://api.example.org/accounts/?page=2
               results:
-                - id: 1
-                  annotations_count: 1
+                - annotations_count: 1
                   from_name: from_name
-                  project: 1
+                  id: 1
                   label: 1
+                  project: 1
       audiences:
         - internal
     create:
@@ -61,7 +46,17 @@ service:
         openapi: openapi/openapi.yaml
       display-name: Create label links
       request:
-        body: root.LabelLink
+        name: LabelLinkRequest
+        body:
+          properties:
+            from_name:
+              type: string
+              docs: Tag name
+              validation:
+                minLength: 1
+                maxLength: 2048
+            label: integer
+            project: integer
         content-type: application/json
       response:
         docs: ''
@@ -69,15 +64,15 @@ service:
       examples:
         - request:
             from_name: from_name
-            project: 1
             label: 1
+            project: 1
           response:
             body:
-              id: 1
               annotations_count: 1
               from_name: from_name
-              project: 1
+              id: 1
               label: 1
+              project: 1
       audiences:
         - internal
     get:
@@ -98,24 +93,22 @@ service:
             id: id
           response:
             body:
-              id: 1
               annotations_count: 1
               from_name: from_name
-              project: 1
+              id: 1
               label: 1
+              project: 1
       audiences:
         - internal
     delete:
       path: /api/label_links/{id}/
       method: DELETE
       auth: true
-      docs: >
+      docs: |2-
 
-        Remove a label link that links custom labels to your project labeling
-        configuration. If you remove a label link,
-
-        the label stops being available for the project it was linked to. You
-        can add a new label link at any time. 
+                Remove a label link that links custom labels to your project labeling configuration. If you remove a label link,
+                the label stops being available for the project it was linked to. You can add a new label link at any time. 
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -130,20 +123,28 @@ service:
       path: /api/label_links/{id}/
       method: PATCH
       auth: true
-      docs: >
+      docs: |2-
 
-        Update a label link that links custom labels to a project labeling
-        configuration, for example if the fromName,  
-
-        toName, or name parameters for a tag in the labeling configuration
-        change. 
+                Update a label link that links custom labels to a project labeling configuration, for example if the fromName,  
+                toName, or name parameters for a tag in the labeling configuration change. 
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Update label link
       request:
-        body: root.LabelLink
+        name: PatchedLabelLinkRequest
+        body:
+          properties:
+            from_name:
+              type: optional<string>
+              docs: Tag name
+              validation:
+                minLength: 1
+                maxLength: 2048
+            label: optional<integer>
+            project: optional<integer>
         content-type: application/json
       response:
         docs: ''
@@ -151,27 +152,24 @@ service:
       examples:
         - path-parameters:
             id: id
-          request:
-            from_name: from_name
-            project: 1
-            label: 1
+          request: {}
           response:
             body:
-              id: 1
               annotations_count: 1
               from_name: from_name
-              project: 1
+              id: 1
               label: 1
+              project: 1
       audiences:
         - internal
     update_many:
       path: /api/labels/bulk
       method: POST
       auth: true
-      docs: >
+      docs: |2-
 
-        If you want to update the labels in saved annotations, use this
-        endpoint.
+                If you want to update the labels in saved annotations, use this endpoint.
+                
       source:
         openapi: openapi/openapi.yaml
       display-name: Bulk update labels

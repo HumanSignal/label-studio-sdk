@@ -8,100 +8,72 @@ service:
       path: /api/storages/export/gcs
       method: GET
       auth: true
-      docs: >
-
-        You can connect your Google Cloud Storage bucket to Label Studio as a
-        source storage or target storage. Use this API request to get a list of
-        all GCS export (target) storage connections for a specific project. 
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](../projects/list). 
-
-
-        For more information about working with external storage, see [Sync data
-        from external storage](https://labelstud.io/guide/storage).
+      docs: Get a list of all GCS export storage connections.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List export storages
+      display-name: Get all export storage
       request:
         name: GcsListRequest
         query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
           project:
-            type: optional<integer>
+            type: integer
             docs: Project ID
       response:
         docs: ''
         type: list<root.GcsExportStorage>
       examples:
-        - response:
+        - query-parameters:
+            project: 1
+          response:
             body:
-              - id: 1
-                type: type
-                synchronizable: true
-                bucket: bucket
-                prefix: prefix
-                regex_filter: regex_filter
-                use_blob_urls: true
+              - bucket: bucket
+                can_delete_objects: true
+                created_at: '2024-01-15T09:30:00Z'
+                description: description
                 google_application_credentials: google_application_credentials
                 google_project_id: google_project_id
+                id: 1
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
-                status: initialized
-                traceback: traceback
                 meta:
                   key: value
-                title: title
-                description: description
-                created_at: '2024-01-15T09:30:00Z'
-                can_delete_objects: true
+                prefix: prefix
                 project: 1
+                regex_filter: regex_filter
+                status: initialized
+                synchronizable: true
+                title: title
+                traceback: traceback
+                type: type
+                use_blob_urls: true
       audiences:
         - public
     create:
       path: /api/storages/export/gcs
       method: POST
       auth: true
-      docs: >
-
-        Create a new target storage connection to Google Cloud Storage. 
-
-
-        For information about the required fields and prerequisites, see [Google
-        Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage)
-        in the Label Studio documentation. 
-
-
-        <Tip>After you add the storage, you should validate the connection
-        before attempting to sync your data. Your data will not be exported
-        until you [sync your connection](sync).</Tip>
+      docs: Create a new GCS export storage connection to store annotations.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create new storage
+      display-name: Create export storage
       request:
         name: GcsCreateRequest
         body:
           properties:
-            can_delete_objects:
-              type: optional<boolean>
-              docs: Deletion from storage enabled.
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
             bucket:
               type: optional<string>
               docs: GCS bucket name
-            prefix:
+            can_delete_objects:
+              type: optional<boolean>
+              docs: Deletion from storage enabled.
+              default: false
+            description:
               type: optional<string>
-              docs: GCS bucket prefix
+              docs: Storage description
             google_application_credentials:
               type: optional<string>
               docs: >-
@@ -111,33 +83,53 @@ service:
             google_project_id:
               type: optional<string>
               docs: Google project ID
+            prefix:
+              type: optional<string>
+              docs: GCS bucket prefix
+            project:
+              type: optional<integer>
+              docs: Project ID
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
         content-type: application/json
       response:
         docs: ''
-        type: GcsCreateResponse
+        type: root.GcsExportStorage
       examples:
         - request: {}
           response:
             body:
-              can_delete_objects: true
-              title: title
-              description: description
-              project: 1
               bucket: bucket
-              prefix: prefix
+              can_delete_objects: true
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
               google_application_credentials: google_application_credentials
               google_project_id: google_project_id
+              id: 1
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              project: 1
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
     validate:
       path: /api/storages/export/gcs/validate
       method: POST
       auth: true
-      docs: >
-
-        Validate a specific GCS export storage connection. This is useful to
-        ensure that the storage configuration settings are correct and
-        operational before attempting to export data.
+      docs: Validate a specific GCS export storage connection.
       source:
         openapi: openapi/openapi.yaml
       display-name: Validate export storage
@@ -145,27 +137,16 @@ service:
         name: GcsValidateRequest
         body:
           properties:
-            id:
-              type: optional<integer>
-              docs: Storage ID. If set, storage with specified ID will be updated
-            can_delete_objects:
-              type: optional<boolean>
-              docs: Deletion from storage enabled.
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
             bucket:
               type: optional<string>
               docs: GCS bucket name
-            prefix:
+            can_delete_objects:
+              type: optional<boolean>
+              docs: Deletion from storage enabled.
+              default: false
+            description:
               type: optional<string>
-              docs: GCS bucket prefix
+              docs: Storage description
             google_application_credentials:
               type: optional<string>
               docs: >-
@@ -175,6 +156,20 @@ service:
             google_project_id:
               type: optional<string>
               docs: Google project ID
+            id:
+              type: optional<integer>
+              docs: Storage ID. If set, storage with specified ID will be updated
+            prefix:
+              type: optional<string>
+              docs: GCS bucket prefix
+            project:
+              type: optional<integer>
+              docs: Project ID
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
         content-type: application/json
       examples:
         - request: {}
@@ -184,21 +179,11 @@ service:
       path: /api/storages/export/gcs/{id}
       method: GET
       auth: true
-      docs: >
-
-        Get a specific GCS export storage connection. You will need to provide
-        the export storage ID. You can find this using [List export
-        storages](list). 
-
-
-        For more information about working with external storage, see [Sync data
-        from external storage](https://labelstud.io/guide/storage).
+      docs: Get a specific GCS export storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this gcs export storage.
+        id: integer
       display-name: Get export storage
       response:
         docs: ''
@@ -208,51 +193,38 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
               bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
+              can_delete_objects: true
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
               google_application_credentials: google_application_credentials
               google_project_id: google_project_id
+              id: 1
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              can_delete_objects: true
+              prefix: prefix
               project: 1
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
     delete:
       path: /api/storages/export/gcs/{id}
       method: DELETE
       auth: true
-      docs: >
-
-        Delete a specific GCS export storage connection. You will need to
-        provide the export storage ID. You can find this using [List export
-        storages](list). 
-
-
-        Deleting an export/target storage connection does not affect tasks with
-        synced data in Label Studio. If you want to remove the tasks that were
-        synced from the external storage, you will need to delete them manually
-        from within the Label Studio UI or use the [Delete
-        tasks](../../tasks/delete-all-tasks) API. 
+      docs: Delete a specific GCS export storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this gcs export storage.
+        id: integer
       display-name: Delete export storage
       examples:
         - path-parameters:
@@ -263,44 +235,26 @@ service:
       path: /api/storages/export/gcs/{id}
       method: PATCH
       auth: true
-      docs: >
-
-        Update a specific GCS export storage connection. You will need to
-        provide the export storage ID. You can find this using [List export
-        storages](list). 
-
-
-        For more information about working with external storage, see [Sync data
-        from external storage](https://labelstud.io/guide/storage).
+      docs: Update a specific GCS export storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this gcs export storage.
+        id: integer
       display-name: Update export storage
       request:
         name: GcsUpdateRequest
         body:
           properties:
-            can_delete_objects:
-              type: optional<boolean>
-              docs: Deletion from storage enabled.
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
             bucket:
               type: optional<string>
               docs: GCS bucket name
-            prefix:
+            can_delete_objects:
+              type: optional<boolean>
+              docs: Deletion from storage enabled.
+              default: false
+            description:
               type: optional<string>
-              docs: GCS bucket prefix
+              docs: Storage description
             google_application_credentials:
               type: optional<string>
               docs: >-
@@ -310,46 +264,55 @@ service:
             google_project_id:
               type: optional<string>
               docs: Google project ID
+            prefix:
+              type: optional<string>
+              docs: GCS bucket prefix
+            project:
+              type: optional<integer>
+              docs: Project ID
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
         content-type: application/json
       response:
         docs: ''
-        type: GcsUpdateResponse
+        type: root.GcsExportStorage
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
-              can_delete_objects: true
-              title: title
-              description: description
-              project: 1
               bucket: bucket
-              prefix: prefix
+              can_delete_objects: true
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
               google_application_credentials: google_application_credentials
               google_project_id: google_project_id
+              id: 1
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              project: 1
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
     sync:
       path: /api/storages/export/gcs/{id}/sync
       method: POST
       auth: true
-      docs: >
-
-        Sync tasks to a GCS export/target storage connection. You will need to
-        provide the export storage ID. You can find this using [List export
-        storages](list). 
-
-
-        Sync operations with external buckets only go one way. They either
-        create tasks from objects in the bucket (source/import storage) or push
-        annotations to the output bucket (export/target storage). Changing
-        something on the bucket side doesn’t guarantee consistency in results.
-
-
-        <Note>Before proceeding, you should review [How sync operations work -
-        Source storage](https://labelstud.io/guide/storage#Source-storage) to
-        ensure that your data remains secure and private.</Note> 
+      docs: Sync tasks from an GCS export storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -363,89 +326,28 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
               bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
+              can_delete_objects: true
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
               google_application_credentials: google_application_credentials
               google_project_id: google_project_id
+              id: 1
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              can_delete_objects: true
+              prefix: prefix
               project: 1
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
-types:
-  GcsCreateResponse:
-    properties:
-      can_delete_objects:
-        type: optional<boolean>
-        docs: Deletion from storage enabled.
-      title:
-        type: optional<string>
-        docs: Storage title
-      description:
-        type: optional<string>
-        docs: Storage description
-      project:
-        type: optional<integer>
-        docs: Project ID
-      bucket:
-        type: optional<string>
-        docs: GCS bucket name
-      prefix:
-        type: optional<string>
-        docs: GCS bucket prefix
-      google_application_credentials:
-        type: optional<string>
-        docs: >-
-          The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-          official Google Cloud Authentication documentation for more details.
-      google_project_id:
-        type: optional<string>
-        docs: Google project ID
-    source:
-      openapi: openapi/openapi.yaml
-  GcsUpdateResponse:
-    properties:
-      can_delete_objects:
-        type: optional<boolean>
-        docs: Deletion from storage enabled.
-      title:
-        type: optional<string>
-        docs: Storage title
-      description:
-        type: optional<string>
-        docs: Storage description
-      project:
-        type: optional<integer>
-        docs: Project ID
-      bucket:
-        type: optional<string>
-        docs: GCS bucket name
-      prefix:
-        type: optional<string>
-        docs: GCS bucket prefix
-      google_application_credentials:
-        type: optional<string>
-        docs: >-
-          The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-          official Google Cloud Authentication documentation for more details.
-      google_project_id:
-        type: optional<string>
-        docs: Google project ID
-    source:
-      openapi: openapi/openapi.yaml

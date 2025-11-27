@@ -1,0 +1,25 @@
+<View>
+  <Image name="image" value="$image"/>
+  <KeyPointLabels name="keypoints" toName="image">
+    <Label value="nose" model_index="0"/>
+    <Label value="left_eye" model_index="1"/>
+    <Label value="right_eye" model_index="2"/>
+    <Label value="left_ear" model_index="3"/>
+    <Label value="right_ear" model_index="4"/>
+    <Label value="left_shoulder" model_index="5"/>
+    <Label value="right_shoulder" model_index="6"/>
+    <Label value="left_elbow" model_index="7"/>
+    <Label value="right_elbow" model_index="8"/>
+    <Label value="left_wrist" model_index="9"/>
+    <Label value="right_wrist" model_index="10"/>
+    <Label value="left_hip" model_index="11"/>
+    <Label value="right_hip" model_index="12"/>
+    <Label value="left_knee" model_index="13"/>
+    <Label value="right_knee" model_index="14"/>
+    <Label value="left_ankle" model_index="15"/>
+    <Label value="right_ankle" model_index="16"/>
+  </KeyPointLabels>
+  <RectangleLabels name="bbox" toName="image">
+    <Label value="person"/>
+  </RectangleLabels>
+</View>

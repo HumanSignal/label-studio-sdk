@@ -12,14 +12,21 @@ import pytest
 from label_studio_sdk import LabelStudio
 from label_studio_sdk.client import AsyncLabelStudio
 from label_studio_sdk.core.api_error import ApiError
-from label_studio_sdk.projects.types.projects_list_response import \
-    ProjectsListResponse
-from label_studio_sdk.types.access_token_response import AccessTokenResponse
+from label_studio_sdk.types.token_refresh_response import TokenRefreshResponse
+from label_studio_sdk.tokens.client_ext import TokensClientExt
 
 NOW = int(datetime.datetime.now(timezone.utc).timestamp())
 ONE_HOUR_AGO = NOW - 3600
 IN_ONE_HOUR = NOW + 3600
 BASE_URL = "https://mocked.test"
+
+
+empty_projects_list_response = {
+    "count": 0,
+    "results": [],
+    "next": None,
+    "previous": None,
+}
 
 
 @pytest.mark.respx(base_url=BASE_URL)
@@ -31,7 +38,7 @@ def test_refresh_token_auth(respx_mock):
         return_value=httpx.Response(200, json={"access": access_token})
     )
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = LabelStudio(
@@ -54,7 +61,7 @@ def test_initial_request_triggers_token_refresh(respx_mock):
         return_value=httpx.Response(200, json={"access": access_token})
     )
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = LabelStudio(
@@ -77,7 +84,7 @@ def test_expired_token_triggers_refresh(respx_mock):
         return_value=httpx.Response(200, json={"access": valid_access_token})
     )
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = LabelStudio(
@@ -101,7 +108,7 @@ def test_valid_token_skips_refresh(respx_mock):
         return_value=httpx.Response(200, json={"access": access_token})
     )
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = LabelStudio(
@@ -120,7 +127,7 @@ def test_legacy_token_detection(respx_mock):
     """Test that a non-JWT token is automatically detected as a legacy token."""
     legacy_token = "some-legacy-token-123"
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = LabelStudio(
@@ -139,7 +146,7 @@ async def test_async_legacy_token_detection(respx_mock):
     """Test that a non-JWT token is automatically detected as a legacy token in async client."""
     legacy_token = "some-legacy-token-123"
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = AsyncLabelStudio(
@@ -161,7 +168,7 @@ async def test_async_jwt_refresh_token(respx_mock):
         return_value=httpx.Response(200, json={"access": jwt_token})
     )
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     async with httpx.AsyncClient() as http_client:
@@ -202,7 +209,7 @@ def test_concurrent_refresh_single_request():
     refresh_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
     expired_access_token = jwt.encode({"exp": ONE_HOUR_AGO}, "secret")
     valid_access_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
-    mock_response = AccessTokenResponse(access=valid_access_token)
+    mock_response = TokenRefreshResponse(access=valid_access_token)
     
     refresh_count = 0
     refresh_called = threading.Event()
@@ -239,7 +246,7 @@ async def test_async_concurrent_refresh_single_request():
     refresh_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
     expired_access_token = jwt.encode({"exp": ONE_HOUR_AGO}, "secret")
     valid_access_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
-    mock_response = AccessTokenResponse(access=valid_access_token)
+    mock_response = TokenRefreshResponse(access=valid_access_token)
 
     refresh_count = 0
     refresh_called = asyncio.Event()
@@ -278,7 +285,7 @@ def test_no_unnecessary_refresh():
     refresh_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
     expired_access_token = jwt.encode({"exp": ONE_HOUR_AGO}, "secret")
     valid_access_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
-    mock_response = AccessTokenResponse(access=valid_access_token)
+    mock_response = TokenRefreshResponse(access=valid_access_token)
 
     refresh_count = 0
     refresh_started = threading.Event()
@@ -311,3 +318,66 @@ def test_no_unnecessary_refresh():
 
     assert refresh_count == 1, "Expected exactly one refresh call"
     assert client._client_wrapper._tokens_client.api_key == mock_response.access
+
+@pytest.mark.asyncio
+async def test_client_params_preserved_during_refresh():
+    # Initialize test parameters
+    test_params = {
+        'auth': httpx.BasicAuth('user', 'pass'),
+        'params': {'test': 'param'},
+        'headers': {'X-Test': 'header'},  # httpx will convert this to lowercase
+        'cookies': {'test': 'cookie'},
+        'timeout': httpx.Timeout(10.0),
+        'follow_redirects': True,
+        'max_redirects': 5,
+        'event_hooks': {'request': [lambda r: r]},
+        'base_url': 'http://test.com',
+        'trust_env': False,
+        'default_encoding': 'latin1',
+        'verify': False,
+        'http1': True,
+        'http2': False,
+        'limits': httpx.Limits(max_connections=50, max_keepalive_connections=10, keepalive_expiry=10.0)
+    }
+
+    # Create AsyncLabelStudio with test parameters
+    ls = AsyncLabelStudio(
+        base_url="http://localhost:8080",
+        api_key="test_key",
+        httpx_client=httpx.AsyncClient(**test_params)
+    )
+
+    # Get the tokens client
+    tokens_client = ls._client_wrapper._tokens_client
+
+    # Get parameters from the new client that would be created during refresh
+    new_params = tokens_client._get_client_params(tokens_client._client_wrapper.httpx_client.httpx_client)
+
+    # Verify all parameters are preserved
+    for key, value in test_params.items():
+        if key == 'limits':
+            # Limits objects need special comparison
+            assert new_params[key].max_connections == value.max_connections
+            assert new_params[key].max_keepalive_connections == value.max_keepalive_connections
+            assert new_params[key].keepalive_expiry == value.keepalive_expiry
+        elif key == 'params':
+            # QueryParams need to be compared as dict
+            assert dict(new_params[key]) == value
+        elif key == 'headers':
+            # Headers need to be compared as dict, but only our custom headers
+            new_headers = dict(new_params[key])
+            # Remove default httpx headers
+            default_headers = {'accept', 'accept-encoding', 'connection', 'user-agent'}
+            for header in default_headers:
+                new_headers.pop(header, None)
+            # Convert test headers to lowercase for comparison
+            test_headers = {k.lower(): v for k, v in value.items()}
+            assert new_headers == test_headers
+        elif key == 'cookies':
+            # Cookies need to be compared as dict
+            assert dict(new_params[key]) == value
+        elif key == 'event_hooks':
+            # Only compare request hooks since httpx adds default response hooks
+            assert new_params[key]['request'] == value['request']
+        else:
+            assert new_params[key] == value, f"Parameter {key} was not preserved correctly"

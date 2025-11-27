@@ -4,20 +4,17 @@ The newer versions v1.0 and above still support the functionalities of the old v
 [`label_studio_sdk._legacy`](../../README.md) in your script.
 """
 
+import os
 import random
 import re
 
 import pandas as pd
 
-from label_studio_sdk import Client
+from label_studio_sdk.client import LabelStudio
 
-ls = Client(
-    url="http://localhost:8080", api_key="d6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3"
-)
-ls.check_connection()
+ls = LabelStudio(base_url=os.getenv('LABEL_STUDIO_URL', 'http://localhost:8080'), api_key=os.getenv('LABEL_STUDIO_API_KEY'))
 
-
-project = ls.start_project(
+project = ls.projects.create(
     title="Weak Supervision example with SDK",
     label_config="""
     <View>
@@ -36,7 +33,10 @@ project = ls.start_project(
 
 
 tasks = pd.read_csv("data/amazon_cells_labelled.tsv", sep="\t").to_dict("records")
-tasks_ids = project.import_tasks(tasks)
+tasks_ids = [
+    ls.tasks.create(project=project.id, data=task).id
+    for task in tasks
+]
 
 
 # Noisy programmatic labelers
@@ -71,13 +71,13 @@ for label_regex, label in label_ops.items():
                 }
             )
 
-project.create_predictions(predictions)
+for pr in predictions:
+    ls.predictions.create(
+        task=pr["task"],
+        result=pr["result"],
+        score=float(pr["score"]),
+        model_version=pr["model_version"],
+    )
 
 
-model_versions = project.get_model_versions()
-
-# check model version stats
-pd.Series(project.get_predictions_coverage(), name="Coverage")
-
-
-print(project.create_annotations_from_predictions(model_versions=list(model_versions)))
+model_versions = ls.projects.get(id=project.id).model_version

@@ -4,98 +4,138 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    blacklist:
-      path: /api/token/blacklist
-      method: POST
+    list:
+      path: /api/token/
+      method: GET
       auth: true
-      docs: |
-        Blacklist a refresh token to prevent its future use.
+      docs: List all API tokens for the current user.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Blacklist token
+      display-name: List API tokens
       request:
-        name: TokensBlacklistRequest
+        name: TokensListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.LseapiTokenList>
+      examples:
+        - response:
+            body:
+              - created_at: created_at
+                expires_at: expires_at
+                token: token
+      audiences:
+        - public
+    create:
+      path: /api/token/
+      method: POST
+      auth: true
+      docs: Create a new API token for the current user.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create API token
+      response:
+        docs: ''
+        type: root.LseapiTokenCreate
+      examples:
+        - response:
+            body:
+              created_at: created_at
+              expires_at: expires_at
+              token: token
+      audiences:
+        - public
+    blacklist:
+      path: /api/token/blacklist/
+      method: POST
+      auth: false
+      docs: >-
+        Adds a JWT refresh token to the blacklist, preventing it from being used
+        to obtain new access tokens.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Blacklist a JWT refresh token
+      request:
+        name: LsapiTokenBlacklistRequest
         body:
           properties:
             refresh:
               type: string
-              docs: JWT refresh token
+              validation:
+                minLength: 1
         content-type: application/json
+      response:
+        docs: ''
+        type: map<string, unknown>
       errors:
         - root.NotFoundError
       examples:
         - request:
             refresh: refresh
-      audiences:
-        - public
-    get:
-      path: /api/token
-      method: GET
-      auth: true
-      docs: |
-        List all API tokens for the current user.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: List API tokens
-      response:
-        docs: List of API tokens retrieved successfully
-        type: list<root.ApiTokenResponse>
-      examples:
-        - response:
+          response:
             body:
-              - token: token
-                created_at: created_at
-                expires_at: expires_at
-      audiences:
-        - public
-    create:
-      path: /api/token
-      method: POST
-      auth: true
-      docs: |
-        Create a new API token for the current user.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Create API token
-      response:
-        docs: Token created successfully
-        type: root.ApiTokenResponse
-      examples:
-        - response:
-            body:
-              token: token
-              created_at: created_at
-              expires_at: expires_at
+              key: value
       audiences:
         - public
     refresh:
-      path: /api/token/refresh
+      path: /api/token/refresh/
       method: POST
-      auth: true
-      docs: |
-        Get a new access token, using a refresh token.
+      auth: false
+      docs: Get a new access token, using a refresh token.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Refresh token
+      display-name: Refresh JWT token
       request:
-        name: TokensRefreshRequest
+        name: TokenRefreshRequest
         body:
           properties:
             refresh:
               type: string
-              docs: JWT refresh token
+              validation:
+                minLength: 1
         content-type: application/json
       response:
-        docs: New access token created successfully
-        type: root.AccessTokenResponse
-      errors:
-        - root.UnauthorizedError
+        docs: ''
+        type: root.TokenRefreshResponse
       examples:
         - request:
             refresh: refresh
           response:
             body:
               access: access
+      audiences:
+        - public
+    rotate:
+      path: /api/token/rotate/
+      method: POST
+      auth: true
+      docs: Creates a new JWT refresh token and blacklists the current one.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Rotate JWT refresh token
+      request:
+        name: LsapiTokenRotateRequest
+        body:
+          properties:
+            refresh:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TokenRotateResponse
+      errors:
+        - root.BadRequestError
+      examples:
+        - request:
+            refresh: refresh
+          response:
+            body:
+              refresh: refresh
       audiences:
         - public
   source:

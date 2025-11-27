@@ -39,6 +39,7 @@ _TAG_TO_CLASS = {
     "taxonomy": "TaxonomyTag",
     "textarea": "TextAreaTag",
     "timeserieslabels": "TimeSeriesLabelsTag",
+    "chatmessage": "ChatMessageTag",
 }
 
 
@@ -287,10 +288,9 @@ class ControlTag(LabelStudioTag):
 
     def _validate_value_labels(self, value):
         """ """
-        if self._label_attr_name not in value:
-            return False
-
-        return self._validate_labels(value.get(self._label_attr_name))
+        if hasattr(self, "_label_attr_name") and self._label_attr_name in value:
+            return self._validate_labels(value.get(self._label_attr_name))
+        return False
 
     def validate_value(self, value: dict) -> bool:
         """
@@ -312,6 +312,10 @@ class ControlTag(LabelStudioTag):
             True if the value is valid, False otherwise
         """
         
+        # Accept inputs that nest the payload under the control name, e.g. {"ranker": "rank": ["a", "b", "c"]}
+        if isinstance(value, dict) and self.name in value and isinstance(value[self.name], dict):
+            value = value[self.name]
+
         if hasattr(self, "_label_attr_name"):
             if not self._validate_value_labels(value):
                 return False
@@ -499,13 +503,13 @@ class ControlTag(LabelStudioTag):
 
 
 class SpanSelection(BaseModel):
-    start: int = Field(..., ge=0)
-    end: int = Field(..., ge=0)
+    start: Union[float, int, str]
+    end: Union[float, int, str]
 
 
 class SpanSelectionOffsets(SpanSelection):
-    startOffset: int = Field(..., ge=0)
-    endOffset: int = Field(..., ge=0)
+    startOffset: Optional[int] = Field(None, ge=0)
+    endOffset: Optional[int] = Field(None, ge=0)
 
 
 class ChoicesValue(BaseModel):
@@ -557,6 +561,7 @@ class LabelsTag(ControlTag):
     _label_attr_name: str = "labels"
     _value_class: Type[LabelsValue] = LabelsValue
 
+
     def to_json_schema(self):
         """
         Converts the current LabelsTag instance into a JSON Schema.
@@ -571,13 +576,17 @@ class LabelsTag(ControlTag):
                 "required": ["start", "end", "labels"],
                 "properties": {
                     "start": {
-                        "type": "integer",
+                        "oneOf": [
+                            {"type": "integer", "minimum": 0},
+                            {"type": "number", "minimum": 0}
+                        ],
                         # TODO: this is incompatible with the OpenAI API using PredictedOutputs
-                        "minimum": 0
                     },
                     "end": {
-                        "type": "integer",
-                        "minimum": 0
+                        "oneOf": [
+                            {"type": "integer", "minimum": 0},
+                            {"type": "number", "minimum": 0}
+                        ]
                     },
                     "labels": {
                         "type": "array",
@@ -774,7 +783,7 @@ class VideoRectangleTag(ControlTag):
     
     
 class NumberValue(BaseModel):
-    number: int = Field(..., ge=0)
+    number: float
     
 
 class NumberTag(ControlTag):
@@ -912,6 +921,25 @@ class RatingTag(ControlTag):
     _value_class: Type[RatingValue] = RatingValue
     _label_attr_name: str = "rating"
 
+    def _validate_value_labels(self, value):
+        """Override to handle rating values correctly - ratings are not labels"""
+        if self._label_attr_name not in value:
+            return False
+
+        # For ratings, we just check that the rating value exists and is valid
+        # The actual validation is done by the RatingValue model
+        rating_value = value.get(self._label_attr_name)
+        if rating_value is None:
+            return False
+
+        # Check if rating is within valid range (0 to maxRating)
+        max_rating = int(self.attr.get('maxRating', 5))
+        try:
+            rating_int = int(rating_value)
+            return 0 <= rating_int <= max_rating
+        except (ValueError, TypeError):
+            return False
+
     def to_json_schema(self):
         """
         Converts the current RatingTag instance into a JSON Schema.
@@ -925,6 +953,44 @@ class RatingTag(ControlTag):
             "minimum": 0,
             "maximum": max_rating,
             "description": f"Rating for {self.to_name[0]} (0 to {max_rating})"
+        }
+
+
+class ChatMessageContent(BaseModel):
+    role: str
+    content: str
+    createdAt: Optional[int] = None
+
+
+class ChatMessageValue(BaseModel):
+    chatmessage: ChatMessageContent
+
+
+class ChatMessageTag(ControlTag):
+    """Control tag for chat messages targeting a `<Chat>` object.
+
+    This tag is a hybrid where `from_name == to_name` and `type == 'chatmessage'`.
+    """
+    tag: str = "ChatMessage"
+    _value_class: Type[ChatMessageValue] = ChatMessageValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "required": ["chatmessage"],
+            "properties": {
+                "chatmessage": {
+                    "type": "object",
+                    "required": ["role", "content"],
+                    "properties": {
+                        "role": {"type": "string"},
+                        "content": {"type": "string"},
+                        "createdAt": {"type": "number"}
+                    },
+                    "additionalProperties": True
+                }
+            },
+            "description": f"Chat message for {self.to_name[0]}"
         }
 
 
@@ -952,6 +1018,24 @@ class TaxonomyTag(ControlTag):
     tag: str = "Taxonomy"
     _value_class: Type[TaxonomyValue] = TaxonomyValue
     _label_attr_name: str = "taxonomy"
+
+    def _validate_value_labels(self, value):
+        """Validate taxonomy labels by flattening selected paths before subset check.
+
+        Expected value format:
+          { "taxonomy": [["A"], ["A", "B"], ...] }
+        """
+        paths = value.get("taxonomy")
+        if paths is None:
+            return False
+        if not isinstance(paths, list):
+            return False
+        flat_labels: List[str] = []
+        for path in paths:
+            if not isinstance(path, list):
+                return False
+            flat_labels.extend(path)
+        return self._validate_labels(flat_labels)
 
     def to_json_schema(self):
         """

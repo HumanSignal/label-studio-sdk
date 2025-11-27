@@ -1,346 +1,464 @@
-imports:
-  root: ../__package__.yml
 service:
   auth: false
   base-path: ''
   endpoints:
-    list:
-      path: /api/prompts/{id}/versions
+    get_default_version_name:
+      path: /api/prompts/{id}/get-default-version-name
       method: GET
       auth: true
-      docs: |
-        Get a list of prompt versions.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get default prompt version name
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-      display-name: List prompt versions
-      response:
-        docs: ''
-        type: list<root.PromptVersion>
+        id: integer
+      display-name: ✨ Get default prompt version name
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
+    list:
+      path: /api/prompts/{prompt_id}/versions
+      method: GET
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all versions of a prompt.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        prompt_id: integer
+      display-name: ✨ List prompt versions
+      request:
+        name: VersionsListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.ThirdPartyModelVersion>
+      examples:
+        - path-parameters:
+            prompt_id: 1
           response:
             body:
-              - title: title
-                parent_model: 1
+              - created_at: '2024-01-15T09:30:00Z'
+                created_by:
+                  avatar: avatar
+                  email: email
+                  first_name: first_name
+                  id: 1
+                  last_name: last_name
+                id: 1
                 model_provider_connection: 1
+                organization: 1
+                parent_model: 1
                 prompt: prompt
                 provider: OpenAI
                 provider_model_id: provider_model_id
-                created_by: 1
-                created_at: '2024-01-15T09:30:00Z'
+                score: score
+                title: title
                 updated_at: '2024-01-15T09:30:00Z'
-                organization: 1
       audiences:
         - public
     create:
-      path: /api/prompts/{id}/versions
+      path: /api/prompts/{prompt_id}/versions
       method: POST
       auth: true
-      docs: |
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new version of a prompt.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-      display-name: Create prompt version
+        prompt_id: integer
+      display-name: ✨ Create prompt version
       request:
-        body: root.PromptVersion
+        body: root.ThirdPartyModelVersionRequest
         content-type: application/json
       response:
         docs: ''
-        type: root.PromptVersion
+        type: root.ThirdPartyModelVersion
       examples:
         - path-parameters:
-            id: 1
-          request: {}
+            prompt_id: 1
+          request:
+            prompt: prompt
+            provider_model_id: provider_model_id
+            title: title
           response:
             body:
-              title: title
-              parent_model: 1
+              created_at: '2024-01-15T09:30:00Z'
+              created_by:
+                avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
+              id: 1
               model_provider_connection: 1
+              organization: 1
+              parent_model: 1
               prompt: prompt
               provider: OpenAI
               provider_model_id: provider_model_id
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
+              score: score
+              title: title
               updated_at: '2024-01-15T09:30:00Z'
-              organization: 1
       audiences:
         - public
     get:
-      path: /api/prompts/{id}/versions/{version_id}
+      path: /api/prompts/{prompt_id}/versions/{version_id}
       method: GET
       auth: true
-      docs: |
-        Get a prompt version by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific prompt of a model.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Prompt Version ID
-      display-name: Get prompt version
+        prompt_id: integer
+        version_id: integer
+      display-name: ✨ Get prompt version
       response:
         docs: ''
-        type: root.PromptVersion
+        type: root.ThirdPartyModelVersion
       examples:
         - path-parameters:
-            id: 1
+            prompt_id: 1
             version_id: 1
           response:
             body:
-              title: title
-              parent_model: 1
+              created_at: '2024-01-15T09:30:00Z'
+              created_by:
+                avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
+              id: 1
               model_provider_connection: 1
+              organization: 1
+              parent_model: 1
               prompt: prompt
               provider: OpenAI
               provider_model_id: provider_model_id
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
+              score: score
+              title: title
               updated_at: '2024-01-15T09:30:00Z'
-              organization: 1
       audiences:
         - public
     delete:
-      path: /api/prompts/{id}/versions/{version_id}
+      path: /api/prompts/{prompt_id}/versions/{version_id}
       method: DELETE
       auth: true
-      docs: |
-        Delete a prompt version by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a prompt version by ID
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Prompt Version ID
-      display-name: Delete prompt version
+        prompt_id: integer
+        version_id: integer
+      display-name: ✨ Delete prompt version
       examples:
         - path-parameters:
-            id: 1
+            prompt_id: 1
             version_id: 1
       audiences:
         - public
     update:
-      path: /api/prompts/{id}/versions/{version_id}
+      path: /api/prompts/{prompt_id}/versions/{version_id}
       method: PATCH
       auth: true
-      docs: |
-        Update a prompt version by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific prompt version by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Prompt Version ID
-      display-name: Update prompt version
+        prompt_id: integer
+        version_id: integer
+      display-name: ✨ Update prompt version
       request:
-        body: root.PromptVersion
+        name: PatchedThirdPartyModelVersionRequest
+        body:
+          properties:
+            model_provider_connection: optional<integer>
+            organization: optional<integer>
+            parent_model:
+              type: optional<integer>
+              docs: Parent model interface ID
+            prompt:
+              type: optional<string>
+              docs: Prompt to execute
+              validation:
+                minLength: 1
+            provider:
+              type: optional<root.ProviderEnum>
+              docs: |-
+                The model provider to use e.g. OpenAI
+
+                * `OpenAI` - OpenAI
+                * `AzureOpenAI` - AzureOpenAI
+                * `AzureAIFoundry` - AzureAIFoundry
+                * `VertexAI` - VertexAI
+                * `Gemini` - Gemini
+                * `Anthropic` - Anthropic
+                * `Custom` - Custom
+            provider_model_id:
+              type: optional<string>
+              docs: The model ID to use within the given provider, e.g. gpt-3.5
+              validation:
+                minLength: 1
+                maxLength: 255
+            title:
+              type: optional<string>
+              docs: Model name
+              validation:
+                minLength: 1
+                maxLength: 500
         content-type: application/json
       response:
         docs: ''
-        type: root.PromptVersion
+        type: root.ThirdPartyModelVersion
       examples:
         - path-parameters:
-            id: 1
+            prompt_id: 1
             version_id: 1
           request: {}
           response:
             body:
-              title: title
-              parent_model: 1
+              created_at: '2024-01-15T09:30:00Z'
+              created_by:
+                avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
+              id: 1
               model_provider_connection: 1
+              organization: 1
+              parent_model: 1
               prompt: prompt
               provider: OpenAI
               provider_model_id: provider_model_id
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
+              score: score
+              title: title
               updated_at: '2024-01-15T09:30:00Z'
-              organization: 1
       audiences:
         - public
     cost_estimate:
       path: /api/prompts/{prompt_id}/versions/{version_id}/cost-estimate
-      method: POST
+      method: GET
       auth: true
-      docs: >
-        Get cost estimate for running a prompt version on a particular
-        project/subset
+      docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get an estimate of the cost for making an inference run on the selected
+        Prompt Version and Project/ProjectSubset
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        prompt_id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Prompt Version ID
+        prompt_id: integer
+        version_id: integer
       display-name: >-
-        Get cost estimate for running a prompt version on a particular
+        ✨ Get cost estimate for running a prompt version on a particular
         project/subset
-      request:
-        name: VersionsCostEstimateRequest
-        query-parameters:
-          project_id:
-            type: integer
-            docs: ID of the project to get an estimate for running on
-          project_subset:
-            type: integer
-            docs: >-
-              Subset of the project to get an estimate for running on (e.g.
-              'All', 'Sample', or 'HasGT')
       response:
-        docs: ''
+        docs: Cost estimate response
         type: root.InferenceRunCostEstimate
       examples:
         - path-parameters:
             prompt_id: 1
             version_id: 1
-          query-parameters:
-            project_id: 1
-            project_subset: 1
           response:
             body:
-              prompt_cost_usd: prompt_cost_usd
               completion_cost_usd: completion_cost_usd
-              total_cost_usd: total_cost_usd
-              is_error: true
-              error_type: error_type
               error_message: error_message
+              error_type: error_type
+              is_error: true
+              prompt_cost_usd: prompt_cost_usd
+              total_cost_usd: total_cost_usd
       audiences:
         - public
     get_refined_prompt:
       path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: GET
       auth: true
-      docs: |
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Get the refined prompt based on the `refinement_job_id`.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        prompt_id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Prompt Version ID
-      display-name: Get refined prompt
+        prompt_id: integer
+        version_id: integer
+      display-name: ✨ Get refined prompt
       request:
         name: VersionsGetRefinedPromptRequest
         query-parameters:
           refinement_job_id:
-            type: string
+            type: optional<string>
             docs: >-
               Refinement Job ID acquired from the `POST
               /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
       response:
-        docs: ''
+        docs: Refined prompt response
         type: root.RefinedPromptResponse
       examples:
         - path-parameters:
             prompt_id: 1
             version_id: 1
-          query-parameters:
-            refinement_job_id: refinement_job_id
           response:
             body:
-              title: title
-              reasoning: reasoning
-              prompt: prompt
-              refinement_job_id: refinement_job_id
-              refinement_status: Pending
-              total_cost: total_cost
               previous_version:
-                title: title
-                parent_model: 1
+                created_at: '2024-01-15T09:30:00Z'
+                created_by:
+                  avatar: avatar
+                  email: email
+                  first_name: first_name
+                  id: 1
+                  last_name: last_name
+                id: 1
                 model_provider_connection: 1
+                organization: 1
+                parent_model: 1
                 prompt: prompt
                 provider: OpenAI
                 provider_model_id: provider_model_id
-                created_by: 1
-                created_at: '2024-01-15T09:30:00Z'
+                score: score
+                title: title
                 updated_at: '2024-01-15T09:30:00Z'
-                organization: 1
+              prompt: prompt
+              reasoning: reasoning
+              refinement_job_id: refinement_job_id
+              refinement_status: refinement_status
+              title: title
+              total_cost: total_cost
       audiences:
         - public
     refine_prompt:
       path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: POST
       auth: true
-      docs: >
+      docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Refine a prompt version using a teacher model and save the refined
         prompt as a new version.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        prompt_id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Base Prompt Version ID
-      display-name: Refine a prompt version
+        prompt_id: integer
+        version_id: integer
+      display-name: ✨ Refine a prompt version
       request:
-        name: VersionsRefinePromptRequest
+        name: RefinePromptRequestRequest
         query-parameters:
           async:
             type: optional<boolean>
-            docs: Run the refinement job asynchronously
+            docs: Whether to run the refinement asynchronously
         body:
           properties:
-            teacher_model_provider_connection_id:
-              type: optional<integer>
-              docs: Model Provider Connection ID to use to refine the prompt
-            teacher_model_name:
-              type: optional<string>
-              docs: Name of the model to use to refine the prompt
             project_id:
-              type: optional<integer>
+              type: integer
               docs: Project ID to target the refined prompt for
+            teacher_model_name:
+              type: string
+              docs: Name of the model to use to refine the prompt
+              validation:
+                minLength: 1
+            teacher_model_provider_connection_id:
+              type: integer
+              docs: Model Provider Connection ID to use to refine the prompt
         content-type: application/json
       response:
-        docs: ''
+        docs: Refined prompt response
         type: root.RefinedPromptResponse
       examples:
         - path-parameters:
             prompt_id: 1
             version_id: 1
-          request: {}
+          request:
+            project_id: 1
+            teacher_model_name: teacher_model_name
+            teacher_model_provider_connection_id: 1
           response:
             body:
-              title: title
-              reasoning: reasoning
-              prompt: prompt
-              refinement_job_id: refinement_job_id
-              refinement_status: Pending
-              total_cost: total_cost
               previous_version:
-                title: title
-                parent_model: 1
+                created_at: '2024-01-15T09:30:00Z'
+                created_by:
+                  avatar: avatar
+                  email: email
+                  first_name: first_name
+                  id: 1
+                  last_name: last_name
+                id: 1
                 model_provider_connection: 1
+                organization: 1
+                parent_model: 1
                 prompt: prompt
                 provider: OpenAI
                 provider_model_id: provider_model_id
-                created_by: 1
-                created_at: '2024-01-15T09:30:00Z'
+                score: score
+                title: title
                 updated_at: '2024-01-15T09:30:00Z'
-                organization: 1
+              prompt: prompt
+              reasoning: reasoning
+              refinement_job_id: refinement_job_id
+              refinement_status: refinement_status
+              title: title
+              total_cost: total_cost
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
+imports:
+  root: ../__package__.yml

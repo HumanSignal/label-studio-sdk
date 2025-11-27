@@ -6,35 +6,113 @@ import typing
 from .utilities import validate_response
 
 
+async def test_batch_failed_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"failed_predictions": [{"key": "value"}], "job_id": "job_id"}
+    expected_types: typing.Any = {"failed_predictions": ("list", {0: None}), "job_id": None}
+    response = client.prompts.batch_failed_predictions(failed_predictions=[], modelrun_id=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.batch_failed_predictions(failed_predictions=[], modelrun_id=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_batch_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"job_id": "job_id", "results": [{"key": "value"}]}
+    expected_types: typing.Any = {"job_id": None, "results": ("list", {0: None})}
+    response = client.prompts.batch_predictions(modelrun_id=1, results=[])
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.batch_predictions(modelrun_id=1, results=[])
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_subset_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "count": 123,
+        "next": "http://api.example.org/accounts/?page=4",
+        "previous": "http://api.example.org/accounts/?page=2",
+        "results": [
+            {
+                "next_cursor": "next_cursor",
+                "previous_cursor": "previous_cursor",
+                "task_count": 1,
+                "task_result_list": [{"data": {"key": "value"}}],
+            }
+        ],
+    }
+    expected_types: typing.Any = {
+        "count": "integer",
+        "next": None,
+        "previous": None,
+        "results": (
+            "list",
+            {
+                0: {
+                    "next_cursor": None,
+                    "previous_cursor": None,
+                    "task_count": "integer",
+                    "task_result_list": ("list", {0: {"data": ("dict", {0: (None, None)})}}),
+                }
+            },
+        ),
+    }
+    response = client.prompts.subset_tasks(project_pk=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.subset_tasks(project_pk=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_subsets(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = [{"columns_schema": [{"key": "value"}], "count": 1, "subset": "subset"}]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {0: {"columns_schema": ("list", {0: ("dict", {0: (None, None)})}), "count": "integer", "subset": None}},
+    )
+    response = client.prompts.subsets(project_pk=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.subsets(project_pk=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "title": "title",
-            "description": "description",
-            "created_by": 1,
+            "associated_projects": [{"id": 1}],
             "created_at": "2024-01-15T09:30:00Z",
-            "updated_at": "2024-01-15T09:30:00Z",
+            "created_by": {
+                "avatar": "avatar",
+                "email": "email",
+                "first_name": "first_name",
+                "id": 1,
+                "last_name": "last_name",
+            },
+            "description": "description",
+            "id": 1,
+            "input_fields": {"key": "value"},
             "organization": 1,
-            "input_fields": ["input_fields"],
-            "output_classes": ["output_classes"],
-            "associated_projects": [1],
-            "skill_name": "skill_name",
+            "output_classes": {"key": "value"},
+            "skill_name": "TextClassification",
+            "title": "title",
+            "updated_at": "2024-01-15T09:30:00Z",
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
-                "title": None,
-                "description": None,
-                "created_by": "integer",
+                "associated_projects": ("list", {0: {"id": "integer"}}),
                 "created_at": "datetime",
-                "updated_at": "datetime",
+                "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
+                "description": None,
+                "id": "integer",
+                "input_fields": None,
                 "organization": "integer",
-                "input_fields": ("list", {0: None}),
-                "output_classes": ("list", {0: None}),
-                "associated_projects": ("list", {0: "integer"}),
+                "output_classes": None,
                 "skill_name": None,
+                "title": None,
+                "updated_at": "datetime",
             }
         },
     )
@@ -47,134 +125,312 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "title": "title",
-        "description": "description",
-        "created_by": 1,
-        "created_at": "2024-01-15T09:30:00Z",
-        "updated_at": "2024-01-15T09:30:00Z",
-        "organization": 1,
-        "input_fields": ["input_fields"],
-        "output_classes": ["output_classes"],
         "associated_projects": [1],
-        "skill_name": "skill_name",
+        "created_at": "2024-01-15T09:30:00Z",
+        "created_by": {
+            "avatar": "avatar",
+            "email": "email",
+            "first_name": "first_name",
+            "id": 1,
+            "last_name": "last_name",
+        },
+        "description": "description",
+        "id": 1,
+        "input_fields": {"key": "value"},
+        "organization": 1,
+        "output_classes": {"key": "value"},
+        "skill_name": "TextClassification",
+        "title": "title",
+        "updated_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
-        "title": None,
-        "description": None,
-        "created_by": "integer",
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "organization": "integer",
-        "input_fields": ("list", {0: None}),
-        "output_classes": ("list", {0: None}),
         "associated_projects": ("list", {0: "integer"}),
+        "created_at": "datetime",
+        "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
+        "description": None,
+        "id": "integer",
+        "input_fields": None,
+        "organization": "integer",
+        "output_classes": None,
         "skill_name": None,
+        "title": None,
+        "updated_at": "datetime",
     }
-    response = client.prompts.create(title="title", input_fields=["input_fields"], output_classes=["output_classes"])
+    response = client.prompts.create(title="title")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.create(
-        title="title", input_fields=["input_fields"], output_classes=["output_classes"]
-    )
+    async_response = await async_client.prompts.create(title="title")
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "count": 123,
+        "next": "http://api.example.org/accounts/?page=4",
+        "previous": "http://api.example.org/accounts/?page=2",
+        "results": [
+            {
+                "agreement_threshold": "agreement_threshold",
+                "allow_stream": True,
+                "annotation_limit_count": 1,
+                "annotation_limit_percent": "annotation_limit_percent",
+                "annotator_evaluation_minimum_score": "annotator_evaluation_minimum_score",
+                "annotator_evaluation_minimum_tasks": 1,
+                "assignment_settings": {"id": 1},
+                "blueprints": [
+                    {"created_at": "2024-01-15T09:30:00Z", "id": 1, "share_id": "share_id", "short_url": "short_url"}
+                ],
+                "color": "color",
+                "comment_classification_config": "comment_classification_config",
+                "config_has_control_tags": True,
+                "config_suitable_for_bulk_annotation": True,
+                "control_weights": {"key": "value"},
+                "created_at": "2024-01-15T09:30:00Z",
+                "created_by": {"avatar": "avatar", "id": 1},
+                "custom_script": "custom_script",
+                "custom_task_lock_ttl": 1,
+                "data_types": {"key": "value"},
+                "description": "description",
+                "description_short": "description_short",
+                "duplication_done": True,
+                "duplication_status": "duplication_status",
+                "enable_empty_annotation": True,
+                "evaluate_predictions_automatically": True,
+                "expert_instruction": "expert_instruction",
+                "finished_task_number": 1,
+                "ground_truth_number": 1,
+                "id": 1,
+                "is_draft": True,
+                "is_published": True,
+                "label_config": "label_config",
+                "max_additional_annotators_assignable": 1,
+                "maximum_annotations": 1,
+                "members": "members",
+                "members_count": 1,
+                "min_annotations_to_start_training": 1,
+                "model_version": "model_version",
+                "num_tasks_with_annotations": 1,
+                "organization": 1,
+                "overlap_cohort_percentage": 1,
+                "parsed_label_config": {"key": "value"},
+                "pause_on_failed_annotator_evaluation": True,
+                "pinned_at": "2024-01-15T09:30:00Z",
+                "prompts": "prompts",
+                "queue_done": 1,
+                "queue_left": 1,
+                "queue_total": "queue_total",
+                "ready": True,
+                "rejected": 1,
+                "require_comment_on_skip": True,
+                "reveal_preannotations_interactively": True,
+                "review_settings": {"id": 1, "requeue_rejected_tasks_to_annotator": True},
+                "review_total_tasks": 1,
+                "reviewed_number": 1,
+                "reviewer_queue_total": 1,
+                "sampling": "Sequential sampling",
+                "show_annotation_history": True,
+                "show_collab_predictions": True,
+                "show_ground_truth_first": True,
+                "show_instruction": True,
+                "show_overlap_first": True,
+                "show_skip_button": True,
+                "show_unused_data_columns_to_annotators": True,
+                "skip_queue": "REQUEUE_FOR_ME",
+                "skipped_annotations_number": "skipped_annotations_number",
+                "start_training_on_annotation_update": True,
+                "task_number": 1,
+                "title": "title",
+                "total_annotations_number": "total_annotations_number",
+                "total_predictions_number": 1,
+                "useful_annotation_number": 1,
+                "workspace": "workspace",
+                "workspace_title": "workspace_title",
+            }
+        ],
+    }
+    expected_types: typing.Any = {
+        "count": "integer",
+        "next": None,
+        "previous": None,
+        "results": (
+            "list",
+            {
+                0: {
+                    "agreement_threshold": None,
+                    "allow_stream": None,
+                    "annotation_limit_count": "integer",
+                    "annotation_limit_percent": None,
+                    "annotator_evaluation_minimum_score": None,
+                    "annotator_evaluation_minimum_tasks": "integer",
+                    "assignment_settings": {"id": "integer"},
+                    "blueprints": (
+                        "list",
+                        {0: {"created_at": "datetime", "id": "integer", "share_id": None, "short_url": None}},
+                    ),
+                    "color": None,
+                    "comment_classification_config": None,
+                    "config_has_control_tags": None,
+                    "config_suitable_for_bulk_annotation": None,
+                    "control_weights": None,
+                    "created_at": "datetime",
+                    "created_by": {"avatar": None, "id": "integer"},
+                    "custom_script": None,
+                    "custom_task_lock_ttl": "integer",
+                    "data_types": None,
+                    "description": None,
+                    "description_short": None,
+                    "duplication_done": None,
+                    "duplication_status": None,
+                    "enable_empty_annotation": None,
+                    "evaluate_predictions_automatically": None,
+                    "expert_instruction": None,
+                    "finished_task_number": "integer",
+                    "ground_truth_number": "integer",
+                    "id": "integer",
+                    "is_draft": None,
+                    "is_published": None,
+                    "label_config": None,
+                    "max_additional_annotators_assignable": "integer",
+                    "maximum_annotations": "integer",
+                    "members": None,
+                    "members_count": "integer",
+                    "min_annotations_to_start_training": "integer",
+                    "model_version": None,
+                    "num_tasks_with_annotations": "integer",
+                    "organization": "integer",
+                    "overlap_cohort_percentage": "integer",
+                    "parsed_label_config": None,
+                    "pause_on_failed_annotator_evaluation": None,
+                    "pinned_at": "datetime",
+                    "prompts": None,
+                    "queue_done": "integer",
+                    "queue_left": "integer",
+                    "queue_total": None,
+                    "ready": None,
+                    "rejected": "integer",
+                    "require_comment_on_skip": None,
+                    "reveal_preannotations_interactively": None,
+                    "review_settings": {"id": "integer", "requeue_rejected_tasks_to_annotator": None},
+                    "review_total_tasks": "integer",
+                    "reviewed_number": "integer",
+                    "reviewer_queue_total": "integer",
+                    "sampling": None,
+                    "show_annotation_history": None,
+                    "show_collab_predictions": None,
+                    "show_ground_truth_first": None,
+                    "show_instruction": None,
+                    "show_overlap_first": None,
+                    "show_skip_button": None,
+                    "show_unused_data_columns_to_annotators": None,
+                    "skip_queue": None,
+                    "skipped_annotations_number": None,
+                    "start_training_on_annotation_update": None,
+                    "task_number": "integer",
+                    "title": None,
+                    "total_annotations_number": None,
+                    "total_predictions_number": "integer",
+                    "useful_annotation_number": "integer",
+                    "workspace": None,
+                    "workspace_title": None,
+                }
+            },
+        ),
+    }
+    response = client.prompts.compatible_projects()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.compatible_projects()
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "title": "title",
-        "description": "description",
-        "created_by": 1,
+        "associated_projects": [{"id": 1, "title": "title"}],
         "created_at": "2024-01-15T09:30:00Z",
-        "updated_at": "2024-01-15T09:30:00Z",
+        "created_by": {
+            "avatar": "avatar",
+            "email": "email",
+            "first_name": "first_name",
+            "id": 1,
+            "last_name": "last_name",
+        },
+        "description": "description",
+        "id": 1,
+        "input_fields": {"key": "value"},
         "organization": 1,
-        "input_fields": ["input_fields"],
-        "output_classes": ["output_classes"],
-        "associated_projects": [1],
-        "skill_name": "skill_name",
+        "output_classes": {"key": "value"},
+        "skill_name": "TextClassification",
+        "title": "title",
+        "updated_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
-        "title": None,
-        "description": None,
-        "created_by": "integer",
+        "associated_projects": ("list", {0: {"id": "integer", "title": None}}),
         "created_at": "datetime",
-        "updated_at": "datetime",
+        "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
+        "description": None,
+        "id": "integer",
+        "input_fields": None,
         "organization": "integer",
-        "input_fields": ("list", {0: None}),
-        "output_classes": ("list", {0: None}),
-        "associated_projects": ("list", {0: "integer"}),
+        "output_classes": None,
         "skill_name": None,
+        "title": None,
+        "updated_at": "datetime",
     }
-    response = client.prompts.get(id=1)
+    response = client.prompts.get(id="id")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.get(id=1)
+    async_response = await async_client.prompts.get(id="id")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.prompts.delete(id=1)  # type: ignore[func-returns-value]
+        client.prompts.delete(id="id")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.prompts.delete(id=1)  # type: ignore[func-returns-value]
+        await async_client.prompts.delete(id="id")  # type: ignore[func-returns-value]
         is None
     )
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "title": "title",
-        "description": "description",
-        "created_by": 1,
-        "created_at": "2024-01-15T09:30:00Z",
-        "updated_at": "2024-01-15T09:30:00Z",
-        "organization": 1,
-        "input_fields": ["input_fields"],
-        "output_classes": ["output_classes"],
         "associated_projects": [1],
-        "skill_name": "skill_name",
+        "created_at": "2024-01-15T09:30:00Z",
+        "created_by": {
+            "avatar": "avatar",
+            "email": "email",
+            "first_name": "first_name",
+            "id": 1,
+            "last_name": "last_name",
+        },
+        "description": "description",
+        "id": 1,
+        "input_fields": {"key": "value"},
+        "organization": 1,
+        "output_classes": {"key": "value"},
+        "skill_name": "TextClassification",
+        "title": "title",
+        "updated_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
-        "title": None,
-        "description": None,
-        "created_by": "integer",
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "organization": "integer",
-        "input_fields": ("list", {0: None}),
-        "output_classes": ("list", {0: None}),
         "associated_projects": ("list", {0: "integer"}),
+        "created_at": "datetime",
+        "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
+        "description": None,
+        "id": "integer",
+        "input_fields": None,
+        "organization": "integer",
+        "output_classes": None,
         "skill_name": None,
+        "title": None,
+        "updated_at": "datetime",
     }
-    response = client.prompts.update(
-        id=1, title="title", input_fields=["input_fields"], output_classes=["output_classes"]
-    )
+    response = client.prompts.update(id="id")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.update(
-        id=1, title="title", input_fields=["input_fields"], output_classes=["output_classes"]
-    )
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_batch_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"detail": "detail"}
-    expected_types: typing.Any = {"detail": None}
-    response = client.prompts.batch_predictions()
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.prompts.batch_predictions()
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_batch_failed_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"detail": "detail"}
-    expected_types: typing.Any = {"detail": None}
-    response = client.prompts.batch_failed_predictions()
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.prompts.batch_failed_predictions()
+    async_response = await async_client.prompts.update(id="id")
     validate_response(async_response, expected_response, expected_types)

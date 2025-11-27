@@ -2,29 +2,59 @@
 
 from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
+import typing
+from .utilities import validate_response
 from label_studio_sdk.actions import ActionsCreateRequestFilters
 from label_studio_sdk.actions import ActionsCreateRequestFiltersItemsItem
 from label_studio_sdk.actions import ActionsCreateRequestSelectedItemsExcluded
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.actions.list()  # type: ignore[func-returns-value]
-        is None
+    expected_response: typing.Any = [
+        {
+            "dialog": {
+                "form": [{"key": "value"}],
+                "text": "Create annotations from predictions using selected predictions set for each selected task. Your account will be assigned as an owner to those annotations.",
+                "title": "Create Annotations From Predictions",
+                "type": "confirm",
+            },
+            "experimental": False,
+            "id": "predictions_to_annotations",
+            "order": 91,
+            "permission": "tasks.change",
+            "title": "Create Annotations From Predictions",
+        }
+    ]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {
+            0: {
+                "dialog": {
+                    "form": ("list", {0: ("dict", {0: (None, None)})}),
+                    "text": None,
+                    "title": None,
+                    "type": None,
+                },
+                "experimental": None,
+                "id": None,
+                "order": "integer",
+                "permission": None,
+                "title": None,
+            }
+        },
     )
+    response = client.actions.list(project=1)
+    validate_response(response, expected_response, expected_types)
 
-    assert (
-        await async_client.actions.list()  # type: ignore[func-returns-value]
-        is None
-    )
+    async_response = await async_client.actions.list(project=1)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.actions.create(
-            id="retrieve_tasks_predictions",
+            id="delete_annotators",
             project=1,
             filters=ActionsCreateRequestFilters(
                 conjunction="or",
@@ -34,15 +64,15 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     )
                 ],
             ),
-            selected_items=ActionsCreateRequestSelectedItemsExcluded(all_=True, excluded=[124, 125, 126]),
             ordering=["tasks:total_annotations"],
+            selected_items=ActionsCreateRequestSelectedItemsExcluded(all_=True, excluded=[124, 125, 126]),
         )  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
         await async_client.actions.create(
-            id="retrieve_tasks_predictions",
+            id="delete_annotators",
             project=1,
             filters=ActionsCreateRequestFilters(
                 conjunction="or",
@@ -52,8 +82,8 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     )
                 ],
             ),
-            selected_items=ActionsCreateRequestSelectedItemsExcluded(all_=True, excluded=[124, 125, 126]),
             ordering=["tasks:total_annotations"],
+            selected_items=ActionsCreateRequestSelectedItemsExcluded(all_=True, excluded=[124, 125, 126]),
         )  # type: ignore[func-returns-value]
         is None
     )

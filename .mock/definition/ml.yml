@@ -8,17 +8,13 @@ service:
       path: /api/ml/
       method: GET
       auth: true
-      docs: >
+      docs: |2-
 
-        List all configured Machine Learning (ML) backends for a specific
-        project by ID. For more information about ML backends, see [Machine
-        learning integration](https://labelstud.io/guide/ml). 
-
-
-
-        You will need to provide the project ID. This can be found in the URL
-        when viewing the project in Label Studio, or you can retrieve all
-        project IDs using [List all projects](../projects/list).
+            List all configured ML backends for a specific project by ID.
+            Use the following cURL command:
+            ```bash
+            curl http://localhost:8000/api/ml?project={project_id} -H 'Authorization: Token abc123'
+            
       source:
         openapi: openapi/openapi.yaml
       display-name: List ML backends
@@ -34,127 +30,121 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                state: CO
-                readable_state: readable_state
-                is_interactive: true
-                url: url
-                error_message: error_message
-                title: title
-                auth_method: NONE
-                basic_auth_user: basic_auth_user
-                basic_auth_pass: basic_auth_pass
+              - auth_method: NONE
+                auto_update: true
                 basic_auth_pass_is_set: basic_auth_pass_is_set
+                basic_auth_user: basic_auth_user
+                created_at: '2024-01-15T09:30:00Z'
                 description: description
+                error_message: error_message
                 extra_params:
                   key: value
+                id: 1
+                is_interactive: true
                 model_version: model_version
-                timeout: 1.1
-                created_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                auto_update: true
                 project: 1
+                readable_state: readable_state
+                state: CO
+                timeout: 1.1
+                title: title
+                updated_at: '2024-01-15T09:30:00Z'
+                url: url
       audiences:
         - public
     create:
       path: /api/ml/
       method: POST
       auth: true
-      docs: >
+      docs: |2-
 
-        Add an ML backend to a project. For more information about what you need
-        to configure when adding an ML backend, see [Connect the model to Label
-        studio](https://labelstud.io/guide/ml#Connect-the-model-to-Label-Studio).
-
-
-        <Note>If you are using Docker Compose, you may need to adjust your ML
-        backend URL. See [localhost and Docker
-        containers](https://labelstud.io/guide/ml#localhost-and-Docker-containers).</Note>
-
-
-        <Note>If you are using files that are located in the cloud, local
-        storage, or uploaded to Label Studio, you must configure your
-        environment variables to allow the ML backend to interact with those
-        files. See [Allow the ML backend to access Label
-        Studio](https://labelstud.io/guide/ml#Allow-the-ML-backend-to-access-Label-Studio-data).</Note>
+            Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
+            command:
+            ```bash
+            curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml -H 'Authorization: Token abc123'\
+            --data '{"url": "http://localhost:9090", "project": {project_id}}' 
+            
       source:
         openapi: openapi/openapi.yaml
-      display-name: Add ML backend
+      display-name: Add ML Backend
       request:
         name: MlCreateRequest
         body:
           properties:
-            url:
-              type: optional<string>
-              docs: ML backend URL
-            project:
-              type: optional<integer>
-              docs: Project ID
-            is_interactive:
-              type: optional<boolean>
-              docs: Is interactive
-            title:
-              type: optional<string>
-              docs: Title
-            description:
-              type: optional<string>
-              docs: Description
             auth_method:
               type: optional<MlCreateRequestAuthMethod>
               docs: Auth method
-            basic_auth_user:
-              type: optional<string>
-              docs: Basic auth user
             basic_auth_pass:
               type: optional<string>
               docs: Basic auth password
+            basic_auth_user:
+              type: optional<string>
+              docs: Basic auth user
+            description:
+              type: optional<string>
+              docs: Description
             extra_params:
               type: optional<map<string, unknown>>
               docs: Extra parameters
+            is_interactive:
+              type: optional<boolean>
+              docs: Is interactive
+            project:
+              type: optional<integer>
+              docs: Project ID
             timeout:
               type: optional<integer>
               docs: Response model timeout
+            title:
+              type: optional<string>
+              docs: Title
+            url:
+              type: optional<string>
+              docs: ML backend URL
         content-type: application/json
       response:
         docs: ''
-        type: MlCreateResponse
+        type: root.MlBackend
       examples:
         - request: {}
           response:
             body:
-              url: url
-              project: 1
-              is_interactive: true
-              title: title
-              description: description
               auth_method: NONE
+              auto_update: true
+              basic_auth_pass_is_set: basic_auth_pass_is_set
               basic_auth_user: basic_auth_user
-              basic_auth_pass: basic_auth_pass
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
+              error_message: error_message
               extra_params:
                 key: value
-              timeout: 1
+              id: 1
+              is_interactive: true
+              model_version: model_version
+              project: 1
+              readable_state: readable_state
+              state: CO
+              timeout: 1.1
+              title: title
+              updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - public
     get:
       path: /api/ml/{id}
       method: GET
       auth: true
-      docs: >
+      docs: |2-
 
-        Get details about a specific ML backend. You will need to specify an ID
-        for the backend connection. You can find this using [List ML
-        backends](list). 
-
-
-        For more information, see [Machine learning
-        integration](https://labelstud.io/guide/ml).
+            Get details about a specific ML backend connection by ID. For example, make a GET request using the
+            following cURL command:
+            ```bash
+            curl http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+            
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this ml backend.
-      display-name: Get ML backend
+        id: integer
+      display-name: Get ML Backend
       response:
         docs: ''
         type: root.MlBackend
@@ -163,48 +153,43 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              state: CO
-              readable_state: readable_state
-              is_interactive: true
-              url: url
-              error_message: error_message
-              title: title
               auth_method: NONE
-              basic_auth_user: basic_auth_user
-              basic_auth_pass: basic_auth_pass
+              auto_update: true
               basic_auth_pass_is_set: basic_auth_pass_is_set
+              basic_auth_user: basic_auth_user
+              created_at: '2024-01-15T09:30:00Z'
               description: description
+              error_message: error_message
               extra_params:
                 key: value
+              id: 1
+              is_interactive: true
               model_version: model_version
-              timeout: 1.1
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              auto_update: true
               project: 1
+              readable_state: readable_state
+              state: CO
+              timeout: 1.1
+              title: title
+              updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - public
     delete:
       path: /api/ml/{id}
       method: DELETE
       auth: true
-      docs: >
+      docs: |2-
 
-        Remove an existing ML backend connection. You will need to specify an ID
-        for the backend connection. You can find this using [List ML
-        backends](list).
-
-
-        For more information, see [Machine learning
-        integration](https://labelstud.io/guide/ml).
+            Remove an existing ML backend connection by ID. For example, use the
+            following cURL command:
+            ```bash
+            curl -X DELETE http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+            
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this ml backend.
-      display-name: Remove ML backend
+        id: integer
+      display-name: Remove ML Backend
       examples:
         - path-parameters:
             id: 1
@@ -214,122 +199,108 @@ service:
       path: /api/ml/{id}
       method: PATCH
       auth: true
-      docs: >
+      docs: |2-
 
-        Update the ML backend parameters. You will need to specify an ID for the
-        backend connection. You can find this using [List ML backends](list).
-
-
-        For more information, see [Machine learning
-        integration](https://labelstud.io/guide/ml).
+            Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
+            ```bash
+            curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
+            --data '{"url": "http://localhost:9091"}' 
+            
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this ml backend.
-      display-name: Update ML backend
+        id: integer
+      display-name: Update ML Backend
       request:
         name: MlUpdateRequest
         body:
           properties:
-            url:
-              type: optional<string>
-              docs: ML backend URL
-            project:
-              type: optional<integer>
-              docs: Project ID
-            is_interactive:
-              type: optional<boolean>
-              docs: Is interactive
-            title:
-              type: optional<string>
-              docs: Title
-            description:
-              type: optional<string>
-              docs: Description
             auth_method:
               type: optional<MlUpdateRequestAuthMethod>
               docs: Auth method
-            basic_auth_user:
-              type: optional<string>
-              docs: Basic auth user
             basic_auth_pass:
               type: optional<string>
               docs: Basic auth password
+            basic_auth_user:
+              type: optional<string>
+              docs: Basic auth user
+            description:
+              type: optional<string>
+              docs: Description
             extra_params:
               type: optional<map<string, unknown>>
               docs: Extra parameters
+            is_interactive:
+              type: optional<boolean>
+              docs: Is interactive
+            project:
+              type: optional<integer>
+              docs: Project ID
             timeout:
               type: optional<integer>
               docs: Response model timeout
+            title:
+              type: optional<string>
+              docs: Title
+            url:
+              type: optional<string>
+              docs: ML backend URL
         content-type: application/json
       response:
         docs: ''
-        type: MlUpdateResponse
+        type: root.MlBackend
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
-              url: url
-              project: 1
-              is_interactive: true
-              title: title
-              description: description
               auth_method: NONE
+              auto_update: true
+              basic_auth_pass_is_set: basic_auth_pass_is_set
               basic_auth_user: basic_auth_user
-              basic_auth_pass: basic_auth_pass
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
+              error_message: error_message
               extra_params:
                 key: value
-              timeout: 1
+              id: 1
+              is_interactive: true
+              model_version: model_version
+              project: 1
+              readable_state: readable_state
+              state: CO
+              timeout: 1.1
+              title: title
+              updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - public
     predict_interactive:
       path: /api/ml/{id}/interactive-annotating
       method: POST
       auth: true
-      docs: >
+      docs: |2-
 
-        Enable interactive pre-annotations for a specific task. 
-
-
-        ML-assisted labeling with interactive pre-annotations works with image
-        segmentation and object detection tasks using rectangles, ellipses,
-        polygons, brush masks, and keypoints, as well as with HTML and text
-        named entity recognition tasks. Your ML backend must support the type of
-        labeling that you’re performing, recognize the input that you create,
-        and be able to respond with the relevant output for a prediction. For
-        more information, see [Interactive
-        pre-annotations](https://labelstud.io/guide/ml.html#Interactive-pre-annotations).
-
-
-        Before you can use interactive annotations, it must be enabled for you
-        ML backend connection (`"is_interactive": true`). 
-
-
-        You will need the task ID and the ML backend connection ID. The task ID
-        is available from the Label Studio URL when viewing the task, or you can
-        retrieve it programmatically with [Get task list](../tasks/list). The ML
-        backend connection ID is available via [List ML backends](list).
+                Send a request to the machine learning backend set up to be used for interactive preannotations to retrieve a
+                predicted region based on annotator input. 
+                See [set up machine learning](https://labelstud.io/guide/ml.html#Get-interactive-preannotations) for more.
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this ML backend.
-      display-name: Request interactive annotations
+      display-name: Request Interactive Annotation
       request:
-        name: MlInteractiveAnnotatingRequest
+        name: MlInteractiveAnnotatingRequestRequest
         body:
           properties:
+            context: optional<unknown>
             task:
               type: integer
               docs: ID of task to annotate
-            context:
-              type: optional<map<string, unknown>>
-              docs: Context for ML model
         content-type: application/json
       examples:
         - path-parameters:
@@ -338,14 +309,61 @@ service:
             task: 1
       audiences:
         - public
+    predict_all_tasks:
+      path: /api/ml/{id}/predict
+      method: POST
+      auth: true
+      docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+
+
+        Create predictions for all tasks using a specific ML backend so that you
+        can set up an active learning strategy based on the confidence or
+        uncertainty scores associated with the predictions. Creating predictions
+        requires a Label Studio ML backend set up and configured for your
+        project. 
+
+
+        See [Set up machine learning](https://labelstud.io/guide/ml.html) for
+        more details about a Label Studio ML backend. 
+
+
+        Reference the ML backend ID in the path of this API call. Get the ML
+        backend ID by [listing the ML backends for a
+        project](https://labelstud.io/api/#operation/api_ml_list).
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this ML backend.
+      display-name: ✨ Create predictions for all tasks
+      request:
+        name: MlPredictAllTasksRequest
+        query-parameters:
+          batch_size:
+            type: optional<integer>
+            docs: >-
+              Computed number of tasks without predictions that the ML backend
+              needs to predict.
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
     test_predict:
       path: /api/ml/{id}/predict/test
       method: POST
       auth: true
-      docs: >
+      docs: |2-
 
-        After you add an ML backend, call this API with the ML backend ID to run
-        a test prediction on specific task data               
+                After you add an ML backend, call this API with the ML backend ID to run a test prediction on specific task data               
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -353,37 +371,79 @@ service:
           type: integer
           docs: A unique integer value identifying this ML backend.
       display-name: Test prediction
+      request:
+        name: MlBackendRequest
+        body:
+          properties:
+            auth_method: optional<root.AuthMethodEnum>
+            auto_update:
+              type: optional<boolean>
+              docs: >-
+                If false, model version is set by the user, if true - getting
+                latest version from backend.
+            basic_auth_pass: optional<string>
+            basic_auth_user:
+              type: optional<string>
+              docs: HTTP Basic Auth user
+            description:
+              type: optional<string>
+              docs: Description for the machine learning backend
+            error_message:
+              type: optional<string>
+              docs: Error message in error state
+            extra_params: optional<unknown>
+            is_interactive:
+              type: optional<boolean>
+              docs: >-
+                Used to interactively annotate tasks. If true, model returns one
+                list with results
+            model_version:
+              type: optional<string>
+              docs: >-
+                Current model version associated with this machine learning
+                backend
+            project: integer
+            state: optional<root.StateEnum>
+            timeout:
+              type: optional<double>
+              docs: Response model timeout
+            title:
+              type: optional<string>
+              docs: Name of the machine learning backend
+            url:
+              type: string
+              docs: URL for the machine learning model server
+              validation:
+                minLength: 1
+        content-type: application/json
       errors:
         - root.InternalServerError
       examples:
         - path-parameters:
             id: 1
+          request:
+            project: 1
+            url: url
       audiences:
         - internal
     train:
       path: /api/ml/{id}/train
       method: POST
       auth: true
-      docs: >
+      docs: |2-
 
-        After you connect a model to Label Studio as a machine learning backend
-        and annotate at least one task, you can start training the model.
-        Training logs appear in stdout and the console.
-
-
-        For more information, see [Model
-        training](https://labelstud.io/guide/ml.html#Model-training).
-
-
-        You will need to specify an ID for the backend connection. You can find
-        this using [List ML backends](list).
+                After you add an ML backend, call this API with the ML backend ID to start training with 
+                already-labeled tasks. 
+                
+                Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this ML backend.
-      display-name: Start training
+      display-name: Train
       request:
         name: MlTrainRequest
         body:
@@ -404,19 +464,23 @@ service:
       path: /api/ml/{id}/versions
       method: GET
       auth: true
-      docs: >
-
-        Get available versions of the model. You will need to specify an ID for
-        the backend connection. You can find this using [List ML
-        backends](list).
+      docs: Get available versions of the model.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id: string
+        id: integer
       display-name: Get model versions
+      response:
+        docs: List of available versions.
+        type: MlListModelVersionsResponse
       examples:
         - path-parameters:
-            id: id
+            id: 1
+          response:
+            body:
+              message: message
+              versions:
+                - versions
       audiences:
         - public
   source:
@@ -430,48 +494,6 @@ types:
     inline: true
     source:
       openapi: openapi/openapi.yaml
-  MlCreateResponseAuthMethod:
-    enum:
-      - NONE
-      - BASIC_AUTH
-    docs: Auth method
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
-  MlCreateResponse:
-    properties:
-      url:
-        type: optional<string>
-        docs: ML backend URL
-      project:
-        type: optional<integer>
-        docs: Project ID
-      is_interactive:
-        type: optional<boolean>
-        docs: Is interactive
-      title:
-        type: optional<string>
-        docs: Title
-      description:
-        type: optional<string>
-        docs: Description
-      auth_method:
-        type: optional<MlCreateResponseAuthMethod>
-        docs: Auth method
-      basic_auth_user:
-        type: optional<string>
-        docs: Basic auth user
-      basic_auth_pass:
-        type: optional<string>
-        docs: Basic auth password
-      extra_params:
-        type: optional<map<string, unknown>>
-        docs: Extra parameters
-      timeout:
-        type: optional<integer>
-        docs: Response model timeout
-    source:
-      openapi: openapi/openapi.yaml
   MlUpdateRequestAuthMethod:
     enum:
       - NONE
@@ -480,45 +502,9 @@ types:
     inline: true
     source:
       openapi: openapi/openapi.yaml
-  MlUpdateResponseAuthMethod:
-    enum:
-      - NONE
-      - BASIC_AUTH
-    docs: Auth method
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
-  MlUpdateResponse:
+  MlListModelVersionsResponse:
     properties:
-      url:
-        type: optional<string>
-        docs: ML backend URL
-      project:
-        type: optional<integer>
-        docs: Project ID
-      is_interactive:
-        type: optional<boolean>
-        docs: Is interactive
-      title:
-        type: optional<string>
-        docs: Title
-      description:
-        type: optional<string>
-        docs: Description
-      auth_method:
-        type: optional<MlUpdateResponseAuthMethod>
-        docs: Auth method
-      basic_auth_user:
-        type: optional<string>
-        docs: Basic auth user
-      basic_auth_pass:
-        type: optional<string>
-        docs: Basic auth password
-      extra_params:
-        type: optional<map<string, unknown>>
-        docs: Extra parameters
-      timeout:
-        type: optional<integer>
-        docs: Response model timeout
+      message: optional<string>
+      versions: optional<list<string>>
     source:
       openapi: openapi/openapi.yaml

@@ -10,8 +10,19 @@ service:
       source:
         openapi: openapi/openapi.yaml
       display-name: List all import storages from the project
+      request:
+        name: ImportStorageListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<map<string, unknown>>
       examples:
-        - {}
+        - response:
+            body:
+              - key: value
       audiences:
         - internal
     list_types:
@@ -23,7 +34,7 @@ service:
         openapi: openapi/openapi.yaml
       display-name: List all import storages types
       response:
-        docs: ''
+        docs: List of import storage types
         type: list<ImportStorageListTypesResponseItem>
       examples:
         - response:

@@ -8,30 +8,14 @@ service:
       path: /api/projects/{id}/imports/{import_pk}/
       method: GET
       auth: true
-      docs: >
-
-        Get information about an async project import operation. This can be
-        especially useful to monitor status, as large import jobs can take
-        time. 
-
-
-        You will need the project ID and the unique ID of the import operation. 
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](../projects/list). 
-
-
-        The import ID is returned as part of the response when you call [Import
-        tasks](import-tasks). 
+      docs: Return data related to async project import operation
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: The project ID.
-        import_pk: string
+          docs: A unique integer value identifying this project import.
+        import_pk: integer
       display-name: Get project import info
       response:
         docs: ''
@@ -39,51 +23,43 @@ service:
       examples:
         - path-parameters:
             id: 1
-            import_pk: import_pk
+            import_pk: 1
           response:
             body:
+              annotation_count: 1
+              commit_to_project: true
+              could_be_tasks_list: true
+              created_at: '2024-01-15T09:30:00Z'
+              data_columns:
+                key: value
+              duration: 1
+              error: error
+              file_upload_ids:
+                key: value
+              finished_at: '2024-01-15T09:30:00Z'
+              found_formats:
+                key: value
               id: 1
               preannotated_from_fields:
                 key: value
-              commit_to_project: true
+              prediction_count: 1
+              project: 1
               return_task_ids: true
               status: created
-              url: url
-              traceback: traceback
-              error: error
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              finished_at: '2024-01-15T09:30:00Z'
               task_count: 1
-              annotation_count: 1
-              prediction_count: 1
-              duration: 1
-              file_upload_ids:
-                key: value
-              could_be_tasks_list: true
-              found_formats:
-                key: value
-              data_columns:
+              task_ids:
                 key: value
               tasks:
                 key: value
-              task_ids:
-                key: value
-              project: 1
+              updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - public
     delete_all_tasks:
       path: /api/projects/{id}/tasks/
       method: DELETE
       auth: true
-      docs: >
-
-        Delete all tasks from a specific project.
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](../projects/list). 
+      docs: Delete all tasks from a specific project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -100,192 +76,240 @@ service:
       path: /api/tasks/
       method: GET
       auth: true
-      docs: >
+      docs: >-
+        Retrieve a paginated list of tasks. The response format varies based on
+        the user's role in the organization:
 
-        Retrieve a list of tasks. 
+        - **Admin/Owner**: Full task details with all annotations, reviews, and
+        metadata
 
+        - **Reviewer**: Task details optimized for review workflow
 
-        You can use the query parameters to filter the list by project and/or
-        view (a tab within the Data Manager). You can also optionally add
-        pagination to make the response easier to parse. 
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](../projects/list). The view ID can be found using [List
-        views](../views/list).
+        - **Annotator**: Task details filtered to show only user's own
+        annotations and assignments
       pagination:
         offset: $request.page
         results: $response.tasks
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get task list
+      display-name: List tasks
       request:
         name: TasksListRequest
         query-parameters:
+          fields:
+            type: optional<TasksListRequestFields>
+            docs: >-
+              Set to "all" if you want to include annotations and predictions in
+              the response. Defaults to task_only
+          include:
+            type: optional<string>
+            docs: Specify which fields to include in the response
+          only_annotated:
+            type: optional<boolean>
+            docs: Filter to show only tasks that have annotations
           page:
             type: optional<integer>
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
             docs: Number of results to return per page.
-          view:
-            type: optional<integer>
-            docs: View ID
           project:
             type: optional<integer>
             docs: Project ID
-          resolve_uri:
-            type: optional<boolean>
-            docs: Resolve task data URIs using Cloud Storage
-          fields:
-            type: optional<TasksListRequestFields>
-            default: task_only
-            docs: >-
-              Set to "all" if you want to include annotations and predictions in
-              the response
-          review:
-            type: optional<boolean>
-            docs: Get tasks for review
-          include:
-            type: optional<string>
-            docs: Specify which fields to include in the response
           query:
             type: optional<string>
             docs: >-
               Additional query to filter tasks. It must be JSON encoded string
-              of dict containing one of the following parameters: `{"filters":
-              ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager
-              > Create View > see `data`
-              field](#tag/Data-Manager/operation/api_dm_views_create) for more
-              details about filters, selectedItems and ordering.
+              of dict containing one of the following parameters: {"filters":
+              ..., "selectedItems": ..., "ordering": ...}. Check Data Manager >
+              Create View > see data field for more details about filters,
+              selectedItems and ordering.
 
 
-              * **filters**: dict with `"conjunction"` string (`"or"` or
-              `"and"`) and list of filters in `"items"` array. Each filter is a
-              dictionary with keys: `"filter"`, `"operator"`, `"type"`,
-              `"value"`. [Read more about available
-              filters](https://labelstud.io/sdk/data_manager.html)<br/>                  
-              Example: `{"conjunction": "or", "items": [{"filter":
+              filters: dict with "conjunction" string ("or" or "and") and list
+              of filters in "items" array. Each filter is a dictionary with
+              keys: "filter", "operator", "type", "value". Read more about
+              available filters
+
+              Example: {"conjunction": "or", "items": [{"filter":
               "filter:tasks:completed_at", "operator": "greater", "type":
-              "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+              "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}
 
-              * **selectedItems**: dictionary with keys: `"all"`, `"included"`,
-              `"excluded"`. If "all" is `false`, `"included"` must be used. If
-              "all" is `true`, `"excluded"` must be used.<br/>                  
-              Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all":
-              true, "excluded": [4, 5]}`
+              selectedItems: dictionary with keys: "all", "included",
+              "excluded". If "all" is false, "included" must be used. If "all"
+              is true, "excluded" must be used.
 
-              * **ordering**: list of fields to order by. Currently, ordering is
-              supported by only one parameter. <br/>
-                                 Example: `["completed_at"]`
+              Examples: {"all": false, "included": [1, 2, 3]} or {"all": true,
+              "excluded": [4, 5]}
+
+              ordering: list of fields to order by. Currently, ordering is
+              supported by only one parameter.
+
+              Example: ["completed_at"]
+          resolve_uri:
+            type: optional<boolean>
+            docs: Resolve task data URIs using Cloud Storage
+          review:
+            type: optional<boolean>
+            docs: Get tasks for review
+          selectedItems:
+            type: optional<string>
+            docs: JSON string of selected task IDs for review workflow
+          view:
+            type: optional<integer>
+            docs: View ID
       response:
-        docs: List of Tasks
-        type: TasksListResponse
+        docs: ''
+        type: root.PaginatedRoleBasedTaskList
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
       examples:
-        - name: response
-          response:
+        - response:
             body:
               tasks:
-                - id: 1
-                  predictions:
-                    - result:
-                        - from_name: sentiment
-                          to_name: text
-                          type: choices
-                          value:
-                            value:
-                              choices:
-                                - POSITIVE
-                      score: 0.9
-                      model_version: '1.0'
-                      task: 1
-                      created_at: '2021-01-01T00:00:00Z'
-                      updated_at: '2021-01-01T00:00:00Z'
-                  annotations:
-                    - result:
-                        - from_name: sentiment
-                          to_name: text
-                          type: choices
-                          value:
-                            value:
-                              choices:
-                                - POSITIVE
-                      created_at: '2021-01-01T00:00:00Z'
-                      updated_at: '2021-01-01T00:00:00Z'
-                      completed_by: 1
-                      updated_by: 1
-                      was_cancelled: false
-                      ground_truth: false
-                      lead_time: 12.34
-                  drafts:
-                    - key: value
+                - agreement: agreement
+                  agreement_selected: agreement_selected
+                  annotations: annotations
+                  annotations_ids: annotations_ids
+                  annotations_results: annotations_results
                   annotators:
                     - 1
-                  inner_id: 1
-                  cancelled_annotations: 1
-                  total_annotations: 1
-                  total_predictions: 1
-                  completed_at: '2024-01-15T09:30:00Z'
-                  file_upload: file_upload
-                  storage_filename: storage_filename
+                  annotators_count: 1
                   avg_lead_time: 1.1
-                  draft_exists: true
-                  updated_by:
+                  cancelled_annotations: 1
+                  comment_authors:
                     - key: value
+                  comment_authors_count: 1
+                  comment_count: 1
+                  comments: comments
+                  completed_at: '2024-01-15T09:30:00Z'
+                  created_at: '2024-01-15T09:30:00Z'
                   data:
                     key: value
+                  draft_exists: true
+                  drafts:
+                    - {}
+                  file_upload: file_upload
+                  ground_truth: true
+                  id: 1
+                  inner_id: 1
+                  is_labeled: true
+                  last_comment_updated_at: '2024-01-15T09:30:00Z'
                   meta:
                     key: value
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  is_labeled: true
-                  overlap: 1.1
-                  comment_count: 1
-                  unresolved_comment_count: 1
-                  last_comment_updated_at: '2024-01-15T09:30:00Z'
+                  overlap: 1
+                  precomputed_agreement: 1.1
+                  predictions:
+                    - {}
+                  predictions_model_versions: predictions_model_versions
+                  predictions_results: predictions_results
+                  predictions_score: 1.1
                   project: 1
-                  comment_authors:
-                    - 1
-              total: 1
-              total_annotations: 1
-              total_predictions: 1
+                  review_time: 1
+                  reviewed: true
+                  reviewers:
+                    - key: value
+                  reviewers_count: 1
+                  reviews_accepted: 1
+                  reviews_rejected: 1
+                  state: state
+                  storage_filename: storage_filename
+                  total_annotations: 1
+                  total_predictions: 1
+                  unresolved_comment_count: 1
+                  updated_at: '2024-01-15T09:30:00Z'
+                  updated_by:
+                    - key: value
+              total: 123
+              total_annotations: 456
+              total_predictions: 78
       audiences:
         - public
     create:
       path: /api/tasks/
       method: POST
       auth: true
-      docs: >
-
-        Create a new labeling task in Label Studio.
-
-
-        The data you provide depends on your labeling config and data type. 
-
-
-        You will also need to provide a project ID. The project ID can be found
-        in the URL when viewing the project in Label Studio, or you can retrieve
-        all project IDs using [List all projects](../projects/list). 
+      docs: Create a new task
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create task
+      display-name: Create a new task
       request:
-        name: TasksCreateRequest
+        name: LseTaskRequest
         body:
           properties:
-            data:
-              type: optional<map<string, unknown>>
-              docs: Task data dictionary with arbitrary keys and values
+            cancelled_annotations:
+              type: optional<integer>
+              docs: Number of total cancelled annotations for the current task
+              validation:
+                min: -2147483648
+                max: 2147483647
+            comment_authors:
+              type: optional<list<integer>>
+              docs: Users who wrote comments
+            comment_count:
+              type: optional<integer>
+              docs: Number of comments in the task including all annotations
+              validation:
+                min: -2147483648
+                max: 2147483647
+            data: unknown
+            file_upload:
+              type: optional<integer>
+              docs: Uploaded file used as data source for this task
+            inner_id:
+              type: optional<long>
+              docs: Internal task ID in the project, starts with 1
+            is_labeled:
+              type: optional<boolean>
+              docs: >-
+                True if the number of annotations for this task is greater than
+                or equal to the number of maximum_completions for the project
+            last_comment_updated_at:
+              type: optional<datetime>
+              docs: When the last comment was updated
+            meta: optional<unknown>
+            overlap:
+              type: optional<integer>
+              docs: Number of distinct annotators that processed the current task
+              validation:
+                min: -2147483648
+                max: 2147483647
             project:
               type: optional<integer>
-              docs: Project ID
+              docs: Project ID for this task
+            total_annotations:
+              type: optional<integer>
+              docs: >-
+                Number of total annotations for the current task except
+                cancelled annotations
+              validation:
+                min: -2147483648
+                max: 2147483647
+            total_predictions:
+              type: optional<integer>
+              docs: Number of total predictions for the current task
+              validation:
+                min: -2147483648
+                max: 2147483647
+            unresolved_comment_count:
+              type: optional<integer>
+              docs: >-
+                Number of unresolved comments in the task including all
+                annotations
+              validation:
+                min: -2147483648
+                max: 2147483647
+            updated_by:
+              type: optional<integer>
+              docs: Last annotator or reviewer who updated this task
         content-type: application/json
       response:
-        docs: Created task
-        type: root.BaseTask
+        docs: ''
+        type: root.LseTask
       examples:
-        - name: response
+        - name: Create Task
           request:
             data:
               image: https://example.com/image.jpg
@@ -293,43 +317,82 @@ service:
             project: 1
           response:
             body:
-              id: 1
+              agreement: agreement
+              agreement_selected: agreement_selected
+              annotations: annotations
+              annotations_ids: annotations_ids
+              annotations_results: annotations_results
+              annotators:
+                - 1
+              annotators_count: 1
+              avg_lead_time: 1.1
+              cancelled_annotations: 1
+              comment_authors:
+                - key: value
+              comment_authors_count: 1
+              comment_count: 1
+              comments: comments
+              completed_at: '2024-01-15T09:30:00Z'
+              created_at: '2024-01-15T09:30:00Z'
               data:
-                image: https://example.com/image.jpg
-                text: Hello, AI!
+                key: value
+              draft_exists: true
+              drafts:
+                - created_at: '2024-01-15T09:30:00Z'
+                  result:
+                    - key: value
+                  updated_at: '2024-01-15T09:30:00Z'
+              file_upload: file_upload
+              ground_truth: true
+              id: 1
+              inner_id: 1
+              is_labeled: true
+              last_comment_updated_at: '2024-01-15T09:30:00Z'
               meta:
                 key: value
-              created_at: '2024-06-18T23:45:46Z'
-              updated_at: '2024-06-18T23:45:46Z'
-              is_labeled: false
               overlap: 1
-              inner_id: 1
-              total_annotations: 0
-              cancelled_annotations: 0
-              total_predictions: 0
-              comment_count: 0
-              unresolved_comment_count: 0
-              last_comment_updated_at: '2024-01-15T09:30:00Z'
+              precomputed_agreement: 1.1
+              predictions:
+                - created_at: '2024-01-15T09:30:00Z'
+                  model:
+                    key: value
+                  model_run:
+                    key: value
+                  model_version: model_version
+                  project: 1
+                  result:
+                    - key: value
+                  score: 1.1
+                  task: 1
+                  updated_at: '2024-01-15T09:30:00Z'
+              predictions_model_versions: predictions_model_versions
+              predictions_results: predictions_results
+              predictions_score: 1.1
               project: 1
+              review_time: 1
+              reviewed: true
+              reviewers:
+                - key: value
+              reviewers_count: 1
+              reviews_accepted: 1
+              reviews_rejected: 1
+              state: state
+              storage_filename: storage_filename
+              total_annotations: 1
+              total_predictions: 1
+              unresolved_comment_count: 1
+              updated_at: '2024-01-15T09:30:00Z'
               updated_by:
-                - user_id: 1
-              file_upload: 42d46c4c-my-pic.jpeg
-              comment_authors:
-                - 1
+                - key: value
       audiences:
         - public
     get:
       path: /api/tasks/{id}/
       method: GET
       auth: true
-      docs: >
-
+      docs: >-
         Get task data, metadata, annotations and other attributes for a specific
         labeling task by task ID.
-
-        The task ID is available from the Label Studio URL when viewing the
-        task, or you can retrieve it programmatically with [Get task
-        list](list). 
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -338,105 +401,87 @@ service:
           docs: Task ID
       display-name: Get task
       response:
-        docs: Task
-        type: root.DataManagerTaskSerializer
+        docs: ''
+        type: root.RoleBasedTask
       examples:
-        - name: response
-          path-parameters:
+        - path-parameters:
             id: id
           response:
             body:
-              id: 13
-              predictions:
-                - result:
+              agreement: agreement
+              agreement_selected: agreement_selected
+              annotations: annotations
+              annotations_ids: annotations_ids
+              annotations_results: annotations_results
+              annotators:
+                - 1
+              annotators_count: 1
+              avg_lead_time: 1.1
+              cancelled_annotations: 1
+              comment_authors:
+                - key: value
+              comment_authors_count: 1
+              comment_count: 1
+              comments: comments
+              completed_at: '2024-01-15T09:30:00Z'
+              created_at: '2024-01-15T09:30:00Z'
+              data:
+                key: value
+              draft_exists: true
+              drafts:
+                - created_at: '2024-01-15T09:30:00Z'
+                  result:
                     - key: value
-                  score: 1.1
-                  model_version: model_version
+                  updated_at: '2024-01-15T09:30:00Z'
+              file_upload: file_upload
+              ground_truth: true
+              id: 1
+              inner_id: 1
+              is_labeled: true
+              last_comment_updated_at: '2024-01-15T09:30:00Z'
+              meta:
+                key: value
+              overlap: 1
+              precomputed_agreement: 1.1
+              predictions:
+                - created_at: '2024-01-15T09:30:00Z'
                   model:
                     key: value
                   model_run:
                     key: value
-                  task: 1
-                  project: 1.1
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-              annotations:
-                - id: 1
+                  model_version: model_version
+                  project: 1
                   result:
                     - key: value
-                  created_username: created_username
-                  created_ago: created_ago
-                  completed_by:
-                    key: value
-                  unique_id: unique_id
-                  was_cancelled: true
-                  ground_truth: true
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  draft_created_at: '2024-01-15T09:30:00Z'
-                  lead_time: 1.1
-                  import_id: 1
-                  last_action: prediction
+                  score: 1.1
                   task: 1
-                  project: 1
-                  updated_by: 1
-                  parent_prediction: 1
-                  parent_annotation: 1
-                  last_created_by: 1
-              drafts:
-                - result:
-                    - key: value
-                  created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-              annotators:
-                - 1
-              inner_id: 2
-              cancelled_annotations: 0
-              total_annotations: 0
-              total_predictions: 0
-              completed_at: '2024-01-15T09:30:00Z'
-              annotations_results: ''
-              predictions_results: ''
+              predictions_model_versions: predictions_model_versions
+              predictions_results: predictions_results
               predictions_score: 1.1
-              file_upload: 6b25fc23-some_3.mp4
+              project: 1
+              review_time: 1
+              reviewed: true
+              reviewers:
+                - key: value
+              reviewers_count: 1
+              reviews_accepted: 1
+              reviews_rejected: 1
+              state: state
               storage_filename: storage_filename
-              annotations_ids: ''
-              predictions_model_versions: ''
-              avg_lead_time: 1.1
-              draft_exists: false
+              total_annotations: 1
+              total_predictions: 1
+              unresolved_comment_count: 1
+              updated_at: '2024-01-15T09:30:00Z'
               updated_by:
                 - key: value
-              data:
-                image: /data/upload/1/6b25fc23-some_3.mp4
-              meta:
-                key: value
-              created_at: '2024-06-18T23:45:46Z'
-              updated_at: '2024-06-18T23:45:46Z'
-              is_labeled: false
-              overlap: 1
-              comment_count: 0
-              unresolved_comment_count: 0
-              last_comment_updated_at: '2024-01-15T09:30:00Z'
-              project: 1
-              comment_authors:
-                - 1
       audiences:
         - public
     delete:
       path: /api/tasks/{id}/
       method: DELETE
       auth: true
-      docs: >
-
-        Delete a task in Label Studio. 
-
-
-        You will need the task ID. This is available from the Label Studio URL
-        when viewing the task, or you can retrieve it programmatically with [Get
-        task list](list). 
-
-
-        <Warning>This action cannot be undone.</Warning>
+      docs: Delete a task in Label Studio. This action cannot be undone!
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -453,14 +498,7 @@ service:
       path: /api/tasks/{id}/
       method: PATCH
       auth: true
-      docs: >
-
-        Update the attributes of an existing labeling task.
-
-
-        You will need the task ID. This is available from the Label Studio URL
-        when viewing the task, or you can retrieve it programmatically with [Get
-        task list](list). 
+      docs: Update the attributes of an existing labeling task.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -469,53 +507,252 @@ service:
           docs: Task ID
       display-name: Update task
       request:
-        name: TasksUpdateRequest
+        name: PatchedLseTaskRequest
         body:
           properties:
-            data:
-              type: optional<map<string, unknown>>
-              docs: Task data dictionary with arbitrary keys and values
+            avg_lead_time: optional<double>
+            cancelled_annotations: optional<integer>
+            comment_count:
+              type: optional<integer>
+              docs: Number of comments in the task including all annotations
+              validation:
+                min: -2147483648
+                max: 2147483647
+            completed_at: optional<datetime>
+            data: optional<unknown>
+            draft_exists: optional<boolean>
+            ground_truth: optional<boolean>
+            inner_id: optional<integer>
+            is_labeled:
+              type: optional<boolean>
+              docs: >-
+                True if the number of annotations for this task is greater than
+                or equal to the number of maximum_completions for the project
+            last_comment_updated_at:
+              type: optional<datetime>
+              docs: When the last comment was updated
+            meta: optional<unknown>
+            overlap:
+              type: optional<integer>
+              docs: Number of distinct annotators that processed the current task
+              validation:
+                min: -2147483648
+                max: 2147483647
+            precomputed_agreement:
+              type: optional<double>
+              docs: Average agreement score for the task
+            predictions_score: optional<double>
             project:
               type: optional<integer>
-              docs: Project ID
+              docs: Project ID for this task
+            reviewed: optional<boolean>
+            reviews_accepted: optional<integer>
+            reviews_rejected: optional<integer>
+            total_annotations: optional<integer>
+            total_predictions: optional<integer>
+            unresolved_comment_count:
+              type: optional<integer>
+              docs: >-
+                Number of unresolved comments in the task including all
+                annotations
+              validation:
+                min: -2147483648
+                max: 2147483647
         content-type: application/json
       response:
-        docs: Updated task
-        type: root.BaseTask
+        docs: ''
+        type: root.RoleBasedTask
       examples:
-        - name: response
-          path-parameters:
+        - path-parameters:
             id: id
-          request:
-            data:
-              image: https://example.com/image.jpg
-              text: Hello, world!
-            project: 1
+          request: {}
           response:
             body:
-              id: 1
+              agreement: agreement
+              agreement_selected: agreement_selected
+              annotations: annotations
+              annotations_ids: annotations_ids
+              annotations_results: annotations_results
+              annotators:
+                - 1
+              annotators_count: 1
+              avg_lead_time: 1.1
+              cancelled_annotations: 1
+              comment_authors:
+                - key: value
+              comment_authors_count: 1
+              comment_count: 1
+              comments: comments
+              completed_at: '2024-01-15T09:30:00Z'
+              created_at: '2024-01-15T09:30:00Z'
               data:
-                image: https://example.com/image.jpg
-                text: Hello, AI!
+                key: value
+              draft_exists: true
+              drafts:
+                - created_at: '2024-01-15T09:30:00Z'
+                  result:
+                    - key: value
+                  updated_at: '2024-01-15T09:30:00Z'
+              file_upload: file_upload
+              ground_truth: true
+              id: 1
+              inner_id: 1
+              is_labeled: true
+              last_comment_updated_at: '2024-01-15T09:30:00Z'
               meta:
                 key: value
-              created_at: '2024-06-18T23:45:46Z'
-              updated_at: '2024-06-18T23:45:46Z'
-              is_labeled: false
               overlap: 1
-              inner_id: 1
-              total_annotations: 0
-              cancelled_annotations: 0
-              total_predictions: 0
-              comment_count: 0
-              unresolved_comment_count: 0
-              last_comment_updated_at: '2024-01-15T09:30:00Z'
+              precomputed_agreement: 1.1
+              predictions:
+                - created_at: '2024-01-15T09:30:00Z'
+                  model:
+                    key: value
+                  model_run:
+                    key: value
+                  model_version: model_version
+                  project: 1
+                  result:
+                    - key: value
+                  score: 1.1
+                  task: 1
+                  updated_at: '2024-01-15T09:30:00Z'
+              predictions_model_versions: predictions_model_versions
+              predictions_results: predictions_results
+              predictions_score: 1.1
               project: 1
+              review_time: 1
+              reviewed: true
+              reviewers:
+                - key: value
+              reviewers_count: 1
+              reviews_accepted: 1
+              reviews_rejected: 1
+              state: state
+              storage_filename: storage_filename
+              total_annotations: 1
+              total_predictions: 1
+              unresolved_comment_count: 1
+              updated_at: '2024-01-15T09:30:00Z'
               updated_by:
-                - user_id: 1
-              file_upload: 42d46c4c-my-pic.jpeg
-              comment_authors:
-                - 1
+                - key: value
+      audiences:
+        - public
+    create_event:
+      path: /api/tasks/{id}/events/
+      method: POST
+      auth: true
+      docs: |2-
+
+            Create a new task event to track user interactions and system events during annotation.
+
+            This endpoint is designed to receive events from the frontend labeling interface to enable
+            accurate lead time calculation and detailed annotation analytics.
+
+            ## Event Types
+
+            **Core Annotation Events:**
+            - `annotation_loaded` - When annotation interface is loaded
+            - `annotation_submitted` - When annotation is submitted
+            - `annotation_updated` - When annotation is modified
+            - `annotation_reviewed` - When annotation is reviewed
+
+            **User Activity Events:**
+            - `visibility_change` - When page visibility changes (tab switch, minimize)
+            - `idle_detected` - When user goes idle
+            - `idle_resumed` - When user returns from idle
+
+            **Interaction Events:**
+            - `region_finished_drawing` - When annotation region is completed
+            - `region_deleted` - When annotation regions are removed
+            - `hotkey_pressed` - When keyboard shortcuts are used
+
+            **Media Events:**
+            - `video_playback_start/end` - Video playback control
+            - `audio_playback_start/end` - Audio playback control
+            - `video_scrub` - Video timeline scrubbing
+
+            ## Usage
+
+            Events are automatically associated with the task specified in the URL path.
+            The current user is automatically set as the actor. Project and organization
+            are derived from the task context.
+
+            ## Example Request
+
+            ```json
+            {
+                "event_key": "annotation_loaded",
+                "event_time": "2024-01-15T10:30:00Z",
+                "annotation": 123,
+                "meta": {
+                    "annotation_count": 5,
+                    "estimated_time": 300
+                }
+            }
+            ```
+            
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: Task ID to associate the event with
+      display-name: Create task event
+      request:
+        name: TaskEventRequest
+        body:
+          properties:
+            annotation:
+              type: optional<integer>
+              docs: Annotation ID associated with this event
+            annotation_draft:
+              type: optional<integer>
+              docs: Draft annotation ID associated with this event
+            event_key:
+              type: string
+              docs: >-
+                Event type identifier (e.g., "annotation_loaded",
+                "region_finished_drawing")
+              validation:
+                minLength: 1
+                maxLength: 255
+            event_time:
+              type: datetime
+              docs: Timestamp when the event occurred (frontend time)
+            meta: optional<unknown>
+            review:
+              type: optional<integer>
+              docs: Review ID associated with this event
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TaskEvent
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            event_key: event_key
+            event_time: '2024-01-15T09:30:00Z'
+          response:
+            body:
+              actor: 1
+              annotation: 1
+              annotation_draft: 1
+              created_at: '2024-01-15T09:30:00Z'
+              event_key: event_key
+              event_time: '2024-01-15T09:30:00Z'
+              id: 1
+              meta:
+                key: value
+              organization: 1
+              project: 1
+              review: 1
+              task: 1
       audiences:
         - public
   source:
@@ -525,24 +762,5 @@ types:
     enum:
       - all
       - task_only
-    default: task_only
-    source:
-      openapi: openapi/openapi.yaml
-  TasksListResponse:
-    properties:
-      tasks:
-        type: optional<list<root.Task>>
-        docs: >-
-          List of tasks, each task contains predictions and annotations if
-          `fields` query parameter is set to `all`
-      total:
-        type: optional<integer>
-        docs: Total number of tasks
-      total_annotations:
-        type: optional<integer>
-        docs: Total number of annotations
-      total_predictions:
-        type: optional<integer>
-        docs: Total number of predictions
     source:
       openapi: openapi/openapi.yaml

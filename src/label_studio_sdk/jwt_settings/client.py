@@ -3,8 +3,8 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.jwt_settings_response import JwtSettingsResponse
-from ..core.pydantic_utilities import parse_obj_as
+from ..types.lsejwt_settings import LsejwtSettings
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -17,7 +17,7 @@ class JwtSettingsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> JwtSettingsResponse:
+    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> LsejwtSettings:
         """
         Retrieve JWT settings for the currently active organization.
 
@@ -28,8 +28,8 @@ class JwtSettingsClient:
 
         Returns
         -------
-        JwtSettingsResponse
-            JWT settings retrieved successfully
+        LsejwtSettings
+
 
         Examples
         --------
@@ -48,9 +48,9 @@ class JwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    JwtSettingsResponse,
-                    parse_obj_as(
-                        type_=JwtSettingsResponse,  # type: ignore
+                    LsejwtSettings,
+                    construct_type(
+                        type_=LsejwtSettings,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -59,35 +59,34 @@ class JwtSettingsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create(
+    def update(
         self,
         *,
-        api_tokens_enabled: bool,
-        legacy_api_tokens_enabled: bool,
         api_token_ttl_days: int,
+        api_tokens_enabled: typing.Optional[bool] = OMIT,
+        legacy_api_tokens_enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> JwtSettingsResponse:
+    ) -> LsejwtSettings:
         """
         Update JWT settings for the currently active organization.
 
         Parameters
         ----------
-        api_tokens_enabled : bool
-            Whether JWT API tokens are enabled
-
-        legacy_api_tokens_enabled : bool
-            Whether legacy API tokens are enabled
-
         api_token_ttl_days : int
-            Number of days before API tokens expire
+
+        api_tokens_enabled : typing.Optional[bool]
+            Enable JWT API token authentication for this organization
+
+        legacy_api_tokens_enabled : typing.Optional[bool]
+            Enable legacy API token authentication for this organization
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        JwtSettingsResponse
-            JWT settings updated successfully
+        LsejwtSettings
+
 
         Examples
         --------
@@ -96,9 +95,7 @@ class JwtSettingsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.jwt_settings.create(
-            api_tokens_enabled=True,
-            legacy_api_tokens_enabled=True,
+        client.jwt_settings.update(
             api_token_ttl_days=1,
         )
         """
@@ -106,9 +103,12 @@ class JwtSettingsClient:
             "api/jwt/settings",
             method="POST",
             json={
+                "api_token_ttl_days": api_token_ttl_days,
                 "api_tokens_enabled": api_tokens_enabled,
                 "legacy_api_tokens_enabled": legacy_api_tokens_enabled,
-                "api_token_ttl_days": api_token_ttl_days,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -116,9 +116,9 @@ class JwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    JwtSettingsResponse,
-                    parse_obj_as(
-                        type_=JwtSettingsResponse,  # type: ignore
+                    LsejwtSettings,
+                    construct_type(
+                        type_=LsejwtSettings,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -132,7 +132,7 @@ class AsyncJwtSettingsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> JwtSettingsResponse:
+    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> LsejwtSettings:
         """
         Retrieve JWT settings for the currently active organization.
 
@@ -143,8 +143,8 @@ class AsyncJwtSettingsClient:
 
         Returns
         -------
-        JwtSettingsResponse
-            JWT settings retrieved successfully
+        LsejwtSettings
+
 
         Examples
         --------
@@ -171,9 +171,9 @@ class AsyncJwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    JwtSettingsResponse,
-                    parse_obj_as(
-                        type_=JwtSettingsResponse,  # type: ignore
+                    LsejwtSettings,
+                    construct_type(
+                        type_=LsejwtSettings,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -182,35 +182,34 @@ class AsyncJwtSettingsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create(
+    async def update(
         self,
         *,
-        api_tokens_enabled: bool,
-        legacy_api_tokens_enabled: bool,
         api_token_ttl_days: int,
+        api_tokens_enabled: typing.Optional[bool] = OMIT,
+        legacy_api_tokens_enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> JwtSettingsResponse:
+    ) -> LsejwtSettings:
         """
         Update JWT settings for the currently active organization.
 
         Parameters
         ----------
-        api_tokens_enabled : bool
-            Whether JWT API tokens are enabled
-
-        legacy_api_tokens_enabled : bool
-            Whether legacy API tokens are enabled
-
         api_token_ttl_days : int
-            Number of days before API tokens expire
+
+        api_tokens_enabled : typing.Optional[bool]
+            Enable JWT API token authentication for this organization
+
+        legacy_api_tokens_enabled : typing.Optional[bool]
+            Enable legacy API token authentication for this organization
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        JwtSettingsResponse
-            JWT settings updated successfully
+        LsejwtSettings
+
 
         Examples
         --------
@@ -224,9 +223,7 @@ class AsyncJwtSettingsClient:
 
 
         async def main() -> None:
-            await client.jwt_settings.create(
-                api_tokens_enabled=True,
-                legacy_api_tokens_enabled=True,
+            await client.jwt_settings.update(
                 api_token_ttl_days=1,
             )
 
@@ -237,9 +234,12 @@ class AsyncJwtSettingsClient:
             "api/jwt/settings",
             method="POST",
             json={
+                "api_token_ttl_days": api_token_ttl_days,
                 "api_tokens_enabled": api_tokens_enabled,
                 "legacy_api_tokens_enabled": legacy_api_tokens_enabled,
-                "api_token_ttl_days": api_token_ttl_days,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -247,9 +247,9 @@ class AsyncJwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    JwtSettingsResponse,
-                    parse_obj_as(
-                        type_=JwtSettingsResponse,  # type: ignore
+                    LsejwtSettings,
+                    construct_type(
+                        type_=LsejwtSettings,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

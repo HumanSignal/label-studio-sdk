@@ -9,104 +9,213 @@ from ..utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "id": 1,
-            "title": "title",
-            "description": "description",
-            "created_at": "2024-01-15T09:30:00Z",
+            "aws_access_key_id": "aws_access_key_id",
+            "aws_secret_access_key": "aws_secret_access_key",
+            "aws_session_token": "aws_session_token",
+            "aws_sse_kms_key_id": "aws_sse_kms_key_id",
             "bucket": "bucket",
-            "prefix": "prefix",
+            "can_delete_objects": True,
+            "created_at": "2024-01-15T09:30:00Z",
+            "description": "description",
             "external_id": "external_id",
-            "role_arn": "role_arn",
-            "region_name": "region_name",
-            "s3_endpoint": "s3_endpoint",
+            "id": 1,
+            "last_sync": "2024-01-15T09:30:00Z",
+            "last_sync_count": 1,
+            "last_sync_job": "last_sync_job",
+            "legacy_auth": True,
+            "meta": {"key": "value"},
+            "prefix": "prefix",
             "project": 1,
+            "regex_filter": "regex_filter",
+            "region_name": "region_name",
+            "role_arn": "role_arn",
+            "s3_endpoint": "s3_endpoint",
+            "status": "initialized",
+            "synchronizable": True,
+            "title": "title",
+            "traceback": "traceback",
+            "type": "type",
+            "use_blob_urls": True,
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
-                "id": "integer",
-                "title": None,
-                "description": None,
-                "created_at": "datetime",
+                "aws_access_key_id": None,
+                "aws_secret_access_key": None,
+                "aws_session_token": None,
+                "aws_sse_kms_key_id": None,
                 "bucket": None,
-                "prefix": None,
+                "can_delete_objects": None,
+                "created_at": "datetime",
+                "description": None,
                 "external_id": None,
-                "role_arn": None,
-                "region_name": None,
-                "s3_endpoint": None,
+                "id": "integer",
+                "last_sync": "datetime",
+                "last_sync_count": "integer",
+                "last_sync_job": None,
+                "legacy_auth": None,
+                "meta": None,
+                "prefix": None,
                 "project": "integer",
+                "regex_filter": None,
+                "region_name": None,
+                "role_arn": None,
+                "s3_endpoint": None,
+                "status": None,
+                "synchronizable": None,
+                "title": None,
+                "traceback": None,
+                "type": None,
+                "use_blob_urls": None,
             }
         },
     )
-    response = client.export_storage.s3s.list()
+    response = client.export_storage.s3s.list(project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.export_storage.s3s.list()
+    async_response = await async_client.export_storage.s3s.list(project=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "title": "title",
-        "description": "description",
-        "created_at": "2024-01-15T09:30:00Z",
+        "aws_access_key_id": "aws_access_key_id",
+        "aws_secret_access_key": "aws_secret_access_key",
+        "aws_session_token": "aws_session_token",
+        "aws_sse_kms_key_id": "aws_sse_kms_key_id",
         "bucket": "bucket",
-        "prefix": "prefix",
+        "can_delete_objects": True,
+        "created_at": "2024-01-15T09:30:00Z",
+        "description": "description",
         "external_id": "external_id",
-        "role_arn": "role_arn",
-        "region_name": "region_name",
-        "s3_endpoint": "s3_endpoint",
+        "id": 1,
+        "last_sync": "2024-01-15T09:30:00Z",
+        "last_sync_count": 1,
+        "last_sync_job": "last_sync_job",
+        "legacy_auth": True,
+        "meta": {"key": "value"},
+        "prefix": "prefix",
         "project": 1,
+        "regex_filter": "regex_filter",
+        "region_name": "region_name",
+        "role_arn": "role_arn",
+        "s3_endpoint": "s3_endpoint",
+        "status": "initialized",
+        "synchronizable": True,
+        "title": "title",
+        "traceback": "traceback",
+        "type": "type",
+        "use_blob_urls": True,
     }
     expected_types: typing.Any = {
-        "id": "integer",
-        "title": None,
-        "description": None,
-        "created_at": "datetime",
+        "aws_access_key_id": None,
+        "aws_secret_access_key": None,
+        "aws_session_token": None,
+        "aws_sse_kms_key_id": None,
         "bucket": None,
-        "prefix": None,
+        "can_delete_objects": None,
+        "created_at": "datetime",
+        "description": None,
         "external_id": None,
-        "role_arn": None,
-        "region_name": None,
-        "s3_endpoint": None,
+        "id": "integer",
+        "last_sync": "datetime",
+        "last_sync_count": "integer",
+        "last_sync_job": None,
+        "legacy_auth": None,
+        "meta": None,
+        "prefix": None,
         "project": "integer",
+        "regex_filter": None,
+        "region_name": None,
+        "role_arn": None,
+        "s3_endpoint": None,
+        "status": None,
+        "synchronizable": None,
+        "title": None,
+        "traceback": None,
+        "type": None,
+        "use_blob_urls": None,
     }
-    response = client.export_storage.s3s.create()
+    response = client.export_storage.s3s.create(project=1, role_arn="role_arn")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.export_storage.s3s.create()
+    async_response = await async_client.export_storage.s3s.create(project=1, role_arn="role_arn")
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_validate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.export_storage.s3s.validate(project=1, role_arn="role_arn")  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.export_storage.s3s.validate(project=1, role_arn="role_arn")  # type: ignore[func-returns-value]
+        is None
+    )
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "title": "title",
-        "description": "description",
-        "created_at": "2024-01-15T09:30:00Z",
+        "aws_access_key_id": "aws_access_key_id",
+        "aws_secret_access_key": "aws_secret_access_key",
+        "aws_session_token": "aws_session_token",
+        "aws_sse_kms_key_id": "aws_sse_kms_key_id",
         "bucket": "bucket",
-        "prefix": "prefix",
+        "can_delete_objects": True,
+        "created_at": "2024-01-15T09:30:00Z",
+        "description": "description",
         "external_id": "external_id",
-        "role_arn": "role_arn",
-        "region_name": "region_name",
-        "s3_endpoint": "s3_endpoint",
+        "id": 1,
+        "last_sync": "2024-01-15T09:30:00Z",
+        "last_sync_count": 1,
+        "last_sync_job": "last_sync_job",
+        "legacy_auth": True,
+        "meta": {"key": "value"},
+        "prefix": "prefix",
         "project": 1,
+        "regex_filter": "regex_filter",
+        "region_name": "region_name",
+        "role_arn": "role_arn",
+        "s3_endpoint": "s3_endpoint",
+        "status": "initialized",
+        "synchronizable": True,
+        "title": "title",
+        "traceback": "traceback",
+        "type": "type",
+        "use_blob_urls": True,
     }
     expected_types: typing.Any = {
-        "id": "integer",
-        "title": None,
-        "description": None,
-        "created_at": "datetime",
+        "aws_access_key_id": None,
+        "aws_secret_access_key": None,
+        "aws_session_token": None,
+        "aws_sse_kms_key_id": None,
         "bucket": None,
-        "prefix": None,
+        "can_delete_objects": None,
+        "created_at": "datetime",
+        "description": None,
         "external_id": None,
-        "role_arn": None,
-        "region_name": None,
-        "s3_endpoint": None,
+        "id": "integer",
+        "last_sync": "datetime",
+        "last_sync_count": "integer",
+        "last_sync_job": None,
+        "legacy_auth": None,
+        "meta": None,
+        "prefix": None,
         "project": "integer",
+        "regex_filter": None,
+        "region_name": None,
+        "role_arn": None,
+        "s3_endpoint": None,
+        "status": None,
+        "synchronizable": None,
+        "title": None,
+        "traceback": None,
+        "type": None,
+        "use_blob_urls": None,
     }
     response = client.export_storage.s3s.get(id=1)
     validate_response(response, expected_response, expected_types)
@@ -130,30 +239,62 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "title": "title",
-        "description": "description",
-        "created_at": "2024-01-15T09:30:00Z",
+        "aws_access_key_id": "aws_access_key_id",
+        "aws_secret_access_key": "aws_secret_access_key",
+        "aws_session_token": "aws_session_token",
+        "aws_sse_kms_key_id": "aws_sse_kms_key_id",
         "bucket": "bucket",
-        "prefix": "prefix",
+        "can_delete_objects": True,
+        "created_at": "2024-01-15T09:30:00Z",
+        "description": "description",
         "external_id": "external_id",
-        "role_arn": "role_arn",
-        "region_name": "region_name",
-        "s3_endpoint": "s3_endpoint",
+        "id": 1,
+        "last_sync": "2024-01-15T09:30:00Z",
+        "last_sync_count": 1,
+        "last_sync_job": "last_sync_job",
+        "legacy_auth": True,
+        "meta": {"key": "value"},
+        "prefix": "prefix",
         "project": 1,
+        "regex_filter": "regex_filter",
+        "region_name": "region_name",
+        "role_arn": "role_arn",
+        "s3_endpoint": "s3_endpoint",
+        "status": "initialized",
+        "synchronizable": True,
+        "title": "title",
+        "traceback": "traceback",
+        "type": "type",
+        "use_blob_urls": True,
     }
     expected_types: typing.Any = {
-        "id": "integer",
-        "title": None,
-        "description": None,
-        "created_at": "datetime",
+        "aws_access_key_id": None,
+        "aws_secret_access_key": None,
+        "aws_session_token": None,
+        "aws_sse_kms_key_id": None,
         "bucket": None,
-        "prefix": None,
+        "can_delete_objects": None,
+        "created_at": "datetime",
+        "description": None,
         "external_id": None,
-        "role_arn": None,
-        "region_name": None,
-        "s3_endpoint": None,
+        "id": "integer",
+        "last_sync": "datetime",
+        "last_sync_count": "integer",
+        "last_sync_job": None,
+        "legacy_auth": None,
+        "meta": None,
+        "prefix": None,
         "project": "integer",
+        "regex_filter": None,
+        "region_name": None,
+        "role_arn": None,
+        "s3_endpoint": None,
+        "status": None,
+        "synchronizable": None,
+        "title": None,
+        "traceback": None,
+        "type": None,
+        "use_blob_urls": None,
     }
     response = client.export_storage.s3s.update(id=1)
     validate_response(response, expected_response, expected_types)
@@ -162,14 +303,67 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_validate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.export_storage.s3s.validate()  # type: ignore[func-returns-value]
-        is None
-    )
+async def test_sync(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "aws_access_key_id": "aws_access_key_id",
+        "aws_secret_access_key": "aws_secret_access_key",
+        "aws_session_token": "aws_session_token",
+        "aws_sse_kms_key_id": "aws_sse_kms_key_id",
+        "bucket": "bucket",
+        "can_delete_objects": True,
+        "created_at": "2024-01-15T09:30:00Z",
+        "description": "description",
+        "external_id": "external_id",
+        "id": 1,
+        "last_sync": "2024-01-15T09:30:00Z",
+        "last_sync_count": 1,
+        "last_sync_job": "last_sync_job",
+        "legacy_auth": True,
+        "meta": {"key": "value"},
+        "prefix": "prefix",
+        "project": 1,
+        "regex_filter": "regex_filter",
+        "region_name": "region_name",
+        "role_arn": "role_arn",
+        "s3_endpoint": "s3_endpoint",
+        "status": "initialized",
+        "synchronizable": True,
+        "title": "title",
+        "traceback": "traceback",
+        "type": "type",
+        "use_blob_urls": True,
+    }
+    expected_types: typing.Any = {
+        "aws_access_key_id": None,
+        "aws_secret_access_key": None,
+        "aws_session_token": None,
+        "aws_sse_kms_key_id": None,
+        "bucket": None,
+        "can_delete_objects": None,
+        "created_at": "datetime",
+        "description": None,
+        "external_id": None,
+        "id": "integer",
+        "last_sync": "datetime",
+        "last_sync_count": "integer",
+        "last_sync_job": None,
+        "legacy_auth": None,
+        "meta": None,
+        "prefix": None,
+        "project": "integer",
+        "regex_filter": None,
+        "region_name": None,
+        "role_arn": None,
+        "s3_endpoint": None,
+        "status": None,
+        "synchronizable": None,
+        "title": None,
+        "traceback": None,
+        "type": None,
+        "use_blob_urls": None,
+    }
+    response = client.export_storage.s3s.sync(id=1)
+    validate_response(response, expected_response, expected_types)
 
-    assert (
-        await async_client.export_storage.s3s.validate()  # type: ignore[func-returns-value]
-        is None
-    )
+    async_response = await async_client.export_storage.s3s.sync(id=1)
+    validate_response(async_response, expected_response, expected_types)

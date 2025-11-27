@@ -23,6 +23,9 @@ on:
       - 'release/**'
   workflow_dispatch:
 
+env:
+  POETRY_VERSION: 2.1.4
+
 jobs:
   run_pytest:
     name: "pytest ${{ matrix.os }} | ${{ matrix.python-version }}"
@@ -31,21 +34,19 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-          - 3.12
+          - 3.13
         os:
           - ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: "Install poetry"
-        env:
-          POETRY_VERSION: ${{ vars.POETRY_VERSION }}
-        run: pipx install "poetry==${POETRY_VERSION}"
+        run: pipx install "poetry==${{ env.POETRY_VERSION }}"
 
       - name: "Set up Python"
         id: setup_python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'poetry'

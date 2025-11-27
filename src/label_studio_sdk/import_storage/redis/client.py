@@ -4,12 +4,10 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.redis_import_storage import RedisImportStorage
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from .types.redis_create_response import RedisCreateResponse
 from ...core.jsonable_encoder import jsonable_encoder
-from .types.redis_update_response import RedisUpdateResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -21,20 +19,22 @@ class RedisClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: int,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[RedisImportStorage]:
         """
-
-        You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis import (source) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a list of all Redis import storage connections.
 
         Parameters
         ----------
-        project : typing.Optional[int]
+        project : int
             Project ID
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,12 +51,15 @@ class RedisClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.redis.list()
+        client.import_storage.redis.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/redis/",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -65,7 +68,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[RedisImportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[RedisImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -78,60 +81,55 @@ class RedisClient:
     def create(
         self,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RedisCreateResponse:
+    ) -> RedisImportStorage:
         """
-
-        Create a new source storage connection to a Redis database.
-
-        For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation.
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        Create a new Redis import storage connection.
 
         Parameters
         ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Storage prefix (optional)
 
         host : typing.Optional[str]
             Server Host IP (optional)
 
+        password : typing.Optional[str]
+            Server Password (optional)
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        title : typing.Optional[str]
+            Storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisCreateResponse
+        RedisImportStorage
 
 
         Examples
@@ -147,15 +145,15 @@ class RedisClient:
             "api/storages/redis/",
             method="POST",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -166,9 +164,9 @@ class RedisClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RedisCreateResponse,
-                    parse_obj_as(
-                        type_=RedisCreateResponse,  # type: ignore
+                    RedisImportStorage,
+                    construct_type(
+                        type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -180,53 +178,52 @@ class RedisClient:
     def validate(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
-        Validate a specific Redis import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+        Validate a specific Redis import storage connection.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Storage prefix (optional)
 
         host : typing.Optional[str]
             Server Host IP (optional)
 
-        port : typing.Optional[str]
-            Server Port (optional)
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
 
         password : typing.Optional[str]
             Server Password (optional)
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
+        port : typing.Optional[str]
+            Server Port (optional)
+
+        project : typing.Optional[int]
+            Project ID
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        title : typing.Optional[str]
+            Storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -248,16 +245,16 @@ class RedisClient:
             "api/storages/redis/validate",
             method="POST",
             json={
-                "id": id,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
+                "id": id,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -275,15 +272,11 @@ class RedisClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
-
-        Get a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific Redis import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -313,7 +306,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -325,17 +318,11 @@ class RedisClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific Redis import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -372,61 +359,57 @@ class RedisClient:
         self,
         id: int,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RedisUpdateResponse:
+    ) -> RedisImportStorage:
         """
-
-        Update a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific Redis import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis import storage.
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
 
         path : typing.Optional[str]
             Storage prefix (optional)
 
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        title : typing.Optional[str]
+            Storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisUpdateResponse
+        RedisImportStorage
 
 
         Examples
@@ -444,15 +427,15 @@ class RedisClient:
             f"api/storages/redis/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -463,9 +446,9 @@ class RedisClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RedisUpdateResponse,
-                    parse_obj_as(
-                        type_=RedisUpdateResponse,  # type: ignore
+                    RedisImportStorage,
+                    construct_type(
+                        type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -476,12 +459,7 @@ class RedisClient:
 
     def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
-
-        Sync tasks from a Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
-
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        Sync tasks from a Redis import storage connection.
 
         Parameters
         ----------
@@ -516,7 +494,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -532,20 +510,22 @@ class AsyncRedisClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: int,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[RedisImportStorage]:
         """
-
-        You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis import (source) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a list of all Redis import storage connections.
 
         Parameters
         ----------
-        project : typing.Optional[int]
+        project : int
             Project ID
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -567,7 +547,9 @@ class AsyncRedisClient:
 
 
         async def main() -> None:
-            await client.import_storage.redis.list()
+            await client.import_storage.redis.list(
+                project=1,
+            )
 
 
         asyncio.run(main())
@@ -576,6 +558,7 @@ class AsyncRedisClient:
             "api/storages/redis/",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -584,7 +567,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[RedisImportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[RedisImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -597,60 +580,55 @@ class AsyncRedisClient:
     async def create(
         self,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RedisCreateResponse:
+    ) -> RedisImportStorage:
         """
-
-        Create a new source storage connection to a Redis database.
-
-        For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation.
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        Create a new Redis import storage connection.
 
         Parameters
         ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Storage prefix (optional)
 
         host : typing.Optional[str]
             Server Host IP (optional)
 
+        password : typing.Optional[str]
+            Server Password (optional)
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        title : typing.Optional[str]
+            Storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisCreateResponse
+        RedisImportStorage
 
 
         Examples
@@ -674,15 +652,15 @@ class AsyncRedisClient:
             "api/storages/redis/",
             method="POST",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -693,9 +671,9 @@ class AsyncRedisClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RedisCreateResponse,
-                    parse_obj_as(
-                        type_=RedisCreateResponse,  # type: ignore
+                    RedisImportStorage,
+                    construct_type(
+                        type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -707,53 +685,52 @@ class AsyncRedisClient:
     async def validate(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
-        Validate a specific Redis import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+        Validate a specific Redis import storage connection.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Storage prefix (optional)
 
         host : typing.Optional[str]
             Server Host IP (optional)
 
-        port : typing.Optional[str]
-            Server Port (optional)
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
 
         password : typing.Optional[str]
             Server Password (optional)
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
+        port : typing.Optional[str]
+            Server Port (optional)
+
+        project : typing.Optional[int]
+            Project ID
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        title : typing.Optional[str]
+            Storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -783,16 +760,16 @@ class AsyncRedisClient:
             "api/storages/redis/validate",
             method="POST",
             json={
-                "id": id,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
+                "id": id,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -810,15 +787,11 @@ class AsyncRedisClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
-
-        Get a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific Redis import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -856,7 +829,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -868,17 +841,11 @@ class AsyncRedisClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific Redis import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -923,61 +890,57 @@ class AsyncRedisClient:
         self,
         id: int,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RedisUpdateResponse:
+    ) -> RedisImportStorage:
         """
-
-        Update a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific Redis import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis import storage.
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
 
         path : typing.Optional[str]
             Storage prefix (optional)
 
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        title : typing.Optional[str]
+            Storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisUpdateResponse
+        RedisImportStorage
 
 
         Examples
@@ -1003,15 +966,15 @@ class AsyncRedisClient:
             f"api/storages/redis/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -1022,9 +985,9 @@ class AsyncRedisClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RedisUpdateResponse,
-                    parse_obj_as(
-                        type_=RedisUpdateResponse,  # type: ignore
+                    RedisImportStorage,
+                    construct_type(
+                        type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1035,12 +998,7 @@ class AsyncRedisClient:
 
     async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
-
-        Sync tasks from a Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
-
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        Sync tasks from a Redis import storage connection.
 
         Parameters
         ----------
@@ -1083,7 +1041,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),

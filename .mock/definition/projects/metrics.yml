@@ -1,0 +1,96 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /api/projects/{id}/metricparam/
+      method: GET
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get the current metrics configuration for a project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: ✨ Get project metrics configuration
+      response:
+        docs: Current metrics configuration
+        type: root.MetricParam
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              agreement_threshold: agreement_threshold
+              allowed: allowed
+              max_additional_annotators_assignable: 1
+              metric_name: metric_name
+              metric_params:
+                key: value
+      audiences:
+        - public
+    update:
+      path: /api/projects/{id}/metricparam/
+      method: POST
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update metrics strategy and parameters for a project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: ✨ Update project metrics configuration
+      request:
+        name: MetricParamUpdateRequest
+        body:
+          properties:
+            additional_params: optional<map<string, unknown>>
+            agreement_threshold:
+              type: optional<integer>
+              validation:
+                min: 0
+                max: 100
+              availability: deprecated
+            max_additional_annotators_assignable:
+              type: optional<integer>
+              validation:
+                min: 0
+              availability: deprecated
+            metric_name:
+              type: optional<string>
+              validation:
+                minLength: 1
+        content-type: application/json
+      response:
+        docs: Updated metrics configuration
+        type: root.MetricParam
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              agreement_threshold: agreement_threshold
+              allowed: allowed
+              max_additional_annotators_assignable: 1
+              metric_name: metric_name
+              metric_params:
+                key: value
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

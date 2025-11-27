@@ -1,0 +1,90 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get_invite_link:
+      path: /api/invite
+      method: GET
+      auth: true
+      docs: Get invite link for organization
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Get invite link
+      response:
+        docs: ''
+        type: root.OrganizationInvite
+      errors:
+        - root.ForbiddenError
+      examples:
+        - response:
+            body:
+              invite_url: invite_url
+              token: token
+      audiences:
+        - public
+    revoke_invite:
+      path: /api/invite/revoke
+      method: POST
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Revoke invite to organization
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: ✨ Revoke invite
+      request:
+        name: RevokeInviteRequest
+        body:
+          properties:
+            email:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
+      examples:
+        - request:
+            email: email
+      audiences:
+        - public
+    send_email:
+      path: /api/invite/send-email
+      method: POST
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Send email with invite to organization
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: ✨ Send email with invite
+      request:
+        name: SendInviteRequest
+        body:
+          properties:
+            emails: list<string>
+            projects: optional<list<integer>>
+            role: root.Role9E7Enum
+            workspaces: optional<list<integer>>
+        content-type: application/json
+      errors:
+        - root.ForbiddenError
+      examples:
+        - request:
+            emails:
+              - emails
+            role: OW
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

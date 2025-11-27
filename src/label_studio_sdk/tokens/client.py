@@ -3,13 +3,15 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..errors.not_found_error import NotFoundError
-from ..core.pydantic_utilities import parse_obj_as
+from ..types.lseapi_token_list import LseapiTokenList
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.api_token_response import ApiTokenResponse
-from ..types.access_token_response import AccessTokenResponse
-from ..errors.unauthorized_error import UnauthorizedError
+from ..types.lseapi_token_create import LseapiTokenCreate
+from ..errors.not_found_error import NotFoundError
+from ..types.token_refresh_response import TokenRefreshResponse
+from ..types.token_rotate_response import TokenRotateResponse
+from ..errors.bad_request_error import BadRequestError
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -20,21 +22,115 @@ class TokensClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def blacklist(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def list(
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[LseapiTokenList]:
         """
-        Blacklist a refresh token to prevent its future use.
+        List all API tokens for the current user.
 
         Parameters
         ----------
-        refresh : str
-            JWT refresh token
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        typing.List[LseapiTokenList]
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.tokens.list()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/token/",
+            method="GET",
+            params={
+                "ordering": ordering,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[LseapiTokenList],
+                    construct_type(
+                        type_=typing.List[LseapiTokenList],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseapiTokenCreate:
+        """
+        Create a new API token for the current user.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseapiTokenCreate
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.tokens.create()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/token/",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LseapiTokenCreate,
+                    construct_type(
+                        type_=LseapiTokenCreate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def blacklist(
+        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+        """
+        Adds a JWT refresh token to the blacklist, preventing it from being used to obtain new access tokens.
+
+        Parameters
+        ----------
+        refresh : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, typing.Optional[typing.Any]]
+
 
         Examples
         --------
@@ -48,7 +144,7 @@ class TokensClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/token/blacklist",
+            "api/token/blacklist/",
             method="POST",
             json={
                 "refresh": refresh,
@@ -61,12 +157,18 @@ class TokensClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    typing.Dict[str, typing.Optional[typing.Any]],
+                    construct_type(
+                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -77,106 +179,21 @@ class TokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ApiTokenResponse]:
-        """
-        List all API tokens for the current user.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[ApiTokenResponse]
-            List of API tokens retrieved successfully
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.tokens.get()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/token",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[ApiTokenResponse],
-                    parse_obj_as(
-                        type_=typing.List[ApiTokenResponse],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> ApiTokenResponse:
-        """
-        Create a new API token for the current user.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ApiTokenResponse
-            Token created successfully
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.tokens.create()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/token",
-            method="POST",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ApiTokenResponse,
-                    parse_obj_as(
-                        type_=ApiTokenResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def refresh(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> AccessTokenResponse:
+    def refresh(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> TokenRefreshResponse:
         """
         Get a new access token, using a refresh token.
 
         Parameters
         ----------
         refresh : str
-            JWT refresh token
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AccessTokenResponse
-            New access token created successfully
+        TokenRefreshResponse
+
 
         Examples
         --------
@@ -190,7 +207,7 @@ class TokensClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/token/refresh",
+            "api/token/refresh/",
             method="POST",
             json={
                 "refresh": refresh,
@@ -204,17 +221,70 @@ class TokensClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AccessTokenResponse,
-                    parse_obj_as(
-                        type_=AccessTokenResponse,  # type: ignore
+                    TokenRefreshResponse,
+                    construct_type(
+                        type_=TokenRefreshResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def rotate(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> TokenRotateResponse:
+        """
+        Creates a new JWT refresh token and blacklists the current one.
+
+        Parameters
+        ----------
+        refresh : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenRotateResponse
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.tokens.rotate(
+            refresh="refresh",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/token/rotate/",
+            method="POST",
+            json={
+                "refresh": refresh,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    TokenRotateResponse,
+                    construct_type(
+                        type_=TokenRotateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -230,21 +300,131 @@ class AsyncTokensClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def blacklist(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def list(
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[LseapiTokenList]:
         """
-        Blacklist a refresh token to prevent its future use.
+        List all API tokens for the current user.
 
         Parameters
         ----------
-        refresh : str
-            JWT refresh token
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        typing.List[LseapiTokenList]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.tokens.list()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/token/",
+            method="GET",
+            params={
+                "ordering": ordering,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[LseapiTokenList],
+                    construct_type(
+                        type_=typing.List[LseapiTokenList],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseapiTokenCreate:
+        """
+        Create a new API token for the current user.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseapiTokenCreate
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.tokens.create()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/token/",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LseapiTokenCreate,
+                    construct_type(
+                        type_=LseapiTokenCreate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def blacklist(
+        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+        """
+        Adds a JWT refresh token to the blacklist, preventing it from being used to obtain new access tokens.
+
+        Parameters
+        ----------
+        refresh : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, typing.Optional[typing.Any]]
+
 
         Examples
         --------
@@ -266,7 +446,7 @@ class AsyncTokensClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/token/blacklist",
+            "api/token/blacklist/",
             method="POST",
             json={
                 "refresh": refresh,
@@ -279,12 +459,18 @@ class AsyncTokensClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    typing.Dict[str, typing.Optional[typing.Any]],
+                    construct_type(
+                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -295,124 +481,23 @@ class AsyncTokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ApiTokenResponse]:
-        """
-        List all API tokens for the current user.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[ApiTokenResponse]
-            List of API tokens retrieved successfully
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.tokens.get()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/token",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[ApiTokenResponse],
-                    parse_obj_as(
-                        type_=typing.List[ApiTokenResponse],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> ApiTokenResponse:
-        """
-        Create a new API token for the current user.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ApiTokenResponse
-            Token created successfully
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.tokens.create()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/token",
-            method="POST",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ApiTokenResponse,
-                    parse_obj_as(
-                        type_=ApiTokenResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     async def refresh(
         self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AccessTokenResponse:
+    ) -> TokenRefreshResponse:
         """
         Get a new access token, using a refresh token.
 
         Parameters
         ----------
         refresh : str
-            JWT refresh token
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AccessTokenResponse
-            New access token created successfully
+        TokenRefreshResponse
+
 
         Examples
         --------
@@ -434,7 +519,7 @@ class AsyncTokensClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/token/refresh",
+            "api/token/refresh/",
             method="POST",
             json={
                 "refresh": refresh,
@@ -448,17 +533,80 @@ class AsyncTokensClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AccessTokenResponse,
-                    parse_obj_as(
-                        type_=AccessTokenResponse,  # type: ignore
+                    TokenRefreshResponse,
+                    construct_type(
+                        type_=TokenRefreshResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def rotate(
+        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TokenRotateResponse:
+        """
+        Creates a new JWT refresh token and blacklists the current one.
+
+        Parameters
+        ----------
+        refresh : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenRotateResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.tokens.rotate(
+                refresh="refresh",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/token/rotate/",
+            method="POST",
+            json={
+                "refresh": refresh,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    TokenRotateResponse,
+                    construct_type(
+                        type_=TokenRotateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),

@@ -79,6 +79,12 @@ def get_export_args(parser):
         default=True,
         help="Set this flag if your annotations are in one JSON file instead of multiple JSON files from directory",
     )
+    parser.add_argument(
+        "--brush-to-coco",
+        dest="brush_to_coco",
+        action="store_true",
+        help="If set, brush annotations will be converted to COCO format"
+    )
 
 
 def get_all_args():
@@ -157,6 +163,14 @@ def export(args):
     elif args.format == Format.YOLO_OBB:
         c.convert_to_yolo(
             args.input, args.output, is_dir=not args.heartex_format, is_obb=True
+        )
+    elif args.format == Format.BRUSH_TO_COCO:
+        c.convert(
+            args.input,
+            args.output,
+            Format.BRUSH_TO_COCO,
+            output_image_dir=args.image_dir,
+            is_dir=not args.heartex_format,
         )
     else:
         raise FormatNotSupportedError()

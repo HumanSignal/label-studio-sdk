@@ -1,29 +1,6 @@
 ci: TEST
 # Label Studio Python Library
 
-<!-- Note about deprecated version <1 -->
----
-> :warning: **Note**<br/>
->
-> The version of `label-studio-sdk<1` is deprecated and no longer supported. We recommend updating to the latest version.
-> If you still want to use the old version, you can install it with `pip install "label-studio-sdk<1"`.
-> OR You can find the branch with the old version by cloning the repository and checking out the branch as follows:
->
-> ```sh
-> git clone https://github.com/HumanSignal/label-studio-sdk.git
-> cd label-studio-sdk
-> git fetch origin
-> git checkout release/0.0.34
-> ```
-> 
-> OR you can change your import statements as follows:
-> ```python
-> from label_studio_sdk import Client
-> from label_studio_sdk.data_manager import Filters, Column, Operator, Type
-> from label_studio_sdk._legacy import Project
-> ```
----
-
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 [![pypi](https://img.shields.io/pypi/v/label-studio-sdk.svg)](https://pypi.python.org/pypi/label-studio-sdk)
 
@@ -48,113 +25,135 @@ poetry add label-studio-sdk
 # Usage
 
 ```python
-from label_studio_sdk.client import LabelStudio
+from label_studio_sdk import LabelStudio
 
-ls = LabelStudio(
+client = LabelStudio(
     base_url='YOUR_LABEL_STUDIO_URL',  
     api_key="YOUR_API_KEY",
 )
 ```
 
-# Examples
+# Versions
 
-Check more examples [here](https://api.labelstud.io/).
+## SDK 2.0.0
 
-## Create a new project
+In August 2025, we released SDK version 2.0.0. 
 
-```python
-from label_studio_sdk.label_interface import LabelInterface
-from label_studio_sdk.label_interface.create import labels
+This version has a number of documentation and functional improvements over SDK 1. 
 
-project = ls.projects.create(
-    name="Project name",
-    description="Project description",
-    label_config=LabelInterface.create({
-      "image": "Image",
-      "bbox": labels(["cat", "dog"], tag_type="RectangleLabels")
-    })
-)
+### Enhancements 
+
+**Enterprise-only**
+
+- Added a new `projects.stats.iaa` endpoint to return stats from the inter-annotator agreement matrix. 
+- You can now update tasks that have comments.
+- Added support for `sync` to `S3s` (S3 with IAM role) exports.
+
+**Enterprise and open source**
+
+- Expanded support to include all project settings, many of which were missing in SDK 1. For example, in Enterprise environments you can now configure `assignment_settings`, `review_settings`, `annotator_evaluation`, and many more.
+- Fixed passing the `project` parameter in `actions.list()` (broken in SDK 1). 
+- Relaxed request/response validation reduces pydantic errors in SDK 2.
+
+### Breaking changes
+
+**Enterprise-only**
+
+- `comments.create` no longer accepts a `project` argument.
+- In `prompts.indicators`, the `pk` parameter is now `id`.
+- In `prompts.runs` and `prompts.versions`, the `id` parameter is now `prompt_id`.
+- `workspaces.members.list` responses are now objects instead of dictionaries.
+
+**Enterprise and open source**
+
+- In `projects.exports` calls, the project ID is now passed as `id`, while the export ID is passed as `export_pk`.
+- Predictions returned in task responses are now objects instead of dictionaries. 
+
+## SDK 1.0+
+
+SDK 1 was released in June 2024. 
+
+If you use the Label Studio SDK 1 package in any automated pipelines, we strongly recommend pinning your SDK version to `<2.0.0` until you can reconcile the breaking changes. 
+
+
+## SDK <1
+
+The version of `label-studio-sdk<1` is deprecated and no longer supported. We recommend updating to the latest version.
+
+<details>
+
+<summary> To use SDK <1 </summary>
+
+If you still want to use the deprecated version, you can install it with `pip install "label-studio-sdk<1"`. 
+
+OR You can find the branch with the old version by cloning the repository and checking out the branch as follows:
+
+```sh
+git clone https://github.com/HumanSignal/label-studio-sdk.git
+cd label-studio-sdk
+git fetch origin
+git checkout release/0.0.34
 ```
 
-## Create a new task
-    
+OR you can change your import statements as follows:
 ```python
-task = ls.tasks.create(
+from label_studio_sdk import Client
+from label_studio_sdk.data_manager import Filters, Column, Operator, Type
+from label_studio_sdk._legacy import Project
+```
+
+</details>
+
+# Example: Create a new project with tasks
+
+```python
+# Import the SDK and the client module
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    base_url="http://localhost:8080",   # <-- put your LS URL here
+    api_key="YOUR_API_KEY",             # <-- put your API key here
+)
+
+label_config = """
+<View>
+  <Header value="Choose text sentiment:"/>
+  <Text name="text" value="$text"/>
+  <Choices name="sentiment" toName="text" choice="single">
+    <Choice value="Positive"/>
+    <Choice value="Negative"/>
+    <Choice value="Neutral"/>
+  </Choices>
+</View>
+"""
+
+# Create project
+project = client.projects.create(
+    title="Sentiment Classification",
+    label_config=label_config
+)
+
+# (Optional) validate the config to catch mistakes early
+client.projects.validate_label_config(id=project.id, label_config=label_config)
+
+# Create a single task
+task = client.tasks.create(
     project=project.id,
-    data={"image": "https://example.com/image.jpg"}
+    data={"text": "Label Studio is the best!"}  # 'text' matches value="$text"
 )
-```
-Now you can open the project `PROJECT_ID` in the Label Studio UI and create annotations for the task.
+print(f"Created task id: {task.id}")
 
-## Export annotations
-
-```python
-annotations = [
-    task.annotations
-    for task in ls.tasks.list(project=project.id, fields='all')
-    if task.annotations
-]
-```
-
-
-## Async client
-
-```python
-from label_studio_sdk.client import AsyncLabelStudio
-
-client = AsyncLabelStudio(
-    api_key="YOUR_API_KEY",
+# Or create multiple tasks at once
+client.projects.import_tasks(
+    id=project.id,
+    request=[
+        {"text": "I love Label Studio"},
+        {"text": "Label Studio helps me ship faster"},
+    ]
 )
 ```
 
-## Advanced
-
-### Timeouts
-By default, requests time out after 60 seconds. You can configure this with a 
-timeout option at the client or request level.
-
-```python
-from label_studio_sdk.client import LabelStudio
-
-ls = LabelStudio(
-    # All timeouts set to 20 seconds
-    timeout=20.0
-)
-
-ls.projects.create(..., {
-    # Override timeout for a specific method
-    timeout=20.0
-})
-```
-
-### Custom HTTP client
-You can override the httpx client to customize it for your use-case. Some common use-cases 
-include support for proxies and transports.
-
-```python
-import httpx
-
-from label_studio_sdk.client import LabelStudio
-
-ls = LabelStudio(
-    http_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
-
-## Enterprise features
-
-### Create comments
-    
-```python
-comment = ls.comments.create(
-    project=project.id,
-    annotation=annotation.id,
-    text="Comment text"
-)
-```
+For additional examples, see [our API reference](https://api.labelstud.io/). 
 
 <!-- Begin Contributing, generated by Fern  -->
 # Contributing

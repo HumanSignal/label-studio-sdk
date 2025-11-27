@@ -9,11 +9,11 @@ concurrency:
 
 jobs:
   sync:
-    name: "Update: Update Feature Flags"
+    name: "Follow Merge: Sync Upstream PRs"
     if: github.event.client_payload.slash_command.args.unnamed.arg1 == 'sync'
     uses: ./.github/workflows/follow-merge-upstream-repo-sync-v2.yml
     with:
-      branch_name: ${{ github.event.client_payload.pull_request.head.ref }}
+      branch_name: ${{ github.event.client_payload.slash_command.args.unnamed.arg2 || github.event.client_payload.pull_request.head.ref }}
     secrets: inherit
 
   help:
@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 1
     steps:
       - name: Update comment
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ secrets.GIT_PAT }}
           repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
@@ -30,5 +30,5 @@ jobs:
           body: |
             > Command | Description
             > --- | ---
-            > /fm sync | Sync upstream prs and merge with pull request base
-          reaction-type: hooray
+            > /fm sync <Optional branch override> | Sync upstream prs and merge with pull request base
+          reactions: hooray

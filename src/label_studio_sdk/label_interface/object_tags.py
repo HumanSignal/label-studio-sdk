@@ -20,6 +20,7 @@ _TAG_TO_CLASS = {
     "list": "ListTag",
     "paragraphs": "ParagraphsTag",
     "timeseries": "TimeSeriesTag",
+    "chat": "ChatTag",
 }
 
 _DATA_EXAMPLES = None
@@ -189,12 +190,17 @@ class AudioTag(ObjectTag):
 
 
 class ImageTag(ObjectTag):
-    """ """
+    """Image tag"""
     tag: str = "Image"
     
     def _generate_example(self, examples, only_urls=False):
         """ """
         return examples.get("Image")
+    
+    @property
+    def is_image_list(self):
+        """Check if the tag is an image list, i.e. it has a valueList attribute that accepts list of images"""
+        return bool(self.attr.get("valueList")) if self.attr else False
 
 
 class TableTag(ObjectTag):
@@ -301,3 +307,11 @@ class TimeSeriesTag(ObjectTag):
         else:
             # data is JSON
             return generate_time_series_json(time_column, value_columns, time_format)
+
+class ChatTag(ObjectTag):
+    """ """
+    tag: str = "Chat"
+
+    def _generate_example(self, examples, only_urls=False):
+        """ """
+        return examples.get("Chat")

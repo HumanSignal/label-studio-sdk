@@ -4,12 +4,10 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.azure_blob_import_storage import AzureBlobImportStorage
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from .types.azure_create_response import AzureCreateResponse
 from ...core.jsonable_encoder import jsonable_encoder
-from .types.azure_update_response import AzureUpdateResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -21,20 +19,22 @@ class AzureClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: int,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[AzureBlobImportStorage]:
         """
-
-        You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure import (source) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get list of all Azure import storage connections.
 
         Parameters
         ----------
-        project : typing.Optional[int]
+        project : int
             Project ID
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,12 +51,15 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure.list()
+        client.import_storage.azure.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/azure/",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -65,7 +68,7 @@ class AzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[AzureBlobImportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[AzureBlobImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -78,36 +81,38 @@ class AzureClient:
     def create(
         self,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureCreateResponse:
+    ) -> AzureBlobImportStorage:
         """
-
-        Create a new source storage connection to Microsoft Azure Blob storage.
-
-        For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation.
-
-        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        Create new Azure import storage
 
         Parameters
         ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -115,33 +120,24 @@ class AzureClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
-        container : typing.Optional[str]
-            Azure blob container
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        title : typing.Optional[str]
+            Storage title
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureCreateResponse
+        AzureBlobImportStorage
 
 
         Examples
@@ -157,17 +153,17 @@ class AzureClient:
             "api/storages/azure/",
             method="POST",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "account_key": account_key,
+                "account_name": account_name,
+                "container": container,
+                "description": description,
+                "prefix": prefix,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
-                "title": title,
-                "description": description,
                 "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -178,9 +174,9 @@ class AzureClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureCreateResponse,
-                    parse_obj_as(
-                        type_=AzureCreateResponse,  # type: ignore
+                    AzureBlobImportStorage,
+                    construct_type(
+                        type_=AzureBlobImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -192,34 +188,42 @@ class AzureClient:
     def validate(
         self,
         *,
+        account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
-        Validate a specific Azure import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+        Validate a specific Azure import storage connection.
 
         Parameters
         ----------
+        account_key : typing.Optional[str]
+            Azure Blob account key
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
 
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        prefix : typing.Optional[str]
+            Azure blob prefix name
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -227,26 +231,17 @@ class AzureClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
-        container : typing.Optional[str]
-            Azure blob container
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        title : typing.Optional[str]
+            Storage title
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -268,18 +263,18 @@ class AzureClient:
             "api/storages/azure/validate",
             method="POST",
             json={
+                "account_key": account_key,
+                "account_name": account_name,
+                "container": container,
+                "description": description,
                 "id": id,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "prefix": prefix,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
-                "title": title,
-                "description": description,
                 "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -297,15 +292,11 @@ class AzureClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
-
-        Get a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific Azure import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -335,7 +326,7 @@ class AzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     AzureBlobImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=AzureBlobImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -347,17 +338,11 @@ class AzureClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific Azure import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -394,35 +379,40 @@ class AzureClient:
         self,
         id: int,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureUpdateResponse:
+    ) -> AzureBlobImportStorage:
         """
-
-        Update a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific Azure import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
 
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -430,33 +420,24 @@ class AzureClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
-        container : typing.Optional[str]
-            Azure blob container
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        title : typing.Optional[str]
+            Storage title
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureUpdateResponse
+        AzureBlobImportStorage
 
 
         Examples
@@ -474,17 +455,17 @@ class AzureClient:
             f"api/storages/azure/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "account_key": account_key,
+                "account_name": account_name,
+                "container": container,
+                "description": description,
+                "prefix": prefix,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
-                "title": title,
-                "description": description,
                 "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -495,9 +476,9 @@ class AzureClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureUpdateResponse,
-                    parse_obj_as(
-                        type_=AzureUpdateResponse,  # type: ignore
+                    AzureBlobImportStorage,
+                    construct_type(
+                        type_=AzureBlobImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -508,12 +489,7 @@ class AzureClient:
 
     def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
-
-        Sync tasks from an Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
-
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        Sync tasks from an Azure import storage connection.
 
         Parameters
         ----------
@@ -548,7 +524,7 @@ class AzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     AzureBlobImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=AzureBlobImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -564,20 +540,22 @@ class AsyncAzureClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: int,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[AzureBlobImportStorage]:
         """
-
-        You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure import (source) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get list of all Azure import storage connections.
 
         Parameters
         ----------
-        project : typing.Optional[int]
+        project : int
             Project ID
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -599,7 +577,9 @@ class AsyncAzureClient:
 
 
         async def main() -> None:
-            await client.import_storage.azure.list()
+            await client.import_storage.azure.list(
+                project=1,
+            )
 
 
         asyncio.run(main())
@@ -608,6 +588,7 @@ class AsyncAzureClient:
             "api/storages/azure/",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -616,7 +597,7 @@ class AsyncAzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[AzureBlobImportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[AzureBlobImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -629,36 +610,38 @@ class AsyncAzureClient:
     async def create(
         self,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureCreateResponse:
+    ) -> AzureBlobImportStorage:
         """
-
-        Create a new source storage connection to Microsoft Azure Blob storage.
-
-        For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation.
-
-        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        Create new Azure import storage
 
         Parameters
         ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -666,33 +649,24 @@ class AsyncAzureClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
-        container : typing.Optional[str]
-            Azure blob container
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        title : typing.Optional[str]
+            Storage title
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureCreateResponse
+        AzureBlobImportStorage
 
 
         Examples
@@ -716,17 +690,17 @@ class AsyncAzureClient:
             "api/storages/azure/",
             method="POST",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "account_key": account_key,
+                "account_name": account_name,
+                "container": container,
+                "description": description,
+                "prefix": prefix,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
-                "title": title,
-                "description": description,
                 "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -737,9 +711,9 @@ class AsyncAzureClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureCreateResponse,
-                    parse_obj_as(
-                        type_=AzureCreateResponse,  # type: ignore
+                    AzureBlobImportStorage,
+                    construct_type(
+                        type_=AzureBlobImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -751,34 +725,42 @@ class AsyncAzureClient:
     async def validate(
         self,
         *,
+        account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
-        Validate a specific Azure import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+        Validate a specific Azure import storage connection.
 
         Parameters
         ----------
+        account_key : typing.Optional[str]
+            Azure Blob account key
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
 
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        prefix : typing.Optional[str]
+            Azure blob prefix name
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -786,26 +768,17 @@ class AsyncAzureClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
-        container : typing.Optional[str]
-            Azure blob container
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        title : typing.Optional[str]
+            Storage title
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -835,18 +808,18 @@ class AsyncAzureClient:
             "api/storages/azure/validate",
             method="POST",
             json={
+                "account_key": account_key,
+                "account_name": account_name,
+                "container": container,
+                "description": description,
                 "id": id,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "prefix": prefix,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
-                "title": title,
-                "description": description,
                 "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -864,15 +837,11 @@ class AsyncAzureClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
-
-        Get a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific Azure import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -910,7 +879,7 @@ class AsyncAzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     AzureBlobImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=AzureBlobImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -922,17 +891,11 @@ class AsyncAzureClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific Azure import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -977,35 +940,40 @@ class AsyncAzureClient:
         self,
         id: int,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureUpdateResponse:
+    ) -> AzureBlobImportStorage:
         """
-
-        Update a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific Azure import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
 
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -1013,33 +981,24 @@ class AsyncAzureClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
-        container : typing.Optional[str]
-            Azure blob container
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        title : typing.Optional[str]
+            Storage title
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureUpdateResponse
+        AzureBlobImportStorage
 
 
         Examples
@@ -1065,17 +1024,17 @@ class AsyncAzureClient:
             f"api/storages/azure/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "account_key": account_key,
+                "account_name": account_name,
+                "container": container,
+                "description": description,
+                "prefix": prefix,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
-                "title": title,
-                "description": description,
                 "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -1086,9 +1045,9 @@ class AsyncAzureClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureUpdateResponse,
-                    parse_obj_as(
-                        type_=AzureUpdateResponse,  # type: ignore
+                    AzureBlobImportStorage,
+                    construct_type(
+                        type_=AzureBlobImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1099,12 +1058,7 @@ class AsyncAzureClient:
 
     async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
-
-        Sync tasks from an Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
-
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        Sync tasks from an Azure import storage connection.
 
         Parameters
         ----------
@@ -1147,7 +1101,7 @@ class AsyncAzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     AzureBlobImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=AzureBlobImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),

@@ -6,52 +6,25 @@ service:
       path: /api/projects/{id}/export
       method: GET
       auth: true
-      docs: >
+      docs: |2-
 
-        <Note>If you have a large project it's recommended to use export
-        snapshots, this easy export endpoint might have timeouts.</Note>
-
-        Export annotated tasks as a file in a specific format.
-
-        For example, to export JSON annotations for a project to a file called
-        `annotations.json`,
-
-        run the following from the command line:
-
-        ```bash
-
-        curl -X GET
-        https://localhost:8080/api/projects/{id}/export?exportType=JSON -H
-        'Authorization: Token abc123' --output 'annotations.json'
-
-        ```
-
-        To export all tasks, including skipped tasks and others without
-        annotations, run the following from the command line:
-
-        ```bash
-
-        curl -X GET
-        https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true
-        -H 'Authorization: Token abc123' --output 'annotations.json'
-
-        ```
-
-        To export specific tasks with IDs of 123 and 345, run the following from
-        the command line:
-
-        ```bash
-
-        curl -X GET
-        https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H
-        'Authorization: Token abc123' --output 'annotations.json'
-
-        ```
-
-
-        You must provide a project ID. The project ID can be found in the URL
-        when viewing the project in Label Studio, or you can retrieve all
-        project IDs using [List all projects](../list). 
+                <i>Note: if you have a large project it's recommended to use
+                export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
+                Export annotated tasks as a file in a specific format.
+                For example, to export JSON annotations for a project to a file called `annotations.json`,
+                run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export specific tasks with IDs of 123 and 345, run the following from the command line:
+                ```bash
+                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -62,30 +35,27 @@ service:
       request:
         name: ExportsDownloadSyncRequest
         query-parameters:
-          export_type:
-            type: optional<string>
-            docs: Selected export format (JSON by default)
           download_all_tasks:
             type: optional<boolean>
-            docs: >
-
+            docs: >-
               If true, download all tasks regardless of status. If false,
               download only annotated tasks.
           download_resources:
             type: optional<boolean>
-            docs: >
-
+            docs: >-
               If true, download all resource files such as images, audio, and
               others relevant to the tasks.
+          export_type:
+            type: optional<string>
+            docs: Selected export format (JSON by default)
           ids:
-            type: optional<integer>
+            type: optional<string>
             allow-multiple: true
-            docs: >
-
+            docs: >-
               Specify a list of task IDs to retrieve only the details for those
               tasks.
       response:
-        docs: Exported data in binary format
+        docs: Exported data
         type: file
       audiences:
         - public
@@ -93,17 +63,7 @@ service:
       path: /api/projects/{id}/export/formats
       method: GET
       auth: true
-      docs: >
-
-        Before exporting annotations, you can check with formats are supported
-        by the specified project. For more information about export formats, see
-        [Export formats supported by Label
-        Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
-
-
-        You must provide a project ID. The project ID can be found in the URL
-        when viewing the project in Label Studio, or you can retrieve all
-        project IDs using [List all projects](../list). 
+      docs: Retrieve the available export formats for the current project by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -113,333 +73,292 @@ service:
       display-name: Get export formats
       response:
         docs: Export formats
-        type: list<ExportsListFormatsResponseItem>
+        type: list<string>
       examples:
         - path-parameters:
             id: 1
           response:
             body:
-              - name: JSON
-                title: title
-                description: description
-                link: link
-                tags:
-                  - tags
-                disabled: true
+              - string
       audiences:
         - public
     list:
-      path: /api/projects/{project_id}/exports
+      path: /api/projects/{id}/exports/
       method: GET
       auth: true
-      docs: >
-
-        Returns a list of export file (snapshots) for a specific project by ID.
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](../list). 
-
-
-        Included in the response is information about each snapshot, such as who
-        created it and what format it is in. 
+      docs: Returns a list of exported files for a specific project by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        project_id:
+        id:
           type: integer
           docs: A unique integer value identifying this project.
       display-name: List all export snapshots
+      request:
+        name: ExportsListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
       response:
         docs: ''
         type: list<root.Export>
       examples:
         - path-parameters:
-            project_id: 1
+            id: 1
           response:
             body:
-              - title: title
-                id: 1
-                created_by:
-                  id: 1
-                  first_name: first_name
-                  last_name: last_name
-                  email: email
-                  avatar: avatar
-                created_at: '2024-01-15T09:30:00Z'
-                finished_at: '2024-01-15T09:30:00Z'
-                status: created
-                md5: md5
+              - converted_formats:
+                  - export_type: export_type
+                    id: 1
                 counters:
                   key: value
-                converted_formats:
-                  - export_type: export_type
+                created_at: '2024-01-15T09:30:00Z'
+                created_by:
+                  avatar: avatar
+                  email: email
+                  first_name: first_name
+                  id: 1
+                  last_name: last_name
+                finished_at: '2024-01-15T09:30:00Z'
+                id: 1
+                md5: md5
+                status: created
+                title: title
       audiences:
         - public
     create:
-      path: /api/projects/{project_id}/exports
+      path: /api/projects/{id}/exports/
       method: POST
       auth: true
-      docs: >
-
+      docs: >-
         Create a new export request to start a background task and generate an
-        export file (snapshot) for a specific project by ID. The project ID can
-        be found in the URL when viewing the project in Label Studio, or you can
-        retrieve all project IDs using [List all projects](../list). 
-
-
-        A snapshot is a static export of your project's data and annotations at
-        a specific point in time. It captures the current state of your tasks,
-        annotations, and other relevant data, allowing you to download and
-        review them later. Snapshots are particularly useful for large projects
-        as they help avoid timeouts during export operations by processing the
-        data asynchronously.
-
-
-        For more information, see the [Label Studio documentation on exporting
-        annotations](https://labelstud.io/guide/export.html).
+        export file for a specific project by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        project_id:
+        id:
           type: integer
           docs: A unique integer value identifying this project.
       display-name: Create new export snapshot
       request:
-        body: root.ExportSnapshot
+        name: LseExportCreateRequest
+        body:
+          properties:
+            annotation_filter_options: optional<root.LseAnnotationFilterOptionsRequest>
+            converted_formats: optional<list<root.ConvertedFormatRequest>>
+            counters: optional<unknown>
+            created_by: optional<root.UserSimpleRequest>
+            finished_at:
+              type: optional<datetime>
+              docs: Complete or fail time
+            md5:
+              type: optional<string>
+              validation:
+                minLength: 1
+                maxLength: 128
+            serialization_options: optional<root.SerializationOptionsRequest>
+            status: optional<root.Status7BfEnum>
+            task_filter_options: optional<root.LseTaskFilterOptionsRequest>
+            title:
+              type: optional<string>
+              validation:
+                maxLength: 2048
         content-type: application/json
       response:
         docs: ''
-        type: root.ExportSnapshot
+        type: root.LseExportCreate
       examples:
         - path-parameters:
-            project_id: 1
+            id: 1
           request: {}
           response:
             body:
-              title: title
-              id: 1
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              created_at: '2024-01-15T09:30:00Z'
-              finished_at: '2024-01-15T09:30:00Z'
-              status: created
-              md5: md5
+              annotation_filter_options:
+                ground_truth: true
+                reviewed: only
+                skipped: true
+                usual: true
+              converted_formats:
+                - export_type: export_type
+                  id: 1
+                  status: created
+                  traceback: traceback
               counters:
                 key: value
-              converted_formats:
-                - id: 1
-                  status: created
-                  export_type: export_type
-                  traceback: traceback
-              task_filter_options:
-                view: 1
-                skipped: skipped
-                finished: finished
-                annotated: annotated
-                only_with_annotations: true
-              annotation_filter_options:
-                usual: true
-                ground_truth: true
-                skipped: true
+              created_at: '2024-01-15T09:30:00Z'
+              created_by:
+                avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
+              finished_at: '2024-01-15T09:30:00Z'
+              id: 1
+              md5: md5
               serialization_options:
-                drafts:
-                  only_id: true
-                predictions:
-                  only_id: true
-                include_annotation_history: true
                 annotations__completed_by:
                   only_id: true
+                drafts:
+                  only_id: true
+                include_annotation_history: true
                 interpolate_key_frames: true
-      audiences:
-        - public
-    download:
-      path: /api/projects/{project_id}/exports/{export_pk}/download
-      method: GET
-      auth: true
-      docs: >
-
-        Download an export snapshot as a file in a specified format. To see what
-        formats are supported, you can use [Get export formats](list-formats) or
-        see [Export formats supported by Label
-        Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
-
-
-        You will need to provide the project ID and export ID (`export_pk`). The
-        export ID is returned when you create the export or you can use [List
-        all export snapshots](list).
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](../list). 
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        project_id:
-          type: integer
-          docs: A unique integer value identifying this project.
-        export_pk:
-          type: string
-          docs: Primary key identifying the export file.
-      display-name: Download export snapshot
-      request:
-        name: ExportsDownloadRequest
-        query-parameters:
-          exportType:
-            type: optional<root.ExportFormat>
-            docs: >-
-              Selected export format. JSON is available by default. For other
-              formats, you need to convert the export first.
-      response:
-        docs: Exported data in binary format
-        type: file
+                predictions:
+                  only_id: true
+              status: created
+              task_filter_options:
+                annotated: only
+                finished: only
+                only_with_annotations: true
+                reviewed: only
+                skipped: only
+                view: 1
+              title: title
       audiences:
         - public
     get:
-      path: /api/projects/{project_id}/exports/{export_pk}
+      path: /api/projects/{id}/exports/{export_pk}
       method: GET
       auth: true
-      docs: >
-
-        Retrieve information about a specific export file (snapshot). 
-
-
-        You will need the export ID. You can find this in the response when you
-        [create the snapshot via the API](create) or using [List all export
-        snapshots](list).   
-
-
-        You will also need the project ID. This can be found in the URL when
-        viewing the project in Label Studio, or you can retrieve all project IDs
-        using [List all projects](../list). 
+      docs: >-
+        Retrieve information about an export file by export ID for a specific
+        project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        project_id:
+        export_pk:
+          type: integer
+          docs: Primary key identifying the export file.
+        id:
           type: integer
           docs: A unique integer value identifying this project.
-        export_pk:
-          type: string
-          docs: Primary key identifying the export file.
       display-name: Get export snapshot by ID
       response:
         docs: ''
         type: root.Export
       examples:
         - path-parameters:
-            project_id: 1
-            export_pk: export_pk
+            export_pk: 1
+            id: 1
           response:
             body:
-              title: title
-              id: 1
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              created_at: '2024-01-15T09:30:00Z'
-              finished_at: '2024-01-15T09:30:00Z'
-              status: created
-              md5: md5
+              converted_formats:
+                - export_type: export_type
+                  id: 1
+                  status: created
+                  traceback: traceback
               counters:
                 key: value
-              converted_formats:
-                - id: 1
-                  status: created
-                  export_type: export_type
-                  traceback: traceback
+              created_at: '2024-01-15T09:30:00Z'
+              created_by:
+                avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
+              finished_at: '2024-01-15T09:30:00Z'
+              id: 1
+              md5: md5
+              status: created
+              title: title
       audiences:
         - public
     delete:
-      path: /api/projects/{project_id}/exports/{export_pk}
+      path: /api/projects/{id}/exports/{export_pk}
       method: DELETE
       auth: true
-      docs: >
-
-        Delete an export file by specified export ID.
-
-
-        You will need the export ID. You can find this in the response when you
-        [create the snapshot via the API](create) or using [List all export
-        snapshots](list). 
+      docs: Delete an export file by specified export ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        project_id:
+        export_pk:
+          type: integer
+          docs: Primary key identifying the export file.
+        id:
           type: integer
           docs: A unique integer value identifying this project.
-        export_pk:
-          type: string
-          docs: Primary key identifying the export file.
       display-name: Delete export snapshot
       examples:
         - path-parameters:
-            project_id: 1
-            export_pk: export_pk
+            export_pk: 1
+            id: 1
       audiences:
         - public
     convert:
-      path: /api/projects/{project_id}/exports/{export_pk}/convert
+      path: /api/projects/{id}/exports/{export_pk}/convert
       method: POST
       auth: true
-      docs: >
-
-        You can use this to convert an export snapshot into the selected
-        format. 
-
-
-        To see what formats are supported, you can use [Get export
-        formats](list-formats) or see [Export formats supported by Label
-        Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
-
-
-        You will need to provide the project ID and export ID (`export_pk`). The
-        export ID is returned when you create the export or you can use [List
-        all export snapshots](list).
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](../list). 
+      docs: Convert export snapshot to selected format
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        project_id:
+        export_pk:
+          type: integer
+          docs: Primary key identifying the export file.
+        id:
           type: integer
           docs: A unique integer value identifying this project.
-        export_pk:
-          type: string
-          docs: Primary key identifying the export file.
       display-name: Export conversion
       request:
-        name: ExportsConvertRequest
+        name: ExportConvertRequest
         body:
           properties:
-            export_type: optional<root.ExportFormat>
             download_resources:
               type: optional<boolean>
-              docs: >-
-                If true, download all resource files such as images, audio, and
-                others relevant to the tasks.
+              docs: Download resources in converter.
+            export_type:
+              type: string
+              docs: Export file format.
+              validation:
+                minLength: 1
         content-type: application/json
       response:
         docs: ''
         type: ExportsConvertResponse
       examples:
         - path-parameters:
-            project_id: 1
-            export_pk: export_pk
-          request: {}
+            export_pk: 1
+            id: 1
+          request:
+            export_type: export_type
           response:
             body:
-              export_type: JSON
               converted_format: 1
+              export_type: export_type
+      audiences:
+        - public
+    download:
+      path: /api/projects/{id}/exports/{export_pk}/download
+      method: GET
+      auth: true
+      docs: |2-
+
+                Download an export file in the specified format for a specific project. Specify the project ID with the `id`
+                parameter in the path and the ID of the export file you want to download using the `export_pk` parameter
+                in the path.
+
+                Get the `export_pk` from the response of the request to [Create new export](/api#operation/api_projects_exports_create)
+                or after [listing export files](/api#operation/api_projects_exports_list).
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        export_pk:
+          type: integer
+          docs: Primary key identifying the export file.
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+      display-name: Download export snapshot as file in specified format
+      request:
+        name: ExportsDownloadRequest
+        query-parameters:
+          exportType:
+            type: optional<string>
+            docs: Selected export format
+      response:
+        docs: Export file
+        type: file
       audiences:
         - public
   source:
@@ -447,33 +366,9 @@ service:
 imports:
   root: ../__package__.yml
 types:
-  ExportsListFormatsResponseItem:
-    properties:
-      name: optional<root.ExportFormat>
-      title:
-        type: optional<string>
-        docs: Export format title
-      description:
-        type: optional<string>
-        docs: Export format description
-      link:
-        type: optional<string>
-        docs: Export format documentation link
-        validation:
-          format: uri
-      tags:
-        type: optional<list<string>>
-        docs: Export format tags
-      disabled:
-        type: optional<boolean>
-        docs: If true, the export format is not supported by the project.
-    source:
-      openapi: openapi/openapi.yaml
   ExportsConvertResponse:
     properties:
-      export_type: optional<root.ExportFormat>
-      converted_format:
-        type: optional<integer>
-        docs: ID of the converted format
+      converted_format: optional<integer>
+      export_type: optional<string>
     source:
       openapi: openapi/openapi.yaml

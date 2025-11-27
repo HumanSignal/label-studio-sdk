@@ -4,6 +4,12 @@ import httpx
 
 from .http_client import AsyncHttpClient, HttpClient
 
+import importlib.metadata
+
+try:
+    VERSION = importlib.metadata.version("label-studio-sdk")
+except importlib.metadata.PackageNotFoundError:
+    VERSION = "unknown"
 
 class BaseClientWrapper:
     def __init__(
@@ -18,7 +24,7 @@ class BaseClientWrapper:
 
         # even in the async case, refreshing access token (when the existing one is expired) should be sync
         from ..tokens.client_ext import TokensClientExt
-        self._tokens_client = TokensClientExt(base_url=base_url, api_key=api_key)
+        self._tokens_client = TokensClientExt(base_url=base_url, api_key=api_key, client_wrapper=self)
 
 
     def get_timeout(self) -> typing.Optional[float]:
@@ -33,7 +39,7 @@ class BaseClientWrapper:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "label-studio-sdk",
-            "X-Fern-SDK-Version": "1.0.11",
+            "X-Fern-SDK-Version": VERSION,
         }
         if self._tokens_client._use_legacy_token:
             headers["Authorization"] = f"Token {self._tokens_client.api_key}"

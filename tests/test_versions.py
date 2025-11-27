@@ -8,26 +8,26 @@ from .utilities import validate_response
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "release": "release",
-        "label-studio-os-package": {"key": "value"},
-        "label-studio-os-backend": {"key": "value"},
-        "label-studio-frontend": {"key": "value"},
-        "dm2": {"key": "value"},
-        "label-studio-converter": {"key": "value"},
-        "edition": "Community",
-        "lsf": {"key": "value"},
         "backend": {"key": "value"},
+        "dm2": {"key": "value"},
+        "edition": "Community",
+        "label-studio-converter": {"key": "value"},
+        "label-studio-frontend": {"key": "value"},
+        "label-studio-os-backend": {"key": "value"},
+        "label-studio-os-package": {"key": "value"},
+        "lsf": {"key": "value"},
+        "release": "release",
     }
     expected_types: typing.Any = {
-        "release": None,
-        "label-studio-os-package": ("dict", {0: (None, None)}),
-        "label-studio-os-backend": ("dict", {0: (None, None)}),
-        "label-studio-frontend": ("dict", {0: (None, None)}),
-        "dm2": ("dict", {0: (None, None)}),
-        "label-studio-converter": ("dict", {0: (None, None)}),
+        "backend": None,
+        "dm2": None,
         "edition": None,
-        "lsf": ("dict", {0: (None, None)}),
-        "backend": ("dict", {0: (None, None)}),
+        "label-studio-converter": None,
+        "label-studio-frontend": None,
+        "label-studio-os-backend": None,
+        "label-studio-os-package": None,
+        "lsf": None,
+        "release": None,
     }
     response = client.versions.get()
     validate_response(response, expected_response, expected_types)

@@ -1,26 +1,18 @@
-"""
-**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
-The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
-[`label_studio_sdk._legacy`](../../README.md) in your script.
-"""
-
 # Import tasks with pre-annotations (predictions) using SDK,
 # then calculate agreement scores (accuracy) per tasks.
 
+import os
 import pandas as pd
-from evalme.metrics import (
-    get_agreement,
-)  # run first `pip install label-studio-evalme` to use this package
 
-from label_studio_sdk import Client
+from label_studio_sdk.client import LabelStudio
 
-LABEL_STUDIO_URL = "http://localhost:8080"
-API_KEY = "91b3b61589784ed069b138eae3d5a5fe1e909f57"
+LABEL_STUDIO_URL = os.getenv("LABEL_STUDIO_URL", "http://localhost:8080")
+API_KEY = os.getenv("LABEL_STUDIO_API_KEY")
 
-ls = Client(url=LABEL_STUDIO_URL, api_key=API_KEY)
+ls = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=API_KEY)
 
 
-project = ls.start_project(
+project = ls.projects.create(
     title="Project Created from SDK: Image Preannotation",
     label_config="""
     <View>
@@ -34,86 +26,125 @@ project = ls.start_project(
 )
 
 
-project.import_tasks(
-    [
-        {
-            "data": {
-                "image": "https://data.heartex.net/open-images/train_0/mini/0045dd96bf73936c.jpg"
-            },
-            "predictions": [
-                {
-                    "result": [
-                        {
-                            "from_name": "image_class",
-                            "to_name": "image",
-                            "type": "choices",
-                            "value": {"choices": ["Dog"]},
-                        }
-                    ],
-                    "score": 0.87,
-                }
-            ],
-        },
-        {
-            "data": {
-                "image": "https://data.heartex.net/open-images/train_0/mini/0083d02f6ad18b38.jpg"
-            },
-            "predictions": [
-                {
-                    "result": [
-                        {
-                            "from_name": "image_class",
-                            "to_name": "image",
-                            "type": "choices",
-                            "value": {"choices": ["Cat"]},
-                        }
-                    ],
-                    "score": 0.65,
-                }
-            ],
-        },
-    ]
-)
-
-
-project.import_tasks(
-    [
-        {
-            "image": f"https://data.heartex.net/open-images/train_0/mini/0045dd96bf73936c.jpg",
-            "pet": "Dog",
-        },
-        {
-            "image": f"https://data.heartex.net/open-images/train_0/mini/0083d02f6ad18b38.jpg",
-            "pet": "Cat",
-        },
+# Bulk import with embedded predictions
+bulk_with_predictions = [
+    {
+        "image": "https://data.heartex.net/open-images/train_0/mini/0045dd96bf73936c.jpg",
+        "_predictions": [
+            {
+                "result": [
+                    {
+                        "from_name": "image_class",
+                        "to_name": "image",
+                        "type": "choices",
+                        "value": {"choices": ["Dog"]},
+                    }
+                ],
+                "score": 0.87,
+            }
+        ],
+    },
+    {
+        "image": "https://data.heartex.net/open-images/train_0/mini/0083d02f6ad18b38.jpg",
+        "_predictions": [
+            {
+                "result": [
+                    {
+                        "from_name": "image_class",
+                        "to_name": "image",
+                        "type": "choices",
+                        "value": {"choices": ["Cat"]},
+                    }
+                ],
+                "score": 0.65,
+            }
+        ],
+    },
+]
+ls.projects.import_tasks(
+    id=project.id,
+    request=[
+        {"data": {"image": r["image"]}, "predictions": r["_predictions"]}
+        for r in bulk_with_predictions
     ],
-    preannotated_from_fields=["pet"],
 )
+
+
+bulk_simple = [
+    {
+        "image": "https://data.heartex.net/open-images/train_0/mini/0045dd96bf73936c.jpg",
+        "pet": "Dog",
+    },
+    {
+        "image": "https://data.heartex.net/open-images/train_0/mini/0083d02f6ad18b38.jpg",
+        "pet": "Cat",
+    },
+]
+ls.projects.import_tasks(
+    id=project.id,
+    request=[{"data": row} for row in bulk_simple],
+)
+
+# Create predictions for the imported tasks according to the "pet" field
+for task in ls.tasks.list(project=project.id, fields="task_only"):
+    data = task.data
+    if "pet" in data:
+        ls.predictions.create(
+            task=task.id,
+            result=[
+                {
+                    "from_name": "image_class",
+                    "to_name": "image",
+                    "type": "choices",
+                    "value": {"choices": [data["pet"]]},
+                }
+            ],
+            score=0.5,
+            model_version="from_fields",
+        )
 
 
 pd.read_csv("data/images.csv")
 
-project.import_tasks("data/images.csv", preannotated_from_fields=["pet"])
 
-
-tasks_ids = project.get_tasks_ids()
-project.create_prediction(tasks_ids[0], result="Dog", model_version="1")
+task_ids = [t.id for t in ls.tasks.list(project=project.id, fields='task_only')]
+ls.predictions.create(
+    task=task_ids[0],
+    result=[
+        {
+            "from_name": "image_class",
+            "to_name": "image",
+            "type": "choices",
+            "value": {"choices": ["Dog"]},
+        }
+    ],
+    model_version="1",
+)
 
 
 predictions = [
-    {"task": tasks_ids[0], "result": "Dog", "score": 0.9},
-    {"task": tasks_ids[1], "result": "Cat", "score": 0.8},
+    {"task": task_ids[0], "label": "Dog", "score": 0.9},
+    {"task": task_ids[1], "label": "Cat", "score": 0.8},
 ]
-project.create_predictions(predictions)
+for pr in predictions:
+    ls.predictions.create(
+        task=pr["task"],
+        result=[
+            {
+                "from_name": "image_class",
+                "to_name": "image",
+                "type": "choices",
+                "value": {"choices": [pr["label"]]},
+            }
+        ],
+        score=pr["score"],
+        model_version="bulk",
+    )
 
-print("Pre-annotation agreement scores:")
 
-total_score = 0
-n = 0
-for task in project.tasks:
-    score = get_agreement(task["annotations"][0], task["predictions"][0])
-    print(f'{task["id"]} ==> {score}')
-    total_score += score
-    n += 1
-
-print(f"Pre-annotation accuracy: {100 * total_score / n: .0f}%")
+try:
+    # NOTE: total_agreement available only in LSE
+    agreement = ls.projects.stats.total_agreement(id=project.id)
+    print(agreement.model_dump(mode="json"))
+except Exception as e:
+    print(f"Agreement stats unavailable on this edition: {e}")

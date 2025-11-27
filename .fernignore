@@ -31,7 +31,7 @@ tests/custom/converter
 tests/custom/label_studio_tools
 tests/custom/legacy
 tests/custom/test_interface
-# TODO: fix webhooks !
+# TODO: remove all tests from fernignore so that they can be regenerated
 tests/test_webhooks.py
 tests/test_refresh_token.py
 
@@ -53,6 +53,13 @@ tests/test_refresh_token.py
 .github/workflows/slash-command-dispatch.yml
 .github/workflows/tests.yml
 .github/workflows/update-draft-release.yml
+.github/workflows/validator-dependencies.yml
+.github/workflows/zendesk_issue_commented.yml
+.github/workflows/zendesk_issue_created.yml
+.github/workflows/zendesk_task_comment.yml
+.github/workflows/zendesk_task_solve.yml
+.github/workflows/gitleaks.yml
+.github/workflows/git-command.yml
 .github/pr-title-checker-config.json
 .github/release.yml
 .github/autolabeler.yml

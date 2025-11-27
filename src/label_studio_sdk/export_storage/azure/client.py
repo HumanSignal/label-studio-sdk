@@ -4,12 +4,10 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.azure_blob_export_storage import AzureBlobExportStorage
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from .types.azure_create_response import AzureCreateResponse
 from ...core.jsonable_encoder import jsonable_encoder
-from .types.azure_update_response import AzureUpdateResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -21,20 +19,22 @@ class AzureClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: int,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[AzureBlobExportStorage]:
         """
-
-        You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure export (target) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a list of all Azure export storage connections.
 
         Parameters
         ----------
-        project : typing.Optional[int]
+        project : int
             Project ID
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,12 +51,15 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.azure.list()
+        client.export_storage.azure.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/export/azure",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -65,7 +68,7 @@ class AzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[AzureBlobExportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[AzureBlobExportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -78,56 +81,51 @@ class AzureClient:
     def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
         account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureCreateResponse:
+    ) -> AzureBlobExportStorage:
         """
-
-        Create a new target storage connection to Microsoft Azure Blob storage.
-
-        For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation.
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
+        Create a new Azure export storage connection to store annotations.
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         account_name : typing.Optional[str]
             Azure Blob account name
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureCreateResponse
+        AzureBlobExportStorage
 
 
         Examples
@@ -143,14 +141,14 @@ class AzureClient:
             "api/storages/export/azure",
             method="POST",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
                 "account_key": account_key,
+                "account_name": account_name,
+                "can_delete_objects": can_delete_objects,
+                "container": container,
+                "description": description,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -161,9 +159,9 @@ class AzureClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureCreateResponse,
-                    parse_obj_as(
-                        type_=AzureCreateResponse,  # type: ignore
+                    AzureBlobExportStorage,
+                    construct_type(
+                        type_=AzureBlobExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -175,49 +173,48 @@ class AzureClient:
     def validate(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
         account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
-        Validate a specific Azure export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+        Validate a specific Azure export storage connection.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         account_name : typing.Optional[str]
             Azure Blob account name
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -239,15 +236,15 @@ class AzureClient:
             "api/storages/export/azure/validate",
             method="POST",
             json={
-                "id": id,
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
                 "account_key": account_key,
+                "account_name": account_name,
+                "can_delete_objects": can_delete_objects,
+                "container": container,
+                "description": description,
+                "id": id,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -265,15 +262,11 @@ class AzureClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobExportStorage:
         """
-
-        Get a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific Azure export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob export storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -303,7 +296,7 @@ class AzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     AzureBlobExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=AzureBlobExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -315,15 +308,11 @@ class AzureClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific Azure export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob export storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -360,57 +349,53 @@ class AzureClient:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
         account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureUpdateResponse:
+    ) -> AzureBlobExportStorage:
         """
-
-        Update a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific Azure export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob export storage.
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         account_name : typing.Optional[str]
             Azure Blob account name
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureUpdateResponse
+        AzureBlobExportStorage
 
 
         Examples
@@ -428,14 +413,14 @@ class AzureClient:
             f"api/storages/export/azure/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
                 "account_key": account_key,
+                "account_name": account_name,
+                "can_delete_objects": can_delete_objects,
+                "container": container,
+                "description": description,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -446,9 +431,9 @@ class AzureClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureUpdateResponse,
-                    parse_obj_as(
-                        type_=AzureUpdateResponse,  # type: ignore
+                    AzureBlobExportStorage,
+                    construct_type(
+                        type_=AzureBlobExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -459,12 +444,7 @@ class AzureClient:
 
     def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobExportStorage:
         """
-
-        Sync tasks to an Azure export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
-
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        Sync tasks from an Azure export storage connection.
 
         Parameters
         ----------
@@ -498,7 +478,7 @@ class AzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     AzureBlobExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=AzureBlobExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -514,20 +494,22 @@ class AsyncAzureClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: int,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[AzureBlobExportStorage]:
         """
-
-        You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure export (target) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a list of all Azure export storage connections.
 
         Parameters
         ----------
-        project : typing.Optional[int]
+        project : int
             Project ID
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -549,7 +531,9 @@ class AsyncAzureClient:
 
 
         async def main() -> None:
-            await client.export_storage.azure.list()
+            await client.export_storage.azure.list(
+                project=1,
+            )
 
 
         asyncio.run(main())
@@ -558,6 +542,7 @@ class AsyncAzureClient:
             "api/storages/export/azure",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -566,7 +551,7 @@ class AsyncAzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[AzureBlobExportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[AzureBlobExportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -579,56 +564,51 @@ class AsyncAzureClient:
     async def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
         account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureCreateResponse:
+    ) -> AzureBlobExportStorage:
         """
-
-        Create a new target storage connection to Microsoft Azure Blob storage.
-
-        For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation.
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
+        Create a new Azure export storage connection to store annotations.
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         account_name : typing.Optional[str]
             Azure Blob account name
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureCreateResponse
+        AzureBlobExportStorage
 
 
         Examples
@@ -652,14 +632,14 @@ class AsyncAzureClient:
             "api/storages/export/azure",
             method="POST",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
                 "account_key": account_key,
+                "account_name": account_name,
+                "can_delete_objects": can_delete_objects,
+                "container": container,
+                "description": description,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -670,9 +650,9 @@ class AsyncAzureClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureCreateResponse,
-                    parse_obj_as(
-                        type_=AzureCreateResponse,  # type: ignore
+                    AzureBlobExportStorage,
+                    construct_type(
+                        type_=AzureBlobExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -684,49 +664,48 @@ class AsyncAzureClient:
     async def validate(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
         account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
-        Validate a specific Azure export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+        Validate a specific Azure export storage connection.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         account_name : typing.Optional[str]
             Azure Blob account name
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -756,15 +735,15 @@ class AsyncAzureClient:
             "api/storages/export/azure/validate",
             method="POST",
             json={
-                "id": id,
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
                 "account_key": account_key,
+                "account_name": account_name,
+                "can_delete_objects": can_delete_objects,
+                "container": container,
+                "description": description,
+                "id": id,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -782,15 +761,11 @@ class AsyncAzureClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobExportStorage:
         """
-
-        Get a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific Azure export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob export storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -828,7 +803,7 @@ class AsyncAzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     AzureBlobExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=AzureBlobExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -840,15 +815,11 @@ class AsyncAzureClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific Azure export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob export storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -893,57 +864,53 @@ class AsyncAzureClient:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
         account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureUpdateResponse:
+    ) -> AzureBlobExportStorage:
         """
-
-        Update a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific Azure export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob export storage.
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         account_name : typing.Optional[str]
             Azure Blob account name
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureUpdateResponse
+        AzureBlobExportStorage
 
 
         Examples
@@ -969,14 +936,14 @@ class AsyncAzureClient:
             f"api/storages/export/azure/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
                 "account_key": account_key,
+                "account_name": account_name,
+                "can_delete_objects": can_delete_objects,
+                "container": container,
+                "description": description,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -987,9 +954,9 @@ class AsyncAzureClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureUpdateResponse,
-                    parse_obj_as(
-                        type_=AzureUpdateResponse,  # type: ignore
+                    AzureBlobExportStorage,
+                    construct_type(
+                        type_=AzureBlobExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1000,12 +967,7 @@ class AsyncAzureClient:
 
     async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobExportStorage:
         """
-
-        Sync tasks to an Azure export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
-
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        Sync tasks from an Azure export storage connection.
 
         Parameters
         ----------
@@ -1047,7 +1009,7 @@ class AsyncAzureClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     AzureBlobExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=AzureBlobExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),

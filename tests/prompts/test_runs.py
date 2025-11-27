@@ -7,68 +7,101 @@ from ..utilities import validate_response
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
-        "organization": 1,
-        "project": 1,
-        "model_version": 1,
-        "created_by": 1,
-        "project_subset": "All",
-        "status": "Pending",
-        "job_id": "job_id",
-        "created_at": "2024-01-15T09:30:00Z",
-        "triggered_at": "2024-01-15T09:30:00Z",
-        "predictions_updated_at": "2024-01-15T09:30:00Z",
-        "completed_at": "2024-01-15T09:30:00Z",
-    }
-    expected_types: typing.Any = {
-        "organization": "integer",
-        "project": "integer",
-        "model_version": "integer",
-        "created_by": "integer",
-        "project_subset": None,
-        "status": None,
-        "job_id": None,
-        "created_at": "datetime",
-        "triggered_at": "datetime",
-        "predictions_updated_at": "datetime",
-        "completed_at": "datetime",
-    }
-    response = client.prompts.runs.list(id=1, version_id=1, project=1, project_subset="All")
+    expected_response: typing.Any = [
+        {
+            "completed_at": "2024-01-15T09:30:00Z",
+            "created_at": "2024-01-15T09:30:00Z",
+            "created_by": 1,
+            "id": 1,
+            "job_id": "job_id",
+            "organization": 1,
+            "parent_model": 1,
+            "predictions_updated_at": "2024-01-15T09:30:00Z",
+            "project": 1,
+            "project_subset": "All",
+            "status": "Pending",
+            "total_correct_predictions": 1,
+            "total_predictions": 1,
+            "total_tasks": 1,
+            "triggered_at": "2024-01-15T09:30:00Z",
+        }
+    ]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {
+            0: {
+                "completed_at": "datetime",
+                "created_at": "datetime",
+                "created_by": "integer",
+                "id": "integer",
+                "job_id": None,
+                "organization": "integer",
+                "parent_model": "integer",
+                "predictions_updated_at": "datetime",
+                "project": "integer",
+                "project_subset": None,
+                "status": None,
+                "total_correct_predictions": "integer",
+                "total_predictions": "integer",
+                "total_tasks": "integer",
+                "triggered_at": "datetime",
+            }
+        },
+    )
+    response = client.prompts.runs.list(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.runs.list(id=1, version_id=1, project=1, project_subset="All")
+    async_response = await async_client.prompts.runs.list(prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "organization": 1,
-        "project": 1,
-        "model_version": 1,
+        "completed_at": "2024-01-15T09:30:00Z",
+        "created_at": "2024-01-15T09:30:00Z",
         "created_by": 1,
+        "id": 1,
+        "job_id": "job_id",
+        "organization": 1,
+        "parent_model": 1,
+        "predictions_updated_at": "2024-01-15T09:30:00Z",
+        "project": 1,
         "project_subset": "All",
         "status": "Pending",
-        "job_id": "job_id",
-        "created_at": "2024-01-15T09:30:00Z",
+        "total_correct_predictions": 1,
+        "total_predictions": 1,
+        "total_tasks": 1,
         "triggered_at": "2024-01-15T09:30:00Z",
-        "predictions_updated_at": "2024-01-15T09:30:00Z",
-        "completed_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
-        "organization": "integer",
-        "project": "integer",
-        "model_version": "integer",
+        "completed_at": "datetime",
+        "created_at": "datetime",
         "created_by": "integer",
+        "id": "integer",
+        "job_id": None,
+        "organization": "integer",
+        "parent_model": "integer",
+        "predictions_updated_at": "datetime",
+        "project": "integer",
         "project_subset": None,
         "status": None,
-        "job_id": None,
-        "created_at": "datetime",
+        "total_correct_predictions": "integer",
+        "total_predictions": "integer",
+        "total_tasks": "integer",
         "triggered_at": "datetime",
-        "predictions_updated_at": "datetime",
-        "completed_at": "datetime",
     }
-    response = client.prompts.runs.create(id=1, version_id=1, project=1, project_subset="All")
+    response = client.prompts.runs.create(prompt_id=1, version_id=1, project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.runs.create(id=1, version_id=1, project=1, project_subset="All")
+    async_response = await async_client.prompts.runs.create(prompt_id=1, version_id=1, project=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_cancel(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"detail": "detail"}
+    expected_types: typing.Any = {"detail": None}
+    response = client.prompts.runs.cancel(inference_run_id=1, prompt_id=1, version_id=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.runs.cancel(inference_run_id=1, prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)

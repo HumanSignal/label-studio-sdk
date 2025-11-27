@@ -12,7 +12,7 @@ from label_studio_sdk.converter.utils import (
     convert_annotation_to_yolo_obb,
     convert_yolo_obb_to_annotation,
 )
-from .utils import almost_equal_1d, almost_equal_2d
+from .utils import almost_equal_1d, almost_equal_2d, get_os_walk, check_equal_list_of_strings
 
 BASE_DIR = os.path.dirname(__file__)
 TEST_DATA_PATH = os.path.join(BASE_DIR, "data", "test_export_yolo")
@@ -24,34 +24,6 @@ INPUT_JSON_PATH_POLYGONS = os.path.join(BASE_DIR, TEST_DATA_PATH, "data_polygons
 LABEL_CONFIG_PATH_POLYGONS = os.path.join(
     BASE_DIR, TEST_DATA_PATH, "label_config_polygons.xml"
 )
-
-
-def check_equal_list_of_strings(list1, list2):
-    # Check that both lists are not empty
-    if not list1 or not list2:
-        return False
-
-    list1.sort()
-    list2.sort()
-
-    # Check that the lists have the same length
-    if len(list1) != len(list2):
-        return False
-
-    # Check that the elements of the lists are equal
-    for i in range(len(list1)):
-        if list1[i] != list2[i]:
-            return False
-
-    return True
-
-
-def get_os_walk(root_path):
-    list_file_paths = []
-    for root, dirs, files in os.walk(root_path):
-        for f in files:
-            list_file_paths += [os.path.join(root, f)]
-    return list_file_paths
 
 
 @pytest.fixture
@@ -515,3 +487,85 @@ def test_yolo_obb_to_annotation_to_yolo():
     assert np.allclose(
         yolo_data, np.array(inv_data).reshape((4, 2)), rtol=1, atol=1  # 1 pixel tolerance
     ), f"Test failed: {yolo_data} != {inv_data}"
+
+
+def test_convert_directory_to_yolo(create_temp_folder):
+    """Test directory input processing with is_dir=True - should match single JSON file output"""
+    import json
+    
+    # Setup test directories
+    tmp_folder = create_temp_folder
+    input_dir = os.path.join(tmp_folder, "input_tasks")
+    os.makedirs(input_dir)
+    
+    # Create separate output directories for comparison
+    dir_output_dir = os.path.join(tmp_folder, "dir_output")
+    dir_output_image_dir = os.path.join(dir_output_dir, "tmp_image")
+    dir_output_label_dir = os.path.join(dir_output_dir, "tmp_label")
+    
+    single_output_dir = os.path.join(tmp_folder, "single_output")
+    single_output_image_dir = os.path.join(single_output_dir, "tmp_image") 
+    single_output_label_dir = os.path.join(single_output_dir, "tmp_label")
+    
+    # Load original test data
+    with open(INPUT_JSON_PATH, 'r') as f:
+        tasks = json.load(f)
+    
+    # Split tasks into individual JSON files
+    for i, task in enumerate(tasks):
+        task_file = os.path.join(input_dir, f"task_{task['id']}.json")
+        with open(task_file, 'w') as f:
+            json.dump([task], f)  # Each file contains a list with one task
+    
+    project_dir = "."
+    converter = Converter(LABEL_CONFIG_PATH, project_dir)
+    
+    # Convert directory with is_dir=True
+    converter.convert_to_yolo(
+        input_dir,
+        dir_output_dir,
+        output_image_dir=dir_output_image_dir,
+        output_label_dir=dir_output_label_dir,
+        is_dir=True,
+        split_labelers=True,
+    )
+    
+    # Convert single JSON file with is_dir=False for comparison
+    converter.convert_to_yolo(
+        INPUT_JSON_PATH,
+        single_output_dir,
+        output_image_dir=single_output_image_dir,
+        output_label_dir=single_output_label_dir,
+        is_dir=False,
+        split_labelers=True,
+    )
+    
+    # Verify directory processing produces same structure as single file
+    dir_generated_paths = get_os_walk(os.path.abspath(dir_output_label_dir))
+    single_generated_paths = get_os_walk(os.path.abspath(single_output_label_dir))
+    
+    # Convert to relative paths for comparison
+    dir_relative_paths = [os.path.relpath(p, os.path.abspath(dir_output_label_dir)) for p in dir_generated_paths]
+    single_relative_paths = [os.path.relpath(p, os.path.abspath(single_output_label_dir)) for p in single_generated_paths]
+    
+    # Should produce identical file structures
+    assert check_equal_list_of_strings(
+        dir_relative_paths, single_relative_paths
+    ), f"Directory output: \n  {dir_relative_paths} \n does not match single file output: \n {single_relative_paths}"
+    
+    # Compare actual file contents
+    for dir_file in dir_generated_paths:
+        # Get corresponding single file path
+        relative_path = os.path.relpath(dir_file, os.path.abspath(dir_output_label_dir))
+        single_file = os.path.join(os.path.abspath(single_output_label_dir), relative_path)
+        
+        # Read both files and compare content
+        with open(dir_file, 'r') as f:
+            dir_content = f.read().strip()
+        with open(single_file, 'r') as f:
+            single_content = f.read().strip()
+            
+        assert dir_content == single_content, \
+            f"Content mismatch in {relative_path}:\nDirectory: {dir_content}\nSingle: {single_content}"
+
+

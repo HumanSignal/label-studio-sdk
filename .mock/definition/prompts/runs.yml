@@ -13,99 +13,173 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/prompts/{id}/versions/{version_id}/inference-runs
+      path: /api/prompts/{prompt_id}/versions/{version_id}/inference-runs
       method: GET
       auth: true
-      docs: Get information (status, etadata, etc) about an existing inference run
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get information (status, metadata, etc) about an existing inference run
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Prompt Version ID
-      display-name: Get inference run info
+        prompt_id: integer
+        version_id: integer
+      display-name: ✨ Get inference run info
       request:
         name: RunsListRequest
         query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+          parent_model:
+            type: optional<integer>
+            docs: The ID of the parent model for this Inference Run
           project:
-            type: integer
-            docs: The ID of the project that this Interence Run makes predictions on
+            type: optional<integer>
+            docs: The ID of the project this Inference Run makes predictions on
           project_subset:
-            type: RunsListRequestProjectSubset
-            docs: >
+            type: optional<RunsListRequestProjectSubset>
+            docs: >-
               Defines which tasks are operated on (e.g. HasGT will only operate
               on tasks with a ground truth annotation, but All will operate on
               all records)
       response:
-        docs: Success
-        type: root.InferenceRun
+        docs: ''
+        type: list<root.ModelRun>
       examples:
         - path-parameters:
-            id: 1
+            prompt_id: 1
             version_id: 1
-          query-parameters:
-            project: 1
-            project_subset: All
           response:
             body:
-              organization: 1
-              project: 1
-              model_version: 1
-              created_by: 1
-              project_subset: All
-              status: Pending
-              job_id: job_id
-              created_at: '2024-01-15T09:30:00Z'
-              triggered_at: '2024-01-15T09:30:00Z'
-              predictions_updated_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
+              - completed_at: '2024-01-15T09:30:00Z'
+                created_at: '2024-01-15T09:30:00Z'
+                created_by: 1
+                id: 1
+                job_id: job_id
+                organization: 1
+                parent_model: 1
+                predictions_updated_at: '2024-01-15T09:30:00Z'
+                project: 1
+                project_subset: All
+                status: Pending
+                total_correct_predictions: 1
+                total_predictions: 1
+                total_tasks: 1
+                triggered_at: '2024-01-15T09:30:00Z'
       audiences:
         - public
     create:
-      path: /api/prompts/{id}/versions/{version_id}/inference-runs
+      path: /api/prompts/{prompt_id}/versions/{version_id}/inference-runs
       method: POST
       auth: true
-      docs: |
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Run a prompt inference.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Prompt Version ID
-      display-name: Run prompt inference
+        prompt_id: integer
+        version_id: integer
+      display-name: ✨ Run prompt inference
       request:
-        body: root.InferenceRun
+        name: ModelRunRequest
+        body:
+          properties:
+            job_id:
+              type: optional<string>
+              docs: Job ID for inference job for a ModelRun e.g. Adala job ID
+              validation:
+                maxLength: 255
+            organization: optional<integer>
+            predictions_updated_at: optional<datetime>
+            project: integer
+            project_subset: optional<root.ProjectSubsetEnum>
+            total_correct_predictions:
+              type: optional<integer>
+              validation:
+                min: -2147483648
+                max: 2147483647
+            total_predictions:
+              type: optional<integer>
+              validation:
+                min: -2147483648
+                max: 2147483647
+            total_tasks:
+              type: optional<integer>
+              validation:
+                min: -2147483648
+                max: 2147483647
         content-type: application/json
       response:
         docs: ''
-        type: root.InferenceRun
+        type: root.ModelRun
       examples:
         - path-parameters:
-            id: 1
+            prompt_id: 1
             version_id: 1
           request:
             project: 1
-            project_subset: All
           response:
             body:
-              organization: 1
-              project: 1
-              model_version: 1
+              completed_at: '2024-01-15T09:30:00Z'
+              created_at: '2024-01-15T09:30:00Z'
               created_by: 1
+              id: 1
+              job_id: job_id
+              organization: 1
+              parent_model: 1
+              predictions_updated_at: '2024-01-15T09:30:00Z'
+              project: 1
               project_subset: All
               status: Pending
-              job_id: job_id
-              created_at: '2024-01-15T09:30:00Z'
+              total_correct_predictions: 1
+              total_predictions: 1
+              total_tasks: 1
               triggered_at: '2024-01-15T09:30:00Z'
-              predictions_updated_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
+    cancel:
+      path: >-
+        /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel
+      method: POST
+      auth: true
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel the inference run for the given api
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        inference_run_id: integer
+        prompt_id: integer
+        version_id: integer
+      display-name: ✨ Cancel Inference Run API
+      response:
+        docs: ''
+        type: root.CancelModelRunResponse
+      examples:
+        - path-parameters:
+            inference_run_id: 1
+            prompt_id: 1
+            version_id: 1
+          response:
+            body:
+              detail: detail
       audiences:
         - public
   source:

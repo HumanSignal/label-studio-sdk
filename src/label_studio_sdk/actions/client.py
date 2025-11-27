@@ -3,12 +3,14 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
+from .types.actions_list_response_item import ActionsListResponseItem
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .types.actions_create_request_id import ActionsCreateRequestId
 from .types.actions_create_request_filters import ActionsCreateRequestFilters
-from .types.actions_create_request_selected_items import ActionsCreateRequestSelectedItems
 from .types.actions_create_request_ordering_item import ActionsCreateRequestOrderingItem
+from .types.actions_create_request_selected_items import ActionsCreateRequestSelectedItems
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -20,18 +22,24 @@ class ActionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def list(
+        self, *, project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ActionsListResponseItem]:
         """
         Retrieve all the registered actions with descriptions that data manager can use.
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        typing.List[ActionsListResponseItem]
+            Actions retrieved successfully
 
         Examples
         --------
@@ -40,16 +48,27 @@ class ActionsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.actions.list()
+        client.actions.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/dm/actions/",
             method="GET",
+            params={
+                "project": project,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    typing.List[ActionsListResponseItem],
+                    construct_type(
+                        type_=typing.List[ActionsListResponseItem],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -62,8 +81,8 @@ class ActionsClient:
         project: int,
         view: typing.Optional[int] = None,
         filters: typing.Optional[ActionsCreateRequestFilters] = OMIT,
-        selected_items: typing.Optional[ActionsCreateRequestSelectedItems] = OMIT,
         ordering: typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]] = OMIT,
+        selected_items: typing.Optional[ActionsCreateRequestSelectedItems] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -83,11 +102,11 @@ class ActionsClient:
         filters : typing.Optional[ActionsCreateRequestFilters]
             Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
 
-        selected_items : typing.Optional[ActionsCreateRequestSelectedItems]
-            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-
         ordering : typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]]
             List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+
+        selected_items : typing.Optional[ActionsCreateRequestSelectedItems]
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -109,7 +128,7 @@ class ActionsClient:
             api_key="YOUR_API_KEY",
         )
         client.actions.create(
-            id="retrieve_tasks_predictions",
+            id="delete_annotators",
             project=1,
             filters=ActionsCreateRequestFilters(
                 conjunction="or",
@@ -122,11 +141,11 @@ class ActionsClient:
                     )
                 ],
             ),
+            ordering=["tasks:total_annotations"],
             selected_items=ActionsCreateRequestSelectedItemsExcluded(
                 all_=True,
                 excluded=[124, 125, 126],
             ),
-            ordering=["tasks:total_annotations"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -141,10 +160,10 @@ class ActionsClient:
                 "filters": convert_and_respect_annotation_metadata(
                     object_=filters, annotation=ActionsCreateRequestFilters, direction="write"
                 ),
+                "ordering": ordering,
                 "selectedItems": convert_and_respect_annotation_metadata(
                     object_=selected_items, annotation=ActionsCreateRequestSelectedItems, direction="write"
                 ),
-                "ordering": ordering,
             },
             headers={
                 "content-type": "application/json",
@@ -165,18 +184,24 @@ class AsyncActionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def list(
+        self, *, project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ActionsListResponseItem]:
         """
         Retrieve all the registered actions with descriptions that data manager can use.
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        typing.List[ActionsListResponseItem]
+            Actions retrieved successfully
 
         Examples
         --------
@@ -190,7 +215,9 @@ class AsyncActionsClient:
 
 
         async def main() -> None:
-            await client.actions.list()
+            await client.actions.list(
+                project=1,
+            )
 
 
         asyncio.run(main())
@@ -198,11 +225,20 @@ class AsyncActionsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/dm/actions/",
             method="GET",
+            params={
+                "project": project,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    typing.List[ActionsListResponseItem],
+                    construct_type(
+                        type_=typing.List[ActionsListResponseItem],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -215,8 +251,8 @@ class AsyncActionsClient:
         project: int,
         view: typing.Optional[int] = None,
         filters: typing.Optional[ActionsCreateRequestFilters] = OMIT,
-        selected_items: typing.Optional[ActionsCreateRequestSelectedItems] = OMIT,
         ordering: typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]] = OMIT,
+        selected_items: typing.Optional[ActionsCreateRequestSelectedItems] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -236,11 +272,11 @@ class AsyncActionsClient:
         filters : typing.Optional[ActionsCreateRequestFilters]
             Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
 
-        selected_items : typing.Optional[ActionsCreateRequestSelectedItems]
-            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-
         ordering : typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]]
             List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+
+        selected_items : typing.Optional[ActionsCreateRequestSelectedItems]
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -267,7 +303,7 @@ class AsyncActionsClient:
 
         async def main() -> None:
             await client.actions.create(
-                id="retrieve_tasks_predictions",
+                id="delete_annotators",
                 project=1,
                 filters=ActionsCreateRequestFilters(
                     conjunction="or",
@@ -280,11 +316,11 @@ class AsyncActionsClient:
                         )
                     ],
                 ),
+                ordering=["tasks:total_annotations"],
                 selected_items=ActionsCreateRequestSelectedItemsExcluded(
                     all_=True,
                     excluded=[124, 125, 126],
                 ),
-                ordering=["tasks:total_annotations"],
             )
 
 
@@ -302,10 +338,10 @@ class AsyncActionsClient:
                 "filters": convert_and_respect_annotation_metadata(
                     object_=filters, annotation=ActionsCreateRequestFilters, direction="write"
                 ),
+                "ordering": ordering,
                 "selectedItems": convert_and_respect_annotation_metadata(
                     object_=selected_items, annotation=ActionsCreateRequestSelectedItems, direction="write"
                 ),
-                "ordering": ordering,
             },
             headers={
                 "content-type": "application/json",

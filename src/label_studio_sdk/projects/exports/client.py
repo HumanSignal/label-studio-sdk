@@ -6,19 +6,17 @@ from ...core.request_options import RequestOptions
 from ...core.jsonable_encoder import jsonable_encoder
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from .types.exports_list_formats_response_item import ExportsListFormatsResponseItem
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from ...types.export import Export
-from ...types.user_simple import UserSimple
+from ...types.lse_annotation_filter_options_request import LseAnnotationFilterOptionsRequest
+from ...types.converted_format_request import ConvertedFormatRequest
+from ...types.user_simple_request import UserSimpleRequest
 import datetime as dt
-from ...types.export_snapshot_status import ExportSnapshotStatus
-from ...types.converted_format import ConvertedFormat
-from ...types.task_filter_options import TaskFilterOptions
-from ...types.annotation_filter_options import AnnotationFilterOptions
-from ...types.serialization_options import SerializationOptions
-from ...types.export_snapshot import ExportSnapshot
+from ...types.serialization_options_request import SerializationOptionsRequest
+from ...types.status7bf_enum import Status7BfEnum
+from ...types.lse_task_filter_options_request import LseTaskFilterOptionsRequest
+from ...types.lse_export_create import LseExportCreate
 from ...core.serialization import convert_and_respect_annotation_metadata
-from ...types.export_format import ExportFormat
 from .types.exports_convert_response import ExportsConvertResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
@@ -34,50 +32,47 @@ class ExportsClient:
         self,
         id: int,
         *,
-        export_type: typing.Optional[str] = None,
         download_all_tasks: typing.Optional[bool] = None,
         download_resources: typing.Optional[bool] = None,
-        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        export_type: typing.Optional[str] = None,
+        ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
 
-        <Note>If you have a large project it's recommended to use export snapshots, this easy export endpoint might have timeouts.</Note>
-        Export annotated tasks as a file in a specific format.
-        For example, to export JSON annotations for a project to a file called `annotations.json`,
-        run the following from the command line:
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
-        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
-        To export specific tasks with IDs of 123 and 345, run the following from the command line:
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
+                <i>Note: if you have a large project it's recommended to use
+                export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
+                Export annotated tasks as a file in a specific format.
+                For example, to export JSON annotations for a project to a file called `annotations.json`,
+                run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export specific tasks with IDs of 123 and 345, run the following from the command line:
+                ```bash
+                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
 
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
         id : int
             A unique integer value identifying this project.
 
-        export_type : typing.Optional[str]
-            Selected export format (JSON by default)
-
         download_all_tasks : typing.Optional[bool]
-
             If true, download all tasks regardless of status. If false, download only annotated tasks.
 
         download_resources : typing.Optional[bool]
-
             If true, download all resource files such as images, audio, and others relevant to the tasks.
 
-        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+        export_type : typing.Optional[str]
+            Selected export format (JSON by default)
 
+        ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Specify a list of task IDs to retrieve only the details for those tasks.
 
         request_options : typing.Optional[RequestOptions]
@@ -86,15 +81,15 @@ class ExportsClient:
         Yields
         ------
         typing.Iterator[bytes]
-            Exported data in binary format
+            Exported data
         """
         with self._client_wrapper.httpx_client.stream(
             f"api/projects/{jsonable_encoder(id)}/export",
             method="GET",
             params={
-                "export_type": export_type,
                 "download_all_tasks": download_all_tasks,
                 "download_resources": download_resources,
+                "export_type": export_type,
                 "ids": ids,
             },
             request_options=request_options,
@@ -111,14 +106,9 @@ class ExportsClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def list_formats(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ExportsListFormatsResponseItem]:
+    def list_formats(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[str]:
         """
-
-        Before exporting annotations, you can check with formats are supported by the specified project. For more information about export formats, see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
-
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+        Retrieve the available export formats for the current project by ID.
 
         Parameters
         ----------
@@ -130,7 +120,7 @@ class ExportsClient:
 
         Returns
         -------
-        typing.List[ExportsListFormatsResponseItem]
+        typing.List[str]
             Export formats
 
         Examples
@@ -152,9 +142,9 @@ class ExportsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[ExportsListFormatsResponseItem],
-                    parse_obj_as(
-                        type_=typing.List[ExportsListFormatsResponseItem],  # type: ignore
+                    typing.List[str],
+                    construct_type(
+                        type_=typing.List[str],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -163,17 +153,19 @@ class ExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def list(self, project_id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Export]:
+    def list(
+        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[Export]:
         """
-
-        Returns a list of export file (snapshots) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
-
-        Included in the response is information about each snapshot, such as who created it and what format it is in.
+        Returns a list of exported files for a specific project by ID.
 
         Parameters
         ----------
-        project_id : int
+        id : int
             A unique integer value identifying this project.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -191,19 +183,22 @@ class ExportsClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.exports.list(
-            project_id=1,
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_id)}/exports",
+            f"api/projects/{jsonable_encoder(id)}/exports/",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Export],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Export],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -215,67 +210,55 @@ class ExportsClient:
 
     def create(
         self,
-        project_id: int,
+        id: int,
         *,
-        title: typing.Optional[str] = OMIT,
-        id: typing.Optional[int] = OMIT,
-        created_by: typing.Optional[UserSimple] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
+        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
+        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
+        counters: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
         finished_at: typing.Optional[dt.datetime] = OMIT,
-        status: typing.Optional[ExportSnapshotStatus] = OMIT,
         md5: typing.Optional[str] = OMIT,
-        counters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        converted_formats: typing.Optional[typing.Sequence[ConvertedFormat]] = OMIT,
-        task_filter_options: typing.Optional[TaskFilterOptions] = OMIT,
-        annotation_filter_options: typing.Optional[AnnotationFilterOptions] = OMIT,
-        serialization_options: typing.Optional[SerializationOptions] = OMIT,
+        serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
+        status: typing.Optional[Status7BfEnum] = OMIT,
+        task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ExportSnapshot:
+    ) -> LseExportCreate:
         """
-
-        Create a new export request to start a background task and generate an export file (snapshot) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
-
-        A snapshot is a static export of your project's data and annotations at a specific point in time. It captures the current state of your tasks, annotations, and other relevant data, allowing you to download and review them later. Snapshots are particularly useful for large projects as they help avoid timeouts during export operations by processing the data asynchronously.
-
-        For more information, see the [Label Studio documentation on exporting annotations](https://labelstud.io/guide/export.html).
+        Create a new export request to start a background task and generate an export file for a specific project by ID.
 
         Parameters
         ----------
-        project_id : int
+        id : int
             A unique integer value identifying this project.
 
-        title : typing.Optional[str]
+        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
 
-        id : typing.Optional[int]
+        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
 
-        created_by : typing.Optional[UserSimple]
+        counters : typing.Optional[typing.Optional[typing.Any]]
 
-        created_at : typing.Optional[dt.datetime]
-            Creation time
+        created_by : typing.Optional[UserSimpleRequest]
 
         finished_at : typing.Optional[dt.datetime]
             Complete or fail time
 
-        status : typing.Optional[ExportSnapshotStatus]
-
         md5 : typing.Optional[str]
 
-        counters : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        serialization_options : typing.Optional[SerializationOptionsRequest]
 
-        converted_formats : typing.Optional[typing.Sequence[ConvertedFormat]]
+        status : typing.Optional[Status7BfEnum]
 
-        task_filter_options : typing.Optional[TaskFilterOptions]
+        task_filter_options : typing.Optional[LseTaskFilterOptionsRequest]
 
-        annotation_filter_options : typing.Optional[AnnotationFilterOptions]
-
-        serialization_options : typing.Optional[SerializationOptions]
+        title : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ExportSnapshot
+        LseExportCreate
 
 
         Examples
@@ -286,35 +269,36 @@ class ExportsClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.exports.create(
-            project_id=1,
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_id)}/exports",
+            f"api/projects/{jsonable_encoder(id)}/exports/",
             method="POST",
             json={
-                "title": title,
-                "id": id,
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=UserSimple, direction="write"
-                ),
-                "created_at": created_at,
-                "finished_at": finished_at,
-                "status": status,
-                "md5": md5,
-                "counters": counters,
-                "converted_formats": convert_and_respect_annotation_metadata(
-                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormat], direction="write"
-                ),
-                "task_filter_options": convert_and_respect_annotation_metadata(
-                    object_=task_filter_options, annotation=TaskFilterOptions, direction="write"
-                ),
                 "annotation_filter_options": convert_and_respect_annotation_metadata(
-                    object_=annotation_filter_options, annotation=AnnotationFilterOptions, direction="write"
+                    object_=annotation_filter_options, annotation=LseAnnotationFilterOptionsRequest, direction="write"
                 ),
+                "converted_formats": convert_and_respect_annotation_metadata(
+                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormatRequest], direction="write"
+                ),
+                "counters": counters,
+                "created_by": convert_and_respect_annotation_metadata(
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
+                ),
+                "finished_at": finished_at,
+                "md5": md5,
                 "serialization_options": convert_and_respect_annotation_metadata(
-                    object_=serialization_options, annotation=SerializationOptions, direction="write"
+                    object_=serialization_options, annotation=SerializationOptionsRequest, direction="write"
                 ),
+                "status": status,
+                "task_filter_options": convert_and_respect_annotation_metadata(
+                    object_=task_filter_options, annotation=LseTaskFilterOptionsRequest, direction="write"
+                ),
+                "title": title,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -322,9 +306,178 @@ class ExportsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ExportSnapshot,
-                    parse_obj_as(
-                        type_=ExportSnapshot,  # type: ignore
+                    LseExportCreate,
+                    construct_type(
+                        type_=LseExportCreate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
+        """
+        Retrieve information about an export file by export ID for a specific project.
+
+        Parameters
+        ----------
+        export_pk : int
+            Primary key identifying the export file.
+
+        id : int
+            A unique integer value identifying this project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Export
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.exports.get(
+            export_pk=1,
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Export,
+                    construct_type(
+                        type_=Export,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete an export file by specified export ID.
+
+        Parameters
+        ----------
+        export_pk : int
+            Primary key identifying the export file.
+
+        id : int
+            A unique integer value identifying this project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.exports.delete(
+            export_pk=1,
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def convert(
+        self,
+        export_pk: int,
+        id: int,
+        *,
+        export_type: str,
+        download_resources: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ExportsConvertResponse:
+        """
+        Convert export snapshot to selected format
+
+        Parameters
+        ----------
+        export_pk : int
+            Primary key identifying the export file.
+
+        id : int
+            A unique integer value identifying this project.
+
+        export_type : str
+            Export file format.
+
+        download_resources : typing.Optional[bool]
+            Download resources in converter.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ExportsConvertResponse
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.exports.convert(
+            export_pk=1,
+            id=1,
+            export_type="export_type",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/convert",
+            method="POST",
+            json={
+                "download_resources": download_resources,
+                "export_type": export_type,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ExportsConvertResponse,
+                    construct_type(
+                        type_=ExportsConvertResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -335,30 +488,32 @@ class ExportsClient:
 
     def download(
         self,
-        project_id: int,
-        export_pk: str,
+        export_pk: int,
+        id: int,
         *,
-        export_type: typing.Optional[ExportFormat] = None,
+        export_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
 
-        Download an export snapshot as a file in a specified format. To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
+                Download an export file in the specified format for a specific project. Specify the project ID with the `id`
+                parameter in the path and the ID of the export file you want to download using the `export_pk` parameter
+                in the path.
 
-        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
+                Get the `export_pk` from the response of the request to [Create new export](/api#operation/api_projects_exports_create)
+                or after [listing export files](/api#operation/api_projects_exports_list).
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
-        project_id : int
-            A unique integer value identifying this project.
-
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
-        export_type : typing.Optional[ExportFormat]
-            Selected export format. JSON is available by default. For other formats, you need to convert the export first.
+        id : int
+            A unique integer value identifying this project.
+
+        export_type : typing.Optional[str]
+            Selected export format
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -366,10 +521,10 @@ class ExportsClient:
         Yields
         ------
         typing.Iterator[bytes]
-            Exported data in binary format
+            Export file
         """
         with self._client_wrapper.httpx_client.stream(
-            f"api/projects/{jsonable_encoder(project_id)}/exports/{jsonable_encoder(export_pk)}/download",
+            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/download",
             method="GET",
             params={
                 "exportType": export_type,
@@ -388,192 +543,6 @@ class ExportsClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(
-        self, project_id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Export:
-        """
-
-        Retrieve information about a specific export file (snapshot).
-
-        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).
-
-        You will also need the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
-
-        Parameters
-        ----------
-        project_id : int
-            A unique integer value identifying this project.
-
-        export_pk : str
-            Primary key identifying the export file.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Export
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.exports.get(
-            project_id=1,
-            export_pk="export_pk",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_id)}/exports/{jsonable_encoder(export_pk)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Export,
-                    parse_obj_as(
-                        type_=Export,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def delete(
-        self, project_id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-
-        Delete an export file by specified export ID.
-
-        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).
-
-        Parameters
-        ----------
-        project_id : int
-            A unique integer value identifying this project.
-
-        export_pk : str
-            Primary key identifying the export file.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.exports.delete(
-            project_id=1,
-            export_pk="export_pk",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_id)}/exports/{jsonable_encoder(export_pk)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def convert(
-        self,
-        project_id: int,
-        export_pk: str,
-        *,
-        export_type: typing.Optional[ExportFormat] = OMIT,
-        download_resources: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ExportsConvertResponse:
-        """
-
-        You can use this to convert an export snapshot into the selected format.
-
-        To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
-
-        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
-
-        Parameters
-        ----------
-        project_id : int
-            A unique integer value identifying this project.
-
-        export_pk : str
-            Primary key identifying the export file.
-
-        export_type : typing.Optional[ExportFormat]
-
-        download_resources : typing.Optional[bool]
-            If true, download all resource files such as images, audio, and others relevant to the tasks.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ExportsConvertResponse
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.exports.convert(
-            project_id=1,
-            export_pk="export_pk",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_id)}/exports/{jsonable_encoder(export_pk)}/convert",
-            method="POST",
-            json={
-                "export_type": export_type,
-                "download_resources": download_resources,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ExportsConvertResponse,
-                    parse_obj_as(
-                        type_=ExportsConvertResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
 
 class AsyncExportsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -583,50 +552,47 @@ class AsyncExportsClient:
         self,
         id: int,
         *,
-        export_type: typing.Optional[str] = None,
         download_all_tasks: typing.Optional[bool] = None,
         download_resources: typing.Optional[bool] = None,
-        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        export_type: typing.Optional[str] = None,
+        ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
 
-        <Note>If you have a large project it's recommended to use export snapshots, this easy export endpoint might have timeouts.</Note>
-        Export annotated tasks as a file in a specific format.
-        For example, to export JSON annotations for a project to a file called `annotations.json`,
-        run the following from the command line:
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
-        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
-        To export specific tasks with IDs of 123 and 345, run the following from the command line:
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
+                <i>Note: if you have a large project it's recommended to use
+                export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
+                Export annotated tasks as a file in a specific format.
+                For example, to export JSON annotations for a project to a file called `annotations.json`,
+                run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export specific tasks with IDs of 123 and 345, run the following from the command line:
+                ```bash
+                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
 
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
         id : int
             A unique integer value identifying this project.
 
-        export_type : typing.Optional[str]
-            Selected export format (JSON by default)
-
         download_all_tasks : typing.Optional[bool]
-
             If true, download all tasks regardless of status. If false, download only annotated tasks.
 
         download_resources : typing.Optional[bool]
-
             If true, download all resource files such as images, audio, and others relevant to the tasks.
 
-        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+        export_type : typing.Optional[str]
+            Selected export format (JSON by default)
 
+        ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Specify a list of task IDs to retrieve only the details for those tasks.
 
         request_options : typing.Optional[RequestOptions]
@@ -635,15 +601,15 @@ class AsyncExportsClient:
         Yields
         ------
         typing.AsyncIterator[bytes]
-            Exported data in binary format
+            Exported data
         """
         async with self._client_wrapper.httpx_client.stream(
             f"api/projects/{jsonable_encoder(id)}/export",
             method="GET",
             params={
-                "export_type": export_type,
                 "download_all_tasks": download_all_tasks,
                 "download_resources": download_resources,
+                "export_type": export_type,
                 "ids": ids,
             },
             request_options=request_options,
@@ -662,12 +628,9 @@ class AsyncExportsClient:
 
     async def list_formats(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ExportsListFormatsResponseItem]:
+    ) -> typing.List[str]:
         """
-
-        Before exporting annotations, you can check with formats are supported by the specified project. For more information about export formats, see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
-
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+        Retrieve the available export formats for the current project by ID.
 
         Parameters
         ----------
@@ -679,7 +642,7 @@ class AsyncExportsClient:
 
         Returns
         -------
-        typing.List[ExportsListFormatsResponseItem]
+        typing.List[str]
             Export formats
 
         Examples
@@ -709,9 +672,9 @@ class AsyncExportsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[ExportsListFormatsResponseItem],
-                    parse_obj_as(
-                        type_=typing.List[ExportsListFormatsResponseItem],  # type: ignore
+                    typing.List[str],
+                    construct_type(
+                        type_=typing.List[str],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -721,18 +684,18 @@ class AsyncExportsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list(
-        self, project_id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Export]:
         """
-
-        Returns a list of export file (snapshots) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
-
-        Included in the response is information about each snapshot, such as who created it and what format it is in.
+        Returns a list of exported files for a specific project by ID.
 
         Parameters
         ----------
-        project_id : int
+        id : int
             A unique integer value identifying this project.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -755,22 +718,25 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.list(
-                project_id=1,
+                id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_id)}/exports",
+            f"api/projects/{jsonable_encoder(id)}/exports/",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Export],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Export],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -782,67 +748,55 @@ class AsyncExportsClient:
 
     async def create(
         self,
-        project_id: int,
+        id: int,
         *,
-        title: typing.Optional[str] = OMIT,
-        id: typing.Optional[int] = OMIT,
-        created_by: typing.Optional[UserSimple] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
+        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
+        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
+        counters: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
         finished_at: typing.Optional[dt.datetime] = OMIT,
-        status: typing.Optional[ExportSnapshotStatus] = OMIT,
         md5: typing.Optional[str] = OMIT,
-        counters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        converted_formats: typing.Optional[typing.Sequence[ConvertedFormat]] = OMIT,
-        task_filter_options: typing.Optional[TaskFilterOptions] = OMIT,
-        annotation_filter_options: typing.Optional[AnnotationFilterOptions] = OMIT,
-        serialization_options: typing.Optional[SerializationOptions] = OMIT,
+        serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
+        status: typing.Optional[Status7BfEnum] = OMIT,
+        task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ExportSnapshot:
+    ) -> LseExportCreate:
         """
-
-        Create a new export request to start a background task and generate an export file (snapshot) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
-
-        A snapshot is a static export of your project's data and annotations at a specific point in time. It captures the current state of your tasks, annotations, and other relevant data, allowing you to download and review them later. Snapshots are particularly useful for large projects as they help avoid timeouts during export operations by processing the data asynchronously.
-
-        For more information, see the [Label Studio documentation on exporting annotations](https://labelstud.io/guide/export.html).
+        Create a new export request to start a background task and generate an export file for a specific project by ID.
 
         Parameters
         ----------
-        project_id : int
+        id : int
             A unique integer value identifying this project.
 
-        title : typing.Optional[str]
+        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
 
-        id : typing.Optional[int]
+        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
 
-        created_by : typing.Optional[UserSimple]
+        counters : typing.Optional[typing.Optional[typing.Any]]
 
-        created_at : typing.Optional[dt.datetime]
-            Creation time
+        created_by : typing.Optional[UserSimpleRequest]
 
         finished_at : typing.Optional[dt.datetime]
             Complete or fail time
 
-        status : typing.Optional[ExportSnapshotStatus]
-
         md5 : typing.Optional[str]
 
-        counters : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        serialization_options : typing.Optional[SerializationOptionsRequest]
 
-        converted_formats : typing.Optional[typing.Sequence[ConvertedFormat]]
+        status : typing.Optional[Status7BfEnum]
 
-        task_filter_options : typing.Optional[TaskFilterOptions]
+        task_filter_options : typing.Optional[LseTaskFilterOptionsRequest]
 
-        annotation_filter_options : typing.Optional[AnnotationFilterOptions]
-
-        serialization_options : typing.Optional[SerializationOptions]
+        title : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ExportSnapshot
+        LseExportCreate
 
 
         Examples
@@ -858,38 +812,39 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.create(
-                project_id=1,
+                id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_id)}/exports",
+            f"api/projects/{jsonable_encoder(id)}/exports/",
             method="POST",
             json={
-                "title": title,
-                "id": id,
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=UserSimple, direction="write"
-                ),
-                "created_at": created_at,
-                "finished_at": finished_at,
-                "status": status,
-                "md5": md5,
-                "counters": counters,
-                "converted_formats": convert_and_respect_annotation_metadata(
-                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormat], direction="write"
-                ),
-                "task_filter_options": convert_and_respect_annotation_metadata(
-                    object_=task_filter_options, annotation=TaskFilterOptions, direction="write"
-                ),
                 "annotation_filter_options": convert_and_respect_annotation_metadata(
-                    object_=annotation_filter_options, annotation=AnnotationFilterOptions, direction="write"
+                    object_=annotation_filter_options, annotation=LseAnnotationFilterOptionsRequest, direction="write"
                 ),
+                "converted_formats": convert_and_respect_annotation_metadata(
+                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormatRequest], direction="write"
+                ),
+                "counters": counters,
+                "created_by": convert_and_respect_annotation_metadata(
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
+                ),
+                "finished_at": finished_at,
+                "md5": md5,
                 "serialization_options": convert_and_respect_annotation_metadata(
-                    object_=serialization_options, annotation=SerializationOptions, direction="write"
+                    object_=serialization_options, annotation=SerializationOptionsRequest, direction="write"
                 ),
+                "status": status,
+                "task_filter_options": convert_and_respect_annotation_metadata(
+                    object_=task_filter_options, annotation=LseTaskFilterOptionsRequest, direction="write"
+                ),
+                "title": title,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -897,9 +852,9 @@ class AsyncExportsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ExportSnapshot,
-                    parse_obj_as(
-                        type_=ExportSnapshot,  # type: ignore
+                    LseExportCreate,
+                    construct_type(
+                        type_=LseExportCreate,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -908,79 +863,17 @@ class AsyncExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def download(
-        self,
-        project_id: int,
-        export_pk: str,
-        *,
-        export_type: typing.Optional[ExportFormat] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    async def get(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
         """
-
-        Download an export snapshot as a file in a specified format. To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
-
-        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+        Retrieve information about an export file by export ID for a specific project.
 
         Parameters
         ----------
-        project_id : int
-            A unique integer value identifying this project.
-
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
-        export_type : typing.Optional[ExportFormat]
-            Selected export format. JSON is available by default. For other formats, you need to convert the export first.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-
-        Yields
-        ------
-        typing.AsyncIterator[bytes]
-            Exported data in binary format
-        """
-        async with self._client_wrapper.httpx_client.stream(
-            f"api/projects/{jsonable_encoder(project_id)}/exports/{jsonable_encoder(export_pk)}/download",
-            method="GET",
-            params={
-                "exportType": export_type,
-            },
-            request_options=request_options,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
-                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                await _response.aread()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get(
-        self, project_id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Export:
-        """
-
-        Retrieve information about a specific export file (snapshot).
-
-        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).
-
-        You will also need the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
-
-        Parameters
-        ----------
-        project_id : int
+        id : int
             A unique integer value identifying this project.
-
-        export_pk : str
-            Primary key identifying the export file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1003,15 +896,15 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.get(
-                project_id=1,
-                export_pk="export_pk",
+                export_pk=1,
+                id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_id)}/exports/{jsonable_encoder(export_pk)}",
+            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}",
             method="GET",
             request_options=request_options,
         )
@@ -1019,7 +912,7 @@ class AsyncExportsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Export,
-                    parse_obj_as(
+                    construct_type(
                         type_=Export,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1029,22 +922,17 @@ class AsyncExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, project_id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete an export file by specified export ID.
-
-        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).
 
         Parameters
         ----------
-        project_id : int
-            A unique integer value identifying this project.
-
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
+
+        id : int
+            A unique integer value identifying this project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1066,15 +954,15 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.delete(
-                project_id=1,
-                export_pk="export_pk",
+                export_pk=1,
+                id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_id)}/exports/{jsonable_encoder(export_pk)}",
+            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -1088,35 +976,29 @@ class AsyncExportsClient:
 
     async def convert(
         self,
-        project_id: int,
-        export_pk: str,
+        export_pk: int,
+        id: int,
         *,
-        export_type: typing.Optional[ExportFormat] = OMIT,
+        export_type: str,
         download_resources: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ExportsConvertResponse:
         """
-
-        You can use this to convert an export snapshot into the selected format.
-
-        To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
-
-        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+        Convert export snapshot to selected format
 
         Parameters
         ----------
-        project_id : int
-            A unique integer value identifying this project.
-
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
-        export_type : typing.Optional[ExportFormat]
+        id : int
+            A unique integer value identifying this project.
+
+        export_type : str
+            Export file format.
 
         download_resources : typing.Optional[bool]
-            If true, download all resource files such as images, audio, and others relevant to the tasks.
+            Download resources in converter.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1139,19 +1021,20 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.convert(
-                project_id=1,
-                export_pk="export_pk",
+                export_pk=1,
+                id=1,
+                export_type="export_type",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_id)}/exports/{jsonable_encoder(export_pk)}/convert",
+            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/convert",
             method="POST",
             json={
-                "export_type": export_type,
                 "download_resources": download_resources,
+                "export_type": export_type,
             },
             headers={
                 "content-type": "application/json",
@@ -1163,7 +1046,7 @@ class AsyncExportsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ExportsConvertResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=ExportsConvertResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1172,3 +1055,60 @@ class AsyncExportsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def download(
+        self,
+        export_pk: int,
+        id: int,
+        *,
+        export_type: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+
+                Download an export file in the specified format for a specific project. Specify the project ID with the `id`
+                parameter in the path and the ID of the export file you want to download using the `export_pk` parameter
+                in the path.
+
+                Get the `export_pk` from the response of the request to [Create new export](/api#operation/api_projects_exports_create)
+                or after [listing export files](/api#operation/api_projects_exports_list).
+
+
+        Parameters
+        ----------
+        export_pk : int
+            Primary key identifying the export file.
+
+        id : int
+            A unique integer value identifying this project.
+
+        export_type : typing.Optional[str]
+            Selected export format
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Export file
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/download",
+            method="GET",
+            params={
+                "exportType": export_type,
+            },
+            request_options=request_options,
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                await _response.aread()
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)

@@ -11,8 +11,11 @@ You will learn:
 - How to download and work with satellite imagery
 - How to label polygons in Label Studio
 - How to compute distances in georeferenced images
-- How to use the Label Studio SDK to poll for new annotations and modify task data (this is a toy example - for production use cases, we recommend using Custom Scripts in Label Studio Enterprise for real-time updates to the labeling interface on [annotation events](https://labelstud.io/guide/frontend_reference#Annotation-events).)
+- How to use the Label Studio SDK to poll for new annotations and modify task data (this is a toy example - for production use cases, we recommend using Plugins in Label Studio Enterprise for real-time updates to the labeling interface on [annotation events](https://labelstud.io/guide/frontend_reference#Annotation-events).)
 
+> [!WARNING]
+> 
+> This example predates the Plugins feature. Consider using Plugins for this use case instead of polling using the SDK. 
 
 ## Setup data
 
@@ -56,8 +59,31 @@ Add a label config for image segmentation, slightly modified from the default te
 </View>
 ```
 
-Note: you must upload all your files before setting the label config, to support the workaround where `Text` fields are populated by the SDK when an annotation is updated.
+Add a cloud storage to host your images. If you're running Label Studio locally, you can set `LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true` to use local file storage.
 
+Upload a JSON manifest describing where your files are. Here's an example for S3:
+```json
+[
+  {
+    "data": {
+      "image": "s3://my-bucket/path/image1.jpg",
+      "perimeter_m": "placeholder",
+      "area_m2": "placeholder",
+      "major_axis_m": "placeholder",
+      "minor_axis_m": "placeholder"
+    }
+  },
+  {
+    "data": {
+      "image": "s3://my-bucket/path/image2.jpg",
+      "perimeter_m": "placeholder",
+      "area_m2": "placeholder",
+      "major_axis_m": "placeholder",
+      "minor_axis_m": "placeholder"
+    }
+  }
+]
+```
 
 ## Run background task
 

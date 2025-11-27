@@ -2,14 +2,18 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from .bulk.client import BulkClient
+from .paginated.client import PaginatedClient
 from ...core.request_options import RequestOptions
-from .types.members_list_response_item import MembersListResponseItem
+from ...types.workspace_member_list import WorkspaceMemberList
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from .types.members_create_response import MembersCreateResponse
+from ...types.workspace_member_create import WorkspaceMemberCreate
 from ...core.client_wrapper import AsyncClientWrapper
+from .bulk.client import AsyncBulkClient
+from .paginated.client import AsyncPaginatedClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -18,26 +22,32 @@ OMIT = typing.cast(typing.Any, ...)
 class MembersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.bulk = BulkClient(client_wrapper=self._client_wrapper)
+        self.paginated = PaginatedClient(client_wrapper=self._client_wrapper)
 
     def list(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[MembersListResponseItem]:
+    ) -> typing.List[WorkspaceMemberList]:
         """
-
-        List all workspace memberships for a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all members in a specific workspace.
 
         Parameters
         ----------
         id : int
-            Workspace ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[MembersListResponseItem]
-
+        typing.List[WorkspaceMemberList]
+            A list of workspace memberships
 
         Examples
         --------
@@ -51,16 +61,16 @@ class MembersClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships",
+            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[MembersListResponseItem],
-                    parse_obj_as(
-                        type_=typing.List[MembersListResponseItem],  # type: ignore
+                    typing.List[WorkspaceMemberList],
+                    construct_type(
+                        type_=typing.List[WorkspaceMemberList],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -70,26 +80,38 @@ class MembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
-        self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> MembersCreateResponse:
+        self,
+        id: int,
+        *,
+        user: int,
+        workspace: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WorkspaceMemberCreate:
         """
-
-        Create a new workspace membership. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Add a new workspace member by user ID.
 
         Parameters
         ----------
         id : int
-            Workspace ID
 
-        user : typing.Optional[int]
-            User ID of the workspace member
+        user : int
+            User ID
+
+        workspace : typing.Optional[int]
+            Workspace ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        MembersCreateResponse
+        WorkspaceMemberCreate
 
 
         Examples
@@ -101,13 +123,15 @@ class MembersClient:
         )
         client.workspaces.members.create(
             id=1,
+            user=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships",
+            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
             method="POST",
             json={
                 "user": user,
+                "workspace": workspace,
             },
             headers={
                 "content-type": "application/json",
@@ -118,9 +142,9 @@ class MembersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    MembersCreateResponse,
-                    parse_obj_as(
-                        type_=MembersCreateResponse,  # type: ignore
+                    WorkspaceMemberCreate,
+                    construct_type(
+                        type_=WorkspaceMemberCreate,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -129,20 +153,19 @@ class MembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific workspace membership. You will need to provide the workspace ID and the user ID. You can find this using [List workspace memberships](list).
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
 
         Parameters
         ----------
         id : int
-            Workspace ID
-
-        user : typing.Optional[int]
-            User ID of the workspace member
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -163,16 +186,9 @@ class MembersClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships",
+            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
             method="DELETE",
-            json={
-                "user": user,
-            },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -186,26 +202,32 @@ class MembersClient:
 class AsyncMembersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.bulk = AsyncBulkClient(client_wrapper=self._client_wrapper)
+        self.paginated = AsyncPaginatedClient(client_wrapper=self._client_wrapper)
 
     async def list(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[MembersListResponseItem]:
+    ) -> typing.List[WorkspaceMemberList]:
         """
-
-        List all workspace memberships for a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all members in a specific workspace.
 
         Parameters
         ----------
         id : int
-            Workspace ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[MembersListResponseItem]
-
+        typing.List[WorkspaceMemberList]
+            A list of workspace memberships
 
         Examples
         --------
@@ -227,16 +249,16 @@ class AsyncMembersClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships",
+            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[MembersListResponseItem],
-                    parse_obj_as(
-                        type_=typing.List[MembersListResponseItem],  # type: ignore
+                    typing.List[WorkspaceMemberList],
+                    construct_type(
+                        type_=typing.List[WorkspaceMemberList],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -246,26 +268,38 @@ class AsyncMembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
-        self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> MembersCreateResponse:
+        self,
+        id: int,
+        *,
+        user: int,
+        workspace: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WorkspaceMemberCreate:
         """
-
-        Create a new workspace membership. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Add a new workspace member by user ID.
 
         Parameters
         ----------
         id : int
-            Workspace ID
 
-        user : typing.Optional[int]
-            User ID of the workspace member
+        user : int
+            User ID
+
+        workspace : typing.Optional[int]
+            Workspace ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        MembersCreateResponse
+        WorkspaceMemberCreate
 
 
         Examples
@@ -282,16 +316,18 @@ class AsyncMembersClient:
         async def main() -> None:
             await client.workspaces.members.create(
                 id=1,
+                user=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships",
+            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
             method="POST",
             json={
                 "user": user,
+                "workspace": workspace,
             },
             headers={
                 "content-type": "application/json",
@@ -302,9 +338,9 @@ class AsyncMembersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    MembersCreateResponse,
-                    parse_obj_as(
-                        type_=MembersCreateResponse,  # type: ignore
+                    WorkspaceMemberCreate,
+                    construct_type(
+                        type_=WorkspaceMemberCreate,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -313,20 +349,19 @@ class AsyncMembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific workspace membership. You will need to provide the workspace ID and the user ID. You can find this using [List workspace memberships](list).
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
 
         Parameters
         ----------
         id : int
-            Workspace ID
-
-        user : typing.Optional[int]
-            User ID of the workspace member
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -355,16 +390,9 @@ class AsyncMembersClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships",
+            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
             method="DELETE",
-            json={
-                "user": user,
-            },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
