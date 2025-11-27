@@ -267,6 +267,30 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
         {"sentiment": "Positive", "reasoning": "Let's think step by step"},
         {"sentiment": "Positive", "reasoning": "Let's think step by step"}
     ),
+    # custom interface with simple comma-delimited outputs
+    (
+        """
+        <View>
+          <CustomInterface name="my_app" toName="my_app" data="$my_data" outputs="field1,field2,field3" />
+        </View>
+        """,
+        {
+            "type": "object",
+            "properties": {
+                "my_app": {
+                    "type": "object",
+                    "properties": {
+                        "field1": {"type": "string"},
+                        "field2": {"type": "string"},
+                        "field3": {"type": "string"},
+                    }
+                }
+            },
+            "required": []
+        },
+        {"my_app": {"field1": "value1", "field2": "value2", "field3": "value3"}},
+        {"my_app": {"field1": "value1", "field2": "value2", "field3": "value3"}}
+    ),
     # add more tests for other control tags
     # ...
 ], ids=[
@@ -276,6 +300,7 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
     "classification_with_textarea",
     "complex_interface",
     "textarea_required",
+    "custom_interface",
     # specify ids for each test case
     # ...
 ])
@@ -402,3 +427,142 @@ def test_concurrent_json_schema_to_pydantic_threaded():
 
         # Check if execution time is reasonable (adjust as needed)
         assert end_time - start_time < 1.0, f"Execution took too long: {end_time - start_time} seconds"
+
+
+@pytest.mark.parametrize("outputs_attr, expected_properties, sample_input", [
+    # Strategy 1: Delimited list - comma separated
+    (
+        "field1, field2, field3",
+        {
+            "field1": {"type": "string"},
+            "field2": {"type": "string"},
+            "field3": {"type": "string"},
+        },
+        {"field1": "a", "field2": "b", "field3": "c"}
+    ),
+    # Strategy 1: Delimited list - pipe separated
+    (
+        "name|email|phone",
+        {
+            "name": {"type": "string"},
+            "email": {"type": "string"},
+            "phone": {"type": "string"},
+        },
+        {"name": "John", "email": "john@example.com", "phone": "123"}
+    ),
+    # Strategy 1: Delimited list - semicolon separated
+    (
+        "a;b;c",
+        {
+            "a": {"type": "string"},
+            "b": {"type": "string"},
+            "c": {"type": "string"},
+        },
+        {"a": "1", "b": "2", "c": "3"}
+    ),
+    # Strategy 2: JSON schema - properties only (quotes escaped for XML)
+    (
+        '{&quot;score&quot;: {&quot;type&quot;: &quot;number&quot;}, &quot;comment&quot;: {&quot;type&quot;: &quot;string&quot;}}',
+        {
+            "score": {"type": "number"},
+            "comment": {"type": "string"},
+        },
+        {"score": 42.5, "comment": "great"}
+    ),
+    # Strategy 2: JSON schema - complete schema (quotes escaped for XML)
+    (
+        '{&quot;type&quot;: &quot;object&quot;, &quot;properties&quot;: {&quot;value&quot;: {&quot;type&quot;: &quot;integer&quot;, &quot;minimum&quot;: 0}}}',
+        {"value": {"type": "integer", "minimum": 0}},
+        {"value": 10}
+    ),
+    # Strategy 3: Type alias - choices
+    (
+        "sentiment:choices(positive, negative, neutral)",
+        {
+            "sentiment": {"type": "string", "enum": ["positive", "negative", "neutral"]},
+        },
+        {"sentiment": "positive"}
+    ),
+    # Strategy 3: Type alias - multichoices
+    (
+        "tags:multichoices(urgent, review, done)",
+        {
+            "tags": {"type": "array", "items": {"type": "string", "enum": ["urgent", "review", "done"]}},
+        },
+        {"tags": ["urgent", "review"]}
+    ),
+    # Strategy 3: Type alias - number with min/max
+    (
+        "score:number(0, 100)",
+        {
+            "score": {"type": "number", "minimum": 0.0, "maximum": 100.0},
+        },
+        {"score": 75.5}
+    ),
+    # Strategy 3: Type alias - rating
+    (
+        "stars:rating(5)",
+        {
+            "stars": {"type": "integer", "minimum": 1, "maximum": 5},
+        },
+        {"stars": 4}
+    ),
+    # Mixed: delimited list with type aliases
+    (
+        "name, sentiment:choices(good, bad), score:number(1, 10), tags:multichoices(a, b)",
+        {
+            "name": {"type": "string"},
+            "sentiment": {"type": "string", "enum": ["good", "bad"]},
+            "score": {"type": "number", "minimum": 1.0, "maximum": 10.0},
+            "tags": {"type": "array", "items": {"type": "string", "enum": ["a", "b"]}},
+        },
+        {"name": "test", "sentiment": "good", "score": 5.0, "tags": ["a"]}
+    ),
+    # Mixed: pipe-delimited with rating
+    (
+        "comment|quality:rating(10)",
+        {
+            "comment": {"type": "string"},
+            "quality": {"type": "integer", "minimum": 1, "maximum": 10},
+        },
+        {"comment": "nice", "quality": 8}
+    ),
+], ids=[
+    "comma_delimited",
+    "pipe_delimited",
+    "semicolon_delimited",
+    "json_properties",
+    "json_complete_schema",
+    "choices_alias",
+    "multichoices_alias",
+    "number_alias",
+    "rating_alias",
+    "mixed_delimited_with_aliases",
+    "pipe_with_rating",
+])
+def test_custom_interface_outputs_parsing(outputs_attr, expected_properties, sample_input):
+    """Test various parsing strategies for CustomInterface outputs attribute."""
+    config = f'''
+    <View>
+      <CustomInterface name="result" toName="result" outputs="{outputs_attr}" />
+    </View>
+    '''
+    interface = LabelInterface(config)
+    json_schema = interface.to_json_schema()
+    
+    expected_schema = {
+        "type": "object",
+        "properties": {
+            "result": {
+                "type": "object",
+                "properties": expected_properties
+            }
+        },
+        "required": []
+    }
+    assert json_schema == expected_schema
+    
+    # Validate that the schema works with pydantic
+    with json_schema_to_pydantic(json_schema) as ResponseModel:
+        instance = ResponseModel(result=sample_input)
+        assert instance.model_dump()["result"] == sample_input

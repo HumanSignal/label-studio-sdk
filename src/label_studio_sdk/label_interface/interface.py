@@ -303,6 +303,7 @@ class LabelInterface:
         self._objects = objects
         self._labels = labels
         self._tree = tree
+        
 
     def create_regions(self, data: Dict[str, Union[str, Dict, List[str], List[Dict]]]) -> List[Region]:
         """
