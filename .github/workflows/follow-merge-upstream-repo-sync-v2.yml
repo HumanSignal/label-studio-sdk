@@ -18,7 +18,45 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  merge:
+    name: Merge
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hmarr/debug-action@v3.0.0
+
+      - name: Checkout SDK
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          fetch-depth: 0
+
+      - name: Checkout Actions Hub
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: HumanSignal/actions-hub
+          path: ./.github/actions-hub
+
+      - name: Git Configure
+        uses: ./.github/actions-hub/actions/git-configure
+        with:
+            username: "${{ github.actor }}"
+
+      - name: Checkout branch
+        run: git checkout "${{ inputs.branch_name }}" || git checkout -b "${{ inputs.branch_name }}"
+
+      - name: Merge
+        run: git merge -X ours origin/${{ github.event.repository.default_branch }} --no-edit || git merge --abort
+
+      - name: Git Push
+        id: push
+        uses: ./.github/actions-hub/actions/git-push
+
   sync:
+    if: always()
+    needs:
+      - merge
     name: Sync PR
     runs-on: ubuntu-latest
     outputs:
@@ -97,9 +135,6 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api@latest
 
-      - name: Download Fern
-        run: npm install -g fern-api@latest
-
       - name: Set Fern Generator Branch and Mode
         env:
           BRANCH_NAME: "${{ steps.get-branch.outputs.branch_name }}"
@@ -115,7 +150,6 @@ jobs:
       - name: Generate Python SDK
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
         run: fern generate --group python-sdk-staging --log-level debug
 
       - name: Find or Create PR
