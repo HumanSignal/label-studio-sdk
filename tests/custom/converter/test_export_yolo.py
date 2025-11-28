@@ -275,6 +275,21 @@ def test_convert_invalid_annotation_to_yolo_format():
         assert result is None, f"Expected annotation at index {idx} to be invalid"
 
 
+def test_convert_annotation_to_yolo_with_none_values():
+    """
+    Verify conversion handles None values safely by returning None.
+    """
+    annotations_with_none = [
+        {"x": None, "y": 10.0, "width": 5.0, "height": 5.0},
+        {"x": 10.0, "y": None, "width": 5.0, "height": 5.0},
+        {"x": 10.0, "y": 10.0, "width": None, "height": 5.0},
+        {"x": 10.0, "y": 10.0, "width": 5.0, "height": None},
+    ]
+    for idx, ann in enumerate(annotations_with_none):
+        result = convert_annotation_to_yolo(ann)
+        assert result is None, f"Expected None for annotation with None values at index {idx}"
+
+
 def test_convert_annotation_to_yolo_obb_format():
     """
     Verify conversion from LS annotation to normalized Yolo OBB format.
