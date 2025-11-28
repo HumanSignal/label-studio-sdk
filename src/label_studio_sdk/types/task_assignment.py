@@ -2,8 +2,8 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
-import datetime as dt
 import typing
+import datetime as dt
 from .type_enum import TypeEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -25,13 +25,13 @@ class TaskAssignment(UncheckedBaseModel):
     Assigned user
     """
 
-    created_at: dt.datetime = pydantic.Field()
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Time of assignment
     """
 
-    id: int
-    state: str
+    id: typing.Optional[int] = None
+    state: typing.Optional[str] = None
     task: int = pydantic.Field()
     """
     Assigned task

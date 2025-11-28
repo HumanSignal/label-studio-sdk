@@ -108,6 +108,7 @@ class ProjectTemplatesClient:
         project_id : int
 
         assignment_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized assignment settings
 
         created_by : typing.Optional[int]
 
@@ -119,11 +120,13 @@ class ProjectTemplatesClient:
         organization : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized project settings
 
         require_comment_on_skip : typing.Optional[bool]
             flag to require comment on skip
 
         review_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized review settings
 
         show_unused_data_columns_to_annotators : typing.Optional[bool]
 
@@ -312,6 +315,7 @@ class ProjectTemplatesClient:
         id : int
 
         assignment_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized assignment settings
 
         created_by : typing.Optional[int]
 
@@ -327,11 +331,13 @@ class ProjectTemplatesClient:
         project_id : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized project settings
 
         require_comment_on_skip : typing.Optional[bool]
             flag to require comment on skip
 
         review_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized review settings
 
         show_unused_data_columns_to_annotators : typing.Optional[bool]
 
@@ -575,6 +581,7 @@ class AsyncProjectTemplatesClient:
         project_id : int
 
         assignment_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized assignment settings
 
         created_by : typing.Optional[int]
 
@@ -586,11 +593,13 @@ class AsyncProjectTemplatesClient:
         organization : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized project settings
 
         require_comment_on_skip : typing.Optional[bool]
             flag to require comment on skip
 
         review_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized review settings
 
         show_unused_data_columns_to_annotators : typing.Optional[bool]
 
@@ -803,6 +812,7 @@ class AsyncProjectTemplatesClient:
         id : int
 
         assignment_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized assignment settings
 
         created_by : typing.Optional[int]
 
@@ -818,11 +828,13 @@ class AsyncProjectTemplatesClient:
         project_id : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized project settings
 
         require_comment_on_skip : typing.Optional[bool]
             flag to require comment on skip
 
         review_settings : typing.Optional[typing.Optional[typing.Any]]
+            general dict serialized review settings
 
         show_unused_data_columns_to_annotators : typing.Optional[bool]
 

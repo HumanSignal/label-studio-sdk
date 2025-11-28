@@ -67,7 +67,11 @@ class LseS3ExportStorageRequest(UncheckedBaseModel):
     """
 
     legacy_auth: typing.Optional[bool] = None
-    meta: typing.Optional[typing.Optional[typing.Any]] = None
+    meta: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Meta and debug information about storage processes
+    """
+
     prefix: typing.Optional[str] = pydantic.Field(default=None)
     """
     S3 bucket prefix

@@ -4,7 +4,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
 import datetime as dt
-from .annotation_request_last_action import AnnotationRequestLastAction
+from .last_action_enum import LastActionEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -37,7 +37,7 @@ class AnnotationRequest(UncheckedBaseModel):
     Original annotation ID that was at the import step or NULL if this annotation wasn't imported
     """
 
-    last_action: typing.Optional[AnnotationRequestLastAction] = pydantic.Field(default=None)
+    last_action: typing.Optional[LastActionEnum] = pydantic.Field(default=None)
     """
     Action which was performed in the last annotation history item
     

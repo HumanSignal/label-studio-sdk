@@ -19,14 +19,22 @@ class CommentRequest(UncheckedBaseModel):
     """
 
     annotation: typing.Optional[int] = None
-    classifications: typing.Optional[typing.Optional[typing.Any]] = None
+    classifications: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Classifications applied by a reviewer or annotator
+    """
+
     draft: typing.Optional[int] = None
     is_resolved: typing.Optional[bool] = pydantic.Field(default=None)
     """
     True if the comment is resolved
     """
 
-    region_ref: typing.Optional[typing.Optional[typing.Any]] = None
+    region_ref: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
+    """
+
     text: typing.Optional[str] = pydantic.Field(default=None)
     """
     Reviewer or annotator comment

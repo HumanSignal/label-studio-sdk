@@ -13,7 +13,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 class Export(UncheckedBaseModel):
     converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None
     counters: typing.Optional[typing.Optional[typing.Any]] = None
-    created_at: dt.datetime = pydantic.Field()
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
     """
@@ -24,7 +24,7 @@ class Export(UncheckedBaseModel):
     Complete or fail time
     """
 
-    id: int
+    id: typing.Optional[int] = None
     md5: typing.Optional[str] = None
     status: typing.Optional[Status7BfEnum] = None
     title: typing.Optional[str] = None

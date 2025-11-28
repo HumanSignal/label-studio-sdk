@@ -3,7 +3,7 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
-from .lse_annotation_filter_options_request_reviewed import LseAnnotationFilterOptionsRequestReviewed
+from .reviewed_enum import ReviewedEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -13,7 +13,7 @@ class LseAnnotationFilterOptionsRequest(UncheckedBaseModel):
     Include ground truth annotations
     """
 
-    reviewed: typing.Optional[LseAnnotationFilterOptionsRequestReviewed] = pydantic.Field(default=None)
+    reviewed: typing.Optional[ReviewedEnum] = pydantic.Field(default=None)
     """
     `only` - include all tasks with at least one not reviewed annotation<br>`exclude` - exclude with at least one not reviewed annotation
     

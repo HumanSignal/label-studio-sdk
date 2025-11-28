@@ -154,6 +154,7 @@ class DatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume
@@ -329,6 +330,7 @@ class DatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume
@@ -588,6 +590,7 @@ class DatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume
@@ -902,6 +905,7 @@ class AsyncDatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume
@@ -1085,6 +1089,7 @@ class AsyncDatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume
@@ -1368,6 +1373,7 @@ class AsyncDatabricksClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             Path under the volume

@@ -32,7 +32,11 @@ class PredictionRequest(UncheckedBaseModel):
     Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
     """
 
-    neighbors: typing.Optional[typing.Optional[typing.Any]] = None
+    neighbors: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Array of task IDs of the closest neighbors
+    """
+
     project: typing.Optional[int] = None
     result: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
     """

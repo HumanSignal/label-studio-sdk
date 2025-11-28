@@ -2,7 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .annotation_history_action import AnnotationHistoryAction
+from .action_enum import ActionEnum
 import pydantic
 import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -16,7 +16,7 @@ class AnnotationHistory(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
-    action: typing.Optional[AnnotationHistoryAction] = None
+    action: typing.Optional[ActionEnum] = None
     annotation_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Corresponding annotation for this historical annotation
@@ -28,7 +28,7 @@ class AnnotationHistory(UncheckedBaseModel):
     Comment id sent with result
     """
 
-    created_at: dt.datetime
+    created_at: typing.Optional[dt.datetime] = None
     created_by: typing.Optional[int] = pydantic.Field(default=None)
     """
     Created by user id
@@ -39,7 +39,7 @@ class AnnotationHistory(UncheckedBaseModel):
     Corresponding draft for this historical annotation
     """
 
-    id: int
+    id: typing.Optional[int] = None
     lead_time: typing.Optional[float] = pydantic.Field(default=None)
     """
     How much time it took to annotate the task
@@ -55,7 +55,11 @@ class AnnotationHistory(UncheckedBaseModel):
     Project for this annotation history
     """
 
-    result: typing.Optional[typing.Optional[typing.Any]] = None
+    result: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Labeling result
+    """
+
     review_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     AnnotationReview ID, using with review field

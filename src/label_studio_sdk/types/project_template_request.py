@@ -7,7 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ProjectTemplateRequest(UncheckedBaseModel):
-    assignment_settings: typing.Optional[typing.Optional[typing.Any]] = None
+    assignment_settings: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    general dict serialized assignment settings
+    """
+
     created_by: typing.Optional[int] = None
     custom_script: typing.Optional[str] = pydantic.Field(default=None)
     """
@@ -18,13 +22,21 @@ class ProjectTemplateRequest(UncheckedBaseModel):
     name: str
     organization: typing.Optional[int] = None
     project_id: int
-    project_settings: typing.Optional[typing.Optional[typing.Any]] = None
+    project_settings: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    general dict serialized project settings
+    """
+
     require_comment_on_skip: typing.Optional[bool] = pydantic.Field(default=None)
     """
     flag to require comment on skip
     """
 
-    review_settings: typing.Optional[typing.Optional[typing.Any]] = None
+    review_settings: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    general dict serialized review settings
+    """
+
     show_unused_data_columns_to_annotators: typing.Optional[bool] = None
     tags: typing.Optional[typing.Optional[typing.Any]] = None
 

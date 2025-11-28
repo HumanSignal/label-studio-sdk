@@ -7,8 +7,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class MetricParam(UncheckedBaseModel):
-    agreement_threshold: str
-    allowed: str
+    agreement_threshold: typing.Optional[str] = None
+    allowed: typing.Optional[str] = None
     max_additional_annotators_assignable: typing.Optional[int] = pydantic.Field(default=None)
     """
     Maximum number of additional annotators that can be assigned to a low agreement task

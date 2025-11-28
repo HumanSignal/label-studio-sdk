@@ -168,6 +168,7 @@ class S3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix
@@ -342,6 +343,7 @@ class S3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix
@@ -603,6 +605,7 @@ class S3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix
@@ -916,6 +919,7 @@ class AsyncS3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix
@@ -1098,6 +1102,7 @@ class AsyncS3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix
@@ -1383,6 +1388,7 @@ class AsyncS3SClient:
         legacy_auth : typing.Optional[bool]
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             S3 bucket prefix

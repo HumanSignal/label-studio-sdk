@@ -62,7 +62,7 @@ client.activity_logs.list()
 <dl>
 <dd>
 
-**method:** `typing.Optional[ActivityLogsListRequestMethod]` — HTTP request method used in the log.
+**method:** `typing.Optional[ListActivityLogsRequestMethod]` — HTTP request method used in the log.
     
 </dd>
 </dl>
@@ -1007,7 +1007,7 @@ client.annotations.create_bulk()
 <dl>
 <dd>
 
-**last_action:** `typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]` 
+**last_action:** `typing.Optional[LastActionEnum]` 
 
 Action which was performed in the last annotation history item
 
@@ -1929,7 +1929,7 @@ client.comments.create()
 <dl>
 <dd>
 
-**classifications:** `typing.Optional[typing.Optional[typing.Any]]` 
+**classifications:** `typing.Optional[typing.Optional[typing.Any]]` — Classifications applied by a reviewer or annotator
     
 </dd>
 </dl>
@@ -1953,7 +1953,7 @@ client.comments.create()
 <dl>
 <dd>
 
-**region_ref:** `typing.Optional[typing.Optional[typing.Any]]` 
+**region_ref:** `typing.Optional[typing.Optional[typing.Any]]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
     
 </dd>
 </dl>
@@ -2229,7 +2229,7 @@ client.comments.update(
 <dl>
 <dd>
 
-**classifications:** `typing.Optional[typing.Optional[typing.Any]]` 
+**classifications:** `typing.Optional[typing.Optional[typing.Any]]` — Classifications applied by a reviewer or annotator
     
 </dd>
 </dl>
@@ -2253,7 +2253,7 @@ client.comments.update(
 <dl>
 <dd>
 
-**region_ref:** `typing.Optional[typing.Optional[typing.Any]]` 
+**region_ref:** `typing.Optional[typing.Optional[typing.Any]]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
     
 </dd>
 </dl>
@@ -2418,7 +2418,7 @@ client.users.update_current_user()
 <dl>
 <dd>
 
-**custom_hotkeys:** `typing.Optional[typing.Optional[typing.Any]]` 
+**custom_hotkeys:** `typing.Optional[typing.Optional[typing.Any]]` — Custom keyboard shortcuts configuration for the user interface
     
 </dd>
 </dl>
@@ -3252,7 +3252,7 @@ client.users.update(
 <dl>
 <dd>
 
-**users_update_request_id:** `typing.Optional[int]` — User ID
+**update_users_request_id:** `typing.Optional[int]` — User ID
     
 </dd>
 </dl>
@@ -3404,9 +3404,9 @@ Perform a Data Manager action with the selected tasks and filters. Note: More co
 ```python
 from label_studio_sdk import LabelStudio
 from label_studio_sdk.actions import (
-    ActionsCreateRequestFilters,
-    ActionsCreateRequestFiltersItemsItem,
-    ActionsCreateRequestSelectedItemsExcluded,
+    CreateActionsRequestFilters,
+    CreateActionsRequestFiltersItemsItem,
+    CreateActionsRequestSelectedItemsExcluded,
 )
 
 client = LabelStudio(
@@ -3415,10 +3415,10 @@ client = LabelStudio(
 client.actions.create(
     id="delete_annotators",
     project=1,
-    filters=ActionsCreateRequestFilters(
+    filters=CreateActionsRequestFilters(
         conjunction="or",
         items=[
-            ActionsCreateRequestFiltersItemsItem(
+            CreateActionsRequestFiltersItemsItem(
                 filter="filter:tasks:id",
                 operator="greater",
                 type="Number",
@@ -3427,7 +3427,7 @@ client.actions.create(
         ],
     ),
     ordering=["tasks:total_annotations"],
-    selected_items=ActionsCreateRequestSelectedItemsExcluded(
+    selected_items=CreateActionsRequestSelectedItemsExcluded(
         all_=True,
         excluded=[124, 125, 126],
     ),
@@ -3447,7 +3447,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**id:** `ActionsCreateRequestId` — Action name ID, see the full list of actions in the `GET api/actions` request
+**id:** `CreateActionsRequestId` — Action name ID, see the full list of actions in the `GET api/actions` request
     
 </dd>
 </dl>
@@ -3471,7 +3471,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**filters:** `typing.Optional[ActionsCreateRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+**filters:** `typing.Optional[CreateActionsRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
     
 </dd>
 </dl>
@@ -3479,7 +3479,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]]` — List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+**ordering:** `typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]` — List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
     
 </dd>
 </dl>
@@ -3487,7 +3487,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**selected_items:** `typing.Optional[ActionsCreateRequestSelectedItems]` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+**selected_items:** `typing.Optional[CreateActionsRequestSelectedItems]` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
     
 </dd>
 </dl>
@@ -3624,7 +3624,7 @@ client.views.create()
 <dl>
 <dd>
 
-**data:** `typing.Optional[ViewsCreateRequestData]` — Custom view data
+**data:** `typing.Optional[CreateViewsRequestData]` — Custom view data
     
 </dd>
 </dl>
@@ -3999,7 +3999,7 @@ client.views.update(
 <dl>
 <dd>
 
-**data:** `typing.Optional[ViewsUpdateRequestData]` — Custom view data
+**data:** `typing.Optional[UpdateViewsRequestData]` — Custom view data
     
 </dd>
 </dl>
@@ -4008,6 +4008,521 @@ client.views.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Organizations
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">reset_token</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Reset the token used in the invitation link to invite someone to an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.reset_token()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+        Return a list of the organizations you've created or that you have access to.
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the settings for a specific organization by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Update organization details including title, embed domains, and Plugins settings.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**contact_info:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**custom_scripts_enabled:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embed_domains:** `typing.Optional[typing.Sequence[typing.Dict[str, str]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embed_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update_default_role</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Update the default role for members of a specific organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.update_default_role(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotator_reviewer_firewall_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**default_role:** `typing.Optional[Role9E7Enum]` 
+
+Default membership role for invited users
+
+* `OW` - Owner
+* `AD` - Administrator
+* `MA` - Manager
+* `RE` - Reviewer
+* `AN` - Annotator
+* `DI` - Deactivated
+* `NO` - Not Activated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]` — Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embed_domains:** `typing.Optional[typing.Optional[typing.Any]]` — List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embed_settings:** `typing.Optional[typing.Optional[typing.Any]]` — Embed settings for this organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — External ID to uniquely identify this organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extra_data_on_activity_logs:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label_stream_navigation_disabled_at:** `typing.Optional[dt.datetime]` — Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` — A unique integer value identifying this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**read_only_quick_view_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
     
 </dd>
 </dl>
@@ -4486,521 +5001,6 @@ client.files.download(
 </dl>
 </details>
 
-## Organizations
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">reset_token</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Reset the token used in the invitation link to invite someone to an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.reset_token()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-        Return a list of the organizations you've created or that you have access to.
-        
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the settings for a specific organization by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Update organization details including title, embed domains, and Plugins settings.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**contact_info:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_scripts_enabled:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_domains:** `typing.Optional[typing.Sequence[typing.Dict[str, str]]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update_default_role</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Update the default role for members of a specific organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.update_default_role(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**annotator_reviewer_firewall_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**default_role:** `typing.Optional[Role9E7Enum]` 
-
-Default membership role for invited users
-
-* `OW` - Owner
-* `AD` - Administrator
-* `MA` - Manager
-* `RE` - Reviewer
-* `AN` - Annotator
-* `DI` - Deactivated
-* `NO` - Not Activated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_domains:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — External ID to uniquely identify this organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extra_data_on_activity_logs:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**label_stream_navigation_disabled_at:** `typing.Optional[dt.datetime]` — Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` — A unique integer value identifying this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**read_only_quick_view_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## JwtSettings
 <details><summary><code>client.jwt_settings.<a href="src/label_studio_sdk/jwt_settings/client.py">get</a>()</code></summary>
 <dl>
@@ -5276,7 +5276,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**auth_method:** `typing.Optional[MlCreateRequestAuthMethod]` — Auth method
+**auth_method:** `typing.Optional[CreateMlRequestAuthMethod]` — Auth method
     
 </dd>
 </dl>
@@ -5581,7 +5581,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**auth_method:** `typing.Optional[MlUpdateRequestAuthMethod]` — Auth method
+**auth_method:** `typing.Optional[UpdateMlRequestAuthMethod]` — Auth method
     
 </dd>
 </dl>
@@ -5744,7 +5744,7 @@ client.ml.predict_interactive(
 <dl>
 <dd>
 
-**context:** `typing.Optional[typing.Optional[typing.Any]]` 
+**context:** `typing.Optional[typing.Optional[typing.Any]]` — Context for ML model
     
 </dd>
 </dl>
@@ -7329,7 +7329,7 @@ client.prompts.compatible_projects()
 <dl>
 <dd>
 
-**project_type:** `typing.Optional[PromptsCompatibleProjectsRequestProjectType]` — Skill to filter by
+**project_type:** `typing.Optional[CompatibleProjectsPromptsRequestProjectType]` — Skill to filter by
     
 </dd>
 </dl>
@@ -8241,7 +8241,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**assignment_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**assignment_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized assignment settings
     
 </dd>
 </dl>
@@ -8281,7 +8281,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**project_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**project_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized project settings
     
 </dd>
 </dl>
@@ -8297,7 +8297,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**review_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**review_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized review settings
     
 </dd>
 </dl>
@@ -8549,7 +8549,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**assignment_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**assignment_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized assignment settings
     
 </dd>
 </dl>
@@ -8605,7 +8605,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**project_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**project_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized project settings
     
 </dd>
 </dl>
@@ -8621,7 +8621,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**review_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
+**review_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized review settings
     
 </dd>
 </dl>
@@ -8877,6 +8877,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**state:** `typing.Optional[str]` — Filter current_state by exact match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` — Filter title by contains (case-insensitive)
     
 </dd>
@@ -8961,7 +8969,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` 
+**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
     
 </dd>
 </dl>
@@ -9089,7 +9097,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**sampling:** `typing.Optional[LseProjectCreateRequestSampling]` 
+**sampling:** `typing.Optional[SamplingDe5Enum]` 
     
 </dd>
 </dl>
@@ -9145,7 +9153,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**skip_queue:** `typing.Optional[LseProjectCreateRequestSkipQueue]` 
+**skip_queue:** `typing.Optional[SkipQueueEnum]` 
     
 </dd>
 </dl>
@@ -9294,6 +9302,14 @@ client.projects.list_counts()
 <dd>
 
 **search:** `typing.Optional[str]` — Search term for project title and description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**state:** `typing.Optional[str]` — Filter current_state by exact match
     
 </dd>
 </dl>
@@ -9607,7 +9623,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` 
+**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
     
 </dd>
 </dl>
@@ -9783,7 +9799,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**sampling:** `typing.Optional[PatchedLseProjectUpdateRequestSampling]` 
+**sampling:** `typing.Optional[SamplingDe5Enum]` 
     
 </dd>
 </dl>
@@ -9847,7 +9863,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**skip_queue:** `typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]` 
+**skip_queue:** `typing.Optional[SkipQueueEnum]` 
     
 </dd>
 </dl>
@@ -10608,7 +10624,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fields:** `typing.Optional[TasksListRequestFields]` — Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
+**fields:** `typing.Optional[ListTasksRequestFields]` — Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
     
 </dd>
 </dl>
@@ -10832,7 +10848,7 @@ client.tasks.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
     
 </dd>
 </dl>
@@ -11130,7 +11146,7 @@ client.tasks.update(
 <dl>
 <dd>
 
-**data:** `typing.Optional[typing.Optional[typing.Any]]` 
+**data:** `typing.Optional[typing.Optional[typing.Any]]` — User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
     
 </dd>
 </dl>
@@ -11178,7 +11194,7 @@ client.tasks.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
     
 </dd>
 </dl>
@@ -11422,7 +11438,7 @@ client.tasks.create_event(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Additional event metadata (region data, hotkey info, etc.)
     
 </dd>
 </dl>
@@ -12244,7 +12260,7 @@ client.webhooks.create(
 <dl>
 <dd>
 
-**headers:** `typing.Optional[typing.Optional[typing.Any]]` 
+**headers:** `typing.Optional[typing.Optional[typing.Any]]` — Key Value Json of headers
     
 </dd>
 </dl>
@@ -12528,7 +12544,7 @@ client.webhooks.update(
 <dl>
 <dd>
 
-**headers:** `typing.Optional[typing.Optional[typing.Any]]` 
+**headers:** `typing.Optional[typing.Optional[typing.Any]]` — Key Value Json of headers
     
 </dd>
 </dl>
@@ -13939,7 +13955,7 @@ client.export_storage.azure_spi.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -14167,7 +14183,7 @@ client.export_storage.azure_spi.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -14547,7 +14563,7 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -14948,7 +14964,7 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -15196,7 +15212,7 @@ client.export_storage.databricks.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -15576,7 +15592,7 @@ client.export_storage.databricks.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -16708,7 +16724,7 @@ client.export_storage.gcswif.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -16944,7 +16960,7 @@ client.export_storage.gcswif.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -17332,7 +17348,7 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -19855,7 +19871,7 @@ client.export_storage.s3s.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -20116,7 +20132,7 @@ client.export_storage.s3s.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -20520,7 +20536,7 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -21668,7 +21684,7 @@ client.import_storage.azure_spi.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -21912,7 +21928,7 @@ client.import_storage.azure_spi.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -22308,7 +22324,7 @@ client.import_storage.azure_spi.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -22725,7 +22741,7 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -22989,7 +23005,7 @@ client.import_storage.databricks.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -23385,7 +23401,7 @@ client.import_storage.databricks.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -24605,7 +24621,7 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -24857,7 +24873,7 @@ client.import_storage.gcswif.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -25261,7 +25277,7 @@ client.import_storage.gcswif.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -27896,7 +27912,7 @@ client.import_storage.s3s.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -28173,7 +28189,7 @@ client.import_storage.s3s.validate(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -28593,7 +28609,7 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -29137,6 +29153,29 @@ client.organizations.members.list(
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` 
+
+Filter members by organization role. Accepts single role or comma-separated list of roles.
+
+**Format:**
+- Single role: `?role=RE`
+- Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+**Role Codes:**
+- `OW` = Owner
+- `AD` = Administrator
+- `MA` = Manager
+- `RE` = Reviewer
+- `AN` = Annotator
+- `NO` = Not Activated
+- `DI` = Disabled
     
 </dd>
 </dl>
@@ -30742,8 +30781,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.get(
-    export_pk=1,
     id=1,
+    export_pk=1,
 )
 
 ```
@@ -30760,7 +30799,7 @@ client.projects.exports.get(
 <dl>
 <dd>
 
-**export_pk:** `int` — Primary key identifying the export file.
+**id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -30768,7 +30807,7 @@ client.projects.exports.get(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**export_pk:** `int` — Primary key identifying the export file.
     
 </dd>
 </dl>
@@ -30821,8 +30860,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.delete(
-    export_pk=1,
     id=1,
+    export_pk=1,
 )
 
 ```
@@ -30839,7 +30878,7 @@ client.projects.exports.delete(
 <dl>
 <dd>
 
-**export_pk:** `int` — Primary key identifying the export file.
+**id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -30847,7 +30886,7 @@ client.projects.exports.delete(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**export_pk:** `int` — Primary key identifying the export file.
     
 </dd>
 </dl>
@@ -30900,8 +30939,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.convert(
-    export_pk=1,
     id=1,
+    export_pk=1,
     export_type="export_type",
 )
 
@@ -30919,7 +30958,7 @@ client.projects.exports.convert(
 <dl>
 <dd>
 
-**export_pk:** `int` — Primary key identifying the export file.
+**id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -30927,7 +30966,7 @@ client.projects.exports.convert(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**export_pk:** `int` — Primary key identifying the export file.
     
 </dd>
 </dl>
@@ -32860,7 +32899,7 @@ Assign multiple users to a collection of tasks within a specific project.
 ```python
 from label_studio_sdk import LabelStudio
 from label_studio_sdk.projects.assignments import (
-    AssignmentsBulkAssignRequestSelectedItemsIncluded,
+    BulkAssignAssignmentsRequestSelectedItemsIncluded,
 )
 
 client = LabelStudio(
@@ -32868,7 +32907,7 @@ client = LabelStudio(
 )
 client.projects.assignments.bulk_assign(
     id=1,
-    selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
+    selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
         all_=True,
     ),
     type="AN",
@@ -32897,7 +32936,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**selected_items:** `AssignmentsBulkAssignRequestSelectedItems` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+**selected_items:** `BulkAssignAssignmentsRequestSelectedItems` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
     
 </dd>
 </dl>
@@ -32905,7 +32944,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**type:** `AssignmentsBulkAssignRequestType` — Assignment type. Use AN for annotate or RE for review.
+**type:** `BulkAssignAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
     
 </dd>
 </dl>
@@ -32921,7 +32960,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**filters:** `typing.Optional[AssignmentsBulkAssignRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+**filters:** `typing.Optional[BulkAssignAssignmentsRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
     
 </dd>
 </dl>
@@ -33101,7 +33140,7 @@ client.projects.assignments.assign(
 <dl>
 <dd>
 
-**type:** `AssignmentsAssignRequestType` — Assignment type. Use AN for annotate or RE for review.
+**type:** `AssignAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
     
 </dd>
 </dl>
@@ -33202,7 +33241,7 @@ client.projects.assignments.delete(
 <dl>
 <dd>
 
-**type:** `typing.Optional[AssignmentsDeleteRequestType]` — Assignment type to delete (optional). If omitted, deletes all assignments for the task.
+**type:** `typing.Optional[DeleteAssignmentsRequestType]` — Assignment type to delete (optional). If omitted, deletes all assignments for the task.
     
 </dd>
 </dl>
@@ -33305,7 +33344,7 @@ client.projects.assignments.update(
 <dl>
 <dd>
 
-**type:** `AssignmentsUpdateRequestType` — Assignment type. Use AN for annotate or RE for review.
+**type:** `UpdateAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
     
 </dd>
 </dl>
@@ -33584,9 +33623,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.pauses.get(
-    id="id",
     project_pk=1,
     user_pk=1,
+    id="id",
 )
 
 ```
@@ -33603,14 +33642,6 @@ client.projects.pauses.get(
 <dl>
 <dd>
 
-**id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **project_pk:** `int` 
     
 </dd>
@@ -33620,6 +33651,14 @@ client.projects.pauses.get(
 <dd>
 
 **user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `str` 
     
 </dd>
 </dl>
@@ -33678,9 +33717,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.pauses.delete(
-    id="id",
     project_pk=1,
     user_pk=1,
+    id="id",
 )
 
 ```
@@ -33697,14 +33736,6 @@ client.projects.pauses.delete(
 <dl>
 <dd>
 
-**id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **project_pk:** `int` 
     
 </dd>
@@ -33714,6 +33745,14 @@ client.projects.pauses.delete(
 <dd>
 
 **user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `str` 
     
 </dd>
 </dl>
@@ -33772,9 +33811,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.pauses.update(
-    id="id",
     project_pk=1,
     user_pk=1,
+    id="id",
 )
 
 ```
@@ -33791,14 +33830,6 @@ client.projects.pauses.update(
 <dl>
 <dd>
 
-**id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **project_pk:** `int` 
     
 </dd>
@@ -33808,6 +33839,14 @@ client.projects.pauses.update(
 <dd>
 
 **user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `str` 
     
 </dd>
 </dl>
@@ -33925,6 +33964,22 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
+**last_activity_gte:** `typing.Optional[str]` — Filter by last activity (ISO 8601 formatted date). Only when all=True.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` — Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **search:** `typing.Optional[str]` — Search term for filtering members by name, email, or username. Only when all=True.
     
 </dd>
@@ -34033,6 +34088,22 @@ client.projects.members.bulk.delete(
 <dl>
 <dd>
 
+**last_activity_gte:** `typing.Optional[str]` — Filter by last activity (ISO 8601 formatted date). Only when all=True.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` — Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **search:** `typing.Optional[str]` — Search term for filtering members by name, email, or username. Only when all=True.
     
 </dd>
@@ -34073,6 +34144,14 @@ client.projects.members.bulk.delete(
         </p>
     </Card>
 Retrieve the members for a specific project.
+
+**Response Fields:**
+- `implicit_member` (boolean): Indicates if the user is an implicit member.
+  - `true`: User has access via workspace membership or organization role (Administrator/Owner)
+  - `false`: User is an explicit project member (added directly to the project)
+- `project_role` (string|null): Project-specific role override if assigned, null otherwise
+
+**Note:** Users can have both explicit membership AND implicit access. The `implicit_member` field is `false` if the user has an explicit ProjectMember entry, regardless of whether they also have implicit access via workspace or org role.
 </dd>
 </dl>
 </dd>
@@ -34139,7 +34218,32 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**last_activity_gte:** `typing.Optional[dt.datetime]` — Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **no_annotators:** `typing.Optional[bool]` — Exclude annotators from the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` 
+
+Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
+
+**Note on role ordering:**
+When ordering by "role", the system uses the effective role:
+- Project-specific role if assigned (takes precedence)
+- Organization role if no project role is assigned
+
+Roles are sorted alphabetically by their code: AD (Administrator), AN (Annotator), DI (Disabled), MA (Manager), NO (Not Activated), OW (Owner), RE (Reviewer)
     
 </dd>
 </dl>
@@ -34156,6 +34260,34 @@ for page in response.iter_pages():
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` 
+
+Filter members by role. Accepts single role or comma-separated list of roles.
+
+**Format:**
+- Single role: `?role=RE`
+- Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+**Role Codes:**
+- `OW` = Owner
+- `AD` = Administrator
+- `MA` = Manager
+- `RE` = Reviewer
+- `AN` = Annotator
+
+**Matching Logic:**
+Returns users who have any of the specified roles either:
+1. As their **project-specific role** (from project role assignments), OR
+2. As their **organization role** (if they have no project-specific role override)
+
+**Note:** Project-specific roles take precedence. If a user has a project role assigned, their organization role is ignored for filtering purposes.
     
 </dd>
 </dl>
@@ -35739,7 +35871,7 @@ client.prompts.runs.list(
 <dl>
 <dd>
 
-**project_subset:** `typing.Optional[RunsListRequestProjectSubset]` — Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
+**project_subset:** `typing.Optional[ListRunsRequestProjectSubset]` — Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
     
 </dd>
 </dl>
@@ -35948,9 +36080,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.runs.cancel(
-    inference_run_id=1,
     prompt_id=1,
     version_id=1,
+    inference_run_id=1,
 )
 
 ```
@@ -35967,14 +36099,6 @@ client.prompts.runs.cancel(
 <dl>
 <dd>
 
-**inference_run_id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **prompt_id:** `int` 
     
 </dd>
@@ -35984,6 +36108,14 @@ client.prompts.runs.cancel(
 <dd>
 
 **version_id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inference_run_id:** `int` 
     
 </dd>
 </dl>

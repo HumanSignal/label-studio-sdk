@@ -12,7 +12,7 @@ class ChildFilter(UncheckedBaseModel):
     Field name
     """
 
-    id: int
+    id: typing.Optional[int] = None
     index: typing.Optional[int] = pydantic.Field(default=None)
     """
     Display order among root filters only
@@ -33,7 +33,10 @@ class ChildFilter(UncheckedBaseModel):
     Field type
     """
 
-    value: typing.Optional[typing.Optional[typing.Any]] = None
+    value: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Filter value
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

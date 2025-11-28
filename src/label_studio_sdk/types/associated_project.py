@@ -14,7 +14,7 @@ class AssociatedProject(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
-    id: int
+    id: typing.Optional[int] = None
     title: typing.Optional[str] = pydantic.Field(default=None)
     """
     Project name. Must be between 3 and 50 characters long.

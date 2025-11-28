@@ -31,9 +31,6 @@ tests/custom/converter
 tests/custom/label_studio_tools
 tests/custom/legacy
 tests/custom/test_interface
-# TODO: remove all tests from fernignore so that they can be regenerated
-tests/test_webhooks.py
-tests/test_refresh_token.py
 
 # manual workflows
 .github/workflows/build_pypi.yml

@@ -7,11 +7,11 @@ from ..types.ml_backend import MlBackend
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.ml_create_request_auth_method import MlCreateRequestAuthMethod
+from .types.create_ml_request_auth_method import CreateMlRequestAuthMethod
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.ml_update_request_auth_method import MlUpdateRequestAuthMethod
+from .types.update_ml_request_auth_method import UpdateMlRequestAuthMethod
 from ..errors.internal_server_error import InternalServerError
-from .types.ml_list_model_versions_response import MlListModelVersionsResponse
+from .types.list_model_versions_ml_response import ListModelVersionsMlResponse
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -80,7 +80,7 @@ class MlClient:
     def create(
         self,
         *,
-        auth_method: typing.Optional[MlCreateRequestAuthMethod] = OMIT,
+        auth_method: typing.Optional[CreateMlRequestAuthMethod] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
         basic_auth_user: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -103,7 +103,7 @@ class MlClient:
         
         Parameters
         ----------
-        auth_method : typing.Optional[MlCreateRequestAuthMethod]
+        auth_method : typing.Optional[CreateMlRequestAuthMethod]
             Auth method
         
         basic_auth_pass : typing.Optional[str]
@@ -284,7 +284,7 @@ class MlClient:
         self,
         id: int,
         *,
-        auth_method: typing.Optional[MlUpdateRequestAuthMethod] = OMIT,
+        auth_method: typing.Optional[UpdateMlRequestAuthMethod] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
         basic_auth_user: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -308,7 +308,7 @@ class MlClient:
         ----------
         id : int
         
-        auth_method : typing.Optional[MlUpdateRequestAuthMethod]
+        auth_method : typing.Optional[UpdateMlRequestAuthMethod]
             Auth method
         
         basic_auth_pass : typing.Optional[str]
@@ -416,6 +416,7 @@ class MlClient:
             ID of task to annotate
 
         context : typing.Optional[typing.Optional[typing.Any]]
+            Context for ML model
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -594,7 +595,7 @@ class MlClient:
 
     def list_model_versions(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> MlListModelVersionsResponse:
+    ) -> ListModelVersionsMlResponse:
         """
         Get available versions of the model.
 
@@ -607,7 +608,7 @@ class MlClient:
 
         Returns
         -------
-        MlListModelVersionsResponse
+        ListModelVersionsMlResponse
             List of available versions.
 
         Examples
@@ -629,9 +630,9 @@ class MlClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    MlListModelVersionsResponse,
+                    ListModelVersionsMlResponse,
                     construct_type(
-                        type_=MlListModelVersionsResponse,  # type: ignore
+                        type_=ListModelVersionsMlResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -711,7 +712,7 @@ class AsyncMlClient:
     async def create(
         self,
         *,
-        auth_method: typing.Optional[MlCreateRequestAuthMethod] = OMIT,
+        auth_method: typing.Optional[CreateMlRequestAuthMethod] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
         basic_auth_user: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -734,7 +735,7 @@ class AsyncMlClient:
         
         Parameters
         ----------
-        auth_method : typing.Optional[MlCreateRequestAuthMethod]
+        auth_method : typing.Optional[CreateMlRequestAuthMethod]
             Auth method
         
         basic_auth_pass : typing.Optional[str]
@@ -939,7 +940,7 @@ class AsyncMlClient:
         self,
         id: int,
         *,
-        auth_method: typing.Optional[MlUpdateRequestAuthMethod] = OMIT,
+        auth_method: typing.Optional[UpdateMlRequestAuthMethod] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
         basic_auth_user: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -963,7 +964,7 @@ class AsyncMlClient:
         ----------
         id : int
         
-        auth_method : typing.Optional[MlUpdateRequestAuthMethod]
+        auth_method : typing.Optional[UpdateMlRequestAuthMethod]
             Auth method
         
         basic_auth_pass : typing.Optional[str]
@@ -1079,6 +1080,7 @@ class AsyncMlClient:
             ID of task to annotate
 
         context : typing.Optional[typing.Optional[typing.Any]]
+            Context for ML model
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1281,7 +1283,7 @@ class AsyncMlClient:
 
     async def list_model_versions(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> MlListModelVersionsResponse:
+    ) -> ListModelVersionsMlResponse:
         """
         Get available versions of the model.
 
@@ -1294,7 +1296,7 @@ class AsyncMlClient:
 
         Returns
         -------
-        MlListModelVersionsResponse
+        ListModelVersionsMlResponse
             List of available versions.
 
         Examples
@@ -1324,9 +1326,9 @@ class AsyncMlClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    MlListModelVersionsResponse,
+                    ListModelVersionsMlResponse,
                     construct_type(
-                        type_=MlListModelVersionsResponse,  # type: ignore
+                        type_=ListModelVersionsMlResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

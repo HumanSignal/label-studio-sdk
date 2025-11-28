@@ -17,7 +17,7 @@ class LseExportCreate(UncheckedBaseModel):
     annotation_filter_options: typing.Optional[LseAnnotationFilterOptions] = None
     converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None
     counters: typing.Optional[typing.Optional[typing.Any]] = None
-    created_at: dt.datetime = pydantic.Field()
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
     """
@@ -28,7 +28,7 @@ class LseExportCreate(UncheckedBaseModel):
     Complete or fail time
     """
 
-    id: int
+    id: typing.Optional[int] = None
     md5: typing.Optional[str] = None
     serialization_options: typing.Optional[SerializationOptions] = None
     status: typing.Optional[Status7BfEnum] = None

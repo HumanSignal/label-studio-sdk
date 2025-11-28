@@ -46,7 +46,11 @@ class ImportApiRequest(UncheckedBaseModel):
     When the last comment was updated
     """
 
-    meta: typing.Optional[typing.Optional[typing.Any]] = None
+    meta: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+    """
+
     overlap: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of distinct annotators that processed the current task

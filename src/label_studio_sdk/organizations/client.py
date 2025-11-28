@@ -348,10 +348,13 @@ class OrganizationsClient:
             * `NO` - Not Activated
 
         email_notification_settings : typing.Optional[typing.Optional[typing.Any]]
+            Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
 
         embed_domains : typing.Optional[typing.Optional[typing.Any]]
+            List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
 
         embed_settings : typing.Optional[typing.Optional[typing.Any]]
+            Embed settings for this organization
 
         external_id : typing.Optional[str]
             External ID to uniquely identify this organization
@@ -775,10 +778,13 @@ class AsyncOrganizationsClient:
             * `NO` - Not Activated
 
         email_notification_settings : typing.Optional[typing.Optional[typing.Any]]
+            Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
 
         embed_domains : typing.Optional[typing.Optional[typing.Any]]
+            List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
 
         embed_settings : typing.Optional[typing.Optional[typing.Any]]
+            Embed settings for this organization
 
         external_id : typing.Optional[str]
             External ID to uniquely identify this organization

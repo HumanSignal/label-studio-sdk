@@ -10,12 +10,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class OrganizationPermission(UncheckedBaseModel):
-    default: typing.List[Default165Enum]
+    default: typing.Optional[typing.List[Default165Enum]] = None
     group: typing.Optional[str] = None
-    id: int
+    id: typing.Optional[int] = None
     label: typing.Optional[str] = None
-    options: typing.List[Options165Enum]
-    organization: int
+    options: typing.Optional[typing.List[Options165Enum]] = None
+    organization: typing.Optional[int] = None
     permission: str
     roles: typing.Optional[typing.List[Role9E7Enum]] = pydantic.Field(default=None)
     """

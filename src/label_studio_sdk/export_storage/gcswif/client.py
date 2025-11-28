@@ -163,6 +163,7 @@ class GcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix
@@ -322,6 +323,7 @@ class GcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix
@@ -571,6 +573,7 @@ class GcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix
@@ -867,6 +870,7 @@ class AsyncGcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix
@@ -1034,6 +1038,7 @@ class AsyncGcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix
@@ -1307,6 +1312,7 @@ class AsyncGcswifClient:
             Last sync job ID
 
         meta : typing.Optional[typing.Optional[typing.Any]]
+            Meta and debug information about storage processes
 
         prefix : typing.Optional[str]
             GCS bucket prefix

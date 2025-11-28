@@ -2,16 +2,16 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .lse_task_filter_options_request_annotated import LseTaskFilterOptionsRequestAnnotated
+from .annotated_enum import AnnotatedEnum
 import pydantic
-from .lse_task_filter_options_request_finished import LseTaskFilterOptionsRequestFinished
-from .lse_task_filter_options_request_reviewed import LseTaskFilterOptionsRequestReviewed
-from .lse_task_filter_options_request_skipped import LseTaskFilterOptionsRequestSkipped
+from .finished_enum import FinishedEnum
+from .reviewed_enum import ReviewedEnum
+from .skipped_enum import SkippedEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LseTaskFilterOptionsRequest(UncheckedBaseModel):
-    annotated: typing.Optional[LseTaskFilterOptionsRequestAnnotated] = pydantic.Field(default=None)
+    annotated: typing.Optional[AnnotatedEnum] = pydantic.Field(default=None)
     """
     `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
     
@@ -20,7 +20,7 @@ class LseTaskFilterOptionsRequest(UncheckedBaseModel):
     * `None` - None
     """
 
-    finished: typing.Optional[LseTaskFilterOptionsRequestFinished] = pydantic.Field(default=None)
+    finished: typing.Optional[FinishedEnum] = pydantic.Field(default=None)
     """
     `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
     
@@ -30,7 +30,7 @@ class LseTaskFilterOptionsRequest(UncheckedBaseModel):
     """
 
     only_with_annotations: typing.Optional[bool] = None
-    reviewed: typing.Optional[LseTaskFilterOptionsRequestReviewed] = pydantic.Field(default=None)
+    reviewed: typing.Optional[ReviewedEnum] = pydantic.Field(default=None)
     """
     `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
     
@@ -39,7 +39,7 @@ class LseTaskFilterOptionsRequest(UncheckedBaseModel):
     * `None` - None
     """
 
-    skipped: typing.Optional[LseTaskFilterOptionsRequestSkipped] = pydantic.Field(default=None)
+    skipped: typing.Optional[SkippedEnum] = pydantic.Field(default=None)
     """
     `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
     

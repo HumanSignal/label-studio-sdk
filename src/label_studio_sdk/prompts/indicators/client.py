@@ -3,7 +3,7 @@
 from ...core.client_wrapper import SyncClientWrapper
 import typing
 from ...core.request_options import RequestOptions
-from .types.indicators_list_response_item import IndicatorsListResponseItem
+from .types.list_indicators_response_item import ListIndicatorsResponseItem
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
@@ -18,7 +18,7 @@ class IndicatorsClient:
 
     def list(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[IndicatorsListResponseItem]:
+    ) -> typing.List[ListIndicatorsResponseItem]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -37,7 +37,7 @@ class IndicatorsClient:
 
         Returns
         -------
-        typing.List[IndicatorsListResponseItem]
+        typing.List[ListIndicatorsResponseItem]
             Key indicators
 
         Examples
@@ -59,9 +59,9 @@ class IndicatorsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[IndicatorsListResponseItem],
+                    typing.List[ListIndicatorsResponseItem],
                     construct_type(
-                        type_=typing.List[IndicatorsListResponseItem],  # type: ignore
+                        type_=typing.List[ListIndicatorsResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -134,7 +134,7 @@ class AsyncIndicatorsClient:
 
     async def list(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[IndicatorsListResponseItem]:
+    ) -> typing.List[ListIndicatorsResponseItem]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -153,7 +153,7 @@ class AsyncIndicatorsClient:
 
         Returns
         -------
-        typing.List[IndicatorsListResponseItem]
+        typing.List[ListIndicatorsResponseItem]
             Key indicators
 
         Examples
@@ -183,9 +183,9 @@ class AsyncIndicatorsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[IndicatorsListResponseItem],
+                    typing.List[ListIndicatorsResponseItem],
                     construct_type(
-                        type_=typing.List[IndicatorsListResponseItem],  # type: ignore
+                        type_=typing.List[ListIndicatorsResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class ModelInterface(UncheckedBaseModel):
     associated_projects: typing.Optional[typing.List[int]] = None
-    created_at: dt.datetime
+    created_at: typing.Optional[dt.datetime] = None
     created_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
     """
     User who created Dataset
@@ -22,7 +22,7 @@ class ModelInterface(UncheckedBaseModel):
     Model description
     """
 
-    id: int
+    id: typing.Optional[int] = None
     input_fields: typing.Optional[typing.Optional[typing.Any]] = None
     organization: typing.Optional[int] = None
     output_classes: typing.Optional[typing.Optional[typing.Any]] = None
@@ -32,7 +32,7 @@ class ModelInterface(UncheckedBaseModel):
     Model name
     """
 
-    updated_at: dt.datetime
+    updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

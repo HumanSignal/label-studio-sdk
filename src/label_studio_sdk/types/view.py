@@ -2,27 +2,39 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .filter_group import FilterGroup
 import pydantic
+from .filter_group import FilterGroup
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class View(UncheckedBaseModel):
-    data: typing.Optional[typing.Optional[typing.Any]] = None
+    data: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Custom view data
+    """
+
     filter_group: typing.Optional[FilterGroup] = None
-    id: int
+    id: typing.Optional[int] = None
     order: typing.Optional[int] = pydantic.Field(default=None)
     """
     Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
     """
 
-    ordering: typing.Optional[typing.Optional[typing.Any]] = None
+    ordering: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Ordering parameters
+    """
+
     project: int = pydantic.Field()
     """
     Project ID
     """
 
-    selected_items: typing.Optional[typing.Optional[typing.Any]] = None
+    selected_items: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Selected items
+    """
+
     user: typing.Optional[int] = pydantic.Field(default=None)
     """
     User who made this view

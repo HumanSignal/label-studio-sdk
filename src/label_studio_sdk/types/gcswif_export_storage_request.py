@@ -69,7 +69,11 @@ class GcswifExportStorageRequest(UncheckedBaseModel):
     Last sync job ID
     """
 
-    meta: typing.Optional[typing.Optional[typing.Any]] = None
+    meta: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Meta and debug information about storage processes
+    """
+
     prefix: typing.Optional[str] = pydantic.Field(default=None)
     """
     GCS bucket prefix

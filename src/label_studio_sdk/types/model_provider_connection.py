@@ -4,7 +4,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
 import datetime as dt
-from .model_provider_connection_budget_reset_period import ModelProviderConnectionBudgetResetPeriod
+from .budget_reset_period_enum import BudgetResetPeriodEnum
 from .user_simple import UserSimple
 from .provider_enum import ProviderEnum
 from .scope_enum import ScopeEnum
@@ -27,7 +27,7 @@ class ModelProviderConnection(UncheckedBaseModel):
     Budget limit for the model provider connection (null if unlimited)
     """
 
-    budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = pydantic.Field(default=None)
+    budget_reset_period: typing.Optional[BudgetResetPeriodEnum] = pydantic.Field(default=None)
     """
     Budget reset period for the model provider connection (null if not reset)
     
@@ -45,8 +45,8 @@ class ModelProviderConnection(UncheckedBaseModel):
     List of available models from the provider
     """
 
-    created_at: dt.datetime
-    created_by: UserSimple
+    created_at: typing.Optional[dt.datetime] = None
+    created_by: typing.Optional[UserSimple] = None
     deployment_name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Azure OpenAI deployment name
@@ -67,13 +67,13 @@ class ModelProviderConnection(UncheckedBaseModel):
     Google project ID
     """
 
-    id: int
+    id: typing.Optional[int] = None
     is_internal: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether the model provider connection is internal, not visible to the user
     """
 
-    model_params: str = pydantic.Field()
+    model_params: typing.Optional[str] = pydantic.Field(default=None)
     """
     JSON schema for the model parameters available for the provider
     """
@@ -81,7 +81,7 @@ class ModelProviderConnection(UncheckedBaseModel):
     organization: typing.Optional[int] = None
     provider: typing.Optional[ProviderEnum] = None
     scope: typing.Optional[ScopeEnum] = None
-    updated_at: dt.datetime
+    updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -9,7 +9,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.provider_enum import ProviderEnum
 from ..types.scope_enum import ScopeEnum
-from .types.model_providers_list_model_provider_choices_response import ModelProvidersListModelProviderChoicesResponse
+from .types.list_model_provider_choices_model_providers_response import ListModelProviderChoicesModelProvidersResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -192,7 +192,7 @@ class ModelProvidersClient:
 
     def list_model_provider_choices(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ModelProvidersListModelProviderChoicesResponse:
+    ) -> ListModelProviderChoicesModelProvidersResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -209,7 +209,7 @@ class ModelProvidersClient:
 
         Returns
         -------
-        ModelProvidersListModelProviderChoicesResponse
+        ListModelProviderChoicesModelProvidersResponse
             List of model provider choices
 
         Examples
@@ -229,9 +229,9 @@ class ModelProvidersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ModelProvidersListModelProviderChoicesResponse,
+                    ListModelProviderChoicesModelProvidersResponse,
                     construct_type(
-                        type_=ModelProvidersListModelProviderChoicesResponse,  # type: ignore
+                        type_=ListModelProviderChoicesModelProvidersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -650,7 +650,7 @@ class AsyncModelProvidersClient:
 
     async def list_model_provider_choices(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ModelProvidersListModelProviderChoicesResponse:
+    ) -> ListModelProviderChoicesModelProvidersResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -667,7 +667,7 @@ class AsyncModelProvidersClient:
 
         Returns
         -------
-        ModelProvidersListModelProviderChoicesResponse
+        ListModelProviderChoicesModelProvidersResponse
             List of model provider choices
 
         Examples
@@ -695,9 +695,9 @@ class AsyncModelProvidersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ModelProvidersListModelProviderChoicesResponse,
+                    ListModelProviderChoicesModelProvidersResponse,
                     construct_type(
-                        type_=ModelProvidersListModelProviderChoicesResponse,  # type: ignore
+                        type_=ListModelProviderChoicesModelProvidersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

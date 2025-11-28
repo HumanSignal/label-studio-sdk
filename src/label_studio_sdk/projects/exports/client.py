@@ -17,7 +17,7 @@ from ...types.status7bf_enum import Status7BfEnum
 from ...types.lse_task_filter_options_request import LseTaskFilterOptionsRequest
 from ...types.lse_export_create import LseExportCreate
 from ...core.serialization import convert_and_respect_annotation_metadata
-from .types.exports_convert_response import ExportsConvertResponse
+from .types.convert_exports_response import ConvertExportsResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -317,17 +317,17 @@ class ExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
+    def get(self, id: int, export_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
         """
         Retrieve information about an export file by export ID for a specific project.
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -345,8 +345,8 @@ class ExportsClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.exports.get(
-            export_pk=1,
             id=1,
+            export_pk=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -368,17 +368,17 @@ class ExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: int, export_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete an export file by specified export ID.
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -395,8 +395,8 @@ class ExportsClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.exports.delete(
-            export_pk=1,
             id=1,
+            export_pk=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -414,23 +414,23 @@ class ExportsClient:
 
     def convert(
         self,
-        export_pk: int,
         id: int,
+        export_pk: int,
         *,
         export_type: str,
         download_resources: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ExportsConvertResponse:
+    ) -> ConvertExportsResponse:
         """
         Convert export snapshot to selected format
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         export_type : str
             Export file format.
@@ -443,7 +443,7 @@ class ExportsClient:
 
         Returns
         -------
-        ExportsConvertResponse
+        ConvertExportsResponse
 
 
         Examples
@@ -454,8 +454,8 @@ class ExportsClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.exports.convert(
-            export_pk=1,
             id=1,
+            export_pk=1,
             export_type="export_type",
         )
         """
@@ -475,9 +475,9 @@ class ExportsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ExportsConvertResponse,
+                    ConvertExportsResponse,
                     construct_type(
-                        type_=ExportsConvertResponse,  # type: ignore
+                        type_=ConvertExportsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -488,8 +488,8 @@ class ExportsClient:
 
     def download(
         self,
-        export_pk: int,
         id: int,
+        export_pk: int,
         *,
         export_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -506,11 +506,11 @@ class ExportsClient:
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         export_type : typing.Optional[str]
             Selected export format
@@ -863,17 +863,17 @@ class AsyncExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
+    async def get(self, id: int, export_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
         """
         Retrieve information about an export file by export ID for a specific project.
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -896,8 +896,8 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.get(
-                export_pk=1,
                 id=1,
+                export_pk=1,
             )
 
 
@@ -922,17 +922,17 @@ class AsyncExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: int, export_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete an export file by specified export ID.
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -954,8 +954,8 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.delete(
-                export_pk=1,
                 id=1,
+                export_pk=1,
             )
 
 
@@ -976,23 +976,23 @@ class AsyncExportsClient:
 
     async def convert(
         self,
-        export_pk: int,
         id: int,
+        export_pk: int,
         *,
         export_type: str,
         download_resources: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ExportsConvertResponse:
+    ) -> ConvertExportsResponse:
         """
         Convert export snapshot to selected format
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         export_type : str
             Export file format.
@@ -1005,7 +1005,7 @@ class AsyncExportsClient:
 
         Returns
         -------
-        ExportsConvertResponse
+        ConvertExportsResponse
 
 
         Examples
@@ -1021,8 +1021,8 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.convert(
-                export_pk=1,
                 id=1,
+                export_pk=1,
                 export_type="export_type",
             )
 
@@ -1045,9 +1045,9 @@ class AsyncExportsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ExportsConvertResponse,
+                    ConvertExportsResponse,
                     construct_type(
-                        type_=ExportsConvertResponse,  # type: ignore
+                        type_=ConvertExportsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1058,8 +1058,8 @@ class AsyncExportsClient:
 
     async def download(
         self,
-        export_pk: int,
         id: int,
+        export_pk: int,
         *,
         export_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1076,11 +1076,11 @@ class AsyncExportsClient:
 
         Parameters
         ----------
-        export_pk : int
-            Primary key identifying the export file.
-
         id : int
             A unique integer value identifying this project.
+
+        export_pk : int
+            Primary key identifying the export file.
 
         export_type : typing.Optional[str]
             Selected export format
