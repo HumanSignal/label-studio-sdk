@@ -15,6 +15,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "id": 1,
             "is_archived": True,
             "is_personal": True,
+            "membership": "membership",
             "title": "title",
         }
     ]
@@ -28,6 +29,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "id": "integer",
                 "is_archived": None,
                 "is_personal": None,
+                "membership": None,
                 "title": None,
             }
         },
@@ -47,6 +49,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "id": 1,
         "is_archived": True,
         "is_personal": True,
+        "membership": "membership",
         "title": "title",
     }
     expected_types: typing.Any = {
@@ -56,6 +59,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "id": "integer",
         "is_archived": None,
         "is_personal": None,
+        "membership": None,
         "title": None,
     }
     response = client.workspaces.create(title="title")
@@ -73,6 +77,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "id": 1,
         "is_archived": True,
         "is_personal": True,
+        "membership": "membership",
         "title": "title",
     }
     expected_types: typing.Any = {
@@ -82,6 +87,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "id": "integer",
         "is_archived": None,
         "is_personal": None,
+        "membership": None,
         "title": None,
     }
     response = client.workspaces.get(id=1)
@@ -112,6 +118,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "id": 1,
         "is_archived": True,
         "is_personal": True,
+        "membership": "membership",
         "title": "title",
     }
     expected_types: typing.Any = {
@@ -121,6 +128,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "id": "integer",
         "is_archived": None,
         "is_personal": None,
+        "membership": None,
         "title": None,
     }
     response = client.workspaces.update(id=1)

@@ -32,6 +32,7 @@ class Workspace(UncheckedBaseModel):
     Workspace is a personal user workspace
     """
 
+    membership: typing.Optional[str] = None
     title: str = pydantic.Field()
     """
     Workspace name

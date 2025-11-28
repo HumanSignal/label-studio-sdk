@@ -49,6 +49,7 @@ service:
                 id: 1
                 is_archived: true
                 is_personal: true
+                membership: membership
                 title: title
       audiences:
         - public
@@ -111,6 +112,7 @@ service:
               id: 1
               is_archived: true
               is_personal: true
+              membership: membership
               title: title
       audiences:
         - public
@@ -147,6 +149,7 @@ service:
               id: 1
               is_archived: true
               is_personal: true
+              membership: membership
               title: title
       audiences:
         - public
@@ -231,6 +234,7 @@ service:
               id: 1
               is_archived: true
               is_personal: true
+              membership: membership
               title: title
       audiences:
         - public

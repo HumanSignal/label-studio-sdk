@@ -33163,6 +33163,9 @@ components:
           description: Workspace is a personal user workspace
           title: Personal
           type: boolean
+        membership:
+          readOnly: true
+          type: string
         title:
           description: Workspace name
           maxLength: 1000
@@ -33170,6 +33173,7 @@ components:
       required:
         - created_by
         - id
+        - membership
         - title
       type: object
     WorkspaceMemberBulkAssignRequest:

@@ -9309,6 +9309,9 @@ types:
       is_personal:
         type: optional<boolean>
         docs: Workspace is a personal user workspace
+      membership:
+        type: optional<string>
+        access: read-only
       title:
         type: string
         docs: Workspace name
