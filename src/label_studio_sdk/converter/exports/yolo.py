@@ -14,7 +14,11 @@ def process_keypoints_for_yolo(labels, label_path,
     for item in labels:
         if item['type'].lower() == 'rectanglelabels':
             bbox_id = item['id']
-            cls_name = item['rectanglelabels'][0]
+            # Skip if there are no labels
+            rect_labels = item.get('rectanglelabels') or []
+            if not rect_labels:
+                continue
+            cls_name = rect_labels[0]
             cls_idx = class_map.get(cls_name)
             if cls_idx is None:
                 continue
@@ -40,7 +44,10 @@ def process_keypoints_for_yolo(labels, label_path,
             parent_id = item.get('parentID')
             if parent_id not in rectangles:
                 continue
-            label_name = item['keypointlabels'][0]
+            kp_labels = item.get('keypointlabels') or []
+            if not kp_labels:
+                continue
+            label_name = kp_labels[0]
             kp_x = item['x'] / 100.0
             kp_y = item['y'] / 100.0
             rectangles[parent_id]['kp_dict'][label_name] = (kp_x, kp_y, 2)  # 2 = visible
