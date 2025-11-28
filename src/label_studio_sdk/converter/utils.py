@@ -502,36 +502,34 @@ def convert_yolo_obb_to_annotation(xyxyxyxy, original_width, original_height):
     # Reshape the coordinates into a 4x2 matrix
     coords = np.array(xyxyxyxy, dtype=np.float64).reshape((4, 2))
 
-    # Calculate the center of the bounding box
-    center_x = np.mean(coords[:, 0])
-    center_y = np.mean(coords[:, 1])
+    # Sort by X, get left-most two and right-most two points
+    sorted_by_x = sorted(coords, key=lambda c: c[0])
+    left_two = sorted_by_x[:2]
+    right_two = sorted_by_x[2:]
 
-    # Calculate the width and height of the bounding box
-    width = np.linalg.norm(coords[0] - coords[1])
-    height = np.linalg.norm(coords[0] - coords[3])
+    # Top-left = left-most with smallest Y
+    top_left = min(left_two, key=lambda c: c[1])
+    bottom_left = max(left_two, key=lambda c: c[1])
+
+    # Top-right = right-most with smallest Y
+    top_right = min(right_two, key=lambda c: c[1])
+
+    # Width: distance between TL and TR
+    width = float(np.linalg.norm(np.array(top_right) - np.array(top_left)))
+
+    # Height: distance between TL and BL
+    height = float(np.linalg.norm(np.array(bottom_left) - np.array(top_left)))
 
     # Calculate the rotation angle
-    dx = coords[1, 0] - coords[0, 0]
-    dy = coords[1, 1] - coords[0, 1]
-    r = np.degrees(np.arctan2(dy, dx))
-
-    # Find the top-left corner (x, y)
-    top_left_x = (
-        center_x
-        - (width / 2) * np.cos(np.radians(r))
-        + (height / 2) * np.sin(np.radians(r))
-    )
-    top_left_y = (
-        center_y
-        - (width / 2) * np.sin(np.radians(r))
-        - (height / 2) * np.cos(np.radians(r))
-    )
+    dx = top_right[0] - top_left[0]
+    dy = top_right[1] - top_left[1]
+    r = float(np.degrees(np.arctan2(dy, dx)))
 
     # Normalize the values
-    x = (top_left_x / original_width) * 100
-    y = (top_left_y / original_height) * 100
-    width = (width / original_width) * 100
-    height = (height / original_height) * 100
+    x = (top_left[0] / original_width) * 100.0
+    y = (top_left[1] / original_height) * 100.0
+    width = (width / original_width) * 100.0
+    height = (height / original_height) * 100.0
 
     # Create the dictionary for Label Studio
     return {
@@ -543,3 +541,4 @@ def convert_yolo_obb_to_annotation(xyxyxyxy, original_width, original_height):
         "original_width": original_width,
         "original_height": original_height,
     }
+
