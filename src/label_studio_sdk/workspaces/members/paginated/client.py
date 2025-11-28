@@ -70,10 +70,6 @@ class PaginatedClient:
         )
         response = client.workspaces.members.paginated.list(
             id=1,
-            ids="ids",
-            page=1,
-            page_size=1,
-            search="search",
         )
         for item in response:
             yield item
@@ -180,10 +176,6 @@ class AsyncPaginatedClient:
         async def main() -> None:
             response = await client.workspaces.members.paginated.list(
                 id=1,
-                ids="ids",
-                page=1,
-                page_size=1,
-                search="search",
             )
             async for item in response:
                 yield item

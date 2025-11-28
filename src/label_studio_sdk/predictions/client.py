@@ -51,10 +51,7 @@ class PredictionsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.predictions.list(
-            project=1,
-            task=1,
-        )
+        client.predictions.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/predictions/",
@@ -400,10 +397,7 @@ class AsyncPredictionsClient:
 
 
         async def main() -> None:
-            await client.predictions.list(
-                project=1,
-                task=1,
-            )
+            await client.predictions.list()
 
 
         asyncio.run(main())

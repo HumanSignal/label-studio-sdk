@@ -105,9 +105,7 @@ class OrganizationsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.organizations.list(
-            ordering="ordering",
-        )
+        client.organizations.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/organizations/",
@@ -518,9 +516,7 @@ class AsyncOrganizationsClient:
 
 
         async def main() -> None:
-            await client.organizations.list(
-                ordering="ordering",
-            )
+            await client.organizations.list()
 
 
         asyncio.run(main())

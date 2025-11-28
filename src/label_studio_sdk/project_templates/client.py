@@ -51,9 +51,7 @@ class ProjectTemplatesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.project_templates.list(
-            ordering="ordering",
-        )
+        client.project_templates.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/project-templates/",
@@ -523,9 +521,7 @@ class AsyncProjectTemplatesClient:
 
 
         async def main() -> None:
-            await client.project_templates.list(
-                ordering="ordering",
-            )
+            await client.project_templates.list()
 
 
         asyncio.run(main())

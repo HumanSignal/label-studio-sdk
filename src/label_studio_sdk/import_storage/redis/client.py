@@ -52,7 +52,6 @@ class RedisClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.redis.list(
-            ordering="ordering",
             project=1,
         )
         """
@@ -549,7 +548,6 @@ class AsyncRedisClient:
 
         async def main() -> None:
             await client.import_storage.redis.list(
-                ordering="ordering",
                 project=1,
             )
 

@@ -48,9 +48,7 @@ class TokensClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.tokens.list(
-            ordering="ordering",
-        )
+        client.tokens.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/token/",
@@ -333,9 +331,7 @@ class AsyncTokensClient:
 
 
         async def main() -> None:
-            await client.tokens.list(
-                ordering="ordering",
-            )
+            await client.tokens.list()
 
 
         asyncio.run(main())

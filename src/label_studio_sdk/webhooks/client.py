@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.actions_enum import ActionsEnum
-from .types.webhooks_info_response import WebhooksInfoResponse
+from .types.info_webhooks_response import InfoWebhooksResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.webhook_serializer_for_update import WebhookSerializerForUpdate
 from ..core.client_wrapper import AsyncClientWrapper
@@ -47,9 +47,7 @@ class WebhooksClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.webhooks.list(
-            project="project",
-        )
+        client.webhooks.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/webhooks/",
@@ -165,7 +163,7 @@ class WebhooksClient:
         *,
         organization_only: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> WebhooksInfoResponse:
+    ) -> InfoWebhooksResponse:
         """
         Get descriptions of all available webhook actions to set up webhooks.
 
@@ -179,7 +177,7 @@ class WebhooksClient:
 
         Returns
         -------
-        WebhooksInfoResponse
+        InfoWebhooksResponse
             Object with webhook action descriptions.
 
         Examples
@@ -189,9 +187,7 @@ class WebhooksClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.webhooks.info(
-            organization_only=True,
-        )
+        client.webhooks.info()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/webhooks/info/",
@@ -204,9 +200,9 @@ class WebhooksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    WebhooksInfoResponse,
+                    InfoWebhooksResponse,
                     construct_type(
-                        type_=WebhooksInfoResponse,  # type: ignore
+                        type_=InfoWebhooksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -416,9 +412,7 @@ class AsyncWebhooksClient:
 
 
         async def main() -> None:
-            await client.webhooks.list(
-                project="project",
-            )
+            await client.webhooks.list()
 
 
         asyncio.run(main())
@@ -545,7 +539,7 @@ class AsyncWebhooksClient:
         *,
         organization_only: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> WebhooksInfoResponse:
+    ) -> InfoWebhooksResponse:
         """
         Get descriptions of all available webhook actions to set up webhooks.
 
@@ -559,7 +553,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        WebhooksInfoResponse
+        InfoWebhooksResponse
             Object with webhook action descriptions.
 
         Examples
@@ -574,9 +568,7 @@ class AsyncWebhooksClient:
 
 
         async def main() -> None:
-            await client.webhooks.info(
-                organization_only=True,
-            )
+            await client.webhooks.info()
 
 
         asyncio.run(main())
@@ -592,9 +584,9 @@ class AsyncWebhooksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    WebhooksInfoResponse,
+                    InfoWebhooksResponse,
                     construct_type(
-                        type_=WebhooksInfoResponse,  # type: ignore
+                        type_=InfoWebhooksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

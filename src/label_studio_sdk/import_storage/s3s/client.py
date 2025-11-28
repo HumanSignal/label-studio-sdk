@@ -60,7 +60,6 @@ class S3SClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.s3s.list(
-            ordering="ordering",
             project=1,
         )
         """
@@ -836,7 +835,6 @@ class AsyncS3SClient:
 
         async def main() -> None:
             await client.import_storage.s3s.list(
-                ordering="ordering",
                 project=1,
             )
 

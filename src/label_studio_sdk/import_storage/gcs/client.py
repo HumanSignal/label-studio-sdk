@@ -52,7 +52,6 @@ class GcsClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.gcs.list(
-            ordering="ordering",
             project=1,
         )
         """
@@ -579,7 +578,6 @@ class AsyncGcsClient:
 
         async def main() -> None:
             await client.import_storage.gcs.list(
-                ordering="ordering",
                 project=1,
             )
 

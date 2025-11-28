@@ -8,7 +8,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.tasks_list_request_fields import TasksListRequestFields
+from .types.list_tasks_request_fields import ListTasksRequestFields
 from ..core.pagination import SyncPager
 from ..types.role_based_task import RoleBasedTask
 from ..types.paginated_role_based_task_list import PaginatedRoleBasedTaskList
@@ -125,7 +125,7 @@ class TasksClient:
     def list(
         self,
         *,
-        fields: typing.Optional[TasksListRequestFields] = None,
+        fields: typing.Optional[ListTasksRequestFields] = None,
         include: typing.Optional[str] = None,
         only_annotated: typing.Optional[bool] = None,
         page: typing.Optional[int] = None,
@@ -146,7 +146,7 @@ class TasksClient:
 
         Parameters
         ----------
-        fields : typing.Optional[TasksListRequestFields]
+        fields : typing.Optional[ListTasksRequestFields]
             Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
 
         include : typing.Optional[str]
@@ -201,19 +201,7 @@ class TasksClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        response = client.tasks.list(
-            fields="all",
-            include="include",
-            only_annotated=True,
-            page=1,
-            page_size=1,
-            project=1,
-            query="query",
-            resolve_uri=True,
-            review=True,
-            selected_items="selectedItems",
-            view=1,
-        )
+        response = client.tasks.list()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -965,7 +953,7 @@ class AsyncTasksClient:
     async def list(
         self,
         *,
-        fields: typing.Optional[TasksListRequestFields] = None,
+        fields: typing.Optional[ListTasksRequestFields] = None,
         include: typing.Optional[str] = None,
         only_annotated: typing.Optional[bool] = None,
         page: typing.Optional[int] = None,
@@ -986,7 +974,7 @@ class AsyncTasksClient:
 
         Parameters
         ----------
-        fields : typing.Optional[TasksListRequestFields]
+        fields : typing.Optional[ListTasksRequestFields]
             Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
 
         include : typing.Optional[str]
@@ -1046,19 +1034,7 @@ class AsyncTasksClient:
 
 
         async def main() -> None:
-            response = await client.tasks.list(
-                fields="all",
-                include="include",
-                only_annotated=True,
-                page=1,
-                page_size=1,
-                project=1,
-                query="query",
-                resolve_uri=True,
-                review=True,
-                selected_items="selectedItems",
-                view=1,
-            )
+            response = await client.tasks.list()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page

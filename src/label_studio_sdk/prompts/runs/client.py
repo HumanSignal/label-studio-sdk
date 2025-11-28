@@ -2,7 +2,7 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .types.runs_list_request_project_subset import RunsListRequestProjectSubset
+from .types.list_runs_request_project_subset import ListRunsRequestProjectSubset
 from ...core.request_options import RequestOptions
 from ...types.model_run import ModelRun
 from ...core.jsonable_encoder import jsonable_encoder
@@ -30,7 +30,7 @@ class RunsClient:
         ordering: typing.Optional[str] = None,
         parent_model: typing.Optional[int] = None,
         project: typing.Optional[int] = None,
-        project_subset: typing.Optional[RunsListRequestProjectSubset] = None,
+        project_subset: typing.Optional[ListRunsRequestProjectSubset] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ModelRun]:
         """
@@ -57,7 +57,7 @@ class RunsClient:
         project : typing.Optional[int]
             The ID of the project this Inference Run makes predictions on
 
-        project_subset : typing.Optional[RunsListRequestProjectSubset]
+        project_subset : typing.Optional[ListRunsRequestProjectSubset]
             Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
 
         request_options : typing.Optional[RequestOptions]
@@ -78,10 +78,6 @@ class RunsClient:
         client.prompts.runs.list(
             prompt_id=1,
             version_id=1,
-            ordering="ordering",
-            parent_model=1,
-            project=1,
-            project_subset="All",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -288,7 +284,7 @@ class AsyncRunsClient:
         ordering: typing.Optional[str] = None,
         parent_model: typing.Optional[int] = None,
         project: typing.Optional[int] = None,
-        project_subset: typing.Optional[RunsListRequestProjectSubset] = None,
+        project_subset: typing.Optional[ListRunsRequestProjectSubset] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ModelRun]:
         """
@@ -315,7 +311,7 @@ class AsyncRunsClient:
         project : typing.Optional[int]
             The ID of the project this Inference Run makes predictions on
 
-        project_subset : typing.Optional[RunsListRequestProjectSubset]
+        project_subset : typing.Optional[ListRunsRequestProjectSubset]
             Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
 
         request_options : typing.Optional[RequestOptions]
@@ -341,10 +337,6 @@ class AsyncRunsClient:
             await client.prompts.runs.list(
                 prompt_id=1,
                 version_id=1,
-                ordering="ordering",
-                parent_model=1,
-                project=1,
-                project_subset="All",
             )
 
 

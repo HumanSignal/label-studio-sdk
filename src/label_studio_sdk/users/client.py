@@ -9,8 +9,8 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 import datetime as dt
 from ..types.hotkeys import Hotkeys
-from .types.users_reset_token_response import UsersResetTokenResponse
-from .types.users_get_token_response import UsersGetTokenResponse
+from .types.reset_token_users_response import ResetTokenUsersResponse
+from .types.get_token_users_response import GetTokenUsersResponse
 from ..types.who_am_i_user import WhoAmIUser
 from ..types.lse_user import LseUser
 from ..core.jsonable_encoder import jsonable_encoder
@@ -278,7 +278,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersResetTokenResponse:
+    def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> ResetTokenUsersResponse:
         """
         Reset the user token for the current user.
 
@@ -289,7 +289,7 @@ class UsersClient:
 
         Returns
         -------
-        UsersResetTokenResponse
+        ResetTokenUsersResponse
             User token response
 
         Examples
@@ -309,9 +309,9 @@ class UsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    UsersResetTokenResponse,
+                    ResetTokenUsersResponse,
                     construct_type(
-                        type_=UsersResetTokenResponse,  # type: ignore
+                        type_=ResetTokenUsersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -320,7 +320,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersGetTokenResponse:
+    def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetTokenUsersResponse:
         """
         Get a user token to authenticate to the API as the current user.
 
@@ -331,7 +331,7 @@ class UsersClient:
 
         Returns
         -------
-        UsersGetTokenResponse
+        GetTokenUsersResponse
             User token response
 
         Examples
@@ -351,9 +351,9 @@ class UsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    UsersGetTokenResponse,
+                    GetTokenUsersResponse,
                     construct_type(
-                        type_=UsersGetTokenResponse,  # type: ignore
+                        type_=GetTokenUsersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -430,9 +430,7 @@ class UsersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.list(
-            ordering="ordering",
-        )
+        client.users.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/users/",
@@ -650,7 +648,7 @@ class UsersClient:
         avatar: typing.Optional[str] = OMIT,
         email: typing.Optional[str] = OMIT,
         first_name: typing.Optional[str] = OMIT,
-        users_update_request_id: typing.Optional[int] = OMIT,
+        update_users_request_id: typing.Optional[int] = OMIT,
         initials: typing.Optional[str] = OMIT,
         last_name: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
@@ -679,7 +677,7 @@ class UsersClient:
         first_name : typing.Optional[str]
             First name of the user
 
-        users_update_request_id : typing.Optional[int]
+        update_users_request_id : typing.Optional[int]
             User ID
 
         initials : typing.Optional[str]
@@ -721,7 +719,7 @@ class UsersClient:
                 "avatar": avatar,
                 "email": email,
                 "first_name": first_name,
-                "id": users_update_request_id,
+                "id": update_users_request_id,
                 "initials": initials,
                 "last_name": last_name,
                 "phone": phone,
@@ -1038,7 +1036,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersResetTokenResponse:
+    async def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> ResetTokenUsersResponse:
         """
         Reset the user token for the current user.
 
@@ -1049,7 +1047,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        UsersResetTokenResponse
+        ResetTokenUsersResponse
             User token response
 
         Examples
@@ -1077,9 +1075,9 @@ class AsyncUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    UsersResetTokenResponse,
+                    ResetTokenUsersResponse,
                     construct_type(
-                        type_=UsersResetTokenResponse,  # type: ignore
+                        type_=ResetTokenUsersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1088,7 +1086,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersGetTokenResponse:
+    async def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetTokenUsersResponse:
         """
         Get a user token to authenticate to the API as the current user.
 
@@ -1099,7 +1097,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        UsersGetTokenResponse
+        GetTokenUsersResponse
             User token response
 
         Examples
@@ -1127,9 +1125,9 @@ class AsyncUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    UsersGetTokenResponse,
+                    GetTokenUsersResponse,
                     construct_type(
-                        type_=UsersGetTokenResponse,  # type: ignore
+                        type_=GetTokenUsersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1219,9 +1217,7 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            await client.users.list(
-                ordering="ordering",
-            )
+            await client.users.list()
 
 
         asyncio.run(main())
@@ -1466,7 +1462,7 @@ class AsyncUsersClient:
         avatar: typing.Optional[str] = OMIT,
         email: typing.Optional[str] = OMIT,
         first_name: typing.Optional[str] = OMIT,
-        users_update_request_id: typing.Optional[int] = OMIT,
+        update_users_request_id: typing.Optional[int] = OMIT,
         initials: typing.Optional[str] = OMIT,
         last_name: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
@@ -1495,7 +1491,7 @@ class AsyncUsersClient:
         first_name : typing.Optional[str]
             First name of the user
 
-        users_update_request_id : typing.Optional[int]
+        update_users_request_id : typing.Optional[int]
             User ID
 
         initials : typing.Optional[str]
@@ -1545,7 +1541,7 @@ class AsyncUsersClient:
                 "avatar": avatar,
                 "email": email,
                 "first_name": first_name,
-                "id": users_update_request_id,
+                "id": update_users_request_id,
                 "initials": initials,
                 "last_name": last_name,
                 "phone": phone,

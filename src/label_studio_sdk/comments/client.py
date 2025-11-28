@@ -68,14 +68,7 @@ class CommentsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.comments.list(
-            annotation=1,
-            annotators="annotators",
-            draft=1,
-            expand_created_by=True,
-            ordering="ordering",
-            projects="projects",
-        )
+        client.comments.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/comments/",
@@ -161,9 +154,7 @@ class CommentsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.comments.create(
-            expand_created_by=True,
-        )
+        client.comments.create()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/comments/",
@@ -304,7 +295,6 @@ class CommentsClient:
         )
         client.comments.get(
             id="id",
-            expand_created_by=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -368,7 +358,6 @@ class CommentsClient:
         )
         client.comments.delete(
             id="id",
-            expand_created_by=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -449,7 +438,6 @@ class CommentsClient:
         )
         client.comments.update(
             id="id",
-            expand_created_by=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -546,14 +534,7 @@ class AsyncCommentsClient:
 
 
         async def main() -> None:
-            await client.comments.list(
-                annotation=1,
-                annotators="annotators",
-                draft=1,
-                expand_created_by=True,
-                ordering="ordering",
-                projects="projects",
-            )
+            await client.comments.list()
 
 
         asyncio.run(main())
@@ -647,9 +628,7 @@ class AsyncCommentsClient:
 
 
         async def main() -> None:
-            await client.comments.create(
-                expand_created_by=True,
-            )
+            await client.comments.create()
 
 
         asyncio.run(main())
@@ -798,7 +777,6 @@ class AsyncCommentsClient:
         async def main() -> None:
             await client.comments.get(
                 id="id",
-                expand_created_by=True,
             )
 
 
@@ -870,7 +848,6 @@ class AsyncCommentsClient:
         async def main() -> None:
             await client.comments.delete(
                 id="id",
-                expand_created_by=True,
             )
 
 
@@ -959,7 +936,6 @@ class AsyncCommentsClient:
         async def main() -> None:
             await client.comments.update(
                 id="id",
-                expand_created_by=True,
             )
 
 

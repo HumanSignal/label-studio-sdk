@@ -6,7 +6,7 @@ import datetime as dt
 from ..types.last_action_enum import LastActionEnum
 from ..types.selected_items_request import SelectedItemsRequest
 from ..core.request_options import RequestOptions
-from .types.annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
+from .types.create_bulk_annotations_response_item import CreateBulkAnnotationsResponseItem
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
@@ -45,7 +45,7 @@ class AnnotationsClient:
         updated_by: typing.Optional[int] = OMIT,
         was_cancelled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
+    ) -> typing.List[CreateBulkAnnotationsResponseItem]:
         """
         Create multiple annotations at once
 
@@ -117,7 +117,7 @@ class AnnotationsClient:
 
         Returns
         -------
-        typing.List[AnnotationsCreateBulkResponseItem]
+        typing.List[CreateBulkAnnotationsResponseItem]
             Bulk annotations created successfully
 
         Examples
@@ -163,9 +163,9 @@ class AnnotationsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[AnnotationsCreateBulkResponseItem],
+                    typing.List[CreateBulkAnnotationsResponseItem],
                     construct_type(
-                        type_=typing.List[AnnotationsCreateBulkResponseItem],  # type: ignore
+                        type_=typing.List[CreateBulkAnnotationsResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -407,7 +407,6 @@ class AnnotationsClient:
         )
         client.annotations.list(
             id=1,
-            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -592,7 +591,7 @@ class AsyncAnnotationsClient:
         updated_by: typing.Optional[int] = OMIT,
         was_cancelled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
+    ) -> typing.List[CreateBulkAnnotationsResponseItem]:
         """
         Create multiple annotations at once
 
@@ -664,7 +663,7 @@ class AsyncAnnotationsClient:
 
         Returns
         -------
-        typing.List[AnnotationsCreateBulkResponseItem]
+        typing.List[CreateBulkAnnotationsResponseItem]
             Bulk annotations created successfully
 
         Examples
@@ -718,9 +717,9 @@ class AsyncAnnotationsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[AnnotationsCreateBulkResponseItem],
+                    typing.List[CreateBulkAnnotationsResponseItem],
                     construct_type(
-                        type_=typing.List[AnnotationsCreateBulkResponseItem],  # type: ignore
+                        type_=typing.List[CreateBulkAnnotationsResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -991,7 +990,6 @@ class AsyncAnnotationsClient:
         async def main() -> None:
             await client.annotations.list(
                 id=1,
-                ordering="ordering",
             )
 
 

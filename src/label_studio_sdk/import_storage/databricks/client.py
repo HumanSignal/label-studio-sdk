@@ -60,7 +60,6 @@ class DatabricksClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.databricks.list(
-            ordering="ordering",
             project=1,
         )
         """
@@ -809,7 +808,6 @@ class AsyncDatabricksClient:
 
         async def main() -> None:
             await client.import_storage.databricks.list(
-                ordering="ordering",
                 project=1,
             )
 

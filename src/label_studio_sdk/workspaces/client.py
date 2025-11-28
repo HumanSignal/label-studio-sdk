@@ -63,10 +63,7 @@ class WorkspacesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.list(
-            is_personal=True,
-            ordering="ordering",
-        )
+        client.workspaces.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/workspaces/",
@@ -410,10 +407,7 @@ class AsyncWorkspacesClient:
 
 
         async def main() -> None:
-            await client.workspaces.list(
-                is_personal=True,
-                ordering="ordering",
-            )
+            await client.workspaces.list()
 
 
         asyncio.run(main())

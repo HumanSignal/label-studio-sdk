@@ -122,8 +122,6 @@ class PaginatedClient:
 
         Examples
         --------
-        import datetime
-
         from label_studio_sdk import LabelStudio
 
         client = LabelStudio(
@@ -131,18 +129,6 @@ class PaginatedClient:
         )
         response = client.projects.members.paginated.list(
             id=1,
-            ids="ids",
-            implicit=True,
-            last_activity_gte=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            no_annotators=True,
-            ordering="ordering",
-            page=1,
-            page_size=1,
-            role="role",
-            search="search",
-            with_deleted=True,
         )
         for item in response:
             yield item
@@ -307,7 +293,6 @@ class AsyncPaginatedClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from label_studio_sdk import AsyncLabelStudio
 
@@ -319,18 +304,6 @@ class AsyncPaginatedClient:
         async def main() -> None:
             response = await client.projects.members.paginated.list(
                 id=1,
-                ids="ids",
-                implicit=True,
-                last_activity_gte=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                no_annotators=True,
-                ordering="ordering",
-                page=1,
-                page_size=1,
-                role="role",
-                search="search",
-                with_deleted=True,
             )
             async for item in response:
                 yield item

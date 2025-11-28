@@ -38,18 +38,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.activity_logs.list(
-    end_date="end_date",
-    method="DELETE",
-    ordering="ordering",
-    page=1,
-    page_size=1,
-    project=1,
-    search="search",
-    start_date="start_date",
-    user=1,
-    workspace=1,
-)
+client.activity_logs.list()
 
 ```
 </dd>
@@ -73,7 +62,7 @@ client.activity_logs.list(
 <dl>
 <dd>
 
-**method:** `typing.Optional[ActivityLogsListRequestMethod]` — HTTP request method used in the log.
+**method:** `typing.Optional[ListActivityLogsRequestMethod]` — HTTP request method used in the log.
     
 </dd>
 </dl>
@@ -196,10 +185,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.annotation_history.list(
-    annotation=1,
-    ordering="ordering",
-)
+client.annotation_history.list()
 
 ```
 </dd>
@@ -281,11 +267,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.annotation_history.delete(
-    annotation=1,
-    project=1,
-    task=1,
-)
+client.annotation_history.delete()
 
 ```
 </dd>
@@ -377,8 +359,6 @@ client = LabelStudio(
 )
 client.annotation_history.list_for_project(
     id=1,
-    page=1,
-    page_size=1,
 )
 
 ```
@@ -470,11 +450,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.annotation_reviews.list(
-    annotation=1,
-    annotation_task_project=1,
-    ordering="ordering",
-)
+client.annotation_reviews.list()
 
 ```
 </dd>
@@ -565,7 +541,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.annotation_reviews.create(
-    async_postprocess=True,
     annotation=1,
 )
 
@@ -1489,7 +1464,6 @@ client = LabelStudio(
 )
 client.annotations.list(
     id=1,
-    ordering="ordering",
 )
 
 ```
@@ -1809,14 +1783,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.comments.list(
-    annotation=1,
-    annotators="annotators",
-    draft=1,
-    expand_created_by=True,
-    ordering="ordering",
-    projects="projects",
-)
+client.comments.list()
 
 ```
 </dd>
@@ -1930,9 +1897,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.comments.create(
-    expand_created_by=True,
-)
+client.comments.create()
 
 ```
 </dd>
@@ -2056,7 +2021,6 @@ client = LabelStudio(
 )
 client.comments.get(
     id="id",
-    expand_created_by=True,
 )
 
 ```
@@ -2141,7 +2105,6 @@ client = LabelStudio(
 )
 client.comments.delete(
     id="id",
-    expand_created_by=True,
 )
 
 ```
@@ -2226,7 +2189,6 @@ client = LabelStudio(
 )
 client.comments.update(
     id="id",
-    expand_created_by=True,
 )
 
 ```
@@ -2888,9 +2850,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.users.list(
-    ordering="ordering",
-)
+client.users.list()
 
 ```
 </dd>
@@ -3292,7 +3252,7 @@ client.users.update(
 <dl>
 <dd>
 
-**users_update_request_id:** `typing.Optional[int]` — User ID
+**update_users_request_id:** `typing.Optional[int]` — User ID
     
 </dd>
 </dl>
@@ -3444,9 +3404,9 @@ Perform a Data Manager action with the selected tasks and filters. Note: More co
 ```python
 from label_studio_sdk import LabelStudio
 from label_studio_sdk.actions import (
-    ActionsCreateRequestFilters,
-    ActionsCreateRequestFiltersItemsItem,
-    ActionsCreateRequestSelectedItemsExcluded,
+    CreateActionsRequestFilters,
+    CreateActionsRequestFiltersItemsItem,
+    CreateActionsRequestSelectedItemsExcluded,
 )
 
 client = LabelStudio(
@@ -3455,11 +3415,10 @@ client = LabelStudio(
 client.actions.create(
     id="delete_annotators",
     project=1,
-    view=1,
-    filters=ActionsCreateRequestFilters(
+    filters=CreateActionsRequestFilters(
         conjunction="or",
         items=[
-            ActionsCreateRequestFiltersItemsItem(
+            CreateActionsRequestFiltersItemsItem(
                 filter="filter:tasks:id",
                 operator="greater",
                 type="Number",
@@ -3468,7 +3427,7 @@ client.actions.create(
         ],
     ),
     ordering=["tasks:total_annotations"],
-    selected_items=ActionsCreateRequestSelectedItemsExcluded(
+    selected_items=CreateActionsRequestSelectedItemsExcluded(
         all_=True,
         excluded=[124, 125, 126],
     ),
@@ -3488,7 +3447,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**id:** `ActionsCreateRequestId` — Action name ID, see the full list of actions in the `GET api/actions` request
+**id:** `CreateActionsRequestId` — Action name ID, see the full list of actions in the `GET api/actions` request
     
 </dd>
 </dl>
@@ -3512,7 +3471,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**filters:** `typing.Optional[ActionsCreateRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+**filters:** `typing.Optional[CreateActionsRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
     
 </dd>
 </dl>
@@ -3520,7 +3479,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]]` — List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+**ordering:** `typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]` — List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
     
 </dd>
 </dl>
@@ -3528,7 +3487,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**selected_items:** `typing.Optional[ActionsCreateRequestSelectedItems]` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+**selected_items:** `typing.Optional[CreateActionsRequestSelectedItems]` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
     
 </dd>
 </dl>
@@ -3581,9 +3540,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.views.list(
-    project=1,
-)
+client.views.list()
 
 ```
 </dd>
@@ -3667,7 +3624,7 @@ client.views.create()
 <dl>
 <dd>
 
-**data:** `typing.Optional[ViewsCreateRequestData]` — Custom view data
+**data:** `typing.Optional[CreateViewsRequestData]` — Custom view data
     
 </dd>
 </dl>
@@ -4042,7 +3999,7 @@ client.views.update(
 <dl>
 <dd>
 
-**data:** `typing.Optional[ViewsUpdateRequestData]` — Custom view data
+**data:** `typing.Optional[UpdateViewsRequestData]` — Custom view data
     
 </dd>
 </dl>
@@ -4327,8 +4284,6 @@ client = LabelStudio(
 )
 client.files.list(
     id=1,
-    all_=True,
-    ordering="ordering",
 )
 
 ```
@@ -4626,9 +4581,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.organizations.list(
-    ordering="ordering",
-)
+client.organizations.list()
 
 ```
 </dd>
@@ -5233,9 +5186,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.ml.list(
-    project=1,
-)
+client.ml.list()
 
 ```
 </dd>
@@ -5325,7 +5276,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**auth_method:** `typing.Optional[MlCreateRequestAuthMethod]` — Auth method
+**auth_method:** `typing.Optional[CreateMlRequestAuthMethod]` — Auth method
     
 </dd>
 </dl>
@@ -5630,7 +5581,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**auth_method:** `typing.Optional[MlUpdateRequestAuthMethod]` — Auth method
+**auth_method:** `typing.Optional[UpdateMlRequestAuthMethod]` — Auth method
     
 </dd>
 </dl>
@@ -5859,7 +5810,6 @@ client = LabelStudio(
 )
 client.ml.predict_all_tasks(
     id=1,
-    batch_size=1,
 )
 
 ```
@@ -6096,9 +6046,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.model_providers.list(
-    ordering="ordering",
-)
+client.model_providers.list()
 
 ```
 </dd>
@@ -6726,7 +6674,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.batch_failed_predictions(
-    num_failed_predictions=1,
     failed_predictions=[],
     modelrun_id=1,
 )
@@ -6828,7 +6775,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.batch_predictions(
-    num_predictions=1,
     modelrun_id=1,
     results=[],
 )
@@ -6933,13 +6879,6 @@ client = LabelStudio(
 )
 client.prompts.subset_tasks(
     project_pk=1,
-    include_total=True,
-    model_run=1,
-    ordering="ordering",
-    page=1,
-    page_size=1,
-    parent_model=1,
-    project_subset="project_subset",
 )
 
 ```
@@ -7074,7 +7013,6 @@ client = LabelStudio(
 )
 client.prompts.subsets(
     project_pk=1,
-    ordering="ordering",
 )
 
 ```
@@ -7151,9 +7089,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.prompts.list(
-    ordering="ordering",
-)
+client.prompts.list()
 
 ```
 </dd>
@@ -7353,12 +7289,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.prompts.compatible_projects(
-    ordering="ordering",
-    page=1,
-    page_size=1,
-    project_type="NamedEntityRecognition",
-)
+client.prompts.compatible_projects()
 
 ```
 </dd>
@@ -7398,7 +7329,7 @@ client.prompts.compatible_projects(
 <dl>
 <dd>
 
-**project_type:** `typing.Optional[PromptsCompatibleProjectsRequestProjectType]` — Skill to filter by
+**project_type:** `typing.Optional[CompatibleProjectsPromptsRequestProjectType]` — Skill to filter by
     
 </dd>
 </dl>
@@ -7743,10 +7674,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.predictions.list(
-    project=1,
-    task=1,
-)
+client.predictions.list()
 
 ```
 </dd>
@@ -8204,9 +8132,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.project_templates.list(
-    ordering="ordering",
-)
+client.project_templates.list()
 
 ```
 </dd>
@@ -8866,19 +8792,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-response = client.projects.list(
-    filter="filter",
-    ids="ids",
-    include="include",
-    members_limit=1,
-    ordering="ordering",
-    page=1,
-    page_size=1,
-    search="search",
-    state="state",
-    title="title",
-    workspaces=1.1,
-)
+response = client.projects.list()
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -9323,18 +9237,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.list_counts(
-    filter="filter",
-    ids="ids",
-    include="include",
-    ordering="ordering",
-    page=1,
-    page_size=1,
-    search="search",
-    state="state",
-    title="title",
-    workspaces=1.1,
-)
+client.projects.list_counts()
 
 ```
 </dd>
@@ -9476,7 +9379,6 @@ client = LabelStudio(
 )
 client.projects.get(
     id=1,
-    members_limit=1,
 )
 
 ```
@@ -9625,7 +9527,6 @@ client = LabelStudio(
 )
 client.projects.update(
     id=1,
-    members_limit=1,
 )
 
 ```
@@ -10285,8 +10186,6 @@ client = LabelStudio(
 )
 client.projects.import_tasks(
     id=1,
-    commit_to_project=True,
-    return_task_ids=True,
     request=[],
 )
 
@@ -10704,19 +10603,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-response = client.tasks.list(
-    fields="all",
-    include="include",
-    only_annotated=True,
-    page=1,
-    page_size=1,
-    project=1,
-    query="query",
-    resolve_uri=True,
-    review=True,
-    selected_items="selectedItems",
-    view=1,
-)
+response = client.tasks.list()
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -10737,7 +10624,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fields:** `typing.Optional[TasksListRequestFields]` — Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
+**fields:** `typing.Optional[ListTasksRequestFields]` — Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
     
 </dd>
 </dl>
@@ -11871,9 +11758,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.tokens.list(
-    ordering="ordering",
-)
+client.tokens.list()
 
 ```
 </dd>
@@ -12273,9 +12158,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.webhooks.list(
-    project="project",
-)
+client.webhooks.list()
 
 ```
 </dd>
@@ -12461,9 +12344,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.webhooks.info(
-    organization_only=True,
-)
+client.webhooks.info()
 
 ```
 </dd>
@@ -12754,10 +12635,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.workspaces.list(
-    is_personal=True,
-    ordering="ordering",
-)
+client.workspaces.list()
 
 ```
 </dd>
@@ -13211,7 +13089,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.azure.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -13897,7 +13774,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.azure_spi.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -14903,7 +14779,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.databricks.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -15959,7 +15834,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.gcs.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -16645,7 +16519,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.gcswif.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -17669,7 +17542,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.local.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -18301,7 +18173,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.redis.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -19005,7 +18876,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.s3.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -19787,7 +19657,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.s3s.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -20885,7 +20754,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.azure.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -21643,7 +21511,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.azure_spi.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -22697,7 +22564,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.databricks.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -23801,7 +23667,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.gcs.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -24559,7 +24424,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.gcswif.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -25631,7 +25495,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.local.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -26263,7 +26126,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.redis.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -26967,7 +26829,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.s3.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -27845,7 +27706,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.s3s.list(
-    ordering="ordering",
     project=1,
 )
 
@@ -29236,13 +29096,6 @@ client = LabelStudio(
 )
 client.organizations.members.list(
     id=1,
-    exclude_project_id=1,
-    exclude_workspace_id=1,
-    ordering="ordering",
-    page=1,
-    page_size=1,
-    role="role",
-    search="search",
 )
 
 ```
@@ -29654,7 +29507,6 @@ client = LabelStudio(
 )
 client.organizations.permissions.list(
     id=1,
-    ordering="ordering",
 )
 
 ```
@@ -29832,7 +29684,6 @@ client = LabelStudio(
 )
 client.organizations.permissions.get_options(
     id=1,
-    ordering="ordering",
 )
 
 ```
@@ -30291,10 +30142,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.roles.list(
-    ids=1,
-    ordering="ordering",
-)
+client.projects.roles.list()
 
 ```
 </dd>
@@ -30706,7 +30554,6 @@ client = LabelStudio(
 )
 client.projects.exports.list(
     id=1,
-    ordering="ordering",
 )
 
 ```
@@ -31629,7 +31476,6 @@ client = LabelStudio(
 client.projects.stats.model_version_ground_truth_agreement(
     id=1,
     model_version="model_version",
-    per_label=True,
 )
 
 ```
@@ -31723,7 +31569,6 @@ client = LabelStudio(
 client.projects.stats.model_version_prediction_agreement(
     id=1,
     model_version="model_version",
-    per_label=True,
 )
 
 ```
@@ -31816,10 +31661,6 @@ client = LabelStudio(
 )
 client.projects.stats.iaa(
     id=1,
-    expand="expand",
-    per_label=True,
-    std=True,
-    task="task",
 )
 
 ```
@@ -31929,7 +31770,6 @@ client = LabelStudio(
 client.projects.stats.users_ground_truth_agreement(
     id=1,
     ids="ids",
-    per_label=True,
 )
 
 ```
@@ -32268,7 +32108,6 @@ client = LabelStudio(
 )
 client.projects.stats.finished_tasks(
     id=1,
-    user_pk=1,
 )
 
 ```
@@ -32431,7 +32270,6 @@ client = LabelStudio(
 )
 client.projects.stats.total_agreement(
     id=1,
-    per_label=True,
 )
 
 ```
@@ -32516,7 +32354,6 @@ client = LabelStudio(
 )
 client.projects.stats.update_stats(
     id=1,
-    stat_type="stat_type",
 )
 
 ```
@@ -32602,7 +32439,6 @@ client = LabelStudio(
 client.projects.stats.users_prediction_agreement(
     id=1,
     ids="ids",
-    per_label=True,
 )
 
 ```
@@ -32696,7 +32532,6 @@ client = LabelStudio(
 client.projects.stats.users_review_score(
     id=1,
     ids="ids",
-    per_label=True,
 )
 
 ```
@@ -32790,7 +32625,6 @@ client = LabelStudio(
 client.projects.stats.user_prediction_agreement(
     id=1,
     user_pk=1,
-    per_label=True,
 )
 
 ```
@@ -32884,7 +32718,6 @@ client = LabelStudio(
 client.projects.stats.user_review_score(
     id=1,
     user_pk=1,
-    per_label=True,
 )
 
 ```
@@ -32978,7 +32811,6 @@ client = LabelStudio(
 client.projects.stats.user_ground_truth_agreement(
     id=1,
     user_pk=1,
-    per_label=True,
 )
 
 ```
@@ -33067,7 +32899,7 @@ Assign multiple users to a collection of tasks within a specific project.
 ```python
 from label_studio_sdk import LabelStudio
 from label_studio_sdk.projects.assignments import (
-    AssignmentsBulkAssignRequestSelectedItemsIncluded,
+    BulkAssignAssignmentsRequestSelectedItemsIncluded,
 )
 
 client = LabelStudio(
@@ -33075,7 +32907,7 @@ client = LabelStudio(
 )
 client.projects.assignments.bulk_assign(
     id=1,
-    selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
+    selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
         all_=True,
     ),
     type="AN",
@@ -33104,7 +32936,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**selected_items:** `AssignmentsBulkAssignRequestSelectedItems` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+**selected_items:** `BulkAssignAssignmentsRequestSelectedItems` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
     
 </dd>
 </dl>
@@ -33112,7 +32944,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**type:** `AssignmentsBulkAssignRequestType` — Assignment type. Use AN for annotate or RE for review.
+**type:** `BulkAssignAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
     
 </dd>
 </dl>
@@ -33128,7 +32960,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**filters:** `typing.Optional[AssignmentsBulkAssignRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+**filters:** `typing.Optional[BulkAssignAssignmentsRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
     
 </dd>
 </dl>
@@ -33308,7 +33140,7 @@ client.projects.assignments.assign(
 <dl>
 <dd>
 
-**type:** `AssignmentsAssignRequestType` — Assignment type. Use AN for annotate or RE for review.
+**type:** `AssignAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
     
 </dd>
 </dl>
@@ -33377,8 +33209,6 @@ client = LabelStudio(
 client.projects.assignments.delete(
     id=1,
     task_pk=1,
-    type="AN",
-    users="users",
 )
 
 ```
@@ -33411,7 +33241,7 @@ client.projects.assignments.delete(
 <dl>
 <dd>
 
-**type:** `typing.Optional[AssignmentsDeleteRequestType]` — Assignment type to delete (optional). If omitted, deletes all assignments for the task.
+**type:** `typing.Optional[DeleteAssignmentsRequestType]` — Assignment type to delete (optional). If omitted, deletes all assignments for the task.
     
 </dd>
 </dl>
@@ -33514,7 +33344,7 @@ client.projects.assignments.update(
 <dl>
 <dd>
 
-**type:** `AssignmentsUpdateRequestType` — Assignment type. Use AN for annotate or RE for review.
+**type:** `UpdateAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
     
 </dd>
 </dl>
@@ -33584,8 +33414,6 @@ client = LabelStudio(
 client.projects.pauses.list(
     project_pk=1,
     user_pk=1,
-    include_deleted=True,
-    ordering="ordering",
 )
 
 ```
@@ -34103,9 +33931,6 @@ client = LabelStudio(
 )
 client.projects.members.bulk.post(
     id=1,
-    last_activity_gte="last_activity__gte",
-    role="role",
-    search="search",
     all_=True,
 )
 
@@ -34239,9 +34064,6 @@ client = LabelStudio(
 )
 client.projects.members.bulk.delete(
     id=1,
-    last_activity_gte="last_activity__gte",
-    role="role",
-    search="search",
 )
 
 ```
@@ -34344,8 +34166,6 @@ Retrieve the members for a specific project.
 <dd>
 
 ```python
-import datetime
-
 from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
@@ -34353,18 +34173,6 @@ client = LabelStudio(
 )
 response = client.projects.members.paginated.list(
     id=1,
-    ids="ids",
-    implicit=True,
-    last_activity_gte=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    no_annotators=True,
-    ordering="ordering",
-    page=1,
-    page_size=1,
-    role="role",
-    search="search",
-    with_deleted=True,
 )
 for item in response:
     yield item
@@ -34733,9 +34541,6 @@ client = LabelStudio(
 )
 client.projects.metrics.custom.logs(
     id=1,
-    end_date="end_date",
-    limit=1,
-    start_date="start_date",
 )
 
 ```
@@ -35160,7 +34965,6 @@ client = LabelStudio(
 )
 client.prompts.versions.list(
     prompt_id=1,
-    ordering="ordering",
 )
 
 ```
@@ -35797,7 +35601,6 @@ client = LabelStudio(
 client.prompts.versions.get_refined_prompt(
     prompt_id=1,
     version_id=1,
-    refinement_job_id="refinement_job_id",
 )
 
 ```
@@ -35891,7 +35694,6 @@ client = LabelStudio(
 client.prompts.versions.refine_prompt(
     prompt_id=1,
     version_id=1,
-    async_=True,
     project_id=1,
     teacher_model_name="teacher_model_name",
     teacher_model_provider_connection_id=1,
@@ -36013,10 +35815,6 @@ client = LabelStudio(
 client.prompts.runs.list(
     prompt_id=1,
     version_id=1,
-    ordering="ordering",
-    parent_model=1,
-    project=1,
-    project_subset="All",
 )
 
 ```
@@ -36073,7 +35871,7 @@ client.prompts.runs.list(
 <dl>
 <dd>
 
-**project_subset:** `typing.Optional[RunsListRequestProjectSubset]` — Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
+**project_subset:** `typing.Optional[ListRunsRequestProjectSubset]` — Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
     
 </dd>
 </dl>
@@ -37374,10 +37172,6 @@ client = LabelStudio(
 )
 response = client.workspaces.members.paginated.list(
     id=1,
-    ids="ids",
-    page=1,
-    page_size=1,
-    search="search",
 )
 for item in response:
     yield item

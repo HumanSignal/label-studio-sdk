@@ -67,8 +67,6 @@ class PausesClient:
         client.projects.pauses.list(
             project_pk=1,
             user_pk=1,
-            include_deleted=True,
-            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -433,8 +431,6 @@ class AsyncPausesClient:
             await client.projects.pauses.list(
                 project_pk=1,
                 user_pk=1,
-                include_deleted=True,
-                ordering="ordering",
             )
 
 

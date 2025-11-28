@@ -60,7 +60,6 @@ class AzureSpiClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.azure_spi.list(
-            ordering="ordering",
             project=1,
         )
         """
@@ -781,7 +780,6 @@ class AsyncAzureSpiClient:
 
         async def main() -> None:
             await client.import_storage.azure_spi.list(
-                ordering="ordering",
                 project=1,
             )
 

@@ -59,10 +59,7 @@ class RolesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.roles.list(
-            ids=1,
-            ordering="ordering",
-        )
+        client.projects.roles.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/projects/roles/",
@@ -320,10 +317,7 @@ class AsyncRolesClient:
 
 
         async def main() -> None:
-            await client.projects.roles.list(
-                ids=1,
-                ordering="ordering",
-            )
+            await client.projects.roles.list()
 
 
         asyncio.run(main())

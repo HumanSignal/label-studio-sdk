@@ -30,12 +30,12 @@ from ..types.review_settings_request import ReviewSettingsRequest
 from ..types.lse_project_update import LseProjectUpdate
 from ..types.user_simple import UserSimple
 from ..types.mode_enum import ModeEnum
-from .types.projects_duplicate_response import ProjectsDuplicateResponse
+from .types.duplicate_projects_response import DuplicateProjectsResponse
 from ..types.import_api_request import ImportApiRequest
-from .types.projects_import_tasks_response import ProjectsImportTasksResponse
+from .types.import_tasks_projects_response import ImportTasksProjectsResponse
 from ..errors.bad_request_error import BadRequestError
 from ..types.prediction_request import PredictionRequest
-from .types.projects_import_predictions_response import ProjectsImportPredictionsResponse
+from .types.import_predictions_projects_response import ImportPredictionsProjectsResponse
 from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
 from .roles.client import AsyncRolesClient
@@ -131,19 +131,7 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        response = client.projects.list(
-            filter="filter",
-            ids="ids",
-            include="include",
-            members_limit=1,
-            ordering="ordering",
-            page=1,
-            page_size=1,
-            search="search",
-            state="state",
-            title="title",
-            workspaces=1.1,
-        )
+        response = client.projects.list()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -457,18 +445,7 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.list_counts(
-            filter="filter",
-            ids="ids",
-            include="include",
-            ordering="ordering",
-            page=1,
-            page_size=1,
-            search="search",
-            state="state",
-            title="title",
-            workspaces=1.1,
-        )
+        client.projects.list_counts()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/projects/counts/",
@@ -535,7 +512,6 @@ class ProjectsClient:
         )
         client.projects.get(
             id=1,
-            members_limit=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -787,7 +763,6 @@ class ProjectsClient:
         )
         client.projects.update(
             id=1,
-            members_limit=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -924,7 +899,7 @@ class ProjectsClient:
         workspace: int,
         description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsDuplicateResponse:
+    ) -> DuplicateProjectsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -958,7 +933,7 @@ class ProjectsClient:
 
         Returns
         -------
-        ProjectsDuplicateResponse
+        DuplicateProjectsResponse
             Project duplicated
 
         Examples
@@ -993,9 +968,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectsDuplicateResponse,
+                    DuplicateProjectsResponse,
                     construct_type(
-                        type_=ProjectsDuplicateResponse,  # type: ignore
+                        type_=DuplicateProjectsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1013,7 +988,7 @@ class ProjectsClient:
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         return_task_ids: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsImportTasksResponse:
+    ) -> ImportTasksProjectsResponse:
         """
         
                     Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
@@ -1089,7 +1064,7 @@ class ProjectsClient:
         
         Returns
         -------
-        ProjectsImportTasksResponse
+        ImportTasksProjectsResponse
             Tasks successfully imported
         
         Examples
@@ -1101,8 +1076,6 @@ class ProjectsClient:
         )
         client.projects.import_tasks(
             id=1,
-            commit_to_project=True,
-            return_task_ids=True,
             request=[],
         )
         """
@@ -1123,9 +1096,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectsImportTasksResponse,
+                    ImportTasksProjectsResponse,
                     construct_type(
-                        type_=ProjectsImportTasksResponse,  # type: ignore
+                        type_=ImportTasksProjectsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1150,7 +1123,7 @@ class ProjectsClient:
         *,
         request: typing.Sequence[PredictionRequest],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsImportPredictionsResponse:
+    ) -> ImportPredictionsProjectsResponse:
         """
         Import model predictions for tasks in the specified project.
 
@@ -1166,7 +1139,7 @@ class ProjectsClient:
 
         Returns
         -------
-        ProjectsImportPredictionsResponse
+        ImportPredictionsProjectsResponse
             Predictions successfully imported
 
         Examples
@@ -1198,9 +1171,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectsImportPredictionsResponse,
+                    ImportPredictionsProjectsResponse,
                     construct_type(
-                        type_=ProjectsImportPredictionsResponse,  # type: ignore
+                        type_=ImportPredictionsProjectsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1362,19 +1335,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            response = await client.projects.list(
-                filter="filter",
-                ids="ids",
-                include="include",
-                members_limit=1,
-                ordering="ordering",
-                page=1,
-                page_size=1,
-                search="search",
-                state="state",
-                title="title",
-                workspaces=1.1,
-            )
+            response = await client.projects.list()
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1704,18 +1665,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.list_counts(
-                filter="filter",
-                ids="ids",
-                include="include",
-                ordering="ordering",
-                page=1,
-                page_size=1,
-                search="search",
-                state="state",
-                title="title",
-                workspaces=1.1,
-            )
+            await client.projects.list_counts()
 
 
         asyncio.run(main())
@@ -1790,7 +1740,6 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.projects.get(
                 id=1,
-                members_limit=1,
             )
 
 
@@ -2058,7 +2007,6 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.projects.update(
                 id=1,
-                members_limit=1,
             )
 
 
@@ -2206,7 +2154,7 @@ class AsyncProjectsClient:
         workspace: int,
         description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsDuplicateResponse:
+    ) -> DuplicateProjectsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -2240,7 +2188,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        ProjectsDuplicateResponse
+        DuplicateProjectsResponse
             Project duplicated
 
         Examples
@@ -2283,9 +2231,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectsDuplicateResponse,
+                    DuplicateProjectsResponse,
                     construct_type(
-                        type_=ProjectsDuplicateResponse,  # type: ignore
+                        type_=DuplicateProjectsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2303,7 +2251,7 @@ class AsyncProjectsClient:
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         return_task_ids: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsImportTasksResponse:
+    ) -> ImportTasksProjectsResponse:
         """
         
                     Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
@@ -2379,7 +2327,7 @@ class AsyncProjectsClient:
         
         Returns
         -------
-        ProjectsImportTasksResponse
+        ImportTasksProjectsResponse
             Tasks successfully imported
         
         Examples
@@ -2396,8 +2344,6 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.projects.import_tasks(
                 id=1,
-                commit_to_project=True,
-                return_task_ids=True,
                 request=[],
             )
         
@@ -2421,9 +2367,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectsImportTasksResponse,
+                    ImportTasksProjectsResponse,
                     construct_type(
-                        type_=ProjectsImportTasksResponse,  # type: ignore
+                        type_=ImportTasksProjectsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2448,7 +2394,7 @@ class AsyncProjectsClient:
         *,
         request: typing.Sequence[PredictionRequest],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsImportPredictionsResponse:
+    ) -> ImportPredictionsProjectsResponse:
         """
         Import model predictions for tasks in the specified project.
 
@@ -2464,7 +2410,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        ProjectsImportPredictionsResponse
+        ImportPredictionsProjectsResponse
             Predictions successfully imported
 
         Examples
@@ -2504,9 +2450,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectsImportPredictionsResponse,
+                    ImportPredictionsProjectsResponse,
                     construct_type(
-                        type_=ProjectsImportPredictionsResponse,  # type: ignore
+                        type_=ImportPredictionsProjectsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

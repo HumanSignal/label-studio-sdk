@@ -208,8 +208,6 @@ class FilesClient:
         )
         client.files.list(
             id=1,
-            all_=True,
-            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -539,8 +537,6 @@ class AsyncFilesClient:
         async def main() -> None:
             await client.files.list(
                 id=1,
-                all_=True,
-                ordering="ordering",
             )
 
 

@@ -3,7 +3,7 @@
 import typing
 from ....core.client_wrapper import SyncClientWrapper
 from ....core.request_options import RequestOptions
-from .types.custom_get_lambda_response import CustomGetLambdaResponse
+from .types.get_lambda_custom_response import GetLambdaCustomResponse
 from ....core.jsonable_encoder import jsonable_encoder
 from ....core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
@@ -21,7 +21,7 @@ class CustomClient:
 
     def get_lambda(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> CustomGetLambdaResponse:
+    ) -> GetLambdaCustomResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -40,7 +40,7 @@ class CustomClient:
 
         Returns
         -------
-        CustomGetLambdaResponse
+        GetLambdaCustomResponse
             Lambda code
 
         Examples
@@ -62,9 +62,9 @@ class CustomClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    CustomGetLambdaResponse,
+                    GetLambdaCustomResponse,
                     construct_type(
-                        type_=CustomGetLambdaResponse,  # type: ignore
+                        type_=GetLambdaCustomResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -200,9 +200,6 @@ class CustomClient:
         )
         client.projects.metrics.custom.logs(
             id=1,
-            end_date="end_date",
-            limit=1,
-            start_date="start_date",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -291,7 +288,7 @@ class AsyncCustomClient:
 
     async def get_lambda(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> CustomGetLambdaResponse:
+    ) -> GetLambdaCustomResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -310,7 +307,7 @@ class AsyncCustomClient:
 
         Returns
         -------
-        CustomGetLambdaResponse
+        GetLambdaCustomResponse
             Lambda code
 
         Examples
@@ -340,9 +337,9 @@ class AsyncCustomClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    CustomGetLambdaResponse,
+                    GetLambdaCustomResponse,
                     construct_type(
-                        type_=CustomGetLambdaResponse,  # type: ignore
+                        type_=GetLambdaCustomResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -491,9 +488,6 @@ class AsyncCustomClient:
         async def main() -> None:
             await client.projects.metrics.custom.logs(
                 id=1,
-                end_date="end_date",
-                limit=1,
-                start_date="start_date",
             )
 
 

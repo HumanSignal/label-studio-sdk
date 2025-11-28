@@ -20,7 +20,7 @@ from ..types.user_simple_request import UserSimpleRequest
 from ..types.skill_name_enum import SkillNameEnum
 from ..types.model_interface import ModelInterface
 from ..core.serialization import convert_and_respect_annotation_metadata
-from .types.prompts_compatible_projects_request_project_type import PromptsCompatibleProjectsRequestProjectType
+from .types.compatible_projects_prompts_request_project_type import CompatibleProjectsPromptsRequestProjectType
 from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from ..core.client_wrapper import AsyncClientWrapper
 from .indicators.client import AsyncIndicatorsClient
@@ -83,7 +83,6 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.batch_failed_predictions(
-            num_failed_predictions=1,
             failed_predictions=[],
             modelrun_id=1,
         )
@@ -164,7 +163,6 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.batch_predictions(
-            num_predictions=1,
             modelrun_id=1,
             results=[],
         )
@@ -266,13 +264,6 @@ class PromptsClient:
         )
         client.prompts.subset_tasks(
             project_pk=1,
-            include_total=True,
-            model_run=1,
-            ordering="ordering",
-            page=1,
-            page_size=1,
-            parent_model=1,
-            project_subset="project_subset",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -355,7 +346,6 @@ class PromptsClient:
         )
         client.prompts.subsets(
             project_pk=1,
-            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -406,9 +396,7 @@ class PromptsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.prompts.list(
-            ordering="ordering",
-        )
+        client.prompts.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/prompts/",
@@ -532,7 +520,7 @@ class PromptsClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        project_type: typing.Optional[PromptsCompatibleProjectsRequestProjectType] = None,
+        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedAllRolesProjectListList:
         """
@@ -549,7 +537,7 @@ class PromptsClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        project_type : typing.Optional[PromptsCompatibleProjectsRequestProjectType]
+        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
             Skill to filter by
 
         request_options : typing.Optional[RequestOptions]
@@ -567,12 +555,7 @@ class PromptsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.prompts.compatible_projects(
-            ordering="ordering",
-            page=1,
-            page_size=1,
-            project_type="NamedEntityRecognition",
-        )
+        client.prompts.compatible_projects()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/prompts/compatible-projects",
@@ -854,7 +837,6 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.batch_failed_predictions(
-                num_failed_predictions=1,
                 failed_predictions=[],
                 modelrun_id=1,
             )
@@ -943,7 +925,6 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.batch_predictions(
-                num_predictions=1,
                 modelrun_id=1,
                 results=[],
             )
@@ -1053,13 +1034,6 @@ class AsyncPromptsClient:
         async def main() -> None:
             await client.prompts.subset_tasks(
                 project_pk=1,
-                include_total=True,
-                model_run=1,
-                ordering="ordering",
-                page=1,
-                page_size=1,
-                parent_model=1,
-                project_subset="project_subset",
             )
 
 
@@ -1150,7 +1124,6 @@ class AsyncPromptsClient:
         async def main() -> None:
             await client.prompts.subsets(
                 project_pk=1,
-                ordering="ordering",
             )
 
 
@@ -1209,9 +1182,7 @@ class AsyncPromptsClient:
 
 
         async def main() -> None:
-            await client.prompts.list(
-                ordering="ordering",
-            )
+            await client.prompts.list()
 
 
         asyncio.run(main())
@@ -1346,7 +1317,7 @@ class AsyncPromptsClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        project_type: typing.Optional[PromptsCompatibleProjectsRequestProjectType] = None,
+        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedAllRolesProjectListList:
         """
@@ -1363,7 +1334,7 @@ class AsyncPromptsClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        project_type : typing.Optional[PromptsCompatibleProjectsRequestProjectType]
+        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
             Skill to filter by
 
         request_options : typing.Optional[RequestOptions]
@@ -1386,12 +1357,7 @@ class AsyncPromptsClient:
 
 
         async def main() -> None:
-            await client.prompts.compatible_projects(
-                ordering="ordering",
-                page=1,
-                page_size=1,
-                project_type="NamedEntityRecognition",
-            )
+            await client.prompts.compatible_projects()
 
 
         asyncio.run(main())

@@ -2,7 +2,7 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 import typing
-from .types.activity_logs_list_request_method import ActivityLogsListRequestMethod
+from .types.list_activity_logs_request_method import ListActivityLogsRequestMethod
 from ..core.request_options import RequestOptions
 from ..types.activity_log_response import ActivityLogResponse
 from ..core.unchecked_base_model import construct_type
@@ -20,7 +20,7 @@ class ActivityLogsClient:
         self,
         *,
         end_date: typing.Optional[str] = None,
-        method: typing.Optional[ActivityLogsListRequestMethod] = None,
+        method: typing.Optional[ListActivityLogsRequestMethod] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -45,7 +45,7 @@ class ActivityLogsClient:
         end_date : typing.Optional[str]
             End date/time (ISO-8601) for log filtering.
 
-        method : typing.Optional[ActivityLogsListRequestMethod]
+        method : typing.Optional[ListActivityLogsRequestMethod]
             HTTP request method used in the log.
 
         ordering : typing.Optional[str]
@@ -87,18 +87,7 @@ class ActivityLogsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.activity_logs.list(
-            end_date="end_date",
-            method="DELETE",
-            ordering="ordering",
-            page=1,
-            page_size=1,
-            project=1,
-            search="search",
-            start_date="start_date",
-            user=1,
-            workspace=1,
-        )
+        client.activity_logs.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/activity-logs/",
@@ -150,7 +139,7 @@ class AsyncActivityLogsClient:
         self,
         *,
         end_date: typing.Optional[str] = None,
-        method: typing.Optional[ActivityLogsListRequestMethod] = None,
+        method: typing.Optional[ListActivityLogsRequestMethod] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -175,7 +164,7 @@ class AsyncActivityLogsClient:
         end_date : typing.Optional[str]
             End date/time (ISO-8601) for log filtering.
 
-        method : typing.Optional[ActivityLogsListRequestMethod]
+        method : typing.Optional[ListActivityLogsRequestMethod]
             HTTP request method used in the log.
 
         ordering : typing.Optional[str]
@@ -222,18 +211,7 @@ class AsyncActivityLogsClient:
 
 
         async def main() -> None:
-            await client.activity_logs.list(
-                end_date="end_date",
-                method="DELETE",
-                ordering="ordering",
-                page=1,
-                page_size=1,
-                project=1,
-                search="search",
-                start_date="start_date",
-                user=1,
-                workspace=1,
-            )
+            await client.activity_logs.list()
 
 
         asyncio.run(main())

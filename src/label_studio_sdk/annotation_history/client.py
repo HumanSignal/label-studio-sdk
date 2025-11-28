@@ -7,7 +7,7 @@ from ..types.annotation_history import AnnotationHistory
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.annotation_history_delete_response import AnnotationHistoryDeleteResponse
+from .types.delete_annotation_history_response import DeleteAnnotationHistoryResponse
 from ..types.paginated_annotation_history_list import PaginatedAnnotationHistoryList
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
@@ -56,10 +56,7 @@ class AnnotationHistoryClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.annotation_history.list(
-            annotation=1,
-            ordering="ordering",
-        )
+        client.annotation_history.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/annotation-history/",
@@ -91,7 +88,7 @@ class AnnotationHistoryClient:
         project: typing.Optional[int] = None,
         task: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AnnotationHistoryDeleteResponse:
+    ) -> DeleteAnnotationHistoryResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -117,7 +114,7 @@ class AnnotationHistoryClient:
 
         Returns
         -------
-        AnnotationHistoryDeleteResponse
+        DeleteAnnotationHistoryResponse
             Returns a dict containing the count of removed items.
 
         Examples
@@ -127,11 +124,7 @@ class AnnotationHistoryClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.annotation_history.delete(
-            annotation=1,
-            project=1,
-            task=1,
-        )
+        client.annotation_history.delete()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/annotation-history/",
@@ -146,9 +139,9 @@ class AnnotationHistoryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AnnotationHistoryDeleteResponse,
+                    DeleteAnnotationHistoryResponse,
                     construct_type(
-                        type_=AnnotationHistoryDeleteResponse,  # type: ignore
+                        type_=DeleteAnnotationHistoryResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -201,8 +194,6 @@ class AnnotationHistoryClient:
         )
         client.annotation_history.list_for_project(
             id=1,
-            page=1,
-            page_size=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -277,10 +268,7 @@ class AsyncAnnotationHistoryClient:
 
 
         async def main() -> None:
-            await client.annotation_history.list(
-                annotation=1,
-                ordering="ordering",
-            )
+            await client.annotation_history.list()
 
 
         asyncio.run(main())
@@ -315,7 +303,7 @@ class AsyncAnnotationHistoryClient:
         project: typing.Optional[int] = None,
         task: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AnnotationHistoryDeleteResponse:
+    ) -> DeleteAnnotationHistoryResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -341,7 +329,7 @@ class AsyncAnnotationHistoryClient:
 
         Returns
         -------
-        AnnotationHistoryDeleteResponse
+        DeleteAnnotationHistoryResponse
             Returns a dict containing the count of removed items.
 
         Examples
@@ -356,11 +344,7 @@ class AsyncAnnotationHistoryClient:
 
 
         async def main() -> None:
-            await client.annotation_history.delete(
-                annotation=1,
-                project=1,
-                task=1,
-            )
+            await client.annotation_history.delete()
 
 
         asyncio.run(main())
@@ -378,9 +362,9 @@ class AsyncAnnotationHistoryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AnnotationHistoryDeleteResponse,
+                    DeleteAnnotationHistoryResponse,
                     construct_type(
-                        type_=AnnotationHistoryDeleteResponse,  # type: ignore
+                        type_=DeleteAnnotationHistoryResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -438,8 +422,6 @@ class AsyncAnnotationHistoryClient:
         async def main() -> None:
             await client.annotation_history.list_for_project(
                 id=1,
-                page=1,
-                page_size=1,
             )
 
 

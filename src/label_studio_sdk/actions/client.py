@@ -3,14 +3,14 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from .types.actions_list_response_item import ActionsListResponseItem
+from .types.list_actions_response_item import ListActionsResponseItem
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.actions_create_request_id import ActionsCreateRequestId
-from .types.actions_create_request_filters import ActionsCreateRequestFilters
-from .types.actions_create_request_ordering_item import ActionsCreateRequestOrderingItem
-from .types.actions_create_request_selected_items import ActionsCreateRequestSelectedItems
+from .types.create_actions_request_id import CreateActionsRequestId
+from .types.create_actions_request_filters import CreateActionsRequestFilters
+from .types.create_actions_request_ordering_item import CreateActionsRequestOrderingItem
+from .types.create_actions_request_selected_items import CreateActionsRequestSelectedItems
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -24,7 +24,7 @@ class ActionsClient:
 
     def list(
         self, *, project: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ActionsListResponseItem]:
+    ) -> typing.List[ListActionsResponseItem]:
         """
         Retrieve all the registered actions with descriptions that data manager can use.
 
@@ -38,7 +38,7 @@ class ActionsClient:
 
         Returns
         -------
-        typing.List[ActionsListResponseItem]
+        typing.List[ListActionsResponseItem]
             Actions retrieved successfully
 
         Examples
@@ -63,9 +63,9 @@ class ActionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[ActionsListResponseItem],
+                    typing.List[ListActionsResponseItem],
                     construct_type(
-                        type_=typing.List[ActionsListResponseItem],  # type: ignore
+                        type_=typing.List[ListActionsResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -77,12 +77,12 @@ class ActionsClient:
     def create(
         self,
         *,
-        id: ActionsCreateRequestId,
+        id: CreateActionsRequestId,
         project: int,
         view: typing.Optional[int] = None,
-        filters: typing.Optional[ActionsCreateRequestFilters] = OMIT,
-        ordering: typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]] = OMIT,
-        selected_items: typing.Optional[ActionsCreateRequestSelectedItems] = OMIT,
+        filters: typing.Optional[CreateActionsRequestFilters] = OMIT,
+        ordering: typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]] = OMIT,
+        selected_items: typing.Optional[CreateActionsRequestSelectedItems] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -90,7 +90,7 @@ class ActionsClient:
 
         Parameters
         ----------
-        id : ActionsCreateRequestId
+        id : CreateActionsRequestId
             Action name ID, see the full list of actions in the `GET api/actions` request
 
         project : int
@@ -99,13 +99,13 @@ class ActionsClient:
         view : typing.Optional[int]
             View ID (optional, it has higher priority than filters, selectedItems and ordering from the request body payload)
 
-        filters : typing.Optional[ActionsCreateRequestFilters]
+        filters : typing.Optional[CreateActionsRequestFilters]
             Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
 
-        ordering : typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]]
+        ordering : typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]
             List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
 
-        selected_items : typing.Optional[ActionsCreateRequestSelectedItems]
+        selected_items : typing.Optional[CreateActionsRequestSelectedItems]
             Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         request_options : typing.Optional[RequestOptions]
@@ -119,9 +119,9 @@ class ActionsClient:
         --------
         from label_studio_sdk import LabelStudio
         from label_studio_sdk.actions import (
-            ActionsCreateRequestFilters,
-            ActionsCreateRequestFiltersItemsItem,
-            ActionsCreateRequestSelectedItemsExcluded,
+            CreateActionsRequestFilters,
+            CreateActionsRequestFiltersItemsItem,
+            CreateActionsRequestSelectedItemsExcluded,
         )
 
         client = LabelStudio(
@@ -130,11 +130,10 @@ class ActionsClient:
         client.actions.create(
             id="delete_annotators",
             project=1,
-            view=1,
-            filters=ActionsCreateRequestFilters(
+            filters=CreateActionsRequestFilters(
                 conjunction="or",
                 items=[
-                    ActionsCreateRequestFiltersItemsItem(
+                    CreateActionsRequestFiltersItemsItem(
                         filter="filter:tasks:id",
                         operator="greater",
                         type="Number",
@@ -143,7 +142,7 @@ class ActionsClient:
                 ],
             ),
             ordering=["tasks:total_annotations"],
-            selected_items=ActionsCreateRequestSelectedItemsExcluded(
+            selected_items=CreateActionsRequestSelectedItemsExcluded(
                 all_=True,
                 excluded=[124, 125, 126],
             ),
@@ -159,11 +158,11 @@ class ActionsClient:
             },
             json={
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=ActionsCreateRequestFilters, direction="write"
+                    object_=filters, annotation=CreateActionsRequestFilters, direction="write"
                 ),
                 "ordering": ordering,
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=ActionsCreateRequestSelectedItems, direction="write"
+                    object_=selected_items, annotation=CreateActionsRequestSelectedItems, direction="write"
                 ),
             },
             headers={
@@ -187,7 +186,7 @@ class AsyncActionsClient:
 
     async def list(
         self, *, project: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ActionsListResponseItem]:
+    ) -> typing.List[ListActionsResponseItem]:
         """
         Retrieve all the registered actions with descriptions that data manager can use.
 
@@ -201,7 +200,7 @@ class AsyncActionsClient:
 
         Returns
         -------
-        typing.List[ActionsListResponseItem]
+        typing.List[ListActionsResponseItem]
             Actions retrieved successfully
 
         Examples
@@ -234,9 +233,9 @@ class AsyncActionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[ActionsListResponseItem],
+                    typing.List[ListActionsResponseItem],
                     construct_type(
-                        type_=typing.List[ActionsListResponseItem],  # type: ignore
+                        type_=typing.List[ListActionsResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -248,12 +247,12 @@ class AsyncActionsClient:
     async def create(
         self,
         *,
-        id: ActionsCreateRequestId,
+        id: CreateActionsRequestId,
         project: int,
         view: typing.Optional[int] = None,
-        filters: typing.Optional[ActionsCreateRequestFilters] = OMIT,
-        ordering: typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]] = OMIT,
-        selected_items: typing.Optional[ActionsCreateRequestSelectedItems] = OMIT,
+        filters: typing.Optional[CreateActionsRequestFilters] = OMIT,
+        ordering: typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]] = OMIT,
+        selected_items: typing.Optional[CreateActionsRequestSelectedItems] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -261,7 +260,7 @@ class AsyncActionsClient:
 
         Parameters
         ----------
-        id : ActionsCreateRequestId
+        id : CreateActionsRequestId
             Action name ID, see the full list of actions in the `GET api/actions` request
 
         project : int
@@ -270,13 +269,13 @@ class AsyncActionsClient:
         view : typing.Optional[int]
             View ID (optional, it has higher priority than filters, selectedItems and ordering from the request body payload)
 
-        filters : typing.Optional[ActionsCreateRequestFilters]
+        filters : typing.Optional[CreateActionsRequestFilters]
             Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
 
-        ordering : typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]]
+        ordering : typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]
             List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
 
-        selected_items : typing.Optional[ActionsCreateRequestSelectedItems]
+        selected_items : typing.Optional[CreateActionsRequestSelectedItems]
             Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         request_options : typing.Optional[RequestOptions]
@@ -292,9 +291,9 @@ class AsyncActionsClient:
 
         from label_studio_sdk import AsyncLabelStudio
         from label_studio_sdk.actions import (
-            ActionsCreateRequestFilters,
-            ActionsCreateRequestFiltersItemsItem,
-            ActionsCreateRequestSelectedItemsExcluded,
+            CreateActionsRequestFilters,
+            CreateActionsRequestFiltersItemsItem,
+            CreateActionsRequestSelectedItemsExcluded,
         )
 
         client = AsyncLabelStudio(
@@ -306,11 +305,10 @@ class AsyncActionsClient:
             await client.actions.create(
                 id="delete_annotators",
                 project=1,
-                view=1,
-                filters=ActionsCreateRequestFilters(
+                filters=CreateActionsRequestFilters(
                     conjunction="or",
                     items=[
-                        ActionsCreateRequestFiltersItemsItem(
+                        CreateActionsRequestFiltersItemsItem(
                             filter="filter:tasks:id",
                             operator="greater",
                             type="Number",
@@ -319,7 +317,7 @@ class AsyncActionsClient:
                     ],
                 ),
                 ordering=["tasks:total_annotations"],
-                selected_items=ActionsCreateRequestSelectedItemsExcluded(
+                selected_items=CreateActionsRequestSelectedItemsExcluded(
                     all_=True,
                     excluded=[124, 125, 126],
                 ),
@@ -338,11 +336,11 @@ class AsyncActionsClient:
             },
             json={
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=ActionsCreateRequestFilters, direction="write"
+                    object_=filters, annotation=CreateActionsRequestFilters, direction="write"
                 ),
                 "ordering": ordering,
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=ActionsCreateRequestSelectedItems, direction="write"
+                    object_=selected_items, annotation=CreateActionsRequestSelectedItems, direction="write"
                 ),
             },
             headers={

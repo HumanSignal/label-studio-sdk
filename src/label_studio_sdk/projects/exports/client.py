@@ -17,7 +17,7 @@ from ...types.status7bf_enum import Status7BfEnum
 from ...types.lse_task_filter_options_request import LseTaskFilterOptionsRequest
 from ...types.lse_export_create import LseExportCreate
 from ...core.serialization import convert_and_respect_annotation_metadata
-from .types.exports_convert_response import ExportsConvertResponse
+from .types.convert_exports_response import ConvertExportsResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -184,7 +184,6 @@ class ExportsClient:
         )
         client.projects.exports.list(
             id=1,
-            ordering="ordering",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -421,7 +420,7 @@ class ExportsClient:
         export_type: str,
         download_resources: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ExportsConvertResponse:
+    ) -> ConvertExportsResponse:
         """
         Convert export snapshot to selected format
 
@@ -444,7 +443,7 @@ class ExportsClient:
 
         Returns
         -------
-        ExportsConvertResponse
+        ConvertExportsResponse
 
 
         Examples
@@ -476,9 +475,9 @@ class ExportsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ExportsConvertResponse,
+                    ConvertExportsResponse,
                     construct_type(
-                        type_=ExportsConvertResponse,  # type: ignore
+                        type_=ConvertExportsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -720,7 +719,6 @@ class AsyncExportsClient:
         async def main() -> None:
             await client.projects.exports.list(
                 id=1,
-                ordering="ordering",
             )
 
 
@@ -984,7 +982,7 @@ class AsyncExportsClient:
         export_type: str,
         download_resources: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ExportsConvertResponse:
+    ) -> ConvertExportsResponse:
         """
         Convert export snapshot to selected format
 
@@ -1007,7 +1005,7 @@ class AsyncExportsClient:
 
         Returns
         -------
-        ExportsConvertResponse
+        ConvertExportsResponse
 
 
         Examples
@@ -1047,9 +1045,9 @@ class AsyncExportsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ExportsConvertResponse,
+                    ConvertExportsResponse,
                     construct_type(
-                        type_=ExportsConvertResponse,  # type: ignore
+                        type_=ConvertExportsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

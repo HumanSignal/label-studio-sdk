@@ -52,7 +52,6 @@ class LocalClient:
             api_key="YOUR_API_KEY",
         )
         client.export_storage.local.list(
-            ordering="ordering",
             project=1,
         )
         """
@@ -503,7 +502,6 @@ class AsyncLocalClient:
 
         async def main() -> None:
             await client.export_storage.local.list(
-                ordering="ordering",
                 project=1,
             )
 

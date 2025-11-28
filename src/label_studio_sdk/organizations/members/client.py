@@ -102,13 +102,6 @@ class MembersClient:
         )
         client.organizations.members.list(
             id=1,
-            exclude_project_id=1,
-            exclude_workspace_id=1,
-            ordering="ordering",
-            page=1,
-            page_size=1,
-            role="role",
-            search="search",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -436,13 +429,6 @@ class AsyncMembersClient:
         async def main() -> None:
             await client.organizations.members.list(
                 id=1,
-                exclude_project_id=1,
-                exclude_workspace_id=1,
-                ordering="ordering",
-                page=1,
-                page_size=1,
-                role="role",
-                search="search",
             )
 
 

@@ -3,26 +3,26 @@
 from ...core.client_wrapper import SyncClientWrapper
 import typing
 from ...core.request_options import RequestOptions
-from .types.stats_model_version_annotator_agreement_response import StatsModelVersionAnnotatorAgreementResponse
+from .types.model_version_annotator_agreement_stats_response import ModelVersionAnnotatorAgreementStatsResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from .types.stats_model_version_ground_truth_agreement_response import StatsModelVersionGroundTruthAgreementResponse
-from .types.stats_model_version_prediction_agreement_response import StatsModelVersionPredictionAgreementResponse
-from .types.stats_iaa_response import StatsIaaResponse
-from .types.stats_users_ground_truth_agreement_response import StatsUsersGroundTruthAgreementResponse
-from .types.stats_agreement_annotator_response import StatsAgreementAnnotatorResponse
-from .types.stats_agreement_annotators_response import StatsAgreementAnnotatorsResponse
-from .types.stats_data_filters_response import StatsDataFiltersResponse
-from .types.stats_finished_tasks_response import StatsFinishedTasksResponse
-from .types.stats_lead_time_response import StatsLeadTimeResponse
-from .types.stats_total_agreement_response import StatsTotalAgreementResponse
-from .types.stats_users_prediction_agreement_response import StatsUsersPredictionAgreementResponse
-from .types.stats_users_review_score_response import StatsUsersReviewScoreResponse
-from .types.stats_user_prediction_agreement_response import StatsUserPredictionAgreementResponse
-from .types.stats_user_review_score_response import StatsUserReviewScoreResponse
-from .types.stats_user_ground_truth_agreement_response import StatsUserGroundTruthAgreementResponse
+from .types.model_version_ground_truth_agreement_stats_response import ModelVersionGroundTruthAgreementStatsResponse
+from .types.model_version_prediction_agreement_stats_response import ModelVersionPredictionAgreementStatsResponse
+from .types.iaa_stats_response import IaaStatsResponse
+from .types.users_ground_truth_agreement_stats_response import UsersGroundTruthAgreementStatsResponse
+from .types.agreement_annotator_stats_response import AgreementAnnotatorStatsResponse
+from .types.agreement_annotators_stats_response import AgreementAnnotatorsStatsResponse
+from .types.data_filters_stats_response import DataFiltersStatsResponse
+from .types.finished_tasks_stats_response import FinishedTasksStatsResponse
+from .types.lead_time_stats_response import LeadTimeStatsResponse
+from .types.total_agreement_stats_response import TotalAgreementStatsResponse
+from .types.users_prediction_agreement_stats_response import UsersPredictionAgreementStatsResponse
+from .types.users_review_score_stats_response import UsersReviewScoreStatsResponse
+from .types.user_prediction_agreement_stats_response import UserPredictionAgreementStatsResponse
+from .types.user_review_score_stats_response import UserReviewScoreStatsResponse
+from .types.user_ground_truth_agreement_stats_response import UserGroundTruthAgreementStatsResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 
@@ -32,7 +32,7 @@ class StatsClient:
 
     def model_version_annotator_agreement(
         self, id: int, model_version: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsModelVersionAnnotatorAgreementResponse:
+    ) -> ModelVersionAnnotatorAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -53,7 +53,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsModelVersionAnnotatorAgreementResponse
+        ModelVersionAnnotatorAgreementStatsResponse
             Model-version overall agreement vs annotators
 
         Examples
@@ -76,9 +76,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsModelVersionAnnotatorAgreementResponse,
+                    ModelVersionAnnotatorAgreementStatsResponse,
                     construct_type(
-                        type_=StatsModelVersionAnnotatorAgreementResponse,  # type: ignore
+                        type_=ModelVersionAnnotatorAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -94,7 +94,7 @@ class StatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsModelVersionGroundTruthAgreementResponse:
+    ) -> ModelVersionGroundTruthAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -118,7 +118,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsModelVersionGroundTruthAgreementResponse
+        ModelVersionGroundTruthAgreementStatsResponse
             Model-version ground truth agreement
 
         Examples
@@ -131,7 +131,6 @@ class StatsClient:
         client.projects.stats.model_version_ground_truth_agreement(
             id=1,
             model_version="model_version",
-            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -145,9 +144,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsModelVersionGroundTruthAgreementResponse,
+                    ModelVersionGroundTruthAgreementStatsResponse,
                     construct_type(
-                        type_=StatsModelVersionGroundTruthAgreementResponse,  # type: ignore
+                        type_=ModelVersionGroundTruthAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -163,7 +162,7 @@ class StatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsModelVersionPredictionAgreementResponse:
+    ) -> ModelVersionPredictionAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -187,7 +186,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsModelVersionPredictionAgreementResponse
+        ModelVersionPredictionAgreementStatsResponse
             Model-version prediction agreement
 
         Examples
@@ -200,7 +199,6 @@ class StatsClient:
         client.projects.stats.model_version_prediction_agreement(
             id=1,
             model_version="model_version",
-            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -214,9 +212,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsModelVersionPredictionAgreementResponse,
+                    ModelVersionPredictionAgreementStatsResponse,
                     construct_type(
-                        type_=StatsModelVersionPredictionAgreementResponse,  # type: ignore
+                        type_=ModelVersionPredictionAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -234,7 +232,7 @@ class StatsClient:
         std: typing.Optional[bool] = None,
         task: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsIaaResponse:
+    ) -> IaaStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -265,7 +263,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsIaaResponse
+        IaaStatsResponse
             Inter-Annotator Agreement matrix
 
         Examples
@@ -277,10 +275,6 @@ class StatsClient:
         )
         client.projects.stats.iaa(
             id=1,
-            expand="expand",
-            per_label=True,
-            std=True,
-            task="task",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -297,9 +291,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsIaaResponse,
+                    IaaStatsResponse,
                     construct_type(
-                        type_=StatsIaaResponse,  # type: ignore
+                        type_=IaaStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -315,7 +309,7 @@ class StatsClient:
         ids: str,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersGroundTruthAgreementResponse:
+    ) -> UsersGroundTruthAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -340,7 +334,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsUsersGroundTruthAgreementResponse
+        UsersGroundTruthAgreementStatsResponse
             Ground truth agreement statistics for multiple users
 
         Examples
@@ -353,7 +347,6 @@ class StatsClient:
         client.projects.stats.users_ground_truth_agreement(
             id=1,
             ids="ids",
-            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -368,9 +361,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUsersGroundTruthAgreementResponse,
+                    UsersGroundTruthAgreementStatsResponse,
                     construct_type(
-                        type_=StatsUsersGroundTruthAgreementResponse,  # type: ignore
+                        type_=UsersGroundTruthAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -381,7 +374,7 @@ class StatsClient:
 
     def agreement_annotator(
         self, id: int, user_id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsAgreementAnnotatorResponse:
+    ) -> AgreementAnnotatorStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -402,7 +395,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsAgreementAnnotatorResponse
+        AgreementAnnotatorStatsResponse
             Individual annotator agreement statistics
 
         Examples
@@ -425,9 +418,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsAgreementAnnotatorResponse,
+                    AgreementAnnotatorStatsResponse,
                     construct_type(
-                        type_=StatsAgreementAnnotatorResponse,  # type: ignore
+                        type_=AgreementAnnotatorStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -438,7 +431,7 @@ class StatsClient:
 
     def agreement_annotators(
         self, id: int, *, ids: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsAgreementAnnotatorsResponse:
+    ) -> AgreementAnnotatorsStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -460,7 +453,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsAgreementAnnotatorsResponse
+        AgreementAnnotatorsStatsResponse
             Multiple annotator agreement statistics
 
         Examples
@@ -486,9 +479,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsAgreementAnnotatorsResponse,
+                    AgreementAnnotatorsStatsResponse,
                     construct_type(
-                        type_=StatsAgreementAnnotatorsResponse,  # type: ignore
+                        type_=AgreementAnnotatorsStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -499,7 +492,7 @@ class StatsClient:
 
     def data_filters(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsDataFiltersResponse:
+    ) -> DataFiltersStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -518,7 +511,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsDataFiltersResponse
+        DataFiltersStatsResponse
             User data filter statistics
 
         Examples
@@ -540,9 +533,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsDataFiltersResponse,
+                    DataFiltersStatsResponse,
                     construct_type(
-                        type_=StatsDataFiltersResponse,  # type: ignore
+                        type_=DataFiltersStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -553,7 +546,7 @@ class StatsClient:
 
     def finished_tasks(
         self, id: int, *, user_pk: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsFinishedTasksResponse:
+    ) -> FinishedTasksStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -575,7 +568,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsFinishedTasksResponse
+        FinishedTasksStatsResponse
             Finished tasks statistics
 
         Examples
@@ -587,7 +580,6 @@ class StatsClient:
         )
         client.projects.stats.finished_tasks(
             id=1,
-            user_pk=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -601,9 +593,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsFinishedTasksResponse,
+                    FinishedTasksStatsResponse,
                     construct_type(
-                        type_=StatsFinishedTasksResponse,  # type: ignore
+                        type_=FinishedTasksStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -612,7 +604,7 @@ class StatsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def lead_time(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> StatsLeadTimeResponse:
+    def lead_time(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LeadTimeStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -631,7 +623,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsLeadTimeResponse
+        LeadTimeStatsResponse
             Lead time statistics
 
         Examples
@@ -653,9 +645,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsLeadTimeResponse,
+                    LeadTimeStatsResponse,
                     construct_type(
-                        type_=StatsLeadTimeResponse,  # type: ignore
+                        type_=LeadTimeStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -670,7 +662,7 @@ class StatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsTotalAgreementResponse:
+    ) -> TotalAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -694,7 +686,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsTotalAgreementResponse
+        TotalAgreementStatsResponse
             Total agreement
 
         Examples
@@ -706,7 +698,6 @@ class StatsClient:
         )
         client.projects.stats.total_agreement(
             id=1,
-            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -720,9 +711,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsTotalAgreementResponse,
+                    TotalAgreementStatsResponse,
                     construct_type(
-                        type_=StatsTotalAgreementResponse,  # type: ignore
+                        type_=TotalAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -771,7 +762,6 @@ class StatsClient:
         )
         client.projects.stats.update_stats(
             id=1,
-            stat_type="stat_type",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -803,7 +793,7 @@ class StatsClient:
         ids: str,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersPredictionAgreementResponse:
+    ) -> UsersPredictionAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -828,7 +818,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsUsersPredictionAgreementResponse
+        UsersPredictionAgreementStatsResponse
             Prediction agreement statistics for multiple annotators
 
         Examples
@@ -841,7 +831,6 @@ class StatsClient:
         client.projects.stats.users_prediction_agreement(
             id=1,
             ids="ids",
-            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -856,9 +845,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUsersPredictionAgreementResponse,
+                    UsersPredictionAgreementStatsResponse,
                     construct_type(
-                        type_=StatsUsersPredictionAgreementResponse,  # type: ignore
+                        type_=UsersPredictionAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -874,7 +863,7 @@ class StatsClient:
         ids: str,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersReviewScoreResponse:
+    ) -> UsersReviewScoreStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -899,7 +888,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsUsersReviewScoreResponse
+        UsersReviewScoreStatsResponse
             Review scores and performance scores for multiple annotators
 
         Examples
@@ -912,7 +901,6 @@ class StatsClient:
         client.projects.stats.users_review_score(
             id=1,
             ids="ids",
-            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -927,9 +915,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUsersReviewScoreResponse,
+                    UsersReviewScoreStatsResponse,
                     construct_type(
-                        type_=StatsUsersReviewScoreResponse,  # type: ignore
+                        type_=UsersReviewScoreStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -945,7 +933,7 @@ class StatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUserPredictionAgreementResponse:
+    ) -> UserPredictionAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -969,7 +957,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsUserPredictionAgreementResponse
+        UserPredictionAgreementStatsResponse
             Individual user prediction agreement statistics
 
         Examples
@@ -982,7 +970,6 @@ class StatsClient:
         client.projects.stats.user_prediction_agreement(
             id=1,
             user_pk=1,
-            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -996,9 +983,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUserPredictionAgreementResponse,
+                    UserPredictionAgreementStatsResponse,
                     construct_type(
-                        type_=StatsUserPredictionAgreementResponse,  # type: ignore
+                        type_=UserPredictionAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1014,7 +1001,7 @@ class StatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUserReviewScoreResponse:
+    ) -> UserReviewScoreStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1038,7 +1025,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsUserReviewScoreResponse
+        UserReviewScoreStatsResponse
             Individual user review score statistics
 
         Examples
@@ -1051,7 +1038,6 @@ class StatsClient:
         client.projects.stats.user_review_score(
             id=1,
             user_pk=1,
-            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1065,9 +1051,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUserReviewScoreResponse,
+                    UserReviewScoreStatsResponse,
                     construct_type(
-                        type_=StatsUserReviewScoreResponse,  # type: ignore
+                        type_=UserReviewScoreStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1083,7 +1069,7 @@ class StatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUserGroundTruthAgreementResponse:
+    ) -> UserGroundTruthAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1107,7 +1093,7 @@ class StatsClient:
 
         Returns
         -------
-        StatsUserGroundTruthAgreementResponse
+        UserGroundTruthAgreementStatsResponse
             Individual user ground truth agreement statistics
 
         Examples
@@ -1120,7 +1106,6 @@ class StatsClient:
         client.projects.stats.user_ground_truth_agreement(
             id=1,
             user_pk=1,
-            per_label=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1134,9 +1119,9 @@ class StatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUserGroundTruthAgreementResponse,
+                    UserGroundTruthAgreementStatsResponse,
                     construct_type(
-                        type_=StatsUserGroundTruthAgreementResponse,  # type: ignore
+                        type_=UserGroundTruthAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1152,7 +1137,7 @@ class AsyncStatsClient:
 
     async def model_version_annotator_agreement(
         self, id: int, model_version: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsModelVersionAnnotatorAgreementResponse:
+    ) -> ModelVersionAnnotatorAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1173,7 +1158,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsModelVersionAnnotatorAgreementResponse
+        ModelVersionAnnotatorAgreementStatsResponse
             Model-version overall agreement vs annotators
 
         Examples
@@ -1204,9 +1189,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsModelVersionAnnotatorAgreementResponse,
+                    ModelVersionAnnotatorAgreementStatsResponse,
                     construct_type(
-                        type_=StatsModelVersionAnnotatorAgreementResponse,  # type: ignore
+                        type_=ModelVersionAnnotatorAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1222,7 +1207,7 @@ class AsyncStatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsModelVersionGroundTruthAgreementResponse:
+    ) -> ModelVersionGroundTruthAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1246,7 +1231,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsModelVersionGroundTruthAgreementResponse
+        ModelVersionGroundTruthAgreementStatsResponse
             Model-version ground truth agreement
 
         Examples
@@ -1264,7 +1249,6 @@ class AsyncStatsClient:
             await client.projects.stats.model_version_ground_truth_agreement(
                 id=1,
                 model_version="model_version",
-                per_label=True,
             )
 
 
@@ -1281,9 +1265,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsModelVersionGroundTruthAgreementResponse,
+                    ModelVersionGroundTruthAgreementStatsResponse,
                     construct_type(
-                        type_=StatsModelVersionGroundTruthAgreementResponse,  # type: ignore
+                        type_=ModelVersionGroundTruthAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1299,7 +1283,7 @@ class AsyncStatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsModelVersionPredictionAgreementResponse:
+    ) -> ModelVersionPredictionAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1323,7 +1307,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsModelVersionPredictionAgreementResponse
+        ModelVersionPredictionAgreementStatsResponse
             Model-version prediction agreement
 
         Examples
@@ -1341,7 +1325,6 @@ class AsyncStatsClient:
             await client.projects.stats.model_version_prediction_agreement(
                 id=1,
                 model_version="model_version",
-                per_label=True,
             )
 
 
@@ -1358,9 +1341,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsModelVersionPredictionAgreementResponse,
+                    ModelVersionPredictionAgreementStatsResponse,
                     construct_type(
-                        type_=StatsModelVersionPredictionAgreementResponse,  # type: ignore
+                        type_=ModelVersionPredictionAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1378,7 +1361,7 @@ class AsyncStatsClient:
         std: typing.Optional[bool] = None,
         task: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsIaaResponse:
+    ) -> IaaStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1409,7 +1392,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsIaaResponse
+        IaaStatsResponse
             Inter-Annotator Agreement matrix
 
         Examples
@@ -1426,10 +1409,6 @@ class AsyncStatsClient:
         async def main() -> None:
             await client.projects.stats.iaa(
                 id=1,
-                expand="expand",
-                per_label=True,
-                std=True,
-                task="task",
             )
 
 
@@ -1449,9 +1428,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsIaaResponse,
+                    IaaStatsResponse,
                     construct_type(
-                        type_=StatsIaaResponse,  # type: ignore
+                        type_=IaaStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1467,7 +1446,7 @@ class AsyncStatsClient:
         ids: str,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersGroundTruthAgreementResponse:
+    ) -> UsersGroundTruthAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1492,7 +1471,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsUsersGroundTruthAgreementResponse
+        UsersGroundTruthAgreementStatsResponse
             Ground truth agreement statistics for multiple users
 
         Examples
@@ -1510,7 +1489,6 @@ class AsyncStatsClient:
             await client.projects.stats.users_ground_truth_agreement(
                 id=1,
                 ids="ids",
-                per_label=True,
             )
 
 
@@ -1528,9 +1506,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUsersGroundTruthAgreementResponse,
+                    UsersGroundTruthAgreementStatsResponse,
                     construct_type(
-                        type_=StatsUsersGroundTruthAgreementResponse,  # type: ignore
+                        type_=UsersGroundTruthAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1541,7 +1519,7 @@ class AsyncStatsClient:
 
     async def agreement_annotator(
         self, id: int, user_id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsAgreementAnnotatorResponse:
+    ) -> AgreementAnnotatorStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1562,7 +1540,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsAgreementAnnotatorResponse
+        AgreementAnnotatorStatsResponse
             Individual annotator agreement statistics
 
         Examples
@@ -1593,9 +1571,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsAgreementAnnotatorResponse,
+                    AgreementAnnotatorStatsResponse,
                     construct_type(
-                        type_=StatsAgreementAnnotatorResponse,  # type: ignore
+                        type_=AgreementAnnotatorStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1606,7 +1584,7 @@ class AsyncStatsClient:
 
     async def agreement_annotators(
         self, id: int, *, ids: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsAgreementAnnotatorsResponse:
+    ) -> AgreementAnnotatorsStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1628,7 +1606,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsAgreementAnnotatorsResponse
+        AgreementAnnotatorsStatsResponse
             Multiple annotator agreement statistics
 
         Examples
@@ -1662,9 +1640,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsAgreementAnnotatorsResponse,
+                    AgreementAnnotatorsStatsResponse,
                     construct_type(
-                        type_=StatsAgreementAnnotatorsResponse,  # type: ignore
+                        type_=AgreementAnnotatorsStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1675,7 +1653,7 @@ class AsyncStatsClient:
 
     async def data_filters(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsDataFiltersResponse:
+    ) -> DataFiltersStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1694,7 +1672,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsDataFiltersResponse
+        DataFiltersStatsResponse
             User data filter statistics
 
         Examples
@@ -1724,9 +1702,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsDataFiltersResponse,
+                    DataFiltersStatsResponse,
                     construct_type(
-                        type_=StatsDataFiltersResponse,  # type: ignore
+                        type_=DataFiltersStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1737,7 +1715,7 @@ class AsyncStatsClient:
 
     async def finished_tasks(
         self, id: int, *, user_pk: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsFinishedTasksResponse:
+    ) -> FinishedTasksStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1759,7 +1737,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsFinishedTasksResponse
+        FinishedTasksStatsResponse
             Finished tasks statistics
 
         Examples
@@ -1776,7 +1754,6 @@ class AsyncStatsClient:
         async def main() -> None:
             await client.projects.stats.finished_tasks(
                 id=1,
-                user_pk=1,
             )
 
 
@@ -1793,9 +1770,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsFinishedTasksResponse,
+                    FinishedTasksStatsResponse,
                     construct_type(
-                        type_=StatsFinishedTasksResponse,  # type: ignore
+                        type_=FinishedTasksStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1806,7 +1783,7 @@ class AsyncStatsClient:
 
     async def lead_time(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> StatsLeadTimeResponse:
+    ) -> LeadTimeStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1825,7 +1802,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsLeadTimeResponse
+        LeadTimeStatsResponse
             Lead time statistics
 
         Examples
@@ -1855,9 +1832,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsLeadTimeResponse,
+                    LeadTimeStatsResponse,
                     construct_type(
-                        type_=StatsLeadTimeResponse,  # type: ignore
+                        type_=LeadTimeStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1872,7 +1849,7 @@ class AsyncStatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsTotalAgreementResponse:
+    ) -> TotalAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1896,7 +1873,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsTotalAgreementResponse
+        TotalAgreementStatsResponse
             Total agreement
 
         Examples
@@ -1913,7 +1890,6 @@ class AsyncStatsClient:
         async def main() -> None:
             await client.projects.stats.total_agreement(
                 id=1,
-                per_label=True,
             )
 
 
@@ -1930,9 +1906,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsTotalAgreementResponse,
+                    TotalAgreementStatsResponse,
                     construct_type(
-                        type_=StatsTotalAgreementResponse,  # type: ignore
+                        type_=TotalAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1986,7 +1962,6 @@ class AsyncStatsClient:
         async def main() -> None:
             await client.projects.stats.update_stats(
                 id=1,
-                stat_type="stat_type",
             )
 
 
@@ -2021,7 +1996,7 @@ class AsyncStatsClient:
         ids: str,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersPredictionAgreementResponse:
+    ) -> UsersPredictionAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -2046,7 +2021,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsUsersPredictionAgreementResponse
+        UsersPredictionAgreementStatsResponse
             Prediction agreement statistics for multiple annotators
 
         Examples
@@ -2064,7 +2039,6 @@ class AsyncStatsClient:
             await client.projects.stats.users_prediction_agreement(
                 id=1,
                 ids="ids",
-                per_label=True,
             )
 
 
@@ -2082,9 +2056,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUsersPredictionAgreementResponse,
+                    UsersPredictionAgreementStatsResponse,
                     construct_type(
-                        type_=StatsUsersPredictionAgreementResponse,  # type: ignore
+                        type_=UsersPredictionAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2100,7 +2074,7 @@ class AsyncStatsClient:
         ids: str,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUsersReviewScoreResponse:
+    ) -> UsersReviewScoreStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -2125,7 +2099,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsUsersReviewScoreResponse
+        UsersReviewScoreStatsResponse
             Review scores and performance scores for multiple annotators
 
         Examples
@@ -2143,7 +2117,6 @@ class AsyncStatsClient:
             await client.projects.stats.users_review_score(
                 id=1,
                 ids="ids",
-                per_label=True,
             )
 
 
@@ -2161,9 +2134,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUsersReviewScoreResponse,
+                    UsersReviewScoreStatsResponse,
                     construct_type(
-                        type_=StatsUsersReviewScoreResponse,  # type: ignore
+                        type_=UsersReviewScoreStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2179,7 +2152,7 @@ class AsyncStatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUserPredictionAgreementResponse:
+    ) -> UserPredictionAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -2203,7 +2176,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsUserPredictionAgreementResponse
+        UserPredictionAgreementStatsResponse
             Individual user prediction agreement statistics
 
         Examples
@@ -2221,7 +2194,6 @@ class AsyncStatsClient:
             await client.projects.stats.user_prediction_agreement(
                 id=1,
                 user_pk=1,
-                per_label=True,
             )
 
 
@@ -2238,9 +2210,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUserPredictionAgreementResponse,
+                    UserPredictionAgreementStatsResponse,
                     construct_type(
-                        type_=StatsUserPredictionAgreementResponse,  # type: ignore
+                        type_=UserPredictionAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2256,7 +2228,7 @@ class AsyncStatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUserReviewScoreResponse:
+    ) -> UserReviewScoreStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -2280,7 +2252,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsUserReviewScoreResponse
+        UserReviewScoreStatsResponse
             Individual user review score statistics
 
         Examples
@@ -2298,7 +2270,6 @@ class AsyncStatsClient:
             await client.projects.stats.user_review_score(
                 id=1,
                 user_pk=1,
-                per_label=True,
             )
 
 
@@ -2315,9 +2286,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUserReviewScoreResponse,
+                    UserReviewScoreStatsResponse,
                     construct_type(
-                        type_=StatsUserReviewScoreResponse,  # type: ignore
+                        type_=UserReviewScoreStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2333,7 +2304,7 @@ class AsyncStatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StatsUserGroundTruthAgreementResponse:
+    ) -> UserGroundTruthAgreementStatsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -2357,7 +2328,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        StatsUserGroundTruthAgreementResponse
+        UserGroundTruthAgreementStatsResponse
             Individual user ground truth agreement statistics
 
         Examples
@@ -2375,7 +2346,6 @@ class AsyncStatsClient:
             await client.projects.stats.user_ground_truth_agreement(
                 id=1,
                 user_pk=1,
-                per_label=True,
             )
 
 
@@ -2392,9 +2362,9 @@ class AsyncStatsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    StatsUserGroundTruthAgreementResponse,
+                    UserGroundTruthAgreementStatsResponse,
                     construct_type(
-                        type_=StatsUserGroundTruthAgreementResponse,  # type: ignore
+                        type_=UserGroundTruthAgreementStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

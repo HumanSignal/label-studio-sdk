@@ -52,7 +52,6 @@ class GcsClient:
             api_key="YOUR_API_KEY",
         )
         client.export_storage.gcs.list(
-            ordering="ordering",
             project=1,
         )
         """
@@ -533,7 +532,6 @@ class AsyncGcsClient:
 
         async def main() -> None:
             await client.export_storage.gcs.list(
-                ordering="ordering",
                 project=1,
             )
 
