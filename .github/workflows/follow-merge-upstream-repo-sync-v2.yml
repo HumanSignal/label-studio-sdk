@@ -249,7 +249,7 @@ jobs:
           payload: |
             channel: "${{ env.SLACK_CHANNEL_ID }}"
             text: >+
-              :x: Follow Merge downstream workflow has been failed.
+              :x: Follow Merge downstream workflow has been failed in <https://github.com/${{ github.repository }}|${{ github.repository }}>.
               [ ${{ env.WORKFLOW }} ]
               ${{ steps.team_details.outputs.slack-user-id && env.MENTION || '' }}
 
