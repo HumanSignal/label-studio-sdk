@@ -13,13 +13,13 @@ class Prediction(UncheckedBaseModel):
     Cluster for the current prediction
     """
 
-    created_ago: str = pydantic.Field()
+    created_ago: typing.Optional[str] = pydantic.Field(default=None)
     """
     Delta time from creation time
     """
 
-    created_at: dt.datetime
-    id: int
+    created_at: typing.Optional[dt.datetime] = None
+    id: typing.Optional[int] = None
     mislabeling: typing.Optional[float] = pydantic.Field(default=None)
     """
     Related task mislabeling score
@@ -40,7 +40,11 @@ class Prediction(UncheckedBaseModel):
     Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
     """
 
-    neighbors: typing.Optional[typing.Optional[typing.Any]] = None
+    neighbors: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Array of task IDs of the closest neighbors
+    """
+
     project: typing.Optional[int] = None
     result: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
     """
@@ -53,7 +57,7 @@ class Prediction(UncheckedBaseModel):
     """
 
     task: int
-    updated_at: dt.datetime
+    updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

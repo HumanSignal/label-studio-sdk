@@ -2,14 +2,25 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ScimSettings(UncheckedBaseModel):
-    projects_groups: typing.Optional[typing.Optional[typing.Any]] = None
-    roles_groups: typing.Optional[typing.Optional[typing.Any]] = None
-    workspaces_groups: typing.Optional[typing.Optional[typing.Any]] = None
+    projects_groups: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Projects to groups mapping
+    """
+
+    roles_groups: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Roles to groups mapping
+    """
+
+    workspaces_groups: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Workspaces to groups mapping
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

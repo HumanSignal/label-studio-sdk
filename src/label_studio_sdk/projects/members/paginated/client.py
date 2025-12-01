@@ -2,10 +2,12 @@
 
 from ....core.client_wrapper import SyncClientWrapper
 import typing
+import datetime as dt
 from ....core.request_options import RequestOptions
 from ....core.pagination import SyncPager
 from ....types.paginated_project_member import PaginatedProjectMember
 from ....core.jsonable_encoder import jsonable_encoder
+from ....core.datetime_utils import serialize_datetime
 from ....types.paginated_paginated_project_member_list import PaginatedPaginatedProjectMemberList
 from ....core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
@@ -24,9 +26,12 @@ class PaginatedClient:
         *,
         ids: typing.Optional[str] = None,
         implicit: typing.Optional[bool] = None,
+        last_activity_gte: typing.Optional[dt.datetime] = None,
         no_annotators: typing.Optional[bool] = None,
+        ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -40,6 +45,14 @@ class PaginatedClient:
             </Card>
         Retrieve the members for a specific project.
 
+        **Response Fields:**
+        - `implicit_member` (boolean): Indicates if the user is an implicit member.
+          - `true`: User has access via workspace membership or organization role (Administrator/Owner)
+          - `false`: User is an explicit project member (added directly to the project)
+        - `project_role` (string|null): Project-specific role override if assigned, null otherwise
+
+        **Note:** Users can have both explicit membership AND implicit access. The `implicit_member` field is `false` if the user has an explicit ProjectMember entry, regardless of whether they also have implicit access via workspace or org role.
+
         Parameters
         ----------
         id : int
@@ -50,14 +63,48 @@ class PaginatedClient:
         implicit : typing.Optional[bool]
             Include/Exclude implicit project members in the results. If not provided, explicit + implicit members are returned.
 
+        last_activity_gte : typing.Optional[dt.datetime]
+            Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
+
         no_annotators : typing.Optional[bool]
             Exclude annotators from the results
+
+        ordering : typing.Optional[str]
+            Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
+
+            **Note on role ordering:**
+            When ordering by "role", the system uses the effective role:
+            - Project-specific role if assigned (takes precedence)
+            - Organization role if no project role is assigned
+
+            Roles are sorted alphabetically by their code: AD (Administrator), AN (Annotator), DI (Disabled), MA (Manager), NO (Not Activated), OW (Owner), RE (Reviewer)
 
         page : typing.Optional[int]
             A page number within the paginated result set.
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        role : typing.Optional[str]
+            Filter members by role. Accepts single role or comma-separated list of roles.
+
+            **Format:**
+            - Single role: `?role=RE`
+            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+            **Role Codes:**
+            - `OW` = Owner
+            - `AD` = Administrator
+            - `MA` = Manager
+            - `RE` = Reviewer
+            - `AN` = Annotator
+
+            **Matching Logic:**
+            Returns users who have any of the specified roles either:
+            1. As their **project-specific role** (from project role assignments), OR
+            2. As their **organization role** (if they have no project-specific role override)
+
+            **Note:** Project-specific roles take precedence. If a user has a project role assigned, their organization role is ignored for filtering purposes.
 
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username
@@ -96,9 +143,12 @@ class PaginatedClient:
             params={
                 "ids": ids,
                 "implicit": implicit,
+                "last_activity__gte": serialize_datetime(last_activity_gte) if last_activity_gte is not None else None,
                 "no_annotators": no_annotators,
+                "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "role": role,
                 "search": search,
                 "with_deleted": with_deleted,
             },
@@ -118,9 +168,12 @@ class PaginatedClient:
                     id,
                     ids=ids,
                     implicit=implicit,
+                    last_activity_gte=last_activity_gte,
                     no_annotators=no_annotators,
+                    ordering=ordering,
                     page=page + 1,
                     page_size=page_size,
+                    role=role,
                     search=search,
                     with_deleted=with_deleted,
                     request_options=request_options,
@@ -143,9 +196,12 @@ class AsyncPaginatedClient:
         *,
         ids: typing.Optional[str] = None,
         implicit: typing.Optional[bool] = None,
+        last_activity_gte: typing.Optional[dt.datetime] = None,
         no_annotators: typing.Optional[bool] = None,
+        ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -159,6 +215,14 @@ class AsyncPaginatedClient:
             </Card>
         Retrieve the members for a specific project.
 
+        **Response Fields:**
+        - `implicit_member` (boolean): Indicates if the user is an implicit member.
+          - `true`: User has access via workspace membership or organization role (Administrator/Owner)
+          - `false`: User is an explicit project member (added directly to the project)
+        - `project_role` (string|null): Project-specific role override if assigned, null otherwise
+
+        **Note:** Users can have both explicit membership AND implicit access. The `implicit_member` field is `false` if the user has an explicit ProjectMember entry, regardless of whether they also have implicit access via workspace or org role.
+
         Parameters
         ----------
         id : int
@@ -169,14 +233,48 @@ class AsyncPaginatedClient:
         implicit : typing.Optional[bool]
             Include/Exclude implicit project members in the results. If not provided, explicit + implicit members are returned.
 
+        last_activity_gte : typing.Optional[dt.datetime]
+            Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
+
         no_annotators : typing.Optional[bool]
             Exclude annotators from the results
+
+        ordering : typing.Optional[str]
+            Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
+
+            **Note on role ordering:**
+            When ordering by "role", the system uses the effective role:
+            - Project-specific role if assigned (takes precedence)
+            - Organization role if no project role is assigned
+
+            Roles are sorted alphabetically by their code: AD (Administrator), AN (Annotator), DI (Disabled), MA (Manager), NO (Not Activated), OW (Owner), RE (Reviewer)
 
         page : typing.Optional[int]
             A page number within the paginated result set.
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        role : typing.Optional[str]
+            Filter members by role. Accepts single role or comma-separated list of roles.
+
+            **Format:**
+            - Single role: `?role=RE`
+            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+            **Role Codes:**
+            - `OW` = Owner
+            - `AD` = Administrator
+            - `MA` = Manager
+            - `RE` = Reviewer
+            - `AN` = Annotator
+
+            **Matching Logic:**
+            Returns users who have any of the specified roles either:
+            1. As their **project-specific role** (from project role assignments), OR
+            2. As their **organization role** (if they have no project-specific role override)
+
+            **Note:** Project-specific roles take precedence. If a user has a project role assigned, their organization role is ignored for filtering purposes.
 
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username
@@ -223,9 +321,12 @@ class AsyncPaginatedClient:
             params={
                 "ids": ids,
                 "implicit": implicit,
+                "last_activity__gte": serialize_datetime(last_activity_gte) if last_activity_gte is not None else None,
                 "no_annotators": no_annotators,
+                "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "role": role,
                 "search": search,
                 "with_deleted": with_deleted,
             },
@@ -245,9 +346,12 @@ class AsyncPaginatedClient:
                     id,
                     ids=ids,
                     implicit=implicit,
+                    last_activity_gte=last_activity_gte,
                     no_annotators=no_annotators,
+                    ordering=ordering,
                     page=page + 1,
                     page_size=page_size,
+                    role=role,
                     search=search,
                     with_deleted=with_deleted,
                     request_options=request_options,

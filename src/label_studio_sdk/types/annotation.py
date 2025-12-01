@@ -4,7 +4,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
 import datetime as dt
-from .annotation_last_action import AnnotationLastAction
+from .last_action_enum import LastActionEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -22,17 +22,17 @@ class Annotation(UncheckedBaseModel):
     """
 
     completed_by: typing.Optional[int] = None
-    created_ago: str = pydantic.Field()
+    created_ago: typing.Optional[str] = pydantic.Field(default=None)
     """
     Time delta from creation time
     """
 
-    created_at: dt.datetime = pydantic.Field()
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
     """
 
-    created_username: str = pydantic.Field()
+    created_username: typing.Optional[str] = pydantic.Field(default=None)
     """
     Username string
     """
@@ -47,13 +47,13 @@ class Annotation(UncheckedBaseModel):
     This annotation is a Ground Truth (ground_truth)
     """
 
-    id: int
+    id: typing.Optional[int] = None
     import_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Original annotation ID that was at the import step or NULL if this annotation wasn't imported
     """
 
-    last_action: typing.Optional[AnnotationLastAction] = pydantic.Field(default=None)
+    last_action: typing.Optional[LastActionEnum] = pydantic.Field(default=None)
     """
     Action which was performed in the last annotation history item
     
@@ -99,13 +99,13 @@ class Annotation(UncheckedBaseModel):
     List of annotation results for the task
     """
 
-    state: str
+    state: typing.Optional[str] = None
     task: typing.Optional[int] = pydantic.Field(default=None)
     """
     Corresponding task for this annotation
     """
 
-    updated_at: dt.datetime = pydantic.Field()
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last updated time
     """

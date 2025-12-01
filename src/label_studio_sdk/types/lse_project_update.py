@@ -7,8 +7,8 @@ from .assignment_settings import AssignmentSettings
 import datetime as dt
 from .user_simple import UserSimple
 from .review_settings import ReviewSettings
-from .lse_project_update_sampling import LseProjectUpdateSampling
-from .lse_project_update_skip_queue import LseProjectUpdateSkipQueue
+from .sampling_de5enum import SamplingDe5Enum
+from .skip_queue_enum import SkipQueueEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -30,18 +30,22 @@ class LseProjectUpdate(UncheckedBaseModel):
     assignment_settings: AssignmentSettings
     color: typing.Optional[str] = None
     comment_classification_config: typing.Optional[str] = None
-    config_has_control_tags: bool = pydantic.Field()
+    config_has_control_tags: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Flag to detect is project ready for labeling
     """
 
-    config_suitable_for_bulk_annotation: bool = pydantic.Field()
+    config_suitable_for_bulk_annotation: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Flag to detect is project ready for bulk annotation
     """
 
-    control_weights: typing.Optional[typing.Optional[typing.Any]] = None
-    created_at: dt.datetime
+    control_weights: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+    """
+
+    created_at: typing.Optional[dt.datetime] = None
     created_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
     """
     Project owner
@@ -73,17 +77,17 @@ class LseProjectUpdate(UncheckedBaseModel):
     Labeling instructions in HTML format
     """
 
-    finished_task_number: int = pydantic.Field()
+    finished_task_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Finished tasks
     """
 
-    ground_truth_number: int = pydantic.Field()
+    ground_truth_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Honeypot annotation number in project
     """
 
-    id: int
+    id: typing.Optional[int] = None
     is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether or not the project is in the middle of being created
@@ -119,23 +123,27 @@ class LseProjectUpdate(UncheckedBaseModel):
     Machine learning model version
     """
 
-    num_tasks_with_annotations: int = pydantic.Field()
+    num_tasks_with_annotations: typing.Optional[int] = pydantic.Field(default=None)
     """
     Tasks with annotations count
     """
 
     organization: typing.Optional[int] = None
     overlap_cohort_percentage: typing.Optional[int] = None
-    parsed_label_config: typing.Optional[typing.Any] = None
+    parsed_label_config: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    JSON-formatted labeling configuration
+    """
+
     pause_on_failed_annotator_evaluation: typing.Optional[bool] = None
     pinned_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Pinned date and time
     """
 
-    prompts: str
-    queue_done: int
-    queue_total: int
+    prompts: typing.Optional[str] = None
+    queue_done: typing.Optional[int] = None
+    queue_total: typing.Optional[int] = None
     require_comment_on_skip: typing.Optional[bool] = None
     reveal_preannotations_interactively: typing.Optional[bool] = pydantic.Field(default=None)
     """
@@ -143,7 +151,7 @@ class LseProjectUpdate(UncheckedBaseModel):
     """
 
     review_settings: ReviewSettings
-    sampling: typing.Optional[LseProjectUpdateSampling] = None
+    sampling: typing.Optional[SamplingDe5Enum] = None
     show_annotation_history: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Show annotation history to annotator
@@ -171,17 +179,18 @@ class LseProjectUpdate(UncheckedBaseModel):
     """
 
     show_unused_data_columns_to_annotators: typing.Optional[bool] = None
-    skip_queue: typing.Optional[LseProjectUpdateSkipQueue] = None
-    skipped_annotations_number: int = pydantic.Field()
+    skip_queue: typing.Optional[SkipQueueEnum] = None
+    skipped_annotations_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Skipped by collaborators annotation number in project
     """
 
-    start_training_on_annotation_update: bool = pydantic.Field()
+    start_training_on_annotation_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Start model training after any annotations are submitted or updated
     """
 
+    state: typing.Optional[str] = None
     task_data_login: typing.Optional[str] = pydantic.Field(default=None)
     """
     Task data credentials: login
@@ -192,7 +201,7 @@ class LseProjectUpdate(UncheckedBaseModel):
     Task data credentials: password
     """
 
-    task_number: int = pydantic.Field()
+    task_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Total task number in project
     """
@@ -202,23 +211,23 @@ class LseProjectUpdate(UncheckedBaseModel):
     Project name. Must be between 3 and 50 characters long.
     """
 
-    total_annotations_number: int = pydantic.Field()
+    total_annotations_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Total annotations number in project including skipped_annotations_number and ground_truth_number.
     """
 
-    total_predictions_number: int = pydantic.Field()
+    total_predictions_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Total predictions number in project including skipped_annotations_number, ground_truth_number, and useful_annotation_number.
     """
 
-    useful_annotation_number: int = pydantic.Field()
+    useful_annotation_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Useful annotation number in project not including skipped_annotations_number and ground_truth_number. Total annotations = annotation_number + skipped_annotations_number + ground_truth_number
     """
 
     workspace: int
-    workspace_title: str
+    workspace_title: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

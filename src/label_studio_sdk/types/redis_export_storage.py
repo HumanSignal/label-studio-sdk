@@ -14,7 +14,7 @@ class RedisExportStorage(UncheckedBaseModel):
     Deletion from storage enabled
     """
 
-    created_at: dt.datetime = pydantic.Field()
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
     """
@@ -34,7 +34,7 @@ class RedisExportStorage(UncheckedBaseModel):
     Server Host IP (optional)
     """
 
-    id: int
+    id: typing.Optional[int] = None
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last sync finished time
@@ -50,7 +50,11 @@ class RedisExportStorage(UncheckedBaseModel):
     Last sync job ID
     """
 
-    meta: typing.Optional[typing.Optional[typing.Any]] = None
+    meta: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Meta and debug information about storage processes
+    """
+
     password: typing.Optional[str] = pydantic.Field(default=None)
     """
     Server Password (optional)
@@ -88,7 +92,7 @@ class RedisExportStorage(UncheckedBaseModel):
     Traceback report for the last failed sync
     """
 
-    type: str
+    type: typing.Optional[str] = None
     use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Interpret objects as BLOBs and generate URLs

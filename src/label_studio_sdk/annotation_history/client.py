@@ -7,7 +7,7 @@ from ..types.annotation_history import AnnotationHistory
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.annotation_history_delete_response import AnnotationHistoryDeleteResponse
+from .types.delete_annotation_history_response import DeleteAnnotationHistoryResponse
 from ..types.paginated_annotation_history_list import PaginatedAnnotationHistoryList
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
@@ -88,7 +88,7 @@ class AnnotationHistoryClient:
         project: typing.Optional[int] = None,
         task: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AnnotationHistoryDeleteResponse:
+    ) -> DeleteAnnotationHistoryResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -114,7 +114,7 @@ class AnnotationHistoryClient:
 
         Returns
         -------
-        AnnotationHistoryDeleteResponse
+        DeleteAnnotationHistoryResponse
             Returns a dict containing the count of removed items.
 
         Examples
@@ -139,9 +139,9 @@ class AnnotationHistoryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AnnotationHistoryDeleteResponse,
+                    DeleteAnnotationHistoryResponse,
                     construct_type(
-                        type_=AnnotationHistoryDeleteResponse,  # type: ignore
+                        type_=DeleteAnnotationHistoryResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -303,7 +303,7 @@ class AsyncAnnotationHistoryClient:
         project: typing.Optional[int] = None,
         task: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AnnotationHistoryDeleteResponse:
+    ) -> DeleteAnnotationHistoryResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -329,7 +329,7 @@ class AsyncAnnotationHistoryClient:
 
         Returns
         -------
-        AnnotationHistoryDeleteResponse
+        DeleteAnnotationHistoryResponse
             Returns a dict containing the count of removed items.
 
         Examples
@@ -362,9 +362,9 @@ class AsyncAnnotationHistoryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AnnotationHistoryDeleteResponse,
+                    DeleteAnnotationHistoryResponse,
                     construct_type(
-                        type_=AnnotationHistoryDeleteResponse,  # type: ignore
+                        type_=DeleteAnnotationHistoryResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

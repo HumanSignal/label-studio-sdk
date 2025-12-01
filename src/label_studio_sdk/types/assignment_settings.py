@@ -2,16 +2,14 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .assignment_settings_label_stream_task_distribution import AssignmentSettingsLabelStreamTaskDistribution
+from .label_stream_task_distribution_enum import LabelStreamTaskDistributionEnum
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class AssignmentSettings(UncheckedBaseModel):
-    id: int
-    label_stream_task_distribution: typing.Optional[AssignmentSettingsLabelStreamTaskDistribution] = pydantic.Field(
-        default=None
-    )
+    id: typing.Optional[int] = None
+    label_stream_task_distribution: typing.Optional[LabelStreamTaskDistributionEnum] = pydantic.Field(default=None)
     """
     Modes for distributing tasks to annotators
     

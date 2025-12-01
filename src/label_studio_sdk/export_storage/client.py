@@ -12,7 +12,7 @@ from .s3.client import S3Client
 from .s3s.client import S3SClient
 import typing
 from ..core.request_options import RequestOptions
-from .types.export_storage_list_types_response_item import ExportStorageListTypesResponseItem
+from .types.list_types_export_storage_response_item import ListTypesExportStorageResponseItem
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -43,7 +43,7 @@ class ExportStorageClient:
 
     def list_types(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ExportStorageListTypesResponseItem]:
+    ) -> typing.List[ListTypesExportStorageResponseItem]:
         """
         Retrieve a list of the export storages types.
 
@@ -54,7 +54,7 @@ class ExportStorageClient:
 
         Returns
         -------
-        typing.List[ExportStorageListTypesResponseItem]
+        typing.List[ListTypesExportStorageResponseItem]
             List of export storage types
 
         Examples
@@ -74,9 +74,9 @@ class ExportStorageClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[ExportStorageListTypesResponseItem],
+                    typing.List[ListTypesExportStorageResponseItem],
                     construct_type(
-                        type_=typing.List[ExportStorageListTypesResponseItem],  # type: ignore
+                        type_=typing.List[ListTypesExportStorageResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -101,7 +101,7 @@ class AsyncExportStorageClient:
 
     async def list_types(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ExportStorageListTypesResponseItem]:
+    ) -> typing.List[ListTypesExportStorageResponseItem]:
         """
         Retrieve a list of the export storages types.
 
@@ -112,7 +112,7 @@ class AsyncExportStorageClient:
 
         Returns
         -------
-        typing.List[ExportStorageListTypesResponseItem]
+        typing.List[ListTypesExportStorageResponseItem]
             List of export storage types
 
         Examples
@@ -140,9 +140,9 @@ class AsyncExportStorageClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[ExportStorageListTypesResponseItem],
+                    typing.List[ListTypesExportStorageResponseItem],
                     construct_type(
-                        type_=typing.List[ExportStorageListTypesResponseItem],  # type: ignore
+                        type_=typing.List[ListTypesExportStorageResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -3,12 +3,12 @@
 import typing
 from ....core.client_wrapper import SyncClientWrapper
 from ....core.request_options import RequestOptions
-from .types.bulk_post_response import BulkPostResponse
+from .types.post_bulk_response import PostBulkResponse
 from ....core.jsonable_encoder import jsonable_encoder
 from ....core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
-from .types.bulk_delete_response import BulkDeleteResponse
+from .types.delete_bulk_response import DeleteBulkResponse
 from ....core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -27,7 +27,7 @@ class BulkClient:
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BulkPostResponse:
+    ) -> PostBulkResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -52,7 +52,7 @@ class BulkClient:
 
         Returns
         -------
-        BulkPostResponse
+        PostBulkResponse
 
 
         Examples
@@ -84,9 +84,9 @@ class BulkClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BulkPostResponse,
+                    PostBulkResponse,
                     construct_type(
-                        type_=BulkPostResponse,  # type: ignore
+                        type_=PostBulkResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -95,7 +95,7 @@ class BulkClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BulkDeleteResponse:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteBulkResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -114,7 +114,7 @@ class BulkClient:
 
         Returns
         -------
-        BulkDeleteResponse
+        DeleteBulkResponse
 
 
         Examples
@@ -136,9 +136,9 @@ class BulkClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BulkDeleteResponse,
+                    DeleteBulkResponse,
                     construct_type(
-                        type_=BulkDeleteResponse,  # type: ignore
+                        type_=DeleteBulkResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -160,7 +160,7 @@ class AsyncBulkClient:
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BulkPostResponse:
+    ) -> PostBulkResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -185,7 +185,7 @@ class AsyncBulkClient:
 
         Returns
         -------
-        BulkPostResponse
+        PostBulkResponse
 
 
         Examples
@@ -225,9 +225,9 @@ class AsyncBulkClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BulkPostResponse,
+                    PostBulkResponse,
                     construct_type(
-                        type_=BulkPostResponse,  # type: ignore
+                        type_=PostBulkResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -236,7 +236,7 @@ class AsyncBulkClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BulkDeleteResponse:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteBulkResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -255,7 +255,7 @@ class AsyncBulkClient:
 
         Returns
         -------
-        BulkDeleteResponse
+        DeleteBulkResponse
 
 
         Examples
@@ -285,9 +285,9 @@ class AsyncBulkClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BulkDeleteResponse,
+                    DeleteBulkResponse,
                     construct_type(
-                        type_=BulkDeleteResponse,  # type: ignore
+                        type_=DeleteBulkResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -3,12 +3,10 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 import datetime as dt
-from .types.annotation_bulk_serializer_with_selected_items_request_last_action import (
-    AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
-)
+from ..types.last_action_enum import LastActionEnum
 from ..types.selected_items_request import SelectedItemsRequest
 from ..core.request_options import RequestOptions
-from .types.annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
+from .types.create_bulk_annotations_response_item import CreateBulkAnnotationsResponseItem
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
@@ -33,7 +31,7 @@ class AnnotationsClient:
         draft_created_at: typing.Optional[dt.datetime] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
         import_id: typing.Optional[int] = OMIT,
-        last_action: typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction] = OMIT,
+        last_action: typing.Optional[LastActionEnum] = OMIT,
         last_created_by: typing.Optional[int] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
         parent_annotation: typing.Optional[int] = OMIT,
@@ -47,7 +45,7 @@ class AnnotationsClient:
         updated_by: typing.Optional[int] = OMIT,
         was_cancelled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
+    ) -> typing.List[CreateBulkAnnotationsResponseItem]:
         """
         Create multiple annotations at once
 
@@ -67,7 +65,7 @@ class AnnotationsClient:
         import_id : typing.Optional[int]
             Original annotation ID that was at the import step or NULL if this annotation wasn't imported
 
-        last_action : typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]
+        last_action : typing.Optional[LastActionEnum]
             Action which was performed in the last annotation history item
 
             * `prediction` - Created from prediction
@@ -119,7 +117,7 @@ class AnnotationsClient:
 
         Returns
         -------
-        typing.List[AnnotationsCreateBulkResponseItem]
+        typing.List[CreateBulkAnnotationsResponseItem]
             Bulk annotations created successfully
 
         Examples
@@ -140,11 +138,7 @@ class AnnotationsClient:
                 "draft_created_at": draft_created_at,
                 "ground_truth": ground_truth,
                 "import_id": import_id,
-                "last_action": convert_and_respect_annotation_metadata(
-                    object_=last_action,
-                    annotation=AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
-                    direction="write",
-                ),
+                "last_action": last_action,
                 "last_created_by": last_created_by,
                 "lead_time": lead_time,
                 "parent_annotation": parent_annotation,
@@ -169,9 +163,9 @@ class AnnotationsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[AnnotationsCreateBulkResponseItem],
+                    typing.List[CreateBulkAnnotationsResponseItem],
                     construct_type(
-                        type_=typing.List[AnnotationsCreateBulkResponseItem],  # type: ignore
+                        type_=typing.List[CreateBulkAnnotationsResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -583,7 +577,7 @@ class AsyncAnnotationsClient:
         draft_created_at: typing.Optional[dt.datetime] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
         import_id: typing.Optional[int] = OMIT,
-        last_action: typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction] = OMIT,
+        last_action: typing.Optional[LastActionEnum] = OMIT,
         last_created_by: typing.Optional[int] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
         parent_annotation: typing.Optional[int] = OMIT,
@@ -597,7 +591,7 @@ class AsyncAnnotationsClient:
         updated_by: typing.Optional[int] = OMIT,
         was_cancelled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
+    ) -> typing.List[CreateBulkAnnotationsResponseItem]:
         """
         Create multiple annotations at once
 
@@ -617,7 +611,7 @@ class AsyncAnnotationsClient:
         import_id : typing.Optional[int]
             Original annotation ID that was at the import step or NULL if this annotation wasn't imported
 
-        last_action : typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]
+        last_action : typing.Optional[LastActionEnum]
             Action which was performed in the last annotation history item
 
             * `prediction` - Created from prediction
@@ -669,7 +663,7 @@ class AsyncAnnotationsClient:
 
         Returns
         -------
-        typing.List[AnnotationsCreateBulkResponseItem]
+        typing.List[CreateBulkAnnotationsResponseItem]
             Bulk annotations created successfully
 
         Examples
@@ -698,11 +692,7 @@ class AsyncAnnotationsClient:
                 "draft_created_at": draft_created_at,
                 "ground_truth": ground_truth,
                 "import_id": import_id,
-                "last_action": convert_and_respect_annotation_metadata(
-                    object_=last_action,
-                    annotation=AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
-                    direction="write",
-                ),
+                "last_action": last_action,
                 "last_created_by": last_created_by,
                 "lead_time": lead_time,
                 "parent_annotation": parent_annotation,
@@ -727,9 +717,9 @@ class AsyncAnnotationsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[AnnotationsCreateBulkResponseItem],
+                    typing.List[CreateBulkAnnotationsResponseItem],
                     construct_type(
-                        type_=typing.List[AnnotationsCreateBulkResponseItem],  # type: ignore
+                        type_=typing.List[CreateBulkAnnotationsResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

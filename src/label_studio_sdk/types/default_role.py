@@ -32,9 +32,21 @@ class DefaultRole(UncheckedBaseModel):
     * `NO` - Not Activated
     """
 
-    email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = None
-    embed_domains: typing.Optional[typing.Optional[typing.Any]] = None
-    embed_settings: typing.Optional[typing.Optional[typing.Any]] = None
+    email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
+    """
+
+    embed_domains: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
+    """
+
+    embed_settings: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Embed settings for this organization
+    """
+
     external_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     External ID to uniquely identify this organization

@@ -3,20 +3,20 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import datetime as dt
-from .lse_fields_onboarding_state import LseFieldsOnboardingState
+from .onboarding_state_enum import OnboardingStateEnum
 import pydantic
-from .lse_fields_trial_role import LseFieldsTrialRole
+from .trial_role_enum import TrialRoleEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LseFields(UncheckedBaseModel):
-    email_notification_settings: str
+    email_notification_settings: typing.Optional[str] = None
     invite_activated: typing.Optional[bool] = None
-    invite_expired: str
-    invite_expired_at: str
+    invite_expired: typing.Optional[str] = None
+    invite_expired_at: typing.Optional[str] = None
     invited_at: typing.Optional[dt.datetime] = None
     invited_by: typing.Optional[int] = None
-    onboarding_state: typing.Optional[LseFieldsOnboardingState] = pydantic.Field(default=None)
+    onboarding_state: typing.Optional[OnboardingStateEnum] = pydantic.Field(default=None)
     """
     The current stage of user onboarding
     
@@ -37,7 +37,7 @@ class LseFields(UncheckedBaseModel):
     trial_experience_labeling: typing.Optional[str] = None
     trial_license_enterprise: typing.Optional[bool] = None
     trial_models_in_production: typing.Optional[str] = None
-    trial_role: typing.Optional[LseFieldsTrialRole] = None
+    trial_role: typing.Optional[TrialRoleEnum] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

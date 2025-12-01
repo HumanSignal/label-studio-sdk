@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.actions_enum import ActionsEnum
-from .types.webhooks_info_response import WebhooksInfoResponse
+from .types.info_webhooks_response import InfoWebhooksResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.webhook_serializer_for_update import WebhookSerializerForUpdate
 from ..core.client_wrapper import AsyncClientWrapper
@@ -94,6 +94,7 @@ class WebhooksClient:
         actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Optional[typing.Any]]
+            Key Value Json of headers
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
@@ -162,7 +163,7 @@ class WebhooksClient:
         *,
         organization_only: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> WebhooksInfoResponse:
+    ) -> InfoWebhooksResponse:
         """
         Get descriptions of all available webhook actions to set up webhooks.
 
@@ -176,7 +177,7 @@ class WebhooksClient:
 
         Returns
         -------
-        WebhooksInfoResponse
+        InfoWebhooksResponse
             Object with webhook action descriptions.
 
         Examples
@@ -199,9 +200,9 @@ class WebhooksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    WebhooksInfoResponse,
+                    InfoWebhooksResponse,
                     construct_type(
-                        type_=WebhooksInfoResponse,  # type: ignore
+                        type_=InfoWebhooksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -311,6 +312,7 @@ class WebhooksClient:
         actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Optional[typing.Any]]
+            Key Value Json of headers
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
@@ -460,6 +462,7 @@ class AsyncWebhooksClient:
         actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Optional[typing.Any]]
+            Key Value Json of headers
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
@@ -536,7 +539,7 @@ class AsyncWebhooksClient:
         *,
         organization_only: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> WebhooksInfoResponse:
+    ) -> InfoWebhooksResponse:
         """
         Get descriptions of all available webhook actions to set up webhooks.
 
@@ -550,7 +553,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        WebhooksInfoResponse
+        InfoWebhooksResponse
             Object with webhook action descriptions.
 
         Examples
@@ -581,9 +584,9 @@ class AsyncWebhooksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    WebhooksInfoResponse,
+                    InfoWebhooksResponse,
                     construct_type(
-                        type_=WebhooksInfoResponse,  # type: ignore
+                        type_=InfoWebhooksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -709,6 +712,7 @@ class AsyncWebhooksClient:
         actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Optional[typing.Any]]
+            Key Value Json of headers
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled

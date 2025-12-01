@@ -12,7 +12,7 @@ from .s3.client import S3Client
 from .s3s.client import S3SClient
 import typing
 from ..core.request_options import RequestOptions
-from .types.import_storage_list_types_response_item import ImportStorageListTypesResponseItem
+from .types.list_types_import_storage_response_item import ListTypesImportStorageResponseItem
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -43,7 +43,7 @@ class ImportStorageClient:
 
     def list_types(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ImportStorageListTypesResponseItem]:
+    ) -> typing.List[ListTypesImportStorageResponseItem]:
         """
         Retrieve a list of the import storages types.
 
@@ -54,7 +54,7 @@ class ImportStorageClient:
 
         Returns
         -------
-        typing.List[ImportStorageListTypesResponseItem]
+        typing.List[ListTypesImportStorageResponseItem]
             List of import storage types
 
         Examples
@@ -74,9 +74,9 @@ class ImportStorageClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[ImportStorageListTypesResponseItem],
+                    typing.List[ListTypesImportStorageResponseItem],
                     construct_type(
-                        type_=typing.List[ImportStorageListTypesResponseItem],  # type: ignore
+                        type_=typing.List[ListTypesImportStorageResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -101,7 +101,7 @@ class AsyncImportStorageClient:
 
     async def list_types(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ImportStorageListTypesResponseItem]:
+    ) -> typing.List[ListTypesImportStorageResponseItem]:
         """
         Retrieve a list of the import storages types.
 
@@ -112,7 +112,7 @@ class AsyncImportStorageClient:
 
         Returns
         -------
-        typing.List[ImportStorageListTypesResponseItem]
+        typing.List[ListTypesImportStorageResponseItem]
             List of import storage types
 
         Examples
@@ -140,9 +140,9 @@ class AsyncImportStorageClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[ImportStorageListTypesResponseItem],
+                    typing.List[ListTypesImportStorageResponseItem],
                     construct_type(
-                        type_=typing.List[ImportStorageListTypesResponseItem],  # type: ignore
+                        type_=typing.List[ListTypesImportStorageResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

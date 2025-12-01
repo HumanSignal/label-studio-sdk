@@ -15,13 +15,13 @@ class Workspace(UncheckedBaseModel):
     """
 
     color: typing.Optional[str] = None
-    created_by: int
+    created_by: typing.Optional[int] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Workspace description
     """
 
-    id: int
+    id: typing.Optional[int] = None
     is_archived: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Workspace is archived
@@ -32,6 +32,7 @@ class Workspace(UncheckedBaseModel):
     Workspace is a personal user workspace
     """
 
+    membership: typing.Optional[str] = None
     title: str = pydantic.Field()
     """
     Workspace name

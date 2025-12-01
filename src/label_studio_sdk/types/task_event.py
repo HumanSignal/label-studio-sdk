@@ -15,7 +15,7 @@ class TaskEvent(UncheckedBaseModel):
     ensuring proper data format and automatically setting required relationships.
     """
 
-    actor: int
+    actor: typing.Optional[int] = None
     annotation: typing.Optional[int] = pydantic.Field(default=None)
     """
     Annotation ID associated with this event
@@ -26,7 +26,7 @@ class TaskEvent(UncheckedBaseModel):
     Draft annotation ID associated with this event
     """
 
-    created_at: dt.datetime
+    created_at: typing.Optional[dt.datetime] = None
     event_key: str = pydantic.Field()
     """
     Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
@@ -37,16 +37,20 @@ class TaskEvent(UncheckedBaseModel):
     Timestamp when the event occurred (frontend time)
     """
 
-    id: int
-    meta: typing.Optional[typing.Optional[typing.Any]] = None
-    organization: int
-    project: int
+    id: typing.Optional[int] = None
+    meta: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Additional event metadata (region data, hotkey info, etc.)
+    """
+
+    organization: typing.Optional[int] = None
+    project: typing.Optional[int] = None
     review: typing.Optional[int] = pydantic.Field(default=None)
     """
     Review ID associated with this event
     """
 
-    task: int = pydantic.Field()
+    task: typing.Optional[int] = pydantic.Field(default=None)
     """
     Task this event is associated with
     """

@@ -3,9 +3,9 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
-from .review_settings_requeue_rejected_tasks_mode import ReviewSettingsRequeueRejectedTasksMode
-from .review_settings_review_criteria import ReviewSettingsReviewCriteria
-from .review_settings_sampling import ReviewSettingsSampling
+from .requeue_rejected_tasks_mode_enum import RequeueRejectedTasksModeEnum
+from .review_criteria_enum import ReviewCriteriaEnum
+from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -15,7 +15,7 @@ class ReviewSettings(UncheckedBaseModel):
     Hide annotator names from annotations while review
     """
 
-    id: int
+    id: typing.Optional[int] = None
     instruction: typing.Optional[str] = pydantic.Field(default=None)
     """
     Reviewer instructions in HTML format
@@ -27,7 +27,7 @@ class ReviewSettings(UncheckedBaseModel):
     """
 
     project: typing.Optional[int] = None
-    requeue_rejected_tasks_mode: typing.Optional[ReviewSettingsRequeueRejectedTasksMode] = pydantic.Field(default=None)
+    requeue_rejected_tasks_mode: typing.Optional[RequeueRejectedTasksModeEnum] = pydantic.Field(default=None)
     """
     Requeue mode for rejected tasks
     
@@ -36,13 +36,13 @@ class ReviewSettings(UncheckedBaseModel):
     * `flexible` - Flexible
     """
 
-    requeue_rejected_tasks_to_annotator: bool
+    requeue_rejected_tasks_to_annotator: typing.Optional[bool] = None
     require_comment_on_reject: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If set, the reviewer must leave a comment on reject
     """
 
-    review_criteria: typing.Optional[ReviewSettingsReviewCriteria] = pydantic.Field(default=None)
+    review_criteria: typing.Optional[ReviewCriteriaEnum] = pydantic.Field(default=None)
     """
     Criteria to mark task as reviewed
     
@@ -60,7 +60,7 @@ class ReviewSettings(UncheckedBaseModel):
     Percent of tasks to include in review stream (0-100). Null/0 disables.
     """
 
-    sampling: typing.Optional[ReviewSettingsSampling] = pydantic.Field(default=None)
+    sampling: typing.Optional[ReviewSettingsSamplingEnum] = pydantic.Field(default=None)
     """
     Task sampling strategy in the review stream (by task id or random)
     

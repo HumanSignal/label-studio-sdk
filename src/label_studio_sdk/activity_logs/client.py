@@ -2,7 +2,7 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 import typing
-from .types.activity_logs_list_request_method import ActivityLogsListRequestMethod
+from .types.list_activity_logs_request_method import ListActivityLogsRequestMethod
 from ..core.request_options import RequestOptions
 from ..types.activity_log_response import ActivityLogResponse
 from ..core.unchecked_base_model import construct_type
@@ -20,7 +20,7 @@ class ActivityLogsClient:
         self,
         *,
         end_date: typing.Optional[str] = None,
-        method: typing.Optional[ActivityLogsListRequestMethod] = None,
+        method: typing.Optional[ListActivityLogsRequestMethod] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -45,7 +45,7 @@ class ActivityLogsClient:
         end_date : typing.Optional[str]
             End date/time (ISO-8601) for log filtering.
 
-        method : typing.Optional[ActivityLogsListRequestMethod]
+        method : typing.Optional[ListActivityLogsRequestMethod]
             HTTP request method used in the log.
 
         ordering : typing.Optional[str]
@@ -139,7 +139,7 @@ class AsyncActivityLogsClient:
         self,
         *,
         end_date: typing.Optional[str] = None,
-        method: typing.Optional[ActivityLogsListRequestMethod] = None,
+        method: typing.Optional[ListActivityLogsRequestMethod] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -164,7 +164,7 @@ class AsyncActivityLogsClient:
         end_date : typing.Optional[str]
             End date/time (ISO-8601) for log filtering.
 
-        method : typing.Optional[ActivityLogsListRequestMethod]
+        method : typing.Optional[ListActivityLogsRequestMethod]
             HTTP request method used in the log.
 
         ordering : typing.Optional[str]

@@ -27,7 +27,7 @@ class ProjectImport(UncheckedBaseModel):
     """
 
     found_formats: typing.Optional[typing.Optional[typing.Any]] = None
-    id: int
+    id: typing.Optional[int] = None
     preannotated_from_fields: typing.Optional[typing.Optional[typing.Any]] = None
     prediction_count: typing.Optional[int] = None
     project: typing.Optional[int] = None

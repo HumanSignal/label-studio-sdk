@@ -126,6 +126,7 @@ class CommentsClient:
         annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
+            Classifications applied by a reviewer or annotator
 
         draft : typing.Optional[int]
 
@@ -133,6 +134,7 @@ class CommentsClient:
             True if the comment is resolved
 
         region_ref : typing.Optional[typing.Optional[typing.Any]]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
         text : typing.Optional[str]
             Reviewer or annotator comment
@@ -406,6 +408,7 @@ class CommentsClient:
         annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
+            Classifications applied by a reviewer or annotator
 
         draft : typing.Optional[int]
 
@@ -413,6 +416,7 @@ class CommentsClient:
             True if the comment is resolved
 
         region_ref : typing.Optional[typing.Optional[typing.Any]]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
         text : typing.Optional[str]
             Reviewer or annotator comment
@@ -591,6 +595,7 @@ class AsyncCommentsClient:
         annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
+            Classifications applied by a reviewer or annotator
 
         draft : typing.Optional[int]
 
@@ -598,6 +603,7 @@ class AsyncCommentsClient:
             True if the comment is resolved
 
         region_ref : typing.Optional[typing.Optional[typing.Any]]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
         text : typing.Optional[str]
             Reviewer or annotator comment
@@ -895,6 +901,7 @@ class AsyncCommentsClient:
         annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
+            Classifications applied by a reviewer or annotator
 
         draft : typing.Optional[int]
 
@@ -902,6 +909,7 @@ class AsyncCommentsClient:
             True if the comment is resolved
 
         region_ref : typing.Optional[typing.Optional[typing.Any]]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
         text : typing.Optional[str]
             Reviewer or annotator comment

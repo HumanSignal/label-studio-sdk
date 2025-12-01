@@ -54,8 +54,5 @@ jobs:
       - name: "Install dependencies"
         run: poetry install
 
-      - name: Install Fern
-        run: npm install -g fern-api@latest
-
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: poetry run pytest -rP .

@@ -4,13 +4,13 @@ import typing
 from ....core.client_wrapper import SyncClientWrapper
 from ....types.project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
 from ....core.request_options import RequestOptions
-from .types.bulk_post_response import BulkPostResponse
+from .types.post_bulk_response import PostBulkResponse
 from ....core.jsonable_encoder import jsonable_encoder
 from ....core.serialization import convert_and_respect_annotation_metadata
 from ....core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
-from .types.bulk_delete_response import BulkDeleteResponse
+from .types.delete_bulk_response import DeleteBulkResponse
 from ....core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -26,12 +26,14 @@ class BulkClient:
         id: int,
         *,
         all_: bool,
+        last_activity_gte: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BulkPostResponse:
+    ) -> PostBulkResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -47,6 +49,12 @@ class BulkClient:
 
         all_ : bool
 
+        last_activity_gte : typing.Optional[str]
+            Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        role : typing.Optional[str]
+            Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
 
@@ -61,7 +69,7 @@ class BulkClient:
 
         Returns
         -------
-        BulkPostResponse
+        PostBulkResponse
 
 
         Examples
@@ -80,6 +88,8 @@ class BulkClient:
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="POST",
             params={
+                "last_activity__gte": last_activity_gte,
+                "role": role,
                 "search": search,
             },
             json={
@@ -99,9 +109,9 @@ class BulkClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BulkPostResponse,
+                    PostBulkResponse,
                     construct_type(
-                        type_=BulkPostResponse,  # type: ignore
+                        type_=PostBulkResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -111,8 +121,14 @@ class BulkClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, id: int, *, search: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkDeleteResponse:
+        self,
+        id: int,
+        *,
+        last_activity_gte: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DeleteBulkResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -126,6 +142,12 @@ class BulkClient:
         ----------
         id : int
 
+        last_activity_gte : typing.Optional[str]
+            Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        role : typing.Optional[str]
+            Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
 
@@ -134,7 +156,7 @@ class BulkClient:
 
         Returns
         -------
-        BulkDeleteResponse
+        DeleteBulkResponse
 
 
         Examples
@@ -152,6 +174,8 @@ class BulkClient:
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="DELETE",
             params={
+                "last_activity__gte": last_activity_gte,
+                "role": role,
                 "search": search,
             },
             request_options=request_options,
@@ -159,9 +183,9 @@ class BulkClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BulkDeleteResponse,
+                    DeleteBulkResponse,
                     construct_type(
-                        type_=BulkDeleteResponse,  # type: ignore
+                        type_=DeleteBulkResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -180,12 +204,14 @@ class AsyncBulkClient:
         id: int,
         *,
         all_: bool,
+        last_activity_gte: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BulkPostResponse:
+    ) -> PostBulkResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -201,6 +227,12 @@ class AsyncBulkClient:
 
         all_ : bool
 
+        last_activity_gte : typing.Optional[str]
+            Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        role : typing.Optional[str]
+            Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
 
@@ -215,7 +247,7 @@ class AsyncBulkClient:
 
         Returns
         -------
-        BulkPostResponse
+        PostBulkResponse
 
 
         Examples
@@ -242,6 +274,8 @@ class AsyncBulkClient:
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="POST",
             params={
+                "last_activity__gte": last_activity_gte,
+                "role": role,
                 "search": search,
             },
             json={
@@ -261,9 +295,9 @@ class AsyncBulkClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BulkPostResponse,
+                    PostBulkResponse,
                     construct_type(
-                        type_=BulkPostResponse,  # type: ignore
+                        type_=PostBulkResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -273,8 +307,14 @@ class AsyncBulkClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, id: int, *, search: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkDeleteResponse:
+        self,
+        id: int,
+        *,
+        last_activity_gte: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DeleteBulkResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -288,6 +328,12 @@ class AsyncBulkClient:
         ----------
         id : int
 
+        last_activity_gte : typing.Optional[str]
+            Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        role : typing.Optional[str]
+            Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
 
@@ -296,7 +342,7 @@ class AsyncBulkClient:
 
         Returns
         -------
-        BulkDeleteResponse
+        DeleteBulkResponse
 
 
         Examples
@@ -322,6 +368,8 @@ class AsyncBulkClient:
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="DELETE",
             params={
+                "last_activity__gte": last_activity_gte,
+                "role": role,
                 "search": search,
             },
             request_options=request_options,
@@ -329,9 +377,9 @@ class AsyncBulkClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BulkDeleteResponse,
+                    DeleteBulkResponse,
                     construct_type(
-                        type_=BulkDeleteResponse,  # type: ignore
+                        type_=DeleteBulkResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

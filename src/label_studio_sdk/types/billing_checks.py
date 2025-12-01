@@ -3,6 +3,7 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .count_limit import CountLimit
 import typing
+import datetime as dt
 from .prompts_status_enum import PromptsStatusEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
@@ -15,9 +16,9 @@ class BillingChecks(UncheckedBaseModel):
     is_license_warning: bool
     is_prompts_expire: bool
     is_prompts_warning: bool
-    license_expires: typing.Optional[str] = None
-    license_issued: typing.Optional[str] = None
-    license_warning: typing.Optional[str] = None
+    license_expires: typing.Optional[dt.date] = None
+    license_issued: typing.Optional[dt.date] = None
+    license_warning: typing.Optional[dt.date] = None
     organization_is_active: bool
     projects: CountLimit
     prompts_api_keys_enabled: bool

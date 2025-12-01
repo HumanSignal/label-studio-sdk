@@ -7,10 +7,10 @@ from ..types.view import View
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.views_create_request_data import ViewsCreateRequestData
+from .types.create_views_request_data import CreateViewsRequestData
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.views_update_request_data import ViewsUpdateRequestData
+from .types.update_views_request_data import UpdateViewsRequestData
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -74,7 +74,7 @@ class ViewsClient:
     def create(
         self,
         *,
-        data: typing.Optional[ViewsCreateRequestData] = OMIT,
+        data: typing.Optional[CreateViewsRequestData] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
@@ -83,7 +83,7 @@ class ViewsClient:
 
         Parameters
         ----------
-        data : typing.Optional[ViewsCreateRequestData]
+        data : typing.Optional[CreateViewsRequestData]
             Custom view data
 
         project : typing.Optional[int]
@@ -111,7 +111,7 @@ class ViewsClient:
             method="POST",
             json={
                 "data": convert_and_respect_annotation_metadata(
-                    object_=data, annotation=ViewsCreateRequestData, direction="write"
+                    object_=data, annotation=CreateViewsRequestData, direction="write"
                 ),
                 "project": project,
             },
@@ -322,7 +322,7 @@ class ViewsClient:
         self,
         id: str,
         *,
-        data: typing.Optional[ViewsUpdateRequestData] = OMIT,
+        data: typing.Optional[UpdateViewsRequestData] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
@@ -334,7 +334,7 @@ class ViewsClient:
         id : str
             View ID
 
-        data : typing.Optional[ViewsUpdateRequestData]
+        data : typing.Optional[UpdateViewsRequestData]
             Custom view data
 
         project : typing.Optional[int]
@@ -364,7 +364,7 @@ class ViewsClient:
             method="PATCH",
             json={
                 "data": convert_and_respect_annotation_metadata(
-                    object_=data, annotation=ViewsUpdateRequestData, direction="write"
+                    object_=data, annotation=UpdateViewsRequestData, direction="write"
                 ),
                 "project": project,
             },
@@ -454,7 +454,7 @@ class AsyncViewsClient:
     async def create(
         self,
         *,
-        data: typing.Optional[ViewsCreateRequestData] = OMIT,
+        data: typing.Optional[CreateViewsRequestData] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
@@ -463,7 +463,7 @@ class AsyncViewsClient:
 
         Parameters
         ----------
-        data : typing.Optional[ViewsCreateRequestData]
+        data : typing.Optional[CreateViewsRequestData]
             Custom view data
 
         project : typing.Optional[int]
@@ -499,7 +499,7 @@ class AsyncViewsClient:
             method="POST",
             json={
                 "data": convert_and_respect_annotation_metadata(
-                    object_=data, annotation=ViewsCreateRequestData, direction="write"
+                    object_=data, annotation=CreateViewsRequestData, direction="write"
                 ),
                 "project": project,
             },
@@ -742,7 +742,7 @@ class AsyncViewsClient:
         self,
         id: str,
         *,
-        data: typing.Optional[ViewsUpdateRequestData] = OMIT,
+        data: typing.Optional[UpdateViewsRequestData] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
@@ -754,7 +754,7 @@ class AsyncViewsClient:
         id : str
             View ID
 
-        data : typing.Optional[ViewsUpdateRequestData]
+        data : typing.Optional[UpdateViewsRequestData]
             Custom view data
 
         project : typing.Optional[int]
@@ -792,7 +792,7 @@ class AsyncViewsClient:
             method="PATCH",
             json={
                 "data": convert_and_respect_annotation_metadata(
-                    object_=data, annotation=ViewsUpdateRequestData, direction="write"
+                    object_=data, annotation=UpdateViewsRequestData, direction="write"
                 ),
                 "project": project,
             },

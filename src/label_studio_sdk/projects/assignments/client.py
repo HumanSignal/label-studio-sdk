@@ -2,11 +2,11 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .types.assignments_bulk_assign_request_selected_items import AssignmentsBulkAssignRequestSelectedItems
-from .types.assignments_bulk_assign_request_type import AssignmentsBulkAssignRequestType
-from .types.assignments_bulk_assign_request_filters import AssignmentsBulkAssignRequestFilters
+from .types.bulk_assign_assignments_request_selected_items import BulkAssignAssignmentsRequestSelectedItems
+from .types.bulk_assign_assignments_request_type import BulkAssignAssignmentsRequestType
+from .types.bulk_assign_assignments_request_filters import BulkAssignAssignmentsRequestFilters
 from ...core.request_options import RequestOptions
-from .types.assignments_bulk_assign_response import AssignmentsBulkAssignResponse
+from .types.bulk_assign_assignments_response import BulkAssignAssignmentsResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
@@ -14,9 +14,9 @@ from ...errors.bad_request_error import BadRequestError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.task_assignment import TaskAssignment
-from .types.assignments_assign_request_type import AssignmentsAssignRequestType
-from .types.assignments_delete_request_type import AssignmentsDeleteRequestType
-from .types.assignments_update_request_type import AssignmentsUpdateRequestType
+from .types.assign_assignments_request_type import AssignAssignmentsRequestType
+from .types.delete_assignments_request_type import DeleteAssignmentsRequestType
+from .types.update_assignments_request_type import UpdateAssignmentsRequestType
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -31,12 +31,12 @@ class AssignmentsClient:
         self,
         id: int,
         *,
-        selected_items: AssignmentsBulkAssignRequestSelectedItems,
-        type: AssignmentsBulkAssignRequestType,
+        selected_items: BulkAssignAssignmentsRequestSelectedItems,
+        type: BulkAssignAssignmentsRequestType,
         users: typing.Sequence[int],
-        filters: typing.Optional[AssignmentsBulkAssignRequestFilters] = OMIT,
+        filters: typing.Optional[BulkAssignAssignmentsRequestFilters] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AssignmentsBulkAssignResponse:
+    ) -> BulkAssignAssignmentsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -50,16 +50,16 @@ class AssignmentsClient:
         ----------
         id : int
 
-        selected_items : AssignmentsBulkAssignRequestSelectedItems
+        selected_items : BulkAssignAssignmentsRequestSelectedItems
             Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
-        type : AssignmentsBulkAssignRequestType
+        type : BulkAssignAssignmentsRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]
             List of user IDs to assign
 
-        filters : typing.Optional[AssignmentsBulkAssignRequestFilters]
+        filters : typing.Optional[BulkAssignAssignmentsRequestFilters]
             Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
 
         request_options : typing.Optional[RequestOptions]
@@ -67,14 +67,14 @@ class AssignmentsClient:
 
         Returns
         -------
-        AssignmentsBulkAssignResponse
+        BulkAssignAssignmentsResponse
             Success
 
         Examples
         --------
         from label_studio_sdk import LabelStudio
         from label_studio_sdk.projects.assignments import (
-            AssignmentsBulkAssignRequestSelectedItemsIncluded,
+            BulkAssignAssignmentsRequestSelectedItemsIncluded,
         )
 
         client = LabelStudio(
@@ -82,7 +82,7 @@ class AssignmentsClient:
         )
         client.projects.assignments.bulk_assign(
             id=1,
-            selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
+            selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
                 all_=True,
             ),
             type="AN",
@@ -94,10 +94,10 @@ class AssignmentsClient:
             method="POST",
             json={
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=AssignmentsBulkAssignRequestFilters, direction="write"
+                    object_=filters, annotation=BulkAssignAssignmentsRequestFilters, direction="write"
                 ),
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=AssignmentsBulkAssignRequestSelectedItems, direction="write"
+                    object_=selected_items, annotation=BulkAssignAssignmentsRequestSelectedItems, direction="write"
                 ),
                 "type": type,
                 "users": users,
@@ -111,9 +111,9 @@ class AssignmentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AssignmentsBulkAssignResponse,
+                    BulkAssignAssignmentsResponse,
                     construct_type(
-                        type_=AssignmentsBulkAssignResponse,  # type: ignore
+                        type_=BulkAssignAssignmentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -196,7 +196,7 @@ class AssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        type: AssignmentsAssignRequestType,
+        type: AssignAssignmentsRequestType,
         users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
@@ -217,7 +217,7 @@ class AssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : AssignmentsAssignRequestType
+        type : AssignAssignmentsRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]
@@ -277,7 +277,7 @@ class AssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        type: typing.Optional[AssignmentsDeleteRequestType] = None,
+        type: typing.Optional[DeleteAssignmentsRequestType] = None,
         users: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
@@ -298,7 +298,7 @@ class AssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : typing.Optional[AssignmentsDeleteRequestType]
+        type : typing.Optional[DeleteAssignmentsRequestType]
             Assignment type to delete (optional). If omitted, deletes all assignments for the task.
 
         users : typing.Optional[str]
@@ -345,7 +345,7 @@ class AssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        type: AssignmentsUpdateRequestType,
+        type: UpdateAssignmentsRequestType,
         users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
@@ -366,7 +366,7 @@ class AssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : AssignmentsUpdateRequestType
+        type : UpdateAssignmentsRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]
@@ -430,12 +430,12 @@ class AsyncAssignmentsClient:
         self,
         id: int,
         *,
-        selected_items: AssignmentsBulkAssignRequestSelectedItems,
-        type: AssignmentsBulkAssignRequestType,
+        selected_items: BulkAssignAssignmentsRequestSelectedItems,
+        type: BulkAssignAssignmentsRequestType,
         users: typing.Sequence[int],
-        filters: typing.Optional[AssignmentsBulkAssignRequestFilters] = OMIT,
+        filters: typing.Optional[BulkAssignAssignmentsRequestFilters] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AssignmentsBulkAssignResponse:
+    ) -> BulkAssignAssignmentsResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -449,16 +449,16 @@ class AsyncAssignmentsClient:
         ----------
         id : int
 
-        selected_items : AssignmentsBulkAssignRequestSelectedItems
+        selected_items : BulkAssignAssignmentsRequestSelectedItems
             Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
-        type : AssignmentsBulkAssignRequestType
+        type : BulkAssignAssignmentsRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]
             List of user IDs to assign
 
-        filters : typing.Optional[AssignmentsBulkAssignRequestFilters]
+        filters : typing.Optional[BulkAssignAssignmentsRequestFilters]
             Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
 
         request_options : typing.Optional[RequestOptions]
@@ -466,7 +466,7 @@ class AsyncAssignmentsClient:
 
         Returns
         -------
-        AssignmentsBulkAssignResponse
+        BulkAssignAssignmentsResponse
             Success
 
         Examples
@@ -475,7 +475,7 @@ class AsyncAssignmentsClient:
 
         from label_studio_sdk import AsyncLabelStudio
         from label_studio_sdk.projects.assignments import (
-            AssignmentsBulkAssignRequestSelectedItemsIncluded,
+            BulkAssignAssignmentsRequestSelectedItemsIncluded,
         )
 
         client = AsyncLabelStudio(
@@ -486,7 +486,7 @@ class AsyncAssignmentsClient:
         async def main() -> None:
             await client.projects.assignments.bulk_assign(
                 id=1,
-                selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
+                selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
                     all_=True,
                 ),
                 type="AN",
@@ -501,10 +501,10 @@ class AsyncAssignmentsClient:
             method="POST",
             json={
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=AssignmentsBulkAssignRequestFilters, direction="write"
+                    object_=filters, annotation=BulkAssignAssignmentsRequestFilters, direction="write"
                 ),
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=AssignmentsBulkAssignRequestSelectedItems, direction="write"
+                    object_=selected_items, annotation=BulkAssignAssignmentsRequestSelectedItems, direction="write"
                 ),
                 "type": type,
                 "users": users,
@@ -518,9 +518,9 @@ class AsyncAssignmentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AssignmentsBulkAssignResponse,
+                    BulkAssignAssignmentsResponse,
                     construct_type(
-                        type_=AssignmentsBulkAssignResponse,  # type: ignore
+                        type_=BulkAssignAssignmentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -611,7 +611,7 @@ class AsyncAssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        type: AssignmentsAssignRequestType,
+        type: AssignAssignmentsRequestType,
         users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
@@ -632,7 +632,7 @@ class AsyncAssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : AssignmentsAssignRequestType
+        type : AssignAssignmentsRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]
@@ -700,7 +700,7 @@ class AsyncAssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        type: typing.Optional[AssignmentsDeleteRequestType] = None,
+        type: typing.Optional[DeleteAssignmentsRequestType] = None,
         users: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
@@ -721,7 +721,7 @@ class AsyncAssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : typing.Optional[AssignmentsDeleteRequestType]
+        type : typing.Optional[DeleteAssignmentsRequestType]
             Assignment type to delete (optional). If omitted, deletes all assignments for the task.
 
         users : typing.Optional[str]
@@ -776,7 +776,7 @@ class AsyncAssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        type: AssignmentsUpdateRequestType,
+        type: UpdateAssignmentsRequestType,
         users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
@@ -797,7 +797,7 @@ class AsyncAssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : AssignmentsUpdateRequestType
+        type : UpdateAssignmentsRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]

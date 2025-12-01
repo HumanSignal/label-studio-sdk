@@ -14,10 +14,10 @@ class UserSimple(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
-    avatar: str
+    avatar: typing.Optional[str] = None
     email: typing.Optional[str] = None
     first_name: typing.Optional[str] = None
-    id: int
+    id: typing.Optional[int] = None
     last_name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

@@ -20,7 +20,7 @@ from ..types.user_simple_request import UserSimpleRequest
 from ..types.skill_name_enum import SkillNameEnum
 from ..types.model_interface import ModelInterface
 from ..core.serialization import convert_and_respect_annotation_metadata
-from .types.prompts_compatible_projects_request_project_type import PromptsCompatibleProjectsRequestProjectType
+from .types.compatible_projects_prompts_request_project_type import CompatibleProjectsPromptsRequestProjectType
 from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from ..core.client_wrapper import AsyncClientWrapper
 from .indicators.client import AsyncIndicatorsClient
@@ -520,7 +520,7 @@ class PromptsClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        project_type: typing.Optional[PromptsCompatibleProjectsRequestProjectType] = None,
+        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedAllRolesProjectListList:
         """
@@ -537,7 +537,7 @@ class PromptsClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        project_type : typing.Optional[PromptsCompatibleProjectsRequestProjectType]
+        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
             Skill to filter by
 
         request_options : typing.Optional[RequestOptions]
@@ -1317,7 +1317,7 @@ class AsyncPromptsClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        project_type: typing.Optional[PromptsCompatibleProjectsRequestProjectType] = None,
+        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedAllRolesProjectListList:
         """
@@ -1334,7 +1334,7 @@ class AsyncPromptsClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        project_type : typing.Optional[PromptsCompatibleProjectsRequestProjectType]
+        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
             Skill to filter by
 
         request_options : typing.Optional[RequestOptions]
