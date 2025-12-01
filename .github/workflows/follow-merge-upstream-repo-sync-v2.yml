@@ -17,6 +17,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ inputs.branch_name }}
   cancel-in-progress: true
 
+env:
+  SLACK_CHANNEL_ID: "C02LMULF4NA"
+
 jobs:
   merge:
     name: Merge
