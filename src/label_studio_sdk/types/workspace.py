@@ -33,6 +33,7 @@ class Workspace(UncheckedBaseModel):
     """
 
     membership: typing.Optional[str] = None
+    projects_count: typing.Optional[int] = None
     title: str = pydantic.Field()
     """
     Workspace name
