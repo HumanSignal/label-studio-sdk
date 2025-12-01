@@ -12,6 +12,7 @@ from label_studio_sdk.converter.utils import (
     convert_annotation_to_yolo_obb,
     convert_yolo_obb_to_annotation,
 )
+from label_studio_sdk.converter.exports.yolo import process_keypoints_for_yolo
 from .utils import almost_equal_1d, almost_equal_2d, get_os_walk, check_equal_list_of_strings
 
 BASE_DIR = os.path.dirname(__file__)
@@ -274,6 +275,95 @@ def test_convert_invalid_annotation_to_yolo_format():
         result = convert_annotation_to_yolo(annotation)
         assert result is None, f"Expected annotation at index {idx} to be invalid"
 
+
+def test_convert_annotation_to_yolo_with_none_values():
+    """
+    Verify conversion handles None values safely by returning None.
+    """
+    annotations_with_none = [
+        {"x": None, "y": 10.0, "width": 5.0, "height": 5.0},
+        {"x": 10.0, "y": None, "width": 5.0, "height": 5.0},
+        {"x": 10.0, "y": 10.0, "width": None, "height": 5.0},
+        {"x": 10.0, "y": 10.0, "width": 5.0, "height": None},
+    ]
+    for idx, ann in enumerate(annotations_with_none):
+        result = convert_annotation_to_yolo(ann)
+        assert result is None, f"Expected None for annotation with None values at index {idx}"
+
+
+def test_keypoints_yolo_export_with_empty_rectanglelabels(create_temp_folder):
+    """
+    Ensure keypoints export path doesn't raise IndexError when rectanglelabels is empty.
+    """
+    tmp_folder = create_temp_folder
+    label_path = os.path.join(tmp_folder, "empty_rects.txt")
+
+    # Categories and mapping (class names to ids)
+    categories = [{"id": 0, "name": "classA"}]
+    category_name_to_id = {"classA": 0}
+
+    # Labels contain a rectangle with empty rectanglelabels (should be skipped safely)
+    labels = [
+        {
+            "id": "6SX02sLq5c",
+            "type": "rectanglelabels",
+            "x": 91.90256747860435,
+            "y": 59.97366688610929,
+            "width": 0.658327847267941,
+            "height": 2.106649111257404,
+            "rotation": 0,
+            "rectanglelabels": [],
+        }
+    ]
+
+    # Should not raise; output file should be created and empty
+    process_keypoints_for_yolo(
+        labels, label_path, category_name_to_id, categories, is_obb=False, kp_order=[]
+    )
+    with open(label_path, "r", encoding="utf-8") as f:
+        content = f.read().strip()
+    assert content == ""
+
+
+def test_keypoints_yolo_export_with_empty_keypointlabels(create_temp_folder):
+    """
+    Ensure keypoints export path doesn't raise IndexError when keypointlabels is empty.
+    """
+    tmp_folder = create_temp_folder
+    label_path = os.path.join(tmp_folder, "empty_kps.txt")
+
+    categories = [{"id": 0, "name": "classA"}]
+    category_name_to_id = {"classA": 0}
+
+    # First, provide a valid rectangle so rectangles dict is created
+    labels = [
+        {
+            "id": "rect-1",
+            "type": "rectanglelabels",
+            "x": 10.0,
+            "y": 10.0,
+            "width": 10.0,
+            "height": 10.0,
+            "rotation": 0,
+            "rectanglelabels": ["classA"],
+        },
+        {
+            "id": "kp-1",
+            "type": "keypointlabels",
+            "parentID": "rect-1",
+            "x": 15.0,
+            "y": 15.0,
+            "keypointlabels": [],
+        },
+    ]
+
+    # Should not raise; output should contain one line (rectangle only, no keypoints contributed)
+    process_keypoints_for_yolo(
+        labels, label_path, category_name_to_id, categories, is_obb=False, kp_order=["nose"]
+    )
+    with open(label_path, "r", encoding="utf-8") as f:
+        lines = [ln for ln in f.read().splitlines() if ln.strip()]
+    assert len(lines) == 1
 
 def test_convert_annotation_to_yolo_obb_format():
     """
