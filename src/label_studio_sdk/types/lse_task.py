@@ -16,6 +16,11 @@ class LseTask(UncheckedBaseModel):
 
     agreement: typing.Optional[str] = None
     agreement_selected: typing.Optional[str] = None
+    allow_skip: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether this task can be skipped. Set to False to make task unskippable.
+    """
+
     annotations: typing.Optional[str] = None
     annotations_ids: typing.Optional[str] = None
     annotations_results: typing.Optional[str] = None

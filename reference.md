@@ -1521,10 +1521,10 @@ client.annotations.list(
 <dd>
 
 
-        Add annotations to a task like an annotator does. The content of the result field depends on your 
-        labeling configuration. For example, send the following data as part of your POST 
+        Add annotations to a task like an annotator does. The content of the result field depends on your
+        labeling configuration. For example, send the following data as part of your POST
         request to send an empty annotation with the ID of the user who completed the task:
-        
+
         ```json
         {
         "result": {},
@@ -1533,7 +1533,7 @@ client.annotations.list(
         "lead_time": 0,
         "task": 0
         "completed_by": 123
-        } 
+        }
         ```
         
 </dd>
@@ -10784,6 +10784,14 @@ client.tasks.create(
 <dl>
 <dd>
 
+**allow_skip:** `typing.Optional[bool]` — Whether this task can be skipped. Set to False to make task unskippable.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **cancelled_annotations:** `typing.Optional[int]` — Number of total cancelled annotations for the current task
     
 </dd>
@@ -11107,6 +11115,14 @@ client.tasks.update(
 <dd>
 
 **id:** `str` — Task ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allow_skip:** `typing.Optional[bool]` — Whether this task can be skipped. Set to False to make task unskippable.
     
 </dd>
 </dl>
