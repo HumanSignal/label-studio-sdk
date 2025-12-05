@@ -16,6 +16,11 @@ class Project(UncheckedBaseModel):
     make sure, that you use correct one(Project.objects.with_counts())
     """
 
+    annotator_evaluation_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Enable annotator evaluation for the project
+    """
+
     color: typing.Optional[str] = None
     config_has_control_tags: typing.Optional[bool] = pydantic.Field(default=None)
     """
