@@ -34,11 +34,7 @@ class AllRolesProjectList(UncheckedBaseModel):
 
     annotator_evaluation_minimum_score: typing.Optional[str] = None
     annotator_evaluation_minimum_tasks: typing.Optional[int] = None
-    annotator_evaluation_onboarding_tasks: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of onboarding tasks for annotator evaluation
-    """
-
+    annotator_evaluation_onboarding_tasks: typing.Optional[int] = None
     assignment_settings: AssignmentSettings
     blueprints: typing.Optional[typing.List[BlueprintList]] = None
     color: typing.Optional[str] = None

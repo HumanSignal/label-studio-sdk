@@ -668,7 +668,6 @@ class ProjectsClient:
         annotator_evaluation_minimum_tasks : typing.Optional[int]
 
         annotator_evaluation_onboarding_tasks : typing.Optional[int]
-            Number of onboarding tasks for annotator evaluation
 
         assignment_settings : typing.Optional[AssignmentSettingsRequest]
 
@@ -1937,7 +1936,6 @@ class AsyncProjectsClient:
         annotator_evaluation_minimum_tasks : typing.Optional[int]
 
         annotator_evaluation_onboarding_tasks : typing.Optional[int]
-            Number of onboarding tasks for annotator evaluation
 
         assignment_settings : typing.Optional[AssignmentSettingsRequest]
 

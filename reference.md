@@ -9631,7 +9631,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**annotator_evaluation_onboarding_tasks:** `typing.Optional[int]` — Number of onboarding tasks for annotator evaluation
+**annotator_evaluation_onboarding_tasks:** `typing.Optional[int]` 
     
 </dd>
 </dl>

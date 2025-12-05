@@ -32,11 +32,7 @@ class LseProjectUpdate(UncheckedBaseModel):
 
     annotator_evaluation_minimum_score: typing.Optional[str] = None
     annotator_evaluation_minimum_tasks: typing.Optional[int] = None
-    annotator_evaluation_onboarding_tasks: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of onboarding tasks for annotator evaluation
-    """
-
+    annotator_evaluation_onboarding_tasks: typing.Optional[int] = None
     assignment_settings: AssignmentSettings
     color: typing.Optional[str] = None
     comment_classification_config: typing.Optional[str] = None
