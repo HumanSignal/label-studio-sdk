@@ -16,6 +16,16 @@ class Project(UncheckedBaseModel):
     make sure, that you use correct one(Project.objects.with_counts())
     """
 
+    annotator_evaluation_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Enable annotator evaluation for the project
+    """
+
+    annotator_evaluation_onboarding_tasks: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of onboarding tasks for annotator evaluation
+    """
+
     color: typing.Optional[str] = None
     config_has_control_tags: typing.Optional[bool] = pydantic.Field(default=None)
     """
@@ -132,6 +142,11 @@ class Project(UncheckedBaseModel):
     show_collab_predictions: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If set, the annotator can view model predictions
+    """
+
+    show_ground_truth_always: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, ground truth tasks will be shown to all annotators regardless of overlap
     """
 
     show_ground_truth_first: typing.Optional[bool] = pydantic.Field(default=None)

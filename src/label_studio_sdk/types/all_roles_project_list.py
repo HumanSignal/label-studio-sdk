@@ -27,8 +27,18 @@ class AllRolesProjectList(UncheckedBaseModel):
     allow_stream: typing.Optional[bool] = None
     annotation_limit_count: typing.Optional[int] = None
     annotation_limit_percent: typing.Optional[str] = None
+    annotator_evaluation_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Enable annotator evaluation for the project
+    """
+
     annotator_evaluation_minimum_score: typing.Optional[str] = None
     annotator_evaluation_minimum_tasks: typing.Optional[int] = None
+    annotator_evaluation_onboarding_tasks: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of onboarding tasks for annotator evaluation
+    """
+
     assignment_settings: AssignmentSettings
     blueprints: typing.Optional[typing.List[BlueprintList]] = None
     color: typing.Optional[str] = None
@@ -167,6 +177,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     show_collab_predictions: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If set, the annotator can view model predictions
+    """
+
+    show_ground_truth_always: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, ground truth tasks will be shown to all annotators regardless of overlap
     """
 
     show_ground_truth_first: typing.Optional[bool] = pydantic.Field(default=None)
