@@ -291,6 +291,7 @@ class TasksClient:
     def create(
         self,
         *,
+        allow_skip: typing.Optional[bool] = OMIT,
         cancelled_annotations: typing.Optional[int] = OMIT,
         comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
         comment_count: typing.Optional[int] = OMIT,
@@ -313,6 +314,9 @@ class TasksClient:
 
         Parameters
         ----------
+        allow_skip : typing.Optional[bool]
+            Whether this task can be skipped. Set to False to make task unskippable.
+
         cancelled_annotations : typing.Optional[int]
             Number of total cancelled annotations for the current task
 
@@ -381,6 +385,7 @@ class TasksClient:
             "api/tasks/",
             method="POST",
             json={
+                "allow_skip": allow_skip,
                 "cancelled_annotations": cancelled_annotations,
                 "comment_authors": comment_authors,
                 "comment_count": comment_count,
@@ -508,6 +513,7 @@ class TasksClient:
         self,
         id: str,
         *,
+        allow_skip: typing.Optional[bool] = OMIT,
         avg_lead_time: typing.Optional[float] = OMIT,
         cancelled_annotations: typing.Optional[int] = OMIT,
         comment_count: typing.Optional[int] = OMIT,
@@ -538,6 +544,9 @@ class TasksClient:
         ----------
         id : str
             Task ID
+
+        allow_skip : typing.Optional[bool]
+            Whether this task can be skipped. Set to False to make task unskippable.
 
         avg_lead_time : typing.Optional[float]
 
@@ -613,6 +622,7 @@ class TasksClient:
             f"api/tasks/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
+                "allow_skip": allow_skip,
                 "avg_lead_time": avg_lead_time,
                 "cancelled_annotations": cancelled_annotations,
                 "comment_count": comment_count,
@@ -1127,6 +1137,7 @@ class AsyncTasksClient:
     async def create(
         self,
         *,
+        allow_skip: typing.Optional[bool] = OMIT,
         cancelled_annotations: typing.Optional[int] = OMIT,
         comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
         comment_count: typing.Optional[int] = OMIT,
@@ -1149,6 +1160,9 @@ class AsyncTasksClient:
 
         Parameters
         ----------
+        allow_skip : typing.Optional[bool]
+            Whether this task can be skipped. Set to False to make task unskippable.
+
         cancelled_annotations : typing.Optional[int]
             Number of total cancelled annotations for the current task
 
@@ -1228,6 +1242,7 @@ class AsyncTasksClient:
             "api/tasks/",
             method="POST",
             json={
+                "allow_skip": allow_skip,
                 "cancelled_annotations": cancelled_annotations,
                 "comment_authors": comment_authors,
                 "comment_count": comment_count,
@@ -1371,6 +1386,7 @@ class AsyncTasksClient:
         self,
         id: str,
         *,
+        allow_skip: typing.Optional[bool] = OMIT,
         avg_lead_time: typing.Optional[float] = OMIT,
         cancelled_annotations: typing.Optional[int] = OMIT,
         comment_count: typing.Optional[int] = OMIT,
@@ -1401,6 +1417,9 @@ class AsyncTasksClient:
         ----------
         id : str
             Task ID
+
+        allow_skip : typing.Optional[bool]
+            Whether this task can be skipped. Set to False to make task unskippable.
 
         avg_lead_time : typing.Optional[float]
 
@@ -1484,6 +1503,7 @@ class AsyncTasksClient:
             f"api/tasks/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
+                "allow_skip": allow_skip,
                 "avg_lead_time": avg_lead_time,
                 "cancelled_annotations": cancelled_annotations,
                 "comment_count": comment_count,

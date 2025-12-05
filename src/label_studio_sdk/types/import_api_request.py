@@ -2,8 +2,8 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .annotation_request import AnnotationRequest
 import pydantic
+from .annotation_request import AnnotationRequest
 import datetime as dt
 from .prediction_request import PredictionRequest
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -12,6 +12,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 class ImportApiRequest(UncheckedBaseModel):
     """
     Tasks serializer for Import API (TaskBulkCreateAPI)
+    """
+
+    allow_skip: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether this task can be skipped. Set to False to make task unskippable.
     """
 
     annotations: typing.Optional[typing.List[AnnotationRequest]] = None

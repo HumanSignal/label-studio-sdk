@@ -13,6 +13,7 @@ class LseOrganizationMemberList(UncheckedBaseModel):
     which fields should be displayed.
     """
 
+    concurrency: typing.Optional[str] = None
     id: typing.Optional[int] = None
     organization: int = pydantic.Field()
     """

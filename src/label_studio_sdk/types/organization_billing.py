@@ -7,8 +7,11 @@ import pydantic
 
 
 class OrganizationBilling(UncheckedBaseModel):
+    enforce_session_concurrency: typing.Optional[str] = None
     manual_role_management: typing.Optional[str] = None
     manual_workspace_management: typing.Optional[str] = None
+    max_parallel_sessions: typing.Optional[str] = None
+    session_concurrency_window_seconds: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
