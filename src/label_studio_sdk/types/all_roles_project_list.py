@@ -175,11 +175,6 @@ class AllRolesProjectList(UncheckedBaseModel):
     If set, the annotator can view model predictions
     """
 
-    show_ground_truth_always: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    When enabled, ground truth tasks will be shown to all annotators regardless of overlap
-    """
-
     show_ground_truth_first: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Onboarding mode (true): show ground truth tasks first in the labeling stream

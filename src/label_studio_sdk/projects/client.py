@@ -192,7 +192,6 @@ class ProjectsClient:
         self,
         *,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
-        annotator_evaluation_onboarding_tasks: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
@@ -213,7 +212,6 @@ class ProjectsClient:
         sampling: typing.Optional[SamplingDe5Enum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
-        show_ground_truth_always: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
         show_instruction: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
@@ -232,9 +230,6 @@ class ProjectsClient:
         ----------
         annotator_evaluation_enabled : typing.Optional[bool]
             Enable annotator evaluation for the project
-
-        annotator_evaluation_onboarding_tasks : typing.Optional[int]
-            Number of onboarding tasks for annotator evaluation
 
         color : typing.Optional[str]
 
@@ -292,9 +287,6 @@ class ProjectsClient:
         show_collab_predictions : typing.Optional[bool]
             If set, the annotator can view model predictions
 
-        show_ground_truth_always : typing.Optional[bool]
-            When enabled, ground truth tasks will be shown to all annotators regardless of overlap
-
         show_ground_truth_first : typing.Optional[bool]
             Onboarding mode (true): show ground truth tasks first in the labeling stream
 
@@ -341,7 +333,6 @@ class ProjectsClient:
             method="POST",
             json={
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
-                "annotator_evaluation_onboarding_tasks": annotator_evaluation_onboarding_tasks,
                 "color": color,
                 "control_weights": control_weights,
                 "created_by": convert_and_respect_annotation_metadata(
@@ -364,7 +355,6 @@ class ProjectsClient:
                 "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
-                "show_ground_truth_always": show_ground_truth_always,
                 "show_ground_truth_first": show_ground_truth_first,
                 "show_instruction": show_instruction,
                 "show_overlap_first": show_overlap_first,
@@ -630,7 +620,6 @@ class ProjectsClient:
         sampling: typing.Optional[SamplingDe5Enum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
-        show_ground_truth_always: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
         show_instruction: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
@@ -743,9 +732,6 @@ class ProjectsClient:
         show_collab_predictions : typing.Optional[bool]
             If set, the annotator can view model predictions
 
-        show_ground_truth_always : typing.Optional[bool]
-            When enabled, ground truth tasks will be shown to all annotators regardless of overlap
-
         show_ground_truth_first : typing.Optional[bool]
             Onboarding mode (true): show ground truth tasks first in the labeling stream
 
@@ -839,7 +825,6 @@ class ProjectsClient:
                 "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
-                "show_ground_truth_always": show_ground_truth_always,
                 "show_ground_truth_first": show_ground_truth_first,
                 "show_instruction": show_instruction,
                 "show_overlap_first": show_overlap_first,
@@ -1428,7 +1413,6 @@ class AsyncProjectsClient:
         self,
         *,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
-        annotator_evaluation_onboarding_tasks: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
@@ -1449,7 +1433,6 @@ class AsyncProjectsClient:
         sampling: typing.Optional[SamplingDe5Enum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
-        show_ground_truth_always: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
         show_instruction: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
@@ -1468,9 +1451,6 @@ class AsyncProjectsClient:
         ----------
         annotator_evaluation_enabled : typing.Optional[bool]
             Enable annotator evaluation for the project
-
-        annotator_evaluation_onboarding_tasks : typing.Optional[int]
-            Number of onboarding tasks for annotator evaluation
 
         color : typing.Optional[str]
 
@@ -1528,9 +1508,6 @@ class AsyncProjectsClient:
         show_collab_predictions : typing.Optional[bool]
             If set, the annotator can view model predictions
 
-        show_ground_truth_always : typing.Optional[bool]
-            When enabled, ground truth tasks will be shown to all annotators regardless of overlap
-
         show_ground_truth_first : typing.Optional[bool]
             Onboarding mode (true): show ground truth tasks first in the labeling stream
 
@@ -1585,7 +1562,6 @@ class AsyncProjectsClient:
             method="POST",
             json={
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
-                "annotator_evaluation_onboarding_tasks": annotator_evaluation_onboarding_tasks,
                 "color": color,
                 "control_weights": control_weights,
                 "created_by": convert_and_respect_annotation_metadata(
@@ -1608,7 +1584,6 @@ class AsyncProjectsClient:
                 "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
-                "show_ground_truth_always": show_ground_truth_always,
                 "show_ground_truth_first": show_ground_truth_first,
                 "show_instruction": show_instruction,
                 "show_overlap_first": show_overlap_first,
@@ -1898,7 +1873,6 @@ class AsyncProjectsClient:
         sampling: typing.Optional[SamplingDe5Enum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
-        show_ground_truth_always: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
         show_instruction: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
@@ -2011,9 +1985,6 @@ class AsyncProjectsClient:
         show_collab_predictions : typing.Optional[bool]
             If set, the annotator can view model predictions
 
-        show_ground_truth_always : typing.Optional[bool]
-            When enabled, ground truth tasks will be shown to all annotators regardless of overlap
-
         show_ground_truth_first : typing.Optional[bool]
             Onboarding mode (true): show ground truth tasks first in the labeling stream
 
@@ -2115,7 +2086,6 @@ class AsyncProjectsClient:
                 "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
-                "show_ground_truth_always": show_ground_truth_always,
                 "show_ground_truth_first": show_ground_truth_first,
                 "show_instruction": show_instruction,
                 "show_overlap_first": show_overlap_first,

@@ -8969,14 +8969,6 @@ client.projects.create()
 <dl>
 <dd>
 
-**annotator_evaluation_onboarding_tasks:** `typing.Optional[int]` — Number of onboarding tasks for annotator evaluation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **color:** `typing.Optional[str]` 
     
 </dd>
@@ -9130,14 +9122,6 @@ client.projects.create()
 <dd>
 
 **show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_ground_truth_always:** `typing.Optional[bool]` — When enabled, ground truth tasks will be shown to all annotators regardless of overlap
     
 </dd>
 </dl>
@@ -9856,14 +9840,6 @@ client.projects.update(
 <dd>
 
 **show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_ground_truth_always:** `typing.Optional[bool]` — When enabled, ground truth tasks will be shown to all annotators regardless of overlap
     
 </dd>
 </dl>
