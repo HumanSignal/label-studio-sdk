@@ -40,6 +40,7 @@ _TAG_TO_CLASS = {
     "textarea": "TextAreaTag",
     "timeserieslabels": "TimeSeriesLabelsTag",
     "chatmessage": "ChatMessageTag",
+    "custominterface": "CustomInterfaceTag",
 }
 
 
@@ -1098,3 +1099,205 @@ class TimeSeriesLabelsTag(ControlTag):
     tag: str = "TimeSeriesLabels"
     _label_attr_name: str = "timeserieslabels"
     _value_class: Type[TimeSeriesValue] = TimeSeriesValue
+
+
+class CustomInterfaceValue(BaseModel):
+    custominterface: Dict[str, str]
+
+class CustomInterfaceTag(ControlTag):
+    """ """
+    tag: str = "CustomInterface"
+    _value_class: Type[CustomInterfaceValue] = CustomInterfaceValue
+    _label_attr_name: str = "custominterface"
+
+    # Registry of type aliases that can be used in outputs specification
+    # Each alias maps to a function that takes arguments and returns a JSON schema fragment
+    _TYPE_ALIASES = {
+        'choices': lambda args: {
+            "type": "string",
+            "enum": [arg.strip() for arg in args if arg.strip()]
+        },
+        'multichoices': lambda args: {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [arg.strip() for arg in args if arg.strip()]
+            }
+        },
+        'number': lambda args: {
+            "type": "number",
+            **({"minimum": float(args[0].strip())} if len(args) > 0 and args[0].strip() else {}),
+            **({"maximum": float(args[1].strip())} if len(args) > 1 and args[1].strip() else {}),
+        },
+        'rating': lambda args: {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": int(args[0].strip()) if len(args) > 0 and args[0].strip() else 5,
+        },
+    }
+
+    def _parse_type_alias(self, value: str) -> dict:
+        """
+        Parse a type alias like 'choices(label1, label2)' into a JSON schema fragment.
+        
+        Args:
+            value: A string that may contain a type alias with arguments.
+            
+        Returns:
+            dict: A JSON schema fragment for the type.
+        """
+        import re
+        # Match pattern like "alias_name(arg1, arg2, ...)"
+        match = re.match(r'^(\w+)\s*\(\s*(.+?)\s*\)$', value.strip())
+        if match:
+            alias_name = match.group(1).lower()
+            args_str = match.group(2)
+            # Split arguments by comma, handling potential whitespace
+            args = [arg.strip() for arg in args_str.split(',')]
+            
+            if alias_name in self._TYPE_ALIASES:
+                return self._TYPE_ALIASES[alias_name](args)
+        
+        # Default to string type if no alias matched
+        return {"type": "string"}
+
+    def _try_parse_json(self, outputs_str: str) -> dict | None:
+        """
+        Attempt to parse the outputs string as JSON.
+        
+        Args:
+            outputs_str: The raw outputs string from the tag configuration.
+            
+        Returns:
+            dict or None: Parsed JSON if valid, None otherwise.
+        """
+        import json
+        stripped = outputs_str.strip()
+        if stripped.startswith('{'):
+            try:
+                return json.loads(stripped)
+            except json.JSONDecodeError:
+                return None
+        return None
+
+    def _parse_delimited_list(self, outputs_str: str) -> list:
+        """
+        Parse a string into a list by splitting on non-alphanumeric delimiters.
+        
+        Splits on: comma, semicolon, vertical bar, or any sequence of 
+        whitespace/non-alphanumeric characters (except parentheses for aliases).
+        
+        Args:
+            outputs_str: The raw outputs string to parse.
+            
+        Returns:
+            list: List of parsed output field names/definitions.
+        """
+        import re
+        # Split on common delimiters: comma, semicolon, pipe, or whitespace
+        # But preserve content inside parentheses for type aliases
+        parts = []
+        current = []
+        paren_depth = 0
+        
+        for char in outputs_str:
+            if char == '(':
+                paren_depth += 1
+                current.append(char)
+            elif char == ')':
+                paren_depth -= 1
+                current.append(char)
+            elif paren_depth == 0 and char in ',;|\t\n':
+                # Delimiter found outside parentheses
+                part = ''.join(current).strip()
+                if part:
+                    parts.append(part)
+                current = []
+            else:
+                current.append(char)
+        
+        # Don't forget the last part
+        part = ''.join(current).strip()
+        if part:
+            parts.append(part)
+        
+        return parts
+
+    def _parse_output_field(self, field_spec: str) -> tuple:
+        """
+        Parse a single output field specification.
+        
+        Handles formats like:
+        - "field_name" -> (field_name, {"type": "string"})
+        - "field_name:choices(a,b,c)" -> (field_name, {"type": "string", "enum": ["a","b","c"]})
+        
+        Args:
+            field_spec: A single field specification string.
+            
+        Returns:
+            tuple: (field_name, json_schema_fragment)
+        """
+        field_spec = field_spec.strip()
+        
+        # Check if there's a type specification with colon separator
+        if ':' in field_spec:
+            name_part, type_part = field_spec.split(':', 1)
+            name = name_part.strip()
+            schema = self._parse_type_alias(type_part.strip())
+            return (name, schema)
+        
+        # Check if the entire spec is a type alias (for JSON-style definitions)
+        import re
+        if re.match(r'^\w+\s*\(', field_spec):
+            # This looks like a standalone type alias, not a field name
+            # In this case, we can't determine the field name, so return as-is
+            return (field_spec, {"type": "string"})
+        
+        # Plain field name defaults to string type
+        return (field_spec, {"type": "string"})
+
+    def to_json_schema(self):
+        """
+        Converts the current CustomInterfaceTag instance into a JSON Schema.
+        
+        Supports multiple parsing strategies (mutually compatible):
+        
+        1. Delimited list: If 'outputs' contains field names separated by 
+           comma, semicolon, pipe, or whitespace, each becomes a string property.
+           Example: "field1, field2, field3" or "field1|field2|field3"
+        
+        2. JSON Schema: If 'outputs' starts with '{', it's parsed as a JSON schema.
+           Example: '{"field1": {"type": "number"}, "field2": {"type": "string"}}'
+        
+        3. Type aliases: Special syntax for common patterns within delimited lists.
+           - "field:choices(a,b,c)" -> enum with string type
+           - "field:multichoices(a,b,c)" -> array of enum values
+           Example: "rating:choices(good, bad), tags:multichoices(urgent, review)"
+        
+        Returns:
+            dict: A dictionary representing the JSON Schema with properties for each output.
+        """
+        outputs_str = self.attr.get('outputs', '')
+        
+        if not outputs_str or not outputs_str.strip():
+            return {"type": "object", "properties": {}}
+        
+        # Strategy 2: Try parsing as JSON first
+        json_schema = self._try_parse_json(outputs_str)
+        if json_schema is not None:
+            # If it's already a complete schema, return it
+            if "type" in json_schema and "properties" in json_schema:
+                return json_schema
+            # If it's just properties, wrap them
+            return {"type": "object", "properties": json_schema}
+        
+        # Strategy 1 & 3: Parse as delimited list with optional type aliases
+        fields = self._parse_delimited_list(outputs_str)
+        
+        properties = {}
+        for field_spec in fields:
+            field_name, field_schema = self._parse_output_field(field_spec)
+            if field_name:
+                properties[field_name] = field_schema
+        
+        return {"type": "object", "properties": properties}
