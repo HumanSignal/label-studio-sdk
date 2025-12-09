@@ -42,6 +42,7 @@ class LseTaskSerializerForAnnotators(UncheckedBaseModel):
     predictions_results: typing.Optional[str] = None
     predictions_score: typing.Optional[float] = None
     reviews_rejected: typing.Optional[int] = None
+    state: typing.Optional[str] = None
     total_annotations: typing.Optional[int] = None
     total_predictions: typing.Optional[int] = None
     unresolved_comment_count: typing.Optional[str] = None
