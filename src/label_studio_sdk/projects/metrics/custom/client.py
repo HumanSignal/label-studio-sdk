@@ -41,7 +41,7 @@ class CustomClient:
         Returns
         -------
         GetLambdaCustomResponse
-            Lambda code
+            Lambda code and deployment status
 
         Examples
         --------
@@ -96,10 +96,13 @@ class CustomClient:
         id : int
 
         code : str
+            The Python code for the custom metric function.
 
         region : typing.Optional[str]
+            The AWS region for the Lambda function. Uses default if not provided.
 
         role : typing.Optional[str]
+            The AWS IAM role ARN for the Lambda function. Uses default if not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -308,7 +311,7 @@ class AsyncCustomClient:
         Returns
         -------
         GetLambdaCustomResponse
-            Lambda code
+            Lambda code and deployment status
 
         Examples
         --------
@@ -371,10 +374,13 @@ class AsyncCustomClient:
         id : int
 
         code : str
+            The Python code for the custom metric function.
 
         region : typing.Optional[str]
+            The AWS region for the Lambda function. Uses default if not provided.
 
         role : typing.Optional[str]
+            The AWS IAM role ARN for the Lambda function. Uses default if not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

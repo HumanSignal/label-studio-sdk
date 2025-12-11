@@ -34481,7 +34481,7 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
-**code:** `str` 
+**code:** `str` — The Python code for the custom metric function.
     
 </dd>
 </dl>
@@ -34489,7 +34489,7 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
-**region:** `typing.Optional[str]` 
+**region:** `typing.Optional[str]` — The AWS region for the Lambda function. Uses default if not provided.
     
 </dd>
 </dl>
@@ -34497,7 +34497,7 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
-**role:** `typing.Optional[str]` 
+**role:** `typing.Optional[str]` — The AWS IAM role ARN for the Lambda function. Uses default if not provided.
     
 </dd>
 </dl>
