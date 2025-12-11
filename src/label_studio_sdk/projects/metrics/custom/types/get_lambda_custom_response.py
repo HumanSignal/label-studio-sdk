@@ -11,7 +11,7 @@ class GetLambdaCustomResponse(UncheckedBaseModel):
     code: str
     status: GetLambdaCustomResponseStatus = pydantic.Field()
     """
-    Deployment status of the Lambda function
+    Deployment status of the Lambda function.
     """
 
     if IS_PYDANTIC_V2:
