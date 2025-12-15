@@ -599,6 +599,17 @@ def test_custom_interface_outputs_parsing(outputs_attr, expected_properties, sam
             },
             "required": []
         }
+    else:
+        expected_schema = {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "object",
+                    "properties": expected_properties
+                }
+            },
+            "required": []
+        }
     assert json_schema == expected_schema
     
     # Validate that the schema works with pydantic
