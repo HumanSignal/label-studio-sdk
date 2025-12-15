@@ -2,6 +2,7 @@
 """
 
 import xml.etree.ElementTree
+import json
 from typing import Type, Dict, Optional, List, Tuple, Any, Union
 from pydantic import BaseModel, confloat, Field, validator
 
@@ -1102,7 +1103,7 @@ class TimeSeriesLabelsTag(ControlTag):
 
 
 class CustomInterfaceValue(BaseModel):
-    custominterface: Dict[str, str]
+    custominterface: Dict[str, Any]
 
 class CustomInterfaceTag(ControlTag):
     """ """
@@ -1171,7 +1172,6 @@ class CustomInterfaceTag(ControlTag):
         Returns:
             dict or None: Parsed JSON if valid, None otherwise.
         """
-        import json
         stripped = outputs_str.strip()
         if stripped.startswith('{'):
             try:
@@ -1286,7 +1286,7 @@ class CustomInterfaceTag(ControlTag):
         json_schema = self._try_parse_json(outputs_str)
         if json_schema is not None:
             # If it's already a complete schema, return it
-            if "type" in json_schema and "properties" in json_schema:
+            if (json_schema.get("type") == "object" and "properties" in json_schema) or (json_schema.get("type") == "array" and "items" in json_schema):
                 return json_schema
             # If it's just properties, wrap them
             return {"type": "object", "properties": json_schema}
@@ -1301,3 +1301,7 @@ class CustomInterfaceTag(ControlTag):
                 properties[field_name] = field_schema
         
         return {"type": "object", "properties": properties}
+
+    def label(self, *args, **kwargs) -> Region:
+        value = CustomInterfaceValue(custominterface=kwargs)
+        return Region(from_tag=self, to_tag=self, value=value)
