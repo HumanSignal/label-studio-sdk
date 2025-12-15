@@ -475,6 +475,38 @@ def test_concurrent_json_schema_to_pydantic_threaded():
         {"value": {"type": "integer", "minimum": 0}},
         {"value": 10}
     ),
+    # List of objects
+    (
+        '''
+        {
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+            &quot;index&quot;: {
+                &quot;type&quot;: &quot;string&quot;
+            },
+            &quot;category&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;enum&quot;: [
+                &quot;fraud&quot;,
+                &quot;not_fraud&quot;
+                ]
+            },
+            &quot;groupNames&quot;: {
+                &quot;type&quot;: &quot;string&quot;
+            }
+            },
+            &quot;required&quot;: [&quot;index&quot;, &quot;category&quot;, &quot;groupNames&quot;]
+        }
+        }''',
+        [{
+            "index": {"type": "string"},
+            "category": {"type": "string", "enum": ["fraud", "not_fraud"]},
+            "groupNames": {"type": "string"}
+        }],
+        [{"index": "1", "category": "fraud", "groupNames": "group1"}]
+    ),
     # Strategy 3: Type alias - choices
     (
         "sentiment:choices(positive, negative, neutral)",
@@ -533,6 +565,7 @@ def test_concurrent_json_schema_to_pydantic_threaded():
     "semicolon_delimited",
     "json_properties",
     "json_complete_schema",
+    "json_schema_list_of_objects",
     "choices_alias",
     "multichoices_alias",
     "number_alias",
@@ -550,16 +583,33 @@ def test_custom_interface_outputs_parsing(outputs_attr, expected_properties, sam
     interface = LabelInterface(config)
     json_schema = interface.to_json_schema()
     
-    expected_schema = {
-        "type": "object",
-        "properties": {
-            "result": {
-                "type": "object",
-                "properties": expected_properties
-            }
-        },
-        "required": []
-    }
+    # Handle case where expected_properties might be a list (for array schemas)
+    if isinstance(expected_properties, list):
+        expected_schema = {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "array",
+                    "items": {
+                        "type": "object", 
+                        "properties": expected_properties[0] if expected_properties else {},
+                        "required": list(expected_properties[0].keys()) if expected_properties else []
+                    }
+                }
+            },
+            "required": []
+        }
+    else:
+        expected_schema = {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "object",
+                    "properties": expected_properties
+                }
+            },
+            "required": []
+        }
     assert json_schema == expected_schema
     
     # Validate that the schema works with pydantic
