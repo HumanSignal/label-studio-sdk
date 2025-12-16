@@ -904,10 +904,10 @@ class ParagraphLabelsTag(ControlTag):
         
 
 class RankerValue(BaseModel):
-    # Required outer key "ranker"; supports either:
-    # - List[str] (simple ranking)
-    # - Dict[str, List[str]] (bucketed ranking)
-    ranker: Union[List[str], Dict[str, List[str]]]
+    # Required outer key "ranker"; always a dict:
+    # - Simple ranking: { "<control_tag_name>": [str, ...] }
+    # - Bucketed ranking: { "bucket_name": [str, ...], ... }
+    ranker: Dict[str, List[str]]
 
     
 class RankerTag(ControlTag):
@@ -917,17 +917,16 @@ class RankerTag(ControlTag):
 
     def validate_value(self, value: dict) -> bool:
         """
-        Accept:
-          - {"value": {"ranker": {"<control_tag_name>": [str, ...]}}}
-          - {"value": {"ranker": {"bucket_name": [str, ...], ...}}}
+        Accept only:
+          - {"ranker": {"<control_tag_name>": [str, ...]}}
+          - {"ranker": {"bucket_name": [str, ...], ...}}
+        Note: `value` is already the object under the result's "value" field.
         """
         if not isinstance(value, dict):
             return False
 
         inner = value.get("ranker")
-        if isinstance(inner, list):
-            return all(isinstance(x, str) for x in inner)
-        elif isinstance(inner, dict):
+        if isinstance(inner, dict):
             for k, v in inner.items():
                 if not isinstance(k, str):
                     return False
