@@ -8961,6 +8961,14 @@ client.projects.create()
 <dl>
 <dd>
 
+**annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **color:** `typing.Optional[str]` 
     
 </dd>
@@ -9583,6 +9591,14 @@ client.projects.update(
 <dl>
 <dd>
 
+**annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **annotator_evaluation_minimum_score:** `typing.Optional[str]` 
     
 </dd>
@@ -9592,6 +9608,14 @@ client.projects.update(
 <dd>
 
 **annotator_evaluation_minimum_tasks:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotator_evaluation_onboarding_tasks:** `typing.Optional[int]` 
     
 </dd>
 </dl>
