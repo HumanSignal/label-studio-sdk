@@ -904,8 +904,10 @@ class ParagraphLabelsTag(ControlTag):
         
 
 class RankerValue(BaseModel):
-    # Required outer key "ranker"; inner key is dynamic (control name)
-    ranker: Dict[str, List[str]]
+    # Required outer key "ranker"; supports either:
+    # - List[str] (simple ranking)
+    # - Dict[str, List[str]] (bucketed ranking)
+    ranker: Union[List[str], Dict[str, List[str]]]
 
     
 class RankerTag(ControlTag):
@@ -915,29 +917,24 @@ class RankerTag(ControlTag):
 
     def validate_value(self, value: dict) -> bool:
         """
-        Only accept the canonical format:
-          {"ranker": {"<control_name>": [str, ...]}}
-        Where <control_name> must match this control's name exactly, and the list contains strings.
+        Accept:
+          - {"value": {"ranker": {"<control_tag_name>": [str, ...]}}}
+          - {"value": {"ranker": {"bucket_name": [str, ...], ...}}}
         """
         if not isinstance(value, dict):
             return False
 
         inner = value.get("ranker")
-        if not isinstance(inner, dict):
-            return False
-
-        # Must contain exactly one key equal to the control name
-        if len(inner) != 1 or self.name not in inner:
-            return False
-
-        items = inner[self.name]
-        if not isinstance(items, list):
-            return False
-
-        try:
-            self._value_class(**value)  # type: ignore[arg-type]
+        if isinstance(inner, list):
+            return all(isinstance(x, str) for x in inner)
+        elif isinstance(inner, dict):
+            for k, v in inner.items():
+                if not isinstance(k, str):
+                    return False
+                if not isinstance(v, list) or not all(isinstance(x, str) for x in v):
+                    return False
             return True
-        except Exception:
+        else:
             return False
 
 
