@@ -904,13 +904,41 @@ class ParagraphLabelsTag(ControlTag):
         
 
 class RankerValue(BaseModel):
-    rank: List[str]
+    # Required outer key "ranker"; inner key is dynamic (control name)
+    ranker: Dict[str, List[str]]
 
     
 class RankerTag(ControlTag):
     """ """
     tag: str = "Ranker"
     _value_class: Type[RankerValue] = RankerValue
+
+    def validate_value(self, value: dict) -> bool:
+        """
+        Only accept the canonical format:
+          {"ranker": {"<control_name>": [str, ...]}}
+        Where <control_name> must match this control's name exactly, and the list contains strings.
+        """
+        if not isinstance(value, dict):
+            return False
+
+        inner = value.get("ranker")
+        if not isinstance(inner, dict):
+            return False
+
+        # Must contain exactly one key equal to the control name
+        if len(inner) != 1 or self.name not in inner:
+            return False
+
+        items = inner[self.name]
+        if not isinstance(items, list):
+            return False
+
+        try:
+            self._value_class(**value)  # type: ignore[arg-type]
+            return True
+        except Exception:
+            return False
 
 
 class RatingValue(BaseModel):
