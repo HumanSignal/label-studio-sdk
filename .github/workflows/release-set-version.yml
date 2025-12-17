@@ -48,10 +48,10 @@ jobs:
           github-token: ${{ secrets.GIT_PAT }}
           script: |
             const actor_username = process.env.ACTOR_USERNAME;
-            
+
             let user_name = 'robot-ci-heartex';
             let user_email = 'robot-ci-heartex@users.noreply.github.com';
-            
+
             try {
               const {data: user} = await github.rest.users.getByUsername({
                 username: actor_username,
@@ -61,7 +61,7 @@ jobs:
             } catch (e) {
               console.log(e)
             }
-            
+
             core.setOutput('user_name', user_name);
             core.setOutput('user_email', user_email);
 
@@ -77,9 +77,9 @@ jobs:
         shell: bash
         run: |
           set -xeuo pipefail
-          
+
           regexp='^[v]?([0-9]+)\.([0-9]+)\.([0-9]+)(\.dev[0-9]*)?$'
-          
+
           if [[ "${{ inputs.version }}" =~ $regexp ]]; then
               echo "${{ inputs.version }} does match the regexp ${regexp}"
           else
@@ -91,9 +91,9 @@ jobs:
         id: make-commit
         run: |
           set -euo pipefail
-          
+
           sed -i "s/^version[ ]*=.*/version = \"${{ inputs.version }}\"/g" ${{ env.PYTHON_VERSION_FILE }}
-          
+
           git add ${{ env.PYTHON_VERSION_FILE }}
           git commit --message "chore: Bump version to ${{ inputs.version }}"
 

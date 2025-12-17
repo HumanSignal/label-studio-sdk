@@ -30,7 +30,7 @@ class ModelProviderConnection(UncheckedBaseModel):
     budget_reset_period: typing.Optional[BudgetResetPeriodEnum] = pydantic.Field(default=None)
     """
     Budget reset period for the model provider connection (null if not reset)
-    
+
     * `Monthly` - Monthly
     * `Yearly` - Yearly
     """

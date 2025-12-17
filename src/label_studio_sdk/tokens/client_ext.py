@@ -75,7 +75,7 @@ class TokensClientExt:
                 if (not self._access_token) or (not self._is_valid_jwt_token(self._access_token)):
                     token_response = self.refresh()
                     self._set_access_token(token_response.access)
-        
+
         return self._access_token
 
     def _get_client_params(self, existing_client: httpx.AsyncClient) -> dict:
@@ -132,7 +132,7 @@ class TokensClientExt:
                     json={"refresh": self._api_key},
                     headers={"Content-Type": "application/json"},
                 )
-            
+
         if response.status_code == 200:
             return TokenRefreshResponse.parse_obj(response.json())
         else:

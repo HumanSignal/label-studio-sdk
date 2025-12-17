@@ -47,7 +47,7 @@ class AsyncPagerExt(AsyncPager, typing.Generic[T]):
             if exc.status_code == 404:
                 return
             raise
-        
+
     async def __anext__(self) -> T:
         try:
             return await super().__anext__()

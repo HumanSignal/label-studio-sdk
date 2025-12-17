@@ -12,12 +12,12 @@ logger = logging.getLogger("root")
 
 def new_task(out_type, root_url, file_name):
     """Create a new Label Studio task structure.
-    
+
     Args:
         out_type (str): Type of output - either 'annotations' or 'predictions'
         root_url (str): Root URL path where images will be hosted
         file_name (str): Name of the image file
-        
+
     Returns:
         dict: Label Studio task structure with image data and empty result array
     """
@@ -35,10 +35,10 @@ def new_task(out_type, root_url, file_name):
 
 def create_bbox(annotation, categories, from_name, image_height, image_width, to_name):
     """Convert COCO bounding box annotation to Label Studio format.
-    
+
     COCO bbox format: [x, y, width, height] where (x,y) is top-left corner
     Label Studio format: percentages relative to image dimensions
-    
+
     Args:
         annotation (dict): COCO annotation containing bbox and category_id
         categories (dict): Mapping of category_id to category name
@@ -46,14 +46,14 @@ def create_bbox(annotation, categories, from_name, image_height, image_width, to
         image_height (int): Height of the source image in pixels
         image_width (int): Width of the source image in pixels
         to_name (str): Object name from Label Studio labeling config
-        
+
     Returns:
         dict: Label Studio rectangle annotation item
     """
     label = categories[int(annotation["category_id"])]
     x, y, width, height = annotation["bbox"]
     x, y, width, height = float(x), float(y), float(width), float(height)
-    
+
     # Convert absolute coordinates to percentages
     item = {
         "id": uuid.uuid4().hex[0:10],
@@ -79,10 +79,10 @@ def create_segmentation(
     category_id, segmentation, categories, from_name, image_height, image_width, to_name
 ):
     """Convert COCO segmentation annotation to Label Studio polygon format.
-    
+
     COCO segmentation format: flat array of [x1,y1,x2,y2,...] coordinates
     Label Studio format: array of [x,y] points as percentages
-    
+
     Args:
         category_id (int): COCO category ID for this segmentation
         segmentation (list): Flat list of polygon coordinates [x1,y1,x2,y2,...]
@@ -91,7 +91,7 @@ def create_segmentation(
         image_height (int): Height of the source image in pixels
         image_width (int): Width of the source image in pixels
         to_name (str): Object name from Label Studio labeling config
-        
+
     Returns:
         dict: Label Studio polygon annotation item
     """
@@ -121,10 +121,10 @@ def create_keypoints(
     annotation, categories, from_name, to_name, image_height, image_width, point_width
 ):
     """Convert COCO keypoints annotation to Label Studio keypoint format.
-    
+
     COCO keypoints format: [x1,y1,v1,x2,y2,v2,...] where v is visibility flag
     v=0: not labeled, v=1: labeled but not visible, v=2: labeled and visible
-    
+
     Args:
         annotation (dict): COCO annotation containing keypoints and category_id
         categories (dict): Mapping of category_id to category name
@@ -133,7 +133,7 @@ def create_keypoints(
         image_height (int): Height of the source image in pixels
         image_width (int): Width of the source image in pixels
         point_width (float): Width/size of keypoints in Label Studio
-        
+
     Returns:
         list: List of Label Studio keypoint annotation items
     """
@@ -145,7 +145,7 @@ def create_keypoints(
     for i in range(0, len(points), 3):
         x, y, v = points[i : i + 3]  # x, y, visibility
         x, y, v = float(x), float(y), int(v)
-        
+
         # Convert absolute coordinates to percentages
         item = {
             "id": uuid.uuid4().hex[0:10],
@@ -182,13 +182,13 @@ def convert_coco_to_ls(
     point_width=1.0,
 ):
     """Convert COCO dataset annotations to Label Studio JSON format.
-    
+
     This function processes a COCO dataset JSON file and converts all annotations
     (bounding boxes, segmentations, keypoints) to Label Studio's format. It supports:
     - Object detection (bounding boxes)
-    - Instance segmentation (polygons) 
+    - Instance segmentation (polygons)
     - Keypoint detection (pose estimation)
-    
+
     The function automatically generates a Label Studio labeling configuration
     based on the annotation types found in the COCO dataset.
 
@@ -198,11 +198,11 @@ def convert_coco_to_ls(
         to_name (str, optional): Object name from Label Studio labeling config. Defaults to "image".
         from_name (str, optional): Control tag name from Label Studio labeling config. Defaults to "label".
         out_type (str, optional): Annotation type - "annotations" or "predictions". Defaults to "annotations".
-        image_root_url (str, optional): Root URL path where images will be hosted. 
+        image_root_url (str, optional): Root URL path where images will be hosted.
             Defaults to "/data/local-files/?d=" for local storage.
         use_super_categories (bool, optional): Use super categories from COCO if available. Defaults to False.
         point_width (float, optional): Width/size of keypoints in pixels. Defaults to 1.0.
-    
+
     Example:
         >>> convert_coco_to_ls(
         ...     input_file='annotations/instances_val2017.json',
@@ -210,7 +210,7 @@ def convert_coco_to_ls(
         ...     image_root_url='s3://my-bucket/images/',
         ...     use_super_categories=True
         ... )
-        
+
     Note:
         - The function will create a corresponding .label_config.xml file with the labeling configuration
         - RLE (Run-Length Encoding) segmentations are not yet supported
@@ -251,7 +251,7 @@ def convert_coco_to_ls(
     # Flags for tracking annotation types and generating appropriate labeling config
     segmentation = bbox = keypoints = rle = False
     segmentation_once = bbox_once = keypoints_once = rle_once = False
-    
+
     # Generate appropriate from_name tags for different annotation types
     rectangles_from_name, keypoints_from_name = (
         from_name + "_rectangles",
@@ -369,7 +369,7 @@ def convert_coco_to_ls(
 
 def add_parser(subparsers):
     """Add COCO converter arguments to command line parser.
-    
+
     Args:
         subparsers: Argparse subparsers object to add the COCO parser to
     """

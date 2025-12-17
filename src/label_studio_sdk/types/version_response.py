@@ -15,7 +15,7 @@ class VersionResponse(UncheckedBaseModel):
     edition: EditionEnum = pydantic.Field()
     """
     Label Studio edition (Community or Enterprise)
-    
+
     * `Community` - Community
     * `Enterprise` - Enterprise
     """

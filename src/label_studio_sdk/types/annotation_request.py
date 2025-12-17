@@ -40,7 +40,7 @@ class AnnotationRequest(UncheckedBaseModel):
     last_action: typing.Optional[LastActionEnum] = pydantic.Field(default=None)
     """
     Action which was performed in the last annotation history item
-    
+
     * `prediction` - Created from prediction
     * `propagated_annotation` - Created from another annotation
     * `imported` - Imported

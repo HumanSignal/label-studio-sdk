@@ -80,8 +80,8 @@ def get_local_path(
     :param access_token: Label Studio access token, it will be used for uploaded files, local storage files and cloud storage files
       if not provided, it will be taken from LABEL_STUDIO_API_KEY env variable
     :param download_resources: Download and cache a file from URL
-    :param task_id: Label Studio Task ID, required for cloud storage files 
-      because the URL will be rebuilt to `{hostname}/tasks/{task_id}/presign/?fileuri={url}` 
+    :param task_id: Label Studio Task ID, required for cloud storage files
+      because the URL will be rebuilt to `{hostname}/tasks/{task_id}/presign/?fileuri={url}`
 
     :return: filepath
     """

@@ -235,7 +235,7 @@
         "items": {"$ref": "#/definitions/TextArea"}
       }, {"$ref": "#/definitions/TextArea"}]
     }
-    
+
   },
   "type": "object",
   "properties": {

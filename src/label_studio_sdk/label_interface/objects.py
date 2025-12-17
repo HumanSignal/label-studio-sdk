@@ -35,7 +35,7 @@ class PredictionValue(BaseModel):
 
 class AnnotationValue(BaseModel):
     """ """
-    
+
     was_cancelled: Optional[bool] = False
     ground_truth: Optional[bool] = False
     lead_time: Optional[float] = 0.0
@@ -43,7 +43,7 @@ class AnnotationValue(BaseModel):
     completed_by: int
 
     result: Optional[List[Union[Dict[str, Any], Region]]]
-    
+
     class Config:
         populate_by_name = True
 
@@ -54,7 +54,7 @@ class AnnotationValue(BaseModel):
 
 class TaskValue(BaseModel):
     """ """
-    
+
     data: Optional[dict]
     annotations: Optional[List[AnnotationValue]] = Field(default_factory=list)
     predictions: Optional[List[PredictionValue]] = Field(default_factory=list)

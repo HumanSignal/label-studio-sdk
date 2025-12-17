@@ -233,12 +233,12 @@ class LabelInterface:
                     new_tuples.append(t)
 
             tuples = new_tuples
-        
+
         tree = CE.tree_from_tuples(*tuples)
-        
+
         return CE.tree_to_string(tree, pretty=pretty)
 
-    
+
     @classmethod
     def create_instance(cls, *args, **kwargs):
         """Create instance is a shortcut to create a config and then
@@ -249,7 +249,7 @@ class LabelInterface:
         lbl = li.get_control("lbl")
         reg = lbl.label("person", start=0, end=10)
         ```
-        
+
         The above returns a region that could be serialized to Label
         Studio JSON format and uploaded to Label Studio
 
@@ -277,14 +277,14 @@ class LabelInterface:
           <Text name="txt" value="$text" />
         </View>
         ```
-        This method will extract the predefined task from the configuration and 
+        This method will extract the predefined task from the configuration and
         parse the controls, objects, and labels used in it.
         """
         self.task_loaded = False
-        
+
         self._config = config
         self._tags_mapping = tags_mapping
-        
+
         # extract predefined task from the config
         _task_data, _ann, _pred = LabelInterface.get_task_from_labeling_config(config)
         self._sample_config_task = _task_data
@@ -303,7 +303,7 @@ class LabelInterface:
         self._objects = objects
         self._labels = labels
         self._tree = tree
-        
+
 
     def create_regions(self, data: Dict[str, Union[str, Dict, List[str], List[Dict]]]) -> List[Region]:
         """
@@ -316,7 +316,7 @@ class LabelInterface:
         """
         regions = []
         for control_tag_name, payload in data.items():
-            
+
             if payload is None:
                 logger.warning(
                     f"Payload for control tag '{control_tag_name}' is None: "
@@ -324,7 +324,7 @@ class LabelInterface:
                     "try to adjust the prompt to generate valid payloads. "
                     "Otherwise, it can signify an error")
                 continue
-            
+
             if control_tag_name not in self._controls:
                 logger.info(f"Control tag '{control_tag_name}' not found in the config")
                 continue
@@ -520,15 +520,15 @@ class LabelInterface:
             lst = list(filter(match_fn, lst))
 
         return lst
-    
+
     @cached_property
     def ner_tags(self):
         return self.find_tags('controls', lambda t: t.tag.lower() in ('labels', 'hypertextlabels'))
-    
+
     @cached_property
     def image_tags(self):
         return self.find_tags('objects', lambda t: t.tag.lower() == 'image')
-    
+
     @cached_property
     def pdf_tags(self):
         return self.find_tags('objects', lambda t: t.tag.lower() == 'pdf')
@@ -557,13 +557,13 @@ class LabelInterface:
         """
         tree = copy.deepcopy(self)
         tree.task_loaded = True
-        
+
         for obj in tree.objects:
             if obj.value_is_variable and obj.value_name in task:
                 obj.value = task.get(obj.value_name)
 
         return tree
-    
+
     def to_json_schema(self):
         """
         Converts the current LabelInterface instance into a JSON Schema.

@@ -25,7 +25,7 @@ jobs:
         run: |
           body=$(jq -n --arg body "$ISSUE_BODY" '{body: $body}' | jq .body)
           echo "$body"
-          
+
           curl https://${ZENDESK_HOST}/api/v2/tickets \
             --request POST \
             --user "${ZENDESK_USER}/token:${ZENDESK_TOKEN}" \

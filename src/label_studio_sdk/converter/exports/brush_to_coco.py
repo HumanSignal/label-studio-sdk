@@ -34,36 +34,36 @@ def flatten(item):
 
 def generate_contour_from_rle(rle, original_width, original_height):
     """Convert RLE encoded masks to COCO segmentation format
-    
+
     Args:
         rle: RLE encoded mask data
         original_width: Width of the original image
         original_height: Height of the original image
-        
+
     Returns:
         tuple: (segmentation, bbox_list, area_list) in COCO format
     """
     # Ensure rle is bytes, not string
     if isinstance(rle, str):
         rle = rle.encode('utf-8')
-        
+
     # Decode RLE
     try:
         rle_binary = brush_module.decode_rle(rle)
     except Exception as e:
         logger.warning(f"Failed to decode RLE: {e}")
         return [], [], []
-    
+
     # Reshape to image dimensions with 4 channels (RGBA)
     try:
         reshaped_image = np.reshape(rle_binary, [original_height, original_width, 4])
     except Exception as e:
         logger.warning(f"Failed to reshape RLE data: {e}")
         return [], [], []
-    
+
     # Use only the alpha channel for contour detection
     alpha_channel = np.array(reshaped_image[:, :, 3]).astype('uint8')
-    
+
     # Find contours
     contours, _ = cv2.findContours(
         alpha_channel, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
@@ -73,15 +73,15 @@ def generate_contour_from_rle(rle, original_width, original_height):
     bbox_list = []
     area_list = []
     for contour in contours:
-        # OpenCV contours are in format [[[x1,y1]], [[x2,y2]], ...], 
+        # OpenCV contours are in format [[[x1,y1]], [[x2,y2]], ...],
         # we need to convert to a flat list [x1,y1,x2,y2,...]
         contour_points = [point[0] for point in contour]
-        
+
         # Flatten to a single list
         contour_flat = []
         for point in contour_points:
             contour_flat.extend(point.tolist())
-        
+
         # Check if we have at least 3 points (6 coordinates) for a valid polygon
         if len(contour_points) >= 3:
             segmentation.append(contour_flat)
@@ -98,12 +98,12 @@ def generate_contour_from_rle(rle, original_width, original_height):
 
 def generate_contour_from_polygon(points, original_width, original_height):
     """Convert polygon annotations to COCO segmentation format
-    
+
     Args:
         points: List of [x, y] points in percentage format
         original_width: Width of the original image
         original_height: Height of the original image
-        
+
     Returns:
         tuple: (segmentation, bbox, area) in COCO format
     """
@@ -142,7 +142,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
     """
     ensure_dir(output_dir)
     output_file = os.path.join(output_dir, "result_coco.json")
-    
+
     if output_image_dir is not None:
         ensure_dir(output_image_dir)
     else:
@@ -174,7 +174,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
             if isinstance(value, str) and any(value.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']):
                 image_path = value
                 break
-        
+
         if not image_path:
             logger.warning(f"No image path found for item {item.get('id')}. Skipping.")
             continue
@@ -201,11 +201,11 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                 if image_info['width'] is None and 'original_width' in annotation:
                     image_info['width'] = annotation['original_width']
                     image_info['height'] = annotation['original_height']
-                
+
                 # Identify annotation type and extract labels
                 annotation_type = annotation.get('type', '').lower()
                 labels = []
-                
+
                 if 'brushlabels' in annotation:
                     labels = annotation['brushlabels']
                     type_key = 'brushlabels'
@@ -221,7 +221,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                 else:
                     logger.debug(f"Unsupported annotation type: {annotation_type}")
                     continue
-                
+
                 # Process each label
                 for label in labels:
                     # Add new categories to the map
@@ -235,9 +235,9 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                             'color': generate_random_color(),
                             'metadata': {}
                         })
-                    
+
                     category_id = category_map[label]
-                    
+
                     # Convert annotation based on type
                     if 'rle' in annotation and type_key == 'brushlabels':
 
@@ -248,11 +248,11 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
 
                         # Process brush annotation (RLE encoded mask)
                         segmentations, bboxes, areas = generate_contour_from_rle(
-                            annotation['rle'], 
-                            annotation['original_width'], 
+                            annotation['rle'],
+                            annotation['original_width'],
                             annotation['original_height']
                         )
-                        
+
                         # Create separate annotation for each contour
                         for i, (segmentation, bbox, area) in enumerate(zip(segmentations, bboxes, areas)):
                             coco_annotation = {
@@ -268,7 +268,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                             coco_data['annotations'].append(coco_annotation)
                             annotation_id += 1
                             valid_annotations = True
-                    
+
                     elif 'points' in annotation and type_key == 'polygonlabels':
                         # check required keys exist
                         if not all(k in annotation for k in ['points', 'original_width', 'original_height']):
@@ -276,11 +276,11 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                             continue
                         # Process polygon annotation
                         segmentation, bbox, area = generate_contour_from_polygon(
-                            annotation['points'], 
-                            annotation['original_width'], 
+                            annotation['points'],
+                            annotation['original_width'],
                             annotation['original_height']
                         )
-                        
+
                         coco_annotation = {
                             'id': annotation_id,
                             'image_id': image_id,
@@ -294,7 +294,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                         coco_data['annotations'].append(coco_annotation)
                         annotation_id += 1
                         valid_annotations = True
-                    
+
                     elif annotation_type == 'rectanglelabels' or type_key == 'labels':
                         # check required keys exist
                         if not all(k in annotation for k in ['x', 'y', 'width', 'height', 'original_width', 'original_height']):
@@ -306,7 +306,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                         y = annotation['y'] * annotation['original_height'] / 100
                         w = annotation['width'] * annotation['original_width'] / 100
                         h = annotation['height'] * annotation['original_height'] / 100
-                        
+
                         coco_annotation = {
                             'id': annotation_id,
                             'image_id': image_id,
@@ -320,7 +320,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                         coco_data['annotations'].append(coco_annotation)
                         annotation_id += 1
                         valid_annotations = True
-        
+
         # Add image to the dataset if it has valid dimensions
         if image_info['width'] is not None and image_info['height'] is not None and valid_annotations:
             coco_data['images'].append(image_info)
@@ -328,5 +328,5 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
     # Write COCO JSON to file
     with io.open(output_file, 'w', encoding='utf8') as f:
         json.dump(coco_data, f, indent=2, ensure_ascii=False)
-    
+
     return output_file

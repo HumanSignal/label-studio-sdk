@@ -22,7 +22,7 @@ class DefaultRole(UncheckedBaseModel):
     default_role: typing.Optional[Role9E7Enum] = pydantic.Field(default=None)
     """
     Default membership role for invited users
-    
+
     * `OW` - Owner
     * `AD` - Administrator
     * `MA` - Manager

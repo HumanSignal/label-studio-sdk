@@ -43,8 +43,8 @@ def parse_config(config_string):
 
     """
     """
-    :param config_string: 
-    
+    :param config_string:
+
     """
     if not config_string:
         return {}

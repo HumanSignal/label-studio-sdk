@@ -43,7 +43,7 @@ class Region(BaseModel):
              }
             for rel in self.relations
         ]
-               
+
     def to_json(self):
         """ """
         return json.dumps(self._dict())
@@ -55,12 +55,12 @@ class Region(BaseModel):
     @property
     def has_relations(self):
         return len(self.relations) > 0
-    
+
     def add_relation(self, region=None, direction="right", label=None):
         """ """
         self.relations.append({ "region": region, "direction": direction, "labels": label })
-        
+
     def set_relations(self, rels):
         """ """
         self.relations = rels
-        
+

@@ -84,7 +84,7 @@ def test_create_taxonomy():
 def test_create_image_labels():
     tag_type = "RectangleLabels"
     label_names = ("hello", "world")
-    
+
     res = CE.labels(label_names, tag_type=tag_type)
 
     assert res[0] is tag_type
@@ -97,7 +97,7 @@ def test_using_lpi_tags():
         'choices': ChoicesTag(name='sentiment_class', labels=['Positive', 'Negative', 'Neutral']),
         'input': TextTag(name='message', value='my_text'),
     }
-    
+
     tuples = CE.convert_tags_description(tags, mapping=None)
 
     assert len(tags) is 2
@@ -106,7 +106,7 @@ def test_using_lpi_tags():
     stag = tuples[1]
 
     assert ftag[0] == "Choices"
-    assert stag[0] == "Text"    
+    assert stag[0] == "Text"
     assert ftag[1]["name"] == "sentiment_class"
     assert ftag[1]["toName"] == "message"
     assert stag[1]["name"] == "message"
@@ -120,7 +120,7 @@ def test_using_lpi_tags():
     tuples = CE.convert_tags_description(tags, mapping=None)
     ftag = tuples[0]
     stag = tuples[1]
-    
+
     assert ftag[1]["name"] == "choices"
     assert ftag[1]["toName"] == "input"
     assert stag[1]["name"] == "input"

@@ -178,7 +178,7 @@ def test_load_task():
     value = "test"
 
     assert conf.task_loaded == False
-    
+
     tree = conf.load_task({var_name: value})
 
     assert isinstance(tree, LabelInterface)

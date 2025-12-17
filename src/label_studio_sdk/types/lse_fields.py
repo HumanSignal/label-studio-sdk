@@ -19,7 +19,7 @@ class LseFields(UncheckedBaseModel):
     onboarding_state: typing.Optional[OnboardingStateEnum] = pydantic.Field(default=None)
     """
     The current stage of user onboarding
-    
+
     * `not_started` - Not Started
     * `signup` - Signup
     * `trial_signup` - Trial Signup

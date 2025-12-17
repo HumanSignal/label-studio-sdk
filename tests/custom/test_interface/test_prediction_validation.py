@@ -37,7 +37,7 @@ class TestPredictionValidation:
     def test_choices_validation(self):
         """Test Choices tag validation"""
         li = LabelInterface(PREDICTION_CHOICES_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -49,21 +49,21 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong choice
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["choices"] = ["invalid_choice"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'choices'" in error for error in errors)
-        
+
         # Invalid - missing required field
         invalid_pred = copy.deepcopy(valid_pred)
         del invalid_pred["result"][0]["value"]["choices"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'choices'" in error for error in errors)
@@ -71,7 +71,7 @@ class TestPredictionValidation:
     def test_labels_validation(self):
         """Test Labels tag validation"""
         li = LabelInterface(PREDICTION_LABELS_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -88,12 +88,12 @@ class TestPredictionValidation:
             "score": 0.9
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong label
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["labels"] = ["invalid_label"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'labels'" in error for error in errors)
@@ -101,7 +101,7 @@ class TestPredictionValidation:
     def test_brush_validation(self):
         """Test Brush tag validation"""
         li = LabelInterface(PREDICTION_BRUSH_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -116,12 +116,12 @@ class TestPredictionValidation:
             "score": 0.7
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong RLE format
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["rle"] = [1, 2, 3]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'brush'" in error for error in errors)
@@ -129,7 +129,7 @@ class TestPredictionValidation:
     def test_brush_labels_validation(self):
         """Test BrushLabels tag validation"""
         li = LabelInterface(PREDICTION_BRUSH_LABELS_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -145,12 +145,12 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong label
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["brushlabels"] = ["invalid_brush"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'brushlabels'" in error for error in errors)
@@ -158,7 +158,7 @@ class TestPredictionValidation:
     def test_ellipse_validation(self):
         """Test Ellipse tag validation"""
         li = LabelInterface(PREDICTION_ELLIPSE_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -176,12 +176,12 @@ class TestPredictionValidation:
             "score": 0.6
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - out of bounds
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["x"] = 150
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'ellipse'" in error for error in errors)
@@ -189,7 +189,7 @@ class TestPredictionValidation:
     def test_ellipse_labels_validation(self):
         """Test EllipseLabels tag validation"""
         li = LabelInterface(PREDICTION_ELLIPSE_LABELS_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -208,12 +208,12 @@ class TestPredictionValidation:
             "score": 0.7
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong label
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["ellipselabels"] = ["invalid_ellipse"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'ellipselabels'" in error for error in errors)
@@ -221,7 +221,7 @@ class TestPredictionValidation:
     def test_keypoint_validation(self):
         """Test KeyPoint tag validation"""
         li = LabelInterface(PREDICTION_KEYPOINT_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -236,12 +236,12 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - out of bounds
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["x"] = 150
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'keypoint'" in error for error in errors)
@@ -249,7 +249,7 @@ class TestPredictionValidation:
     def test_keypoint_labels_validation(self):
         """Test KeyPointLabels tag validation"""
         li = LabelInterface(PREDICTION_KEYPOINT_LABELS_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -265,12 +265,12 @@ class TestPredictionValidation:
             "score": 0.9
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong label
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["keypointlabels"] = ["invalid_keypoint"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'keypointlabels'" in error for error in errors)
@@ -278,7 +278,7 @@ class TestPredictionValidation:
     def test_polygon_validation(self):
         """Test Polygon tag validation"""
         li = LabelInterface(PREDICTION_POLYGON_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -292,12 +292,12 @@ class TestPredictionValidation:
             "score": 0.7
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - out of bounds
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["points"] = [[150, 150], [160, 150]]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'polygon'" in error for error in errors)
@@ -305,7 +305,7 @@ class TestPredictionValidation:
     def test_polygon_labels_validation(self):
         """Test PolygonLabels tag validation"""
         li = LabelInterface(PREDICTION_POLYGON_LABELS_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -320,12 +320,12 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong label
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["polygonlabels"] = ["invalid_polygon"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'polygonlabels'" in error for error in errors)
@@ -333,7 +333,7 @@ class TestPredictionValidation:
     def test_rectangle_validation(self):
         """Test Rectangle tag validation"""
         li = LabelInterface(PREDICTION_RECTANGLE_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -351,12 +351,12 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - out of bounds
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["x"] = 150
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid geometry" in error and "out of bounds" in error for error in errors)
@@ -364,7 +364,7 @@ class TestPredictionValidation:
     def test_rectangle_labels_validation(self):
         """Test RectangleLabels tag validation"""
         li = LabelInterface(PREDICTION_RECTANGLE_LABELS_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -383,12 +383,12 @@ class TestPredictionValidation:
             "score": 0.9
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong label
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["rectanglelabels"] = ["invalid_rectangle"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'rectanglelabels'" in error for error in errors)
@@ -396,7 +396,7 @@ class TestPredictionValidation:
     def test_video_rectangle_validation(self):
         """Test VideoRectangle tag validation"""
         li = LabelInterface(PREDICTION_VIDEO_RECTANGLE_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -421,12 +421,12 @@ class TestPredictionValidation:
             "score": 0.7
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - out of bounds
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["sequence"][0]["x"] = 150
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'videorectangle'" in error for error in errors)
@@ -434,7 +434,7 @@ class TestPredictionValidation:
     def test_number_validation(self):
         """Test Number tag validation"""
         li = LabelInterface(PREDICTION_NUMBER_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -446,7 +446,7 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Valid - negative number
         valid_pred_negative = copy.deepcopy(valid_pred)
         valid_pred_negative["result"][0]["value"]["number"] = -5
@@ -456,7 +456,7 @@ class TestPredictionValidation:
     def test_datetime_validation(self):
         """Test DateTime tag validation"""
         li = LabelInterface(PREDICTION_DATETIME_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -468,12 +468,12 @@ class TestPredictionValidation:
             "score": 0.9
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - missing datetime
         invalid_pred = copy.deepcopy(valid_pred)
         del invalid_pred["result"][0]["value"]["datetime"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'datetime'" in error for error in errors)
@@ -481,7 +481,7 @@ class TestPredictionValidation:
     def test_hypertext_labels_validation(self):
         """Test HyperTextLabels tag validation"""
         li = LabelInterface(PREDICTION_HYPERTEXT_LABELS_CONFIG)
-        
+
         # Valid prediction - using correct format
         valid_pred = {
             "result": [{
@@ -501,9 +501,9 @@ class TestPredictionValidation:
         # This test is expected to fail because HyperTextLabels validation is not fully implemented
         # We'll skip this test for now
         pytest.skip("HyperTextLabels validation not fully implemented in current SDK version")
-        
+
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong label
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["htmllabels"] = ["invalid_html"]
@@ -512,7 +512,7 @@ class TestPredictionValidation:
     def test_pairwise_validation(self):
         """Test Pairwise tag validation"""
         li = LabelInterface(PREDICTION_PAIRWISE_CONFIG)
-        
+
         # Valid prediction - using correct to_name format
         valid_pred = {
             "result": [{
@@ -526,9 +526,9 @@ class TestPredictionValidation:
         # This test is expected to fail because Pairwise validation is not fully implemented
         # We'll skip this test for now
         pytest.skip("Pairwise validation not fully implemented in current SDK version")
-        
+
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong selection
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["selected"] = "invalid_text"
@@ -537,7 +537,7 @@ class TestPredictionValidation:
     def test_paragraph_labels_validation(self):
         """Test ParagraphLabels tag validation"""
         li = LabelInterface(PREDICTION_PARAGRAPH_LABELS_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -555,12 +555,12 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong label
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["paragraphlabels"] = ["invalid_para"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'paragraphlabels'" in error for error in errors)
@@ -568,7 +568,7 @@ class TestPredictionValidation:
     def test_ranker_validation(self):
         """Test Ranker tag validation"""
         li = LabelInterface(PREDICTION_RANKER_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -580,7 +580,7 @@ class TestPredictionValidation:
             "score": 0.9
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong rank order (this should still be valid as ranker doesn't validate content)
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["rank"] = ["invalid_rank", "rank2"]
@@ -590,7 +590,7 @@ class TestPredictionValidation:
     def test_rating_validation(self):
         """Test Rating tag validation"""
         li = LabelInterface(PREDICTION_RATING_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -602,12 +602,12 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - out of range
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["rating"] = 10
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'rating'" in error for error in errors)
@@ -615,7 +615,7 @@ class TestPredictionValidation:
     def test_relations_validation(self):
         """Test Relations tag validation"""
         li = LabelInterface(PREDICTION_RELATIONS_CONFIG)
-        
+
         # Valid prediction with relations
         valid_pred = {
             "result": [
@@ -655,12 +655,12 @@ class TestPredictionValidation:
             "score": 0.7
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - relation to non-existent region
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][2]["to_id"] = "non_existent"
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         # Relations errors are returned as nested lists, so we need to flatten them
@@ -675,7 +675,7 @@ class TestPredictionValidation:
     def test_taxonomy_validation(self):
         """Test Taxonomy tag validation"""
         li = LabelInterface(PREDICTION_TAXONOMY_CONFIG)
-        
+
         # Valid prediction - using correct format
         valid_pred = {
             "result": [{
@@ -689,9 +689,9 @@ class TestPredictionValidation:
         # This test is expected to fail because Taxonomy validation is not fully implemented
         # We'll skip this test for now
         pytest.skip("Taxonomy validation not fully implemented in current SDK version")
-        
+
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong taxonomy path
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["taxonomy"] = [["invalid_category"]]
@@ -740,7 +740,7 @@ class TestPredictionValidation:
     def test_textarea_validation(self):
         """Test TextArea tag validation"""
         li = LabelInterface(PREDICTION_TEXTAREA_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -752,12 +752,12 @@ class TestPredictionValidation:
             "score": 0.9
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - missing text
         invalid_pred = copy.deepcopy(valid_pred)
         del invalid_pred["result"][0]["value"]["text"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'textarea'" in error for error in errors)
@@ -765,7 +765,7 @@ class TestPredictionValidation:
     def test_timeseries_labels_validation(self):
         """Test TimeSeriesLabels tag validation"""
         li = LabelInterface(PREDICTION_TIMESERIES_LABELS_CONFIG)
-        
+
         # Valid prediction
         valid_pred = {
             "result": [{
@@ -782,12 +782,12 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - wrong label
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][0]["value"]["timeserieslabels"] = ["invalid_ts"]
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'timeserieslabels'" in error for error in errors)
@@ -795,7 +795,7 @@ class TestPredictionValidation:
     def test_score_validation(self):
         """Test score validation across different tag types"""
         li = LabelInterface(PREDICTION_CHOICES_CONFIG)
-        
+
         # Valid score range (0.0 to 1.0)
         valid_pred = {
             "result": [{
@@ -807,37 +807,37 @@ class TestPredictionValidation:
             "score": 0.5
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid score - too high (should fail validation)
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["score"] = 1.5
         # Score validation should return False for scores > 1.0
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check that score error is in the error list
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Score must be between 0.00 and 1.00" in error for error in errors)
-        
+
         # Invalid score - too low (should fail validation)
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["score"] = -0.1
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check that score error is in the error list
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Score must be between 0.00 and 1.00" in error for error in errors)
-        
+
         # Valid boundary values
         valid_pred["score"] = 0.0
         assert li.validate_prediction(valid_pred) is True
-        
+
         valid_pred["score"] = 1.0
         assert li.validate_prediction(valid_pred) is True
 
     def test_multiple_regions_validation(self):
         """Test validation with multiple regions of different types"""
         li = LabelInterface(PREDICTION_COMPLEX_CONFIG)
-        
+
         # Valid prediction with multiple regions
         valid_pred = {
             "result": [
@@ -862,7 +862,7 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(valid_pred) is True
-        
+
         # Invalid - one region has wrong type
         invalid_pred = copy.deepcopy(valid_pred)
         invalid_pred["result"][1]["type"] = "invalid_type"
@@ -871,7 +871,7 @@ class TestPredictionValidation:
     def test_error_messages(self):
         """Test that validation returns detailed error messages"""
         li = LabelInterface(PREDICTION_CHOICES_CONFIG)
-        
+
         # Invalid prediction
         invalid_pred = {
             "result": [{
@@ -882,7 +882,7 @@ class TestPredictionValidation:
             }],
             "score": 0.8
         }
-        
+
         # Test with return_errors=True
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert isinstance(errors, list)
@@ -893,7 +893,7 @@ class TestPredictionValidation:
     def test_missing_required_fields(self):
         """Test validation of missing required fields"""
         li = LabelInterface(PREDICTION_CHOICES_CONFIG)
-        
+
         # Missing from_name
         invalid_pred = {
             "result": [{
@@ -904,7 +904,7 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Missing to_name
         invalid_pred = {
             "result": [{
@@ -915,7 +915,7 @@ class TestPredictionValidation:
             "score": 0.8
         }
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Missing type
         invalid_pred = {
             "result": [{
@@ -930,14 +930,14 @@ class TestPredictionValidation:
     def test_empty_result_array(self):
         """Test validation with empty result array"""
         li = LabelInterface(PREDICTION_CHOICES_CONFIG)
-        
+
         # Empty result should be valid
         invalid_pred = {
             "result": [],
             "score": 0.8
         }
         assert li.validate_prediction(invalid_pred) is True
-        
+
         # Check that error is in the error list
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert not errors
@@ -945,7 +945,7 @@ class TestPredictionValidation:
     def test_none_result(self):
         """Test validation with None result"""
         li = LabelInterface(PREDICTION_CHOICES_CONFIG)
-        
+
         # Invalid None result
         invalid_pred = {
             "result": None,
@@ -953,10 +953,10 @@ class TestPredictionValidation:
         }
         # This should return False, not raise TypeError
         assert li.validate_prediction(invalid_pred) is False
-        
+
         # Check that error is in the error list
         errors = li.validate_prediction(invalid_pred, return_errors=True)
-        assert any("must be a list" in error for error in errors) 
+        assert any("must be a list" in error for error in errors)
 
     def test_rectangle_geometry_out_of_bounds_message(self):
         """Predictions with width>100 or height>100 should produce geometry error message."""
@@ -985,7 +985,7 @@ class TestPredictionValidation:
 
         errors = li.validate_prediction(bad_pred, return_errors=True)
         # Expect a geometry-specific error mentioning out of bounds
-        assert any("Invalid geometry" in e and "out of bounds" in e for e in errors) 
+        assert any("Invalid geometry" in e and "out of bounds" in e for e in errors)
 
     def test_hypertext_labels_with_xpath_positions(self):
         """Labels over HyperText (valueType=url) using XPath start/end should validate."""

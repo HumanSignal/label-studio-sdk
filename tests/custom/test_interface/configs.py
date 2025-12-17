@@ -22,7 +22,7 @@ CORRECT_REGION = {
 
 SIMPLE_CONF = f"""
     <View>
-      <Text name="{TO_NAME}" value="{VALUE}" />      
+      <Text name="{TO_NAME}" value="{VALUE}" />
       <Choices name="{FROM_NAME}" toName="{TO_NAME}">
         <Choice value="{LABEL1}" />
         <Choice value="{LABEL2}" />

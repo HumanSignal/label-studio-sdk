@@ -1,18 +1,18 @@
 """
-This is a Python script that exports labeled data from a Label Studio project 
+This is a Python script that exports labeled data from a Label Studio project
 and converts it into the YOLO format, including downloading associated images.
 
 ## 1. What It Does and How
 The script performs the following steps:
 
-1. **Connects to Label Studio:** It uses the Label Studio SDK to connect 
+1. **Connects to Label Studio:** It uses the Label Studio SDK to connect
 to a Label Studio instance using the provided URL and API key.
 2. **Retrieves the Project:** Fetches the specified project by its ID.
 3. **Creates an Export Snapshot:** Generates a snapshot of the project's annotations for export.
 4. **Downloads Annotations:** Downloads the annotations in JSON format.
-5. **Converts Annotations to YOLO Format:** Utilizes the Label Studio Converter 
+5. **Converts Annotations to YOLO Format:** Utilizes the Label Studio Converter
 to transform the annotations into the YOLO format suitable for object detection tasks.
-6. **Downloads Associated Images:** Iterates over the exported tasks and downloads the corresponding images, 
+6. **Downloads Associated Images:** Iterates over the exported tasks and downloads the corresponding images,
 implementing retry logic with exponential backoff to handle rate limits or transient network issues.
 
 ## 2. How to Use It
@@ -22,7 +22,7 @@ implementing retry logic with exponential backoff to handle rate limits or trans
    pip install git+https://github.com/heartexlabs/label-studio-sdk.git tqdm
    ```
 
-2. **Set Up Credentials:** Provide your LABEL_STUDIO_URL, LABEL_STUDIO_API_KEY, and PROJECT_ID either 
+2. **Set Up Credentials:** Provide your LABEL_STUDIO_URL, LABEL_STUDIO_API_KEY, and PROJECT_ID either
 by modifying the script variables or via command-line arguments.
 
 3. **Run the Script:** Execute the script from the terminal:
@@ -36,8 +36,8 @@ by modifying the script variables or via command-line arguments.
    - An `images` subdirectory with all the downloaded images.
 
 ## 3. When to Use It
-Use this script when you need to prepare labeled datasets from Label Studio for training YOLO object detection models. 
-It's particularly useful for converting annotations into the required YOLO format and ensuring all associated images 
+Use this script when you need to prepare labeled datasets from Label Studio for training YOLO object detection models.
+It's particularly useful for converting annotations into the required YOLO format and ensuring all associated images
 are downloaded and organized locally for your machine learning pipeline.
 """
 

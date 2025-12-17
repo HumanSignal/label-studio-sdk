@@ -54,8 +54,8 @@ def test_label_with_choices():
 
     assert "choices" in rpy.get("value")
     assert c.LABEL1 in rpy["value"]["choices"]
-    
-    
+
+
 @pytest.mark.parametrize("tag, regions, expected", [
     # Test case 1: ChoicesTag with single choice
     (
@@ -63,14 +63,14 @@ def test_label_with_choices():
         [{"from_name": "choices", "value": {"choices": ["positive"]}}],
         "positive"
     ),
-    
+
     # Test case 2: ChoicesTag with multiple choices
     (
         ChoicesTag(name="choices", to_name=["text"], tag="Choices"),
         [{"from_name": "choices", "value": {"choices": ["positive", "negative"]}}],
         ["positive", "negative"]
     ),
-    
+
     # Test case 3: Multiple regions with labels
     (
         LabelsTag(name="label", to_name=["text"], tag="Labels"),
@@ -80,21 +80,21 @@ def test_label_with_choices():
         ],
         [{"start": 0, "end": 1, "labels": ["positive"]}, {"start": 2, "end": 3, "labels": ["negative"]}]
     ),
-    
+
     # Test case 4: Empty regions
     (
         ChoicesTag(name="choices", to_name=["text"], tag="Choices"),
         [],
         []
     ),
-    
+
     # Test case 5: Regions with different from_name
     (
         ChoicesTag(name="choices", to_name=["text"], tag="Choices"),
         [{"from_name": "other_tag", "value": {"choices": ["positive"]}}],
         []
     ),
-    
+
     # Test case 6: Tag without label_attr_name
     (
         ControlTag(name="base", to_name=["text"], tag="BaseTag"),

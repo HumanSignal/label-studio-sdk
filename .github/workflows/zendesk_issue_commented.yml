@@ -51,7 +51,7 @@ jobs:
             --data-binary @- <<DATA
           {
             "ticket": {
-              "comment": { 
+              "comment": {
                 "body": "[GITHUB_ISSUE_COMMENT]\n\n${body:1:-1}\n\nGITHUB ISSUE URL: ${ISSUE_URL}\nWORKFLOW RUN: ${WORKFLOW_RUN_LINK}",
                 "author_id": $user_id
               }

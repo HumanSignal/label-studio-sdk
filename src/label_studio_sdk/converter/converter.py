@@ -61,7 +61,7 @@ class Format(Enum):
     YOLO_WITH_IMAGES = 14
     COCO_WITH_IMAGES = 15
     YOLO_OBB_WITH_IMAGES = 16
-    BRUSH_TO_COCO = 17 
+    BRUSH_TO_COCO = 17
 
     def __str__(self):
         return self.name
@@ -170,7 +170,7 @@ class Converter(object):
             "format expected by NVIDIA NeMo models.",
             "link": "https://labelstud.io/guide/export.html#ASR-MANIFEST",
             "tags": ["speech recognition"],
-        },   
+        },
         Format.BRUSH_TO_COCO: {
 
             "title": "Brush labels to COCO",
@@ -313,8 +313,8 @@ class Converter(object):
             from label_studio_sdk.converter.exports.brush_to_coco import convert_to_coco
             image_dir = kwargs.get("image_dir")
             convert_to_coco(
-                items, 
-                output_data, 
+                items,
+                output_data,
                 output_image_dir=image_dir
             )
 
@@ -424,7 +424,7 @@ class Converter(object):
         ):
             all_formats.remove(Format.BRUSH_TO_NUMPY.name)
             all_formats.remove(Format.BRUSH_TO_PNG.name)
-            all_formats.remove(Format.BRUSH_TO_COCO.name) 
+            all_formats.remove(Format.BRUSH_TO_COCO.name)
         if not (
             ("Audio" in input_tag_types or "AudioPlus" in input_tag_types)
             and "TextArea" in output_tag_types
@@ -564,12 +564,12 @@ class Converter(object):
                     if self.is_keypoints:
                         v['id'] = r.get('id')
                         v['parentID'] = r.get('parentID')
-                    
+
                 elif from_name and r.get("type") == "chatmessage":
                     v = deepcopy(r.get("value", {}))
                     v["type"] = "chatmessage"
                     outputs[from_name].append(v)
-                    
+
                 else:
                     pass
 

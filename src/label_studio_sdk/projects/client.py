@@ -1004,87 +1004,87 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ImportTasksProjectsResponse:
         """
-        
+
                     Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
                     One POST request is limited at 250K tasks and 200 MB.
-        
+
                     **Note:** Imported data is verified against a project *label_config* and must
                     include all variables that were used in the *label_config*. For example,
                     if the label configuration has a *$text* variable, then each item in a data object
                     must include a "text" field.
                     <br>
-        
+
                     ## POST requests
                     <hr style="opacity:0.3">
-        
+
                     There are three possible ways to import tasks with this endpoint:
-        
+
                     ### 1. **POST with data**
                     Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
                     Update this example to specify your authorization token and Label Studio instance host, then run the following from
                     the command line.
-        
+
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
                     -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
                     ```
-        
+
                     ### 2. **POST with files**
                     Send tasks as files. You can attach multiple files with different names.
-        
+
                     - **JSON**: text files in JavaScript object notation format
                     - **CSV**: text files with tables in Comma Separated Values format
                     - **TSV**: text files with tables in Tab Separated Value format
                     - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
-        
+
                     Update this example to specify your authorization token, Label Studio instance host, and file name and path,
                     then run the following from the command line:
-        
+
                     ```bash
                     curl -H 'Authorization: Token abc123' \
                     -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
                     ```
-        
+
                     ### 3. **POST with URL**
                     You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
-        
+
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
                     -X POST 'http://localhost:8000/api/projects/1/import' \
                     --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
                     ```
-        
+
                     <br>
-                
-        
+
+
         Parameters
         ----------
         id : int
             A unique integer value identifying this project.
-        
+
         request : typing.Sequence[ImportApiRequest]
-        
+
         commit_to_project : typing.Optional[bool]
             Set to "true" to immediately commit tasks to the project.
-        
+
         preannotated_from_fields : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
-        
+
         return_task_ids : typing.Optional[bool]
             Set to "true" to return task IDs in the response.
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         ImportTasksProjectsResponse
             Tasks successfully imported
-        
+
         Examples
         --------
         from label_studio_sdk import LabelStudio
-        
+
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
@@ -2281,101 +2281,101 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ImportTasksProjectsResponse:
         """
-        
+
                     Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
                     One POST request is limited at 250K tasks and 200 MB.
-        
+
                     **Note:** Imported data is verified against a project *label_config* and must
                     include all variables that were used in the *label_config*. For example,
                     if the label configuration has a *$text* variable, then each item in a data object
                     must include a "text" field.
                     <br>
-        
+
                     ## POST requests
                     <hr style="opacity:0.3">
-        
+
                     There are three possible ways to import tasks with this endpoint:
-        
+
                     ### 1. **POST with data**
                     Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
                     Update this example to specify your authorization token and Label Studio instance host, then run the following from
                     the command line.
-        
+
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
                     -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
                     ```
-        
+
                     ### 2. **POST with files**
                     Send tasks as files. You can attach multiple files with different names.
-        
+
                     - **JSON**: text files in JavaScript object notation format
                     - **CSV**: text files with tables in Comma Separated Values format
                     - **TSV**: text files with tables in Tab Separated Value format
                     - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
-        
+
                     Update this example to specify your authorization token, Label Studio instance host, and file name and path,
                     then run the following from the command line:
-        
+
                     ```bash
                     curl -H 'Authorization: Token abc123' \
                     -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
                     ```
-        
+
                     ### 3. **POST with URL**
                     You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
-        
+
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
                     -X POST 'http://localhost:8000/api/projects/1/import' \
                     --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
                     ```
-        
+
                     <br>
-                
-        
+
+
         Parameters
         ----------
         id : int
             A unique integer value identifying this project.
-        
+
         request : typing.Sequence[ImportApiRequest]
-        
+
         commit_to_project : typing.Optional[bool]
             Set to "true" to immediately commit tasks to the project.
-        
+
         preannotated_from_fields : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
-        
+
         return_task_ids : typing.Optional[bool]
             Set to "true" to return task IDs in the response.
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         ImportTasksProjectsResponse
             Tasks successfully imported
-        
+
         Examples
         --------
         import asyncio
-        
+
         from label_studio_sdk import AsyncLabelStudio
-        
+
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        
-        
+
+
         async def main() -> None:
             await client.projects.import_tasks(
                 id=1,
                 request=[],
             )
-        
-        
+
+
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(

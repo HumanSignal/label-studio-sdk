@@ -13,7 +13,7 @@ class ProjectRole(UncheckedBaseModel):
     role: Role9E7Enum = pydantic.Field()
     """
     User role in project
-    
+
     * `OW` - Owner
     * `AD` - Administrator
     * `MA` - Manager

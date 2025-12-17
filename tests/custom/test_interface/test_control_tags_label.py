@@ -13,7 +13,7 @@ from . import configs as c
 
 EX_TEXT = "text"
 
-# some meta parameteriation here 
+# some meta parameteriation here
 # object tag, control tag, parameters to the label function, expected json output
 params = [
     ## Image labeling
@@ -25,7 +25,7 @@ params = [
 
     (OT.ImageTag, CT.KeyPointTag, { "x": 10, "y": 10 }, { "x": 10, "y": 10 }),
     (OT.ImageTag, CT.KeyPointLabelsTag, { "x": 10, "y": 10, "label": c.LABEL1 }, { "x": 10, "y": 10, "keypointlabels": [ c.LABEL1 ] }),
-        
+
     (OT.ImageTag, CT.PolygonTag, { "points": [(1,2), (2,1)] }, { "points": [(1,2), (2,1)] }),
     (OT.ImageTag, CT.PolygonLabelsTag, { "points": [(1,2), (2,1)], "label": c.LABEL1 }, { "points": [(1,2), (2,1)], "polygonlabels": [ c.LABEL1 ] }),
 
@@ -35,14 +35,14 @@ params = [
     (OT.ImageTag, CT.TextAreaTag, { "label": [ EX_TEXT, EX_TEXT ] }, { "text": [ EX_TEXT, EX_TEXT ] }),
 
     (OT.ImageTag, CT.RatingTag, { "label": 3 }, { "rating": 3 }),
-    
+
     (OT.ImageTag, CT.BrushTag, { "rle": [2,3,3,2] }, { "rle": [2,3,3,2], "format": "rle" }),
     (OT.ImageTag, CT.BrushLabelsTag, { "rle": [2,3,3,2], "label": c.LABEL1 }, { "rle": [2,3,3,2], "format": "rle", "brushlabels": [ c.LABEL1 ] }),
 
     ## Text labeling
     (OT.TextTag, CT.NumberTag, { "label": 5 }, { "number": 5 }),
     (OT.TextTag, CT.DateTimeTag, { "label": "2024-05-07" }, { "datetime": "2024-05-07" }),
-    
+
     (OT.TextTag, CT.LabelsTag, { "label": c.LABEL1, "start": 1, "end": 10 }, { "labels": [ c.LABEL1 ], "start": 1, "end": 10 }),
     (OT.TextTag, CT.LabelsTag, { "label": [ c.LABEL1, c.LABEL2 ], "start": 1, "end": 10 }, { "labels": [ c.LABEL1, c.LABEL2 ], "start": 1, "end": 10 }),
 
@@ -51,7 +51,7 @@ params = [
 
     ## Paragraphs labeling
     (OT.ParagraphsTag, CT.ParagraphLabelsTag, { "start": 0, "end": 0, "startOffset": 10, "endOffset": 10, "label": [ c.LABEL1 ] }, { "start": 0, "end": 0, "startOffset": 10, "endOffset": 10, "paragraphlabels": [ c.LABEL1 ] } ),
-    (OT.ParagraphsTag, CT.ParagraphLabelsTag, { "utterance": 1, "startOffset": 10, "endOffset": 10, "label": [ c.LABEL1 ] }, { "start": 1, "end": 1, "startOffset": 10, "endOffset": 10, "paragraphlabels": [ c.LABEL1 ] } ),    
+    (OT.ParagraphsTag, CT.ParagraphLabelsTag, { "utterance": 1, "startOffset": 10, "endOffset": 10, "label": [ c.LABEL1 ] }, { "start": 1, "end": 1, "startOffset": 10, "endOffset": 10, "paragraphlabels": [ c.LABEL1 ] } ),
 
     ## List labeling
     (OT.ListTag, CT.RankerTag, { "rank": [ c.LABEL1, c.LABEL2 ] }, { "rank": [ c.LABEL1, c.LABEL2 ] }),
@@ -74,7 +74,7 @@ def test_generic(obj_cls, control_cls, label_params, expected_output):
     tag.set_object(obj)
     r = tag.label(to_name="img", **label_params)
     d = r._dict()
-    
+
     assert d.get("from_name") == "test"
     assert d.get("to_name") == "img"
     assert d.get("type") == "control"
@@ -115,11 +115,11 @@ def test_relations():
 
     assert rels[0] == { "from_id": r1.id, "to_id": r2.id, "type": "relation", "direction": "right" }
 
-    r1.add_relation(r2, label=[ c.LABEL1, c.LABEL2]) 
+    r1.add_relation(r2, label=[ c.LABEL1, c.LABEL2])
 
     rels2 = r1._dict_relations()
 
     assert len(rels2) == 2
     assert "labels" in rels2[1]
     assert rels2[1]["labels"] == [ c.LABEL1, c.LABEL2]
-    
+

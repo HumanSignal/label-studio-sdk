@@ -119,7 +119,7 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
         {"entities": [{"start": 0, "end": 1, "labels": ["PERSON"], "text": "John"}]},
         {"entities": [{"start": 0, "end": 1, "labels": ["PERSON"], "text": "John"}]}
     ),
-    # classification with textarea  
+    # classification with textarea
     (
         """
         <View>
@@ -306,7 +306,7 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
 ])
 def test_to_json_schema(config, expected_json_schema, input_arg, expected_result):
     interface = LabelInterface(config)
-    
+
     # convert XML to JSON Schema
     json_schema = interface.to_json_schema()
     assert json_schema == expected_json_schema
@@ -337,20 +337,20 @@ def test_concurrent_json_schema_to_pydantic():
     }
     input_arg1 = {"sentiment": "Positive"}
     input_arg2 = {"sentiment": "Negative"}
-    
+
     queue = multiprocessing.Queue()
-    
+
     p1 = multiprocessing.Process(target=process_json_schema, args=(json_schema, input_arg1, queue))
     p2 = multiprocessing.Process(target=process_json_schema, args=(json_schema, input_arg2, queue))
-    
+
     p1.start()
     p2.start()
-    
+
     p1.join()
     p2.join()
-    
+
     results = [queue.get() for _ in range(2)]
-    
+
     assert {"sentiment": "Positive"} in results
     assert {"sentiment": "Negative"} in results
     assert len(results) == 2
@@ -364,7 +364,7 @@ def process_json_schema_threaded(json_schema, input_arg, results, index):
 def test_concurrent_json_schema_to_pydantic_threaded():
     import threading
     import time
-    
+
     json_schema = {
         "type": "object",
         "properties": {
@@ -382,7 +382,7 @@ def test_concurrent_json_schema_to_pydantic_threaded():
         {"sentiment": "Neutral"},
         {"sentiment": "Positive"}
     ]
-    
+
     results = [None] * len(input_args)
     threads = []
 
@@ -582,7 +582,7 @@ def test_custom_interface_outputs_parsing(outputs_attr, expected_properties, sam
     '''
     interface = LabelInterface(config)
     json_schema = interface.to_json_schema()
-    
+
     # Handle case where expected_properties might be a list (for array schemas)
     if isinstance(expected_properties, list):
         expected_schema = {
@@ -591,7 +591,7 @@ def test_custom_interface_outputs_parsing(outputs_attr, expected_properties, sam
                 "result": {
                     "type": "array",
                     "items": {
-                        "type": "object", 
+                        "type": "object",
                         "properties": expected_properties[0] if expected_properties else {},
                         "required": list(expected_properties[0].keys()) if expected_properties else []
                     }
@@ -611,7 +611,7 @@ def test_custom_interface_outputs_parsing(outputs_attr, expected_properties, sam
             "required": []
         }
     assert json_schema == expected_schema
-    
+
     # Validate that the schema works with pydantic
     with json_schema_to_pydantic(json_schema) as ResponseModel:
         instance = ResponseModel(result=sample_input)

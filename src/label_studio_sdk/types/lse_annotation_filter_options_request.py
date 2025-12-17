@@ -16,7 +16,7 @@ class LseAnnotationFilterOptionsRequest(UncheckedBaseModel):
     reviewed: typing.Optional[ReviewedEnum] = pydantic.Field(default=None)
     """
     `only` - include all tasks with at least one not reviewed annotation<br>`exclude` - exclude with at least one not reviewed annotation
-    
+
     * `only` - only
     * `exclude` - exclude
     * `None` - None

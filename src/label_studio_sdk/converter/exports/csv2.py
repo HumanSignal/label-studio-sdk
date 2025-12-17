@@ -53,10 +53,10 @@ def convert(item_iterator, input_data, output_dir, **kwargs):
 
 def generate_chat_transcript(pretty_value):
     """Generate a human-readable transcript from Chat messages.
-    
+
     Args:
         pretty_value: List of message objects, each containing 'role' and 'content' keys.
-    
+
     Returns:
         str: Newline-separated transcript with format "role: content" for each message.
     """

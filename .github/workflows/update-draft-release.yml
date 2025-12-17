@@ -36,7 +36,7 @@ jobs:
             const default_branch = process.env.DEFAULT_BRANCH;
             let version = target_commitish.replace(process.env.RELEASE_BRANCH_PREFIX, '')
             const regexp = '^[v]?([0-9]+)\.([0-9]+)\.([0-9]+)(\.post([0-9]+))?$';
-            
+
             const {data: compare} = await github.rest.repos.compareCommits({
               owner,
               repo,
@@ -46,7 +46,7 @@ jobs:
             const rc_version = `${version}rc${ compare.ahead_by }`
             console.log(`rc-version: ${rc_version}`)
             core.setOutput("rc-version", rc_version);
-            
+
             function compareVersions(a, b) {
               if (a[1] === b[1])
                 if (a[2] === b[2])
@@ -59,7 +59,7 @@ jobs:
               else
                 return +a[1] - b[1]
             }
-            
+
             const versionMatch = version.match(regexp)
             if (!versionMatch) {
               core.setFailed(`Version "${version}" from branch "${target_commitish}" does not match the regexp ${regexp}`)
@@ -95,7 +95,7 @@ jobs:
             }
             console.log(`New version: ${version}`)
 
-            const rawTags = tags.map(e => e.name) 
+            const rawTags = tags.map(e => e.name)
             const tagsWithNew = [...rawTags, version]
             const sortedTags = tagsWithNew
               .filter(e => e.match(regexp))
@@ -120,7 +120,7 @@ jobs:
             if (release) {
                 console.log(`Draft release already exist ${release.html_url}`)
             } else {
-                console.log(`Draft release is not found creating a new one`)                
+                console.log(`Draft release is not found creating a new one`)
                 const {data: newDraftRelease} = await github.rest.repos.createRelease({
                     owner,
                     repo,
@@ -134,7 +134,7 @@ jobs:
                 release = newDraftRelease;
                 core.setOutput("created", true);
             }
-            
+
             console.log('Updating release with new release notes')
             const {data: release_notes} = await github.rest.repos.generateReleaseNotes({
               owner,

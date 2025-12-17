@@ -55,7 +55,7 @@ client.activity_logs.list()
 <dd>
 
 **end_date:** `typing.Optional[str]` — End date/time (ISO-8601) for log filtering.
-    
+
 </dd>
 </dl>
 
@@ -63,7 +63,7 @@ client.activity_logs.list()
 <dd>
 
 **method:** `typing.Optional[ListActivityLogsRequestMethod]` — HTTP request method used in the log.
-    
+
 </dd>
 </dl>
 
@@ -71,7 +71,7 @@ client.activity_logs.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -79,7 +79,7 @@ client.activity_logs.list()
 <dd>
 
 **page:** `typing.Optional[int]` — [or "start"] Current page index.
-    
+
 </dd>
 </dl>
 
@@ -87,7 +87,7 @@ client.activity_logs.list()
 <dd>
 
 **page_size:** `typing.Optional[int]` — [or "length"] Logs per page, use -1 to obtain all logs (might be slow).
-    
+
 </dd>
 </dl>
 
@@ -95,7 +95,7 @@ client.activity_logs.list()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID to filter logs.
-    
+
 </dd>
 </dl>
 
@@ -103,7 +103,7 @@ client.activity_logs.list()
 <dd>
 
 **search:** `typing.Optional[str]` — Search expression using "AND"/"OR" to filter by request URL.
-    
+
 </dd>
 </dl>
 
@@ -111,7 +111,7 @@ client.activity_logs.list()
 <dd>
 
 **start_date:** `typing.Optional[str]` — Start date/time (ISO-8601) for log filtering.
-    
+
 </dd>
 </dl>
 
@@ -119,7 +119,7 @@ client.activity_logs.list()
 <dd>
 
 **user:** `typing.Optional[int]` — User ID to filter logs.
-    
+
 </dd>
 </dl>
 
@@ -127,7 +127,7 @@ client.activity_logs.list()
 <dd>
 
 **workspace:** `typing.Optional[int]` — Workspace owner ID to filter logs.
-    
+
 </dd>
 </dl>
 
@@ -135,7 +135,7 @@ client.activity_logs.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -202,7 +202,7 @@ client.annotation_history.list()
 <dd>
 
 **annotation:** `typing.Optional[int]` — Annotation ID to get annotation history items for.
-    
+
 </dd>
 </dl>
 
@@ -210,7 +210,7 @@ client.annotation_history.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -218,7 +218,7 @@ client.annotation_history.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -284,7 +284,7 @@ client.annotation_history.delete()
 <dd>
 
 **annotation:** `typing.Optional[int]` — Annotation ID to delete annotation history items for.
-    
+
 </dd>
 </dl>
 
@@ -292,7 +292,7 @@ client.annotation_history.delete()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID to delete annotation history items for.
-    
+
 </dd>
 </dl>
 
@@ -300,7 +300,7 @@ client.annotation_history.delete()
 <dd>
 
 **task:** `typing.Optional[int]` — Task ID to delete annotation history items for.
-    
+
 </dd>
 </dl>
 
@@ -308,7 +308,7 @@ client.annotation_history.delete()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -375,8 +375,8 @@ client.annotation_history.list_for_project(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -384,7 +384,7 @@ client.annotation_history.list_for_project(
 <dd>
 
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
+
 </dd>
 </dl>
 
@@ -392,7 +392,7 @@ client.annotation_history.list_for_project(
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
+
 </dd>
 </dl>
 
@@ -400,7 +400,7 @@ client.annotation_history.list_for_project(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -466,16 +466,16 @@ client.annotation_reviews.list()
 <dl>
 <dd>
 
-**annotation:** `typing.Optional[int]` 
-    
+**annotation:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**annotation_task_project:** `typing.Optional[int]` 
-    
+**annotation_task_project:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -483,7 +483,7 @@ client.annotation_reviews.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -491,7 +491,7 @@ client.annotation_reviews.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -559,7 +559,7 @@ client.annotation_reviews.create(
 <dd>
 
 **annotation:** `int` — Corresponding annotation
-    
+
 </dd>
 </dl>
 
@@ -567,7 +567,7 @@ client.annotation_reviews.create(
 <dd>
 
 **async_postprocess:** `typing.Optional[bool]` — Whether to postprocess the review asynchronously.
-    
+
 </dd>
 </dl>
 
@@ -575,47 +575,47 @@ client.annotation_reviews.create(
 <dd>
 
 **accepted:** `typing.Optional[bool]` — Accepted or rejected (if false) flag
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**comment:** `typing.Optional[str]` 
-    
+**comment:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**last_annotation_history:** `typing.Optional[int]` 
-    
+**last_annotation_history:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**remove_from_queue:** `typing.Optional[bool]` 
-    
+**remove_from_queue:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**result:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**started_at:** `typing.Optional[dt.datetime]` 
-    
+**started_at:** `typing.Optional[dt.datetime]`
+
 </dd>
 </dl>
 
@@ -623,7 +623,7 @@ client.annotation_reviews.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -691,7 +691,7 @@ client.annotation_reviews.get(
 <dd>
 
 **id:** `int` — A unique integer value identifying this annotation review.
-    
+
 </dd>
 </dl>
 
@@ -699,7 +699,7 @@ client.annotation_reviews.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -767,7 +767,7 @@ client.annotation_reviews.delete(
 <dd>
 
 **id:** `int` — A unique integer value identifying this annotation review.
-    
+
 </dd>
 </dl>
 
@@ -775,7 +775,7 @@ client.annotation_reviews.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -843,7 +843,7 @@ client.annotation_reviews.update(
 <dd>
 
 **id:** `int` — A unique integer value identifying this annotation review.
-    
+
 </dd>
 </dl>
 
@@ -851,7 +851,7 @@ client.annotation_reviews.update(
 <dd>
 
 **accepted:** `typing.Optional[bool]` — Accepted or rejected (if false) flag
-    
+
 </dd>
 </dl>
 
@@ -859,47 +859,47 @@ client.annotation_reviews.update(
 <dd>
 
 **annotation:** `typing.Optional[int]` — Corresponding annotation
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**comment:** `typing.Optional[str]` 
-    
+**comment:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**last_annotation_history:** `typing.Optional[int]` 
-    
+**last_annotation_history:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**remove_from_queue:** `typing.Optional[bool]` 
-    
+**remove_from_queue:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**result:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**started_at:** `typing.Optional[dt.datetime]` 
-    
+**started_at:** `typing.Optional[dt.datetime]`
+
 </dd>
 </dl>
 
@@ -907,7 +907,7 @@ client.annotation_reviews.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -968,15 +968,15 @@ client.annotations.create_bulk()
 <dd>
 
 **bulk_created:** `typing.Optional[bool]` — Annotation was created in bulk mode
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**completed_by:** `typing.Optional[int]` 
-    
+**completed_by:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -984,7 +984,7 @@ client.annotations.create_bulk()
 <dd>
 
 **draft_created_at:** `typing.Optional[dt.datetime]` — Draft creation time
-    
+
 </dd>
 </dl>
 
@@ -992,7 +992,7 @@ client.annotations.create_bulk()
 <dd>
 
 **ground_truth:** `typing.Optional[bool]` — This annotation is a Ground Truth (ground_truth)
-    
+
 </dd>
 </dl>
 
@@ -1000,14 +1000,14 @@ client.annotations.create_bulk()
 <dd>
 
 **import_id:** `typing.Optional[int]` — Original annotation ID that was at the import step or NULL if this annotation wasn't imported
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**last_action:** `typing.Optional[LastActionEnum]` 
+**last_action:** `typing.Optional[LastActionEnum]`
 
 Action which was performed in the last annotation history item
 
@@ -1021,7 +1021,7 @@ Action which was performed in the last annotation history item
 * `rejected` - Rejected
 * `fixed_and_accepted` - Fixed and accepted
 * `deleted_review` - Deleted review
-    
+
 </dd>
 </dl>
 
@@ -1029,7 +1029,7 @@ Action which was performed in the last annotation history item
 <dd>
 
 **last_created_by:** `typing.Optional[int]` — User who created the last annotation history item
-    
+
 </dd>
 </dl>
 
@@ -1037,7 +1037,7 @@ Action which was performed in the last annotation history item
 <dd>
 
 **lead_time:** `typing.Optional[float]` — How much time it took to annotate the task
-    
+
 </dd>
 </dl>
 
@@ -1045,7 +1045,7 @@ Action which was performed in the last annotation history item
 <dd>
 
 **parent_annotation:** `typing.Optional[int]` — Points to the parent annotation from which this annotation was created
-    
+
 </dd>
 </dl>
 
@@ -1053,7 +1053,7 @@ Action which was performed in the last annotation history item
 <dd>
 
 **parent_prediction:** `typing.Optional[int]` — Points to the prediction from which this annotation was created
-    
+
 </dd>
 </dl>
 
@@ -1061,7 +1061,7 @@ Action which was performed in the last annotation history item
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID for this annotation
-    
+
 </dd>
 </dl>
 
@@ -1069,15 +1069,15 @@ Action which was performed in the last annotation history item
 <dd>
 
 **result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]` — List of annotation results for the task
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**selected_items:** `typing.Optional[SelectedItemsRequest]` 
-    
+**selected_items:** `typing.Optional[SelectedItemsRequest]`
+
 </dd>
 </dl>
 
@@ -1085,23 +1085,23 @@ Action which was performed in the last annotation history item
 <dd>
 
 **task:** `typing.Optional[int]` — Corresponding task for this annotation
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**tasks:** `typing.Optional[typing.Sequence[int]]` 
-    
+**tasks:** `typing.Optional[typing.Sequence[int]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**unique_id:** `typing.Optional[str]` 
-    
+**unique_id:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -1109,7 +1109,7 @@ Action which was performed in the last annotation history item
 <dd>
 
 **updated_by:** `typing.Optional[int]` — Last user who updated this annotation
-    
+
 </dd>
 </dl>
 
@@ -1117,7 +1117,7 @@ Action which was performed in the last annotation history item
 <dd>
 
 **was_cancelled:** `typing.Optional[bool]` — User skipped the task
-    
+
 </dd>
 </dl>
 
@@ -1125,7 +1125,7 @@ Action which was performed in the last annotation history item
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1186,8 +1186,8 @@ client.annotations.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -1195,7 +1195,7 @@ client.annotations.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1256,8 +1256,8 @@ client.annotations.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -1265,7 +1265,7 @@ client.annotations.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1346,8 +1346,8 @@ client.annotations.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -1355,7 +1355,7 @@ client.annotations.update(
 <dd>
 
 **completed_by:** `typing.Optional[int]` — User ID of the person who created this annotation
-    
+
 </dd>
 </dl>
 
@@ -1363,7 +1363,7 @@ client.annotations.update(
 <dd>
 
 **ground_truth:** `typing.Optional[bool]` — This annotation is a Ground Truth
-    
+
 </dd>
 </dl>
 
@@ -1371,7 +1371,7 @@ client.annotations.update(
 <dd>
 
 **lead_time:** `typing.Optional[float]` — How much time it took to annotate the task (in seconds)
-    
+
 </dd>
 </dl>
 
@@ -1379,7 +1379,7 @@ client.annotations.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID for this annotation
-    
+
 </dd>
 </dl>
 
@@ -1387,7 +1387,7 @@ client.annotations.update(
 <dd>
 
 **result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
-    
+
 </dd>
 </dl>
 
@@ -1395,7 +1395,7 @@ client.annotations.update(
 <dd>
 
 **task:** `typing.Optional[int]` — Corresponding task for this annotation
-    
+
 </dd>
 </dl>
 
@@ -1403,7 +1403,7 @@ client.annotations.update(
 <dd>
 
 **updated_by:** `typing.Optional[int]` — Last user who updated this annotation
-    
+
 </dd>
 </dl>
 
@@ -1411,7 +1411,7 @@ client.annotations.update(
 <dd>
 
 **was_cancelled:** `typing.Optional[bool]` — User skipped the task
-    
+
 </dd>
 </dl>
 
@@ -1419,7 +1419,7 @@ client.annotations.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1481,7 +1481,7 @@ client.annotations.list(
 <dd>
 
 **id:** `int` — Task ID
-    
+
 </dd>
 </dl>
 
@@ -1489,7 +1489,7 @@ client.annotations.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -1497,7 +1497,7 @@ client.annotations.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1535,7 +1535,7 @@ client.annotations.list(
         "completed_by": 123
         }
         ```
-        
+
 </dd>
 </dl>
 </dd>
@@ -1594,7 +1594,7 @@ client.annotations.create(
 <dd>
 
 **id:** `int` — Task ID
-    
+
 </dd>
 </dl>
 
@@ -1602,7 +1602,7 @@ client.annotations.create(
 <dd>
 
 **completed_by:** `typing.Optional[int]` — User ID of the person who created this annotation
-    
+
 </dd>
 </dl>
 
@@ -1610,7 +1610,7 @@ client.annotations.create(
 <dd>
 
 **ground_truth:** `typing.Optional[bool]` — This annotation is a Ground Truth
-    
+
 </dd>
 </dl>
 
@@ -1618,7 +1618,7 @@ client.annotations.create(
 <dd>
 
 **lead_time:** `typing.Optional[float]` — How much time it took to annotate the task (in seconds)
-    
+
 </dd>
 </dl>
 
@@ -1626,7 +1626,7 @@ client.annotations.create(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID for this annotation
-    
+
 </dd>
 </dl>
 
@@ -1634,7 +1634,7 @@ client.annotations.create(
 <dd>
 
 **result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
-    
+
 </dd>
 </dl>
 
@@ -1642,7 +1642,7 @@ client.annotations.create(
 <dd>
 
 **task:** `typing.Optional[int]` — Corresponding task for this annotation
-    
+
 </dd>
 </dl>
 
@@ -1650,7 +1650,7 @@ client.annotations.create(
 <dd>
 
 **updated_by:** `typing.Optional[int]` — Last user who updated this annotation
-    
+
 </dd>
 </dl>
 
@@ -1658,7 +1658,7 @@ client.annotations.create(
 <dd>
 
 **was_cancelled:** `typing.Optional[bool]` — User skipped the task
-    
+
 </dd>
 </dl>
 
@@ -1666,7 +1666,7 @@ client.annotations.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1733,7 +1733,7 @@ client.billing.info()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1799,32 +1799,32 @@ client.comments.list()
 <dl>
 <dd>
 
-**annotation:** `typing.Optional[int]` 
-    
+**annotation:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**annotators:** `typing.Optional[str]` 
-    
+**annotators:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**draft:** `typing.Optional[int]` 
-    
+**draft:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**expand_created_by:** `typing.Optional[bool]` 
-    
+**expand_created_by:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -1832,15 +1832,15 @@ client.comments.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**projects:** `typing.Optional[str]` 
-    
+**projects:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -1848,7 +1848,7 @@ client.comments.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1914,15 +1914,15 @@ client.comments.create()
 <dd>
 
 **expand_created_by:** `typing.Optional[bool]` — Expand the created_by field
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**annotation:** `typing.Optional[int]` 
-    
+**annotation:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -1930,15 +1930,15 @@ client.comments.create()
 <dd>
 
 **classifications:** `typing.Optional[typing.Optional[typing.Any]]` — Classifications applied by a reviewer or annotator
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**draft:** `typing.Optional[int]` 
-    
+**draft:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -1946,7 +1946,7 @@ client.comments.create()
 <dd>
 
 **is_resolved:** `typing.Optional[bool]` — True if the comment is resolved
-    
+
 </dd>
 </dl>
 
@@ -1954,7 +1954,7 @@ client.comments.create()
 <dd>
 
 **region_ref:** `typing.Optional[typing.Optional[typing.Any]]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
-    
+
 </dd>
 </dl>
 
@@ -1962,7 +1962,7 @@ client.comments.create()
 <dd>
 
 **text:** `typing.Optional[str]` — Reviewer or annotator comment
-    
+
 </dd>
 </dl>
 
@@ -1970,7 +1970,7 @@ client.comments.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2037,8 +2037,8 @@ client.comments.get(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -2046,7 +2046,7 @@ client.comments.get(
 <dd>
 
 **expand_created_by:** `typing.Optional[bool]` — Expand the created_by field
-    
+
 </dd>
 </dl>
 
@@ -2054,7 +2054,7 @@ client.comments.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2121,8 +2121,8 @@ client.comments.delete(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -2130,7 +2130,7 @@ client.comments.delete(
 <dd>
 
 **expand_created_by:** `typing.Optional[bool]` — Expand the created_by field
-    
+
 </dd>
 </dl>
 
@@ -2138,7 +2138,7 @@ client.comments.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2205,8 +2205,8 @@ client.comments.update(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -2214,15 +2214,15 @@ client.comments.update(
 <dd>
 
 **expand_created_by:** `typing.Optional[bool]` — Expand the created_by field
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**annotation:** `typing.Optional[int]` 
-    
+**annotation:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -2230,15 +2230,15 @@ client.comments.update(
 <dd>
 
 **classifications:** `typing.Optional[typing.Optional[typing.Any]]` — Classifications applied by a reviewer or annotator
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**draft:** `typing.Optional[int]` 
-    
+**draft:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -2246,7 +2246,7 @@ client.comments.update(
 <dd>
 
 **is_resolved:** `typing.Optional[bool]` — True if the comment is resolved
-    
+
 </dd>
 </dl>
 
@@ -2254,7 +2254,7 @@ client.comments.update(
 <dd>
 
 **region_ref:** `typing.Optional[typing.Optional[typing.Any]]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
-    
+
 </dd>
 </dl>
 
@@ -2262,7 +2262,7 @@ client.comments.update(
 <dd>
 
 **text:** `typing.Optional[str]` — Reviewer or annotator comment
-    
+
 </dd>
 </dl>
 
@@ -2270,7 +2270,7 @@ client.comments.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2337,7 +2337,7 @@ client.users.get_current_user()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2402,8 +2402,8 @@ client.users.update_current_user()
 <dl>
 <dd>
 
-**active_organization:** `typing.Optional[int]` 
-    
+**active_organization:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -2411,7 +2411,7 @@ client.users.update_current_user()
 <dd>
 
 **allow_newsletters:** `typing.Optional[bool]` — Allow sending newsletters to user
-    
+
 </dd>
 </dl>
 
@@ -2419,79 +2419,79 @@ client.users.update_current_user()
 <dd>
 
 **custom_hotkeys:** `typing.Optional[typing.Optional[typing.Any]]` — Custom keyboard shortcuts configuration for the user interface
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**date_joined:** `typing.Optional[dt.datetime]` 
-    
+**date_joined:** `typing.Optional[dt.datetime]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**first_name:** `typing.Optional[str]` 
-    
+**first_name:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**is_email_verified:** `typing.Optional[bool]` 
-    
+**is_email_verified:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**last_name:** `typing.Optional[str]` 
-    
+**last_name:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**onboarding_state:** `typing.Optional[str]` 
-    
+**onboarding_state:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**password:** `typing.Optional[str]` 
-    
+**password:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**phone:** `typing.Optional[str]` 
-    
+**phone:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**username:** `typing.Optional[str]` 
-    
+**username:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -2499,7 +2499,7 @@ client.users.update_current_user()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2559,7 +2559,7 @@ client.users.get_hotkeys()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2618,8 +2618,8 @@ client.users.update_hotkeys()
 <dl>
 <dd>
 
-**custom_hotkeys:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
-    
+**custom_hotkeys:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]`
+
 </dd>
 </dl>
 
@@ -2627,7 +2627,7 @@ client.users.update_hotkeys()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2687,7 +2687,7 @@ client.users.reset_token()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2747,7 +2747,7 @@ client.users.get_token()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2807,7 +2807,7 @@ client.users.whoami()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2867,7 +2867,7 @@ client.users.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -2875,7 +2875,7 @@ client.users.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2935,7 +2935,7 @@ client.users.create()
 <dd>
 
 **allow_newsletters:** `typing.Optional[bool]` — Whether the user allows newsletters
-    
+
 </dd>
 </dl>
 
@@ -2943,7 +2943,7 @@ client.users.create()
 <dd>
 
 **avatar:** `typing.Optional[str]` — Avatar URL of the user
-    
+
 </dd>
 </dl>
 
@@ -2951,7 +2951,7 @@ client.users.create()
 <dd>
 
 **email:** `typing.Optional[str]` — Email of the user
-    
+
 </dd>
 </dl>
 
@@ -2959,7 +2959,7 @@ client.users.create()
 <dd>
 
 **first_name:** `typing.Optional[str]` — First name of the user
-    
+
 </dd>
 </dl>
 
@@ -2967,7 +2967,7 @@ client.users.create()
 <dd>
 
 **id:** `typing.Optional[int]` — User ID
-    
+
 </dd>
 </dl>
 
@@ -2975,7 +2975,7 @@ client.users.create()
 <dd>
 
 **initials:** `typing.Optional[str]` — Initials of the user
-    
+
 </dd>
 </dl>
 
@@ -2983,7 +2983,7 @@ client.users.create()
 <dd>
 
 **last_name:** `typing.Optional[str]` — Last name of the user
-    
+
 </dd>
 </dl>
 
@@ -2991,7 +2991,7 @@ client.users.create()
 <dd>
 
 **phone:** `typing.Optional[str]` — Phone number of the user
-    
+
 </dd>
 </dl>
 
@@ -2999,7 +2999,7 @@ client.users.create()
 <dd>
 
 **username:** `typing.Optional[str]` — Username of the user
-    
+
 </dd>
 </dl>
 
@@ -3007,7 +3007,7 @@ client.users.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3069,7 +3069,7 @@ client.users.get(
 <dd>
 
 **id:** `int` — User ID
-    
+
 </dd>
 </dl>
 
@@ -3077,7 +3077,7 @@ client.users.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3141,7 +3141,7 @@ client.users.delete(
 <dd>
 
 **id:** `int` — User ID
-    
+
 </dd>
 </dl>
 
@@ -3149,7 +3149,7 @@ client.users.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3174,7 +3174,7 @@ client.users.delete(
 
 
         Update details for a specific user, such as their name or contact information, in Label Studio.
-        
+
 </dd>
 </dl>
 </dd>
@@ -3213,7 +3213,7 @@ client.users.update(
 <dd>
 
 **id:** `int` — User ID
-    
+
 </dd>
 </dl>
 
@@ -3221,7 +3221,7 @@ client.users.update(
 <dd>
 
 **allow_newsletters:** `typing.Optional[bool]` — Whether the user allows newsletters
-    
+
 </dd>
 </dl>
 
@@ -3229,7 +3229,7 @@ client.users.update(
 <dd>
 
 **avatar:** `typing.Optional[str]` — Avatar URL of the user
-    
+
 </dd>
 </dl>
 
@@ -3237,7 +3237,7 @@ client.users.update(
 <dd>
 
 **email:** `typing.Optional[str]` — Email of the user
-    
+
 </dd>
 </dl>
 
@@ -3245,7 +3245,7 @@ client.users.update(
 <dd>
 
 **first_name:** `typing.Optional[str]` — First name of the user
-    
+
 </dd>
 </dl>
 
@@ -3253,7 +3253,7 @@ client.users.update(
 <dd>
 
 **update_users_request_id:** `typing.Optional[int]` — User ID
-    
+
 </dd>
 </dl>
 
@@ -3261,7 +3261,7 @@ client.users.update(
 <dd>
 
 **initials:** `typing.Optional[str]` — Initials of the user
-    
+
 </dd>
 </dl>
 
@@ -3269,7 +3269,7 @@ client.users.update(
 <dd>
 
 **last_name:** `typing.Optional[str]` — Last name of the user
-    
+
 </dd>
 </dl>
 
@@ -3277,7 +3277,7 @@ client.users.update(
 <dd>
 
 **phone:** `typing.Optional[str]` — Phone number of the user
-    
+
 </dd>
 </dl>
 
@@ -3285,7 +3285,7 @@ client.users.update(
 <dd>
 
 **username:** `typing.Optional[str]` — Username of the user
-    
+
 </dd>
 </dl>
 
@@ -3293,7 +3293,7 @@ client.users.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3356,7 +3356,7 @@ client.actions.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -3364,7 +3364,7 @@ client.actions.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3448,7 +3448,7 @@ client.actions.create(
 <dd>
 
 **id:** `CreateActionsRequestId` — Action name ID, see the full list of actions in the `GET api/actions` request
-    
+
 </dd>
 </dl>
 
@@ -3456,7 +3456,7 @@ client.actions.create(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -3464,7 +3464,7 @@ client.actions.create(
 <dd>
 
 **view:** `typing.Optional[int]` — View ID (optional, it has higher priority than filters, selectedItems and ordering from the request body payload)
-    
+
 </dd>
 </dl>
 
@@ -3472,7 +3472,7 @@ client.actions.create(
 <dd>
 
 **filters:** `typing.Optional[CreateActionsRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-    
+
 </dd>
 </dl>
 
@@ -3480,7 +3480,7 @@ client.actions.create(
 <dd>
 
 **ordering:** `typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]` — List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
-    
+
 </dd>
 </dl>
 
@@ -3488,7 +3488,7 @@ client.actions.create(
 <dd>
 
 **selected_items:** `typing.Optional[CreateActionsRequestSelectedItems]` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-    
+
 </dd>
 </dl>
 
@@ -3496,7 +3496,7 @@ client.actions.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3557,7 +3557,7 @@ client.views.list()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -3565,7 +3565,7 @@ client.views.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3625,7 +3625,7 @@ client.views.create()
 <dd>
 
 **data:** `typing.Optional[CreateViewsRequestData]` — Custom view data
-    
+
 </dd>
 </dl>
 
@@ -3633,7 +3633,7 @@ client.views.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -3641,7 +3641,7 @@ client.views.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3704,15 +3704,15 @@ client.views.update_order(
 <dd>
 
 **ids:** `typing.Sequence[int]` — A list of view IDs in the desired order.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**project:** `int` 
-    
+**project:** `int`
+
 </dd>
 </dl>
 
@@ -3720,7 +3720,7 @@ client.views.update_order(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3782,7 +3782,7 @@ client.views.delete_all(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -3790,7 +3790,7 @@ client.views.delete_all(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3852,7 +3852,7 @@ client.views.get(
 <dd>
 
 **id:** `str` — View ID
-    
+
 </dd>
 </dl>
 
@@ -3860,7 +3860,7 @@ client.views.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3922,7 +3922,7 @@ client.views.delete(
 <dd>
 
 **id:** `str` — View ID
-    
+
 </dd>
 </dl>
 
@@ -3930,7 +3930,7 @@ client.views.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -3992,7 +3992,7 @@ client.views.update(
 <dd>
 
 **id:** `str` — View ID
-    
+
 </dd>
 </dl>
 
@@ -4000,7 +4000,7 @@ client.views.update(
 <dd>
 
 **data:** `typing.Optional[UpdateViewsRequestData]` — Custom view data
-    
+
 </dd>
 </dl>
 
@@ -4008,7 +4008,7 @@ client.views.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -4016,7 +4016,7 @@ client.views.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4077,7 +4077,7 @@ client.organizations.reset_token()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4102,7 +4102,7 @@ client.organizations.reset_token()
 
 
         Return a list of the organizations you've created or that you have access to.
-        
+
 </dd>
 </dl>
 </dd>
@@ -4139,7 +4139,7 @@ client.organizations.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -4147,7 +4147,7 @@ client.organizations.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4208,8 +4208,8 @@ client.organizations.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -4217,7 +4217,7 @@ client.organizations.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4284,72 +4284,72 @@ client.organizations.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**contact_info:** `typing.Optional[str]` 
-    
+**contact_info:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**created_by:** `typing.Optional[int]` 
-    
+**created_by:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**custom_scripts_enabled:** `typing.Optional[bool]` 
-    
+**custom_scripts_enabled:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**embed_domains:** `typing.Optional[typing.Sequence[typing.Dict[str, str]]]` 
-    
+**embed_domains:** `typing.Optional[typing.Sequence[typing.Dict[str, str]]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**embed_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**embed_settings:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` 
-    
+**title:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
-    
+**token:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -4357,7 +4357,7 @@ client.organizations.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4424,8 +4424,8 @@ client.organizations.update_default_role(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -4433,7 +4433,7 @@ client.organizations.update_default_role(
 <dd>
 
 **annotator_reviewer_firewall_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-    
+
 </dd>
 </dl>
 
@@ -4441,14 +4441,14 @@ client.organizations.update_default_role(
 <dd>
 
 **custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**default_role:** `typing.Optional[Role9E7Enum]` 
+**default_role:** `typing.Optional[Role9E7Enum]`
 
 Default membership role for invited users
 
@@ -4459,7 +4459,7 @@ Default membership role for invited users
 * `AN` - Annotator
 * `DI` - Deactivated
 * `NO` - Not Activated
-    
+
 </dd>
 </dl>
 
@@ -4467,7 +4467,7 @@ Default membership role for invited users
 <dd>
 
 **email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]` — Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
-    
+
 </dd>
 </dl>
 
@@ -4475,7 +4475,7 @@ Default membership role for invited users
 <dd>
 
 **embed_domains:** `typing.Optional[typing.Optional[typing.Any]]` — List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
-    
+
 </dd>
 </dl>
 
@@ -4483,7 +4483,7 @@ Default membership role for invited users
 <dd>
 
 **embed_settings:** `typing.Optional[typing.Optional[typing.Any]]` — Embed settings for this organization
-    
+
 </dd>
 </dl>
 
@@ -4491,15 +4491,15 @@ Default membership role for invited users
 <dd>
 
 **external_id:** `typing.Optional[str]` — External ID to uniquely identify this organization
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**extra_data_on_activity_logs:** `typing.Optional[bool]` 
-    
+**extra_data_on_activity_logs:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -4507,7 +4507,7 @@ Default membership role for invited users
 <dd>
 
 **label_stream_navigation_disabled_at:** `typing.Optional[dt.datetime]` — Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
-    
+
 </dd>
 </dl>
 
@@ -4515,7 +4515,7 @@ Default membership role for invited users
 <dd>
 
 **organization:** `typing.Optional[int]` — A unique integer value identifying this organization.
-    
+
 </dd>
 </dl>
 
@@ -4523,7 +4523,7 @@ Default membership role for invited users
 <dd>
 
 **read_only_quick_view_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
-    
+
 </dd>
 </dl>
 
@@ -4531,7 +4531,7 @@ Default membership role for invited users
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4593,8 +4593,8 @@ client.files.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -4602,7 +4602,7 @@ client.files.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4663,8 +4663,8 @@ client.files.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -4672,7 +4672,7 @@ client.files.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4733,8 +4733,8 @@ client.files.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -4744,7 +4744,7 @@ client.files.update(
 **file:** `from __future__ import annotations
 
 typing.Optional[core.File]` — See core.File for more documentation
-    
+
 </dd>
 </dl>
 
@@ -4752,7 +4752,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4777,7 +4777,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 
 
         Retrieve the list of uploaded files used to create labeling tasks for a specific project.
-        
+
 </dd>
 </dl>
 </dd>
@@ -4815,8 +4815,8 @@ client.files.list(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -4824,7 +4824,7 @@ client.files.list(
 <dd>
 
 **all_:** `typing.Optional[bool]` — Set to "true" if you want to retrieve all file uploads
-    
+
 </dd>
 </dl>
 
@@ -4832,7 +4832,7 @@ client.files.list(
 <dd>
 
 **ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Specify the list of file upload IDs to retrieve, e.g. ids=[1,2,3]
-    
+
 </dd>
 </dl>
 
@@ -4840,7 +4840,7 @@ client.files.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -4848,7 +4848,7 @@ client.files.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4873,7 +4873,7 @@ client.files.list(
 
 
         Delete uploaded files for a specific project.
-        
+
 </dd>
 </dl>
 </dd>
@@ -4911,8 +4911,8 @@ client.files.delete_many(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -4920,7 +4920,7 @@ client.files.delete_many(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -4981,8 +4981,8 @@ client.files.download(
 <dl>
 <dd>
 
-**filename:** `str` 
-    
+**filename:** `str`
+
 </dd>
 </dl>
 
@@ -4990,7 +4990,7 @@ client.files.download(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5051,7 +5051,7 @@ client.jwt_settings.get()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5112,8 +5112,8 @@ client.jwt_settings.update(
 <dl>
 <dd>
 
-**api_token_ttl_days:** `int` 
-    
+**api_token_ttl_days:** `int`
+
 </dd>
 </dl>
 
@@ -5121,7 +5121,7 @@ client.jwt_settings.update(
 <dd>
 
 **api_tokens_enabled:** `typing.Optional[bool]` — Enable JWT API token authentication for this organization
-    
+
 </dd>
 </dl>
 
@@ -5129,7 +5129,7 @@ client.jwt_settings.update(
 <dd>
 
 **legacy_api_tokens_enabled:** `typing.Optional[bool]` — Enable legacy API token authentication for this organization
-    
+
 </dd>
 </dl>
 
@@ -5137,7 +5137,7 @@ client.jwt_settings.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5166,7 +5166,7 @@ client.jwt_settings.update(
     Use the following cURL command:
     ```bash
     curl http://localhost:8000/api/ml?project={project_id} -H 'Authorization: Token abc123'
-    
+
 </dd>
 </dl>
 </dd>
@@ -5203,7 +5203,7 @@ client.ml.list()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -5211,7 +5211,7 @@ client.ml.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5235,12 +5235,12 @@ client.ml.list()
 <dd>
 
 
-    Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
+    Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL
     command:
     ```bash
     curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml -H 'Authorization: Token abc123'\
-    --data '{"url": "http://localhost:9090", "project": {project_id}}' 
-    
+    --data '{"url": "http://localhost:9090", "project": {project_id}}'
+
 </dd>
 </dl>
 </dd>
@@ -5277,7 +5277,7 @@ client.ml.create()
 <dd>
 
 **auth_method:** `typing.Optional[CreateMlRequestAuthMethod]` — Auth method
-    
+
 </dd>
 </dl>
 
@@ -5285,7 +5285,7 @@ client.ml.create()
 <dd>
 
 **basic_auth_pass:** `typing.Optional[str]` — Basic auth password
-    
+
 </dd>
 </dl>
 
@@ -5293,7 +5293,7 @@ client.ml.create()
 <dd>
 
 **basic_auth_user:** `typing.Optional[str]` — Basic auth user
-    
+
 </dd>
 </dl>
 
@@ -5301,7 +5301,7 @@ client.ml.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Description
-    
+
 </dd>
 </dl>
 
@@ -5309,7 +5309,7 @@ client.ml.create()
 <dd>
 
 **extra_params:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Extra parameters
-    
+
 </dd>
 </dl>
 
@@ -5317,7 +5317,7 @@ client.ml.create()
 <dd>
 
 **is_interactive:** `typing.Optional[bool]` — Is interactive
-    
+
 </dd>
 </dl>
 
@@ -5325,7 +5325,7 @@ client.ml.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -5333,7 +5333,7 @@ client.ml.create()
 <dd>
 
 **timeout:** `typing.Optional[int]` — Response model timeout
-    
+
 </dd>
 </dl>
 
@@ -5341,7 +5341,7 @@ client.ml.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Title
-    
+
 </dd>
 </dl>
 
@@ -5349,7 +5349,7 @@ client.ml.create()
 <dd>
 
 **url:** `typing.Optional[str]` — ML backend URL
-    
+
 </dd>
 </dl>
 
@@ -5357,7 +5357,7 @@ client.ml.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5385,7 +5385,7 @@ client.ml.create()
     following cURL command:
     ```bash
     curl http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
-    
+
 </dd>
 </dl>
 </dd>
@@ -5423,8 +5423,8 @@ client.ml.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -5432,7 +5432,7 @@ client.ml.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5460,7 +5460,7 @@ client.ml.get(
     following cURL command:
     ```bash
     curl -X DELETE http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
-    
+
 </dd>
 </dl>
 </dd>
@@ -5498,8 +5498,8 @@ client.ml.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -5507,7 +5507,7 @@ client.ml.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5534,8 +5534,8 @@ client.ml.delete(
     Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
     ```bash
     curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
-    --data '{"url": "http://localhost:9091"}' 
-    
+    --data '{"url": "http://localhost:9091"}'
+
 </dd>
 </dl>
 </dd>
@@ -5573,8 +5573,8 @@ client.ml.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -5582,7 +5582,7 @@ client.ml.update(
 <dd>
 
 **auth_method:** `typing.Optional[UpdateMlRequestAuthMethod]` — Auth method
-    
+
 </dd>
 </dl>
 
@@ -5590,7 +5590,7 @@ client.ml.update(
 <dd>
 
 **basic_auth_pass:** `typing.Optional[str]` — Basic auth password
-    
+
 </dd>
 </dl>
 
@@ -5598,7 +5598,7 @@ client.ml.update(
 <dd>
 
 **basic_auth_user:** `typing.Optional[str]` — Basic auth user
-    
+
 </dd>
 </dl>
 
@@ -5606,7 +5606,7 @@ client.ml.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Description
-    
+
 </dd>
 </dl>
 
@@ -5614,7 +5614,7 @@ client.ml.update(
 <dd>
 
 **extra_params:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Extra parameters
-    
+
 </dd>
 </dl>
 
@@ -5622,7 +5622,7 @@ client.ml.update(
 <dd>
 
 **is_interactive:** `typing.Optional[bool]` — Is interactive
-    
+
 </dd>
 </dl>
 
@@ -5630,7 +5630,7 @@ client.ml.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -5638,7 +5638,7 @@ client.ml.update(
 <dd>
 
 **timeout:** `typing.Optional[int]` — Response model timeout
-    
+
 </dd>
 </dl>
 
@@ -5646,7 +5646,7 @@ client.ml.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Title
-    
+
 </dd>
 </dl>
 
@@ -5654,7 +5654,7 @@ client.ml.update(
 <dd>
 
 **url:** `typing.Optional[str]` — ML backend URL
-    
+
 </dd>
 </dl>
 
@@ -5662,7 +5662,7 @@ client.ml.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5687,9 +5687,9 @@ client.ml.update(
 
 
         Send a request to the machine learning backend set up to be used for interactive preannotations to retrieve a
-        predicted region based on annotator input. 
+        predicted region based on annotator input.
         See [set up machine learning](https://labelstud.io/guide/ml.html#Get-interactive-preannotations) for more.
-        
+
 </dd>
 </dl>
 </dd>
@@ -5729,7 +5729,7 @@ client.ml.predict_interactive(
 <dd>
 
 **id:** `int` — A unique integer value identifying this ML backend.
-    
+
 </dd>
 </dl>
 
@@ -5737,7 +5737,7 @@ client.ml.predict_interactive(
 <dd>
 
 **task:** `int` — ID of task to annotate
-    
+
 </dd>
 </dl>
 
@@ -5745,7 +5745,7 @@ client.ml.predict_interactive(
 <dd>
 
 **context:** `typing.Optional[typing.Optional[typing.Any]]` — Context for ML model
-    
+
 </dd>
 </dl>
 
@@ -5753,7 +5753,7 @@ client.ml.predict_interactive(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5784,9 +5784,9 @@ client.ml.predict_interactive(
     </Card>
 
 
-Create predictions for all tasks using a specific ML backend so that you can set up an active learning strategy based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires a Label Studio ML backend set up and configured for your project. 
+Create predictions for all tasks using a specific ML backend so that you can set up an active learning strategy based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires a Label Studio ML backend set up and configured for your project.
 
-See [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend. 
+See [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend.
 
 Reference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).
 </dd>
@@ -5827,7 +5827,7 @@ client.ml.predict_all_tasks(
 <dd>
 
 **id:** `int` — A unique integer value identifying this ML backend.
-    
+
 </dd>
 </dl>
 
@@ -5835,7 +5835,7 @@ client.ml.predict_all_tasks(
 <dd>
 
 **batch_size:** `typing.Optional[int]` — Computed number of tasks without predictions that the ML backend needs to predict.
-    
+
 </dd>
 </dl>
 
@@ -5843,7 +5843,7 @@ client.ml.predict_all_tasks(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5867,11 +5867,11 @@ client.ml.predict_all_tasks(
 <dd>
 
 
-        After you add an ML backend, call this API with the ML backend ID to start training with 
-        already-labeled tasks. 
-        
+        After you add an ML backend, call this API with the ML backend ID to start training with
+        already-labeled tasks.
+
         Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).
-        
+
 </dd>
 </dl>
 </dd>
@@ -5910,7 +5910,7 @@ client.ml.train(
 <dd>
 
 **id:** `int` — A unique integer value identifying this ML backend.
-    
+
 </dd>
 </dl>
 
@@ -5918,7 +5918,7 @@ client.ml.train(
 <dd>
 
 **use_ground_truth:** `typing.Optional[bool]` — Whether to include ground truth annotations in training
-    
+
 </dd>
 </dl>
 
@@ -5926,7 +5926,7 @@ client.ml.train(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -5987,8 +5987,8 @@ client.ml.list_model_versions(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -5996,7 +5996,7 @@ client.ml.list_model_versions(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -6063,7 +6063,7 @@ client.model_providers.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -6071,7 +6071,7 @@ client.model_providers.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -6137,7 +6137,7 @@ client.model_providers.create()
 <dd>
 
 **api_key:** `typing.Optional[str]` — Model provider API key
-    
+
 </dd>
 </dl>
 
@@ -6145,7 +6145,7 @@ client.model_providers.create()
 <dd>
 
 **auth_token:** `typing.Optional[str]` — Model provider Auth token
-    
+
 </dd>
 </dl>
 
@@ -6153,7 +6153,7 @@ client.model_providers.create()
 <dd>
 
 **budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
-    
+
 </dd>
 </dl>
 
@@ -6161,7 +6161,7 @@ client.model_providers.create()
 <dd>
 
 **cached_available_models:** `typing.Optional[str]` — List of available models from the provider
-    
+
 </dd>
 </dl>
 
@@ -6169,7 +6169,7 @@ client.model_providers.create()
 <dd>
 
 **deployment_name:** `typing.Optional[str]` — Azure OpenAI deployment name
-    
+
 </dd>
 </dl>
 
@@ -6177,7 +6177,7 @@ client.model_providers.create()
 <dd>
 
 **endpoint:** `typing.Optional[str]` — Azure OpenAI endpoint
-    
+
 </dd>
 </dl>
 
@@ -6185,7 +6185,7 @@ client.model_providers.create()
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
+
 </dd>
 </dl>
 
@@ -6193,7 +6193,7 @@ client.model_providers.create()
 <dd>
 
 **google_location:** `typing.Optional[str]` — Google project location
-    
+
 </dd>
 </dl>
 
@@ -6201,7 +6201,7 @@ client.model_providers.create()
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -6209,23 +6209,23 @@ client.model_providers.create()
 <dd>
 
 **is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**provider:** `typing.Optional[ProviderEnum]` 
-    
+**provider:** `typing.Optional[ProviderEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**scope:** `typing.Optional[ScopeEnum]` 
-    
+**scope:** `typing.Optional[ScopeEnum]`
+
 </dd>
 </dl>
 
@@ -6233,7 +6233,7 @@ client.model_providers.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -6299,7 +6299,7 @@ client.model_providers.list_model_provider_choices()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -6366,8 +6366,8 @@ client.model_providers.get(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -6375,7 +6375,7 @@ client.model_providers.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -6442,8 +6442,8 @@ client.model_providers.delete(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -6451,7 +6451,7 @@ client.model_providers.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -6518,8 +6518,8 @@ client.model_providers.update(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -6527,7 +6527,7 @@ client.model_providers.update(
 <dd>
 
 **api_key:** `typing.Optional[str]` — Model provider API key
-    
+
 </dd>
 </dl>
 
@@ -6535,7 +6535,7 @@ client.model_providers.update(
 <dd>
 
 **auth_token:** `typing.Optional[str]` — Model provider Auth token
-    
+
 </dd>
 </dl>
 
@@ -6543,7 +6543,7 @@ client.model_providers.update(
 <dd>
 
 **budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
-    
+
 </dd>
 </dl>
 
@@ -6551,7 +6551,7 @@ client.model_providers.update(
 <dd>
 
 **cached_available_models:** `typing.Optional[str]` — List of available models from the provider
-    
+
 </dd>
 </dl>
 
@@ -6559,7 +6559,7 @@ client.model_providers.update(
 <dd>
 
 **deployment_name:** `typing.Optional[str]` — Azure OpenAI deployment name
-    
+
 </dd>
 </dl>
 
@@ -6567,7 +6567,7 @@ client.model_providers.update(
 <dd>
 
 **endpoint:** `typing.Optional[str]` — Azure OpenAI endpoint
-    
+
 </dd>
 </dl>
 
@@ -6575,7 +6575,7 @@ client.model_providers.update(
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
+
 </dd>
 </dl>
 
@@ -6583,7 +6583,7 @@ client.model_providers.update(
 <dd>
 
 **google_location:** `typing.Optional[str]` — Google project location
-    
+
 </dd>
 </dl>
 
@@ -6591,7 +6591,7 @@ client.model_providers.update(
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -6599,23 +6599,23 @@ client.model_providers.update(
 <dd>
 
 **is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**provider:** `typing.Optional[ProviderEnum]` 
-    
+**provider:** `typing.Optional[ProviderEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**scope:** `typing.Optional[ScopeEnum]` 
-    
+**scope:** `typing.Optional[ScopeEnum]`
+
 </dd>
 </dl>
 
@@ -6623,7 +6623,7 @@ client.model_providers.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -6692,16 +6692,16 @@ client.prompts.batch_failed_predictions(
 <dl>
 <dd>
 
-**failed_predictions:** `typing.Sequence[typing.Optional[typing.Any]]` 
-    
+**failed_predictions:** `typing.Sequence[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**modelrun_id:** `int` 
-    
+**modelrun_id:** `int`
+
 </dd>
 </dl>
 
@@ -6709,15 +6709,15 @@ client.prompts.batch_failed_predictions(
 <dd>
 
 **num_failed_predictions:** `typing.Optional[int]` — Number of failed predictions being sent (for telemetry only, has no effect)
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**job_id:** `typing.Optional[str]` 
-    
+**job_id:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -6725,7 +6725,7 @@ client.prompts.batch_failed_predictions(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -6793,16 +6793,16 @@ client.prompts.batch_predictions(
 <dl>
 <dd>
 
-**modelrun_id:** `int` 
-    
+**modelrun_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**results:** `typing.Sequence[typing.Optional[typing.Any]]` 
-    
+**results:** `typing.Sequence[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
@@ -6810,15 +6810,15 @@ client.prompts.batch_predictions(
 <dd>
 
 **num_predictions:** `typing.Optional[int]` — Number of predictions being sent (for telemetry only, has no effect)
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**job_id:** `typing.Optional[str]` 
-    
+**job_id:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -6826,7 +6826,7 @@ client.prompts.batch_predictions(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -6857,7 +6857,7 @@ client.prompts.batch_predictions(
     </Card>
 
         Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
-        
+
 </dd>
 </dl>
 </dd>
@@ -6895,8 +6895,8 @@ client.prompts.subset_tasks(
 <dl>
 <dd>
 
-**project_pk:** `int` 
-    
+**project_pk:** `int`
+
 </dd>
 </dl>
 
@@ -6904,7 +6904,7 @@ client.prompts.subset_tasks(
 <dd>
 
 **include_total:** `typing.Optional[bool]` — If true (default), includes task_count in response; if false, omits it.
-    
+
 </dd>
 </dl>
 
@@ -6912,7 +6912,7 @@ client.prompts.subset_tasks(
 <dd>
 
 **model_run:** `typing.Optional[int]` — A unique ID of a ModelRun
-    
+
 </dd>
 </dl>
 
@@ -6920,7 +6920,7 @@ client.prompts.subset_tasks(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -6928,7 +6928,7 @@ client.prompts.subset_tasks(
 <dd>
 
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
+
 </dd>
 </dl>
 
@@ -6936,7 +6936,7 @@ client.prompts.subset_tasks(
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
+
 </dd>
 </dl>
 
@@ -6944,7 +6944,7 @@ client.prompts.subset_tasks(
 <dd>
 
 **parent_model:** `typing.Optional[int]` — The ID of the parent model (ModelInterface) for this Inference Run
-    
+
 </dd>
 </dl>
 
@@ -6952,7 +6952,7 @@ client.prompts.subset_tasks(
 <dd>
 
 **project_subset:** `typing.Optional[str]` — The project subset to retrieve tasks for
-    
+
 </dd>
 </dl>
 
@@ -6960,7 +6960,7 @@ client.prompts.subset_tasks(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -6991,7 +6991,7 @@ client.prompts.subset_tasks(
     </Card>
 
         Provides list of available subsets for a project along with count of tasks in each subset
-        
+
 </dd>
 </dl>
 </dd>
@@ -7029,8 +7029,8 @@ client.prompts.subsets(
 <dl>
 <dd>
 
-**project_pk:** `int` 
-    
+**project_pk:** `int`
+
 </dd>
 </dl>
 
@@ -7038,7 +7038,7 @@ client.prompts.subsets(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -7046,7 +7046,7 @@ client.prompts.subsets(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -7106,7 +7106,7 @@ client.prompts.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -7114,7 +7114,7 @@ client.prompts.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -7182,15 +7182,15 @@ client.prompts.create(
 <dd>
 
 **title:** `str` — Model name
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` 
-    
+**associated_projects:** `typing.Optional[typing.Sequence[int]]`
+
 </dd>
 </dl>
 
@@ -7198,7 +7198,7 @@ client.prompts.create(
 <dd>
 
 **created_by:** `typing.Optional[UserSimpleRequest]` — User who created Dataset
-    
+
 </dd>
 </dl>
 
@@ -7206,39 +7206,39 @@ client.prompts.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Model description
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**input_fields:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**input_fields:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
+**organization:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**output_classes:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**output_classes:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**skill_name:** `typing.Optional[SkillNameEnum]` 
-    
+**skill_name:** `typing.Optional[SkillNameEnum]`
+
 </dd>
 </dl>
 
@@ -7246,7 +7246,7 @@ client.prompts.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -7306,7 +7306,7 @@ client.prompts.compatible_projects()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -7314,7 +7314,7 @@ client.prompts.compatible_projects()
 <dd>
 
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
+
 </dd>
 </dl>
 
@@ -7322,7 +7322,7 @@ client.prompts.compatible_projects()
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
+
 </dd>
 </dl>
 
@@ -7330,7 +7330,7 @@ client.prompts.compatible_projects()
 <dd>
 
 **project_type:** `typing.Optional[CompatibleProjectsPromptsRequestProjectType]` — Skill to filter by
-    
+
 </dd>
 </dl>
 
@@ -7338,7 +7338,7 @@ client.prompts.compatible_projects()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -7405,8 +7405,8 @@ client.prompts.get(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -7414,7 +7414,7 @@ client.prompts.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -7481,8 +7481,8 @@ client.prompts.delete(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -7490,7 +7490,7 @@ client.prompts.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -7557,16 +7557,16 @@ client.prompts.update(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` 
-    
+**associated_projects:** `typing.Optional[typing.Sequence[int]]`
+
 </dd>
 </dl>
 
@@ -7574,7 +7574,7 @@ client.prompts.update(
 <dd>
 
 **created_by:** `typing.Optional[UserSimpleRequest]` — User who created Dataset
-    
+
 </dd>
 </dl>
 
@@ -7582,39 +7582,39 @@ client.prompts.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Model description
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**input_fields:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**input_fields:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
+**organization:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**output_classes:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**output_classes:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**skill_name:** `typing.Optional[SkillNameEnum]` 
-    
+**skill_name:** `typing.Optional[SkillNameEnum]`
+
 </dd>
 </dl>
 
@@ -7622,7 +7622,7 @@ client.prompts.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Model name
-    
+
 </dd>
 </dl>
 
@@ -7630,7 +7630,7 @@ client.prompts.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -7691,7 +7691,7 @@ client.predictions.list()
 <dd>
 
 **project:** `typing.Optional[int]` — Filter predictions by project ID
-    
+
 </dd>
 </dl>
 
@@ -7699,7 +7699,7 @@ client.predictions.list()
 <dd>
 
 **task:** `typing.Optional[int]` — Filter predictions by task ID
-    
+
 </dd>
 </dl>
 
@@ -7707,7 +7707,7 @@ client.predictions.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -7788,7 +7788,7 @@ client.predictions.create(
 <dd>
 
 **model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
-    
+
 </dd>
 </dl>
 
@@ -7796,7 +7796,7 @@ client.predictions.create(
 <dd>
 
 **result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
-    
+
 </dd>
 </dl>
 
@@ -7804,7 +7804,7 @@ client.predictions.create(
 <dd>
 
 **score:** `typing.Optional[float]` — Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
-    
+
 </dd>
 </dl>
 
@@ -7812,7 +7812,7 @@ client.predictions.create(
 <dd>
 
 **task:** `typing.Optional[int]` — Task ID for which the prediction is created
-    
+
 </dd>
 </dl>
 
@@ -7820,7 +7820,7 @@ client.predictions.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -7882,7 +7882,7 @@ client.predictions.get(
 <dd>
 
 **id:** `int` — Prediction ID
-    
+
 </dd>
 </dl>
 
@@ -7890,7 +7890,7 @@ client.predictions.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -7952,7 +7952,7 @@ client.predictions.delete(
 <dd>
 
 **id:** `int` — Prediction ID
-    
+
 </dd>
 </dl>
 
@@ -7960,7 +7960,7 @@ client.predictions.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -8042,7 +8042,7 @@ client.predictions.update(
 <dd>
 
 **id:** `int` — Prediction ID
-    
+
 </dd>
 </dl>
 
@@ -8050,7 +8050,7 @@ client.predictions.update(
 <dd>
 
 **model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
-    
+
 </dd>
 </dl>
 
@@ -8058,7 +8058,7 @@ client.predictions.update(
 <dd>
 
 **result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
-    
+
 </dd>
 </dl>
 
@@ -8066,7 +8066,7 @@ client.predictions.update(
 <dd>
 
 **score:** `typing.Optional[float]` — Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
-    
+
 </dd>
 </dl>
 
@@ -8074,7 +8074,7 @@ client.predictions.update(
 <dd>
 
 **task:** `typing.Optional[int]` — Task ID for which the prediction is created
-    
+
 </dd>
 </dl>
 
@@ -8082,7 +8082,7 @@ client.predictions.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -8149,7 +8149,7 @@ client.project_templates.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -8157,7 +8157,7 @@ client.project_templates.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -8225,16 +8225,16 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**name:** `str` 
-    
+**name:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**project_id:** `int` 
-    
+**project_id:** `int`
+
 </dd>
 </dl>
 
@@ -8242,15 +8242,15 @@ client.project_templates.create(
 <dd>
 
 **assignment_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized assignment settings
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**created_by:** `typing.Optional[int]` 
-    
+**created_by:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -8258,23 +8258,23 @@ client.project_templates.create(
 <dd>
 
 **custom_script:** `typing.Optional[str]` — custom script (Plugin) for projects created from this template
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` 
-    
+**description:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
+**organization:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -8282,7 +8282,7 @@ client.project_templates.create(
 <dd>
 
 **project_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized project settings
-    
+
 </dd>
 </dl>
 
@@ -8290,7 +8290,7 @@ client.project_templates.create(
 <dd>
 
 **require_comment_on_skip:** `typing.Optional[bool]` — flag to require comment on skip
-    
+
 </dd>
 </dl>
 
@@ -8298,23 +8298,23 @@ client.project_templates.create(
 <dd>
 
 **review_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized review settings
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**show_unused_data_columns_to_annotators:** `typing.Optional[bool]` 
-    
+**show_unused_data_columns_to_annotators:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**tags:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
@@ -8322,7 +8322,7 @@ client.project_templates.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -8389,8 +8389,8 @@ client.project_templates.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -8398,7 +8398,7 @@ client.project_templates.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -8465,8 +8465,8 @@ client.project_templates.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -8474,7 +8474,7 @@ client.project_templates.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -8541,8 +8541,8 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -8550,15 +8550,15 @@ client.project_templates.update(
 <dd>
 
 **assignment_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized assignment settings
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**created_by:** `typing.Optional[int]` 
-    
+**created_by:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -8566,39 +8566,39 @@ client.project_templates.update(
 <dd>
 
 **custom_script:** `typing.Optional[str]` — custom script (Plugin) for projects created from this template
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` 
-    
+**description:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
-    
+**name:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
+**organization:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[int]` 
-    
+**project_id:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -8606,7 +8606,7 @@ client.project_templates.update(
 <dd>
 
 **project_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized project settings
-    
+
 </dd>
 </dl>
 
@@ -8614,7 +8614,7 @@ client.project_templates.update(
 <dd>
 
 **require_comment_on_skip:** `typing.Optional[bool]` — flag to require comment on skip
-    
+
 </dd>
 </dl>
 
@@ -8622,23 +8622,23 @@ client.project_templates.update(
 <dd>
 
 **review_settings:** `typing.Optional[typing.Optional[typing.Any]]` — general dict serialized review settings
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**show_unused_data_columns_to_annotators:** `typing.Optional[bool]` 
-    
+**show_unused_data_columns_to_annotators:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**tags:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
@@ -8646,7 +8646,7 @@ client.project_templates.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -8715,8 +8715,8 @@ client.project_templates.create_project_from_template(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -8724,7 +8724,7 @@ client.project_templates.create_project_from_template(
 <dd>
 
 **title:** `str` — The title of the project to be created from the template.
-    
+
 </dd>
 </dl>
 
@@ -8732,7 +8732,7 @@ client.project_templates.create_project_from_template(
 <dd>
 
 **workspace_id:** `int` — A unique integer value identifying the workspace in which to create the project.
-    
+
 </dd>
 </dl>
 
@@ -8740,7 +8740,7 @@ client.project_templates.create_project_from_template(
 <dd>
 
 **description:** `typing.Optional[str]` — A description for the project.
-    
+
 </dd>
 </dl>
 
@@ -8748,7 +8748,7 @@ client.project_templates.create_project_from_template(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -8814,7 +8814,7 @@ for page in response.iter_pages():
 <dd>
 
 **filter:** `typing.Optional[str]` — Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
-    
+
 </dd>
 </dl>
 
@@ -8822,7 +8822,7 @@ for page in response.iter_pages():
 <dd>
 
 **ids:** `typing.Optional[str]` — Filter id by in list
-    
+
 </dd>
 </dl>
 
@@ -8830,7 +8830,7 @@ for page in response.iter_pages():
 <dd>
 
 **include:** `typing.Optional[str]` — Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
-    
+
 </dd>
 </dl>
 
@@ -8838,7 +8838,7 @@ for page in response.iter_pages():
 <dd>
 
 **members_limit:** `typing.Optional[int]` — Maximum number of members to return
-    
+
 </dd>
 </dl>
 
@@ -8846,7 +8846,7 @@ for page in response.iter_pages():
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -8854,7 +8854,7 @@ for page in response.iter_pages():
 <dd>
 
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
+
 </dd>
 </dl>
 
@@ -8862,7 +8862,7 @@ for page in response.iter_pages():
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
+
 </dd>
 </dl>
 
@@ -8870,7 +8870,7 @@ for page in response.iter_pages():
 <dd>
 
 **search:** `typing.Optional[str]` — Search term for project title and description
-    
+
 </dd>
 </dl>
 
@@ -8878,7 +8878,7 @@ for page in response.iter_pages():
 <dd>
 
 **state:** `typing.Optional[str]` — Filter current_state by exact match
-    
+
 </dd>
 </dl>
 
@@ -8886,7 +8886,7 @@ for page in response.iter_pages():
 <dd>
 
 **title:** `typing.Optional[str]` — Filter title by contains (case-insensitive)
-    
+
 </dd>
 </dl>
 
@@ -8894,7 +8894,7 @@ for page in response.iter_pages():
 <dd>
 
 **workspaces:** `typing.Optional[float]` — Filter workspaces by exact match
-    
+
 </dd>
 </dl>
 
@@ -8902,7 +8902,7 @@ for page in response.iter_pages():
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -8962,15 +8962,15 @@ client.projects.create()
 <dd>
 
 **annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**color:** `typing.Optional[str]` 
-    
+**color:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -8978,7 +8978,7 @@ client.projects.create()
 <dd>
 
 **control_weights:** `typing.Optional[typing.Optional[typing.Any]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
-    
+
 </dd>
 </dl>
 
@@ -8986,7 +8986,7 @@ client.projects.create()
 <dd>
 
 **created_by:** `typing.Optional[UserSimpleRequest]` — Project owner
-    
+
 </dd>
 </dl>
 
@@ -8994,7 +8994,7 @@ client.projects.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Project description
-    
+
 </dd>
 </dl>
 
@@ -9002,7 +9002,7 @@ client.projects.create()
 <dd>
 
 **enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
-    
+
 </dd>
 </dl>
 
@@ -9010,7 +9010,7 @@ client.projects.create()
 <dd>
 
 **evaluate_predictions_automatically:** `typing.Optional[bool]` — Retrieve and display predictions when loading a task
-    
+
 </dd>
 </dl>
 
@@ -9018,7 +9018,7 @@ client.projects.create()
 <dd>
 
 **expert_instruction:** `typing.Optional[str]` — Labeling instructions in HTML format
-    
+
 </dd>
 </dl>
 
@@ -9026,7 +9026,7 @@ client.projects.create()
 <dd>
 
 **is_draft:** `typing.Optional[bool]` — Whether or not the project is in the middle of being created
-    
+
 </dd>
 </dl>
 
@@ -9034,7 +9034,7 @@ client.projects.create()
 <dd>
 
 **is_published:** `typing.Optional[bool]` — Whether or not the project is published to annotators
-    
+
 </dd>
 </dl>
 
@@ -9042,7 +9042,7 @@ client.projects.create()
 <dd>
 
 **label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
-    
+
 </dd>
 </dl>
 
@@ -9050,7 +9050,7 @@ client.projects.create()
 <dd>
 
 **maximum_annotations:** `typing.Optional[int]` — Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-    
+
 </dd>
 </dl>
 
@@ -9058,7 +9058,7 @@ client.projects.create()
 <dd>
 
 **min_annotations_to_start_training:** `typing.Optional[int]` — Minimum number of completed tasks after which model training is started
-    
+
 </dd>
 </dl>
 
@@ -9066,23 +9066,23 @@ client.projects.create()
 <dd>
 
 **model_version:** `typing.Optional[str]` — Machine learning model version
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
+**organization:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**overlap_cohort_percentage:** `typing.Optional[int]` 
-    
+**overlap_cohort_percentage:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -9090,7 +9090,7 @@ client.projects.create()
 <dd>
 
 **pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
-    
+
 </dd>
 </dl>
 
@@ -9098,15 +9098,15 @@ client.projects.create()
 <dd>
 
 **reveal_preannotations_interactively:** `typing.Optional[bool]` — Reveal pre-annotations interactively
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**sampling:** `typing.Optional[SamplingDe5Enum]` 
-    
+**sampling:** `typing.Optional[SamplingDe5Enum]`
+
 </dd>
 </dl>
 
@@ -9114,7 +9114,7 @@ client.projects.create()
 <dd>
 
 **show_annotation_history:** `typing.Optional[bool]` — Show annotation history to annotator
-    
+
 </dd>
 </dl>
 
@@ -9122,7 +9122,7 @@ client.projects.create()
 <dd>
 
 **show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
-    
+
 </dd>
 </dl>
 
@@ -9130,7 +9130,7 @@ client.projects.create()
 <dd>
 
 **show_ground_truth_first:** `typing.Optional[bool]` — Onboarding mode (true): show ground truth tasks first in the labeling stream
-    
+
 </dd>
 </dl>
 
@@ -9138,15 +9138,15 @@ client.projects.create()
 <dd>
 
 **show_instruction:** `typing.Optional[bool]` — Show instructions to the annotator before they start
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**show_overlap_first:** `typing.Optional[bool]` 
-    
+**show_overlap_first:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -9154,15 +9154,15 @@ client.projects.create()
 <dd>
 
 **show_skip_button:** `typing.Optional[bool]` — Show a skip button in interface and allow annotators to skip the task
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**skip_queue:** `typing.Optional[SkipQueueEnum]` 
-    
+**skip_queue:** `typing.Optional[SkipQueueEnum]`
+
 </dd>
 </dl>
 
@@ -9170,7 +9170,7 @@ client.projects.create()
 <dd>
 
 **task_data_login:** `typing.Optional[str]` — Task data credentials: login
-    
+
 </dd>
 </dl>
 
@@ -9178,7 +9178,7 @@ client.projects.create()
 <dd>
 
 **task_data_password:** `typing.Optional[str]` — Task data credentials: password
-    
+
 </dd>
 </dl>
 
@@ -9186,15 +9186,15 @@ client.projects.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**workspace:** `typing.Optional[int]` 
-    
+**workspace:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -9202,7 +9202,7 @@ client.projects.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -9262,7 +9262,7 @@ client.projects.list_counts()
 <dd>
 
 **filter:** `typing.Optional[str]` — Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
-    
+
 </dd>
 </dl>
 
@@ -9270,7 +9270,7 @@ client.projects.list_counts()
 <dd>
 
 **ids:** `typing.Optional[str]` — Filter id by in list
-    
+
 </dd>
 </dl>
 
@@ -9278,7 +9278,7 @@ client.projects.list_counts()
 <dd>
 
 **include:** `typing.Optional[str]` — Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
-    
+
 </dd>
 </dl>
 
@@ -9286,7 +9286,7 @@ client.projects.list_counts()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -9294,7 +9294,7 @@ client.projects.list_counts()
 <dd>
 
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
+
 </dd>
 </dl>
 
@@ -9302,7 +9302,7 @@ client.projects.list_counts()
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
+
 </dd>
 </dl>
 
@@ -9310,7 +9310,7 @@ client.projects.list_counts()
 <dd>
 
 **search:** `typing.Optional[str]` — Search term for project title and description
-    
+
 </dd>
 </dl>
 
@@ -9318,7 +9318,7 @@ client.projects.list_counts()
 <dd>
 
 **state:** `typing.Optional[str]` — Filter current_state by exact match
-    
+
 </dd>
 </dl>
 
@@ -9326,7 +9326,7 @@ client.projects.list_counts()
 <dd>
 
 **title:** `typing.Optional[str]` — Filter title by contains (case-insensitive)
-    
+
 </dd>
 </dl>
 
@@ -9334,7 +9334,7 @@ client.projects.list_counts()
 <dd>
 
 **workspaces:** `typing.Optional[float]` — Filter workspaces by exact match
-    
+
 </dd>
 </dl>
 
@@ -9342,7 +9342,7 @@ client.projects.list_counts()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -9403,8 +9403,8 @@ client.projects.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -9412,7 +9412,7 @@ client.projects.get(
 <dd>
 
 **members_limit:** `typing.Optional[int]` — Maximum number of members to return
-    
+
 </dd>
 </dl>
 
@@ -9420,7 +9420,7 @@ client.projects.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -9481,8 +9481,8 @@ client.projects.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -9490,7 +9490,7 @@ client.projects.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -9551,8 +9551,8 @@ client.projects.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -9560,7 +9560,7 @@ client.projects.update(
 <dd>
 
 **members_limit:** `typing.Optional[int]` — Maximum number of members to return
-    
+
 </dd>
 </dl>
 
@@ -9568,23 +9568,23 @@ client.projects.update(
 <dd>
 
 **agreement_threshold:** `typing.Optional[str]` — Minimum percent agreement threshold for which minimum number of annotators must agree
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**annotation_limit_count:** `typing.Optional[int]` 
-    
+**annotation_limit_count:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**annotation_limit_percent:** `typing.Optional[str]` 
-    
+**annotation_limit_percent:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -9592,55 +9592,55 @@ client.projects.update(
 <dd>
 
 **annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**annotator_evaluation_minimum_score:** `typing.Optional[str]` 
-    
+**annotator_evaluation_minimum_score:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**annotator_evaluation_minimum_tasks:** `typing.Optional[int]` 
-    
+**annotator_evaluation_minimum_tasks:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**annotator_evaluation_onboarding_tasks:** `typing.Optional[int]` 
-    
+**annotator_evaluation_onboarding_tasks:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**assignment_settings:** `typing.Optional[AssignmentSettingsRequest]` 
-    
+**assignment_settings:** `typing.Optional[AssignmentSettingsRequest]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**color:** `typing.Optional[str]` 
-    
+**color:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**comment_classification_config:** `typing.Optional[str]` 
-    
+**comment_classification_config:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -9648,7 +9648,7 @@ client.projects.update(
 <dd>
 
 **control_weights:** `typing.Optional[typing.Optional[typing.Any]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
-    
+
 </dd>
 </dl>
 
@@ -9656,15 +9656,15 @@ client.projects.update(
 <dd>
 
 **created_by:** `typing.Optional[UserSimpleRequest]` — Project owner
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**custom_script:** `typing.Optional[str]` 
-    
+**custom_script:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -9672,7 +9672,7 @@ client.projects.update(
 <dd>
 
 **custom_task_lock_ttl:** `typing.Optional[int]` — TTL in seconds for task reservations, on new and existing tasks
-    
+
 </dd>
 </dl>
 
@@ -9680,7 +9680,7 @@ client.projects.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Project description
-    
+
 </dd>
 </dl>
 
@@ -9688,7 +9688,7 @@ client.projects.update(
 <dd>
 
 **enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
-    
+
 </dd>
 </dl>
 
@@ -9696,7 +9696,7 @@ client.projects.update(
 <dd>
 
 **evaluate_predictions_automatically:** `typing.Optional[bool]` — Retrieve and display predictions when loading a task
-    
+
 </dd>
 </dl>
 
@@ -9704,7 +9704,7 @@ client.projects.update(
 <dd>
 
 **expert_instruction:** `typing.Optional[str]` — Labeling instructions in HTML format
-    
+
 </dd>
 </dl>
 
@@ -9712,7 +9712,7 @@ client.projects.update(
 <dd>
 
 **is_draft:** `typing.Optional[bool]` — Whether or not the project is in the middle of being created
-    
+
 </dd>
 </dl>
 
@@ -9720,7 +9720,7 @@ client.projects.update(
 <dd>
 
 **is_published:** `typing.Optional[bool]` — Whether or not the project is published to annotators
-    
+
 </dd>
 </dl>
 
@@ -9728,7 +9728,7 @@ client.projects.update(
 <dd>
 
 **label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
-    
+
 </dd>
 </dl>
 
@@ -9736,7 +9736,7 @@ client.projects.update(
 <dd>
 
 **max_additional_annotators_assignable:** `typing.Optional[int]` — Maximum number of additional annotators that can be assigned to a low agreement task
-    
+
 </dd>
 </dl>
 
@@ -9744,7 +9744,7 @@ client.projects.update(
 <dd>
 
 **maximum_annotations:** `typing.Optional[int]` — Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-    
+
 </dd>
 </dl>
 
@@ -9752,7 +9752,7 @@ client.projects.update(
 <dd>
 
 **min_annotations_to_start_training:** `typing.Optional[int]` — Minimum number of completed tasks after which model training is started
-    
+
 </dd>
 </dl>
 
@@ -9760,31 +9760,31 @@ client.projects.update(
 <dd>
 
 **model_version:** `typing.Optional[str]` — Machine learning model version
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
+**organization:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**overlap_cohort_percentage:** `typing.Optional[int]` 
-    
+**overlap_cohort_percentage:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**pause_on_failed_annotator_evaluation:** `typing.Optional[bool]` 
-    
+**pause_on_failed_annotator_evaluation:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -9792,15 +9792,15 @@ client.projects.update(
 <dd>
 
 **pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**require_comment_on_skip:** `typing.Optional[bool]` 
-    
+**require_comment_on_skip:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -9808,23 +9808,23 @@ client.projects.update(
 <dd>
 
 **reveal_preannotations_interactively:** `typing.Optional[bool]` — Reveal pre-annotations interactively
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**review_settings:** `typing.Optional[ReviewSettingsRequest]` 
-    
+**review_settings:** `typing.Optional[ReviewSettingsRequest]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**sampling:** `typing.Optional[SamplingDe5Enum]` 
-    
+**sampling:** `typing.Optional[SamplingDe5Enum]`
+
 </dd>
 </dl>
 
@@ -9832,7 +9832,7 @@ client.projects.update(
 <dd>
 
 **show_annotation_history:** `typing.Optional[bool]` — Show annotation history to annotator
-    
+
 </dd>
 </dl>
 
@@ -9840,7 +9840,7 @@ client.projects.update(
 <dd>
 
 **show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
-    
+
 </dd>
 </dl>
 
@@ -9848,7 +9848,7 @@ client.projects.update(
 <dd>
 
 **show_ground_truth_first:** `typing.Optional[bool]` — Onboarding mode (true): show ground truth tasks first in the labeling stream
-    
+
 </dd>
 </dl>
 
@@ -9856,15 +9856,15 @@ client.projects.update(
 <dd>
 
 **show_instruction:** `typing.Optional[bool]` — Show instructions to the annotator before they start
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**show_overlap_first:** `typing.Optional[bool]` 
-    
+**show_overlap_first:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -9872,23 +9872,23 @@ client.projects.update(
 <dd>
 
 **show_skip_button:** `typing.Optional[bool]` — Show a skip button in interface and allow annotators to skip the task
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**show_unused_data_columns_to_annotators:** `typing.Optional[bool]` 
-    
+**show_unused_data_columns_to_annotators:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**skip_queue:** `typing.Optional[SkipQueueEnum]` 
-    
+**skip_queue:** `typing.Optional[SkipQueueEnum]`
+
 </dd>
 </dl>
 
@@ -9896,7 +9896,7 @@ client.projects.update(
 <dd>
 
 **task_data_login:** `typing.Optional[str]` — Task data credentials: login
-    
+
 </dd>
 </dl>
 
@@ -9904,7 +9904,7 @@ client.projects.update(
 <dd>
 
 **task_data_password:** `typing.Optional[str]` — Task data credentials: password
-    
+
 </dd>
 </dl>
 
@@ -9912,15 +9912,15 @@ client.projects.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**workspace:** `typing.Optional[int]` 
-    
+**workspace:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -9928,7 +9928,7 @@ client.projects.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -9989,8 +9989,8 @@ client.projects.list_unique_annotators(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -9998,7 +9998,7 @@ client.projects.list_unique_annotators(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -10068,21 +10068,21 @@ client.projects.duplicate(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**mode:** `ModeEnum` 
+**mode:** `ModeEnum`
 
 Data that you want to duplicate: settings only, with tasks, with annotations
 
 * `settings` - Only settings
 * `settings,data` - Settings and tasks
-    
+
 </dd>
 </dl>
 
@@ -10090,7 +10090,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 <dd>
 
 **title:** `str` — Title of duplicated project
-    
+
 </dd>
 </dl>
 
@@ -10098,7 +10098,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 <dd>
 
 **workspace:** `int` — Workspace, where to place duplicated project
-    
+
 </dd>
 </dl>
 
@@ -10106,7 +10106,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 <dd>
 
 **description:** `typing.Optional[str]` — Description of duplicated project
-    
+
 </dd>
 </dl>
 
@@ -10114,7 +10114,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -10188,7 +10188,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
             ```
 
             <br>
-        
+
 </dd>
 </dl>
 </dd>
@@ -10228,15 +10228,15 @@ client.projects.import_tasks(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `typing.Sequence[ImportApiRequest]` 
-    
+**request:** `typing.Sequence[ImportApiRequest]`
+
 </dd>
 </dl>
 
@@ -10244,7 +10244,7 @@ client.projects.import_tasks(
 <dd>
 
 **commit_to_project:** `typing.Optional[bool]` — Set to "true" to immediately commit tasks to the project.
-    
+
 </dd>
 </dl>
 
@@ -10252,7 +10252,7 @@ client.projects.import_tasks(
 <dd>
 
 **preannotated_from_fields:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
-    
+
 </dd>
 </dl>
 
@@ -10260,7 +10260,7 @@ client.projects.import_tasks(
 <dd>
 
 **return_task_ids:** `typing.Optional[bool]` — Set to "true" to return task IDs in the response.
-    
+
 </dd>
 </dl>
 
@@ -10268,7 +10268,7 @@ client.projects.import_tasks(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -10336,15 +10336,15 @@ client.projects.import_predictions(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `typing.Sequence[PredictionRequest]` 
-    
+**request:** `typing.Sequence[PredictionRequest]`
+
 </dd>
 </dl>
 
@@ -10352,7 +10352,7 @@ client.projects.import_predictions(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -10415,7 +10415,7 @@ client.projects.validate_label_config(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -10423,7 +10423,7 @@ client.projects.validate_label_config(
 <dd>
 
 **label_config:** `str` — Label config in XML format. See more about it in documentation
-    
+
 </dd>
 </dl>
 
@@ -10431,7 +10431,7 @@ client.projects.validate_label_config(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -10495,15 +10495,15 @@ client.tasks.create_many_status(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project import.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**import_pk:** `int` 
-    
+**import_pk:** `int`
+
 </dd>
 </dl>
 
@@ -10511,7 +10511,7 @@ client.tasks.create_many_status(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -10573,7 +10573,7 @@ client.tasks.delete_all_tasks(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -10581,7 +10581,7 @@ client.tasks.delete_all_tasks(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -10649,7 +10649,7 @@ for page in response.iter_pages():
 <dd>
 
 **fields:** `typing.Optional[ListTasksRequestFields]` — Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
-    
+
 </dd>
 </dl>
 
@@ -10657,7 +10657,7 @@ for page in response.iter_pages():
 <dd>
 
 **include:** `typing.Optional[str]` — Specify which fields to include in the response
-    
+
 </dd>
 </dl>
 
@@ -10665,7 +10665,7 @@ for page in response.iter_pages():
 <dd>
 
 **only_annotated:** `typing.Optional[bool]` — Filter to show only tasks that have annotations
-    
+
 </dd>
 </dl>
 
@@ -10673,7 +10673,7 @@ for page in response.iter_pages():
 <dd>
 
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
+
 </dd>
 </dl>
 
@@ -10681,7 +10681,7 @@ for page in response.iter_pages():
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
+
 </dd>
 </dl>
 
@@ -10689,14 +10689,14 @@ for page in response.iter_pages():
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**query:** `typing.Optional[str]` 
+**query:** `typing.Optional[str]`
 
 Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: {"filters": ..., "selectedItems": ..., "ordering": ...}. Check Data Manager > Create View > see data field for more details about filters, selectedItems and ordering.
 
@@ -10706,7 +10706,7 @@ selectedItems: dictionary with keys: "all", "included", "excluded". If "all" is 
 Examples: {"all": false, "included": [1, 2, 3]} or {"all": true, "excluded": [4, 5]}
 ordering: list of fields to order by. Currently, ordering is supported by only one parameter.
 Example: ["completed_at"]
-    
+
 </dd>
 </dl>
 
@@ -10714,7 +10714,7 @@ Example: ["completed_at"]
 <dd>
 
 **resolve_uri:** `typing.Optional[bool]` — Resolve task data URIs using Cloud Storage
-    
+
 </dd>
 </dl>
 
@@ -10722,7 +10722,7 @@ Example: ["completed_at"]
 <dd>
 
 **review:** `typing.Optional[bool]` — Get tasks for review
-    
+
 </dd>
 </dl>
 
@@ -10730,7 +10730,7 @@ Example: ["completed_at"]
 <dd>
 
 **selected_items:** `typing.Optional[str]` — JSON string of selected task IDs for review workflow
-    
+
 </dd>
 </dl>
 
@@ -10738,7 +10738,7 @@ Example: ["completed_at"]
 <dd>
 
 **view:** `typing.Optional[int]` — View ID
-    
+
 </dd>
 </dl>
 
@@ -10746,7 +10746,7 @@ Example: ["completed_at"]
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -10809,7 +10809,7 @@ client.tasks.create(
 <dd>
 
 **allow_skip:** `typing.Optional[bool]` — Whether this task can be skipped. Set to False to make task unskippable.
-    
+
 </dd>
 </dl>
 
@@ -10817,7 +10817,7 @@ client.tasks.create(
 <dd>
 
 **cancelled_annotations:** `typing.Optional[int]` — Number of total cancelled annotations for the current task
-    
+
 </dd>
 </dl>
 
@@ -10825,7 +10825,7 @@ client.tasks.create(
 <dd>
 
 **comment_authors:** `typing.Optional[typing.Sequence[int]]` — Users who wrote comments
-    
+
 </dd>
 </dl>
 
@@ -10833,15 +10833,15 @@ client.tasks.create(
 <dd>
 
 **comment_count:** `typing.Optional[int]` — Number of comments in the task including all annotations
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**data:** `typing.Optional[typing.Any]` 
-    
+**data:** `typing.Optional[typing.Any]`
+
 </dd>
 </dl>
 
@@ -10849,7 +10849,7 @@ client.tasks.create(
 <dd>
 
 **file_upload:** `typing.Optional[int]` — Uploaded file used as data source for this task
-    
+
 </dd>
 </dl>
 
@@ -10857,7 +10857,7 @@ client.tasks.create(
 <dd>
 
 **inner_id:** `typing.Optional[int]` — Internal task ID in the project, starts with 1
-    
+
 </dd>
 </dl>
 
@@ -10865,7 +10865,7 @@ client.tasks.create(
 <dd>
 
 **is_labeled:** `typing.Optional[bool]` — True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
-    
+
 </dd>
 </dl>
 
@@ -10873,7 +10873,7 @@ client.tasks.create(
 <dd>
 
 **last_comment_updated_at:** `typing.Optional[dt.datetime]` — When the last comment was updated
-    
+
 </dd>
 </dl>
 
@@ -10881,7 +10881,7 @@ client.tasks.create(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
-    
+
 </dd>
 </dl>
 
@@ -10889,7 +10889,7 @@ client.tasks.create(
 <dd>
 
 **overlap:** `typing.Optional[int]` — Number of distinct annotators that processed the current task
-    
+
 </dd>
 </dl>
 
@@ -10897,7 +10897,7 @@ client.tasks.create(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID for this task
-    
+
 </dd>
 </dl>
 
@@ -10905,7 +10905,7 @@ client.tasks.create(
 <dd>
 
 **total_annotations:** `typing.Optional[int]` — Number of total annotations for the current task except cancelled annotations
-    
+
 </dd>
 </dl>
 
@@ -10913,7 +10913,7 @@ client.tasks.create(
 <dd>
 
 **total_predictions:** `typing.Optional[int]` — Number of total predictions for the current task
-    
+
 </dd>
 </dl>
 
@@ -10921,7 +10921,7 @@ client.tasks.create(
 <dd>
 
 **unresolved_comment_count:** `typing.Optional[int]` — Number of unresolved comments in the task including all annotations
-    
+
 </dd>
 </dl>
 
@@ -10929,7 +10929,7 @@ client.tasks.create(
 <dd>
 
 **updated_by:** `typing.Optional[int]` — Last annotator or reviewer who updated this task
-    
+
 </dd>
 </dl>
 
@@ -10937,7 +10937,7 @@ client.tasks.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -10999,7 +10999,7 @@ client.tasks.get(
 <dd>
 
 **id:** `str` — Task ID
-    
+
 </dd>
 </dl>
 
@@ -11007,7 +11007,7 @@ client.tasks.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -11069,7 +11069,7 @@ client.tasks.delete(
 <dd>
 
 **id:** `str` — Task ID
-    
+
 </dd>
 </dl>
 
@@ -11077,7 +11077,7 @@ client.tasks.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -11139,7 +11139,7 @@ client.tasks.update(
 <dd>
 
 **id:** `str` — Task ID
-    
+
 </dd>
 </dl>
 
@@ -11147,23 +11147,23 @@ client.tasks.update(
 <dd>
 
 **allow_skip:** `typing.Optional[bool]` — Whether this task can be skipped. Set to False to make task unskippable.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**avg_lead_time:** `typing.Optional[float]` 
-    
+**avg_lead_time:** `typing.Optional[float]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**cancelled_annotations:** `typing.Optional[int]` 
-    
+**cancelled_annotations:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -11171,15 +11171,15 @@ client.tasks.update(
 <dd>
 
 **comment_count:** `typing.Optional[int]` — Number of comments in the task including all annotations
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**completed_at:** `typing.Optional[dt.datetime]` 
-    
+**completed_at:** `typing.Optional[dt.datetime]`
+
 </dd>
 </dl>
 
@@ -11187,31 +11187,31 @@ client.tasks.update(
 <dd>
 
 **data:** `typing.Optional[typing.Optional[typing.Any]]` — User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**draft_exists:** `typing.Optional[bool]` 
-    
+**draft_exists:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**ground_truth:** `typing.Optional[bool]` 
-    
+**ground_truth:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**inner_id:** `typing.Optional[int]` 
-    
+**inner_id:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -11219,7 +11219,7 @@ client.tasks.update(
 <dd>
 
 **is_labeled:** `typing.Optional[bool]` — True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
-    
+
 </dd>
 </dl>
 
@@ -11227,7 +11227,7 @@ client.tasks.update(
 <dd>
 
 **last_comment_updated_at:** `typing.Optional[dt.datetime]` — When the last comment was updated
-    
+
 </dd>
 </dl>
 
@@ -11235,7 +11235,7 @@ client.tasks.update(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
-    
+
 </dd>
 </dl>
 
@@ -11243,7 +11243,7 @@ client.tasks.update(
 <dd>
 
 **overlap:** `typing.Optional[int]` — Number of distinct annotators that processed the current task
-    
+
 </dd>
 </dl>
 
@@ -11251,15 +11251,15 @@ client.tasks.update(
 <dd>
 
 **precomputed_agreement:** `typing.Optional[float]` — Average agreement score for the task
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**predictions_score:** `typing.Optional[float]` 
-    
+**predictions_score:** `typing.Optional[float]`
+
 </dd>
 </dl>
 
@@ -11267,47 +11267,47 @@ client.tasks.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID for this task
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**reviewed:** `typing.Optional[bool]` 
-    
+**reviewed:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**reviews_accepted:** `typing.Optional[int]` 
-    
+**reviews_accepted:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**reviews_rejected:** `typing.Optional[int]` 
-    
+**reviews_rejected:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**total_annotations:** `typing.Optional[int]` 
-    
+**total_annotations:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**total_predictions:** `typing.Optional[int]` 
-    
+**total_predictions:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -11315,7 +11315,7 @@ client.tasks.update(
 <dd>
 
 **unresolved_comment_count:** `typing.Optional[int]` — Number of unresolved comments in the task including all annotations
-    
+
 </dd>
 </dl>
 
@@ -11323,7 +11323,7 @@ client.tasks.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -11394,7 +11394,7 @@ client.tasks.update(
         }
     }
     ```
-    
+
 </dd>
 </dl>
 </dd>
@@ -11439,7 +11439,7 @@ client.tasks.create_event(
 <dd>
 
 **id:** `int` — Task ID to associate the event with
-    
+
 </dd>
 </dl>
 
@@ -11447,7 +11447,7 @@ client.tasks.create_event(
 <dd>
 
 **event_key:** `str` — Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
-    
+
 </dd>
 </dl>
 
@@ -11455,7 +11455,7 @@ client.tasks.create_event(
 <dd>
 
 **event_time:** `dt.datetime` — Timestamp when the event occurred (frontend time)
-    
+
 </dd>
 </dl>
 
@@ -11463,7 +11463,7 @@ client.tasks.create_event(
 <dd>
 
 **annotation:** `typing.Optional[int]` — Annotation ID associated with this event
-    
+
 </dd>
 </dl>
 
@@ -11471,7 +11471,7 @@ client.tasks.create_event(
 <dd>
 
 **annotation_draft:** `typing.Optional[int]` — Draft annotation ID associated with this event
-    
+
 </dd>
 </dl>
 
@@ -11479,7 +11479,7 @@ client.tasks.create_event(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Additional event metadata (region data, hotkey info, etc.)
-    
+
 </dd>
 </dl>
 
@@ -11487,7 +11487,7 @@ client.tasks.create_event(
 <dd>
 
 **review:** `typing.Optional[int]` — Review ID associated with this event
-    
+
 </dd>
 </dl>
 
@@ -11495,7 +11495,7 @@ client.tasks.create_event(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -11556,7 +11556,7 @@ client.session_policy.get()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -11616,7 +11616,7 @@ client.session_policy.update()
 <dd>
 
 **max_session_age:** `typing.Optional[int]` — Number of minutes that a session can be active before needing to re-login
-    
+
 </dd>
 </dl>
 
@@ -11624,7 +11624,7 @@ client.session_policy.update()
 <dd>
 
 **max_time_between_activity:** `typing.Optional[int]` — Number of minutes that a session stays active without any activity
-    
+
 </dd>
 </dl>
 
@@ -11632,7 +11632,7 @@ client.session_policy.update()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -11693,7 +11693,7 @@ client.import_storage.list_types()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -11754,7 +11754,7 @@ client.export_storage.list_types()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -11815,7 +11815,7 @@ client.tokens.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -11823,7 +11823,7 @@ client.tokens.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -11883,7 +11883,7 @@ client.tokens.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -11944,8 +11944,8 @@ client.tokens.blacklist(
 <dl>
 <dd>
 
-**refresh:** `str` 
-    
+**refresh:** `str`
+
 </dd>
 </dl>
 
@@ -11953,7 +11953,7 @@ client.tokens.blacklist(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12014,8 +12014,8 @@ client.tokens.refresh(
 <dl>
 <dd>
 
-**refresh:** `str` 
-    
+**refresh:** `str`
+
 </dd>
 </dl>
 
@@ -12023,7 +12023,7 @@ client.tokens.refresh(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12084,8 +12084,8 @@ client.tokens.rotate(
 <dl>
 <dd>
 
-**refresh:** `str` 
-    
+**refresh:** `str`
+
 </dd>
 </dl>
 
@@ -12093,7 +12093,7 @@ client.tokens.rotate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12154,7 +12154,7 @@ client.versions.get()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12215,7 +12215,7 @@ client.webhooks.list()
 <dd>
 
 **project:** `typing.Optional[str]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -12223,7 +12223,7 @@ client.webhooks.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12285,15 +12285,15 @@ client.webhooks.create(
 <dd>
 
 **url:** `str` — URL of webhook
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**actions:** `typing.Optional[typing.Sequence[ActionsEnum]]` 
-    
+**actions:** `typing.Optional[typing.Sequence[ActionsEnum]]`
+
 </dd>
 </dl>
 
@@ -12301,7 +12301,7 @@ client.webhooks.create(
 <dd>
 
 **headers:** `typing.Optional[typing.Optional[typing.Any]]` — Key Value Json of headers
-    
+
 </dd>
 </dl>
 
@@ -12309,15 +12309,15 @@ client.webhooks.create(
 <dd>
 
 **is_active:** `typing.Optional[bool]` — If value is False the webhook is disabled
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` 
-    
+**project:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -12325,7 +12325,7 @@ client.webhooks.create(
 <dd>
 
 **send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
-    
+
 </dd>
 </dl>
 
@@ -12333,7 +12333,7 @@ client.webhooks.create(
 <dd>
 
 **send_payload:** `typing.Optional[bool]` — If value is False send only action
-    
+
 </dd>
 </dl>
 
@@ -12341,7 +12341,7 @@ client.webhooks.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12401,7 +12401,7 @@ client.webhooks.info()
 <dd>
 
 **organization_only:** `typing.Optional[bool]` — organization-only or not
-    
+
 </dd>
 </dl>
 
@@ -12409,7 +12409,7 @@ client.webhooks.info()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12456,8 +12456,8 @@ client.webhooks.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -12465,7 +12465,7 @@ client.webhooks.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12512,8 +12512,8 @@ client.webhooks.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -12521,7 +12521,7 @@ client.webhooks.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12568,16 +12568,16 @@ client.webhooks.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**actions:** `typing.Optional[typing.Sequence[ActionsEnum]]` 
-    
+**actions:** `typing.Optional[typing.Sequence[ActionsEnum]]`
+
 </dd>
 </dl>
 
@@ -12585,7 +12585,7 @@ client.webhooks.update(
 <dd>
 
 **headers:** `typing.Optional[typing.Optional[typing.Any]]` — Key Value Json of headers
-    
+
 </dd>
 </dl>
 
@@ -12593,7 +12593,7 @@ client.webhooks.update(
 <dd>
 
 **is_active:** `typing.Optional[bool]` — If value is False the webhook is disabled
-    
+
 </dd>
 </dl>
 
@@ -12601,7 +12601,7 @@ client.webhooks.update(
 <dd>
 
 **send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
-    
+
 </dd>
 </dl>
 
@@ -12609,7 +12609,7 @@ client.webhooks.update(
 <dd>
 
 **send_payload:** `typing.Optional[bool]` — If value is False send only action
-    
+
 </dd>
 </dl>
 
@@ -12617,7 +12617,7 @@ client.webhooks.update(
 <dd>
 
 **url:** `typing.Optional[str]` — URL of webhook
-    
+
 </dd>
 </dl>
 
@@ -12625,7 +12625,7 @@ client.webhooks.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12692,7 +12692,7 @@ client.workspaces.list()
 <dd>
 
 **is_personal:** `typing.Optional[bool]` — Workspace is a personal user workspace.
-    
+
 </dd>
 </dl>
 
@@ -12700,7 +12700,7 @@ client.workspaces.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -12708,7 +12708,7 @@ client.workspaces.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12776,15 +12776,15 @@ client.workspaces.create(
 <dd>
 
 **title:** `str` — Workspace name
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**color:** `typing.Optional[str]` 
-    
+**color:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -12792,7 +12792,7 @@ client.workspaces.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Workspace description
-    
+
 </dd>
 </dl>
 
@@ -12800,7 +12800,7 @@ client.workspaces.create(
 <dd>
 
 **is_archived:** `typing.Optional[bool]` — Workspace is archived
-    
+
 </dd>
 </dl>
 
@@ -12808,7 +12808,7 @@ client.workspaces.create(
 <dd>
 
 **is_personal:** `typing.Optional[bool]` — Workspace is a personal user workspace
-    
+
 </dd>
 </dl>
 
@@ -12816,7 +12816,7 @@ client.workspaces.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12883,8 +12883,8 @@ client.workspaces.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -12892,7 +12892,7 @@ client.workspaces.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -12959,8 +12959,8 @@ client.workspaces.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -12968,7 +12968,7 @@ client.workspaces.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -13035,16 +13035,16 @@ client.workspaces.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**color:** `typing.Optional[str]` 
-    
+**color:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -13052,7 +13052,7 @@ client.workspaces.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Workspace description
-    
+
 </dd>
 </dl>
 
@@ -13060,7 +13060,7 @@ client.workspaces.update(
 <dd>
 
 **is_archived:** `typing.Optional[bool]` — Workspace is archived
-    
+
 </dd>
 </dl>
 
@@ -13068,7 +13068,7 @@ client.workspaces.update(
 <dd>
 
 **is_personal:** `typing.Optional[bool]` — Workspace is a personal user workspace
-    
+
 </dd>
 </dl>
 
@@ -13076,7 +13076,7 @@ client.workspaces.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Workspace name
-    
+
 </dd>
 </dl>
 
@@ -13084,7 +13084,7 @@ client.workspaces.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -13147,7 +13147,7 @@ client.export_storage.azure.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -13155,7 +13155,7 @@ client.export_storage.azure.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -13163,7 +13163,7 @@ client.export_storage.azure.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -13223,7 +13223,7 @@ client.export_storage.azure.create()
 <dd>
 
 **account_key:** `typing.Optional[str]` — Azure Blob account key
-    
+
 </dd>
 </dl>
 
@@ -13231,7 +13231,7 @@ client.export_storage.azure.create()
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -13239,7 +13239,7 @@ client.export_storage.azure.create()
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -13247,7 +13247,7 @@ client.export_storage.azure.create()
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -13255,7 +13255,7 @@ client.export_storage.azure.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -13263,7 +13263,7 @@ client.export_storage.azure.create()
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
@@ -13271,7 +13271,7 @@ client.export_storage.azure.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -13279,7 +13279,7 @@ client.export_storage.azure.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -13287,7 +13287,7 @@ client.export_storage.azure.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -13347,7 +13347,7 @@ client.export_storage.azure.validate()
 <dd>
 
 **account_key:** `typing.Optional[str]` — Azure Blob account key
-    
+
 </dd>
 </dl>
 
@@ -13355,7 +13355,7 @@ client.export_storage.azure.validate()
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -13363,7 +13363,7 @@ client.export_storage.azure.validate()
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -13371,7 +13371,7 @@ client.export_storage.azure.validate()
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -13379,7 +13379,7 @@ client.export_storage.azure.validate()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -13387,7 +13387,7 @@ client.export_storage.azure.validate()
 <dd>
 
 **id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
+
 </dd>
 </dl>
 
@@ -13395,7 +13395,7 @@ client.export_storage.azure.validate()
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
@@ -13403,7 +13403,7 @@ client.export_storage.azure.validate()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -13411,7 +13411,7 @@ client.export_storage.azure.validate()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -13419,7 +13419,7 @@ client.export_storage.azure.validate()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -13480,8 +13480,8 @@ client.export_storage.azure.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -13489,7 +13489,7 @@ client.export_storage.azure.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -13550,8 +13550,8 @@ client.export_storage.azure.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -13559,7 +13559,7 @@ client.export_storage.azure.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -13620,8 +13620,8 @@ client.export_storage.azure.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -13629,7 +13629,7 @@ client.export_storage.azure.update(
 <dd>
 
 **account_key:** `typing.Optional[str]` — Azure Blob account key
-    
+
 </dd>
 </dl>
 
@@ -13637,7 +13637,7 @@ client.export_storage.azure.update(
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -13645,7 +13645,7 @@ client.export_storage.azure.update(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -13653,7 +13653,7 @@ client.export_storage.azure.update(
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -13661,7 +13661,7 @@ client.export_storage.azure.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -13669,7 +13669,7 @@ client.export_storage.azure.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
@@ -13677,7 +13677,7 @@ client.export_storage.azure.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -13685,7 +13685,7 @@ client.export_storage.azure.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -13693,7 +13693,7 @@ client.export_storage.azure.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -13754,8 +13754,8 @@ client.export_storage.azure.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -13763,7 +13763,7 @@ client.export_storage.azure.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -13832,7 +13832,7 @@ client.export_storage.azure_spi.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -13840,7 +13840,7 @@ client.export_storage.azure_spi.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -13848,7 +13848,7 @@ client.export_storage.azure_spi.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -13916,7 +13916,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -13924,7 +13924,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -13932,7 +13932,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -13940,7 +13940,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
+
 </dd>
 </dl>
 
@@ -13948,7 +13948,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
+
 </dd>
 </dl>
 
@@ -13956,7 +13956,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -13964,7 +13964,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -13972,7 +13972,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -13980,7 +13980,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -13988,7 +13988,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -13996,7 +13996,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -14004,7 +14004,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
@@ -14012,23 +14012,23 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -14036,7 +14036,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
+
 </dd>
 </dl>
 
@@ -14044,7 +14044,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -14052,7 +14052,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -14060,7 +14060,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -14068,7 +14068,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
+
 </dd>
 </dl>
 
@@ -14076,7 +14076,7 @@ client.export_storage.azure_spi.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -14144,7 +14144,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -14152,7 +14152,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -14160,7 +14160,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -14168,7 +14168,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
+
 </dd>
 </dl>
 
@@ -14176,7 +14176,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
+
 </dd>
 </dl>
 
@@ -14184,7 +14184,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -14192,7 +14192,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -14200,7 +14200,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -14208,7 +14208,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -14216,7 +14216,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -14224,7 +14224,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -14232,7 +14232,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
@@ -14240,23 +14240,23 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -14264,7 +14264,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
+
 </dd>
 </dl>
 
@@ -14272,7 +14272,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -14280,7 +14280,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -14288,7 +14288,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -14296,7 +14296,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
+
 </dd>
 </dl>
 
@@ -14304,7 +14304,7 @@ client.export_storage.azure_spi.validate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -14371,8 +14371,8 @@ client.export_storage.azure_spi.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -14380,7 +14380,7 @@ client.export_storage.azure_spi.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -14447,8 +14447,8 @@ client.export_storage.azure_spi.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -14456,7 +14456,7 @@ client.export_storage.azure_spi.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -14523,8 +14523,8 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -14532,7 +14532,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -14540,7 +14540,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -14548,7 +14548,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
+
 </dd>
 </dl>
 
@@ -14556,7 +14556,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
+
 </dd>
 </dl>
 
@@ -14564,7 +14564,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -14572,7 +14572,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -14580,7 +14580,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -14588,7 +14588,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -14596,7 +14596,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -14604,7 +14604,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -14612,7 +14612,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
@@ -14620,7 +14620,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -14628,23 +14628,23 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -14652,7 +14652,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
+
 </dd>
 </dl>
 
@@ -14660,7 +14660,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -14668,7 +14668,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -14676,7 +14676,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -14684,7 +14684,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
+
 </dd>
 </dl>
 
@@ -14692,7 +14692,7 @@ client.export_storage.azure_spi.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -14759,8 +14759,8 @@ client.export_storage.azure_spi.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -14768,7 +14768,7 @@ client.export_storage.azure_spi.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -14837,7 +14837,7 @@ client.export_storage.databricks.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -14845,7 +14845,7 @@ client.export_storage.databricks.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -14853,7 +14853,7 @@ client.export_storage.databricks.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -14925,7 +14925,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **catalog:** `str` — UC catalog name
-    
+
 </dd>
 </dl>
 
@@ -14933,7 +14933,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **host:** `str` — Databricks workspace base URL (https://...)
-    
+
 </dd>
 </dl>
 
@@ -14941,7 +14941,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -14949,7 +14949,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **schema:** `str` — UC schema name
-    
+
 </dd>
 </dl>
 
@@ -14957,7 +14957,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **volume:** `str` — UC volume name
-    
+
 </dd>
 </dl>
 
@@ -14965,7 +14965,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -14973,7 +14973,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -14981,7 +14981,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -14989,7 +14989,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -14997,7 +14997,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -15005,7 +15005,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -15013,7 +15013,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Export path prefix under the volume
-    
+
 </dd>
 </dl>
 
@@ -15021,39 +15021,39 @@ client.export_storage.databricks.create(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_timeout_s:** `typing.Optional[int]` 
-    
+**request_timeout_s:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
+**stream_chunk_bytes:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -15061,15 +15061,15 @@ client.export_storage.databricks.create(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
-    
+**token:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -15077,7 +15077,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -15085,7 +15085,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
+
 </dd>
 </dl>
 
@@ -15093,7 +15093,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
-    
+
 </dd>
 </dl>
 
@@ -15101,7 +15101,7 @@ client.export_storage.databricks.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -15173,7 +15173,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **catalog:** `str` — UC catalog name
-    
+
 </dd>
 </dl>
 
@@ -15181,7 +15181,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **host:** `str` — Databricks workspace base URL (https://...)
-    
+
 </dd>
 </dl>
 
@@ -15189,7 +15189,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -15197,7 +15197,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **schema:** `str` — UC schema name
-    
+
 </dd>
 </dl>
 
@@ -15205,7 +15205,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **volume:** `str` — UC volume name
-    
+
 </dd>
 </dl>
 
@@ -15213,7 +15213,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -15221,7 +15221,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -15229,7 +15229,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -15237,7 +15237,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -15245,7 +15245,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -15253,7 +15253,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -15261,7 +15261,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Export path prefix under the volume
-    
+
 </dd>
 </dl>
 
@@ -15269,39 +15269,39 @@ client.export_storage.databricks.validate(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_timeout_s:** `typing.Optional[int]` 
-    
+**request_timeout_s:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
+**stream_chunk_bytes:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -15309,15 +15309,15 @@ client.export_storage.databricks.validate(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
-    
+**token:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -15325,7 +15325,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -15333,7 +15333,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
+
 </dd>
 </dl>
 
@@ -15341,7 +15341,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
-    
+
 </dd>
 </dl>
 
@@ -15349,7 +15349,7 @@ client.export_storage.databricks.validate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -15416,8 +15416,8 @@ client.export_storage.databricks.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -15425,7 +15425,7 @@ client.export_storage.databricks.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -15492,8 +15492,8 @@ client.export_storage.databricks.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -15501,7 +15501,7 @@ client.export_storage.databricks.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -15568,8 +15568,8 @@ client.export_storage.databricks.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -15577,7 +15577,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -15585,7 +15585,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **catalog:** `typing.Optional[str]` — UC catalog name
-    
+
 </dd>
 </dl>
 
@@ -15593,7 +15593,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -15601,7 +15601,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **host:** `typing.Optional[str]` — Databricks workspace base URL (https://...)
-    
+
 </dd>
 </dl>
 
@@ -15609,7 +15609,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -15617,7 +15617,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -15625,7 +15625,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -15633,7 +15633,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -15641,7 +15641,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Export path prefix under the volume
-    
+
 </dd>
 </dl>
 
@@ -15649,7 +15649,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -15657,15 +15657,15 @@ client.export_storage.databricks.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_timeout_s:** `typing.Optional[int]` 
-    
+**request_timeout_s:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -15673,31 +15673,31 @@ client.export_storage.databricks.update(
 <dd>
 
 **schema:** `typing.Optional[str]` — UC schema name
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
+**stream_chunk_bytes:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -15705,15 +15705,15 @@ client.export_storage.databricks.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
-    
+**token:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -15721,7 +15721,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -15729,7 +15729,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
+
 </dd>
 </dl>
 
@@ -15737,7 +15737,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
-    
+
 </dd>
 </dl>
 
@@ -15745,7 +15745,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **volume:** `typing.Optional[str]` — UC volume name
-    
+
 </dd>
 </dl>
 
@@ -15753,7 +15753,7 @@ client.export_storage.databricks.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -15820,8 +15820,8 @@ client.export_storage.databricks.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -15829,7 +15829,7 @@ client.export_storage.databricks.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -15892,7 +15892,7 @@ client.export_storage.gcs.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -15900,7 +15900,7 @@ client.export_storage.gcs.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -15908,7 +15908,7 @@ client.export_storage.gcs.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -15968,7 +15968,7 @@ client.export_storage.gcs.create()
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -15976,7 +15976,7 @@ client.export_storage.gcs.create()
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
+
 </dd>
 </dl>
 
@@ -15984,7 +15984,7 @@ client.export_storage.gcs.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -15992,7 +15992,7 @@ client.export_storage.gcs.create()
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-    
+
 </dd>
 </dl>
 
@@ -16000,7 +16000,7 @@ client.export_storage.gcs.create()
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -16008,7 +16008,7 @@ client.export_storage.gcs.create()
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -16016,7 +16016,7 @@ client.export_storage.gcs.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -16024,7 +16024,7 @@ client.export_storage.gcs.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -16032,7 +16032,7 @@ client.export_storage.gcs.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -16092,7 +16092,7 @@ client.export_storage.gcs.validate()
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -16100,7 +16100,7 @@ client.export_storage.gcs.validate()
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
+
 </dd>
 </dl>
 
@@ -16108,7 +16108,7 @@ client.export_storage.gcs.validate()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -16116,7 +16116,7 @@ client.export_storage.gcs.validate()
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-    
+
 </dd>
 </dl>
 
@@ -16124,7 +16124,7 @@ client.export_storage.gcs.validate()
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -16132,7 +16132,7 @@ client.export_storage.gcs.validate()
 <dd>
 
 **id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
+
 </dd>
 </dl>
 
@@ -16140,7 +16140,7 @@ client.export_storage.gcs.validate()
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -16148,7 +16148,7 @@ client.export_storage.gcs.validate()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -16156,7 +16156,7 @@ client.export_storage.gcs.validate()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -16164,7 +16164,7 @@ client.export_storage.gcs.validate()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -16225,8 +16225,8 @@ client.export_storage.gcs.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -16234,7 +16234,7 @@ client.export_storage.gcs.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -16295,8 +16295,8 @@ client.export_storage.gcs.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -16304,7 +16304,7 @@ client.export_storage.gcs.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -16365,8 +16365,8 @@ client.export_storage.gcs.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -16374,7 +16374,7 @@ client.export_storage.gcs.update(
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -16382,7 +16382,7 @@ client.export_storage.gcs.update(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
+
 </dd>
 </dl>
 
@@ -16390,7 +16390,7 @@ client.export_storage.gcs.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -16398,7 +16398,7 @@ client.export_storage.gcs.update(
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-    
+
 </dd>
 </dl>
 
@@ -16406,7 +16406,7 @@ client.export_storage.gcs.update(
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -16414,7 +16414,7 @@ client.export_storage.gcs.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -16422,7 +16422,7 @@ client.export_storage.gcs.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -16430,7 +16430,7 @@ client.export_storage.gcs.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -16438,7 +16438,7 @@ client.export_storage.gcs.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -16499,8 +16499,8 @@ client.export_storage.gcs.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -16508,7 +16508,7 @@ client.export_storage.gcs.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -16577,7 +16577,7 @@ client.export_storage.gcswif.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -16585,7 +16585,7 @@ client.export_storage.gcswif.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -16593,7 +16593,7 @@ client.export_storage.gcswif.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -16661,7 +16661,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -16669,7 +16669,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -16677,7 +16677,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -16685,7 +16685,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -16693,7 +16693,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
+
 </dd>
 </dl>
 
@@ -16701,7 +16701,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -16709,7 +16709,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **google_project_number:** `typing.Optional[str]` — Google project number
-    
+
 </dd>
 </dl>
 
@@ -16717,7 +16717,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
+
 </dd>
 </dl>
 
@@ -16725,7 +16725,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
+
 </dd>
 </dl>
 
@@ -16733,7 +16733,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
+
 </dd>
 </dl>
 
@@ -16741,7 +16741,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -16749,7 +16749,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -16757,7 +16757,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -16765,7 +16765,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -16773,7 +16773,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -16781,23 +16781,23 @@ client.export_storage.gcswif.create(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -16805,7 +16805,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -16813,7 +16813,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -16821,7 +16821,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -16829,7 +16829,7 @@ client.export_storage.gcswif.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -16897,7 +16897,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -16905,7 +16905,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -16913,7 +16913,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -16921,7 +16921,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -16929,7 +16929,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
+
 </dd>
 </dl>
 
@@ -16937,7 +16937,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -16945,7 +16945,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **google_project_number:** `typing.Optional[str]` — Google project number
-    
+
 </dd>
 </dl>
 
@@ -16953,7 +16953,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
+
 </dd>
 </dl>
 
@@ -16961,7 +16961,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
+
 </dd>
 </dl>
 
@@ -16969,7 +16969,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
+
 </dd>
 </dl>
 
@@ -16977,7 +16977,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -16985,7 +16985,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -16993,7 +16993,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -17001,7 +17001,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -17009,7 +17009,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -17017,23 +17017,23 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -17041,7 +17041,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -17049,7 +17049,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -17057,7 +17057,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -17065,7 +17065,7 @@ client.export_storage.gcswif.validate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -17132,8 +17132,8 @@ client.export_storage.gcswif.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -17141,7 +17141,7 @@ client.export_storage.gcswif.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -17208,8 +17208,8 @@ client.export_storage.gcswif.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -17217,7 +17217,7 @@ client.export_storage.gcswif.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -17284,8 +17284,8 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -17293,7 +17293,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -17301,7 +17301,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -17309,7 +17309,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -17317,7 +17317,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
+
 </dd>
 </dl>
 
@@ -17325,7 +17325,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -17333,7 +17333,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **google_project_number:** `typing.Optional[str]` — Google project number
-    
+
 </dd>
 </dl>
 
@@ -17341,7 +17341,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
+
 </dd>
 </dl>
 
@@ -17349,7 +17349,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
+
 </dd>
 </dl>
 
@@ -17357,7 +17357,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
+
 </dd>
 </dl>
 
@@ -17365,7 +17365,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -17373,7 +17373,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -17381,7 +17381,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -17389,7 +17389,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -17397,7 +17397,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -17405,7 +17405,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -17413,23 +17413,23 @@ client.export_storage.gcswif.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -17437,7 +17437,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -17445,7 +17445,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -17453,7 +17453,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -17461,7 +17461,7 @@ client.export_storage.gcswif.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -17528,8 +17528,8 @@ client.export_storage.gcswif.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -17537,7 +17537,7 @@ client.export_storage.gcswif.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -17600,7 +17600,7 @@ client.export_storage.local.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -17608,7 +17608,7 @@ client.export_storage.local.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -17616,7 +17616,7 @@ client.export_storage.local.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -17676,7 +17676,7 @@ client.export_storage.local.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -17684,7 +17684,7 @@ client.export_storage.local.create()
 <dd>
 
 **path:** `typing.Optional[str]` — Path to local directory
-    
+
 </dd>
 </dl>
 
@@ -17692,7 +17692,7 @@ client.export_storage.local.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -17700,7 +17700,7 @@ client.export_storage.local.create()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -17708,7 +17708,7 @@ client.export_storage.local.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -17716,7 +17716,7 @@ client.export_storage.local.create()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -17724,7 +17724,7 @@ client.export_storage.local.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -17784,7 +17784,7 @@ client.export_storage.local.validate()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -17792,7 +17792,7 @@ client.export_storage.local.validate()
 <dd>
 
 **id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
+
 </dd>
 </dl>
 
@@ -17800,7 +17800,7 @@ client.export_storage.local.validate()
 <dd>
 
 **path:** `typing.Optional[str]` — Path to local directory
-    
+
 </dd>
 </dl>
 
@@ -17808,7 +17808,7 @@ client.export_storage.local.validate()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -17816,7 +17816,7 @@ client.export_storage.local.validate()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -17824,7 +17824,7 @@ client.export_storage.local.validate()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -17832,7 +17832,7 @@ client.export_storage.local.validate()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -17840,7 +17840,7 @@ client.export_storage.local.validate()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -17901,8 +17901,8 @@ client.export_storage.local.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -17910,7 +17910,7 @@ client.export_storage.local.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -17971,8 +17971,8 @@ client.export_storage.local.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -17980,7 +17980,7 @@ client.export_storage.local.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -18041,8 +18041,8 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -18050,7 +18050,7 @@ client.export_storage.local.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -18058,7 +18058,7 @@ client.export_storage.local.update(
 <dd>
 
 **path:** `typing.Optional[str]` — Path to local directory
-    
+
 </dd>
 </dl>
 
@@ -18066,7 +18066,7 @@ client.export_storage.local.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -18074,7 +18074,7 @@ client.export_storage.local.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -18082,7 +18082,7 @@ client.export_storage.local.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -18090,7 +18090,7 @@ client.export_storage.local.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -18098,7 +18098,7 @@ client.export_storage.local.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -18159,8 +18159,8 @@ client.export_storage.local.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -18168,7 +18168,7 @@ client.export_storage.local.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -18231,7 +18231,7 @@ client.export_storage.redis.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -18239,7 +18239,7 @@ client.export_storage.redis.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -18247,7 +18247,7 @@ client.export_storage.redis.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -18307,7 +18307,7 @@ client.export_storage.redis.create()
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
+
 </dd>
 </dl>
 
@@ -18315,7 +18315,7 @@ client.export_storage.redis.create()
 <dd>
 
 **db:** `typing.Optional[int]` — Database ID of database to use
-    
+
 </dd>
 </dl>
 
@@ -18323,7 +18323,7 @@ client.export_storage.redis.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -18331,7 +18331,7 @@ client.export_storage.redis.create()
 <dd>
 
 **host:** `typing.Optional[str]` — Server Host IP (optional)
-    
+
 </dd>
 </dl>
 
@@ -18339,7 +18339,7 @@ client.export_storage.redis.create()
 <dd>
 
 **password:** `typing.Optional[str]` — Server Password (optional)
-    
+
 </dd>
 </dl>
 
@@ -18347,7 +18347,7 @@ client.export_storage.redis.create()
 <dd>
 
 **path:** `typing.Optional[str]` — Storage prefix (optional)
-    
+
 </dd>
 </dl>
 
@@ -18355,7 +18355,7 @@ client.export_storage.redis.create()
 <dd>
 
 **port:** `typing.Optional[str]` — Server Port (optional)
-    
+
 </dd>
 </dl>
 
@@ -18363,7 +18363,7 @@ client.export_storage.redis.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -18371,7 +18371,7 @@ client.export_storage.redis.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -18379,7 +18379,7 @@ client.export_storage.redis.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -18439,7 +18439,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
+
 </dd>
 </dl>
 
@@ -18447,7 +18447,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **db:** `typing.Optional[int]` — Database ID of database to use
-    
+
 </dd>
 </dl>
 
@@ -18455,7 +18455,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -18463,7 +18463,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **host:** `typing.Optional[str]` — Server Host IP (optional)
-    
+
 </dd>
 </dl>
 
@@ -18471,7 +18471,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
+
 </dd>
 </dl>
 
@@ -18479,7 +18479,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **password:** `typing.Optional[str]` — Server Password (optional)
-    
+
 </dd>
 </dl>
 
@@ -18487,7 +18487,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **path:** `typing.Optional[str]` — Storage prefix (optional)
-    
+
 </dd>
 </dl>
 
@@ -18495,7 +18495,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **port:** `typing.Optional[str]` — Server Port (optional)
-    
+
 </dd>
 </dl>
 
@@ -18503,7 +18503,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -18511,7 +18511,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -18519,7 +18519,7 @@ client.export_storage.redis.validate()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -18580,8 +18580,8 @@ client.export_storage.redis.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -18589,7 +18589,7 @@ client.export_storage.redis.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -18650,8 +18650,8 @@ client.export_storage.redis.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -18659,7 +18659,7 @@ client.export_storage.redis.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -18720,8 +18720,8 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -18729,7 +18729,7 @@ client.export_storage.redis.update(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
+
 </dd>
 </dl>
 
@@ -18737,7 +18737,7 @@ client.export_storage.redis.update(
 <dd>
 
 **db:** `typing.Optional[int]` — Database ID of database to use
-    
+
 </dd>
 </dl>
 
@@ -18745,7 +18745,7 @@ client.export_storage.redis.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -18753,7 +18753,7 @@ client.export_storage.redis.update(
 <dd>
 
 **host:** `typing.Optional[str]` — Server Host IP (optional)
-    
+
 </dd>
 </dl>
 
@@ -18761,7 +18761,7 @@ client.export_storage.redis.update(
 <dd>
 
 **password:** `typing.Optional[str]` — Server Password (optional)
-    
+
 </dd>
 </dl>
 
@@ -18769,7 +18769,7 @@ client.export_storage.redis.update(
 <dd>
 
 **path:** `typing.Optional[str]` — Storage prefix (optional)
-    
+
 </dd>
 </dl>
 
@@ -18777,7 +18777,7 @@ client.export_storage.redis.update(
 <dd>
 
 **port:** `typing.Optional[str]` — Server Port (optional)
-    
+
 </dd>
 </dl>
 
@@ -18785,7 +18785,7 @@ client.export_storage.redis.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -18793,7 +18793,7 @@ client.export_storage.redis.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -18801,7 +18801,7 @@ client.export_storage.redis.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -18862,8 +18862,8 @@ client.export_storage.redis.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -18871,7 +18871,7 @@ client.export_storage.redis.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -18934,7 +18934,7 @@ client.export_storage.s3.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -18942,7 +18942,7 @@ client.export_storage.s3.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -18950,7 +18950,7 @@ client.export_storage.s3.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -19010,7 +19010,7 @@ client.export_storage.s3.create()
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -19018,7 +19018,7 @@ client.export_storage.s3.create()
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -19026,7 +19026,7 @@ client.export_storage.s3.create()
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -19034,7 +19034,7 @@ client.export_storage.s3.create()
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -19042,7 +19042,7 @@ client.export_storage.s3.create()
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -19050,7 +19050,7 @@ client.export_storage.s3.create()
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
+
 </dd>
 </dl>
 
@@ -19058,7 +19058,7 @@ client.export_storage.s3.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -19066,7 +19066,7 @@ client.export_storage.s3.create()
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -19074,7 +19074,7 @@ client.export_storage.s3.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -19082,7 +19082,7 @@ client.export_storage.s3.create()
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -19090,7 +19090,7 @@ client.export_storage.s3.create()
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
@@ -19098,7 +19098,7 @@ client.export_storage.s3.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -19106,7 +19106,7 @@ client.export_storage.s3.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -19166,7 +19166,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -19174,7 +19174,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -19182,7 +19182,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -19190,7 +19190,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -19198,7 +19198,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -19206,7 +19206,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
+
 </dd>
 </dl>
 
@@ -19214,7 +19214,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -19222,7 +19222,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
+
 </dd>
 </dl>
 
@@ -19230,7 +19230,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -19238,7 +19238,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -19246,7 +19246,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -19254,7 +19254,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
@@ -19262,7 +19262,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -19270,7 +19270,7 @@ client.export_storage.s3.validate()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -19331,8 +19331,8 @@ client.export_storage.s3.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -19340,7 +19340,7 @@ client.export_storage.s3.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -19401,8 +19401,8 @@ client.export_storage.s3.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -19410,7 +19410,7 @@ client.export_storage.s3.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -19471,8 +19471,8 @@ client.export_storage.s3.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -19480,7 +19480,7 @@ client.export_storage.s3.update(
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -19488,7 +19488,7 @@ client.export_storage.s3.update(
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -19496,7 +19496,7 @@ client.export_storage.s3.update(
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -19504,7 +19504,7 @@ client.export_storage.s3.update(
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -19512,7 +19512,7 @@ client.export_storage.s3.update(
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -19520,7 +19520,7 @@ client.export_storage.s3.update(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
+
 </dd>
 </dl>
 
@@ -19528,7 +19528,7 @@ client.export_storage.s3.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -19536,7 +19536,7 @@ client.export_storage.s3.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -19544,7 +19544,7 @@ client.export_storage.s3.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -19552,7 +19552,7 @@ client.export_storage.s3.update(
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -19560,7 +19560,7 @@ client.export_storage.s3.update(
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
@@ -19568,7 +19568,7 @@ client.export_storage.s3.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -19576,7 +19576,7 @@ client.export_storage.s3.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -19637,8 +19637,8 @@ client.export_storage.s3.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -19646,7 +19646,7 @@ client.export_storage.s3.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -19715,7 +19715,7 @@ client.export_storage.s3s.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -19723,7 +19723,7 @@ client.export_storage.s3s.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -19731,7 +19731,7 @@ client.export_storage.s3s.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -19800,7 +19800,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -19808,7 +19808,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **role_arn:** `str` — AWS RoleArn
-    
+
 </dd>
 </dl>
 
@@ -19816,7 +19816,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -19824,7 +19824,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -19832,7 +19832,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -19840,7 +19840,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -19848,7 +19848,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -19856,7 +19856,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -19864,7 +19864,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -19872,7 +19872,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **external_id:** `typing.Optional[str]` — AWS ExternalId
-    
+
 </dd>
 </dl>
 
@@ -19880,7 +19880,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -19888,7 +19888,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -19896,15 +19896,15 @@ client.export_storage.s3s.create(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**legacy_auth:** `typing.Optional[bool]` 
-    
+**legacy_auth:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -19912,7 +19912,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -19920,7 +19920,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -19928,7 +19928,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -19936,7 +19936,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -19944,23 +19944,23 @@ client.export_storage.s3s.create(
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -19968,7 +19968,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -19976,7 +19976,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -19984,7 +19984,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -19992,7 +19992,7 @@ client.export_storage.s3s.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -20061,7 +20061,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -20069,7 +20069,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **role_arn:** `str` — AWS RoleArn
-    
+
 </dd>
 </dl>
 
@@ -20077,7 +20077,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -20085,7 +20085,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -20093,7 +20093,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -20101,7 +20101,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -20109,7 +20109,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -20117,7 +20117,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -20125,7 +20125,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -20133,7 +20133,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **external_id:** `typing.Optional[str]` — AWS ExternalId
-    
+
 </dd>
 </dl>
 
@@ -20141,7 +20141,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -20149,7 +20149,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -20157,15 +20157,15 @@ client.export_storage.s3s.validate(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**legacy_auth:** `typing.Optional[bool]` 
-    
+**legacy_auth:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -20173,7 +20173,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -20181,7 +20181,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -20189,7 +20189,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -20197,7 +20197,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -20205,23 +20205,23 @@ client.export_storage.s3s.validate(
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -20229,7 +20229,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -20237,7 +20237,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -20245,7 +20245,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -20253,7 +20253,7 @@ client.export_storage.s3s.validate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -20320,8 +20320,8 @@ client.export_storage.s3s.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -20329,7 +20329,7 @@ client.export_storage.s3s.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -20396,8 +20396,8 @@ client.export_storage.s3s.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -20405,7 +20405,7 @@ client.export_storage.s3s.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -20472,8 +20472,8 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -20481,7 +20481,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -20489,7 +20489,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -20497,7 +20497,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -20505,7 +20505,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -20513,7 +20513,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -20521,7 +20521,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
+
 </dd>
 </dl>
 
@@ -20529,7 +20529,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -20537,7 +20537,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **external_id:** `typing.Optional[str]` — AWS ExternalId
-    
+
 </dd>
 </dl>
 
@@ -20545,7 +20545,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -20553,7 +20553,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -20561,15 +20561,15 @@ client.export_storage.s3s.update(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**legacy_auth:** `typing.Optional[bool]` 
-    
+**legacy_auth:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -20577,7 +20577,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -20585,7 +20585,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -20593,7 +20593,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -20601,7 +20601,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -20609,7 +20609,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -20617,7 +20617,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **role_arn:** `typing.Optional[str]` — AWS RoleArn
-    
+
 </dd>
 </dl>
 
@@ -20625,23 +20625,23 @@ client.export_storage.s3s.update(
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -20649,7 +20649,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -20657,7 +20657,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -20665,7 +20665,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -20673,7 +20673,7 @@ client.export_storage.s3s.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -20740,8 +20740,8 @@ client.export_storage.s3s.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -20749,7 +20749,7 @@ client.export_storage.s3s.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -20812,7 +20812,7 @@ client.import_storage.azure.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -20820,7 +20820,7 @@ client.import_storage.azure.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -20828,7 +20828,7 @@ client.import_storage.azure.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -20888,7 +20888,7 @@ client.import_storage.azure.create()
 <dd>
 
 **account_key:** `typing.Optional[str]` — Azure Blob account key
-    
+
 </dd>
 </dl>
 
@@ -20896,7 +20896,7 @@ client.import_storage.azure.create()
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -20904,7 +20904,7 @@ client.import_storage.azure.create()
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -20912,7 +20912,7 @@ client.import_storage.azure.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -20920,7 +20920,7 @@ client.import_storage.azure.create()
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
@@ -20928,7 +20928,7 @@ client.import_storage.azure.create()
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign URLs for direct download
-    
+
 </dd>
 </dl>
 
@@ -20936,7 +20936,7 @@ client.import_storage.azure.create()
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
+
 </dd>
 </dl>
 
@@ -20944,7 +20944,7 @@ client.import_storage.azure.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -20952,7 +20952,7 @@ client.import_storage.azure.create()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -20960,7 +20960,7 @@ client.import_storage.azure.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -20968,7 +20968,7 @@ client.import_storage.azure.create()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -20976,7 +20976,7 @@ client.import_storage.azure.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -21036,7 +21036,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **account_key:** `typing.Optional[str]` — Azure Blob account key
-    
+
 </dd>
 </dl>
 
@@ -21044,7 +21044,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -21052,7 +21052,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -21060,7 +21060,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -21068,7 +21068,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
+
 </dd>
 </dl>
 
@@ -21076,7 +21076,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
@@ -21084,7 +21084,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign URLs for direct download
-    
+
 </dd>
 </dl>
 
@@ -21092,7 +21092,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
+
 </dd>
 </dl>
 
@@ -21100,7 +21100,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -21108,7 +21108,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -21116,7 +21116,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -21124,7 +21124,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -21132,7 +21132,7 @@ client.import_storage.azure.validate()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -21193,8 +21193,8 @@ client.import_storage.azure.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -21202,7 +21202,7 @@ client.import_storage.azure.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -21263,8 +21263,8 @@ client.import_storage.azure.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -21272,7 +21272,7 @@ client.import_storage.azure.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -21333,8 +21333,8 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -21342,7 +21342,7 @@ client.import_storage.azure.update(
 <dd>
 
 **account_key:** `typing.Optional[str]` — Azure Blob account key
-    
+
 </dd>
 </dl>
 
@@ -21350,7 +21350,7 @@ client.import_storage.azure.update(
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -21358,7 +21358,7 @@ client.import_storage.azure.update(
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -21366,7 +21366,7 @@ client.import_storage.azure.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -21374,7 +21374,7 @@ client.import_storage.azure.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
@@ -21382,7 +21382,7 @@ client.import_storage.azure.update(
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign URLs for direct download
-    
+
 </dd>
 </dl>
 
@@ -21390,7 +21390,7 @@ client.import_storage.azure.update(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
+
 </dd>
 </dl>
 
@@ -21398,7 +21398,7 @@ client.import_storage.azure.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -21406,7 +21406,7 @@ client.import_storage.azure.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -21414,7 +21414,7 @@ client.import_storage.azure.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -21422,7 +21422,7 @@ client.import_storage.azure.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -21430,7 +21430,7 @@ client.import_storage.azure.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -21492,7 +21492,7 @@ client.import_storage.azure.sync(
 <dd>
 
 **id:** `int` — Storage ID
-    
+
 </dd>
 </dl>
 
@@ -21500,7 +21500,7 @@ client.import_storage.azure.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -21569,7 +21569,7 @@ client.import_storage.azure_spi.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -21577,7 +21577,7 @@ client.import_storage.azure_spi.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -21585,7 +21585,7 @@ client.import_storage.azure_spi.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -21653,7 +21653,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -21661,7 +21661,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -21669,7 +21669,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
+
 </dd>
 </dl>
 
@@ -21677,7 +21677,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
+
 </dd>
 </dl>
 
@@ -21685,7 +21685,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -21693,7 +21693,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -21701,7 +21701,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -21709,7 +21709,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -21717,7 +21717,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -21725,7 +21725,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -21733,15 +21733,15 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` 
-    
+**presign:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -21749,7 +21749,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
+
 </dd>
 </dl>
 
@@ -21757,7 +21757,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
+
 </dd>
 </dl>
 
@@ -21765,23 +21765,23 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -21789,7 +21789,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
+
 </dd>
 </dl>
 
@@ -21797,7 +21797,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -21805,7 +21805,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -21813,7 +21813,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -21821,7 +21821,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
+
 </dd>
 </dl>
 
@@ -21829,7 +21829,7 @@ client.import_storage.azure_spi.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -21897,7 +21897,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -21905,7 +21905,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -21913,7 +21913,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
+
 </dd>
 </dl>
 
@@ -21921,7 +21921,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
+
 </dd>
 </dl>
 
@@ -21929,7 +21929,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -21937,7 +21937,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -21945,7 +21945,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -21953,7 +21953,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -21961,7 +21961,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -21969,7 +21969,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -21977,15 +21977,15 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` 
-    
+**presign:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -21993,7 +21993,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
+
 </dd>
 </dl>
 
@@ -22001,7 +22001,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
+
 </dd>
 </dl>
 
@@ -22009,23 +22009,23 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -22033,7 +22033,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
+
 </dd>
 </dl>
 
@@ -22041,7 +22041,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -22049,7 +22049,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -22057,7 +22057,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -22065,7 +22065,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
+
 </dd>
 </dl>
 
@@ -22073,7 +22073,7 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -22140,8 +22140,8 @@ client.import_storage.azure_spi.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -22149,7 +22149,7 @@ client.import_storage.azure_spi.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -22216,8 +22216,8 @@ client.import_storage.azure_spi.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -22225,7 +22225,7 @@ client.import_storage.azure_spi.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -22292,8 +22292,8 @@ client.import_storage.azure_spi.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -22301,7 +22301,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
-    
+
 </dd>
 </dl>
 
@@ -22309,7 +22309,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
+
 </dd>
 </dl>
 
@@ -22317,7 +22317,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
+
 </dd>
 </dl>
 
@@ -22325,7 +22325,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **container:** `typing.Optional[str]` — Azure blob container
-    
+
 </dd>
 </dl>
 
@@ -22333,7 +22333,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -22341,7 +22341,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -22349,7 +22349,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -22357,7 +22357,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -22365,7 +22365,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -22373,15 +22373,15 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` 
-    
+**presign:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -22389,7 +22389,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
+
 </dd>
 </dl>
 
@@ -22397,7 +22397,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -22405,7 +22405,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
+
 </dd>
 </dl>
 
@@ -22413,23 +22413,23 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -22437,7 +22437,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
+
 </dd>
 </dl>
 
@@ -22445,7 +22445,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -22453,7 +22453,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -22461,7 +22461,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -22469,7 +22469,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
+
 </dd>
 </dl>
 
@@ -22477,7 +22477,7 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -22544,8 +22544,8 @@ client.import_storage.azure_spi.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -22553,7 +22553,7 @@ client.import_storage.azure_spi.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -22622,7 +22622,7 @@ client.import_storage.databricks.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -22630,7 +22630,7 @@ client.import_storage.databricks.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -22638,7 +22638,7 @@ client.import_storage.databricks.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -22710,7 +22710,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **catalog:** `str` — UC catalog name
-    
+
 </dd>
 </dl>
 
@@ -22718,7 +22718,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **host:** `str` — Databricks workspace base URL (https://...)
-    
+
 </dd>
 </dl>
 
@@ -22726,7 +22726,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -22734,7 +22734,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **schema:** `str` — UC schema name
-    
+
 </dd>
 </dl>
 
@@ -22742,7 +22742,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **volume:** `str` — UC volume name
-    
+
 </dd>
 </dl>
 
@@ -22750,7 +22750,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -22758,7 +22758,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -22766,7 +22766,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -22774,7 +22774,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -22782,7 +22782,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -22790,7 +22790,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Path under the volume
-    
+
 </dd>
 </dl>
 
@@ -22798,7 +22798,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign not supported; always proxied
-    
+
 </dd>
 </dl>
 
@@ -22806,7 +22806,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
-    
+
 </dd>
 </dl>
 
@@ -22814,7 +22814,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
+
 </dd>
 </dl>
 
@@ -22822,39 +22822,39 @@ client.import_storage.databricks.create(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_timeout_s:** `typing.Optional[int]` 
-    
+**request_timeout_s:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
+**stream_chunk_bytes:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -22862,15 +22862,15 @@ client.import_storage.databricks.create(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
-    
+**token:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -22878,7 +22878,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -22886,7 +22886,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
+
 </dd>
 </dl>
 
@@ -22894,7 +22894,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
-    
+
 </dd>
 </dl>
 
@@ -22902,7 +22902,7 @@ client.import_storage.databricks.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -22974,7 +22974,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **catalog:** `str` — UC catalog name
-    
+
 </dd>
 </dl>
 
@@ -22982,7 +22982,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **host:** `str` — Databricks workspace base URL (https://...)
-    
+
 </dd>
 </dl>
 
@@ -22990,7 +22990,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -22998,7 +22998,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **schema:** `str` — UC schema name
-    
+
 </dd>
 </dl>
 
@@ -23006,7 +23006,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **volume:** `str` — UC volume name
-    
+
 </dd>
 </dl>
 
@@ -23014,7 +23014,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -23022,7 +23022,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -23030,7 +23030,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -23038,7 +23038,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -23046,7 +23046,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -23054,7 +23054,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Path under the volume
-    
+
 </dd>
 </dl>
 
@@ -23062,7 +23062,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign not supported; always proxied
-    
+
 </dd>
 </dl>
 
@@ -23070,7 +23070,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
-    
+
 </dd>
 </dl>
 
@@ -23078,7 +23078,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
+
 </dd>
 </dl>
 
@@ -23086,39 +23086,39 @@ client.import_storage.databricks.validate(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_timeout_s:** `typing.Optional[int]` 
-    
+**request_timeout_s:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
+**stream_chunk_bytes:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -23126,15 +23126,15 @@ client.import_storage.databricks.validate(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
-    
+**token:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -23142,7 +23142,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -23150,7 +23150,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
+
 </dd>
 </dl>
 
@@ -23158,7 +23158,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
-    
+
 </dd>
 </dl>
 
@@ -23166,7 +23166,7 @@ client.import_storage.databricks.validate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -23233,8 +23233,8 @@ client.import_storage.databricks.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -23242,7 +23242,7 @@ client.import_storage.databricks.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -23309,8 +23309,8 @@ client.import_storage.databricks.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -23318,7 +23318,7 @@ client.import_storage.databricks.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -23385,8 +23385,8 @@ client.import_storage.databricks.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -23394,7 +23394,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **catalog:** `typing.Optional[str]` — UC catalog name
-    
+
 </dd>
 </dl>
 
@@ -23402,7 +23402,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -23410,7 +23410,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **host:** `typing.Optional[str]` — Databricks workspace base URL (https://...)
-    
+
 </dd>
 </dl>
 
@@ -23418,7 +23418,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -23426,7 +23426,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -23434,7 +23434,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -23442,7 +23442,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -23450,7 +23450,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — Path under the volume
-    
+
 </dd>
 </dl>
 
@@ -23458,7 +23458,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign not supported; always proxied
-    
+
 </dd>
 </dl>
 
@@ -23466,7 +23466,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
-    
+
 </dd>
 </dl>
 
@@ -23474,7 +23474,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -23482,7 +23482,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
+
 </dd>
 </dl>
 
@@ -23490,15 +23490,15 @@ client.import_storage.databricks.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_timeout_s:** `typing.Optional[int]` 
-    
+**request_timeout_s:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -23506,31 +23506,31 @@ client.import_storage.databricks.update(
 <dd>
 
 **schema:** `typing.Optional[str]` — UC schema name
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
+**stream_chunk_bytes:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -23538,15 +23538,15 @@ client.import_storage.databricks.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
-    
+**token:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -23554,7 +23554,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -23562,7 +23562,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
+
 </dd>
 </dl>
 
@@ -23570,7 +23570,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
-    
+
 </dd>
 </dl>
 
@@ -23578,7 +23578,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **volume:** `typing.Optional[str]` — UC volume name
-    
+
 </dd>
 </dl>
 
@@ -23586,7 +23586,7 @@ client.import_storage.databricks.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -23653,8 +23653,8 @@ client.import_storage.databricks.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -23662,7 +23662,7 @@ client.import_storage.databricks.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -23725,7 +23725,7 @@ client.import_storage.gcs.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -23733,7 +23733,7 @@ client.import_storage.gcs.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -23741,7 +23741,7 @@ client.import_storage.gcs.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -23801,7 +23801,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -23809,7 +23809,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -23817,7 +23817,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-    
+
 </dd>
 </dl>
 
@@ -23825,7 +23825,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -23833,7 +23833,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -23841,7 +23841,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign URLs for direct download
-    
+
 </dd>
 </dl>
 
@@ -23849,7 +23849,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
+
 </dd>
 </dl>
 
@@ -23857,7 +23857,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -23865,7 +23865,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -23873,7 +23873,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -23881,7 +23881,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -23889,7 +23889,7 @@ client.import_storage.gcs.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -23949,7 +23949,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -23957,7 +23957,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -23965,7 +23965,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-    
+
 </dd>
 </dl>
 
@@ -23973,7 +23973,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -23981,7 +23981,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
+
 </dd>
 </dl>
 
@@ -23989,7 +23989,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -23997,7 +23997,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign URLs for direct download
-    
+
 </dd>
 </dl>
 
@@ -24005,7 +24005,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
+
 </dd>
 </dl>
 
@@ -24013,7 +24013,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -24021,7 +24021,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -24029,7 +24029,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -24037,7 +24037,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -24045,7 +24045,7 @@ client.import_storage.gcs.validate()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -24106,8 +24106,8 @@ client.import_storage.gcs.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -24115,7 +24115,7 @@ client.import_storage.gcs.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -24176,8 +24176,8 @@ client.import_storage.gcs.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -24185,7 +24185,7 @@ client.import_storage.gcs.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -24246,8 +24246,8 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -24255,7 +24255,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -24263,7 +24263,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -24271,7 +24271,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-    
+
 </dd>
 </dl>
 
@@ -24279,7 +24279,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -24287,7 +24287,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -24295,7 +24295,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign URLs for direct download
-    
+
 </dd>
 </dl>
 
@@ -24303,7 +24303,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
+
 </dd>
 </dl>
 
@@ -24311,7 +24311,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -24319,7 +24319,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -24327,7 +24327,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -24335,7 +24335,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -24343,7 +24343,7 @@ client.import_storage.gcs.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -24405,7 +24405,7 @@ client.import_storage.gcs.sync(
 <dd>
 
 **id:** `int` — Storage ID
-    
+
 </dd>
 </dl>
 
@@ -24413,7 +24413,7 @@ client.import_storage.gcs.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -24482,7 +24482,7 @@ client.import_storage.gcswif.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -24490,7 +24490,7 @@ client.import_storage.gcswif.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -24498,7 +24498,7 @@ client.import_storage.gcswif.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -24566,7 +24566,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -24574,7 +24574,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -24582,7 +24582,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -24590,7 +24590,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
+
 </dd>
 </dl>
 
@@ -24598,7 +24598,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -24606,7 +24606,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **google_project_number:** `typing.Optional[str]` — Google project number
-    
+
 </dd>
 </dl>
 
@@ -24614,7 +24614,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
+
 </dd>
 </dl>
 
@@ -24622,7 +24622,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
+
 </dd>
 </dl>
 
@@ -24630,7 +24630,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
+
 </dd>
 </dl>
 
@@ -24638,7 +24638,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -24646,7 +24646,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -24654,7 +24654,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -24662,7 +24662,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -24670,15 +24670,15 @@ client.import_storage.gcswif.create(
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` 
-    
+**presign:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -24686,7 +24686,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
+
 </dd>
 </dl>
 
@@ -24694,7 +24694,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
+
 </dd>
 </dl>
 
@@ -24702,23 +24702,23 @@ client.import_storage.gcswif.create(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -24726,7 +24726,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -24734,7 +24734,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -24742,7 +24742,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -24750,7 +24750,7 @@ client.import_storage.gcswif.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -24818,7 +24818,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -24826,7 +24826,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -24834,7 +24834,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -24842,7 +24842,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
+
 </dd>
 </dl>
 
@@ -24850,7 +24850,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -24858,7 +24858,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **google_project_number:** `typing.Optional[str]` — Google project number
-    
+
 </dd>
 </dl>
 
@@ -24866,7 +24866,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
+
 </dd>
 </dl>
 
@@ -24874,7 +24874,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
+
 </dd>
 </dl>
 
@@ -24882,7 +24882,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
+
 </dd>
 </dl>
 
@@ -24890,7 +24890,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -24898,7 +24898,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -24906,7 +24906,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -24914,7 +24914,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -24922,15 +24922,15 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` 
-    
+**presign:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -24938,7 +24938,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
+
 </dd>
 </dl>
 
@@ -24946,7 +24946,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
+
 </dd>
 </dl>
 
@@ -24954,23 +24954,23 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -24978,7 +24978,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -24986,7 +24986,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -24994,7 +24994,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -25002,7 +25002,7 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -25069,8 +25069,8 @@ client.import_storage.gcswif.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -25078,7 +25078,7 @@ client.import_storage.gcswif.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -25145,8 +25145,8 @@ client.import_storage.gcswif.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -25154,7 +25154,7 @@ client.import_storage.gcswif.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -25221,8 +25221,8 @@ client.import_storage.gcswif.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -25230,7 +25230,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **bucket:** `typing.Optional[str]` — GCS bucket name
-    
+
 </dd>
 </dl>
 
@@ -25238,7 +25238,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -25246,7 +25246,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
+
 </dd>
 </dl>
 
@@ -25254,7 +25254,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
+
 </dd>
 </dl>
 
@@ -25262,7 +25262,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **google_project_number:** `typing.Optional[str]` — Google project number
-    
+
 </dd>
 </dl>
 
@@ -25270,7 +25270,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
+
 </dd>
 </dl>
 
@@ -25278,7 +25278,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
+
 </dd>
 </dl>
 
@@ -25286,7 +25286,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
+
 </dd>
 </dl>
 
@@ -25294,7 +25294,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -25302,7 +25302,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -25310,7 +25310,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
@@ -25318,7 +25318,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -25326,15 +25326,15 @@ client.import_storage.gcswif.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` 
-    
+**presign:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -25342,7 +25342,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
+
 </dd>
 </dl>
 
@@ -25350,7 +25350,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -25358,7 +25358,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
+
 </dd>
 </dl>
 
@@ -25366,23 +25366,23 @@ client.import_storage.gcswif.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -25390,7 +25390,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -25398,7 +25398,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -25406,7 +25406,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -25414,7 +25414,7 @@ client.import_storage.gcswif.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -25481,8 +25481,8 @@ client.import_storage.gcswif.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -25490,7 +25490,7 @@ client.import_storage.gcswif.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -25553,7 +25553,7 @@ client.import_storage.local.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -25561,7 +25561,7 @@ client.import_storage.local.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -25569,7 +25569,7 @@ client.import_storage.local.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -25629,7 +25629,7 @@ client.import_storage.local.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -25637,7 +25637,7 @@ client.import_storage.local.create()
 <dd>
 
 **path:** `typing.Optional[str]` — Path to local directory
-    
+
 </dd>
 </dl>
 
@@ -25645,7 +25645,7 @@ client.import_storage.local.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -25653,7 +25653,7 @@ client.import_storage.local.create()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -25661,7 +25661,7 @@ client.import_storage.local.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -25669,7 +25669,7 @@ client.import_storage.local.create()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -25677,7 +25677,7 @@ client.import_storage.local.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -25737,7 +25737,7 @@ client.import_storage.local.validate()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -25745,7 +25745,7 @@ client.import_storage.local.validate()
 <dd>
 
 **id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
+
 </dd>
 </dl>
 
@@ -25753,7 +25753,7 @@ client.import_storage.local.validate()
 <dd>
 
 **path:** `typing.Optional[str]` — Path to local directory
-    
+
 </dd>
 </dl>
 
@@ -25761,7 +25761,7 @@ client.import_storage.local.validate()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -25769,7 +25769,7 @@ client.import_storage.local.validate()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -25777,7 +25777,7 @@ client.import_storage.local.validate()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -25785,7 +25785,7 @@ client.import_storage.local.validate()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -25793,7 +25793,7 @@ client.import_storage.local.validate()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -25854,8 +25854,8 @@ client.import_storage.local.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -25863,7 +25863,7 @@ client.import_storage.local.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -25924,8 +25924,8 @@ client.import_storage.local.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -25933,7 +25933,7 @@ client.import_storage.local.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -25994,8 +25994,8 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -26003,7 +26003,7 @@ client.import_storage.local.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -26011,7 +26011,7 @@ client.import_storage.local.update(
 <dd>
 
 **path:** `typing.Optional[str]` — Path to local directory
-    
+
 </dd>
 </dl>
 
@@ -26019,7 +26019,7 @@ client.import_storage.local.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -26027,7 +26027,7 @@ client.import_storage.local.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -26035,7 +26035,7 @@ client.import_storage.local.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -26043,7 +26043,7 @@ client.import_storage.local.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -26051,7 +26051,7 @@ client.import_storage.local.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -26113,7 +26113,7 @@ client.import_storage.local.sync(
 <dd>
 
 **id:** `int` — Storage ID
-    
+
 </dd>
 </dl>
 
@@ -26121,7 +26121,7 @@ client.import_storage.local.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -26184,7 +26184,7 @@ client.import_storage.redis.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -26192,7 +26192,7 @@ client.import_storage.redis.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -26200,7 +26200,7 @@ client.import_storage.redis.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -26260,7 +26260,7 @@ client.import_storage.redis.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -26268,7 +26268,7 @@ client.import_storage.redis.create()
 <dd>
 
 **host:** `typing.Optional[str]` — Server Host IP (optional)
-    
+
 </dd>
 </dl>
 
@@ -26276,7 +26276,7 @@ client.import_storage.redis.create()
 <dd>
 
 **password:** `typing.Optional[str]` — Server Password (optional)
-    
+
 </dd>
 </dl>
 
@@ -26284,7 +26284,7 @@ client.import_storage.redis.create()
 <dd>
 
 **path:** `typing.Optional[str]` — Storage prefix (optional)
-    
+
 </dd>
 </dl>
 
@@ -26292,7 +26292,7 @@ client.import_storage.redis.create()
 <dd>
 
 **port:** `typing.Optional[str]` — Server Port (optional)
-    
+
 </dd>
 </dl>
 
@@ -26300,7 +26300,7 @@ client.import_storage.redis.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -26308,7 +26308,7 @@ client.import_storage.redis.create()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -26316,7 +26316,7 @@ client.import_storage.redis.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -26324,7 +26324,7 @@ client.import_storage.redis.create()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -26332,7 +26332,7 @@ client.import_storage.redis.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -26392,7 +26392,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -26400,7 +26400,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **host:** `typing.Optional[str]` — Server Host IP (optional)
-    
+
 </dd>
 </dl>
 
@@ -26408,7 +26408,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
+
 </dd>
 </dl>
 
@@ -26416,7 +26416,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **password:** `typing.Optional[str]` — Server Password (optional)
-    
+
 </dd>
 </dl>
 
@@ -26424,7 +26424,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **path:** `typing.Optional[str]` — Storage prefix (optional)
-    
+
 </dd>
 </dl>
 
@@ -26432,7 +26432,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **port:** `typing.Optional[str]` — Server Port (optional)
-    
+
 </dd>
 </dl>
 
@@ -26440,7 +26440,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -26448,7 +26448,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -26456,7 +26456,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -26464,7 +26464,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -26472,7 +26472,7 @@ client.import_storage.redis.validate()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -26533,8 +26533,8 @@ client.import_storage.redis.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -26542,7 +26542,7 @@ client.import_storage.redis.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -26603,8 +26603,8 @@ client.import_storage.redis.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -26612,7 +26612,7 @@ client.import_storage.redis.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -26673,8 +26673,8 @@ client.import_storage.redis.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -26682,7 +26682,7 @@ client.import_storage.redis.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -26690,7 +26690,7 @@ client.import_storage.redis.update(
 <dd>
 
 **host:** `typing.Optional[str]` — Server Host IP (optional)
-    
+
 </dd>
 </dl>
 
@@ -26698,7 +26698,7 @@ client.import_storage.redis.update(
 <dd>
 
 **password:** `typing.Optional[str]` — Server Password (optional)
-    
+
 </dd>
 </dl>
 
@@ -26706,7 +26706,7 @@ client.import_storage.redis.update(
 <dd>
 
 **path:** `typing.Optional[str]` — Storage prefix (optional)
-    
+
 </dd>
 </dl>
 
@@ -26714,7 +26714,7 @@ client.import_storage.redis.update(
 <dd>
 
 **port:** `typing.Optional[str]` — Server Port (optional)
-    
+
 </dd>
 </dl>
 
@@ -26722,7 +26722,7 @@ client.import_storage.redis.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -26730,7 +26730,7 @@ client.import_storage.redis.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -26738,7 +26738,7 @@ client.import_storage.redis.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -26746,7 +26746,7 @@ client.import_storage.redis.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -26754,7 +26754,7 @@ client.import_storage.redis.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -26816,7 +26816,7 @@ client.import_storage.redis.sync(
 <dd>
 
 **id:** `int` — Storage ID
-    
+
 </dd>
 </dl>
 
@@ -26824,7 +26824,7 @@ client.import_storage.redis.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -26887,7 +26887,7 @@ client.import_storage.s3.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -26895,7 +26895,7 @@ client.import_storage.s3.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -26903,7 +26903,7 @@ client.import_storage.s3.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -26963,7 +26963,7 @@ client.import_storage.s3.create()
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -26971,7 +26971,7 @@ client.import_storage.s3.create()
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -26979,7 +26979,7 @@ client.import_storage.s3.create()
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -26987,7 +26987,7 @@ client.import_storage.s3.create()
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -26995,7 +26995,7 @@ client.import_storage.s3.create()
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -27003,7 +27003,7 @@ client.import_storage.s3.create()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -27011,7 +27011,7 @@ client.import_storage.s3.create()
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -27019,7 +27019,7 @@ client.import_storage.s3.create()
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign URLs for download
-    
+
 </dd>
 </dl>
 
@@ -27027,7 +27027,7 @@ client.import_storage.s3.create()
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
+
 </dd>
 </dl>
 
@@ -27035,7 +27035,7 @@ client.import_storage.s3.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -27043,7 +27043,7 @@ client.import_storage.s3.create()
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
+
 </dd>
 </dl>
 
@@ -27051,7 +27051,7 @@ client.import_storage.s3.create()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -27059,7 +27059,7 @@ client.import_storage.s3.create()
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -27067,7 +27067,7 @@ client.import_storage.s3.create()
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
@@ -27075,7 +27075,7 @@ client.import_storage.s3.create()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -27083,7 +27083,7 @@ client.import_storage.s3.create()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -27091,7 +27091,7 @@ client.import_storage.s3.create()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -27151,7 +27151,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -27159,7 +27159,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -27167,7 +27167,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -27175,7 +27175,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -27183,7 +27183,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -27191,7 +27191,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -27199,7 +27199,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
+
 </dd>
 </dl>
 
@@ -27207,7 +27207,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -27215,7 +27215,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign URLs for download
-    
+
 </dd>
 </dl>
 
@@ -27223,7 +27223,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
+
 </dd>
 </dl>
 
@@ -27231,7 +27231,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -27239,7 +27239,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
+
 </dd>
 </dl>
 
@@ -27247,7 +27247,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -27255,7 +27255,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -27263,7 +27263,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
@@ -27271,7 +27271,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -27279,7 +27279,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -27287,7 +27287,7 @@ client.import_storage.s3.validate()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -27348,8 +27348,8 @@ client.import_storage.s3.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -27357,7 +27357,7 @@ client.import_storage.s3.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -27418,8 +27418,8 @@ client.import_storage.s3.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -27427,7 +27427,7 @@ client.import_storage.s3.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -27488,8 +27488,8 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -27497,7 +27497,7 @@ client.import_storage.s3.update(
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -27505,7 +27505,7 @@ client.import_storage.s3.update(
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -27513,7 +27513,7 @@ client.import_storage.s3.update(
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -27521,7 +27521,7 @@ client.import_storage.s3.update(
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -27529,7 +27529,7 @@ client.import_storage.s3.update(
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -27537,7 +27537,7 @@ client.import_storage.s3.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
+
 </dd>
 </dl>
 
@@ -27545,7 +27545,7 @@ client.import_storage.s3.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
@@ -27553,7 +27553,7 @@ client.import_storage.s3.update(
 <dd>
 
 **presign:** `typing.Optional[bool]` — Presign URLs for download
-    
+
 </dd>
 </dl>
 
@@ -27561,7 +27561,7 @@ client.import_storage.s3.update(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
+
 </dd>
 </dl>
 
@@ -27569,7 +27569,7 @@ client.import_storage.s3.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -27577,7 +27577,7 @@ client.import_storage.s3.update(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
+
 </dd>
 </dl>
 
@@ -27585,7 +27585,7 @@ client.import_storage.s3.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
+
 </dd>
 </dl>
 
@@ -27593,7 +27593,7 @@ client.import_storage.s3.update(
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -27601,7 +27601,7 @@ client.import_storage.s3.update(
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
@@ -27609,7 +27609,7 @@ client.import_storage.s3.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Storage title
-    
+
 </dd>
 </dl>
 
@@ -27617,7 +27617,7 @@ client.import_storage.s3.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
+
 </dd>
 </dl>
 
@@ -27625,7 +27625,7 @@ client.import_storage.s3.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -27687,7 +27687,7 @@ client.import_storage.s3.sync(
 <dd>
 
 **id:** `int` — Storage ID
-    
+
 </dd>
 </dl>
 
@@ -27695,7 +27695,7 @@ client.import_storage.s3.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -27764,7 +27764,7 @@ client.import_storage.s3s.list(
 <dd>
 
 **project:** `int` — Project ID
-    
+
 </dd>
 </dl>
 
@@ -27772,7 +27772,7 @@ client.import_storage.s3s.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -27780,7 +27780,7 @@ client.import_storage.s3s.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -27849,7 +27849,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -27857,7 +27857,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **role_arn:** `str` — AWS RoleArn
-    
+
 </dd>
 </dl>
 
@@ -27865,7 +27865,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -27873,7 +27873,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -27881,7 +27881,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -27889,7 +27889,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -27897,7 +27897,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -27905,7 +27905,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -27913,7 +27913,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **external_id:** `typing.Optional[str]` — AWS ExternalId
-    
+
 </dd>
 </dl>
 
@@ -27921,7 +27921,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -27929,7 +27929,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -27937,15 +27937,15 @@ client.import_storage.s3s.create(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**legacy_auth:** `typing.Optional[bool]` 
-    
+**legacy_auth:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -27953,7 +27953,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -27961,15 +27961,15 @@ client.import_storage.s3s.create(
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` 
-    
+**presign:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -27977,7 +27977,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
+
 </dd>
 </dl>
 
@@ -27985,7 +27985,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
+
 </dd>
 </dl>
 
@@ -27993,7 +27993,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -28001,7 +28001,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -28009,23 +28009,23 @@ client.import_storage.s3s.create(
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -28033,7 +28033,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -28041,7 +28041,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -28049,7 +28049,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -28057,7 +28057,7 @@ client.import_storage.s3s.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -28126,7 +28126,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **project:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -28134,7 +28134,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **role_arn:** `str` — AWS RoleArn
-    
+
 </dd>
 </dl>
 
@@ -28142,7 +28142,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -28150,7 +28150,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -28158,7 +28158,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -28166,7 +28166,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -28174,7 +28174,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -28182,7 +28182,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -28190,7 +28190,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **external_id:** `typing.Optional[str]` — AWS ExternalId
-    
+
 </dd>
 </dl>
 
@@ -28198,7 +28198,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -28206,7 +28206,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -28214,15 +28214,15 @@ client.import_storage.s3s.validate(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**legacy_auth:** `typing.Optional[bool]` 
-    
+**legacy_auth:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -28230,7 +28230,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -28238,15 +28238,15 @@ client.import_storage.s3s.validate(
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` 
-    
+**presign:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -28254,7 +28254,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
+
 </dd>
 </dl>
 
@@ -28262,7 +28262,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
+
 </dd>
 </dl>
 
@@ -28270,7 +28270,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -28278,7 +28278,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -28286,23 +28286,23 @@ client.import_storage.s3s.validate(
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -28310,7 +28310,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -28318,7 +28318,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -28326,7 +28326,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -28334,7 +28334,7 @@ client.import_storage.s3s.validate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -28401,8 +28401,8 @@ client.import_storage.s3s.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -28410,7 +28410,7 @@ client.import_storage.s3s.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -28477,8 +28477,8 @@ client.import_storage.s3s.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -28486,7 +28486,7 @@ client.import_storage.s3s.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -28553,8 +28553,8 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -28562,7 +28562,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
+
 </dd>
 </dl>
 
@@ -28570,7 +28570,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
+
 </dd>
 </dl>
 
@@ -28578,7 +28578,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
+
 </dd>
 </dl>
 
@@ -28586,7 +28586,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
+
 </dd>
 </dl>
 
@@ -28594,7 +28594,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **bucket:** `typing.Optional[str]` — S3 bucket name
-    
+
 </dd>
 </dl>
 
@@ -28602,7 +28602,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
+
 </dd>
 </dl>
 
@@ -28610,7 +28610,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **external_id:** `typing.Optional[str]` — AWS ExternalId
-    
+
 </dd>
 </dl>
 
@@ -28618,7 +28618,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
+
 </dd>
 </dl>
 
@@ -28626,7 +28626,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
+
 </dd>
 </dl>
 
@@ -28634,15 +28634,15 @@ client.import_storage.s3s.update(
 <dd>
 
 **last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**legacy_auth:** `typing.Optional[bool]` 
-    
+**legacy_auth:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -28650,7 +28650,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **meta:** `typing.Optional[typing.Optional[typing.Any]]` — Meta and debug information about storage processes
-    
+
 </dd>
 </dl>
 
@@ -28658,15 +28658,15 @@ client.import_storage.s3s.update(
 <dd>
 
 **prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` 
-    
+**presign:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -28674,7 +28674,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
+
 </dd>
 </dl>
 
@@ -28682,7 +28682,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -28690,7 +28690,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
+
 </dd>
 </dl>
 
@@ -28698,7 +28698,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
+
 </dd>
 </dl>
 
@@ -28706,7 +28706,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **region_name:** `typing.Optional[str]` — AWS Region
-    
+
 </dd>
 </dl>
 
@@ -28714,7 +28714,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **role_arn:** `typing.Optional[str]` — AWS RoleArn
-    
+
 </dd>
 </dl>
 
@@ -28722,23 +28722,23 @@ client.import_storage.s3s.update(
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
+**status:** `typing.Optional[StatusC5AEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
+**synchronizable:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
@@ -28746,7 +28746,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **title:** `typing.Optional[str]` — Cloud storage title
-    
+
 </dd>
 </dl>
 
@@ -28754,7 +28754,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
+
 </dd>
 </dl>
 
@@ -28762,7 +28762,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
+
 </dd>
 </dl>
 
@@ -28770,7 +28770,7 @@ client.import_storage.s3s.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -28837,8 +28837,8 @@ client.import_storage.s3s.sync(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -28846,7 +28846,7 @@ client.import_storage.s3s.sync(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -28907,7 +28907,7 @@ client.organizations.invites.get_invite_link()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -28974,8 +28974,8 @@ client.organizations.invites.revoke_invite(
 <dl>
 <dd>
 
-**email:** `str` 
-    
+**email:** `str`
+
 </dd>
 </dl>
 
@@ -28983,7 +28983,7 @@ client.organizations.invites.revoke_invite(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -29051,32 +29051,32 @@ client.organizations.invites.send_email(
 <dl>
 <dd>
 
-**emails:** `typing.Sequence[str]` 
-    
+**emails:** `typing.Sequence[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**role:** `Role9E7Enum` 
-    
+**role:** `Role9E7Enum`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**projects:** `typing.Optional[typing.Sequence[int]]` 
-    
+**projects:** `typing.Optional[typing.Sequence[int]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**workspaces:** `typing.Optional[typing.Sequence[int]]` 
-    
+**workspaces:** `typing.Optional[typing.Sequence[int]]`
+
 </dd>
 </dl>
 
@@ -29084,7 +29084,7 @@ client.organizations.invites.send_email(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -29153,7 +29153,7 @@ client.organizations.members.list(
 <dd>
 
 **id:** `int` — A unique integer value identifying this organization.
-    
+
 </dd>
 </dl>
 
@@ -29161,7 +29161,7 @@ client.organizations.members.list(
 <dd>
 
 **exclude_project_id:** `typing.Optional[int]` — Project ID to exclude users who are already associated with this project (direct members, workspace members, or implicit admin/owner access).
-    
+
 </dd>
 </dl>
 
@@ -29169,7 +29169,7 @@ client.organizations.members.list(
 <dd>
 
 **exclude_workspace_id:** `typing.Optional[int]` — Workspace ID to exclude users who are already associated with this workspace (direct workspace members or implicit admin/owner access).
-    
+
 </dd>
 </dl>
 
@@ -29177,7 +29177,7 @@ client.organizations.members.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -29185,7 +29185,7 @@ client.organizations.members.list(
 <dd>
 
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
+
 </dd>
 </dl>
 
@@ -29193,14 +29193,14 @@ client.organizations.members.list(
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**role:** `typing.Optional[str]` 
+**role:** `typing.Optional[str]`
 
 Filter members by organization role. Accepts single role or comma-separated list of roles.
 
@@ -29216,7 +29216,7 @@ Filter members by organization role. Accepts single role or comma-separated list
 - `AN` = Annotator
 - `NO` = Not Activated
 - `DI` = Disabled
-    
+
 </dd>
 </dl>
 
@@ -29224,7 +29224,7 @@ Filter members by organization role. Accepts single role or comma-separated list
 <dd>
 
 **search:** `typing.Optional[str]` — A search term.
-    
+
 </dd>
 </dl>
 
@@ -29232,7 +29232,7 @@ Filter members by organization role. Accepts single role or comma-separated list
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -29313,23 +29313,23 @@ client.organizations.members.update(
 <dd>
 
 **id:** `int` — A unique integer value identifying this organization.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**role:** `typing.Optional[Role9E7Enum]` 
-    
+**role:** `typing.Optional[Role9E7Enum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user_id:** `typing.Optional[int]` 
-    
+**user_id:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -29337,7 +29337,7 @@ client.organizations.members.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -29399,8 +29399,8 @@ client.organizations.members.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -29408,7 +29408,7 @@ client.organizations.members.get(
 <dd>
 
 **user_pk:** `int` — A unique integer value identifying the user to get organization details for.
-    
+
 </dd>
 </dl>
 
@@ -29416,7 +29416,7 @@ client.organizations.members.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -29478,8 +29478,8 @@ client.organizations.members.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -29487,7 +29487,7 @@ client.organizations.members.delete(
 <dd>
 
 **user_pk:** `int` — A unique integer value identifying the user to be deleted from the organization.
-    
+
 </dd>
 </dl>
 
@@ -29495,7 +29495,7 @@ client.organizations.members.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -29563,8 +29563,8 @@ client.organizations.permissions.list(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -29572,7 +29572,7 @@ client.organizations.permissions.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -29580,7 +29580,7 @@ client.organizations.permissions.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -29648,16 +29648,16 @@ client.organizations.permissions.create(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**permission:** `str` 
-    
+**permission:** `str`
+
 </dd>
 </dl>
 
@@ -29665,7 +29665,7 @@ client.organizations.permissions.create(
 <dd>
 
 **roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Explicit roles that have this permission within the organization.
-    
+
 </dd>
 </dl>
 
@@ -29673,7 +29673,7 @@ client.organizations.permissions.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -29740,8 +29740,8 @@ client.organizations.permissions.get_options(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -29749,7 +29749,7 @@ client.organizations.permissions.get_options(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -29757,7 +29757,7 @@ client.organizations.permissions.get_options(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -29825,16 +29825,16 @@ client.organizations.permissions.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**permission:** `str` 
-    
+**permission:** `str`
+
 </dd>
 </dl>
 
@@ -29842,7 +29842,7 @@ client.organizations.permissions.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -29912,7 +29912,7 @@ client.organizations.permissions.replace(
 <dd>
 
 **id:** `int` — A unique integer value identifying this organization.
-    
+
 </dd>
 </dl>
 
@@ -29920,15 +29920,15 @@ client.organizations.permissions.replace(
 <dd>
 
 **permission_:** `str` — Permission key to update within the organization.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**permission:** `str` 
-    
+**permission:** `str`
+
 </dd>
 </dl>
 
@@ -29936,7 +29936,7 @@ client.organizations.permissions.replace(
 <dd>
 
 **roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Explicit roles that have this permission within the organization.
-    
+
 </dd>
 </dl>
 
@@ -29944,7 +29944,7 @@ client.organizations.permissions.replace(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30012,16 +30012,16 @@ client.organizations.permissions.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**permission:** `str` 
-    
+**permission:** `str`
+
 </dd>
 </dl>
 
@@ -30029,7 +30029,7 @@ client.organizations.permissions.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30097,24 +30097,24 @@ client.organizations.permissions.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**permission:** `str` 
-    
+**permission:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**patched_organization_permission_request_permission:** `typing.Optional[str]` 
-    
+**patched_organization_permission_request_permission:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -30122,7 +30122,7 @@ client.organizations.permissions.update(
 <dd>
 
 **roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Explicit roles that have this permission within the organization.
-    
+
 </dd>
 </dl>
 
@@ -30130,7 +30130,7 @@ client.organizations.permissions.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30162,7 +30162,7 @@ client.organizations.permissions.update(
     </Card>
 
         List project roles for requested IDs for the current user
-        
+
 </dd>
 </dl>
 </dd>
@@ -30198,8 +30198,8 @@ client.projects.roles.list()
 <dl>
 <dd>
 
-**ids:** `typing.Optional[int]` 
-    
+**ids:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -30207,7 +30207,7 @@ client.projects.roles.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -30215,7 +30215,7 @@ client.projects.roles.list()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30246,7 +30246,7 @@ client.projects.roles.list()
     </Card>
 
         Create project role for user allowing the user the same access level provided by organization role.
-        
+
 </dd>
 </dl>
 </dd>
@@ -30286,15 +30286,15 @@ client.projects.roles.add(
 <dl>
 <dd>
 
-**project:** `int` 
-    
+**project:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**role:** `Role9E7Enum` 
+**role:** `Role9E7Enum`
 
 User role in project
 
@@ -30305,15 +30305,15 @@ User role in project
 * `AN` - Annotator
 * `DI` - Deactivated
 * `NO` - Not Activated
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user:** `int` 
-    
+**user:** `int`
+
 </dd>
 </dl>
 
@@ -30321,7 +30321,7 @@ User role in project
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30352,7 +30352,7 @@ User role in project
     </Card>
 
         Remove project role for user allowing the user the same access level provided by organization role.
-        
+
 </dd>
 </dl>
 </dd>
@@ -30391,7 +30391,7 @@ client.projects.roles.remove(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project role.
-    
+
 </dd>
 </dl>
 
@@ -30399,7 +30399,7 @@ client.projects.roles.remove(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30431,7 +30431,7 @@ client.projects.roles.remove(
 
         List users and their project level roles for a given project.
         If user is not listed here and is a member of the project then they would behave as assigned role in organization.
-        
+
 </dd>
 </dl>
 </dd>
@@ -30469,8 +30469,8 @@ client.projects.roles.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -30478,7 +30478,7 @@ client.projects.roles.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30541,7 +30541,7 @@ client.projects.exports.list_formats(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -30549,7 +30549,7 @@ client.projects.exports.list_formats(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30611,7 +30611,7 @@ client.projects.exports.list(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -30619,7 +30619,7 @@ client.projects.exports.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -30627,7 +30627,7 @@ client.projects.exports.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30689,39 +30689,39 @@ client.projects.exports.create(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**annotation_filter_options:** `typing.Optional[LseAnnotationFilterOptionsRequest]` 
-    
+**annotation_filter_options:** `typing.Optional[LseAnnotationFilterOptionsRequest]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**converted_formats:** `typing.Optional[typing.Sequence[ConvertedFormatRequest]]` 
-    
+**converted_formats:** `typing.Optional[typing.Sequence[ConvertedFormatRequest]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**counters:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
+**counters:** `typing.Optional[typing.Optional[typing.Any]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**created_by:** `typing.Optional[UserSimpleRequest]` 
-    
+**created_by:** `typing.Optional[UserSimpleRequest]`
+
 </dd>
 </dl>
 
@@ -30729,47 +30729,47 @@ client.projects.exports.create(
 <dd>
 
 **finished_at:** `typing.Optional[dt.datetime]` — Complete or fail time
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**md5:** `typing.Optional[str]` 
-    
+**md5:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**serialization_options:** `typing.Optional[SerializationOptionsRequest]` 
-    
+**serialization_options:** `typing.Optional[SerializationOptionsRequest]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**status:** `typing.Optional[Status7BfEnum]` 
-    
+**status:** `typing.Optional[Status7BfEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**task_filter_options:** `typing.Optional[LseTaskFilterOptionsRequest]` 
-    
+**task_filter_options:** `typing.Optional[LseTaskFilterOptionsRequest]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` 
-    
+**title:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -30777,7 +30777,7 @@ client.projects.exports.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30840,7 +30840,7 @@ client.projects.exports.get(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -30848,7 +30848,7 @@ client.projects.exports.get(
 <dd>
 
 **export_pk:** `int` — Primary key identifying the export file.
-    
+
 </dd>
 </dl>
 
@@ -30856,7 +30856,7 @@ client.projects.exports.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30919,7 +30919,7 @@ client.projects.exports.delete(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -30927,7 +30927,7 @@ client.projects.exports.delete(
 <dd>
 
 **export_pk:** `int` — Primary key identifying the export file.
-    
+
 </dd>
 </dl>
 
@@ -30935,7 +30935,7 @@ client.projects.exports.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -30999,7 +30999,7 @@ client.projects.exports.convert(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -31007,7 +31007,7 @@ client.projects.exports.convert(
 <dd>
 
 **export_pk:** `int` — Primary key identifying the export file.
-    
+
 </dd>
 </dl>
 
@@ -31015,7 +31015,7 @@ client.projects.exports.convert(
 <dd>
 
 **export_type:** `str` — Export file format.
-    
+
 </dd>
 </dl>
 
@@ -31023,7 +31023,7 @@ client.projects.exports.convert(
 <dd>
 
 **download_resources:** `typing.Optional[bool]` — Download resources in converter.
-    
+
 </dd>
 </dl>
 
@@ -31031,7 +31031,7 @@ client.projects.exports.convert(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -31100,16 +31100,16 @@ client.projects.members.add(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user:** `int` 
-    
+**user:** `int`
+
 </dd>
 </dl>
 
@@ -31117,7 +31117,7 @@ client.projects.members.add(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -31184,8 +31184,8 @@ client.projects.members.remove(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -31193,7 +31193,7 @@ client.projects.members.remove(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -31261,8 +31261,8 @@ client.projects.metrics.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -31270,7 +31270,7 @@ client.projects.metrics.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -31337,40 +31337,40 @@ client.projects.metrics.update(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**additional_params:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
-    
+**additional_params:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**agreement_threshold:** `typing.Optional[int]` 
-    
+**agreement_threshold:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**max_additional_annotators_assignable:** `typing.Optional[int]` 
-    
+**max_additional_annotators_assignable:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**metric_name:** `typing.Optional[str]` 
-    
+**metric_name:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -31378,7 +31378,7 @@ client.projects.metrics.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -31447,16 +31447,16 @@ client.projects.stats.model_version_annotator_agreement(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**model_version:** `str` 
-    
+**model_version:** `str`
+
 </dd>
 </dl>
 
@@ -31464,7 +31464,7 @@ client.projects.stats.model_version_annotator_agreement(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -31532,16 +31532,16 @@ client.projects.stats.model_version_ground_truth_agreement(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**model_version:** `str` 
-    
+**model_version:** `str`
+
 </dd>
 </dl>
 
@@ -31549,7 +31549,7 @@ client.projects.stats.model_version_ground_truth_agreement(
 <dd>
 
 **per_label:** `typing.Optional[bool]` — Calculate agreement per label
-    
+
 </dd>
 </dl>
 
@@ -31557,7 +31557,7 @@ client.projects.stats.model_version_ground_truth_agreement(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -31625,16 +31625,16 @@ client.projects.stats.model_version_prediction_agreement(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**model_version:** `str` 
-    
+**model_version:** `str`
+
 </dd>
 </dl>
 
@@ -31642,7 +31642,7 @@ client.projects.stats.model_version_prediction_agreement(
 <dd>
 
 **per_label:** `typing.Optional[bool]` — Calculate agreement per label
-    
+
 </dd>
 </dl>
 
@@ -31650,7 +31650,7 @@ client.projects.stats.model_version_prediction_agreement(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -31717,8 +31717,8 @@ client.projects.stats.iaa(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -31726,7 +31726,7 @@ client.projects.stats.iaa(
 <dd>
 
 **expand:** `typing.Optional[str]` — Comma-separated list of fields to expand
-    
+
 </dd>
 </dl>
 
@@ -31734,7 +31734,7 @@ client.projects.stats.iaa(
 <dd>
 
 **per_label:** `typing.Optional[bool]` — Calculate IAA per label
-    
+
 </dd>
 </dl>
 
@@ -31742,7 +31742,7 @@ client.projects.stats.iaa(
 <dd>
 
 **std:** `typing.Optional[bool]` — Include standard deviation in results
-    
+
 </dd>
 </dl>
 
@@ -31750,7 +31750,7 @@ client.projects.stats.iaa(
 <dd>
 
 **task:** `typing.Optional[str]` — Comma-separated list of task IDs to filter by
-    
+
 </dd>
 </dl>
 
@@ -31758,7 +31758,7 @@ client.projects.stats.iaa(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -31826,8 +31826,8 @@ client.projects.stats.users_ground_truth_agreement(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -31835,7 +31835,7 @@ client.projects.stats.users_ground_truth_agreement(
 <dd>
 
 **ids:** `str` — Comma separated list of user IDs to get ground truth agreement for
-    
+
 </dd>
 </dl>
 
@@ -31843,7 +31843,7 @@ client.projects.stats.users_ground_truth_agreement(
 <dd>
 
 **per_label:** `typing.Optional[bool]` — Per label
-    
+
 </dd>
 </dl>
 
@@ -31851,7 +31851,7 @@ client.projects.stats.users_ground_truth_agreement(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -31919,16 +31919,16 @@ client.projects.stats.agreement_annotator(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user_id:** `int` 
-    
+**user_id:** `int`
+
 </dd>
 </dl>
 
@@ -31936,7 +31936,7 @@ client.projects.stats.agreement_annotator(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32004,8 +32004,8 @@ client.projects.stats.agreement_annotators(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -32013,7 +32013,7 @@ client.projects.stats.agreement_annotators(
 <dd>
 
 **ids:** `str` — Comma separated list of annotator user IDs to get agreement scores for
-    
+
 </dd>
 </dl>
 
@@ -32021,7 +32021,7 @@ client.projects.stats.agreement_annotators(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32088,8 +32088,8 @@ client.projects.stats.data_filters(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -32097,7 +32097,7 @@ client.projects.stats.data_filters(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32164,8 +32164,8 @@ client.projects.stats.finished_tasks(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -32173,7 +32173,7 @@ client.projects.stats.finished_tasks(
 <dd>
 
 **user_pk:** `typing.Optional[int]` — User ID to filter statistics by (optional)
-    
+
 </dd>
 </dl>
 
@@ -32181,7 +32181,7 @@ client.projects.stats.finished_tasks(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32248,8 +32248,8 @@ client.projects.stats.lead_time(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -32257,7 +32257,7 @@ client.projects.stats.lead_time(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32326,8 +32326,8 @@ client.projects.stats.total_agreement(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -32335,7 +32335,7 @@ client.projects.stats.total_agreement(
 <dd>
 
 **per_label:** `typing.Optional[bool]` — Return agreement per label
-    
+
 </dd>
 </dl>
 
@@ -32343,7 +32343,7 @@ client.projects.stats.total_agreement(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32410,8 +32410,8 @@ client.projects.stats.update_stats(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -32419,7 +32419,7 @@ client.projects.stats.update_stats(
 <dd>
 
 **stat_type:** `typing.Optional[str]` — Stat type to recalculate. Possible values: label, stats
-    
+
 </dd>
 </dl>
 
@@ -32427,7 +32427,7 @@ client.projects.stats.update_stats(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32495,8 +32495,8 @@ client.projects.stats.users_prediction_agreement(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -32504,7 +32504,7 @@ client.projects.stats.users_prediction_agreement(
 <dd>
 
 **ids:** `str` — Comma separated list of annotator user IDs to get agreement scores for
-    
+
 </dd>
 </dl>
 
@@ -32512,7 +32512,7 @@ client.projects.stats.users_prediction_agreement(
 <dd>
 
 **per_label:** `typing.Optional[bool]` — Per label
-    
+
 </dd>
 </dl>
 
@@ -32520,7 +32520,7 @@ client.projects.stats.users_prediction_agreement(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32588,8 +32588,8 @@ client.projects.stats.users_review_score(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -32597,7 +32597,7 @@ client.projects.stats.users_review_score(
 <dd>
 
 **ids:** `str` — Comma separated list of annotator user IDs to get review scores for
-    
+
 </dd>
 </dl>
 
@@ -32605,7 +32605,7 @@ client.projects.stats.users_review_score(
 <dd>
 
 **per_label:** `typing.Optional[bool]` — Per label
-    
+
 </dd>
 </dl>
 
@@ -32613,7 +32613,7 @@ client.projects.stats.users_review_score(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32681,16 +32681,16 @@ client.projects.stats.user_prediction_agreement(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user_pk:** `int` 
-    
+**user_pk:** `int`
+
 </dd>
 </dl>
 
@@ -32698,7 +32698,7 @@ client.projects.stats.user_prediction_agreement(
 <dd>
 
 **per_label:** `typing.Optional[bool]` — Calculate agreement per label
-    
+
 </dd>
 </dl>
 
@@ -32706,7 +32706,7 @@ client.projects.stats.user_prediction_agreement(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32774,16 +32774,16 @@ client.projects.stats.user_review_score(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user_pk:** `int` 
-    
+**user_pk:** `int`
+
 </dd>
 </dl>
 
@@ -32791,7 +32791,7 @@ client.projects.stats.user_review_score(
 <dd>
 
 **per_label:** `typing.Optional[bool]` — Calculate agreement per label
-    
+
 </dd>
 </dl>
 
@@ -32799,7 +32799,7 @@ client.projects.stats.user_review_score(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32867,16 +32867,16 @@ client.projects.stats.user_ground_truth_agreement(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user_pk:** `int` 
-    
+**user_pk:** `int`
+
 </dd>
 </dl>
 
@@ -32884,7 +32884,7 @@ client.projects.stats.user_ground_truth_agreement(
 <dd>
 
 **per_label:** `typing.Optional[bool]` — Calculate agreement per label
-    
+
 </dd>
 </dl>
 
@@ -32892,7 +32892,7 @@ client.projects.stats.user_ground_truth_agreement(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -32968,8 +32968,8 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -32977,7 +32977,7 @@ client.projects.assignments.bulk_assign(
 <dd>
 
 **selected_items:** `BulkAssignAssignmentsRequestSelectedItems` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-    
+
 </dd>
 </dl>
 
@@ -32985,7 +32985,7 @@ client.projects.assignments.bulk_assign(
 <dd>
 
 **type:** `BulkAssignAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
-    
+
 </dd>
 </dl>
 
@@ -32993,7 +32993,7 @@ client.projects.assignments.bulk_assign(
 <dd>
 
 **users:** `typing.Sequence[int]` — List of user IDs to assign
-    
+
 </dd>
 </dl>
 
@@ -33001,7 +33001,7 @@ client.projects.assignments.bulk_assign(
 <dd>
 
 **filters:** `typing.Optional[BulkAssignAssignmentsRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-    
+
 </dd>
 </dl>
 
@@ -33009,7 +33009,7 @@ client.projects.assignments.bulk_assign(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -33078,7 +33078,7 @@ client.projects.assignments.list(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -33086,7 +33086,7 @@ client.projects.assignments.list(
 <dd>
 
 **task_pk:** `int` — A unique integer value identifying this task.
-    
+
 </dd>
 </dl>
 
@@ -33094,7 +33094,7 @@ client.projects.assignments.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -33165,7 +33165,7 @@ client.projects.assignments.assign(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -33173,7 +33173,7 @@ client.projects.assignments.assign(
 <dd>
 
 **task_pk:** `int` — A unique integer value identifying this task.
-    
+
 </dd>
 </dl>
 
@@ -33181,7 +33181,7 @@ client.projects.assignments.assign(
 <dd>
 
 **type:** `AssignAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
-    
+
 </dd>
 </dl>
 
@@ -33189,7 +33189,7 @@ client.projects.assignments.assign(
 <dd>
 
 **users:** `typing.Sequence[int]` — List of user IDs to assign
-    
+
 </dd>
 </dl>
 
@@ -33197,7 +33197,7 @@ client.projects.assignments.assign(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -33266,7 +33266,7 @@ client.projects.assignments.delete(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -33274,7 +33274,7 @@ client.projects.assignments.delete(
 <dd>
 
 **task_pk:** `int` — A unique integer value identifying this task.
-    
+
 </dd>
 </dl>
 
@@ -33282,7 +33282,7 @@ client.projects.assignments.delete(
 <dd>
 
 **type:** `typing.Optional[DeleteAssignmentsRequestType]` — Assignment type to delete (optional). If omitted, deletes all assignments for the task.
-    
+
 </dd>
 </dl>
 
@@ -33290,7 +33290,7 @@ client.projects.assignments.delete(
 <dd>
 
 **users:** `typing.Optional[str]` — Comma separated list of user IDs to delete, as a string. If omitted, deletes all assignees for the given type.
-    
+
 </dd>
 </dl>
 
@@ -33298,7 +33298,7 @@ client.projects.assignments.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -33369,7 +33369,7 @@ client.projects.assignments.update(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
-    
+
 </dd>
 </dl>
 
@@ -33377,7 +33377,7 @@ client.projects.assignments.update(
 <dd>
 
 **task_pk:** `int` — A unique integer value identifying this task.
-    
+
 </dd>
 </dl>
 
@@ -33385,7 +33385,7 @@ client.projects.assignments.update(
 <dd>
 
 **type:** `UpdateAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
-    
+
 </dd>
 </dl>
 
@@ -33393,7 +33393,7 @@ client.projects.assignments.update(
 <dd>
 
 **users:** `typing.Sequence[int]` — List of user IDs to assign
-    
+
 </dd>
 </dl>
 
@@ -33401,7 +33401,7 @@ client.projects.assignments.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -33470,16 +33470,16 @@ client.projects.pauses.list(
 <dl>
 <dd>
 
-**project_pk:** `int` 
-    
+**project_pk:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user_pk:** `int` 
-    
+**user_pk:** `int`
+
 </dd>
 </dl>
 
@@ -33487,7 +33487,7 @@ client.projects.pauses.list(
 <dd>
 
 **include_deleted:** `typing.Optional[bool]` — Include deleted pauses.
-    
+
 </dd>
 </dl>
 
@@ -33495,7 +33495,7 @@ client.projects.pauses.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -33503,7 +33503,7 @@ client.projects.pauses.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -33572,23 +33572,23 @@ client.projects.pauses.create(
 <dl>
 <dd>
 
-**project_pk:** `int` 
-    
+**project_pk:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user_pk:** `int` 
-    
+**user_pk:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**reason:** `ReasonEnum` 
+**reason:** `ReasonEnum`
 
 Reason for pausing
 
@@ -33597,7 +33597,7 @@ Reason for pausing
 * `ANNOTATOR_EVALUATION` - Annotator evaluation
 * `ANNOTATION_LIMIT` - Annotation limit
 * `CUSTOM_SCRIPT` - Custom script
-    
+
 </dd>
 </dl>
 
@@ -33605,7 +33605,7 @@ Reason for pausing
 <dd>
 
 **verbose_reason:** `typing.Optional[str]` — Detailed description of why the project is paused, will be readable by paused annotators
-    
+
 </dd>
 </dl>
 
@@ -33613,7 +33613,7 @@ Reason for pausing
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -33682,24 +33682,24 @@ client.projects.pauses.get(
 <dl>
 <dd>
 
-**project_pk:** `int` 
-    
+**project_pk:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user_pk:** `int` 
-    
+**user_pk:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -33707,7 +33707,7 @@ client.projects.pauses.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -33776,24 +33776,24 @@ client.projects.pauses.delete(
 <dl>
 <dd>
 
-**project_pk:** `int` 
-    
+**project_pk:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user_pk:** `int` 
-    
+**user_pk:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -33801,7 +33801,7 @@ client.projects.pauses.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -33870,31 +33870,31 @@ client.projects.pauses.update(
 <dl>
 <dd>
 
-**project_pk:** `int` 
-    
+**project_pk:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**user_pk:** `int` 
-    
+**user_pk:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**reason:** `typing.Optional[ReasonEnum]` 
+**reason:** `typing.Optional[ReasonEnum]`
 
 Reason for pausing
 
@@ -33903,7 +33903,7 @@ Reason for pausing
 * `ANNOTATOR_EVALUATION` - Annotator evaluation
 * `ANNOTATION_LIMIT` - Annotation limit
 * `CUSTOM_SCRIPT` - Custom script
-    
+
 </dd>
 </dl>
 
@@ -33911,7 +33911,7 @@ Reason for pausing
 <dd>
 
 **verbose_reason:** `typing.Optional[str]` — Detailed description of why the project is paused, will be readable by paused annotators
-    
+
 </dd>
 </dl>
 
@@ -33919,7 +33919,7 @@ Reason for pausing
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -33988,16 +33988,16 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**all_:** `bool` 
-    
+**all_:** `bool`
+
 </dd>
 </dl>
 
@@ -34005,7 +34005,7 @@ client.projects.members.bulk.post(
 <dd>
 
 **last_activity_gte:** `typing.Optional[str]` — Filter by last activity (ISO 8601 formatted date). Only when all=True.
-    
+
 </dd>
 </dl>
 
@@ -34013,7 +34013,7 @@ client.projects.members.bulk.post(
 <dd>
 
 **role:** `typing.Optional[str]` — Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
-    
+
 </dd>
 </dl>
 
@@ -34021,31 +34021,31 @@ client.projects.members.bulk.post(
 <dd>
 
 **search:** `typing.Optional[str]` — Search term for filtering members by name, email, or username. Only when all=True.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**excluded:** `typing.Optional[typing.Sequence[int]]` 
-    
+**excluded:** `typing.Optional[typing.Sequence[int]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**included:** `typing.Optional[typing.Sequence[int]]` 
-    
+**included:** `typing.Optional[typing.Sequence[int]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]` 
-    
+**roles:** `typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]`
+
 </dd>
 </dl>
 
@@ -34053,7 +34053,7 @@ client.projects.members.bulk.post(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -34120,8 +34120,8 @@ client.projects.members.bulk.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -34129,7 +34129,7 @@ client.projects.members.bulk.delete(
 <dd>
 
 **last_activity_gte:** `typing.Optional[str]` — Filter by last activity (ISO 8601 formatted date). Only when all=True.
-    
+
 </dd>
 </dl>
 
@@ -34137,7 +34137,7 @@ client.projects.members.bulk.delete(
 <dd>
 
 **role:** `typing.Optional[str]` — Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
-    
+
 </dd>
 </dl>
 
@@ -34145,7 +34145,7 @@ client.projects.members.bulk.delete(
 <dd>
 
 **search:** `typing.Optional[str]` — Search term for filtering members by name, email, or username. Only when all=True.
-    
+
 </dd>
 </dl>
 
@@ -34153,7 +34153,7 @@ client.projects.members.bulk.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -34234,8 +34234,8 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -34243,7 +34243,7 @@ for page in response.iter_pages():
 <dd>
 
 **ids:** `typing.Optional[str]` — Comma-separated list of user IDs to filter by
-    
+
 </dd>
 </dl>
 
@@ -34251,7 +34251,7 @@ for page in response.iter_pages():
 <dd>
 
 **implicit:** `typing.Optional[bool]` — Include/Exclude implicit project members in the results. If not provided, explicit + implicit members are returned.
-    
+
 </dd>
 </dl>
 
@@ -34259,7 +34259,7 @@ for page in response.iter_pages():
 <dd>
 
 **last_activity_gte:** `typing.Optional[dt.datetime]` — Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
-    
+
 </dd>
 </dl>
 
@@ -34267,14 +34267,14 @@ for page in response.iter_pages():
 <dd>
 
 **no_annotators:** `typing.Optional[bool]` — Exclude annotators from the results
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` 
+**ordering:** `typing.Optional[str]`
 
 Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
 
@@ -34284,7 +34284,7 @@ When ordering by "role", the system uses the effective role:
 - Organization role if no project role is assigned
 
 Roles are sorted alphabetically by their code: AD (Administrator), AN (Annotator), DI (Disabled), MA (Manager), NO (Not Activated), OW (Owner), RE (Reviewer)
-    
+
 </dd>
 </dl>
 
@@ -34292,7 +34292,7 @@ Roles are sorted alphabetically by their code: AD (Administrator), AN (Annotator
 <dd>
 
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
+
 </dd>
 </dl>
 
@@ -34300,14 +34300,14 @@ Roles are sorted alphabetically by their code: AD (Administrator), AN (Annotator
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**role:** `typing.Optional[str]` 
+**role:** `typing.Optional[str]`
 
 Filter members by role. Accepts single role or comma-separated list of roles.
 
@@ -34328,7 +34328,7 @@ Returns users who have any of the specified roles either:
 2. As their **organization role** (if they have no project-specific role override)
 
 **Note:** Project-specific roles take precedence. If a user has a project role assigned, their organization role is ignored for filtering purposes.
-    
+
 </dd>
 </dl>
 
@@ -34336,7 +34336,7 @@ Returns users who have any of the specified roles either:
 <dd>
 
 **search:** `typing.Optional[str]` — Search term for filtering members by name, email, or username
-    
+
 </dd>
 </dl>
 
@@ -34344,7 +34344,7 @@ Returns users who have any of the specified roles either:
 <dd>
 
 **with_deleted:** `typing.Optional[bool]` — Include deleted members in the results
-    
+
 </dd>
 </dl>
 
@@ -34352,7 +34352,7 @@ Returns users who have any of the specified roles either:
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -34420,8 +34420,8 @@ client.projects.metrics.custom.get_lambda(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -34429,7 +34429,7 @@ client.projects.metrics.custom.get_lambda(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -34497,8 +34497,8 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -34506,7 +34506,7 @@ client.projects.metrics.custom.update_lambda(
 <dd>
 
 **code:** `str` — The Python code for the custom metric function.
-    
+
 </dd>
 </dl>
 
@@ -34514,7 +34514,7 @@ client.projects.metrics.custom.update_lambda(
 <dd>
 
 **region:** `typing.Optional[str]` — The AWS region for the Lambda function. Uses default if not provided.
-    
+
 </dd>
 </dl>
 
@@ -34522,7 +34522,7 @@ client.projects.metrics.custom.update_lambda(
 <dd>
 
 **role:** `typing.Optional[str]` — The AWS IAM role ARN for the Lambda function. Uses default if not provided.
-    
+
 </dd>
 </dl>
 
@@ -34530,7 +34530,7 @@ client.projects.metrics.custom.update_lambda(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -34597,8 +34597,8 @@ client.projects.metrics.custom.logs(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -34606,7 +34606,7 @@ client.projects.metrics.custom.logs(
 <dd>
 
 **end_date:** `typing.Optional[str]` — End date for AWS logs filtering in format %Y-%m-%d
-    
+
 </dd>
 </dl>
 
@@ -34614,7 +34614,7 @@ client.projects.metrics.custom.logs(
 <dd>
 
 **limit:** `typing.Optional[int]` — Limit the number of logs to return
-    
+
 </dd>
 </dl>
 
@@ -34622,7 +34622,7 @@ client.projects.metrics.custom.logs(
 <dd>
 
 **start_date:** `typing.Optional[str]` — Start date for AWS logs filtering in format %Y-%m-%d
-    
+
 </dd>
 </dl>
 
@@ -34630,7 +34630,7 @@ client.projects.metrics.custom.logs(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -34698,16 +34698,16 @@ client.projects.metrics.custom.check_function(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**code:** `str` 
-    
+**code:** `str`
+
 </dd>
 </dl>
 
@@ -34715,7 +34715,7 @@ client.projects.metrics.custom.check_function(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -34783,8 +34783,8 @@ client.prompts.indicators.list(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -34792,7 +34792,7 @@ client.prompts.indicators.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -34860,16 +34860,16 @@ client.prompts.indicators.get(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**indicator_key:** `str` 
-    
+**indicator_key:** `str`
+
 </dd>
 </dl>
 
@@ -34877,7 +34877,7 @@ client.prompts.indicators.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -34945,8 +34945,8 @@ client.prompts.versions.get_default_version_name(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -34954,7 +34954,7 @@ client.prompts.versions.get_default_version_name(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -35021,8 +35021,8 @@ client.prompts.versions.list(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
@@ -35030,7 +35030,7 @@ client.prompts.versions.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -35038,7 +35038,7 @@ client.prompts.versions.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -35108,8 +35108,8 @@ client.prompts.versions.create(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
@@ -35117,7 +35117,7 @@ client.prompts.versions.create(
 <dd>
 
 **prompt:** `str` — Prompt to execute
-    
+
 </dd>
 </dl>
 
@@ -35125,7 +35125,7 @@ client.prompts.versions.create(
 <dd>
 
 **provider_model_id:** `str` — The model ID to use within the given provider, e.g. gpt-3.5
-    
+
 </dd>
 </dl>
 
@@ -35133,23 +35133,23 @@ client.prompts.versions.create(
 <dd>
 
 **title:** `str` — Model name
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**model_provider_connection:** `typing.Optional[int]` 
-    
+**model_provider_connection:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
+**organization:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -35157,14 +35157,14 @@ client.prompts.versions.create(
 <dd>
 
 **parent_model:** `typing.Optional[int]` — Parent model interface ID
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**provider:** `typing.Optional[ProviderEnum]` 
+**provider:** `typing.Optional[ProviderEnum]`
 
 The model provider to use e.g. OpenAI
 
@@ -35175,7 +35175,7 @@ The model provider to use e.g. OpenAI
 * `Gemini` - Gemini
 * `Anthropic` - Anthropic
 * `Custom` - Custom
-    
+
 </dd>
 </dl>
 
@@ -35183,7 +35183,7 @@ The model provider to use e.g. OpenAI
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -35251,16 +35251,16 @@ client.prompts.versions.get(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**version_id:** `int` 
-    
+**version_id:** `int`
+
 </dd>
 </dl>
 
@@ -35268,7 +35268,7 @@ client.prompts.versions.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -35336,16 +35336,16 @@ client.prompts.versions.delete(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**version_id:** `int` 
-    
+**version_id:** `int`
+
 </dd>
 </dl>
 
@@ -35353,7 +35353,7 @@ client.prompts.versions.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -35421,32 +35421,32 @@ client.prompts.versions.update(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**version_id:** `int` 
-    
+**version_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**model_provider_connection:** `typing.Optional[int]` 
-    
+**model_provider_connection:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
+**organization:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -35454,7 +35454,7 @@ client.prompts.versions.update(
 <dd>
 
 **parent_model:** `typing.Optional[int]` — Parent model interface ID
-    
+
 </dd>
 </dl>
 
@@ -35462,14 +35462,14 @@ client.prompts.versions.update(
 <dd>
 
 **prompt:** `typing.Optional[str]` — Prompt to execute
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**provider:** `typing.Optional[ProviderEnum]` 
+**provider:** `typing.Optional[ProviderEnum]`
 
 The model provider to use e.g. OpenAI
 
@@ -35480,7 +35480,7 @@ The model provider to use e.g. OpenAI
 * `Gemini` - Gemini
 * `Anthropic` - Anthropic
 * `Custom` - Custom
-    
+
 </dd>
 </dl>
 
@@ -35488,7 +35488,7 @@ The model provider to use e.g. OpenAI
 <dd>
 
 **provider_model_id:** `typing.Optional[str]` — The model ID to use within the given provider, e.g. gpt-3.5
-    
+
 </dd>
 </dl>
 
@@ -35496,7 +35496,7 @@ The model provider to use e.g. OpenAI
 <dd>
 
 **title:** `typing.Optional[str]` — Model name
-    
+
 </dd>
 </dl>
 
@@ -35504,7 +35504,7 @@ The model provider to use e.g. OpenAI
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -35572,16 +35572,16 @@ client.prompts.versions.cost_estimate(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**version_id:** `int` 
-    
+**version_id:** `int`
+
 </dd>
 </dl>
 
@@ -35589,7 +35589,7 @@ client.prompts.versions.cost_estimate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -35657,16 +35657,16 @@ client.prompts.versions.get_refined_prompt(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**version_id:** `int` 
-    
+**version_id:** `int`
+
 </dd>
 </dl>
 
@@ -35674,7 +35674,7 @@ client.prompts.versions.get_refined_prompt(
 <dd>
 
 **refinement_job_id:** `typing.Optional[str]` — Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
-    
+
 </dd>
 </dl>
 
@@ -35682,7 +35682,7 @@ client.prompts.versions.get_refined_prompt(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -35753,16 +35753,16 @@ client.prompts.versions.refine_prompt(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**version_id:** `int` 
-    
+**version_id:** `int`
+
 </dd>
 </dl>
 
@@ -35770,7 +35770,7 @@ client.prompts.versions.refine_prompt(
 <dd>
 
 **project_id:** `int` — Project ID to target the refined prompt for
-    
+
 </dd>
 </dl>
 
@@ -35778,7 +35778,7 @@ client.prompts.versions.refine_prompt(
 <dd>
 
 **teacher_model_name:** `str` — Name of the model to use to refine the prompt
-    
+
 </dd>
 </dl>
 
@@ -35786,7 +35786,7 @@ client.prompts.versions.refine_prompt(
 <dd>
 
 **teacher_model_provider_connection_id:** `int` — Model Provider Connection ID to use to refine the prompt
-    
+
 </dd>
 </dl>
 
@@ -35794,7 +35794,7 @@ client.prompts.versions.refine_prompt(
 <dd>
 
 **async_:** `typing.Optional[bool]` — Whether to run the refinement asynchronously
-    
+
 </dd>
 </dl>
 
@@ -35802,7 +35802,7 @@ client.prompts.versions.refine_prompt(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -35871,16 +35871,16 @@ client.prompts.runs.list(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**version_id:** `int` 
-    
+**version_id:** `int`
+
 </dd>
 </dl>
 
@@ -35888,7 +35888,7 @@ client.prompts.runs.list(
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
+
 </dd>
 </dl>
 
@@ -35896,7 +35896,7 @@ client.prompts.runs.list(
 <dd>
 
 **parent_model:** `typing.Optional[int]` — The ID of the parent model for this Inference Run
-    
+
 </dd>
 </dl>
 
@@ -35904,7 +35904,7 @@ client.prompts.runs.list(
 <dd>
 
 **project:** `typing.Optional[int]` — The ID of the project this Inference Run makes predictions on
-    
+
 </dd>
 </dl>
 
@@ -35912,7 +35912,7 @@ client.prompts.runs.list(
 <dd>
 
 **project_subset:** `typing.Optional[ListRunsRequestProjectSubset]` — Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
-    
+
 </dd>
 </dl>
 
@@ -35920,7 +35920,7 @@ client.prompts.runs.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -35989,24 +35989,24 @@ client.prompts.runs.create(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**version_id:** `int` 
-    
+**version_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**project:** `int` 
-    
+**project:** `int`
+
 </dd>
 </dl>
 
@@ -36014,55 +36014,55 @@ client.prompts.runs.create(
 <dd>
 
 **job_id:** `typing.Optional[str]` — Job ID for inference job for a ModelRun e.g. Adala job ID
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
+**organization:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**predictions_updated_at:** `typing.Optional[dt.datetime]` 
-    
+**predictions_updated_at:** `typing.Optional[dt.datetime]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**project_subset:** `typing.Optional[ProjectSubsetEnum]` 
-    
+**project_subset:** `typing.Optional[ProjectSubsetEnum]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**total_correct_predictions:** `typing.Optional[int]` 
-    
+**total_correct_predictions:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**total_predictions:** `typing.Optional[int]` 
-    
+**total_predictions:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**total_tasks:** `typing.Optional[int]` 
-    
+**total_tasks:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -36070,7 +36070,7 @@ client.prompts.runs.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36139,24 +36139,24 @@ client.prompts.runs.cancel(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
-    
+**prompt_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**version_id:** `int` 
-    
+**version_id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**inference_run_id:** `int` 
-    
+**inference_run_id:** `int`
+
 </dd>
 </dl>
 
@@ -36164,7 +36164,7 @@ client.prompts.runs.cancel(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36231,7 +36231,7 @@ client.sso.saml.get()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36306,24 +36306,24 @@ client.sso.saml.update(
 <dl>
 <dd>
 
-**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` 
-    
+**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**roles_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
-    
+**roles_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
-    
+**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]`
+
 </dd>
 </dl>
 
@@ -36331,7 +36331,7 @@ client.sso.saml.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36398,7 +36398,7 @@ client.sso.scim.get()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36473,24 +36473,24 @@ client.sso.scim.update(
 <dl>
 <dd>
 
-**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` 
-    
+**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**roles_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
-    
+**roles_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
-    
+**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]`
+
 </dd>
 </dl>
 
@@ -36498,7 +36498,7 @@ client.sso.scim.update(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36566,8 +36566,8 @@ client.workspaces.members.list(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -36575,7 +36575,7 @@ client.workspaces.members.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36643,8 +36643,8 @@ client.workspaces.members.create(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -36652,7 +36652,7 @@ client.workspaces.members.create(
 <dd>
 
 **user:** `int` — User ID
-    
+
 </dd>
 </dl>
 
@@ -36660,7 +36660,7 @@ client.workspaces.members.create(
 <dd>
 
 **workspace:** `typing.Optional[int]` — Workspace ID
-    
+
 </dd>
 </dl>
 
@@ -36668,7 +36668,7 @@ client.workspaces.members.create(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36735,8 +36735,8 @@ client.workspaces.members.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -36744,7 +36744,7 @@ client.workspaces.members.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36812,8 +36812,8 @@ client.workspaces.projects.list(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -36821,7 +36821,7 @@ client.workspaces.projects.list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36889,16 +36889,16 @@ client.workspaces.projects.add(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**project:** `int` 
-    
+**project:** `int`
+
 </dd>
 </dl>
 
@@ -36906,7 +36906,7 @@ client.workspaces.projects.add(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -36973,8 +36973,8 @@ client.workspaces.projects.remove(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -36982,7 +36982,7 @@ client.workspaces.projects.remove(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -37051,32 +37051,32 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**all_:** `bool` 
-    
+**all_:** `bool`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**excluded:** `typing.Optional[typing.Sequence[int]]` 
-    
+**excluded:** `typing.Optional[typing.Sequence[int]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**included:** `typing.Optional[typing.Sequence[int]]` 
-    
+**included:** `typing.Optional[typing.Sequence[int]]`
+
 </dd>
 </dl>
 
@@ -37084,7 +37084,7 @@ client.workspaces.members.bulk.post(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -37151,8 +37151,8 @@ client.workspaces.members.bulk.delete(
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -37160,7 +37160,7 @@ client.workspaces.members.bulk.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -37233,8 +37233,8 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**id:** `int` 
-    
+**id:** `int`
+
 </dd>
 </dl>
 
@@ -37242,7 +37242,7 @@ for page in response.iter_pages():
 <dd>
 
 **ids:** `typing.Optional[str]` — Comma-separated list of user IDs to filter by
-    
+
 </dd>
 </dl>
 
@@ -37250,7 +37250,7 @@ for page in response.iter_pages():
 <dd>
 
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
+
 </dd>
 </dl>
 
@@ -37258,7 +37258,7 @@ for page in response.iter_pages():
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
+
 </dd>
 </dl>
 
@@ -37266,7 +37266,7 @@ for page in response.iter_pages():
 <dd>
 
 **search:** `typing.Optional[str]` — A search term.
-    
+
 </dd>
 </dl>
 
@@ -37274,7 +37274,7 @@ for page in response.iter_pages():
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>

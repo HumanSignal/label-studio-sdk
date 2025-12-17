@@ -10,13 +10,13 @@ SCORE = 0.10
 
 
 def test_prediction_value():
-    """ """    
+    """ """
     li = LabelInterface(c.SIMPLE_CONF)
     chc = li.get_control()
-    
+
     r = chc.label(label=c.LABEL1)
     p = PredictionValue(model_version=MODEL_VERSION, score=SCORE, result=[ r ])
-    
+
     expected = {
         "model_version": MODEL_VERSION,
         "score": SCORE,
@@ -32,20 +32,20 @@ def test_prediction_value():
             }
         ]
     }
-    
+
     assert p.model_dump() == expected
-    
+
 
 def test_prediction_value_relation():
     """ """
     li = LabelInterface(c.SIMPLE_CONF)
     chc = li.get_control()
-    
+
     r = chc.label(label=c.LABEL1)
     r2 = chc.label(label=c.LABEL2)
 
     r.add_relation(r2)
-    
+
     p = PredictionValue(model_version=MODEL_VERSION, score=SCORE, result=[ r, r2 ])
 
     # we will pick the last item which should be a relation by default

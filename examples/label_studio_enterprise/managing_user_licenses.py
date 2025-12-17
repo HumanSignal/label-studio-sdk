@@ -33,7 +33,7 @@ for user in ls.users.list():
             print(f"User {user.email} has INACTIVE license")
         user_id = user.id
         break
-            
+
 # Activate user (set role to AN - Annotator)
 if user_id is not None:
     ls.organizations.members.update(ORG_ID, user_id=user_id, role="AN")

@@ -14,7 +14,7 @@ class LseTaskFilterOptions(UncheckedBaseModel):
     annotated: typing.Optional[AnnotatedEnum] = pydantic.Field(default=None)
     """
     `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
-    
+
     * `only` - only
     * `exclude` - exclude
     * `None` - None
@@ -23,7 +23,7 @@ class LseTaskFilterOptions(UncheckedBaseModel):
     finished: typing.Optional[FinishedEnum] = pydantic.Field(default=None)
     """
     `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
-    
+
     * `only` - only
     * `exclude` - exclude
     * `None` - None
@@ -33,7 +33,7 @@ class LseTaskFilterOptions(UncheckedBaseModel):
     reviewed: typing.Optional[ReviewedEnum] = pydantic.Field(default=None)
     """
     `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
-    
+
     * `only` - only
     * `exclude` - exclude
     * `None` - None
@@ -42,7 +42,7 @@ class LseTaskFilterOptions(UncheckedBaseModel):
     skipped: typing.Optional[SkippedEnum] = pydantic.Field(default=None)
     """
     `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
-    
+
     * `only` - only
     * `exclude` - exclude
     * `None` - None

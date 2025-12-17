@@ -14,49 +14,49 @@ import label_studio_sdk.label_interface.control_tags as CT
 def labels(labels, tag_type="Labels", **kwargs):
     """
     Converts labels to a tuple structure.
-    
+
     Args:
         labels: The labels to be converted.
         tag_type: Tag type to assign to each label.
-        
+
     Returns:
         A tuple containing labels as per the tag type.
     """
     return (tag_type, kwargs, _convert_to_tuple(labels, tag_type="Label"))
-    
-    
+
+
 def taxonomy(labels, **kwargs):
     """
     Constructs a taxonomy.
-    
+
     Args:
         labels: The labels to construct the taxonomy.
-        
+
     Returns:
         A tuple containing the taxonomy.
     """
     result = []
-    
+
     for arg in labels:
         if isinstance(arg, tuple):
             parent, *children = _convert_to_tuple(arg)
             parent_children = (parent[0], parent[1], tuple(children))
-            result.append(parent_children)            
+            result.append(parent_children)
         else:
             result.append(("Choice", {"value": arg}, {}))
-    
-    return ("Taxonomy", kwargs, tuple(result))    
+
+    return ("Taxonomy", kwargs, tuple(result))
 
 def choices(labels, **kwargs):
     """
     Constructs a choices tuple.
-    
+
     Args:
         labels: The labels to be converted.
-        
+
     Returns:
         A tuple containing the choices.
-    """ 
+    """
     return ("Choices", kwargs, _convert_to_tuple(labels))
 
 
@@ -82,7 +82,7 @@ def _convert_to_tuple(args, tag_type="Choice"):
     """
     if not args:
         return None
-    
+
     return tuple(((tag_type, {"value": arg}, {})) for arg in args)
 
 
@@ -93,8 +93,8 @@ def _create_nested_elements(parent: ET.Element, elements: List[Union[str, Dict[s
     Args:
         parent: The parent ET.Element object.
         elements: A list containing element definitions.
-    """    
-    for element in elements:        
+    """
+    for element in elements:
         if isinstance(element, str):
             ET.SubElement(parent, element)
         elif isinstance(element, dict):
@@ -103,7 +103,7 @@ def _create_nested_elements(parent: ET.Element, elements: List[Union[str, Dict[s
         elif isinstance(element, list) or isinstance(element, tuple):
             create_element(element, parent=parent)
 
-            
+
 def _convert(name: str, tag: Union[str, list, tuple, LabelStudioTag]) -> tuple:
     """
     Converts tags from str, list, tuple, or class instance to a tuple format.
@@ -114,27 +114,27 @@ def _convert(name: str, tag: Union[str, list, tuple, LabelStudioTag]) -> tuple:
 
     Returns:
         A tuple version of the input tag.
-    
+
     Raises:
         TypeError: If input tag is not a str, list, tuple, or LabelStudioTag.
     """
-    
+
     if isinstance(tag, LabelStudioTag):
         tag.name = tag.name or name
         child_tag_type = "Choice" if tag.tag in ["Choices", "Taxonomy"] else "Label"
         el = tag.tag, tag.collect_attrs(), _convert_to_tuple(getattr(tag, "labels", None), tag_type=child_tag_type)
     elif isinstance(tag, (list, tuple)):
         el = (*tag, ()) if len(tag) < 3 else tag
-    elif isinstance(tag, str):        
+    elif isinstance(tag, str):
         el = tag, {}, ()
     else:
         raise TypeError("Input tag must be one of str, list, tuple, LabelStudioTag")
 
     el[1].setdefault("name", name)
-    
+
     if el[0].lower() in OT._TAG_TO_CLASS and not el[1].get("value"):
         el[1]["value"] = "$" + name
-            
+
     return el
 
 
@@ -151,34 +151,34 @@ def _find_first_object_tag(tags):
     for name, tag in tags.items():
         tag_tuple = _convert(name, tag)
         tag_name = tag_tuple[0]
-                
+
         if tag_name.lower() in OT._TAG_TO_CLASS:
             return tag_tuple
 
-            
+
 def create_element(element: List[Union[str, Dict[str, str], List]], parent=None) -> ET.Element:
     """
     Creates an XML element.
-    
+
     Args:
         element: List of tag, attributes and children to feed into the element.
         parent: Parent element to append the new element to (Optional).
-        
+
     Returns:
         An ElementTree element.
     """
     tag, attrs, children = element
     el = ET.SubElement(parent, tag) if parent is not None else ET.Element(tag)
-    
+
     for k, v in attrs.items():
         el.set(k, v)
 
     if children:
-        _create_nested_elements(el, children) 
-        
+        _create_nested_elements(el, children)
+
     return el
 
-        
+
 def tree_from_tuples(*elements):
     """
     Creates an ElementTree from the input element definitions, and return a string for it.
@@ -199,13 +199,13 @@ def tree_from_tuples(*elements):
 
 def tree_to_string(tree, pretty=True):
     """
-    """    
+    """
     if pretty:
         pp = _prettify(tree)
         return pp.replace('<?xml version="1.0" ?>\n', '')
     else:
         return ET.tostring(tree, encoding='unicode')
-    
+
 
 def convert_tags_description(tags: Dict[str, Any],
                              mapping: Optional[Dict[str, str]]=None) -> List[Union[str, Dict[str, str], List]]:
@@ -221,7 +221,7 @@ def convert_tags_description(tags: Dict[str, Any],
     """
     elements = []
     first_object_tag = _find_first_object_tag(tags)
-        
+
     for name, tag in tags.items():
         el = _convert(name, tag)
 
@@ -232,10 +232,10 @@ def convert_tags_description(tags: Dict[str, Any],
         # object tag if it's not in mapping
         if el[0].lower() in CT._TAG_TO_CLASS and ("toName" not in el[1] or el[1]["toName"] is None):
             if mapping and el[1].get("name") in mapping:
-                el[1]["toName"] = mapping.get(el[1]["name"])                
+                el[1]["toName"] = mapping.get(el[1]["name"])
             else:
                 el[1]["toName"] = first_object_tag[1]["name"]
-        
+
         elements.append(el)
-    
+
     return elements

@@ -18,7 +18,7 @@ class PauseRequest(UncheckedBaseModel):
     reason: ReasonEnum = pydantic.Field()
     """
     Reason for pausing
-    
+
     * `MANUAL` - Manual
     * `BEHAVIOR_BASED` - Behavior-based
     * `ANNOTATOR_EVALUATION` - Annotator evaluation

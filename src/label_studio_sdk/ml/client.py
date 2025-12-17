@@ -93,58 +93,58 @@ class MlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
-        
-            Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
+
+            Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL
             command:
             ```bash
             curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml -H 'Authorization: Token abc123'\
-            --data '{"url": "http://localhost:9090", "project": {project_id}}' 
-            
-        
+            --data '{"url": "http://localhost:9090", "project": {project_id}}'
+
+
         Parameters
         ----------
         auth_method : typing.Optional[CreateMlRequestAuthMethod]
             Auth method
-        
+
         basic_auth_pass : typing.Optional[str]
             Basic auth password
-        
+
         basic_auth_user : typing.Optional[str]
             Basic auth user
-        
+
         description : typing.Optional[str]
             Description
-        
+
         extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Extra parameters
-        
+
         is_interactive : typing.Optional[bool]
             Is interactive
-        
+
         project : typing.Optional[int]
             Project ID
-        
+
         timeout : typing.Optional[int]
             Response model timeout
-        
+
         title : typing.Optional[str]
             Title
-        
+
         url : typing.Optional[str]
             ML backend URL
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         MlBackend
-            
-        
+
+
         Examples
         --------
         from label_studio_sdk import LabelStudio
-        
+
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
@@ -297,59 +297,59 @@ class MlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
-        
+
             Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
             ```bash
             curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
-            --data '{"url": "http://localhost:9091"}' 
-            
-        
+            --data '{"url": "http://localhost:9091"}'
+
+
         Parameters
         ----------
         id : int
-        
+
         auth_method : typing.Optional[UpdateMlRequestAuthMethod]
             Auth method
-        
+
         basic_auth_pass : typing.Optional[str]
             Basic auth password
-        
+
         basic_auth_user : typing.Optional[str]
             Basic auth user
-        
+
         description : typing.Optional[str]
             Description
-        
+
         extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Extra parameters
-        
+
         is_interactive : typing.Optional[bool]
             Is interactive
-        
+
         project : typing.Optional[int]
             Project ID
-        
+
         timeout : typing.Optional[int]
             Response model timeout
-        
+
         title : typing.Optional[str]
             Title
-        
+
         url : typing.Optional[str]
             ML backend URL
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         MlBackend
-            
-        
+
+
         Examples
         --------
         from label_studio_sdk import LabelStudio
-        
+
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
@@ -725,69 +725,69 @@ class AsyncMlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
-        
-            Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
+
+            Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL
             command:
             ```bash
             curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml -H 'Authorization: Token abc123'\
-            --data '{"url": "http://localhost:9090", "project": {project_id}}' 
-            
-        
+            --data '{"url": "http://localhost:9090", "project": {project_id}}'
+
+
         Parameters
         ----------
         auth_method : typing.Optional[CreateMlRequestAuthMethod]
             Auth method
-        
+
         basic_auth_pass : typing.Optional[str]
             Basic auth password
-        
+
         basic_auth_user : typing.Optional[str]
             Basic auth user
-        
+
         description : typing.Optional[str]
             Description
-        
+
         extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Extra parameters
-        
+
         is_interactive : typing.Optional[bool]
             Is interactive
-        
+
         project : typing.Optional[int]
             Project ID
-        
+
         timeout : typing.Optional[int]
             Response model timeout
-        
+
         title : typing.Optional[str]
             Title
-        
+
         url : typing.Optional[str]
             ML backend URL
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         MlBackend
-            
-        
+
+
         Examples
         --------
         import asyncio
-        
+
         from label_studio_sdk import AsyncLabelStudio
-        
+
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        
-        
+
+
         async def main() -> None:
             await client.ml.create()
-        
-        
+
+
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -953,72 +953,72 @@ class AsyncMlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
-        
+
             Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
             ```bash
             curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
-            --data '{"url": "http://localhost:9091"}' 
-            
-        
+            --data '{"url": "http://localhost:9091"}'
+
+
         Parameters
         ----------
         id : int
-        
+
         auth_method : typing.Optional[UpdateMlRequestAuthMethod]
             Auth method
-        
+
         basic_auth_pass : typing.Optional[str]
             Basic auth password
-        
+
         basic_auth_user : typing.Optional[str]
             Basic auth user
-        
+
         description : typing.Optional[str]
             Description
-        
+
         extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Extra parameters
-        
+
         is_interactive : typing.Optional[bool]
             Is interactive
-        
+
         project : typing.Optional[int]
             Project ID
-        
+
         timeout : typing.Optional[int]
             Response model timeout
-        
+
         title : typing.Optional[str]
             Title
-        
+
         url : typing.Optional[str]
             ML backend URL
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         MlBackend
-            
-        
+
+
         Examples
         --------
         import asyncio
-        
+
         from label_studio_sdk import AsyncLabelStudio
-        
+
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        
-        
+
+
         async def main() -> None:
             await client.ml.update(
                 id=1,
             )
-        
-        
+
+
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(

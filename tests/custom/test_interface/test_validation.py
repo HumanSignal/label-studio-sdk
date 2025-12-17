@@ -65,12 +65,12 @@ def test_validate_brush():
     obj = ImageTag(name="img", value="$val", attr={}, tag="obj")
     tag = BrushTag(name="test", to_name=("img", ),
                       attr={}, tag="control")
-    
+
     tag.set_object(obj)
     assert tag.validate_value({ "format": "rle", "rle": [ 1,2,3 ] }) is False
     assert tag.validate_value({ "format": "rle", "rle": [ 2,3,3,2 ] }) is True
 
-    
+
 def test_validate_annotation():
     """ """
     ## trying to just send a plain JSON in here
@@ -123,7 +123,7 @@ def test_validate_annotation():
 ] }'''
 
     d = json.loads(js)
-    
+
     li = LabelInterface(c.CONF_COMPLEX)
     assert li.validate_annotation(d) == True
 
@@ -139,31 +139,31 @@ def test_validate_annotation():
 
     d4 = copy.deepcopy(d)
     del d4["result"][0]["value"]["start"]
-    
+
     assert li.validate_annotation(d4) == False
 
-    
+
 def test_validate_relation():
     """ """
     conf = LabelInterface(c.SIMPLE_CONF)
     control = conf.get_tag(c.FROM_NAME)
-    
+
     r1 = control.label(label=c.LABEL1)
     r2 = control.label(label=c.LABEL1)
     r3 = control.label(label=c.LABEL1)
-    
+
     r1.add_relation(r2)
     assert r1.has_relations > 0
-    
+
     d = r1._dict_relations()[0]
-    
+
     assert conf.validate_relation(d, [ r1._dict(), r2._dict() ]) == True
     assert conf.validate_relation(d, [ r1._dict(), r3._dict() ]) == False
     assert conf.validate_relation(d, [ r2._dict(), r3._dict() ]) == False
-    
+
 # def test_validate_with_data():
 #     """ """
-    
+
 def test_validation_error_messages():
     """ """
-    
+

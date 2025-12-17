@@ -45,7 +45,7 @@ jobs:
             const comment_body = context.payload.inputs.comment_body;
             const formatted_comment_body =
             `${comment_body}
-            
+
             > Comment by ${comment_author}
             > [Workflow Run](${process.env.WORKFLOW_RUN_LINK})`;
 

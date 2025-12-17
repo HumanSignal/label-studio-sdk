@@ -32,7 +32,7 @@ class ThirdPartyModelVersion(UncheckedBaseModel):
     provider: typing.Optional[ProviderEnum] = pydantic.Field(default=None)
     """
     The model provider to use e.g. OpenAI
-    
+
     * `OpenAI` - OpenAI
     * `AzureOpenAI` - AzureOpenAI
     * `AzureAIFoundry` - AzureAIFoundry

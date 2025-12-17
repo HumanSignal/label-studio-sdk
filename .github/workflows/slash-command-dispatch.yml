@@ -39,7 +39,7 @@ jobs:
             const commands_list = process.env.COMMANDS_LIST.split("\n");
             console.log(commands_list);
             const command = body.replace(/^\/+/, '').split(/\s+/)[0];
-            core.setOutput('command', command);            
+            core.setOutput('command', command);
             core.setOutput('command-state', commands_list.includes(command) ? 'known' : 'unknown');
 
       - name: "Slash Command Dispatch"

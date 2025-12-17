@@ -325,11 +325,11 @@ Use cases: image object detection
 
 --------
 
-# YOLO to Label Studio Converter 
+# YOLO to Label Studio Converter
 
 ### YOLO directory structure
 
-Check the structure of YOLO folder first, keep in mind that the root is `/yolo/datasets/one`. 
+Check the structure of YOLO folder first, keep in mind that the root is `/yolo/datasets/one`.
 
 ```
 /yolo/datasets/one
@@ -358,9 +358,9 @@ label-studio-converter import yolo -i /yolo/datasets/one -o ls-tasks.json --imag
 ```
 Where the URL path from `?d=` is relative to the path you set in `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT`.
 
-**Note for Local Storages** 
+**Note for Local Storages**
   * It's very important to set `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/yolo/datasets` (**not** to `/yolo/datasets/one`, but **`/yolo/datasets`**) for Label Studio to run.
-  * [Add a new Local Storage](https://labelstud.io/guide/storage#Local-storage) in the project settings and set **Absolute local path** to `/yolo/datasets/one/images` (or `c:\yolo\datasets\one\images` for Windows). 
+  * [Add a new Local Storage](https://labelstud.io/guide/storage#Local-storage) in the project settings and set **Absolute local path** to `/yolo/datasets/one/images` (or `c:\yolo\datasets\one\images` for Windows).
 
 **Note for Cloud Storages**
   * Use `--image-root-url` to make correct prefixes for task URLs, e.g. `--image-root-url s3://my-bucket/yolo/datasets/one`.
@@ -399,7 +399,7 @@ optional arguments:
 
 ## Tutorial: Importing YOLO Pre-Annotated Images to Label Studio using Local Storage
 
-This tutorial will guide you through the process of importing a folder with YOLO annotations into Label Studio for further annotation. 
+This tutorial will guide you through the process of importing a folder with YOLO annotations into Label Studio for further annotation.
 We'll cover setting up your environment, converting YOLO annotations to Label Studio's format, and importing them into your project.
 
 
@@ -411,14 +411,14 @@ We'll cover setting up your environment, converting YOLO annotations to Label St
 ### Step 1: Set Up Your Environment and Run Label Studio
 Before starting Label Studio, set the following environment variables to enable Local Storage file serving:
 
-Unix systems: 
+Unix systems:
 ```
 export LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
 export LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/yolo/datasets
 label-studio
 ```
 
-Windows: 
+Windows:
 ```
 set LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
 set LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=C:\\yolo\\datasets
@@ -429,8 +429,8 @@ Replace `/yolo/datasets` with the actual path to your YOLO datasets directory.
 
 ### Step 2: Setup Local Storage
 1. Create a new project.
-2. Go to the project settings and select **Cloud Storage**. 
-3. Click **Add Source Storage** and select **Local files** from the **Storage Type** options.  
+2. Go to the project settings and select **Cloud Storage**.
+3. Click **Add Source Storage** and select **Local files** from the **Storage Type** options.
 3. Set the **Absolute local path** to `/yolo/datasets/one/images` or `c:\yolo\datasets\one\images` on Windows.
 4. Click `Add storage`.
 
@@ -444,9 +444,9 @@ http://localhost:8080/data/local-files/?d=one/images/<your_image>.jpg
 ```
 
 Replace `one/images/<your_image>.jpg` with the path to one of your images. The image should display **in the new tab of the browser**.
-If you can't open an image, the Local Storage configuration is incorrect. The most likely reason is that you made a mistake when specifying your `Path` in Local Storage settings or in `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT`. 
+If you can't open an image, the Local Storage configuration is incorrect. The most likely reason is that you made a mistake when specifying your `Path` in Local Storage settings or in `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT`.
 
-**Note:** The URL path from `?d=` should be relative to `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/yolo/datasets`, 
+**Note:** The URL path from `?d=` should be relative to `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/yolo/datasets`,
 it means that the real path will be `/yolo/datasets/one/images/<your_image>.jpg` and this image should exist on your hard drive.
 
 ### Step 4: Convert YOLO Annotations
@@ -479,7 +479,7 @@ e.g.:
 - The Local Storage in Label Studio is set up correctly with the Absolute local path to your images (`/yolo/datasets/one/images`)
 - For more details, refer to the documentation on [importing pre-annotated data](https://labelstud.io/guide/predictions.html) and [setting up Cloud Storages](https://labelstud.io/guide/storage).
 
-# COCO to Label Studio Converter 
+# COCO to Label Studio Converter
 
 ### COCO dataset structure
 
@@ -542,9 +542,9 @@ label-studio-converter import coco -i /coco/dataset/annotations/instances_val201
 ```
 Where the URL path from `?d=` is relative to the path you set in `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT`.
 
-**Note for Local Storages** 
+**Note for Local Storages**
   * It's very important to set `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/coco/dataset` (**not** to `/coco/dataset/val2017`, but **`/coco/dataset`**) for Label Studio to run.
-  * [Add a new Local Storage](https://labelstud.io/guide/storage#Local-storage) in the project settings and set **Absolute local path** to `/coco/dataset/val2017` (or `c:\coco\dataset\val2017` for Windows). 
+  * [Add a new Local Storage](https://labelstud.io/guide/storage#Local-storage) in the project settings and set **Absolute local path** to `/coco/dataset/val2017` (or `c:\coco\dataset\val2017` for Windows).
 
 **Note for Cloud Storages**
   * Use `--image-root-url` to make correct prefixes for task URLs, e.g. `--image-root-url s3://my-bucket/coco/val2017/`.
@@ -586,7 +586,7 @@ optional arguments:
 
 ## Tutorial: Importing COCO Pre-Annotated Images to Label Studio using Local Storage
 
-This tutorial will guide you through the process of importing a COCO dataset into Label Studio for further annotation or review. 
+This tutorial will guide you through the process of importing a COCO dataset into Label Studio for further annotation or review.
 We'll cover setting up your environment, converting COCO annotations to Label Studio's format, and importing them into your project.
 
 ### Prerequisites
@@ -597,14 +597,14 @@ We'll cover setting up your environment, converting COCO annotations to Label St
 ### Step 1: Set Up Your Environment and Run Label Studio
 Before starting Label Studio, set the following environment variables to enable Local Storage file serving:
 
-Unix systems: 
+Unix systems:
 ```
 export LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
 export LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/coco/dataset
 label-studio
 ```
 
-Windows: 
+Windows:
 ```
 set LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
 set LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=C:\\coco\\dataset
@@ -615,8 +615,8 @@ Replace `/coco/dataset` with the actual path to your COCO dataset directory.
 
 ### Step 2: Setup Local Storage
 1. Create a new project.
-2. Go to the project settings and select **Cloud Storage**. 
-3. Click **Add Source Storage** and select **Local files** from the **Storage Type** options.  
+2. Go to the project settings and select **Cloud Storage**.
+3. Click **Add Source Storage** and select **Local files** from the **Storage Type** options.
 4. Set the **Absolute local path** to `/coco/dataset/val2017` (or your image folder path, e.g., `c:\coco\dataset\val2017` on Windows).
 5. Click `Add storage`.
 
@@ -630,9 +630,9 @@ http://localhost:8080/data/local-files/?d=val2017/000000000139.jpg
 ```
 
 Replace `val2017/000000000139.jpg` with the path to one of your images. The image should display **in the new tab of the browser**.
-If you can't open an image, the Local Storage configuration is incorrect. The most likely reason is that you made a mistake when specifying your `Path` in Local Storage settings or in `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT`. 
+If you can't open an image, the Local Storage configuration is incorrect. The most likely reason is that you made a mistake when specifying your `Path` in Local Storage settings or in `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT`.
 
-**Note:** The URL path from `?d=` should be relative to `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/coco/dataset`, 
+**Note:** The URL path from `?d=` should be relative to `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/coco/dataset`,
 it means that the real path will be `/coco/dataset/val2017/000000000139.jpg` and this image should exist on your hard drive.
 
 ### Step 4: Convert COCO Annotations
@@ -644,7 +644,7 @@ label-studio-converter import coco -i /coco/dataset/annotations/instances_val201
 
 **For different annotation types:**
 - **Object Detection (bounding boxes)**: Use `instances_*.json` files
-- **Instance Segmentation**: Use `instances_*.json` files (includes both bboxes and polygon segmentations)  
+- **Instance Segmentation**: Use `instances_*.json` files (includes both bboxes and polygon segmentations)
 - **Keypoint Detection (pose estimation)**: Use `person_keypoints_*.json` files
 - **With super categories**: Add `--use-super-categories` flag
 

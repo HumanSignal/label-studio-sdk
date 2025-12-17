@@ -66,19 +66,19 @@ def json_schema_to_pydantic(json_schema: dict, class_name: str = 'MyModel') -> G
     """
     # Convert the JSON schema dictionary to a JSON string
     json_schema_str = json.dumps(json_schema)
-    
+
     # Generate Pydantic model code from the JSON schema string
     logger.debug(f"Generating Pydantic model code from json schema: {json_schema_str}")
     model_code: str = _generate_model_code(json_schema_str, class_name)
-    
+
     # Create a unique module name using the id of the JSON schema string
     module_name = f'dynamic_module_{id(json_schema_str)}'
-    
+
     # Create a new module object with the unique name and execute the generated model code in the context of the new module
     mod = types.ModuleType(module_name)
     exec(model_code, mod.__dict__)
     model_class = getattr(mod, class_name)
-    
+
     try:
         # Add the new module to sys.modules to make it importable
         # This is necessary to avoid Pydantic errors related to undefined models
@@ -88,4 +88,3 @@ def json_schema_to_pydantic(json_schema: dict, class_name: str = 'MyModel') -> G
     finally:
         if module_name in sys.modules:
             del sys.modules[module_name]
-        

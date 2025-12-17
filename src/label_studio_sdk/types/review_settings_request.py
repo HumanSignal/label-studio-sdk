@@ -29,7 +29,7 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     requeue_rejected_tasks_mode: typing.Optional[RequeueRejectedTasksModeEnum] = pydantic.Field(default=None)
     """
     Requeue mode for rejected tasks
-    
+
     * `requeue` - Requeue
     * `remove` - Remove
     * `flexible` - Flexible
@@ -43,7 +43,7 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     review_criteria: typing.Optional[ReviewCriteriaEnum] = pydantic.Field(default=None)
     """
     Criteria to mark task as reviewed
-    
+
     * `all` - Task is reviewed if all annotations are reviewed
     * `one` - Task is reviewed if at least one annotation is reviewed
     """
@@ -61,7 +61,7 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     sampling: typing.Optional[ReviewSettingsSamplingEnum] = pydantic.Field(default=None)
     """
     Task sampling strategy in the review stream (by task id or random)
-    
+
     * `task_id` - By Task ID
     * `random` - Random
     """

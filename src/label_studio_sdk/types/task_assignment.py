@@ -40,7 +40,7 @@ class TaskAssignment(UncheckedBaseModel):
     type: typing.Optional[TypeEnum] = pydantic.Field(default=None)
     """
     Type of assignment: Annotate|Review
-    
+
     * `AN` - Annotate
     * `RE` - Review
     """

@@ -95,7 +95,7 @@ class ControlTag(LabelStudioTag):
             and tag.attrib.get("toName")
             and tag.tag not in _NOT_CONTROL_TAGS
         )
-        
+
     @property
     def is_output_required(self):
         # TextArea can be blank unless user specifies "required"="true" in the attribute
@@ -129,7 +129,7 @@ class ControlTag(LabelStudioTag):
         tag_class = get_tag_class(tag.tag, _TAG_TO_CLASS, re_mapping=tags_mapping) or cls
         if isinstance(tag_class, str):
             tag_class = globals().get(tag_class, None)
-        
+
         tag_info = {
             "tag": tag.tag,
             "name": tag.attrib["name"],
@@ -170,7 +170,7 @@ class ControlTag(LabelStudioTag):
             "name": self.name,
             "toName": self.to_name
         }
-    
+
     def get_object(self, name=None):
         """
         This method retrieves the object tag that the control tag maps to.
@@ -313,7 +313,7 @@ class ControlTag(LabelStudioTag):
         bool
             True if the value is valid, False otherwise
         """
-        
+
         # Accept inputs that nest the payload under the control name, e.g. {"ranker": "rank": ["a", "b", "c"]}
         if isinstance(value, dict) and self.name in value and isinstance(value[self.name], dict):
             value = value[self.name]
@@ -390,7 +390,7 @@ class ControlTag(LabelStudioTag):
         obj = self.find_object_by_name(to_name)
         cls = self._value_class
         value = cls(**kwargs)
-        
+
         return Region(from_tag=self, to_tag=obj, value=value)
 
     def _label_with_labels(
@@ -437,7 +437,7 @@ class ControlTag(LabelStudioTag):
             )
 
         kwargs[self._label_attr_name] = label
-        
+
         return self._label_simple(to_name=to_name, **kwargs)
 
     def label(
@@ -449,7 +449,7 @@ class ControlTag(LabelStudioTag):
     ) -> Region:
         """
         This method creates a new Region object with the specified label.
-        
+
         If labels are provided, it creates a new instance of the value class with the provided arguments and keyword arguments and adds the labels to the Region object.
 
         Parameters:
@@ -474,7 +474,7 @@ class ControlTag(LabelStudioTag):
             )
         else:
             return self._label_simple(to_name=to_name, *args, **kwargs)
-        
+
     def get_labels(self, regions: List[Dict]):
         """
         Returns the simplified representation of the label. Sort of a reverse to label() method to retrieve an input `label` from an output regions
@@ -611,7 +611,7 @@ def validate_rle(list):
     """
     Validate if a list is correctly formatted in Run-Length Encoding (RLE).
 
-    A correctly formatted RLE list should follow 'value, count' pairs. 
+    A correctly formatted RLE list should follow 'value, count' pairs.
     For example, [2,3,3,2] is a valid RLE list representing [2,2,2,3,3].
 
     Parameters:
@@ -640,7 +640,7 @@ class BrushValue(BaseModel):
     def validate_rle(cls, rle_data):
         if not validate_rle(rle_data):
             raise ValueError('Invalid RLE format')
-        
+
         return rle_data
 
 
@@ -657,7 +657,7 @@ class BrushTag(ControlTag):
     #     res = super().validate_value(value)
     #     if res is True and value.get("format") == "rle":
     #         return validate_rle(value.get("rle"))
-        
+
     #     return res
 
 class BrushLabelsTag(BrushTag):
@@ -775,18 +775,18 @@ class VideoRectangleValue(BaseModel):
     duration: float
     sequence: List[VideoRectangleSequenceValue]
     labels: Optional[List[str]]
-    
-    
+
+
 class VideoRectangleTag(ControlTag):
     """ """
     tag: str = "VideoRectangle"
     _label_attr_name: str = "labels"
     _value_class: Type[VideoRectangleValue] = VideoRectangleValue
-    
-    
+
+
 class NumberValue(BaseModel):
     number: float
-    
+
 
 class NumberTag(ControlTag):
     """ """
@@ -805,19 +805,19 @@ class NumberTag(ControlTag):
             "type": "number",
             "description": f"Number for {self.to_name[0]}"
         }
-        
+
         if 'min' in self.attr:
             schema["minimum"] = float(self.attr['min'])
         if 'max' in self.attr:
             schema["maximum"] = float(self.attr['max'])
-        
+
         return schema
-    
+
 
 class DateTimeValue(BaseModel):
     datetime: str
 
-    
+
 class DateTimeTag(ControlTag):
     """ """
     tag: str = "DateTime"
@@ -901,12 +901,12 @@ class ParagraphLabelsTag(ControlTag):
             kwargs["end"] = utterance
 
         return super().label(*args, **kwargs)
-        
+
 
 class RankerValue(BaseModel):
     rank: List[str]
 
-    
+
 class RankerTag(ControlTag):
     """ """
     tag: str = "Ranker"
@@ -1009,7 +1009,7 @@ class RelationsTag(ControlTag):
         raise NotImplemented("""
         Relations work on regions instead of Object tags
         use Regions add_relation() method""")
-        
+
 
 class TaxonomyValue(BaseModel):
     taxonomy: List[List[str]]
@@ -1140,10 +1140,10 @@ class CustomInterfaceTag(ControlTag):
     def _parse_type_alias(self, value: str) -> dict:
         """
         Parse a type alias like 'choices(label1, label2)' into a JSON schema fragment.
-        
+
         Args:
             value: A string that may contain a type alias with arguments.
-            
+
         Returns:
             dict: A JSON schema fragment for the type.
         """
@@ -1155,20 +1155,20 @@ class CustomInterfaceTag(ControlTag):
             args_str = match.group(2)
             # Split arguments by comma, handling potential whitespace
             args = [arg.strip() for arg in args_str.split(',')]
-            
+
             if alias_name in self._TYPE_ALIASES:
                 return self._TYPE_ALIASES[alias_name](args)
-        
+
         # Default to string type if no alias matched
         return {"type": "string"}
 
     def _try_parse_json(self, outputs_str: str) -> dict | None:
         """
         Attempt to parse the outputs string as JSON.
-        
+
         Args:
             outputs_str: The raw outputs string from the tag configuration.
-            
+
         Returns:
             dict or None: Parsed JSON if valid, None otherwise.
         """
@@ -1183,13 +1183,13 @@ class CustomInterfaceTag(ControlTag):
     def _parse_delimited_list(self, outputs_str: str) -> list:
         """
         Parse a string into a list by splitting on non-alphanumeric delimiters.
-        
-        Splits on: comma, semicolon, vertical bar, or any sequence of 
+
+        Splits on: comma, semicolon, vertical bar, or any sequence of
         whitespace/non-alphanumeric characters (except parentheses for aliases).
-        
+
         Args:
             outputs_str: The raw outputs string to parse.
-            
+
         Returns:
             list: List of parsed output field names/definitions.
         """
@@ -1199,7 +1199,7 @@ class CustomInterfaceTag(ControlTag):
         parts = []
         current = []
         paren_depth = 0
-        
+
         for char in outputs_str:
             if char == '(':
                 paren_depth += 1
@@ -1215,73 +1215,73 @@ class CustomInterfaceTag(ControlTag):
                 current = []
             else:
                 current.append(char)
-        
+
         # Don't forget the last part
         part = ''.join(current).strip()
         if part:
             parts.append(part)
-        
+
         return parts
 
     def _parse_output_field(self, field_spec: str) -> tuple:
         """
         Parse a single output field specification.
-        
+
         Handles formats like:
         - "field_name" -> (field_name, {"type": "string"})
         - "field_name:choices(a,b,c)" -> (field_name, {"type": "string", "enum": ["a","b","c"]})
-        
+
         Args:
             field_spec: A single field specification string.
-            
+
         Returns:
             tuple: (field_name, json_schema_fragment)
         """
         field_spec = field_spec.strip()
-        
+
         # Check if there's a type specification with colon separator
         if ':' in field_spec:
             name_part, type_part = field_spec.split(':', 1)
             name = name_part.strip()
             schema = self._parse_type_alias(type_part.strip())
             return (name, schema)
-        
+
         # Check if the entire spec is a type alias (for JSON-style definitions)
         import re
         if re.match(r'^\w+\s*\(', field_spec):
             # This looks like a standalone type alias, not a field name
             # In this case, we can't determine the field name, so return as-is
             return (field_spec, {"type": "string"})
-        
+
         # Plain field name defaults to string type
         return (field_spec, {"type": "string"})
 
     def to_json_schema(self):
         """
         Converts the current CustomInterfaceTag instance into a JSON Schema.
-        
+
         Supports multiple parsing strategies (mutually compatible):
-        
-        1. Delimited list: If 'outputs' contains field names separated by 
+
+        1. Delimited list: If 'outputs' contains field names separated by
            comma, semicolon, pipe, or whitespace, each becomes a string property.
            Example: "field1, field2, field3" or "field1|field2|field3"
-        
+
         2. JSON Schema: If 'outputs' starts with '{', it's parsed as a JSON schema.
            Example: '{"field1": {"type": "number"}, "field2": {"type": "string"}}'
-        
+
         3. Type aliases: Special syntax for common patterns within delimited lists.
            - "field:choices(a,b,c)" -> enum with string type
            - "field:multichoices(a,b,c)" -> array of enum values
            Example: "rating:choices(good, bad), tags:multichoices(urgent, review)"
-        
+
         Returns:
             dict: A dictionary representing the JSON Schema with properties for each output.
         """
         outputs_str = self.attr.get('outputs', '')
-        
+
         if not outputs_str or not outputs_str.strip():
             return {"type": "object", "properties": {}}
-        
+
         # Strategy 2: Try parsing as JSON first
         json_schema = self._try_parse_json(outputs_str)
         if json_schema is not None:
@@ -1290,16 +1290,16 @@ class CustomInterfaceTag(ControlTag):
                 return json_schema
             # If it's just properties, wrap them
             return {"type": "object", "properties": json_schema}
-        
+
         # Strategy 1 & 3: Parse as delimited list with optional type aliases
         fields = self._parse_delimited_list(outputs_str)
-        
+
         properties = {}
         for field_spec in fields:
             field_name, field_schema = self._parse_output_field(field_spec)
             if field_name:
                 properties[field_name] = field_schema
-        
+
         return {"type": "object", "properties": properties}
 
     def label(self, *args, **kwargs) -> Region:

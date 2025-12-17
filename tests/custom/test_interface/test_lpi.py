@@ -21,7 +21,7 @@ def test_li():
 
 def test_find_tags_by_class():
     """Test finding tags by class type in Label Interface.
-    
+
     This test validates:
     - Creating a LabelInterface with multiple tag types
     - Using find_tags_by_class to filter tags by their class
@@ -29,7 +29,7 @@ def test_find_tags_by_class():
     - Ensuring the method works with CustomInterfaceTag
     """
     from label_studio_sdk.label_interface import LabelInterface
-    
+
     # Setup: Create a config with multiple tag types including CustomInterface
     config = """
     <View>
@@ -47,20 +47,20 @@ def test_find_tags_by_class():
         </Choices>
     </View>
     """
-    
+
     # Action: Parse the config and find tags by class
     li = LabelInterface(config)
-    
+
     # Validation: Find all CustomInterfaceTag instances
     custom_tags = li.find_tags_by_class(CustomInterfaceTag)
-    
+
     # Verify we found exactly 2 CustomInterface tags
     assert len(custom_tags) == 2, f"Expected 2 CustomInterface tags, found {len(custom_tags)}"
-    
+
     # Verify all returned tags are CustomInterfaceTag instances
     for tag in custom_tags:
         assert isinstance(tag, CustomInterfaceTag), f"Expected CustomInterfaceTag, got {type(tag)}"
-    
+
     # Verify the names match
     tag_names = [tag.name for tag in custom_tags]
     assert "custom1" in tag_names, "Expected to find 'custom1' tag"

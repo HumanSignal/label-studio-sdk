@@ -50,9 +50,9 @@ jobs:
         shell: bash
         run: |
           set -xeuo pipefail
-          
+
           regexp='^[v]?([0-9]+)\.([0-9]+)\.([0-9]+)$';
-          
+
           if [[ "${{ inputs.version }}" =~ $regexp ]]; then
               first="${BASH_REMATCH[1]}"
               second="${BASH_REMATCH[2]}"
@@ -61,11 +61,11 @@ jobs:
               echo "${{ inputs.version }} does not mach the regexp ${regexp}"
               exit 1
           fi
-          
+
           release_version="${first}.${second}.${third}"
           release_branch="${{ env.RELEASE_BRANCH_PREFIX }}${first}.${second}.${third}"
           next_develop_version="${first}.${second}.$(($third + 1)).dev"
-          
+
           echo "release_branch=${release_branch}" >> $GITHUB_OUTPUT
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
           echo "next_develop_version=${next_develop_version}" >> $GITHUB_OUTPUT
@@ -74,7 +74,7 @@ jobs:
         shell: bash
         run: |
           set -xeuo pipefail
-          
+
           git checkout -b "${{ steps.calculate_branch_name_and_version.outputs.release_branch }}"
           echo "commit=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
           git push origin HEAD:refs/heads/${{ steps.calculate_branch_name_and_version.outputs.release_branch }}
