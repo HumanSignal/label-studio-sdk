@@ -575,7 +575,7 @@ class TestPredictionValidation:
                 "from_name": "ranker",
                 "to_name": "text",
                 "type": "ranker",
-                "value": {"rank": ["rank1", "rank2", "rank3"]}
+                "value": {"ranker": {"ranker": ["rank1", "rank2", "rank3"]}}
             }],
             "score": 0.9
         }
@@ -583,7 +583,7 @@ class TestPredictionValidation:
         
         # Invalid - wrong rank order (this should still be valid as ranker doesn't validate content)
         invalid_pred = copy.deepcopy(valid_pred)
-        invalid_pred["result"][0]["value"]["rank"] = ["invalid_rank", "rank2"]
+        invalid_pred["result"][0]["value"]["ranker"]["ranker"] = ["invalid_rank", "rank2"]
         # Ranker validation doesn't check content validity, so this should pass
         assert li.validate_prediction(invalid_pred) is True
 
@@ -1038,25 +1038,13 @@ class TestPredictionValidation:
         """
         li = LabelInterface(CONFIG)
 
-        flat_pred = {
-            "result": [
-                {
-                    "from_name": "ranker",
-                    "to_name": "t",
-                    "type": "ranker",
-                    "value": {"rank": ["a", "b", "c"]},
-                }
-            ]
-        }
-        assert li.validate_prediction(flat_pred) is True
-
         nested_pred = {
             "result": [
                 {
                     "from_name": "ranker",
                     "to_name": "t",
                     "type": "ranker",
-                    "value": {"ranker": {"rank": ["c", "a", "b"]}},
+                    "value": {"ranker": {"ranker": ["c", "a", "b"]}},
                 }
             ]
         }
@@ -1073,3 +1061,29 @@ class TestPredictionValidation:
             ]
         }
         assert li.validate_prediction(bad_pred) is False
+
+    def test_ranker_bucketed_prediction_validation(self):
+        CONFIG = """
+        <View>
+        <List name="results" value="$items" title="Search Results" />
+        <Ranker name="rank" toName="results">
+            <Bucket name="best" title="Best results" />
+            <Bucket name="ads" title="Paid results" />
+        </Ranker>
+        </View>
+        """
+        li = LabelInterface(CONFIG)
+
+        bucketed_pred = {
+            "result": [
+                {
+                    "from_name": "rank",
+                    "to_name": "results",
+                    "type": "ranker",
+                    "value": {"ranker": {
+                         "best": ["mdn"],
+                         "ads": ["blog"]
+                    }}
+                }
+            ]
+        }
