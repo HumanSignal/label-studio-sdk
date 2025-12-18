@@ -3,52 +3,61 @@
 from ...core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
+import typing_extensions
+from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ImportTasksProjectsResponse(UncheckedBaseModel):
     """
-    Task creation response
+    Response format varies by edition. Non-Community editions return `{"import": <import_id>}` for async processing. Community edition returns the detailed response below with task counts.
     """
 
     annotation_count: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Number of annotations added
+    Number of annotations added (Community edition sync import only)
     """
 
     could_be_tasks_list: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether uploaded files can contain lists of tasks, like CSV/TSV files
+    Whether uploaded files can contain lists of tasks, like CSV/TSV files (Community edition sync import only)
     """
 
     data_columns: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    The list of found data columns
+    The list of found data columns (Community edition sync import only)
     """
 
     duration: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Time in seconds to create
+    Time in seconds to create (Community edition sync import only)
     """
 
     file_upload_ids: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
     """
-    Database IDs of uploaded files
+    Database IDs of uploaded files (Community edition sync import only)
     """
 
     found_formats: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    The list of found file formats
+    The list of found file formats (Community edition sync import only)
+    """
+
+    import_: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="import")] = pydantic.Field(
+        default=None
+    )
+    """
+    Import ID for async operations (non-Community editions only). Use this ID to poll `/api/projects/{project_id}/imports/{import_id}` for status.
     """
 
     predictions_count: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Number of predictions added
+    Number of predictions added (Community edition sync import only)
     """
 
     task_count: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Number of tasks added
+    Number of tasks added (Community edition sync import only)
     """
 
     if IS_PYDANTIC_V2:
