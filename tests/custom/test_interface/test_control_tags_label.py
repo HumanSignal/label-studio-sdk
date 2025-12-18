@@ -54,7 +54,7 @@ params = [
     (OT.ParagraphsTag, CT.ParagraphLabelsTag, { "utterance": 1, "startOffset": 10, "endOffset": 10, "label": [ c.LABEL1 ] }, { "start": 1, "end": 1, "startOffset": 10, "endOffset": 10, "paragraphlabels": [ c.LABEL1 ] } ),    
 
     ## List labeling
-    (OT.ListTag, CT.RankerTag, { "rank": [ c.LABEL1, c.LABEL2 ] }, { "rank": [ c.LABEL1, c.LABEL2 ] }),
+    (OT.ListTag, CT.RankerTag, { "ranker": { "rank": [ c.LABEL1, c.LABEL2 ] } }, { "ranker" : { "rank": [ c.LABEL1, c.LABEL2 ] } }),
 
     ## Timeseries labeling
     (OT.TimeSeriesTag, CT.TimeSeriesLabelsTag, { "start": 10, "end": 12, "instant": False, "label": c.LABEL1 }, { "start": 10, "end": 12, "instant": False, "timeserieslabels": [ c.LABEL1 ] }),
