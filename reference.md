@@ -34036,6 +34036,14 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
+**last_activity_lte:** `typing.Optional[str]` — Filter by last activity upper bound (ISO 8601 formatted date). Only when all=True.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **role:** `typing.Optional[str]` — Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
     
 </dd>
@@ -34153,6 +34161,14 @@ client.projects.members.bulk.delete(
 <dd>
 
 **last_activity_gte:** `typing.Optional[str]` — Filter by last activity (ISO 8601 formatted date). Only when all=True.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_activity_lte:** `typing.Optional[str]` — Filter by last activity upper bound (ISO 8601 formatted date). Only when all=True.
     
 </dd>
 </dl>
@@ -34283,6 +34299,14 @@ for page in response.iter_pages():
 <dd>
 
 **last_activity_gte:** `typing.Optional[dt.datetime]` — Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_activity_lte:** `typing.Optional[dt.datetime]` — Filter by last activity time (ISO 8601 datetime). Returns users with last activity less than or equal to this time.
     
 </dd>
 </dl>
