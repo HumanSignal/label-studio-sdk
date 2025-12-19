@@ -27,6 +27,7 @@ class BulkClient:
         *,
         all_: bool,
         last_activity_gte: typing.Optional[str] = None,
+        last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
@@ -51,6 +52,9 @@ class BulkClient:
 
         last_activity_gte : typing.Optional[str]
             Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        last_activity_lte : typing.Optional[str]
+            Filter by last activity upper bound (ISO 8601 formatted date). Only when all=True.
 
         role : typing.Optional[str]
             Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
@@ -89,6 +93,7 @@ class BulkClient:
             method="POST",
             params={
                 "last_activity__gte": last_activity_gte,
+                "last_activity__lte": last_activity_lte,
                 "role": role,
                 "search": search,
             },
@@ -125,6 +130,7 @@ class BulkClient:
         id: int,
         *,
         last_activity_gte: typing.Optional[str] = None,
+        last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -144,6 +150,9 @@ class BulkClient:
 
         last_activity_gte : typing.Optional[str]
             Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        last_activity_lte : typing.Optional[str]
+            Filter by last activity upper bound (ISO 8601 formatted date). Only when all=True.
 
         role : typing.Optional[str]
             Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
@@ -175,6 +184,7 @@ class BulkClient:
             method="DELETE",
             params={
                 "last_activity__gte": last_activity_gte,
+                "last_activity__lte": last_activity_lte,
                 "role": role,
                 "search": search,
             },
@@ -205,6 +215,7 @@ class AsyncBulkClient:
         *,
         all_: bool,
         last_activity_gte: typing.Optional[str] = None,
+        last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
@@ -229,6 +240,9 @@ class AsyncBulkClient:
 
         last_activity_gte : typing.Optional[str]
             Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        last_activity_lte : typing.Optional[str]
+            Filter by last activity upper bound (ISO 8601 formatted date). Only when all=True.
 
         role : typing.Optional[str]
             Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
@@ -275,6 +289,7 @@ class AsyncBulkClient:
             method="POST",
             params={
                 "last_activity__gte": last_activity_gte,
+                "last_activity__lte": last_activity_lte,
                 "role": role,
                 "search": search,
             },
@@ -311,6 +326,7 @@ class AsyncBulkClient:
         id: int,
         *,
         last_activity_gte: typing.Optional[str] = None,
+        last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -330,6 +346,9 @@ class AsyncBulkClient:
 
         last_activity_gte : typing.Optional[str]
             Filter by last activity (ISO 8601 formatted date). Only when all=True.
+
+        last_activity_lte : typing.Optional[str]
+            Filter by last activity upper bound (ISO 8601 formatted date). Only when all=True.
 
         role : typing.Optional[str]
             Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
@@ -369,6 +388,7 @@ class AsyncBulkClient:
             method="DELETE",
             params={
                 "last_activity__gte": last_activity_gte,
+                "last_activity__lte": last_activity_lte,
                 "role": role,
                 "search": search,
             },

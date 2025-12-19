@@ -27,6 +27,7 @@ class PaginatedClient:
         ids: typing.Optional[str] = None,
         implicit: typing.Optional[bool] = None,
         last_activity_gte: typing.Optional[dt.datetime] = None,
+        last_activity_lte: typing.Optional[dt.datetime] = None,
         no_annotators: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
@@ -65,6 +66,9 @@ class PaginatedClient:
 
         last_activity_gte : typing.Optional[dt.datetime]
             Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
+
+        last_activity_lte : typing.Optional[dt.datetime]
+            Filter by last activity time (ISO 8601 datetime). Returns users with last activity less than or equal to this time.
 
         no_annotators : typing.Optional[bool]
             Exclude annotators from the results
@@ -144,6 +148,7 @@ class PaginatedClient:
                 "ids": ids,
                 "implicit": implicit,
                 "last_activity__gte": serialize_datetime(last_activity_gte) if last_activity_gte is not None else None,
+                "last_activity__lte": serialize_datetime(last_activity_lte) if last_activity_lte is not None else None,
                 "no_annotators": no_annotators,
                 "ordering": ordering,
                 "page": page,
@@ -169,6 +174,7 @@ class PaginatedClient:
                     ids=ids,
                     implicit=implicit,
                     last_activity_gte=last_activity_gte,
+                    last_activity_lte=last_activity_lte,
                     no_annotators=no_annotators,
                     ordering=ordering,
                     page=page + 1,
@@ -197,6 +203,7 @@ class AsyncPaginatedClient:
         ids: typing.Optional[str] = None,
         implicit: typing.Optional[bool] = None,
         last_activity_gte: typing.Optional[dt.datetime] = None,
+        last_activity_lte: typing.Optional[dt.datetime] = None,
         no_annotators: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
@@ -235,6 +242,9 @@ class AsyncPaginatedClient:
 
         last_activity_gte : typing.Optional[dt.datetime]
             Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
+
+        last_activity_lte : typing.Optional[dt.datetime]
+            Filter by last activity time (ISO 8601 datetime). Returns users with last activity less than or equal to this time.
 
         no_annotators : typing.Optional[bool]
             Exclude annotators from the results
@@ -322,6 +332,7 @@ class AsyncPaginatedClient:
                 "ids": ids,
                 "implicit": implicit,
                 "last_activity__gte": serialize_datetime(last_activity_gte) if last_activity_gte is not None else None,
+                "last_activity__lte": serialize_datetime(last_activity_lte) if last_activity_lte is not None else None,
                 "no_annotators": no_annotators,
                 "ordering": ordering,
                 "page": page,
@@ -347,6 +358,7 @@ class AsyncPaginatedClient:
                     ids=ids,
                     implicit=implicit,
                     last_activity_gte=last_activity_gte,
+                    last_activity_lte=last_activity_lte,
                     no_annotators=no_annotators,
                     ordering=ordering,
                     page=page + 1,
