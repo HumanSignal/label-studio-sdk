@@ -1014,6 +1014,20 @@ class ProjectsClient:
                     must include a "text" field.
                     <br>
         
+                    ## Async Import Behavior
+                    <hr style="opacity:0.3">
+        
+                    **For non-Community editions, this endpoint processes imports asynchronously.**
+                    
+                    - The POST request **can fail** for invalid parameters, malformed request body, or other request-level validation errors.
+                    - However, **data validation errors** that occur during import processing are handled asynchronously and will not cause the POST request to fail.
+                    - Upon successful request validation, a response is returned: `{"import": <import_id>}`
+                    - Use the returned `import_id` to poll the GET `/api/projects/{project_id}/imports/{import_id}` endpoint to check the import status and see any data validation errors.
+                    - Data-level errors and import failures will only be visible in the GET request response.
+        
+                    For Community edition, imports are processed synchronously and return task counts immediately.
+                    <br>
+        
                     ## POST requests
                     <hr style="opacity:0.3">
         
@@ -1079,7 +1093,7 @@ class ProjectsClient:
         Returns
         -------
         ImportTasksProjectsResponse
-            Tasks successfully imported
+            Tasks successfully imported or import queued. **For non-Community editions**, the response will be `{"import": <import_id>}` which you can use to poll the import status. **For Community edition**, the response contains task counts and is processed synchronously.
         
         Examples
         --------
@@ -2291,6 +2305,20 @@ class AsyncProjectsClient:
                     must include a "text" field.
                     <br>
         
+                    ## Async Import Behavior
+                    <hr style="opacity:0.3">
+        
+                    **For non-Community editions, this endpoint processes imports asynchronously.**
+                    
+                    - The POST request **can fail** for invalid parameters, malformed request body, or other request-level validation errors.
+                    - However, **data validation errors** that occur during import processing are handled asynchronously and will not cause the POST request to fail.
+                    - Upon successful request validation, a response is returned: `{"import": <import_id>}`
+                    - Use the returned `import_id` to poll the GET `/api/projects/{project_id}/imports/{import_id}` endpoint to check the import status and see any data validation errors.
+                    - Data-level errors and import failures will only be visible in the GET request response.
+        
+                    For Community edition, imports are processed synchronously and return task counts immediately.
+                    <br>
+        
                     ## POST requests
                     <hr style="opacity:0.3">
         
@@ -2356,7 +2384,7 @@ class AsyncProjectsClient:
         Returns
         -------
         ImportTasksProjectsResponse
-            Tasks successfully imported
+            Tasks successfully imported or import queued. **For non-Community editions**, the response will be `{"import": <import_id>}` which you can use to poll the import status. **For Community edition**, the response contains task counts and is processed synchronously.
         
         Examples
         --------

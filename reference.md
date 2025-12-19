@@ -10147,6 +10147,20 @@ Data that you want to duplicate: settings only, with tasks, with annotations
             must include a "text" field.
             <br>
 
+            ## Async Import Behavior
+            <hr style="opacity:0.3">
+
+            **For non-Community editions, this endpoint processes imports asynchronously.**
+            
+            - The POST request **can fail** for invalid parameters, malformed request body, or other request-level validation errors.
+            - However, **data validation errors** that occur during import processing are handled asynchronously and will not cause the POST request to fail.
+            - Upon successful request validation, a response is returned: `{"import": <import_id>}`
+            - Use the returned `import_id` to poll the GET `/api/projects/{project_id}/imports/{import_id}` endpoint to check the import status and see any data validation errors.
+            - Data-level errors and import failures will only be visible in the GET request response.
+
+            For Community edition, imports are processed synchronously and return task counts immediately.
+            <br>
+
             ## POST requests
             <hr style="opacity:0.3">
 
@@ -10455,7 +10469,17 @@ client.projects.validate_label_config(
 <dl>
 <dd>
 
-Return data related to async project import operation
+
+            Poll the status of an asynchronous project import operation.
+            
+            **Usage:**
+            1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{"import": <import_id>}`
+            2. Use that `import_id` with this GET endpoint to check the import status
+            3. Poll this endpoint to see if the import has completed, is still processing, or has failed
+            4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
+            
+            This endpoint returns detailed information about the import including task counts, status, and any error messages.
+        
 </dd>
 </dl>
 </dd>
