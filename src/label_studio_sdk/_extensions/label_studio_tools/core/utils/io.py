@@ -167,6 +167,24 @@ def get_local_path(
             logger.debug(f"Uploaded file: Path exists in image_dir: {filepath}")
             return filepath
 
+    # Export snapshots can contain raw upload keys (upload/<project>/<file>), while the
+    # web app/API may expose them via the authenticated storage proxy endpoint
+    # /storage-data/uploaded/?filepath=upload/<project>/<file>.
+    #
+    # When the default Django storage is cloud-backed (S3/GCS/Azure via django-storages),
+    # fetching such files via /data/upload/... can fail (files aren't on local disk).
+    # Rewriting to the storage proxy keeps downloads working across both local and cloud
+    # default storage backends.
+    if is_uploaded_file and not is_storage_data_file:
+        upload_path = url.lstrip("/")
+        if upload_path.startswith("data/"):
+            upload_path = upload_path[len("data/") :]
+        storage_filepath = storage_filepath or upload_path
+        url = f"/storage-data/uploaded/?filepath={storage_filepath}"
+        parsed_url = urlparse(url)
+        is_storage_data_file = True
+        is_uploaded_file = False            
+
     # Upload, Local Storage, Storage Proxy or Cloud Storage file
     if is_uploaded_file or is_local_storage_file or is_cloud_storage_file or is_storage_data_file:
         # hostname check
