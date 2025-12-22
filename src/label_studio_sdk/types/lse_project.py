@@ -2,6 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .agreement_methodology_enum import AgreementMethodologyEnum
 import pydantic
 from .assignment_settings import AssignmentSettings
 import datetime as dt
@@ -18,6 +19,7 @@ class LseProject(UncheckedBaseModel):
     make sure, that you use correct one(Project.objects.with_counts())
     """
 
+    agreement_methodology: typing.Optional[AgreementMethodologyEnum] = None
     agreement_threshold: typing.Optional[str] = pydantic.Field(default=None)
     """
     Minimum percent agreement threshold for which minimum number of annotators must agree
