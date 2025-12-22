@@ -2,6 +2,7 @@ import base64
 import hashlib
 import os
 import tempfile
+import requests
 from types import SimpleNamespace
 from unittest.mock import patch, MagicMock
 
@@ -220,4 +221,78 @@ def test_get_local_path_upload_is_rewritten_to_storage_proxy(monkeypatch, tmp_pa
     assert "Authorization" in requested.headers
     assert requested.headers["Authorization"] in (f"Token {token}", f"Bearer {token}")
     assert "/data/upload/" not in requested.url
+
+
+def test_get_local_path_upload_proxy_fallback_to_data_upload(monkeypatch, tmp_path):
+    """
+    If storage proxy download fails (e.g., FileSystemStorage with nginx), fallback to /data/upload works.
+    """
+    url = "upload/5/1.jpg"
+    hostname = "http://app.heartex.com"
+    token = "secret"
+
+    calls = []
+
+    def fake_get(u, stream=False, headers=None, verify=None):
+        calls.append(u)
+        # First call to proxy -> 401
+        if "storage-data/uploaded" in u:
+            raise requests.exceptions.HTTPError("401")
+        # Second call to data/upload succeeds
+        resp = MagicMock()
+        resp.content = b"imgdata"
+        resp.raise_for_status = lambda: None
+        return resp
+
+    monkeypatch.setattr("label_studio_sdk._extensions.label_studio_tools.core.utils.io.requests.get", fake_get)
+    with patch("os.path.exists", return_value=False):
+        local_path = get_local_path(
+            url=url,
+            cache_dir=str(tmp_path),
+            hostname=hostname,
+            access_token=token,
+            download_resources=True,
+            task_id=123,
+        )
+
+    fallback_url = f"{hostname}/data/upload/5/1.jpg"
+    expected_hash = hashlib.md5(fallback_url.encode()).hexdigest()[:8]
+    assert local_path.endswith(f"{expected_hash}__1.jpg")
+    assert calls[0].startswith(f"{hostname}/storage-data/uploaded/?filepath=upload/5/1.jpg")
+    assert calls[-1] == fallback_url
+
+
+def test_get_base64_content_fallback(monkeypatch):
+    """
+    If storage proxy download fails, get_base64_content should fallback to /data/upload.
+    """
+    url = "/storage-data/uploaded/?filepath=upload/5/1.jpg"
+    hostname = "http://app.heartex.com"
+    token = "secret"
+
+    calls = []
+
+    def fake_get(u, headers=None, verify=None):
+        calls.append(u)
+        if "storage-data/uploaded" in u:
+            raise requests.exceptions.HTTPError("401")
+        resp = MagicMock()
+        resp.content = b"abc"
+        resp.raise_for_status = lambda: None
+        return resp
+
+    monkeypatch.setattr("label_studio_sdk._extensions.label_studio_tools.core.utils.io.requests.get", fake_get)
+
+    content_b64 = get_base64_content(
+        url=url,
+        hostname=hostname,
+        access_token=token,
+        task_id=123,
+    )
+
+    fallback_url = f"{hostname}/data/upload/5/1.jpg"
+    assert content_b64 == base64.b64encode(b"abc").decode("utf-8")
+    assert calls[0].startswith(f"{hostname}/storage-data/uploaded/?filepath=upload/5/1.jpg")
+    assert calls[-1] == fallback_url
+
 
