@@ -6,7 +6,7 @@ import shutil
 import base64
 from contextlib import contextmanager
 from tempfile import mkdtemp
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 import jwt
 
 import requests
@@ -58,7 +58,6 @@ def is_jwt_well_formed(token: str) -> bool:
         return False
 
 
-
 def get_local_path(
     url,
     cache_dir=None,
@@ -85,6 +84,16 @@ def get_local_path(
 
     :return: filepath
     """
+    logger.debug("get_local_path() called with the following arguments:\n"
+          f"  url: {url}\n"
+          f"  cache_dir: {cache_dir}\n"
+          f"  project_dir: {project_dir}\n"
+          f"  hostname: {hostname}\n"
+          f"  image_dir: {image_dir}\n"
+          f"  access_token: {access_token}\n"
+          f"  download_resources: {download_resources}\n"
+          f"  task_id: {task_id}")
+    
     # get environment variables
     hostname = (
         hostname
@@ -119,6 +128,12 @@ def get_local_path(
     is_cloud_storage_file = (
         url.startswith("s3:") or url.startswith("gs:") or url.startswith("azure-blob:")
     )
+    parsed_url = urlparse(url)
+    query_params = parse_qs(parsed_url.query)
+    storage_filepath = query_params.get("filepath", [None])[0]
+    is_storage_data_file = parsed_url.path.startswith("/storage-data/uploaded") or parsed_url.path.startswith(
+        "storage-data/uploaded"
+    )
 
     # Local storage file: try to load locally otherwise download below
     # this code allow to read Local Storage files directly from a directory
@@ -152,8 +167,8 @@ def get_local_path(
             logger.debug(f"Uploaded file: Path exists in image_dir: {filepath}")
             return filepath
 
-    # Upload or Local Storage file
-    if is_uploaded_file or is_local_storage_file or is_cloud_storage_file:
+    # Upload, Local Storage, Storage Proxy or Cloud Storage file
+    if is_uploaded_file or is_local_storage_file or is_cloud_storage_file or is_storage_data_file:
         # hostname check
         if not hostname:
             raise FileNotFoundError(
@@ -177,11 +192,22 @@ def get_local_path(
                 + "]: "
                 + url
             )
+        elif is_storage_data_file:
+            resolved_path = parsed_url.path or "/storage-data/uploaded/"
+            url = concat_urls(hostname, resolved_path)
+            if parsed_url.query:
+                url = url + "?" + parsed_url.query
+            logger.info(
+                "Storage proxy file: Resolving url using hostname ["
+                + hostname
+                + "]: "
+                + url
+            )
 
         # check access token
         if not access_token:
             raise FileNotFoundError(
-                "To access uploaded and local storage files you have to "
+                "To access uploaded, storage proxy and local storage files you have to "
                 "set LABEL_STUDIO_API_KEY environment variable."
             )
 
@@ -193,6 +219,8 @@ def get_local_path(
         access_token,
         is_local_storage_file,
         is_cloud_storage_file,
+        is_storage_data_file,
+        storage_filepath,
     )
     return filepath
 
@@ -205,6 +233,8 @@ def download_and_cache(
     access_token,
     is_local_storage_file,
     is_cloud_storage_file,
+    is_storage_data_file,
+    storage_filepath,
 ):
     # File specified by remote URL - download and cache it
     cache_dir = cache_dir or get_cache_dir()
@@ -216,6 +246,12 @@ def download_and_cache(
     # cloud storage: s3://bucket/1.jpg => 1.jpg
     elif is_cloud_storage_file:
         url_filename = os.path.basename(url)
+    # storage proxy: /storage-data/uploaded/?filepath=upload/5/1.jpg => 1.jpg
+    elif is_storage_data_file:
+        storage_filepath = storage_filepath or parse_qs(parsed_url.query).get("filepath", [None])[0]
+        url_filename = os.path.basename(storage_filepath or "")
+        if not url_filename:
+            url_filename = os.path.basename(parsed_url.path)
     # all others: /some/url/1.jpg?expire=xxx => 1.jpg
     else:
         url_filename = os.path.basename(parsed_url.path)
@@ -328,6 +364,12 @@ def get_base64_content(
     is_cloud_storage_file = (
         url.startswith("s3:") or url.startswith("gs:") or url.startswith("azure-blob:")
     )
+    parsed_url = urlparse(url)
+    query_params = parse_qs(parsed_url.query)
+    storage_filepath = query_params.get("filepath", [None])[0]
+    is_storage_data_file = parsed_url.path.startswith("/storage-data/uploaded") or parsed_url.path.startswith(
+        "storage-data/uploaded"
+    )
 
     # Local storage file: try to load locally
     if is_local_storage_file:
@@ -340,8 +382,8 @@ def get_base64_content(
             with open(filepath, "rb") as f:
                 return base64.b64encode(f.read()).decode("utf-8")
 
-    # Upload or Local Storage file
-    if is_uploaded_file or is_local_storage_file or is_cloud_storage_file:
+    # Upload, Local Storage, Storage Proxy or Cloud Storage file
+    if is_uploaded_file or is_local_storage_file or is_cloud_storage_file or is_storage_data_file:
         # hostname check
         if not hostname:
             raise FileNotFoundError(
@@ -365,11 +407,22 @@ def get_base64_content(
                 + "]: "
                 + url
             )
+        elif is_storage_data_file:
+            resolved_path = parsed_url.path or "/storage-data/uploaded/"
+            url = concat_urls(hostname, resolved_path)
+            if parsed_url.query:
+                url = url + "?" + parsed_url.query
+            logger.info(
+                "Storage proxy file: Resolving url using hostname ["
+                + hostname
+                + "]: "
+                + url
+            )
 
         # check access token
         if not access_token:
             raise FileNotFoundError(
-                "To access uploaded and local storage files you have to "
+                "To access uploaded, storage proxy and local storage files you have to "
                 "set LABEL_STUDIO_API_KEY environment variable."
             )
 
