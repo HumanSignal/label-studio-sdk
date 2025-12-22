@@ -66,12 +66,12 @@ flowchart TD
 ## Diagram 3: URL Shapes & Normalization
 ```mermaid
 flowchart LR
-  uploadKey["upload/<project>/<file>"] --> proxyUrl["/storage-data/uploaded/?filepath=upload/..."]
-  proxyUrl -->|HTTP fail + FileSystemStorage| dataUpload["/data/upload/<project>/<file> (fallback)"]
+  uploadKey["upload/project/file"] --> proxyUrl["/storage-data/uploaded/?filepath=upload/..."]
+  proxyUrl -->|HTTP fail + FileSystemStorage| dataUpload["/data/upload/project/file (fallback)"]
   dataUpload --> download[Download]
 
   localFiles["/data/local-files?d=..."] --> localRead["Read LOCAL_FILES_DOCUMENT_ROOT or download"]
-  cloudUri["s3|gs|azure-blob://..."] --> presign["/tasks/<id>/presign?fileuri=..."] --> download
+  cloudUri["s3|gs|azure-blob://..."] --> presign["/tasks/taskId/presign?fileuri=..."] --> download
   httpUrl["http(s)://..."] --> download
   fileProxy["/api/projects/pk/file-proxy?url=b64"] --> download
   storagesProxy["/api/storages/.../task-storage-data-..."] --> download
@@ -80,14 +80,14 @@ flowchart LR
 ---
 
 ## Key Points
-- **Upload key is always stored as** `upload/<project>/<file>` (snapshots keep this).
+- **Upload key is always stored as** `upload/project/file` (snapshots keep this).
 - **Local FileSystemStorage (default)**:
-  - Downloader tries `/storage-data/uploaded/?filepath=upload/...`; on HTTP failure (e.g., nginx + FileSystemStorage), it falls back to `/data/upload/<project>/<file>`.
+  - Downloader tries `/storage-data/uploaded/?filepath=upload/...`; on HTTP failure (e.g., nginx + FileSystemStorage), it falls back to `/data/upload/project/file`.
 - **Cloud default storage (S3/GCS/Azure/minio)**:
-  - Downloads via `/storage-data/uploaded/?filepath=upload/<project>/<file>` with auth; `/data/upload/...` is not expected to exist.
+  - Downloads via `/storage-data/uploaded/?filepath=upload/project/file` with auth; `/data/upload/...` is not expected to exist.
 - **Project storage**:
   - Local Storage: `/data/local-files?d=...` (read locally or download from host).
-  - Project cloud storage: `s3://…`, `gs://…`, `azure-blob://…` → `/tasks/<task_id>/presign/?fileuri=...`.
+  - Project cloud storage: `s3://…`, `gs://…`, `azure-blob://…` → `/tasks/taskId/presign/?fileuri=...`.
 - **Direct URLs**: `http(s)://...` (auth only if host matches `hostname`).
 - **Auth**: `Token <token>` for legacy API tokens; `Bearer <token>` for JWT access tokens (when host matches `hostname`).
 
