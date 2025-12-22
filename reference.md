@@ -9567,6 +9567,14 @@ client.projects.update(
 <dl>
 <dd>
 
+**agreement_methodology:** `typing.Optional[AgreementMethodologyEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **agreement_threshold:** `typing.Optional[str]` — Minimum percent agreement threshold for which minimum number of annotators must agree
     
 </dd>

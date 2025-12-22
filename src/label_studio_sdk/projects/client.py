@@ -25,6 +25,7 @@ from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.paginated_lse_project_counts_list import PaginatedLseProjectCountsList
 from ..types.lse_project_response import LseProjectResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..types.agreement_methodology_enum import AgreementMethodologyEnum
 from ..types.assignment_settings_request import AssignmentSettingsRequest
 from ..types.review_settings_request import ReviewSettingsRequest
 from ..types.lse_project_update import LseProjectUpdate
@@ -585,6 +586,7 @@ class ProjectsClient:
         id: int,
         *,
         members_limit: typing.Optional[int] = None,
+        agreement_methodology: typing.Optional[AgreementMethodologyEnum] = OMIT,
         agreement_threshold: typing.Optional[str] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
@@ -641,6 +643,8 @@ class ProjectsClient:
 
         members_limit : typing.Optional[int]
             Maximum number of members to return
+
+        agreement_methodology : typing.Optional[AgreementMethodologyEnum]
 
         agreement_threshold : typing.Optional[str]
             Minimum percent agreement threshold for which minimum number of annotators must agree
@@ -784,6 +788,7 @@ class ProjectsClient:
                 "members_limit": members_limit,
             },
             json={
+                "agreement_methodology": agreement_methodology,
                 "agreement_threshold": agreement_threshold,
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,
@@ -1852,6 +1857,7 @@ class AsyncProjectsClient:
         id: int,
         *,
         members_limit: typing.Optional[int] = None,
+        agreement_methodology: typing.Optional[AgreementMethodologyEnum] = OMIT,
         agreement_threshold: typing.Optional[str] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
@@ -1908,6 +1914,8 @@ class AsyncProjectsClient:
 
         members_limit : typing.Optional[int]
             Maximum number of members to return
+
+        agreement_methodology : typing.Optional[AgreementMethodologyEnum]
 
         agreement_threshold : typing.Optional[str]
             Minimum percent agreement threshold for which minimum number of annotators must agree
@@ -2059,6 +2067,7 @@ class AsyncProjectsClient:
                 "members_limit": members_limit,
             },
             json={
+                "agreement_methodology": agreement_methodology,
                 "agreement_threshold": agreement_threshold,
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,

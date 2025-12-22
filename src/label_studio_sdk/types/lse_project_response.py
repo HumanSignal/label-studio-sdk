@@ -2,6 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .agreement_methodology_enum import AgreementMethodologyEnum
 import pydantic
 from .assignment_settings import AssignmentSettings
 import datetime as dt
@@ -17,6 +18,7 @@ class LseProjectResponse(UncheckedBaseModel):
     Serializer for project response, combining all the serializers for different roles. Don't use it except for Spectacular/Fern definitions.
     """
 
+    agreement_methodology: typing.Optional[AgreementMethodologyEnum] = None
     agreement_threshold: typing.Optional[str] = pydantic.Field(default=None)
     """
     Minimum percent agreement threshold for which minimum number of annotators must agree

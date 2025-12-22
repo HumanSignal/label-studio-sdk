@@ -4,6 +4,7 @@ from .action_enum import ActionEnum
 from .actions_enum import ActionsEnum
 from .activity_log import ActivityLog
 from .activity_log_response import ActivityLogResponse
+from .agreement_methodology_enum import AgreementMethodologyEnum
 from .all_roles_project_list import AllRolesProjectList
 from .annotated_enum import AnnotatedEnum
 from .annotation import Annotation
@@ -203,6 +204,7 @@ __all__ = [
     "ActionsEnum",
     "ActivityLog",
     "ActivityLogResponse",
+    "AgreementMethodologyEnum",
     "AllRolesProjectList",
     "AnnotatedEnum",
     "Annotation",
