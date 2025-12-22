@@ -1,4 +1,5 @@
 import json
+import os
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
@@ -104,7 +105,7 @@ def test_yolo_with_images_storage_proxy(monkeypatch, storage_proxy_task):
 
     images_dir = f"{storage_proxy_task.output_dir}/images"
     assert any(
-        name.endswith("__1.jpg") for name in (list(__import__("os").listdir(images_dir)))
+        name.endswith("__1.jpg") for name in os.listdir(images_dir)
     ), "Downloaded image file with expected name not found"
 
     assert requested.url.startswith(
