@@ -164,6 +164,14 @@ def export(args):
         c.convert_to_yolo(
             args.input, args.output, is_dir=not args.heartex_format, is_obb=True
         )
+    elif args.format in (Format.YOLO_WITH_IMAGES, Format.YOLO_OBB_WITH_IMAGES):
+        c.convert(
+            args.input,
+            args.output,
+            args.format,
+            output_image_dir=args.image_dir,
+            is_dir=not args.heartex_format,
+        )    
     elif args.format == Format.BRUSH_TO_COCO:
         c.convert(
             args.input,
