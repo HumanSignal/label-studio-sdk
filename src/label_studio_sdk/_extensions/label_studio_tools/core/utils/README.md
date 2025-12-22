@@ -1,96 +1,97 @@
 # Label Studio Tools Core Utils
 
 ## Overview
-This folder contains SDK-side utility helpers used by Label Studio converters and tools.
-The most critical one for exports with images is `io.py`, which turns task media references
-into **local file paths** by downloading and caching remote resources.
+Utilities used by Label Studio converters. `io.py` resolves task media references to **local file paths**, downloading and caching when needed. This is critical for `*_WITH_IMAGES` exports—failed downloads lead to empty `images/` folders.
 
-This matters for `*_WITH_IMAGES` export formats, where missing downloads silently result in
-empty `images/` folders in the exported archive.
+Also, these tools are used in Label Studio ML backend. 
 
-## Architecture
-The diagram below shows:
-- **Where file references come from** in Label Studio
-- **How they are represented** in different APIs and export snapshots
-- **How `get_local_path` normalizes and downloads them**
+---
+
+## Diagram 1: Where URLs Come From
 
 ```mermaid
 flowchart TD
   subgraph sources [MediaSources]
-    uiUpload[UIUpload] --> fileUpload[FileUploadModel]
-    importLocal[ImportLocalStorage] --> localFiles["/data/local-files?d=..."]
-    importHttp[ImportHttpUrl] --> httpUrl["http or https"]
-    importCloud[ImportProjectCloudStorage] --> cloudUri["s3 or gs or azure-blob uri"]
-    importProtected[ImportProtectedHttpUrl] --> fileProxy["/api/projects/pk/file-proxy?url=b64"]
+    uiUpload[UI Upload] --> fileUpload[FileUploadModel]
+    importLocal[Import Local Storage] --> localFiles["/data/local-files?d=..."]
+    importHttp[Import HTTP URL] --> httpUrl["http(s)://..."]
+    importCloud[Import Project Cloud Storage] --> cloudUri["s3|gs|azure-blob://..."]
+    importProtected[Import Protected HTTP] --> fileProxy["/api/projects/pk/file-proxy?url=b64"]
   end
 
-  subgraph taskData [TaskDataRepresentations]
+  subgraph taskData [Task Data Representations]
     fileUpload --> uploadKey["upload/project/file"]
-    uploadKey --> snapshotJson[ExportSnapshotJson]
-    uploadKey --> dataManagerApi[DataManagerApi]
+    uploadKey --> snapshotJson[Export Snapshot JSON]
+    uploadKey --> dataManagerApi[Data Manager API]
 
-    dataManagerApi --> resolveUri[TaskResolveUri]
-    resolveUri --> cloudDefault[CLOUD_FILE_STORAGE_ENABLED true]
+    dataManagerApi --> resolveUri[Task.resolve_uri]
+    resolveUri --> cloudDefault[CLOUD_FILE_STORAGE_ENABLED = true]
     cloudDefault --> storageProxy["/storage-data/uploaded?filepath=upload/project/file"]
-    resolveUri --> fsDefault[CLOUD_FILE_STORAGE_ENABLED false]
+    resolveUri --> fsDefault[CLOUD_FILE_STORAGE_ENABLED = false]
     fsDefault --> dataUpload["/data/upload/project/file"]
 
     cloudUri --> presignApi["/tasks/taskId/presign?fileuri=cloudUri"]
     cloudUri --> storagesProxy["/api/storages/task-storage-data-presign?fileuri=b64"]
   end
-
-  subgraph sdk [SdkDownloader]
-    converter[ConverterWithImages] --> getLocalPath[get_local_path]
-
-    getLocalPath -->|if file exists| localBypass[UseLocalFile]
-    getLocalPath -->|if download needed| normalize[NormalizeAndResolve]
-
-    normalize --> uploadNormalize["upload or data-upload => storage-data proxy"]
-    normalize --> localNormalize["data local-files => local or download"]
-    normalize --> cloudNormalize["cloud uri => tasks presign"]
-    normalize --> httpNormalize["http or https => direct download"]
-    normalize --> proxyNormalize["ls proxy endpoints => download"]
-
-    uploadNormalize --> downloadCache[download_and_cache]
-    localNormalize --> downloadCache
-    cloudNormalize --> downloadCache
-    httpNormalize --> downloadCache
-    proxyNormalize --> downloadCache
-
-    downloadCache --> cachedFile[CachedFilePath]
-    cachedFile --> exportZip[ImagesIncludedInExportZip]
-  end
 ```
 
-## Key Features
-- **Upload key support**: Handles `upload/<project>/<file>` and `/data/upload/...` paths, including the
-  export snapshot case where raw upload keys are present in JSON.
-- **Storage proxy support**: Handles `/storage-data/uploaded/?filepath=...` URLs and derives the cached filename
-  from the `filepath` query param to preserve extensions.
-- **Local Storage support**: Handles `/data/local-files?d=...` and optionally reads directly from disk via
-  `LOCAL_FILES_DOCUMENT_ROOT` when available.
-- **Project cloud storage support**: Handles `s3:`, `gs:`, and `azure-blob:` URIs via the task presign endpoint.
-- **Authentication**: Adds `Authorization` header for Label-Studio-hosted URLs:
-  - `Token <token>` for legacy API tokens
-  - `Bearer <token>` for well-formed JWT access tokens
+---
 
-## URL and Path Shapes
-The downloader recognizes and normalizes the following patterns:
+## Diagram 2: Downloader Flow (`get_local_path`)
+```mermaid
+flowchart TD
+  converter[ConverterWithImages] --> getLocalPath[get_local_path]
 
-| Source | Example value in task data | Where it typically appears | How `get_local_path` handles it |
-|---|---|---|---|
-| UI upload key | `upload/8/file.jpg` | Export snapshots | Normalizes to `/data/upload/...`, then rewrites to `/storage-data/uploaded/?filepath=upload/...` for downloading |
-| UI upload proxy | `/storage-data/uploaded/?filepath=upload/8/file.jpg` | DataManager API when cloud default storage is enabled | Rewrites host to `hostname`, requires auth, uses `filepath` for filename |
-| UI upload download | `/data/upload/8/file.jpg` | DataManager API when default storage is local FS | Downloads from host or uses local disk if `image_dir` exists |
-| Local Storage | `/data/local-files?d=dir/file.jpg` | Tasks using Local Storage | Reads locally via `LOCAL_FILES_DOCUMENT_ROOT` when possible, otherwise downloads from host |
-| Project cloud storage | `s3://bucket/prefix/file.jpg` | Tasks imported from cloud storages | Requires `task_id`, uses `/tasks/<task_id>/presign?fileuri=...` then downloads |
-| Direct URL | `https://example.com/file.jpg` | Tasks with external data links | Downloads directly, no LS auth unless host matches `hostname` |
-| LSE file proxy | `/api/projects/<pk>/file-proxy/?url=<b64>` | Tasks with basic-auth protected HTTP data | Treated as an LS-hosted HTTP URL, downloaded with auth if host matches `hostname` |
-| Storage proxy endpoints | `/api/storages/.../task-storage-data-.../?fileuri=<b64>` | Tasks resolved by project storage proxy | Treated as LS-hosted HTTP URL, downloaded with auth if host matches `hostname` |
+  getLocalPath -->|file exists| localHit[Use local file]
+  getLocalPath -->|need download| normalize[Normalize URL]
+
+  normalize --> uploadProxy["upload/data-upload => storage-data proxy"]
+  normalize --> localStorage["/data/local-files?d=..."]
+  normalize --> cloudStorage["s3|gs|azure-blob => presign"]
+  normalize --> directHttp["http(s) direct"]
+  normalize --> proxyHttp["LS proxy endpoints (/api/storages..., file-proxy)"]
+
+  uploadProxy --> download[download_and_cache]
+  localStorage --> download
+  cloudStorage --> download
+  directHttp --> download
+  proxyHttp --> download
+
+  download --> cached[Cached file path]
+  cached --> exportZip[Images included in export zip]
+```
+
+---
+
+## Diagram 3: URL Shapes & Normalization
+```mermaid
+flowchart LR
+  uploadKey["upload/<project>/<file>"] --> proxyUrl["/storage-data/uploaded/?filepath=upload/..."]
+  proxyUrl -->|HTTP fail + FileSystemStorage| dataUpload["/data/upload/<project>/<file> (fallback)"]
+  dataUpload --> download[Download]
+
+  localFiles["/data/local-files?d=..."] --> localRead["Read LOCAL_FILES_DOCUMENT_ROOT or download"]
+  cloudUri["s3|gs|azure-blob://..."] --> presign["/tasks/<id>/presign?fileuri=..."] --> download
+  httpUrl["http(s)://..."] --> download
+  fileProxy["/api/projects/pk/file-proxy?url=b64"] --> download
+  storagesProxy["/api/storages/.../task-storage-data-..."] --> download
+```
+
+---
+
+## Key Points
+- **Upload key is always stored as** `upload/<project>/<file>` (snapshots keep this).
+- **Local FileSystemStorage (default)**:
+  - Downloader tries `/storage-data/uploaded/?filepath=upload/...`; on HTTP failure (e.g., nginx + FileSystemStorage), it falls back to `/data/upload/<project>/<file>`.
+- **Cloud default storage (S3/GCS/Azure/minio)**:
+  - Downloads via `/storage-data/uploaded/?filepath=upload/<project>/<file>` with auth; `/data/upload/...` is not expected to exist.
+- **Project storage**:
+  - Local Storage: `/data/local-files?d=...` (read locally or download from host).
+  - Project cloud storage: `s3://…`, `gs://…`, `azure-blob://…` → `/tasks/<task_id>/presign/?fileuri=...`.
+- **Direct URLs**: `http(s)://...` (auth only if host matches `hostname`).
+- **Auth**: `Token <token>` for legacy API tokens; `Bearer <token>` for JWT access tokens (when host matches `hostname`).
 
 ## Usage
-Minimal use in converters:
-
 ```python
 from label_studio_sdk._extensions.label_studio_tools.core.utils.io import get_local_path
 
@@ -104,25 +105,21 @@ local_path = get_local_path(
 )
 ```
 
-Environment variables used:
-- `LABEL_STUDIO_URL` / `LABEL_STUDIO_HOST`: default hostname for resolving LS-internal URLs
-- `LABEL_STUDIO_API_KEY` / `LABEL_STUDIO_ACCESS_TOKEN`: auth token used for downloads
-- `LOCAL_FILES_DOCUMENT_ROOT`: root for Local Storage direct reads
-- `VERIFY_SSL`: set `False` to bypass SSL verification for debugging
+## Environment Variables
+- `LABEL_STUDIO_URL` / `LABEL_STUDIO_HOST`
+- `LABEL_STUDIO_API_KEY` / `LABEL_STUDIO_ACCESS_TOKEN`
+- `LOCAL_FILES_DOCUMENT_ROOT`
+- `VERIFY_SSL`
 
 ## API Reference
-- `get_local_path(...)`: Resolve a task media reference to a local file path, downloading if needed.
-- `download_and_cache(...)`: Low-level download + cache helper, builds deterministic filenames.
-- `get_base64_content(...)`: Download a resource and return base64 without writing to disk.
+- `get_local_path(...)`: resolve & download to local path.
+- `download_and_cache(...)`: low-level download/cache helper.
+- `get_base64_content(...)`: download and return base64.
 
-## Development
-- Add tests in `label-studio-sdk/tests/custom/label_studio_tools/` for URL normalization and auth behavior.
-- Add converter regression tests in `label-studio-sdk/tests/custom/converter/` for formats that include images.
+## Development Notes
+- Tests in `tests/custom/label_studio_tools/` cover URL normalization, auth, and upload→proxy→fallback.
+- Converter regressions in `tests/custom/converter/` for image-inclusive formats.
 
 ## Other Points
-- Export snapshots can contain **raw upload keys** instead of `/storage-data/...` proxy URLs. The downloader must
-  handle both representations for the same underlying file.
-- If using JWT-based auth, the downloader expects a **JWT access token** for `Bearer` auth. Refresh tokens are not
-  accepted by the API endpoints that serve files.
-- Some LS proxy endpoints encode the real filename inside query parameters. If the cached filename must preserve an
-  extension, consider extending filename inference similarly to how `/storage-data/uploaded/?filepath=...` is handled.
+- Snapshots may contain raw upload keys; downloader must handle both raw uploads and proxy URLs.
+- Some LS proxy endpoints embed filenames in query params—extend filename inference as needed (pattern: `/storage-data/uploaded/?filepath=...`).
