@@ -70,6 +70,33 @@ def get_local_path(
 ):
     f"""This helper function is used to download (cache) url and return local path to it.
 
+    All possible URL types:
+        **Persistent django storage:**
+
+        - File System on local hard drive when STORAGE_TYPE=None (default) and MINIO_STORAGE_ENDPOINT is not set 
+            * if USE_NGINX_FOR_UPLOADS=False => key: upload/<project-id>/filename 
+            => download url: /storage-data/uploaded/?filepath=upload/<project-id>/filename or /data/upload/<project-id>/filename
+
+            * if USE_NGINX_FOR_UPLOADS=True => [not supported]
+            => download url: /data/upload/<project-id>/filename [only]
+
+        - Cloud storage when STORAGE_TYPE=s3/gcs/azure or MINIO_STORAGE_ENDPOINT is set
+            * if USE_NGINX_FOR_UPLOADS=False => key: /data/upload/<project-id>/filename or /storage-data/uploaded/?filepath=upload/<project-id>/filename
+            * if USE_NGINX_FOR_UPLOADS=True => /storage-data/uploaded/?filepath=upload/<project-id>/filename
+
+        **Project cloud storage:**
+
+        - Local files storage for a project: /data/local-files?d=dir/1.jpg
+            => If LOCAL_FILES_DOCUMENT_ROOT + dir/1.jpg exists locally, it’s read directly.
+            => Otherwise it’s fetched from your LS host: https://<hostname>/data/local-files?d=dir/1.jpg
+
+        - Cloud storage for a project: s3://bucket/1.jpg, gs://bucket/1.jpg, azure-blob://bucket/1.jpg
+            => https://<hostname>/tasks/<task_id>/presign/?fileuri=s3://bucket/1.jpg
+
+        **Direct http(s) URL:**
+        
+        - http(s) url: http://example.com/1.jpg or https://example.com/1.jpg
+
     :param url: File URL to download, it can be a uploaded file, local storage, cloud storage file or just http(s) url
     :param cache_dir: Cache directory to download or copy files
     :param project_dir: Project directory
@@ -175,6 +202,10 @@ def get_local_path(
     # fetching such files via /data/upload/... can fail (files aren't on local disk).
     # Rewriting to the storage proxy keeps downloads working across both local and cloud
     # default storage backends.
+    # 
+    # FileSystemStorage can be downloaded both using 
+    # /storage-data/uploaded/?filepath=upload/<project-id>/filename or /data/upload/<project-id>/filename
+    # but USE_NGINX_FOR_UPLOADS should be OFF for FileSystemStorage since it doesn't support `storage_url=True` mode. 
     if is_uploaded_file and not is_storage_data_file:
         upload_path = url.lstrip("/")
         if upload_path.startswith("data/"):
