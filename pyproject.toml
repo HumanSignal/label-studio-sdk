@@ -80,3 +80,6 @@ line-length = 120
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[project.scripts]
+label-studio-converter = "label_studio_sdk.converter.main:main"
