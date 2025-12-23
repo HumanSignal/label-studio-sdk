@@ -3,6 +3,10 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
+from .lse_user_organization_member_list_contributed_to_projects_item import (
+    LseUserOrganizationMemberListContributedToProjectsItem,
+)
+from .lse_user_organization_member_list_created_projects_item import LseUserOrganizationMemberListCreatedProjectsItem
 import datetime as dt
 from .lse_fields import LseFields
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -23,8 +27,8 @@ class LseUserOrganizationMemberList(UncheckedBaseModel):
     """
 
     avatar: typing.Optional[str] = None
-    contributed_to_projects: typing.Optional[str] = None
-    created_projects: typing.Optional[str] = None
+    contributed_to_projects: typing.Optional[typing.List[LseUserOrganizationMemberListContributedToProjectsItem]] = None
+    created_projects: typing.Optional[typing.List[LseUserOrganizationMemberListCreatedProjectsItem]] = None
     custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
     """
     Custom keyboard shortcuts configuration for the user interface

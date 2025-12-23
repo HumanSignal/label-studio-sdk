@@ -28,6 +28,7 @@ class MembersClient:
         self,
         id: int,
         *,
+        contributed_to_projects: typing.Optional[bool] = None,
         exclude_project_id: typing.Optional[int] = None,
         exclude_workspace_id: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
@@ -50,6 +51,9 @@ class MembersClient:
         ----------
         id : int
             A unique integer value identifying this organization.
+
+        contributed_to_projects : typing.Optional[bool]
+            Whether to include projects created and contributed to by the members.
 
         exclude_project_id : typing.Optional[int]
             Project ID to exclude users who are already associated with this project (direct members, workspace members, or implicit admin/owner access).
@@ -108,6 +112,7 @@ class MembersClient:
             f"api/organizations/{jsonable_encoder(id)}/memberships",
             method="GET",
             params={
+                "contributed_to_projects": contributed_to_projects,
                 "exclude_project_id": exclude_project_id,
                 "exclude_workspace_id": exclude_workspace_id,
                 "ordering": ordering,
@@ -217,7 +222,12 @@ class MembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        contributed_to_projects: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationMember:
         """
         Get organization member details by user ID.
@@ -228,6 +238,9 @@ class MembersClient:
 
         user_pk : int
             A unique integer value identifying the user to get organization details for.
+
+        contributed_to_projects : typing.Optional[bool]
+            Whether to include projects created and contributed to by the member.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -252,6 +265,9 @@ class MembersClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/organizations/{jsonable_encoder(id)}/memberships/{jsonable_encoder(user_pk)}/",
             method="GET",
+            params={
+                "contributed_to_projects": contributed_to_projects,
+            },
             request_options=request_options,
         )
         try:
@@ -350,6 +366,7 @@ class AsyncMembersClient:
         self,
         id: int,
         *,
+        contributed_to_projects: typing.Optional[bool] = None,
         exclude_project_id: typing.Optional[int] = None,
         exclude_workspace_id: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
@@ -372,6 +389,9 @@ class AsyncMembersClient:
         ----------
         id : int
             A unique integer value identifying this organization.
+
+        contributed_to_projects : typing.Optional[bool]
+            Whether to include projects created and contributed to by the members.
 
         exclude_project_id : typing.Optional[int]
             Project ID to exclude users who are already associated with this project (direct members, workspace members, or implicit admin/owner access).
@@ -438,6 +458,7 @@ class AsyncMembersClient:
             f"api/organizations/{jsonable_encoder(id)}/memberships",
             method="GET",
             params={
+                "contributed_to_projects": contributed_to_projects,
                 "exclude_project_id": exclude_project_id,
                 "exclude_workspace_id": exclude_workspace_id,
                 "ordering": ordering,
@@ -555,7 +576,12 @@ class AsyncMembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        contributed_to_projects: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationMember:
         """
         Get organization member details by user ID.
@@ -566,6 +592,9 @@ class AsyncMembersClient:
 
         user_pk : int
             A unique integer value identifying the user to get organization details for.
+
+        contributed_to_projects : typing.Optional[bool]
+            Whether to include projects created and contributed to by the member.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -598,6 +627,9 @@ class AsyncMembersClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/organizations/{jsonable_encoder(id)}/memberships/{jsonable_encoder(user_pk)}/",
             method="GET",
+            params={
+                "contributed_to_projects": contributed_to_projects,
+            },
             request_options=request_options,
         )
         try:
