@@ -29192,6 +29192,14 @@ client.organizations.members.list(
 <dl>
 <dd>
 
+**contributed_to_projects:** `typing.Optional[bool]` — Whether to include projects created and contributed to by the members.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **exclude_project_id:** `typing.Optional[int]` — Project ID to exclude users who are already associated with this project (direct members, workspace members, or implicit admin/owner access).
     
 </dd>
@@ -29440,6 +29448,14 @@ client.organizations.members.get(
 <dd>
 
 **user_pk:** `int` — A unique integer value identifying the user to get organization details for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**contributed_to_projects:** `typing.Optional[bool]` — Whether to include projects created and contributed to by the member.
     
 </dd>
 </dl>

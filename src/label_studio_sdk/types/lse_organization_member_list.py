@@ -2,6 +2,10 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .lse_organization_member_list_contributed_to_projects_item import (
+    LseOrganizationMemberListContributedToProjectsItem,
+)
+from .lse_organization_member_list_created_projects_item import LseOrganizationMemberListCreatedProjectsItem
 import pydantic
 from .lse_user_organization_member_list import LseUserOrganizationMemberList
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -14,6 +18,8 @@ class LseOrganizationMemberList(UncheckedBaseModel):
     """
 
     concurrency: typing.Optional[str] = None
+    contributed_to_projects: typing.Optional[typing.List[LseOrganizationMemberListContributedToProjectsItem]] = None
+    created_projects: typing.Optional[typing.List[LseOrganizationMemberListCreatedProjectsItem]] = None
     id: typing.Optional[int] = None
     organization: int = pydantic.Field()
     """

@@ -2,7 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .organization_member_contributed_to_projects_item import OrganizationMemberContributedToProjectsItem
 import datetime as dt
+from .organization_member_created_projects_item import OrganizationMemberCreatedProjectsItem
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -13,9 +15,11 @@ class OrganizationMember(UncheckedBaseModel):
     which fields should be displayed.
     """
 
-    annotations_count: typing.Optional[str] = None
-    contributed_projects_count: typing.Optional[str] = None
+    annotations_count: typing.Optional[int] = None
+    contributed_projects_count: typing.Optional[int] = None
+    contributed_to_projects: typing.Optional[typing.List[OrganizationMemberContributedToProjectsItem]] = None
     created_at: typing.Optional[dt.datetime] = None
+    created_projects: typing.Optional[typing.List[OrganizationMemberCreatedProjectsItem]] = None
     organization: int = pydantic.Field()
     """
     Organization ID
