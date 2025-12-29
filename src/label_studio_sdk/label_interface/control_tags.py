@@ -41,7 +41,7 @@ _TAG_TO_CLASS = {
     "textarea": "TextAreaTag",
     "timeserieslabels": "TimeSeriesLabelsTag",
     "chatmessage": "ChatMessageTag",
-    "custominterface": "CustomInterfaceTag",
+    "react": "ReactTag",
 }
 
 
@@ -1126,14 +1126,14 @@ class TimeSeriesLabelsTag(ControlTag):
     _value_class: Type[TimeSeriesValue] = TimeSeriesValue
 
 
-class CustomInterfaceValue(BaseModel):
-    custominterface: Dict[str, Any]
+class ReactValue(BaseModel):
+    react: Dict[str, Any]
 
-class CustomInterfaceTag(ControlTag):
+class ReactTag(ControlTag):
     """ """
-    tag: str = "CustomInterface"
-    _value_class: Type[CustomInterfaceValue] = CustomInterfaceValue
-    _label_attr_name: str = "custominterface"
+    tag: str = "React"
+    _value_class: Type[ReactValue] = ReactValue
+    _label_attr_name: str = "react"
 
     # Registry of type aliases that can be used in outputs specification
     # Each alias maps to a function that takes arguments and returns a JSON schema fragment
@@ -1282,7 +1282,7 @@ class CustomInterfaceTag(ControlTag):
 
     def to_json_schema(self):
         """
-        Converts the current CustomInterfaceTag instance into a JSON Schema.
+        Converts the current ReactTag instance into a JSON Schema.
         
         Supports multiple parsing strategies (mutually compatible):
         
@@ -1327,5 +1327,5 @@ class CustomInterfaceTag(ControlTag):
         return {"type": "object", "properties": properties}
 
     def label(self, *args, **kwargs) -> Region:
-        value = CustomInterfaceValue(custominterface=kwargs)
+        value = ReactValue(react=kwargs)
         return Region(from_tag=self, to_tag=self, value=value)
