@@ -1,4 +1,5 @@
 import threading
+import urllib.parse
 import typing
 from datetime import datetime, timezone
 import ssl
@@ -117,7 +118,7 @@ class TokensClientExt:
         if isinstance(existing_client, httpx.Client):
             response = existing_client.request(
                 method="POST",
-                url=f"{self._base_url}/api/token/refresh/",
+                url=urllib.parse.urljoin(f"{self._base_url}", "api/token/refresh/"),
                 json={"refresh": self._api_key},
                 headers={"Content-Type": "application/json"},
             )
@@ -128,7 +129,7 @@ class TokensClientExt:
             with httpx.Client(**client_params) as sync_client:
                 response = sync_client.request(
                     method="POST",
-                    url=f"{self._base_url}/api/token/refresh/",
+                    url=urllib.parse.urljoin(f"{self._base_url}/", "api/token/refresh/"),
                     json={"refresh": self._api_key},
                     headers={"Content-Type": "application/json"},
                 )
