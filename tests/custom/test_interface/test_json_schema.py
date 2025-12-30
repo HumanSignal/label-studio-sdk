@@ -267,11 +267,11 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
         {"sentiment": "Positive", "reasoning": "Let's think step by step"},
         {"sentiment": "Positive", "reasoning": "Let's think step by step"}
     ),
-    # custom interface with simple comma-delimited outputs
+    # React with simple comma-delimited outputs
     (
         """
         <View>
-          <CustomInterface name="my_app" toName="my_app" data="$my_data" outputs="field1,field2,field3" />
+          <React name="my_app" toName="my_app" data="$my_data" outputs="field1,field2,field3" />
         </View>
         """,
         {
@@ -573,11 +573,11 @@ def test_concurrent_json_schema_to_pydantic_threaded():
     "mixed_delimited_with_aliases",
     "pipe_with_rating",
 ])
-def test_custom_interface_outputs_parsing(outputs_attr, expected_properties, sample_input):
-    """Test various parsing strategies for CustomInterface outputs attribute."""
+def test_react_outputs_parsing(outputs_attr, expected_properties, sample_input):
+    """Test various parsing strategies for React outputs attribute."""
     config = f'''
     <View>
-      <CustomInterface name="result" toName="result" outputs="{outputs_attr}" />
+      <React name="result" toName="result" outputs="{outputs_attr}" />
     </View>
     '''
     interface = LabelInterface(config)
