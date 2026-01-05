@@ -41,7 +41,7 @@ _TAG_TO_CLASS = {
     "textarea": "TextAreaTag",
     "timeserieslabels": "TimeSeriesLabelsTag",
     "chatmessage": "ChatMessageTag",
-    "react": "ReactCodeTag",
+    "reactcode": "ReactCodeTag",
 }
 
 
