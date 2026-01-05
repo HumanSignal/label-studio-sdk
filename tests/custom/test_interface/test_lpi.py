@@ -35,8 +35,8 @@ def test_find_tags_by_class():
     <View>
         <Image name="img" value="$image"/>
         <Rectangle name="rect" toName="img"/>
-        <ReactCode name="custom1" toName="custom1" value="$my_data1" outputs="field1, field2" />
-        <ReactCode name="custom2" toName="custom2" value="$my_data2" outputs="field3, field4"><![CDATA[
+        <ReactCode name="react1" toName="react1" value="$my_data1" outputs="field1, field2" />
+        <ReactCode name="react2" toName="react2" value="$my_data2" outputs="field3, field4"><![CDATA[
         function MyInterface({ React, addRegion, regions, data }) {
           return React.createElement('div', {}, 'content');
         }
@@ -52,17 +52,17 @@ def test_find_tags_by_class():
     li = LabelInterface(config)
     
     # Validation: Find all ReactCodeTag instances
-    custom_code_tags = li.find_tags_by_class(ReactCodeTag)
+    react_code_tags = li.find_tags_by_class(ReactCodeTag)
     
     # Verify we found exactly 2 ReactCode tags
-    assert len(custom_code_tags) == 2, f"Expected 2 ReactCode tags, found {len(custom_code_tags)}"
+    assert len(react_code_tags) == 2, f"Expected 2 ReactCode tags, found {len(react_code_tags)}"
     
     # Verify all returned tags are ReactCodeTag instances
-    for tag in custom_code_tags:
+    for tag in react_code_tags:
         assert isinstance(tag, ReactCodeTag), f"Expected ReactCodeTag, got {type(tag)}"
     
     # Verify the names match
-    tag_names = [tag.name for tag in custom_code_tags]
-    assert "custom1" in tag_names, "Expected to find 'custom1' tag"
-    assert "custom2" in tag_names, "Expected to find 'custom2' tag"
+    tag_names = [tag.name for tag in react_code_tags]
+    assert "react1" in tag_names, "Expected to find 'react1' tag"
+    assert "react2" in tag_names, "Expected to find 'react2' tag"
 
