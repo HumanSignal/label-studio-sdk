@@ -300,7 +300,7 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
     "classification_with_textarea",
     "complex_interface",
     "textarea_required",
-    "custom_interface",
+    "react_code",
     # specify ids for each test case
     # ...
 ])
