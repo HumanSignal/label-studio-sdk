@@ -21,6 +21,12 @@ class LseTask(UncheckedBaseModel):
     Whether this task can be skipped. Set to False to make task unskippable.
     """
 
+    annotation_time: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Calculate total annotation time for this task from MetricInTimeBucket records.
+    Returns time in seconds.
+    """
+
     annotations: typing.Optional[str] = None
     annotations_ids: typing.Optional[str] = None
     annotations_results: typing.Optional[str] = None

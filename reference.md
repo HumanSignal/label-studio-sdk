@@ -11388,7 +11388,7 @@ client.tasks.update(
 
     **Core Annotation Events:**
     - `annotation_loaded` - When annotation interface is loaded
-    - `annotation_submitted` - When annotation is submitted
+    - `annotation_created` - When annotation is submitted
     - `annotation_updated` - When annotation is modified
     - `annotation_reviewed` - When annotation is reviewed
 
