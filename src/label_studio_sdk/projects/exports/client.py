@@ -40,6 +40,11 @@ class ExportsClient:
     ) -> typing.Iterator[bytes]:
         """
 
+                This endpoint is deprecated in Enterprise. Use the async export API instead:
+                POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+
+                In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+
                 <i>Note: if you have a large project it's recommended to use
                 export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
                 Export annotated tasks as a file in a specific format.
@@ -108,7 +113,13 @@ class ExportsClient:
 
     def list_formats(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[str]:
         """
-        Retrieve the available export formats for the current project by ID.
+
+                This endpoint is deprecated in Enterprise. Use the async export API instead:
+                POST /api/projects/\{id\}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+
+                In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+
+                Retrieve the available export formats for the current project by ID.
 
         Parameters
         ----------
@@ -560,6 +571,11 @@ class AsyncExportsClient:
     ) -> typing.AsyncIterator[bytes]:
         """
 
+                This endpoint is deprecated in Enterprise. Use the async export API instead:
+                POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+
+                In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+
                 <i>Note: if you have a large project it's recommended to use
                 export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
                 Export annotated tasks as a file in a specific format.
@@ -630,7 +646,13 @@ class AsyncExportsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[str]:
         """
-        Retrieve the available export formats for the current project by ID.
+
+                This endpoint is deprecated in Enterprise. Use the async export API instead:
+                POST /api/projects/\{id\}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+
+                In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+
+                Retrieve the available export formats for the current project by ID.
 
         Parameters
         ----------
