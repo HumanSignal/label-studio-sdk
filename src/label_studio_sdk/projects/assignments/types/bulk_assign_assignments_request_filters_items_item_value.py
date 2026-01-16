@@ -2,6 +2,4 @@
 
 import typing
 
-BulkAssignAssignmentsRequestFiltersItemsItemValue = typing.Union[
-    str, int, float, bool, typing.Dict[str, typing.Optional[typing.Any]]
-]
+BulkAssignAssignmentsRequestFiltersItemsItemValue = typing.Union[str, int, float, bool, typing.Dict[str, typing.Any]]

@@ -1,7 +1,5 @@
 import typing
-from typing_extensions import Annotated
 from .client import ProjectsClient, AsyncProjectsClient
-from pydantic import model_validator, validator, Field, ConfigDict
 from label_studio_sdk._extensions.pager_ext import SyncPagerExt, AsyncPagerExt, T
 from label_studio_sdk.types.lse_project_response import LseProjectResponse
 from label_studio_sdk.label_interface import LabelInterface
