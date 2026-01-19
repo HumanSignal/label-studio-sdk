@@ -26,8 +26,8 @@ class MemberTagsClient:
         self,
         id: int,
         *,
-        ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedOrganizationMemberTagList:
         """
@@ -44,11 +44,11 @@ class MemberTagsClient:
         id : int
             A unique integer value identifying this organization.
 
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
         page : typing.Optional[int]
             A page number within the paginated result set.
+
+        search : typing.Optional[str]
+            Search tags by label (case-insensitive).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -73,8 +73,8 @@ class MemberTagsClient:
             f"api/organizations/{jsonable_encoder(id)}/member-tags",
             method="GET",
             params={
-                "ordering": ordering,
                 "page": page,
+                "search": search,
             },
             request_options=request_options,
         )
@@ -428,8 +428,8 @@ class AsyncMemberTagsClient:
         self,
         id: int,
         *,
-        ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedOrganizationMemberTagList:
         """
@@ -446,11 +446,11 @@ class AsyncMemberTagsClient:
         id : int
             A unique integer value identifying this organization.
 
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
         page : typing.Optional[int]
             A page number within the paginated result set.
+
+        search : typing.Optional[str]
+            Search tags by label (case-insensitive).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -483,8 +483,8 @@ class AsyncMemberTagsClient:
             f"api/organizations/{jsonable_encoder(id)}/member-tags",
             method="GET",
             params={
-                "ordering": ordering,
                 "page": page,
+                "search": search,
             },
             request_options=request_options,
         )

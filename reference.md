@@ -29192,7 +29192,7 @@ client.organizations.member_tags.list(
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**page:** `typing.Optional[int]` — A page number within the paginated result set.
     
 </dd>
 </dl>
@@ -29200,7 +29200,7 @@ client.organizations.member_tags.list(
 <dl>
 <dd>
 
-**page:** `typing.Optional[int]` — A page number within the paginated result set.
+**search:** `typing.Optional[str]` — Search tags by label (case-insensitive).
     
 </dd>
 </dl>
