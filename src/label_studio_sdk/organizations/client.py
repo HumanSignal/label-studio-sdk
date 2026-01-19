@@ -3,6 +3,7 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .invites.client import InvitesClient
+from .member_tags.client import MemberTagsClient
 from .members.client import MembersClient
 from .permissions.client import PermissionsClient
 from ..core.request_options import RequestOptions
@@ -21,6 +22,7 @@ from ..types.role9e7enum import Role9E7Enum
 from ..types.default_role import DefaultRole
 from ..core.client_wrapper import AsyncClientWrapper
 from .invites.client import AsyncInvitesClient
+from .member_tags.client import AsyncMemberTagsClient
 from .members.client import AsyncMembersClient
 from .permissions.client import AsyncPermissionsClient
 
@@ -32,6 +34,7 @@ class OrganizationsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.invites = InvitesClient(client_wrapper=self._client_wrapper)
+        self.member_tags = MemberTagsClient(client_wrapper=self._client_wrapper)
         self.members = MembersClient(client_wrapper=self._client_wrapper)
         self.permissions = PermissionsClient(client_wrapper=self._client_wrapper)
 
@@ -430,6 +433,7 @@ class AsyncOrganizationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.invites = AsyncInvitesClient(client_wrapper=self._client_wrapper)
+        self.member_tags = AsyncMemberTagsClient(client_wrapper=self._client_wrapper)
         self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
         self.permissions = AsyncPermissionsClient(client_wrapper=self._client_wrapper)
 
