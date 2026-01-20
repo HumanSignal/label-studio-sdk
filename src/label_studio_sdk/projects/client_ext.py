@@ -18,7 +18,15 @@ class ProjectsClientExt(ProjectsClient):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.exports = ExportsClientExt(client_wrapper=self._client_wrapper)
+        self._exports_ext: typing.Optional[ExportsClientExt] = None
+
+    @property
+    def exports(self) -> ExportsClientExt:  # type: ignore[override]
+        # Newer Fern-generated clients may expose `exports` as a read-only @property.
+        # Avoid assigning to it; instead override it to return our extension client.
+        if self._exports_ext is None:
+            self._exports_ext = ExportsClientExt(client_wrapper=self._client_wrapper)
+        return self._exports_ext
 
     def list(self, **kwargs) -> SyncPagerExt[T]:
         return SyncPagerExt.from_sync_pager(super().list(**kwargs))
@@ -41,7 +49,13 @@ class AsyncProjectsClientExt(AsyncProjectsClient):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.exports = AsyncExportsClientExt(client_wrapper=self._client_wrapper)
+        self._exports_ext: typing.Optional[AsyncExportsClientExt] = None
+
+    @property
+    def exports(self) -> AsyncExportsClientExt:  # type: ignore[override]
+        if self._exports_ext is None:
+            self._exports_ext = AsyncExportsClientExt(client_wrapper=self._client_wrapper)
+        return self._exports_ext
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> ProjectExt:
         return typing.cast(
