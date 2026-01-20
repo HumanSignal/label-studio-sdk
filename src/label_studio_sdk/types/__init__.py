@@ -131,6 +131,7 @@ if typing.TYPE_CHECKING:
     from .organization_member import OrganizationMember
     from .organization_member_contributed_to_projects_item import OrganizationMemberContributedToProjectsItem
     from .organization_member_created_projects_item import OrganizationMemberCreatedProjectsItem
+    from .organization_member_tag import OrganizationMemberTag
     from .organization_membership import OrganizationMembership
     from .organization_permission import OrganizationPermission
     from .organization_permission_request import OrganizationPermissionRequest
@@ -139,6 +140,7 @@ if typing.TYPE_CHECKING:
     from .paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
     from .paginated_lse_project_counts_list import PaginatedLseProjectCountsList
     from .paginated_lse_user_list import PaginatedLseUserList
+    from .paginated_organization_member_tag_list import PaginatedOrganizationMemberTagList
     from .paginated_paginated_project_member_list import PaginatedPaginatedProjectMemberList
     from .paginated_project_member import PaginatedProjectMember
     from .paginated_project_subset_tasks_response_list import PaginatedProjectSubsetTasksResponseList
@@ -336,6 +338,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrganizationMember": ".organization_member",
     "OrganizationMemberContributedToProjectsItem": ".organization_member_contributed_to_projects_item",
     "OrganizationMemberCreatedProjectsItem": ".organization_member_created_projects_item",
+    "OrganizationMemberTag": ".organization_member_tag",
     "OrganizationMembership": ".organization_membership",
     "OrganizationPermission": ".organization_permission",
     "OrganizationPermissionRequest": ".organization_permission_request",
@@ -344,6 +347,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PaginatedLseOrganizationMemberListList": ".paginated_lse_organization_member_list_list",
     "PaginatedLseProjectCountsList": ".paginated_lse_project_counts_list",
     "PaginatedLseUserList": ".paginated_lse_user_list",
+    "PaginatedOrganizationMemberTagList": ".paginated_organization_member_tag_list",
     "PaginatedPaginatedProjectMemberList": ".paginated_paginated_project_member_list",
     "PaginatedProjectMember": ".paginated_project_member",
     "PaginatedProjectSubsetTasksResponseList": ".paginated_project_subset_tasks_response_list",

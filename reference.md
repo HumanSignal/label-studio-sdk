@@ -29128,7 +29128,7 @@ client.organizations.invites.send_email(
 </details>
 
 ## Organizations MemberTags
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">list</a>(...) -&gt; AsyncHttpResponse[PaginatedOrganizationMemberTagList]</code></summary>
 <dl>
 <dd>
 
@@ -29220,7 +29220,7 @@ client.organizations.member_tags.list(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">create</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTag]</code></summary>
 <dl>
 <dd>
 
@@ -29305,7 +29305,7 @@ client.organizations.member_tags.create(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">get</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTag]</code></summary>
 <dl>
 <dd>
 
@@ -29390,7 +29390,7 @@ client.organizations.member_tags.get(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -29475,7 +29475,7 @@ client.organizations.member_tags.delete(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">update</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTag]</code></summary>
 <dl>
 <dd>
 
@@ -30631,7 +30631,7 @@ client.organizations.permissions.update(
 </details>
 
 ## Organizations MemberTags Bulk
-<details><summary><code>client.organizations.member_tags.bulk.<a href="src/label_studio_sdk/organizations/member_tags/bulk/client.py">post</a>(...)</code></summary>
+<details><summary><code>client.organizations.member_tags.bulk.<a href="src/label_studio_sdk/organizations/member_tags/bulk/client.py">post</a>(...) -&gt; AsyncHttpResponse[PostBulkResponse]</code></summary>
 <dl>
 <dd>
 
@@ -30716,7 +30716,7 @@ client.organizations.member_tags.bulk.post(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.bulk.<a href="src/label_studio_sdk/organizations/member_tags/bulk/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.organizations.member_tags.bulk.<a href="src/label_studio_sdk/organizations/member_tags/bulk/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteBulkResponse]</code></summary>
 <dl>
 <dd>
 

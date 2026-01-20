@@ -16,6 +16,7 @@ from .raw_client import AsyncRawOrganizationsClient, RawOrganizationsClient
 
 if typing.TYPE_CHECKING:
     from .invites.client import AsyncInvitesClient, InvitesClient
+    from .member_tags.client import AsyncMemberTagsClient, MemberTagsClient
     from .members.client import AsyncMembersClient, MembersClient
     from .permissions.client import AsyncPermissionsClient, PermissionsClient
 # this is used as the default value for optional parameters
@@ -27,6 +28,7 @@ class OrganizationsClient:
         self._raw_client = RawOrganizationsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._invites: typing.Optional[InvitesClient] = None
+        self._member_tags: typing.Optional[MemberTagsClient] = None
         self._members: typing.Optional[MembersClient] = None
         self._permissions: typing.Optional[PermissionsClient] = None
 
@@ -321,6 +323,14 @@ class OrganizationsClient:
         return self._invites
 
     @property
+    def member_tags(self):
+        if self._member_tags is None:
+            from .member_tags.client import MemberTagsClient  # noqa: E402
+
+            self._member_tags = MemberTagsClient(client_wrapper=self._client_wrapper)
+        return self._member_tags
+
+    @property
     def members(self):
         if self._members is None:
             from .members.client import MembersClient  # noqa: E402
@@ -342,6 +352,7 @@ class AsyncOrganizationsClient:
         self._raw_client = AsyncRawOrganizationsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._invites: typing.Optional[AsyncInvitesClient] = None
+        self._member_tags: typing.Optional[AsyncMemberTagsClient] = None
         self._members: typing.Optional[AsyncMembersClient] = None
         self._permissions: typing.Optional[AsyncPermissionsClient] = None
 
@@ -674,6 +685,14 @@ class AsyncOrganizationsClient:
 
             self._invites = AsyncInvitesClient(client_wrapper=self._client_wrapper)
         return self._invites
+
+    @property
+    def member_tags(self):
+        if self._member_tags is None:
+            from .member_tags.client import AsyncMemberTagsClient  # noqa: E402
+
+            self._member_tags = AsyncMemberTagsClient(client_wrapper=self._client_wrapper)
+        return self._member_tags
 
     @property
     def members(self):

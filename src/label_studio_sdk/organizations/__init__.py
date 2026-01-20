@@ -6,8 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import invites, members, permissions
-_dynamic_imports: typing.Dict[str, str] = {"invites": ".invites", "members": ".members", "permissions": ".permissions"}
+    from . import invites, member_tags, members, permissions
+_dynamic_imports: typing.Dict[str, str] = {
+    "invites": ".invites",
+    "member_tags": ".member_tags",
+    "members": ".members",
+    "permissions": ".permissions",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
