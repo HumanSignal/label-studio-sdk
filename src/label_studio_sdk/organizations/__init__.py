@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["invites", "members", "permissions"]
+__all__ = ["invites", "member_tags", "members", "permissions"]
