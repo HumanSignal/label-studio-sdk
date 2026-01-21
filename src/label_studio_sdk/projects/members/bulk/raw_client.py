@@ -31,6 +31,7 @@ class RawBulkClient:
         last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
@@ -63,6 +64,9 @@ class RawBulkClient:
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
 
+        tags : typing.Optional[str]
+            Filter tags by in list (comma-separated values)
+
         excluded : typing.Optional[typing.Sequence[int]]
 
         included : typing.Optional[typing.Sequence[int]]
@@ -85,6 +89,7 @@ class RawBulkClient:
                 "last_activity__lte": last_activity_lte,
                 "role": role,
                 "search": search,
+                "tags": tags,
             },
             json={
                 "all": all_,
@@ -123,6 +128,7 @@ class RawBulkClient:
         last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeleteBulkResponse]:
         """
@@ -150,6 +156,9 @@ class RawBulkClient:
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
 
+        tags : typing.Optional[str]
+            Filter tags by in list (comma-separated values)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -166,6 +175,7 @@ class RawBulkClient:
                 "last_activity__lte": last_activity_lte,
                 "role": role,
                 "search": search,
+                "tags": tags,
             },
             request_options=request_options,
         )
@@ -198,6 +208,7 @@ class AsyncRawBulkClient:
         last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
@@ -230,6 +241,9 @@ class AsyncRawBulkClient:
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
 
+        tags : typing.Optional[str]
+            Filter tags by in list (comma-separated values)
+
         excluded : typing.Optional[typing.Sequence[int]]
 
         included : typing.Optional[typing.Sequence[int]]
@@ -252,6 +266,7 @@ class AsyncRawBulkClient:
                 "last_activity__lte": last_activity_lte,
                 "role": role,
                 "search": search,
+                "tags": tags,
             },
             json={
                 "all": all_,
@@ -290,6 +305,7 @@ class AsyncRawBulkClient:
         last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeleteBulkResponse]:
         """
@@ -317,6 +333,9 @@ class AsyncRawBulkClient:
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username. Only when all=True.
 
+        tags : typing.Optional[str]
+            Filter tags by in list (comma-separated values)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -333,6 +352,7 @@ class AsyncRawBulkClient:
                 "last_activity__lte": last_activity_lte,
                 "role": role,
                 "search": search,
+                "tags": tags,
             },
             request_options=request_options,
         )

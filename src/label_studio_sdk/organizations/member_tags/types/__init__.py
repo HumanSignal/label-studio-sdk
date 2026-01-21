@@ -6,15 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import invites, member_tags, members, permissions
-    from .member_tags import AssignMemberTagsResponse, UnassignMemberTagsResponse
+    from .assign_member_tags_response import AssignMemberTagsResponse
+    from .unassign_member_tags_response import UnassignMemberTagsResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "AssignMemberTagsResponse": ".member_tags",
-    "UnassignMemberTagsResponse": ".member_tags",
-    "invites": ".invites",
-    "member_tags": ".member_tags",
-    "members": ".members",
-    "permissions": ".permissions",
+    "AssignMemberTagsResponse": ".assign_member_tags_response",
+    "UnassignMemberTagsResponse": ".unassign_member_tags_response",
 }
 
 
@@ -39,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AssignMemberTagsResponse", "UnassignMemberTagsResponse", "invites", "member_tags", "members", "permissions"]
+__all__ = ["AssignMemberTagsResponse", "UnassignMemberTagsResponse"]
