@@ -3,26 +3,14 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .role9e7enum import Role9E7Enum
-import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class ProjectRole(UncheckedBaseModel):
     id: typing.Optional[int] = None
     project: int
-    role: Role9E7Enum = pydantic.Field()
-    """
-    User role in project
-    
-    * `OW` - Owner
-    * `AD` - Administrator
-    * `MA` - Manager
-    * `RE` - Reviewer
-    * `AN` - Annotator
-    * `DI` - Deactivated
-    * `NO` - Not Activated
-    """
-
+    role: Role9E7Enum
     user: int
 
     if IS_PYDANTIC_V2:

@@ -103,15 +103,6 @@ class RolesClient:
         project : int
 
         role : Role9E7Enum
-            User role in project
-
-            * `OW` - Owner
-            * `AD` - Administrator
-            * `MA` - Manager
-            * `RE` - Reviewer
-            * `AN` - Annotator
-            * `DI` - Deactivated
-            * `NO` - Not Activated
 
         user : int
 
@@ -364,15 +355,6 @@ class AsyncRolesClient:
         project : int
 
         role : Role9E7Enum
-            User role in project
-
-            * `OW` - Owner
-            * `AD` - Administrator
-            * `MA` - Manager
-            * `RE` - Reviewer
-            * `AN` - Annotator
-            * `DI` - Deactivated
-            * `NO` - Not Activated
 
         user : int
 

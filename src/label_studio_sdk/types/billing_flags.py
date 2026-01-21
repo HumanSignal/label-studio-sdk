@@ -17,6 +17,7 @@ class BillingFlags(UncheckedBaseModel):
     allow_invite_project_experts: bool
     allow_nda: bool
     allow_organization_webhooks: bool
+    allow_reviewing: bool
     allow_sso: bool
     allow_storage_proxy: bool
     automax_enabled: bool
