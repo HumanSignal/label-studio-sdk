@@ -30946,16 +30946,6 @@ client.projects.roles.add(
 <dd>
 
 **role:** `Role9E7Enum` 
-
-User role in project
-
-* `OW` - Owner
-* `AD` - Administrator
-* `MA` - Manager
-* `RE` - Reviewer
-* `AN` - Annotator
-* `DI` - Deactivated
-* `NO` - Not Activated
     
 </dd>
 </dl>
