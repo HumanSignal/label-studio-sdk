@@ -1,0 +1,51 @@
+{
+  "cliVersion": "3.46.0",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "4.48.1",
+  "generatorConfig": {
+    "pydantic_config": {
+      "skip_validation": true
+    },
+    "inline_request_params": true,
+    "package_name": "label_studio_sdk",
+    "client": {
+      "class_name": "LabelStudioBase",
+      "filename": "base_client.py",
+      "exported_class_name": "LabelStudio",
+      "exported_filename": "client.py"
+    },
+    "additional_init_exports": [
+      {
+        "from": "_legacy",
+        "imports": [
+          "Client"
+        ]
+      }
+    ],
+    "pyproject_python_version": ">=3.10,<4",
+    "extra_dependencies": {
+      "pandas": ">=0.24.0",
+      "requests": ">=2.22.0",
+      "Pillow": ">=11.3.0",
+      "nltk": "^3.9.1",
+      "ujson": ">=5.8.0",
+      "ijson": ">=3.2.3",
+      "appdirs": ">=1.4.3",
+      "lxml": ">=4.2.5",
+      "xmljson": "0.2.1",
+      "jsonschema": ">=4.23.0",
+      "requests-mock": "1.12.1",
+      "numpy": ">=2.2,<3.0.0",
+      "opencv-python-headless": "^4.12.0",
+      "datamodel-code-generator": "0.26.1",
+      "jsf": "^0.11.2",
+      "pyjwt": "^2.10.1",
+      "urllib3": ">=2.5.0"
+    },
+    "extra_dev_dependencies": {
+      "respx": "^0.22.0"
+    },
+    "pyproject_toml": "[project.scripts]\nlabel-studio-converter = \"label_studio_sdk.converter.main:main\"\n"
+  },
+  "sdkVersion": "2.0.17"
+}
