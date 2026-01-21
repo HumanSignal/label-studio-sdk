@@ -7,6 +7,7 @@ from .client import ExportsClient, AsyncExportsClient
 from io import BytesIO
 from label_studio_sdk.versions.client import VersionsClient, AsyncVersionsClient
 from label_studio_sdk.core.api_error import ApiError
+from label_studio_sdk.core.client_wrapper import SyncClientWrapper, AsyncClientWrapper
 
 
 class ExportTimeoutError(ApiError):
@@ -44,6 +45,12 @@ def _check_status(export_snapshot, converted_format_id, status):
 
 
 class ExportsClientExt(ExportsClient):
+
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
+        super().__init__(client_wrapper=client_wrapper)
+        # Newer Fern-generated clients only store `client_wrapper` on the raw client.
+        # Our extensions need access to it for cross-client calls (e.g. VersionsClient).
+        self._client_wrapper = client_wrapper
 
     def _bytestream_to_fileobj(self, bytestream: typing.Iterable[bytes] | bytes) -> typing.BinaryIO:
         buffer = BytesIO()
@@ -121,6 +128,10 @@ class ExportsClientExt(ExportsClient):
         return self._bytestream_to_pandas(bytestream)
 
 class AsyncExportsClientExt(AsyncExportsClient):
+
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        super().__init__(client_wrapper=client_wrapper)
+        self._client_wrapper = client_wrapper
 
     async def _bytestream_to_fileobj(self, bytestream: typing.AsyncGenerator[bytes, None] | bytes):
         """Convert bytestream to file-like object"""

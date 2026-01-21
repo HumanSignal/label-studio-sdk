@@ -7,16 +7,18 @@ from label_studio_sdk.core.api_error import ApiError
 # that throws 404 errors at the end of the pagination.
 
 
-class SyncPagerExt(SyncPager, typing.Generic[T]):
-
+class SyncPagerExt(SyncPager[T, typing.Any], typing.Generic[T]):
     @classmethod
-    def from_sync_pager(cls, sync_pager: SyncPager) -> 'SyncPagerExt':
+    def from_sync_pager(cls, sync_pager: SyncPager) -> "SyncPagerExt[T]":
+        # Minimal compatibility with newer Fern pagers:
+        # SyncPager is a frozen dataclass and now *requires* the `response` field.
         return cls(
             get_next=sync_pager.get_next,
             has_next=sync_pager.has_next,
-            items=sync_pager.items
+            items=sync_pager.items,
+            response=sync_pager.response,
         )
-
+ 
     def __iter__(self) -> typing.Iterator[T]:  # type: ignore
         # Extends the iterator to catch 404 errors at the end of the pagination
         try:
@@ -28,16 +30,16 @@ class SyncPagerExt(SyncPager, typing.Generic[T]):
             raise
 
 
-class AsyncPagerExt(AsyncPager, typing.Generic[T]):
-
+class AsyncPagerExt(AsyncPager[T, typing.Any], typing.Generic[T]):
     @classmethod
-    async def from_async_pager(cls, async_pager: AsyncPager) -> 'AsyncPagerExt':
+    async def from_async_pager(cls, async_pager: AsyncPager) -> "AsyncPagerExt[T]":
         return cls(
             get_next=async_pager.get_next,
             has_next=async_pager.has_next,
-            items=async_pager.items
+            items=async_pager.items,
+            response=async_pager.response,
         )
-
+ 
     async def __aiter__(self) -> typing.AsyncIterator[T]:  # type: ignore
         # Extends the iterator to catch 404 errors at the end of the pagination
         try:
@@ -47,7 +49,7 @@ class AsyncPagerExt(AsyncPager, typing.Generic[T]):
             if exc.status_code == 404:
                 return
             raise
-        
+ 
     async def __anext__(self) -> T:
         try:
             return await super().__anext__()
