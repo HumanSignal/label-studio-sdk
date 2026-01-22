@@ -142,7 +142,7 @@ class MemberTagsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
+        Assign tags to multiple organization members in bulk.
 
         Parameters
         ----------
@@ -174,7 +174,7 @@ class MemberTagsClient:
             id=1,
             assignments=[
                 OrganizationMemberTagAssignmentRequest(
-                    labels=["labels"],
+                    tag_ids=[1],
                     user_id=1,
                 )
             ],
@@ -467,7 +467,7 @@ class AsyncMemberTagsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
+        Assign tags to multiple organization members in bulk.
 
         Parameters
         ----------
@@ -507,7 +507,7 @@ class AsyncMemberTagsClient:
                 id=1,
                 assignments=[
                     OrganizationMemberTagAssignmentRequest(
-                        labels=["labels"],
+                        tag_ids=[1],
                         user_id=1,
                     )
                 ],

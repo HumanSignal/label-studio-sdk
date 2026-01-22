@@ -29323,7 +29323,7 @@ client.organizations.member_tags.create(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
+Assign tags to multiple organization members in bulk.
 </dd>
 </dl>
 </dd>
@@ -29347,7 +29347,7 @@ client.organizations.member_tags.assign(
     id=1,
     assignments=[
         OrganizationMemberTagAssignmentRequest(
-            labels=["labels"],
+            tag_ids=[1],
             user_id=1,
         )
     ],

@@ -177,7 +177,7 @@ class RawMemberTagsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
+        Assign tags to multiple organization members in bulk.
 
         Parameters
         ----------
@@ -624,7 +624,7 @@ class AsyncRawMemberTagsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
+        Assign tags to multiple organization members in bulk.
 
         Parameters
         ----------
