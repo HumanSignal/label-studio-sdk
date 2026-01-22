@@ -10,6 +10,7 @@ from .lse_organization_member_list_contributed_to_projects_item import (
 )
 from .lse_organization_member_list_created_projects_item import LseOrganizationMemberListCreatedProjectsItem
 from .lse_user_organization_member_list import LseUserOrganizationMemberList
+from .simple_organization_member_tag import SimpleOrganizationMemberTag
 
 
 class LseOrganizationMemberList(UncheckedBaseModel):
@@ -28,6 +29,7 @@ class LseOrganizationMemberList(UncheckedBaseModel):
     """
 
     role: typing.Optional[str] = None
+    tags: typing.Optional[typing.List[SimpleOrganizationMemberTag]] = None
     user: LseUserOrganizationMemberList
 
     if IS_PYDANTIC_V2:

@@ -41,6 +41,7 @@ class MembersClient:
         page_size: typing.Optional[int] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedLseOrganizationMemberListList:
         """
@@ -94,6 +95,9 @@ class MembersClient:
         search : typing.Optional[str]
             A search term.
 
+        tags : typing.Optional[str]
+            Filter members by tags. Use a comma-separated list of tag IDs.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -123,6 +127,7 @@ class MembersClient:
             page_size=page_size,
             role=role,
             search=search,
+            tags=tags,
             request_options=request_options,
         )
         return _response.data
@@ -294,6 +299,7 @@ class AsyncMembersClient:
         page_size: typing.Optional[int] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedLseOrganizationMemberListList:
         """
@@ -347,6 +353,9 @@ class AsyncMembersClient:
         search : typing.Optional[str]
             A search term.
 
+        tags : typing.Optional[str]
+            Filter members by tags. Use a comma-separated list of tag IDs.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -384,6 +393,7 @@ class AsyncMembersClient:
             page_size=page_size,
             role=role,
             search=search,
+            tags=tags,
             request_options=request_options,
         )
         return _response.data

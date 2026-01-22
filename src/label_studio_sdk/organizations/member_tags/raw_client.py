@@ -8,12 +8,15 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.bad_request_error import BadRequestError
 from ...errors.forbidden_error import ForbiddenError
 from ...errors.not_found_error import NotFoundError
 from ...types.organization_member_tag import OrganizationMemberTag
+from ...types.organization_member_tag_assignment_request import OrganizationMemberTagAssignmentRequest
 from ...types.paginated_organization_member_tag_list import PaginatedOrganizationMemberTagList
+from .types.assign_member_tags_response import AssignMemberTagsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -128,6 +131,96 @@ class RawMemberTagsClient:
                     OrganizationMemberTag,
                     construct_type(
                         type_=OrganizationMemberTag,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def assign(
+        self,
+        id: int,
+        *,
+        assignments: typing.Sequence[OrganizationMemberTagAssignmentRequest],
+        overwrite: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[AssignMemberTagsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign tags to multiple organization members in bulk.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
+            List of member tag assignments to assign.
+
+        overwrite : typing.Optional[bool]
+            If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[AssignMemberTagsResponse]
+            Number of tag assignments created
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/organizations/{jsonable_encoder(id)}/member-tags/assignments",
+            method="POST",
+            json={
+                "assignments": convert_and_respect_annotation_metadata(
+                    object_=assignments,
+                    annotation=typing.Sequence[OrganizationMemberTagAssignmentRequest],
+                    direction="write",
+                ),
+                "overwrite": overwrite,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AssignMemberTagsResponse,
+                    construct_type(
+                        type_=AssignMemberTagsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -485,6 +578,96 @@ class AsyncRawMemberTagsClient:
                     OrganizationMemberTag,
                     construct_type(
                         type_=OrganizationMemberTag,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def assign(
+        self,
+        id: int,
+        *,
+        assignments: typing.Sequence[OrganizationMemberTagAssignmentRequest],
+        overwrite: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[AssignMemberTagsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign tags to multiple organization members in bulk.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
+            List of member tag assignments to assign.
+
+        overwrite : typing.Optional[bool]
+            If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[AssignMemberTagsResponse]
+            Number of tag assignments created
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/organizations/{jsonable_encoder(id)}/member-tags/assignments",
+            method="POST",
+            json={
+                "assignments": convert_and_respect_annotation_metadata(
+                    object_=assignments,
+                    annotation=typing.Sequence[OrganizationMemberTagAssignmentRequest],
+                    direction="write",
+                ),
+                "overwrite": overwrite,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AssignMemberTagsResponse,
+                    construct_type(
+                        type_=AssignMemberTagsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

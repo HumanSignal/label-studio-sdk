@@ -7,8 +7,10 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.organization_member_tag import OrganizationMemberTag
+from ...types.organization_member_tag_assignment_request import OrganizationMemberTagAssignmentRequest
 from ...types.paginated_organization_member_tag_list import PaginatedOrganizationMemberTagList
 from .raw_client import AsyncRawMemberTagsClient, RawMemberTagsClient
+from .types.assign_member_tags_response import AssignMemberTagsResponse
 
 if typing.TYPE_CHECKING:
     from .bulk.client import AsyncBulkClient, BulkClient
@@ -123,6 +125,64 @@ class MemberTagsClient:
         )
         """
         _response = self._raw_client.create(id, label=label, request_options=request_options)
+        return _response.data
+
+    def assign(
+        self,
+        id: int,
+        *,
+        assignments: typing.Sequence[OrganizationMemberTagAssignmentRequest],
+        overwrite: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AssignMemberTagsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign tags to multiple organization members in bulk.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
+            List of member tag assignments to assign.
+
+        overwrite : typing.Optional[bool]
+            If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AssignMemberTagsResponse
+            Number of tag assignments created
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio, OrganizationMemberTagAssignmentRequest
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.member_tags.assign(
+            id=1,
+            assignments=[
+                OrganizationMemberTagAssignmentRequest(
+                    tag_ids=[1],
+                    user_id=1,
+                )
+            ],
+        )
+        """
+        _response = self._raw_client.assign(
+            id, assignments=assignments, overwrite=overwrite, request_options=request_options
+        )
         return _response.data
 
     def get(
@@ -390,6 +450,75 @@ class AsyncMemberTagsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(id, label=label, request_options=request_options)
+        return _response.data
+
+    async def assign(
+        self,
+        id: int,
+        *,
+        assignments: typing.Sequence[OrganizationMemberTagAssignmentRequest],
+        overwrite: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AssignMemberTagsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign tags to multiple organization members in bulk.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
+            List of member tag assignments to assign.
+
+        overwrite : typing.Optional[bool]
+            If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AssignMemberTagsResponse
+            Number of tag assignments created
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import (
+            AsyncLabelStudio,
+            OrganizationMemberTagAssignmentRequest,
+        )
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.member_tags.assign(
+                id=1,
+                assignments=[
+                    OrganizationMemberTagAssignmentRequest(
+                        tag_ids=[1],
+                        user_id=1,
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.assign(
+            id, assignments=assignments, overwrite=overwrite, request_options=request_options
+        )
         return _response.data
 
     async def get(

@@ -132,6 +132,7 @@ if typing.TYPE_CHECKING:
     from .organization_member_contributed_to_projects_item import OrganizationMemberContributedToProjectsItem
     from .organization_member_created_projects_item import OrganizationMemberCreatedProjectsItem
     from .organization_member_tag import OrganizationMemberTag
+    from .organization_member_tag_assignment_request import OrganizationMemberTagAssignmentRequest
     from .organization_membership import OrganizationMembership
     from .organization_permission import OrganizationPermission
     from .organization_permission_request import OrganizationPermissionRequest
@@ -193,6 +194,7 @@ if typing.TYPE_CHECKING:
     from .serialization_options import SerializationOptions
     from .serialization_options_request import SerializationOptionsRequest
     from .session_timeout_policy import SessionTimeoutPolicy
+    from .simple_organization_member_tag import SimpleOrganizationMemberTag
     from .skill_name_enum import SkillNameEnum
     from .skip_queue_enum import SkipQueueEnum
     from .skipped_enum import SkippedEnum
@@ -339,6 +341,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrganizationMemberContributedToProjectsItem": ".organization_member_contributed_to_projects_item",
     "OrganizationMemberCreatedProjectsItem": ".organization_member_created_projects_item",
     "OrganizationMemberTag": ".organization_member_tag",
+    "OrganizationMemberTagAssignmentRequest": ".organization_member_tag_assignment_request",
     "OrganizationMembership": ".organization_membership",
     "OrganizationPermission": ".organization_permission",
     "OrganizationPermissionRequest": ".organization_permission_request",
@@ -400,6 +403,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SerializationOptions": ".serialization_options",
     "SerializationOptionsRequest": ".serialization_options_request",
     "SessionTimeoutPolicy": ".session_timeout_policy",
+    "SimpleOrganizationMemberTag": ".simple_organization_member_tag",
     "SkillNameEnum": ".skill_name_enum",
     "SkipQueueEnum": ".skip_queue_enum",
     "SkippedEnum": ".skipped_enum",
@@ -570,6 +574,7 @@ __all__ = [
     "OrganizationMemberContributedToProjectsItem",
     "OrganizationMemberCreatedProjectsItem",
     "OrganizationMemberTag",
+    "OrganizationMemberTagAssignmentRequest",
     "OrganizationMembership",
     "OrganizationPermission",
     "OrganizationPermissionRequest",
@@ -631,6 +636,7 @@ __all__ = [
     "SerializationOptions",
     "SerializationOptionsRequest",
     "SessionTimeoutPolicy",
+    "SimpleOrganizationMemberTag",
     "SkillNameEnum",
     "SkipQueueEnum",
     "SkippedEnum",

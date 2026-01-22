@@ -37,6 +37,7 @@ class RawMembersClient:
         page_size: typing.Optional[int] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PaginatedLseOrganizationMemberListList]:
         """
@@ -90,6 +91,9 @@ class RawMembersClient:
         search : typing.Optional[str]
             A search term.
 
+        tags : typing.Optional[str]
+            Filter members by tags. Use a comma-separated list of tag IDs.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -110,6 +114,7 @@ class RawMembersClient:
                 "page_size": page_size,
                 "role": role,
                 "search": search,
+                "tags": tags,
             },
             request_options=request_options,
         )
@@ -337,6 +342,7 @@ class AsyncRawMembersClient:
         page_size: typing.Optional[int] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PaginatedLseOrganizationMemberListList]:
         """
@@ -390,6 +396,9 @@ class AsyncRawMembersClient:
         search : typing.Optional[str]
             A search term.
 
+        tags : typing.Optional[str]
+            Filter members by tags. Use a comma-separated list of tag IDs.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -410,6 +419,7 @@ class AsyncRawMembersClient:
                 "page_size": page_size,
                 "role": role,
                 "search": search,
+                "tags": tags,
             },
             request_options=request_options,
         )
