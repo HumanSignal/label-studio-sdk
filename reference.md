@@ -29810,6 +29810,14 @@ Filter members by organization role. Accepts single role or comma-separated list
 <dl>
 <dd>
 
+**tags:** `typing.Optional[str]` — Filter members by tags. Use a comma-separated list of tag IDs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -35121,6 +35129,14 @@ Returns users who have any of the specified roles either:
 <dd>
 
 **search:** `typing.Optional[str]` — Search term for filtering members by name, email, or username
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[str]` — Filter members by tags. Use a comma-separated list of tag IDs.
     
 </dd>
 </dl>

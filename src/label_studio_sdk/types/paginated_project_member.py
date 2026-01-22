@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .lse_fields import LseFields
 from .organization_membership import OrganizationMembership
+from .simple_organization_member_tag import SimpleOrganizationMemberTag
 
 
 class PaginatedProjectMember(UncheckedBaseModel):
@@ -45,7 +46,7 @@ class PaginatedProjectMember(UncheckedBaseModel):
     pause: typing.Optional[str] = None
     phone: typing.Optional[str] = None
     project_role: typing.Optional[str] = None
-    tags: typing.Optional[str] = None
+    tags: typing.Optional[typing.List[SimpleOrganizationMemberTag]] = None
     username: str
 
     if IS_PYDANTIC_V2:

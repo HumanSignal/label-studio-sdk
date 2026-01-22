@@ -33,6 +33,7 @@ class RawPaginatedClient:
         page_size: typing.Optional[int] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PaginatedProjectMember, PaginatedPaginatedProjectMemberList]:
@@ -112,6 +113,9 @@ class RawPaginatedClient:
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username
 
+        tags : typing.Optional[str]
+            Filter members by tags. Use a comma-separated list of tag IDs.
+
         with_deleted : typing.Optional[bool]
             Include deleted members in the results
 
@@ -139,6 +143,7 @@ class RawPaginatedClient:
                 "page_size": page_size,
                 "role": role,
                 "search": search,
+                "tags": tags,
                 "with_deleted": with_deleted,
             },
             request_options=request_options,
@@ -166,6 +171,7 @@ class RawPaginatedClient:
                     page_size=page_size,
                     role=role,
                     search=search,
+                    tags=tags,
                     with_deleted=with_deleted,
                     request_options=request_options,
                 )
@@ -194,6 +200,7 @@ class AsyncRawPaginatedClient:
         page_size: typing.Optional[int] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PaginatedProjectMember, PaginatedPaginatedProjectMemberList]:
@@ -273,6 +280,9 @@ class AsyncRawPaginatedClient:
         search : typing.Optional[str]
             Search term for filtering members by name, email, or username
 
+        tags : typing.Optional[str]
+            Filter members by tags. Use a comma-separated list of tag IDs.
+
         with_deleted : typing.Optional[bool]
             Include deleted members in the results
 
@@ -300,6 +310,7 @@ class AsyncRawPaginatedClient:
                 "page_size": page_size,
                 "role": role,
                 "search": search,
+                "tags": tags,
                 "with_deleted": with_deleted,
             },
             request_options=request_options,
@@ -329,6 +340,7 @@ class AsyncRawPaginatedClient:
                         page_size=page_size,
                         role=role,
                         search=search,
+                        tags=tags,
                         with_deleted=with_deleted,
                         request_options=request_options,
                     )
