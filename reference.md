@@ -29347,7 +29347,7 @@ client.organizations.member_tags.assign(
     id=1,
     assignments=[
         OrganizationMemberTagAssignmentRequest(
-            tag_labels=["tag_labels"],
+            labels=["labels"],
             user_id=1,
         )
     ],

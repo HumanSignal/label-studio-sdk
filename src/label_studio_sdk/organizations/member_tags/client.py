@@ -174,7 +174,7 @@ class MemberTagsClient:
             id=1,
             assignments=[
                 OrganizationMemberTagAssignmentRequest(
-                    tag_labels=["tag_labels"],
+                    labels=["labels"],
                     user_id=1,
                 )
             ],
@@ -507,7 +507,7 @@ class AsyncMemberTagsClient:
                 id=1,
                 assignments=[
                     OrganizationMemberTagAssignmentRequest(
-                        tag_labels=["tag_labels"],
+                        labels=["labels"],
                         user_id=1,
                     )
                 ],
