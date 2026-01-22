@@ -8,7 +8,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class OrganizationMemberTagAssignmentRequest(UncheckedBaseModel):
-    tag_ids: typing.List[int]
+    tag_labels: typing.List[str] = pydantic.Field()
+    """
+    List of tag labels to assign. Tags will be created if they do not exist. Use an empty list with overwrite=true to remove all tags from a user.
+    """
+
     user_id: int
 
     if IS_PYDANTIC_V2:

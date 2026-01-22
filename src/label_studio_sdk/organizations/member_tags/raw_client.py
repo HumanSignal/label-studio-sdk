@@ -17,7 +17,6 @@ from ...types.organization_member_tag import OrganizationMemberTag
 from ...types.organization_member_tag_assignment_request import OrganizationMemberTagAssignmentRequest
 from ...types.paginated_organization_member_tag_list import PaginatedOrganizationMemberTagList
 from .types.assign_member_tags_response import AssignMemberTagsResponse
-from .types.unassign_member_tags_response import UnassignMemberTagsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -178,7 +177,7 @@ class RawMemberTagsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Assign tags to multiple organization members in bulk.
+        Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
 
         Parameters
         ----------
@@ -186,7 +185,7 @@ class RawMemberTagsClient:
             A unique integer value identifying this organization.
 
         assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
-            List of member tag assignments to assign/unassign.
+            List of member tag assignments to assign.
 
         overwrite : typing.Optional[bool]
             If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
@@ -222,73 +221,6 @@ class RawMemberTagsClient:
                     AssignMemberTagsResponse,
                     construct_type(
                         type_=AssignMemberTagsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def unassign(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[UnassignMemberTagsResponse]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Remove tag assignments from multiple organization members in bulk.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this organization.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[UnassignMemberTagsResponse]
-            Number of tag assignments deleted
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/assignments",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UnassignMemberTagsResponse,
-                    construct_type(
-                        type_=UnassignMemberTagsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -692,7 +624,7 @@ class AsyncRawMemberTagsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Assign tags to multiple organization members in bulk.
+        Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
 
         Parameters
         ----------
@@ -700,7 +632,7 @@ class AsyncRawMemberTagsClient:
             A unique integer value identifying this organization.
 
         assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
-            List of member tag assignments to assign/unassign.
+            List of member tag assignments to assign.
 
         overwrite : typing.Optional[bool]
             If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
@@ -736,73 +668,6 @@ class AsyncRawMemberTagsClient:
                     AssignMemberTagsResponse,
                     construct_type(
                         type_=AssignMemberTagsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def unassign(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[UnassignMemberTagsResponse]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Remove tag assignments from multiple organization members in bulk.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this organization.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[UnassignMemberTagsResponse]
-            Number of tag assignments deleted
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/assignments",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UnassignMemberTagsResponse,
-                    construct_type(
-                        type_=UnassignMemberTagsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

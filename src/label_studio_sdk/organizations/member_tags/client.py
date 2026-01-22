@@ -11,7 +11,6 @@ from ...types.organization_member_tag_assignment_request import OrganizationMemb
 from ...types.paginated_organization_member_tag_list import PaginatedOrganizationMemberTagList
 from .raw_client import AsyncRawMemberTagsClient, RawMemberTagsClient
 from .types.assign_member_tags_response import AssignMemberTagsResponse
-from .types.unassign_member_tags_response import UnassignMemberTagsResponse
 
 if typing.TYPE_CHECKING:
     from .bulk.client import AsyncBulkClient, BulkClient
@@ -143,7 +142,7 @@ class MemberTagsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Assign tags to multiple organization members in bulk.
+        Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
 
         Parameters
         ----------
@@ -151,7 +150,7 @@ class MemberTagsClient:
             A unique integer value identifying this organization.
 
         assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
-            List of member tag assignments to assign/unassign.
+            List of member tag assignments to assign.
 
         overwrite : typing.Optional[bool]
             If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
@@ -175,7 +174,7 @@ class MemberTagsClient:
             id=1,
             assignments=[
                 OrganizationMemberTagAssignmentRequest(
-                    tag_ids=[1],
+                    tag_labels=["tag_labels"],
                     user_id=1,
                 )
             ],
@@ -184,45 +183,6 @@ class MemberTagsClient:
         _response = self._raw_client.assign(
             id, assignments=assignments, overwrite=overwrite, request_options=request_options
         )
-        return _response.data
-
-    def unassign(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> UnassignMemberTagsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Remove tag assignments from multiple organization members in bulk.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this organization.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UnassignMemberTagsResponse
-            Number of tag assignments deleted
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.organizations.member_tags.unassign(
-            id=1,
-        )
-        """
-        _response = self._raw_client.unassign(id, request_options=request_options)
         return _response.data
 
     def get(
@@ -507,7 +467,7 @@ class AsyncMemberTagsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Assign tags to multiple organization members in bulk.
+        Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
 
         Parameters
         ----------
@@ -515,7 +475,7 @@ class AsyncMemberTagsClient:
             A unique integer value identifying this organization.
 
         assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
-            List of member tag assignments to assign/unassign.
+            List of member tag assignments to assign.
 
         overwrite : typing.Optional[bool]
             If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
@@ -547,7 +507,7 @@ class AsyncMemberTagsClient:
                 id=1,
                 assignments=[
                     OrganizationMemberTagAssignmentRequest(
-                        tag_ids=[1],
+                        tag_labels=["tag_labels"],
                         user_id=1,
                     )
                 ],
@@ -559,53 +519,6 @@ class AsyncMemberTagsClient:
         _response = await self._raw_client.assign(
             id, assignments=assignments, overwrite=overwrite, request_options=request_options
         )
-        return _response.data
-
-    async def unassign(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> UnassignMemberTagsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Remove tag assignments from multiple organization members in bulk.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this organization.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UnassignMemberTagsResponse
-            Number of tag assignments deleted
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.organizations.member_tags.unassign(
-                id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.unassign(id, request_options=request_options)
         return _response.data
 
     async def get(
