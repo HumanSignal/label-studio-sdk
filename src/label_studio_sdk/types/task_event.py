@@ -22,7 +22,7 @@ class TaskEvent(UncheckedBaseModel):
     Annotation ID associated with this event
     """
 
-    annotation_draft: typing.Optional[int] = pydantic.Field(default=None)
+    annotation_draft_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Draft annotation ID associated with this event
     """
