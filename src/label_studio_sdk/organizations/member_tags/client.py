@@ -39,7 +39,9 @@ class MemberTagsClient:
         self,
         id: int,
         *,
+        ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedOrganizationMemberTagList:
@@ -57,8 +59,14 @@ class MemberTagsClient:
         id : int
             A unique integer value identifying this organization.
 
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         page : typing.Optional[int]
             A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results per page (default: 30, max: 100).
 
         search : typing.Optional[str]
             Search tags by label (case-insensitive).
@@ -82,7 +90,9 @@ class MemberTagsClient:
             id=1,
         )
         """
-        _response = self._raw_client.list(id, page=page, search=search, request_options=request_options)
+        _response = self._raw_client.list(
+            id, ordering=ordering, page=page, page_size=page_size, search=search, request_options=request_options
+        )
         return _response.data
 
     def create(
@@ -348,7 +358,9 @@ class AsyncMemberTagsClient:
         self,
         id: int,
         *,
+        ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedOrganizationMemberTagList:
@@ -366,8 +378,14 @@ class AsyncMemberTagsClient:
         id : int
             A unique integer value identifying this organization.
 
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         page : typing.Optional[int]
             A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results per page (default: 30, max: 100).
 
         search : typing.Optional[str]
             Search tags by label (case-insensitive).
@@ -399,7 +417,9 @@ class AsyncMemberTagsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(id, page=page, search=search, request_options=request_options)
+        _response = await self._raw_client.list(
+            id, ordering=ordering, page=page, page_size=page_size, search=search, request_options=request_options
+        )
         return _response.data
 
     async def create(
