@@ -30,6 +30,7 @@ class RawMemberTagsClient:
         self,
         id: int,
         *,
+        ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -47,6 +48,9 @@ class RawMemberTagsClient:
         ----------
         id : int
             A unique integer value identifying this organization.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         page : typing.Optional[int]
             A page number within the paginated result set.
@@ -66,6 +70,7 @@ class RawMemberTagsClient:
             f"api/organizations/{jsonable_encoder(id)}/member-tags",
             method="GET",
             params={
+                "ordering": ordering,
                 "page": page,
                 "search": search,
             },
@@ -477,6 +482,7 @@ class AsyncRawMemberTagsClient:
         self,
         id: int,
         *,
+        ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -494,6 +500,9 @@ class AsyncRawMemberTagsClient:
         ----------
         id : int
             A unique integer value identifying this organization.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         page : typing.Optional[int]
             A page number within the paginated result set.
@@ -513,6 +522,7 @@ class AsyncRawMemberTagsClient:
             f"api/organizations/{jsonable_encoder(id)}/member-tags",
             method="GET",
             params={
+                "ordering": ordering,
                 "page": page,
                 "search": search,
             },
