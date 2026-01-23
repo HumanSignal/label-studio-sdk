@@ -47,5 +47,5 @@
     },
     "pyproject_toml": "[project.scripts]\nlabel-studio-converter = \"label_studio_sdk.converter.main:main\"\n"
   },
-  "sdkVersion": "2.0.17"
+  "sdkVersion": "2.0.18"
 }
