@@ -32,6 +32,7 @@ class RawMemberTagsClient:
         *,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PaginatedOrganizationMemberTagList]:
@@ -55,6 +56,9 @@ class RawMemberTagsClient:
         page : typing.Optional[int]
             A page number within the paginated result set.
 
+        page_size : typing.Optional[int]
+            Number of results per page (default: 30, max: 100).
+
         search : typing.Optional[str]
             Search tags by label (case-insensitive).
 
@@ -72,6 +76,7 @@ class RawMemberTagsClient:
             params={
                 "ordering": ordering,
                 "page": page,
+                "page_size": page_size,
                 "search": search,
             },
             request_options=request_options,
@@ -484,6 +489,7 @@ class AsyncRawMemberTagsClient:
         *,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PaginatedOrganizationMemberTagList]:
@@ -507,6 +513,9 @@ class AsyncRawMemberTagsClient:
         page : typing.Optional[int]
             A page number within the paginated result set.
 
+        page_size : typing.Optional[int]
+            Number of results per page (default: 30, max: 100).
+
         search : typing.Optional[str]
             Search tags by label (case-insensitive).
 
@@ -524,6 +533,7 @@ class AsyncRawMemberTagsClient:
             params={
                 "ordering": ordering,
                 "page": page,
+                "page_size": page_size,
                 "search": search,
             },
             request_options=request_options,

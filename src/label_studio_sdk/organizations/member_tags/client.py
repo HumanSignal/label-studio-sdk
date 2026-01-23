@@ -41,6 +41,7 @@ class MemberTagsClient:
         *,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedOrganizationMemberTagList:
@@ -63,6 +64,9 @@ class MemberTagsClient:
 
         page : typing.Optional[int]
             A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results per page (default: 30, max: 100).
 
         search : typing.Optional[str]
             Search tags by label (case-insensitive).
@@ -87,7 +91,7 @@ class MemberTagsClient:
         )
         """
         _response = self._raw_client.list(
-            id, ordering=ordering, page=page, search=search, request_options=request_options
+            id, ordering=ordering, page=page, page_size=page_size, search=search, request_options=request_options
         )
         return _response.data
 
@@ -356,6 +360,7 @@ class AsyncMemberTagsClient:
         *,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedOrganizationMemberTagList:
@@ -378,6 +383,9 @@ class AsyncMemberTagsClient:
 
         page : typing.Optional[int]
             A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results per page (default: 30, max: 100).
 
         search : typing.Optional[str]
             Search tags by label (case-insensitive).
@@ -410,7 +418,7 @@ class AsyncMemberTagsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            id, ordering=ordering, page=page, search=search, request_options=request_options
+            id, ordering=ordering, page=page, page_size=page_size, search=search, request_options=request_options
         )
         return _response.data
 

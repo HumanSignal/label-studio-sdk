@@ -29208,6 +29208,14 @@ client.organizations.member_tags.list(
 <dl>
 <dd>
 
+**page_size:** `typing.Optional[int]` — Number of results per page (default: 30, max: 100).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **search:** `typing.Optional[str]` — Search tags by label (case-insensitive).
     
 </dd>
