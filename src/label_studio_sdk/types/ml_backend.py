@@ -21,7 +21,7 @@ class MlBackend(UncheckedBaseModel):
     If false, model version is set by the user, if true - getting latest version from backend.
     """
 
-    basic_auth_pass_is_set: typing.Optional[str] = None
+    basic_auth_pass_is_set: typing.Optional[bool] = None
     basic_auth_user: typing.Optional[str] = pydantic.Field(default=None)
     """
     HTTP Basic Auth user

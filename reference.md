@@ -14996,7 +14996,37 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
     
 </dd>
 </dl>
@@ -15092,6 +15122,14 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -15100,7 +15138,7 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
     
 </dd>
 </dl>
@@ -15244,7 +15282,37 @@ client.export_storage.databricks.validate(
 <dl>
 <dd>
 
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
     
 </dd>
 </dl>
@@ -15340,6 +15408,14 @@ client.export_storage.databricks.validate(
 <dl>
 <dd>
 
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -15348,7 +15424,7 @@ client.export_storage.databricks.validate(
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
     
 </dd>
 </dl>
@@ -15608,6 +15684,20 @@ client.export_storage.databricks.update(
 <dl>
 <dd>
 
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
@@ -15617,6 +15707,22 @@ client.export_storage.databricks.update(
 <dd>
 
 **catalog:** `typing.Optional[str]` — UC catalog name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
     
 </dd>
 </dl>
@@ -15736,6 +15842,14 @@ client.export_storage.databricks.update(
 <dl>
 <dd>
 
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -15744,7 +15858,7 @@ client.export_storage.databricks.update(
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
     
 </dd>
 </dl>
@@ -22781,6 +22895,36 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
@@ -22893,6 +23037,14 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -22901,7 +23053,7 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
     
 </dd>
 </dl>
@@ -23045,6 +23197,36 @@ client.import_storage.databricks.validate(
 <dl>
 <dd>
 
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
@@ -23157,6 +23339,14 @@ client.import_storage.databricks.validate(
 <dl>
 <dd>
 
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -23165,7 +23355,7 @@ client.import_storage.databricks.validate(
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
     
 </dd>
 </dl>
@@ -23425,7 +23615,37 @@ client.import_storage.databricks.update(
 <dl>
 <dd>
 
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **catalog:** `typing.Optional[str]` — UC catalog name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
     
 </dd>
 </dl>
@@ -23569,6 +23789,14 @@ client.import_storage.databricks.update(
 <dl>
 <dd>
 
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -23577,7 +23805,7 @@ client.import_storage.databricks.update(
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` 
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
     
 </dd>
 </dl>
