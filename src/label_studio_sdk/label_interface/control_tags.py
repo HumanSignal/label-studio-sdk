@@ -24,6 +24,8 @@ _TAG_TO_CLASS = {
     "ellipselabels": "EllipseLabelsTag",
     "keypoint": "KeyPointTag",
     "keypointlabels": "KeyPointLabelsTag",
+    "vectorlabels": "VectorLabelsTag",
+    "ocrlabels": "OcrLabelsTag",
     "polygon": "PolygonTag",
     "polygonlabels": "PolygonLabelsTag",
     "rectangle": "RectangleTag",
@@ -712,6 +714,48 @@ class KeyPointLabelsTag(ControlTag):
     tag: str = "KeyPointLabels"
     _label_attr_name: str = "keypointlabels"
     _value_class: Type[KeyPointLabelsValue] = KeyPointLabelsValue
+
+
+class VectorVertex(BaseModel):
+    """Single vertex in a VectorLabels region."""
+    x: float
+    y: float
+    id: Optional[str] = None
+    isBezier: Optional[bool] = False
+    prevPointId: Optional[str] = None
+
+
+class VectorLabelsValue(BaseModel):
+    """Value for VectorLabels control tag."""
+    closed: Optional[bool] = False
+    vertices: List[VectorVertex]
+    vectorlabels: List[str]
+
+
+class VectorLabelsTag(ControlTag):
+    """Control tag for vector/line annotations with labels."""
+    tag: str = "VectorLabels"
+    _label_attr_name: str = "vectorlabels"
+    _value_class: Type[VectorLabelsValue] = VectorLabelsValue
+
+
+class OcrLabelsValue(BaseModel):
+    """Value for OcrLabels control tag (OCR region on PDF/images)."""
+    x: float
+    y: float
+    width: float
+    height: float
+    rotation: Optional[float] = 0
+    ocrtext: Optional[str] = None
+    ocrlabels: List[str]
+    pageIndex: Optional[int] = None
+
+
+class OcrLabelsTag(ControlTag):
+    """Control tag for OCR annotations with labels."""
+    tag: str = "OcrLabels"
+    _label_attr_name: str = "ocrlabels"
+    _value_class: Type[OcrLabelsValue] = OcrLabelsValue
 
 
 class PolygonValue(BaseModel):
