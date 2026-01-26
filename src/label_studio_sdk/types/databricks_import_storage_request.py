@@ -8,13 +8,37 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .auth_type_enum import AuthTypeEnum
 from .status_c5a_enum import StatusC5AEnum
 
 
 class DatabricksImportStorageRequest(UncheckedBaseModel):
+    """
+    Serializer for Databricks import storage with multi-auth support.
+    """
+
+    auth_type: typing.Optional[AuthTypeEnum] = pydantic.Field(default=None)
+    """
+    Authentication method: PAT, Databricks SP, or Azure AD SP
+    
+    * `pat` - Personal Access Token
+    * `dbx_sp` - Databricks Service Principal
+    * `azure_ad_sp` - Azure AD Service Principal
+    """
+
     catalog: str = pydantic.Field()
     """
     UC catalog name
+    """
+
+    client_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Service principal client/application ID (required for SP modes)
+    """
+
+    client_secret: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Service principal client secret (required for SP modes)
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)
@@ -86,12 +110,21 @@ class DatabricksImportStorageRequest(UncheckedBaseModel):
     status: typing.Optional[StatusC5AEnum] = None
     stream_chunk_bytes: typing.Optional[int] = None
     synchronizable: typing.Optional[bool] = None
+    tenant_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Azure AD tenant ID (required for Azure AD SP mode)
+    """
+
     title: typing.Optional[str] = pydantic.Field(default=None)
     """
     Cloud storage title
     """
 
-    token: typing.Optional[str] = None
+    token: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Databricks personal access token (required for PAT mode)
+    """
+
     traceback: typing.Optional[str] = pydantic.Field(default=None)
     """
     Traceback report for the last failed sync
