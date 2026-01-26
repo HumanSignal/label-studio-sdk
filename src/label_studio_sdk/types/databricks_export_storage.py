@@ -8,24 +8,10 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .auth_type_enum import AuthTypeEnum
 from .status_c5a_enum import StatusC5AEnum
 
 
 class DatabricksExportStorage(UncheckedBaseModel):
-    """
-    Serializer for Databricks export storage with multi-auth support.
-    """
-
-    auth_type: typing.Optional[AuthTypeEnum] = pydantic.Field(default=None)
-    """
-    Authentication method: PAT, Databricks SP, or Azure AD SP
-    
-    * `pat` - Personal Access Token
-    * `dbx_sp` - Databricks Service Principal
-    * `azure_ad_sp` - Azure AD Service Principal
-    """
-
     can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Deletion from storage enabled
@@ -34,11 +20,6 @@ class DatabricksExportStorage(UncheckedBaseModel):
     catalog: str = pydantic.Field()
     """
     UC catalog name
-    """
-
-    client_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Service principal client/application ID (required for SP modes)
     """
 
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
@@ -101,11 +82,6 @@ class DatabricksExportStorage(UncheckedBaseModel):
     status: typing.Optional[StatusC5AEnum] = None
     stream_chunk_bytes: typing.Optional[int] = None
     synchronizable: typing.Optional[bool] = None
-    tenant_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Azure AD tenant ID (required for Azure AD SP mode)
-    """
-
     title: typing.Optional[str] = pydantic.Field(default=None)
     """
     Cloud storage title

@@ -3,6 +3,7 @@
 import typing
 from json.decoder import JSONDecodeError
 
+from ... import core
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
@@ -15,8 +16,10 @@ from ...errors.forbidden_error import ForbiddenError
 from ...errors.not_found_error import NotFoundError
 from ...types.organization_member_tag import OrganizationMemberTag
 from ...types.organization_member_tag_assignment_request import OrganizationMemberTagAssignmentRequest
+from ...types.organization_member_tag_import_status import OrganizationMemberTagImportStatus
 from ...types.paginated_organization_member_tag_list import PaginatedOrganizationMemberTagList
 from .types.assign_member_tags_response import AssignMemberTagsResponse
+from .types.import_member_tags_response import ImportMemberTagsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -248,6 +251,164 @@ class RawMemberTagsClient:
                 )
             if _response.status_code == 403:
                 raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def import_(
+        self, id: int, *, bulk_tags: str, file: core.File, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ImportMemberTagsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Upload a CSV file to bulk import member tags and assign them to organization members.
+
+        The CSV file must contain `email` and `tags` columns. The `tags` column should contain comma-separated tag labels (quoted if they contain commas). Tags that do not exist will be created.
+
+        Optionally, you can specify `bulk_tags` as a comma-separated list of tags to apply to all users in the CSV file.
+
+        The import runs asynchronously. Use the returned import job ID to check the status.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        bulk_tags : str
+
+        file : core.File
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ImportMemberTagsResponse]
+            Import job created successfully
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/organizations/{jsonable_encoder(id)}/member-tags/imports",
+            method="POST",
+            data={
+                "bulk_tags": bulk_tags,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ImportMemberTagsResponse,
+                    construct_type(
+                        type_=ImportMemberTagsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_import(
+        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[OrganizationMemberTagImportStatus]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the status and results of a member tag import job.
+
+        The response includes the current status (created, in_progress, completed, failed), timestamps, and counts of tags created, assignments made, and users skipped.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        import_pk : int
+            A unique integer value identifying this import job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[OrganizationMemberTagImportStatus]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/organizations/{jsonable_encoder(id)}/member-tags/imports/{jsonable_encoder(import_pk)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    OrganizationMemberTagImportStatus,
+                    construct_type(
+                        type_=OrganizationMemberTagImportStatus,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -705,6 +866,164 @@ class AsyncRawMemberTagsClient:
                 )
             if _response.status_code == 403:
                 raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def import_(
+        self, id: int, *, bulk_tags: str, file: core.File, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ImportMemberTagsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Upload a CSV file to bulk import member tags and assign them to organization members.
+
+        The CSV file must contain `email` and `tags` columns. The `tags` column should contain comma-separated tag labels (quoted if they contain commas). Tags that do not exist will be created.
+
+        Optionally, you can specify `bulk_tags` as a comma-separated list of tags to apply to all users in the CSV file.
+
+        The import runs asynchronously. Use the returned import job ID to check the status.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        bulk_tags : str
+
+        file : core.File
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ImportMemberTagsResponse]
+            Import job created successfully
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/organizations/{jsonable_encoder(id)}/member-tags/imports",
+            method="POST",
+            data={
+                "bulk_tags": bulk_tags,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ImportMemberTagsResponse,
+                    construct_type(
+                        type_=ImportMemberTagsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_import(
+        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[OrganizationMemberTagImportStatus]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the status and results of a member tag import job.
+
+        The response includes the current status (created, in_progress, completed, failed), timestamps, and counts of tags created, assignments made, and users skipped.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        import_pk : int
+            A unique integer value identifying this import job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[OrganizationMemberTagImportStatus]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/organizations/{jsonable_encoder(id)}/member-tags/imports/{jsonable_encoder(import_pk)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    OrganizationMemberTagImportStatus,
+                    construct_type(
+                        type_=OrganizationMemberTagImportStatus,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

@@ -14996,37 +14996,7 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
     
 </dd>
 </dl>
@@ -15122,14 +15092,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -15138,7 +15100,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+**token:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -15282,37 +15244,7 @@ client.export_storage.databricks.validate(
 <dl>
 <dd>
 
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
     
 </dd>
 </dl>
@@ -15408,14 +15340,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -15424,7 +15348,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+**token:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -15684,20 +15608,6 @@ client.export_storage.databricks.update(
 <dl>
 <dd>
 
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
@@ -15707,22 +15617,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dd>
 
 **catalog:** `typing.Optional[str]` — UC catalog name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
     
 </dd>
 </dl>
@@ -15842,14 +15736,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -15858,7 +15744,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+**token:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -22895,36 +22781,6 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
@@ -23037,14 +22893,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -23053,7 +22901,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+**token:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -23197,36 +23045,6 @@ client.import_storage.databricks.validate(
 <dl>
 <dd>
 
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
@@ -23339,14 +23157,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -23355,7 +23165,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+**token:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -23615,37 +23425,7 @@ client.import_storage.databricks.update(
 <dl>
 <dd>
 
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **catalog:** `typing.Optional[str]` — UC catalog name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
     
 </dd>
 </dl>
@@ -23789,14 +23569,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
@@ -23805,7 +23577,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+**token:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -29628,6 +29400,194 @@ client.organizations.member_tags.assign(
 <dd>
 
 **overwrite:** `typing.Optional[bool]` — If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">import_</a>(...) -&gt; AsyncHttpResponse[ImportMemberTagsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Upload a CSV file to bulk import member tags and assign them to organization members.
+
+The CSV file must contain `email` and `tags` columns. The `tags` column should contain comma-separated tag labels (quoted if they contain commas). Tags that do not exist will be created.
+
+Optionally, you can specify `bulk_tags` as a comma-separated list of tags to apply to all users in the CSV file.
+
+The import runs asynchronously. Use the returned import job ID to check the status.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.member_tags.import_(
+    id=1,
+    bulk_tags="bulk_tags",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bulk_tags:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">get_import</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTagImportStatus]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Retrieve the status and results of a member tag import job.
+
+The response includes the current status (created, in_progress, completed, failed), timestamps, and counts of tags created, assignments made, and users skipped.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.member_tags.get_import(
+    id=1,
+    import_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**import_pk:** `int` — A unique integer value identifying this import job.
     
 </dd>
 </dl>

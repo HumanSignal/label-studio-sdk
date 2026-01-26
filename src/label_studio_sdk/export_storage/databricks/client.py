@@ -5,7 +5,6 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.auth_type_enum import AuthTypeEnum
 from ...types.databricks_export_storage import DatabricksExportStorage
 from ...types.status_c5a_enum import StatusC5AEnum
 from .raw_client import AsyncRawDatabricksClient, RawDatabricksClient
@@ -83,10 +82,7 @@ class DatabricksClient:
         project: int,
         schema: str,
         volume: str,
-        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -98,7 +94,6 @@ class DatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -132,21 +127,8 @@ class DatabricksClient:
         volume : str
             UC volume name
 
-        auth_type : typing.Optional[AuthTypeEnum]
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
-
-        client_id : typing.Optional[str]
-            Service principal client/application ID (required for SP modes)
-
-        client_secret : typing.Optional[str]
-            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -177,14 +159,10 @@ class DatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -224,10 +202,7 @@ class DatabricksClient:
             project=project,
             schema=schema,
             volume=volume,
-            auth_type=auth_type,
             can_delete_objects=can_delete_objects,
-            client_id=client_id,
-            client_secret=client_secret,
             description=description,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
@@ -239,7 +214,6 @@ class DatabricksClient:
             status=status,
             stream_chunk_bytes=stream_chunk_bytes,
             synchronizable=synchronizable,
-            tenant_id=tenant_id,
             title=title,
             token=token,
             traceback=traceback,
@@ -257,10 +231,7 @@ class DatabricksClient:
         project: int,
         schema: str,
         volume: str,
-        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -272,7 +243,6 @@ class DatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -306,21 +276,8 @@ class DatabricksClient:
         volume : str
             UC volume name
 
-        auth_type : typing.Optional[AuthTypeEnum]
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
-
-        client_id : typing.Optional[str]
-            Service principal client/application ID (required for SP modes)
-
-        client_secret : typing.Optional[str]
-            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -351,14 +308,10 @@ class DatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -397,10 +350,7 @@ class DatabricksClient:
             project=project,
             schema=schema,
             volume=volume,
-            auth_type=auth_type,
             can_delete_objects=can_delete_objects,
-            client_id=client_id,
-            client_secret=client_secret,
             description=description,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
@@ -412,7 +362,6 @@ class DatabricksClient:
             status=status,
             stream_chunk_bytes=stream_chunk_bytes,
             synchronizable=synchronizable,
-            tenant_id=tenant_id,
             title=title,
             token=token,
             traceback=traceback,
@@ -497,11 +446,8 @@ class DatabricksClient:
         self,
         id: int,
         *,
-        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         catalog: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
@@ -516,7 +462,6 @@ class DatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -538,24 +483,11 @@ class DatabricksClient:
         ----------
         id : int
 
-        auth_type : typing.Optional[AuthTypeEnum]
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
 
         catalog : typing.Optional[str]
             UC catalog name
-
-        client_id : typing.Optional[str]
-            Service principal client/application ID (required for SP modes)
-
-        client_secret : typing.Optional[str]
-            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -595,14 +527,10 @@ class DatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -637,11 +565,8 @@ class DatabricksClient:
         """
         _response = self._raw_client.update(
             id,
-            auth_type=auth_type,
             can_delete_objects=can_delete_objects,
             catalog=catalog,
-            client_id=client_id,
-            client_secret=client_secret,
             description=description,
             host=host,
             last_sync=last_sync,
@@ -656,7 +581,6 @@ class DatabricksClient:
             status=status,
             stream_chunk_bytes=stream_chunk_bytes,
             synchronizable=synchronizable,
-            tenant_id=tenant_id,
             title=title,
             token=token,
             traceback=traceback,
@@ -781,10 +705,7 @@ class AsyncDatabricksClient:
         project: int,
         schema: str,
         volume: str,
-        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -796,7 +717,6 @@ class AsyncDatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -830,21 +750,8 @@ class AsyncDatabricksClient:
         volume : str
             UC volume name
 
-        auth_type : typing.Optional[AuthTypeEnum]
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
-
-        client_id : typing.Optional[str]
-            Service principal client/application ID (required for SP modes)
-
-        client_secret : typing.Optional[str]
-            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -875,14 +782,10 @@ class AsyncDatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -930,10 +833,7 @@ class AsyncDatabricksClient:
             project=project,
             schema=schema,
             volume=volume,
-            auth_type=auth_type,
             can_delete_objects=can_delete_objects,
-            client_id=client_id,
-            client_secret=client_secret,
             description=description,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
@@ -945,7 +845,6 @@ class AsyncDatabricksClient:
             status=status,
             stream_chunk_bytes=stream_chunk_bytes,
             synchronizable=synchronizable,
-            tenant_id=tenant_id,
             title=title,
             token=token,
             traceback=traceback,
@@ -963,10 +862,7 @@ class AsyncDatabricksClient:
         project: int,
         schema: str,
         volume: str,
-        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -978,7 +874,6 @@ class AsyncDatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -1012,21 +907,8 @@ class AsyncDatabricksClient:
         volume : str
             UC volume name
 
-        auth_type : typing.Optional[AuthTypeEnum]
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
-
-        client_id : typing.Optional[str]
-            Service principal client/application ID (required for SP modes)
-
-        client_secret : typing.Optional[str]
-            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -1057,14 +939,10 @@ class AsyncDatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -1111,10 +989,7 @@ class AsyncDatabricksClient:
             project=project,
             schema=schema,
             volume=volume,
-            auth_type=auth_type,
             can_delete_objects=can_delete_objects,
-            client_id=client_id,
-            client_secret=client_secret,
             description=description,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
@@ -1126,7 +1001,6 @@ class AsyncDatabricksClient:
             status=status,
             stream_chunk_bytes=stream_chunk_bytes,
             synchronizable=synchronizable,
-            tenant_id=tenant_id,
             title=title,
             token=token,
             traceback=traceback,
@@ -1227,11 +1101,8 @@ class AsyncDatabricksClient:
         self,
         id: int,
         *,
-        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         catalog: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
@@ -1246,7 +1117,6 @@ class AsyncDatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -1268,24 +1138,11 @@ class AsyncDatabricksClient:
         ----------
         id : int
 
-        auth_type : typing.Optional[AuthTypeEnum]
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
 
         catalog : typing.Optional[str]
             UC catalog name
-
-        client_id : typing.Optional[str]
-            Service principal client/application ID (required for SP modes)
-
-        client_secret : typing.Optional[str]
-            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -1325,14 +1182,10 @@ class AsyncDatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -1375,11 +1228,8 @@ class AsyncDatabricksClient:
         """
         _response = await self._raw_client.update(
             id,
-            auth_type=auth_type,
             can_delete_objects=can_delete_objects,
             catalog=catalog,
-            client_id=client_id,
-            client_secret=client_secret,
             description=description,
             host=host,
             last_sync=last_sync,
@@ -1394,7 +1244,6 @@ class AsyncDatabricksClient:
             status=status,
             stream_chunk_bytes=stream_chunk_bytes,
             synchronizable=synchronizable,
-            tenant_id=tenant_id,
             title=title,
             token=token,
             traceback=traceback,

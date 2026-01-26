@@ -6,12 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import AssignMemberTagsResponse
+    from .types import AssignMemberTagsResponse, ImportMemberTagsResponse
     from . import bulk
     from .bulk import DeleteBulkResponse, PostBulkResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "AssignMemberTagsResponse": ".types",
     "DeleteBulkResponse": ".bulk",
+    "ImportMemberTagsResponse": ".types",
     "PostBulkResponse": ".bulk",
     "bulk": ".bulk",
 }
@@ -38,4 +39,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AssignMemberTagsResponse", "DeleteBulkResponse", "PostBulkResponse", "bulk"]
+__all__ = ["AssignMemberTagsResponse", "DeleteBulkResponse", "ImportMemberTagsResponse", "PostBulkResponse", "bulk"]

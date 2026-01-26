@@ -7,7 +7,11 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .assign_member_tags_response import AssignMemberTagsResponse
-_dynamic_imports: typing.Dict[str, str] = {"AssignMemberTagsResponse": ".assign_member_tags_response"}
+    from .import_member_tags_response import ImportMemberTagsResponse
+_dynamic_imports: typing.Dict[str, str] = {
+    "AssignMemberTagsResponse": ".assign_member_tags_response",
+    "ImportMemberTagsResponse": ".import_member_tags_response",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AssignMemberTagsResponse"]
+__all__ = ["AssignMemberTagsResponse", "ImportMemberTagsResponse"]

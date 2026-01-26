@@ -22,7 +22,6 @@ if typing.TYPE_CHECKING:
     from .assignment_settings_request import AssignmentSettingsRequest
     from .associated_project import AssociatedProject
     from .auth_method_enum import AuthMethodEnum
-    from .auth_type_enum import AuthTypeEnum
     from .azure_blob_export_storage import AzureBlobExportStorage
     from .azure_blob_import_storage import AzureBlobImportStorage
     from .azure_service_principal_export_storage import AzureServicePrincipalExportStorage
@@ -134,6 +133,8 @@ if typing.TYPE_CHECKING:
     from .organization_member_created_projects_item import OrganizationMemberCreatedProjectsItem
     from .organization_member_tag import OrganizationMemberTag
     from .organization_member_tag_assignment_request import OrganizationMemberTagAssignmentRequest
+    from .organization_member_tag_import_status import OrganizationMemberTagImportStatus
+    from .organization_member_tag_import_status_status_enum import OrganizationMemberTagImportStatusStatusEnum
     from .organization_membership import OrganizationMembership
     from .organization_permission import OrganizationPermission
     from .organization_permission_request import OrganizationPermissionRequest
@@ -238,7 +239,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssignmentSettingsRequest": ".assignment_settings_request",
     "AssociatedProject": ".associated_project",
     "AuthMethodEnum": ".auth_method_enum",
-    "AuthTypeEnum": ".auth_type_enum",
     "AzureBlobExportStorage": ".azure_blob_export_storage",
     "AzureBlobImportStorage": ".azure_blob_import_storage",
     "AzureServicePrincipalExportStorage": ".azure_service_principal_export_storage",
@@ -344,6 +344,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrganizationMemberCreatedProjectsItem": ".organization_member_created_projects_item",
     "OrganizationMemberTag": ".organization_member_tag",
     "OrganizationMemberTagAssignmentRequest": ".organization_member_tag_assignment_request",
+    "OrganizationMemberTagImportStatus": ".organization_member_tag_import_status",
+    "OrganizationMemberTagImportStatusStatusEnum": ".organization_member_tag_import_status_status_enum",
     "OrganizationMembership": ".organization_membership",
     "OrganizationPermission": ".organization_permission",
     "OrganizationPermissionRequest": ".organization_permission_request",
@@ -472,7 +474,6 @@ __all__ = [
     "AssignmentSettingsRequest",
     "AssociatedProject",
     "AuthMethodEnum",
-    "AuthTypeEnum",
     "AzureBlobExportStorage",
     "AzureBlobImportStorage",
     "AzureServicePrincipalExportStorage",
@@ -578,6 +579,8 @@ __all__ = [
     "OrganizationMemberCreatedProjectsItem",
     "OrganizationMemberTag",
     "OrganizationMemberTagAssignmentRequest",
+    "OrganizationMemberTagImportStatus",
+    "OrganizationMemberTagImportStatusStatusEnum",
     "OrganizationMembership",
     "OrganizationPermission",
     "OrganizationPermissionRequest",
