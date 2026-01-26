@@ -10,6 +10,7 @@ from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
+from ...types.auth_type_enum import AuthTypeEnum
 from ...types.databricks_import_storage import DatabricksImportStorage
 from ...types.status_c5a_enum import StatusC5AEnum
 
@@ -85,6 +86,9 @@ class RawDatabricksClient:
         project: int,
         schema: str,
         volume: str,
+        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -99,6 +103,7 @@ class RawDatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -131,6 +136,19 @@ class RawDatabricksClient:
 
         volume : str
             UC volume name
+
+        auth_type : typing.Optional[AuthTypeEnum]
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
+
+        client_id : typing.Optional[str]
+            Service principal client/application ID (required for SP modes)
+
+        client_secret : typing.Optional[str]
+            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -170,10 +188,14 @@ class RawDatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -196,7 +218,10 @@ class RawDatabricksClient:
             "api/storages/databricks/",
             method="POST",
             json={
+                "auth_type": auth_type,
                 "catalog": catalog,
+                "client_id": client_id,
+                "client_secret": client_secret,
                 "description": description,
                 "host": host,
                 "last_sync": last_sync,
@@ -214,6 +239,7 @@ class RawDatabricksClient:
                 "status": status,
                 "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
+                "tenant_id": tenant_id,
                 "title": title,
                 "token": token,
                 "traceback": traceback,
@@ -250,6 +276,9 @@ class RawDatabricksClient:
         project: int,
         schema: str,
         volume: str,
+        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -264,6 +293,7 @@ class RawDatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -296,6 +326,19 @@ class RawDatabricksClient:
 
         volume : str
             UC volume name
+
+        auth_type : typing.Optional[AuthTypeEnum]
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
+
+        client_id : typing.Optional[str]
+            Service principal client/application ID (required for SP modes)
+
+        client_secret : typing.Optional[str]
+            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -335,10 +378,14 @@ class RawDatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -360,7 +407,10 @@ class RawDatabricksClient:
             "api/storages/databricks/validate",
             method="POST",
             json={
+                "auth_type": auth_type,
                 "catalog": catalog,
+                "client_id": client_id,
+                "client_secret": client_secret,
                 "description": description,
                 "host": host,
                 "last_sync": last_sync,
@@ -378,6 +428,7 @@ class RawDatabricksClient:
                 "status": status,
                 "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
+                "tenant_id": tenant_id,
                 "title": title,
                 "token": token,
                 "traceback": traceback,
@@ -481,7 +532,10 @@ class RawDatabricksClient:
         self,
         id: int,
         *,
+        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
         catalog: typing.Optional[str] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
@@ -499,6 +553,7 @@ class RawDatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -520,8 +575,21 @@ class RawDatabricksClient:
         ----------
         id : int
 
+        auth_type : typing.Optional[AuthTypeEnum]
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
+
         catalog : typing.Optional[str]
             UC catalog name
+
+        client_id : typing.Optional[str]
+            Service principal client/application ID (required for SP modes)
+
+        client_secret : typing.Optional[str]
+            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -570,10 +638,14 @@ class RawDatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -599,7 +671,10 @@ class RawDatabricksClient:
             f"api/storages/databricks/{jsonable_encoder(id)}",
             method="PATCH",
             json={
+                "auth_type": auth_type,
                 "catalog": catalog,
+                "client_id": client_id,
+                "client_secret": client_secret,
                 "description": description,
                 "host": host,
                 "last_sync": last_sync,
@@ -617,6 +692,7 @@ class RawDatabricksClient:
                 "status": status,
                 "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
+                "tenant_id": tenant_id,
                 "title": title,
                 "token": token,
                 "traceback": traceback,
@@ -758,6 +834,9 @@ class AsyncRawDatabricksClient:
         project: int,
         schema: str,
         volume: str,
+        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -772,6 +851,7 @@ class AsyncRawDatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -804,6 +884,19 @@ class AsyncRawDatabricksClient:
 
         volume : str
             UC volume name
+
+        auth_type : typing.Optional[AuthTypeEnum]
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
+
+        client_id : typing.Optional[str]
+            Service principal client/application ID (required for SP modes)
+
+        client_secret : typing.Optional[str]
+            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -843,10 +936,14 @@ class AsyncRawDatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -869,7 +966,10 @@ class AsyncRawDatabricksClient:
             "api/storages/databricks/",
             method="POST",
             json={
+                "auth_type": auth_type,
                 "catalog": catalog,
+                "client_id": client_id,
+                "client_secret": client_secret,
                 "description": description,
                 "host": host,
                 "last_sync": last_sync,
@@ -887,6 +987,7 @@ class AsyncRawDatabricksClient:
                 "status": status,
                 "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
+                "tenant_id": tenant_id,
                 "title": title,
                 "token": token,
                 "traceback": traceback,
@@ -923,6 +1024,9 @@ class AsyncRawDatabricksClient:
         project: int,
         schema: str,
         volume: str,
+        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -937,6 +1041,7 @@ class AsyncRawDatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -969,6 +1074,19 @@ class AsyncRawDatabricksClient:
 
         volume : str
             UC volume name
+
+        auth_type : typing.Optional[AuthTypeEnum]
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
+
+        client_id : typing.Optional[str]
+            Service principal client/application ID (required for SP modes)
+
+        client_secret : typing.Optional[str]
+            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -1008,10 +1126,14 @@ class AsyncRawDatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -1033,7 +1155,10 @@ class AsyncRawDatabricksClient:
             "api/storages/databricks/validate",
             method="POST",
             json={
+                "auth_type": auth_type,
                 "catalog": catalog,
+                "client_id": client_id,
+                "client_secret": client_secret,
                 "description": description,
                 "host": host,
                 "last_sync": last_sync,
@@ -1051,6 +1176,7 @@ class AsyncRawDatabricksClient:
                 "status": status,
                 "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
+                "tenant_id": tenant_id,
                 "title": title,
                 "token": token,
                 "traceback": traceback,
@@ -1156,7 +1282,10 @@ class AsyncRawDatabricksClient:
         self,
         id: int,
         *,
+        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
         catalog: typing.Optional[str] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
@@ -1174,6 +1303,7 @@ class AsyncRawDatabricksClient:
         status: typing.Optional[StatusC5AEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -1195,8 +1325,21 @@ class AsyncRawDatabricksClient:
         ----------
         id : int
 
+        auth_type : typing.Optional[AuthTypeEnum]
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
+
         catalog : typing.Optional[str]
             UC catalog name
+
+        client_id : typing.Optional[str]
+            Service principal client/application ID (required for SP modes)
+
+        client_secret : typing.Optional[str]
+            Service principal client secret (required for SP modes)
 
         description : typing.Optional[str]
             Cloud storage description
@@ -1245,10 +1388,14 @@ class AsyncRawDatabricksClient:
 
         synchronizable : typing.Optional[bool]
 
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
         title : typing.Optional[str]
             Cloud storage title
 
         token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -1274,7 +1421,10 @@ class AsyncRawDatabricksClient:
             f"api/storages/databricks/{jsonable_encoder(id)}",
             method="PATCH",
             json={
+                "auth_type": auth_type,
                 "catalog": catalog,
+                "client_id": client_id,
+                "client_secret": client_secret,
                 "description": description,
                 "host": host,
                 "last_sync": last_sync,
@@ -1292,6 +1442,7 @@ class AsyncRawDatabricksClient:
                 "status": status,
                 "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
+                "tenant_id": tenant_id,
                 "title": title,
                 "token": token,
                 "traceback": traceback,
