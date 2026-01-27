@@ -430,7 +430,7 @@ client.annotation_history.list_for_project(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-List all reviews for a specific annotation ID.
+List all reviews for a specific annotation ID. Only allowed for organizations with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -520,7 +520,7 @@ client.annotation_reviews.list()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Create a review for a specific annotation ID.
+Create a review for a specific annotation ID. Only allowed for organizations with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -652,7 +652,7 @@ client.annotation_reviews.create(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve a specific review by ID for an annotation.
+Retrieve a specific review by ID for an annotation. Only allowed for organizations with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -728,7 +728,7 @@ client.annotation_reviews.get(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Delete a review by ID
+Delete a review by ID. Only allowed for organizations with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -804,7 +804,7 @@ client.annotation_reviews.delete(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Update a specific review by ID.
+Update a specific review by ID. Only allowed for organizations with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -12719,6 +12719,14 @@ client.workspaces.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**include_all_workspaces:** `typing.Optional[bool]` — Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -33546,7 +33554,7 @@ client.projects.stats.users_prediction_agreement(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Get review score and performance score statistics for multiple annotators within a project.
+Get review score and performance score statistics for multiple annotators within a project. Only allowed for accounts with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -33732,7 +33740,7 @@ client.projects.stats.user_prediction_agreement(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Get review score statistics for a specific user within a project.
+Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -37347,6 +37355,62 @@ client.sso.saml.update(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**domain:** `typing.Optional[str]` — Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_email:** `typing.Optional[str]` — Mapping attributes: user email from SAML request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_first_name:** `typing.Optional[str]` — Mapping attributes: user first name from SAML request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_groups:** `typing.Optional[str]` — Mapping attributes: groups attribute for user mapping to workspaces and roles
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_last_name:** `typing.Optional[str]` — Mapping attributes: user last name from SAML request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata_url:** `typing.Optional[str]` — URL SAML metadata from IdP
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata_xml:** `typing.Optional[str]` — Metadata XML file
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

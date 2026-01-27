@@ -22,6 +22,7 @@ class RawWorkspacesClient:
     def list(
         self,
         *,
+        include_all_workspaces: typing.Optional[bool] = None,
         is_personal: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -37,6 +38,9 @@ class RawWorkspacesClient:
 
         Parameters
         ----------
+        include_all_workspaces : typing.Optional[bool]
+            Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace.
 
@@ -55,6 +59,7 @@ class RawWorkspacesClient:
             "api/workspaces/",
             method="GET",
             params={
+                "include_all_workspaces": include_all_workspaces,
                 "is_personal": is_personal,
                 "ordering": ordering,
             },
@@ -310,6 +315,7 @@ class AsyncRawWorkspacesClient:
     async def list(
         self,
         *,
+        include_all_workspaces: typing.Optional[bool] = None,
         is_personal: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -325,6 +331,9 @@ class AsyncRawWorkspacesClient:
 
         Parameters
         ----------
+        include_all_workspaces : typing.Optional[bool]
+            Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace.
 
@@ -343,6 +352,7 @@ class AsyncRawWorkspacesClient:
             "api/workspaces/",
             method="GET",
             params={
+                "include_all_workspaces": include_all_workspaces,
                 "is_personal": is_personal,
                 "ordering": ordering,
             },

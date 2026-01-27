@@ -651,7 +651,7 @@ class StatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Get review score and performance score statistics for multiple annotators within a project.
+        Get review score and performance score statistics for multiple annotators within a project. Only allowed for accounts with reviewing features enabled.
 
         Parameters
         ----------
@@ -754,7 +754,7 @@ class StatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Get review score statistics for a specific user within a project.
+        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
 
         Parameters
         ----------
@@ -1576,7 +1576,7 @@ class AsyncStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Get review score and performance score statistics for multiple annotators within a project.
+        Get review score and performance score statistics for multiple annotators within a project. Only allowed for accounts with reviewing features enabled.
 
         Parameters
         ----------
@@ -1695,7 +1695,7 @@ class AsyncStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Get review score statistics for a specific user within a project.
+        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
 
         Parameters
         ----------

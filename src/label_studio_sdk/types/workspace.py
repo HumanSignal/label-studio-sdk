@@ -17,6 +17,7 @@ class Workspace(UncheckedBaseModel):
 
     color: typing.Optional[str] = None
     created_by: typing.Optional[int] = None
+    created_by_user: typing.Optional[str] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Workspace description
