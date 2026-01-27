@@ -37,6 +37,7 @@ class WorkspacesClient:
     def list(
         self,
         *,
+        include_all_workspaces: typing.Optional[bool] = None,
         is_personal: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -52,6 +53,9 @@ class WorkspacesClient:
 
         Parameters
         ----------
+        include_all_workspaces : typing.Optional[bool]
+            Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace.
 
@@ -75,7 +79,12 @@ class WorkspacesClient:
         )
         client.workspaces.list()
         """
-        _response = self._raw_client.list(is_personal=is_personal, ordering=ordering, request_options=request_options)
+        _response = self._raw_client.list(
+            include_all_workspaces=include_all_workspaces,
+            is_personal=is_personal,
+            ordering=ordering,
+            request_options=request_options,
+        )
         return _response.data
 
     def create(
@@ -319,6 +328,7 @@ class AsyncWorkspacesClient:
     async def list(
         self,
         *,
+        include_all_workspaces: typing.Optional[bool] = None,
         is_personal: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -334,6 +344,9 @@ class AsyncWorkspacesClient:
 
         Parameters
         ----------
+        include_all_workspaces : typing.Optional[bool]
+            Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace.
 
@@ -366,7 +379,10 @@ class AsyncWorkspacesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            is_personal=is_personal, ordering=ordering, request_options=request_options
+            include_all_workspaces=include_all_workspaces,
+            is_personal=is_personal,
+            ordering=ordering,
+            request_options=request_options,
         )
         return _response.data
 

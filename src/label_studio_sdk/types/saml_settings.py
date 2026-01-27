@@ -8,6 +8,53 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SamlSettings(UncheckedBaseModel):
+    """
+    Serializer for reading SAML settings (GET requests).
+
+    Includes all model fields plus computed read-only fields for SP URLs
+    that are needed for IdP configuration.
+    """
+
+    acs_url: typing.Optional[str] = None
+    domain: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
+    """
+
+    login_url: typing.Optional[str] = None
+    logout_url: typing.Optional[str] = None
+    mapping_email: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: user email from SAML request
+    """
+
+    mapping_first_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: user first name from SAML request
+    """
+
+    mapping_groups: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: groups attribute for user mapping to workspaces and roles
+    """
+
+    mapping_last_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: user last name from SAML request
+    """
+
+    metadata_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    URL SAML metadata from IdP
+    """
+
+    metadata_xml: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Metadata XML file
+    """
+
+    metadata_xml_url: typing.Optional[str] = None
+    nameid_format: typing.Optional[str] = None
     projects_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Projects to groups mapping
@@ -18,6 +65,7 @@ class SamlSettings(UncheckedBaseModel):
     Roles to groups mapping
     """
 
+    token: typing.Optional[str] = None
     workspaces_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Workspaces to groups mapping

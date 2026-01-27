@@ -12723,6 +12723,14 @@ client.workspaces.list()
 <dl>
 <dd>
 
+**include_all_workspaces:** `typing.Optional[bool]` — Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **is_personal:** `typing.Optional[bool]` — Workspace is a personal user workspace.
     
 </dd>
@@ -37535,6 +37543,62 @@ client.sso.saml.update(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**domain:** `typing.Optional[str]` — Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_email:** `typing.Optional[str]` — Mapping attributes: user email from SAML request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_first_name:** `typing.Optional[str]` — Mapping attributes: user first name from SAML request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_groups:** `typing.Optional[str]` — Mapping attributes: groups attribute for user mapping to workspaces and roles
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_last_name:** `typing.Optional[str]` — Mapping attributes: user last name from SAML request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata_url:** `typing.Optional[str]` — URL SAML metadata from IdP
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata_xml:** `typing.Optional[str]` — Metadata XML file
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
