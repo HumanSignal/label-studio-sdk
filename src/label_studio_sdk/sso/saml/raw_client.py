@@ -64,6 +64,13 @@ class RawSamlClient:
     def update(
         self,
         *,
+        domain: typing.Optional[str] = OMIT,
+        mapping_email: typing.Optional[str] = OMIT,
+        mapping_first_name: typing.Optional[str] = OMIT,
+        mapping_groups: typing.Optional[str] = OMIT,
+        mapping_last_name: typing.Optional[str] = OMIT,
+        metadata_url: typing.Optional[str] = OMIT,
+        metadata_xml: typing.Optional[str] = OMIT,
         projects_groups: typing.Optional[typing.Sequence[ProjectGroupRequest]] = OMIT,
         roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
@@ -80,6 +87,27 @@ class RawSamlClient:
 
         Parameters
         ----------
+        domain : typing.Optional[str]
+            Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
+
+        mapping_email : typing.Optional[str]
+            Mapping attributes: user email from SAML request
+
+        mapping_first_name : typing.Optional[str]
+            Mapping attributes: user first name from SAML request
+
+        mapping_groups : typing.Optional[str]
+            Mapping attributes: groups attribute for user mapping to workspaces and roles
+
+        mapping_last_name : typing.Optional[str]
+            Mapping attributes: user last name from SAML request
+
+        metadata_url : typing.Optional[str]
+            URL SAML metadata from IdP
+
+        metadata_xml : typing.Optional[str]
+            Metadata XML file
+
         projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
@@ -98,6 +126,13 @@ class RawSamlClient:
             "api/saml/settings",
             method="POST",
             json={
+                "domain": domain,
+                "mapping_email": mapping_email,
+                "mapping_first_name": mapping_first_name,
+                "mapping_groups": mapping_groups,
+                "mapping_last_name": mapping_last_name,
+                "metadata_url": metadata_url,
+                "metadata_xml": metadata_xml,
                 "projects_groups": convert_and_respect_annotation_metadata(
                     object_=projects_groups, annotation=typing.Sequence[ProjectGroupRequest], direction="write"
                 ),
@@ -173,6 +208,13 @@ class AsyncRawSamlClient:
     async def update(
         self,
         *,
+        domain: typing.Optional[str] = OMIT,
+        mapping_email: typing.Optional[str] = OMIT,
+        mapping_first_name: typing.Optional[str] = OMIT,
+        mapping_groups: typing.Optional[str] = OMIT,
+        mapping_last_name: typing.Optional[str] = OMIT,
+        metadata_url: typing.Optional[str] = OMIT,
+        metadata_xml: typing.Optional[str] = OMIT,
         projects_groups: typing.Optional[typing.Sequence[ProjectGroupRequest]] = OMIT,
         roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
@@ -189,6 +231,27 @@ class AsyncRawSamlClient:
 
         Parameters
         ----------
+        domain : typing.Optional[str]
+            Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
+
+        mapping_email : typing.Optional[str]
+            Mapping attributes: user email from SAML request
+
+        mapping_first_name : typing.Optional[str]
+            Mapping attributes: user first name from SAML request
+
+        mapping_groups : typing.Optional[str]
+            Mapping attributes: groups attribute for user mapping to workspaces and roles
+
+        mapping_last_name : typing.Optional[str]
+            Mapping attributes: user last name from SAML request
+
+        metadata_url : typing.Optional[str]
+            URL SAML metadata from IdP
+
+        metadata_xml : typing.Optional[str]
+            Metadata XML file
+
         projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
@@ -207,6 +270,13 @@ class AsyncRawSamlClient:
             "api/saml/settings",
             method="POST",
             json={
+                "domain": domain,
+                "mapping_email": mapping_email,
+                "mapping_first_name": mapping_first_name,
+                "mapping_groups": mapping_groups,
+                "mapping_last_name": mapping_last_name,
+                "metadata_url": metadata_url,
+                "metadata_xml": metadata_xml,
                 "projects_groups": convert_and_respect_annotation_metadata(
                     object_=projects_groups, annotation=typing.Sequence[ProjectGroupRequest], direction="write"
                 ),

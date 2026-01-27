@@ -42,7 +42,7 @@ class AnnotationReviewsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        List all reviews for a specific annotation ID.
+        List all reviews for a specific annotation ID. Only allowed for organizations with reviewing features enabled.
 
         Parameters
         ----------
@@ -98,7 +98,7 @@ class AnnotationReviewsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create a review for a specific annotation ID.
+        Create a review for a specific annotation ID. Only allowed for organizations with reviewing features enabled.
 
         Parameters
         ----------
@@ -161,7 +161,7 @@ class AnnotationReviewsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve a specific review by ID for an annotation.
+        Retrieve a specific review by ID for an annotation. Only allowed for organizations with reviewing features enabled.
 
         Parameters
         ----------
@@ -198,7 +198,7 @@ class AnnotationReviewsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete a review by ID
+        Delete a review by ID. Only allowed for organizations with reviewing features enabled.
 
         Parameters
         ----------
@@ -246,7 +246,7 @@ class AnnotationReviewsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Update a specific review by ID.
+        Update a specific review by ID. Only allowed for organizations with reviewing features enabled.
 
         Parameters
         ----------
@@ -332,7 +332,7 @@ class AsyncAnnotationReviewsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        List all reviews for a specific annotation ID.
+        List all reviews for a specific annotation ID. Only allowed for organizations with reviewing features enabled.
 
         Parameters
         ----------
@@ -396,7 +396,7 @@ class AsyncAnnotationReviewsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create a review for a specific annotation ID.
+        Create a review for a specific annotation ID. Only allowed for organizations with reviewing features enabled.
 
         Parameters
         ----------
@@ -467,7 +467,7 @@ class AsyncAnnotationReviewsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve a specific review by ID for an annotation.
+        Retrieve a specific review by ID for an annotation. Only allowed for organizations with reviewing features enabled.
 
         Parameters
         ----------
@@ -512,7 +512,7 @@ class AsyncAnnotationReviewsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete a review by ID
+        Delete a review by ID. Only allowed for organizations with reviewing features enabled.
 
         Parameters
         ----------
@@ -568,7 +568,7 @@ class AsyncAnnotationReviewsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Update a specific review by ID.
+        Update a specific review by ID. Only allowed for organizations with reviewing features enabled.
 
         Parameters
         ----------

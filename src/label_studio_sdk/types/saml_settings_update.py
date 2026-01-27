@@ -9,6 +9,45 @@ from .project_group import ProjectGroup
 
 
 class SamlSettingsUpdate(UncheckedBaseModel):
+    """
+    Serializer for updating SAML settings (POST requests).
+    """
+
+    domain: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
+    """
+
+    mapping_email: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: user email from SAML request
+    """
+
+    mapping_first_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: user first name from SAML request
+    """
+
+    mapping_groups: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: groups attribute for user mapping to workspaces and roles
+    """
+
+    mapping_last_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: user last name from SAML request
+    """
+
+    metadata_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    URL SAML metadata from IdP
+    """
+
+    metadata_xml: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Metadata XML file
+    """
+
     projects_groups: typing.Optional[typing.List[ProjectGroup]] = None
     roles_groups: typing.Optional[typing.List[typing.List[str]]] = None
     workspaces_groups: typing.Optional[typing.List[typing.List[str]]] = None
