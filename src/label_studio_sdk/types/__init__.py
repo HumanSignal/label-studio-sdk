@@ -133,7 +133,6 @@ if typing.TYPE_CHECKING:
     from .organization_member_contributed_to_projects_item import OrganizationMemberContributedToProjectsItem
     from .organization_member_created_projects_item import OrganizationMemberCreatedProjectsItem
     from .organization_member_tag import OrganizationMemberTag
-    from .organization_member_tag_assignment_request import OrganizationMemberTagAssignmentRequest
     from .organization_member_tag_import_status import OrganizationMemberTagImportStatus
     from .organization_member_tag_import_status_status_enum import OrganizationMemberTagImportStatusStatusEnum
     from .organization_membership import OrganizationMembership
@@ -345,7 +344,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrganizationMemberContributedToProjectsItem": ".organization_member_contributed_to_projects_item",
     "OrganizationMemberCreatedProjectsItem": ".organization_member_created_projects_item",
     "OrganizationMemberTag": ".organization_member_tag",
-    "OrganizationMemberTagAssignmentRequest": ".organization_member_tag_assignment_request",
     "OrganizationMemberTagImportStatus": ".organization_member_tag_import_status",
     "OrganizationMemberTagImportStatusStatusEnum": ".organization_member_tag_import_status_status_enum",
     "OrganizationMembership": ".organization_membership",
@@ -581,7 +579,6 @@ __all__ = [
     "OrganizationMemberContributedToProjectsItem",
     "OrganizationMemberCreatedProjectsItem",
     "OrganizationMemberTag",
-    "OrganizationMemberTagAssignmentRequest",
     "OrganizationMemberTagImportStatus",
     "OrganizationMemberTagImportStatusStatusEnum",
     "OrganizationMembership",

@@ -8,7 +8,6 @@ from ... import core
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.organization_member_tag import OrganizationMemberTag
-from ...types.organization_member_tag_assignment_request import OrganizationMemberTagAssignmentRequest
 from ...types.organization_member_tag_import_status import OrganizationMemberTagImportStatus
 from ...types.paginated_organization_member_tag_list import PaginatedOrganizationMemberTagList
 from .raw_client import AsyncRawMemberTagsClient, RawMemberTagsClient
@@ -144,8 +143,18 @@ class MemberTagsClient:
         self,
         id: int,
         *,
-        assignments: typing.Sequence[OrganizationMemberTagAssignmentRequest],
+        all_: bool,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
+        is_deleted: typing.Optional[bool] = None,
+        role: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
+        user_last_activity_gte: typing.Optional[str] = None,
+        user_last_activity_lte: typing.Optional[str] = None,
+        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
+        included: typing.Optional[typing.Sequence[int]] = OMIT,
         overwrite: typing.Optional[bool] = OMIT,
+        bulk_organization_member_tag_assignment_request_tags: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AssignMemberTagsResponse:
         """
@@ -162,11 +171,41 @@ class MemberTagsClient:
         id : int
             A unique integer value identifying this organization.
 
-        assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
-            List of member tag assignments to assign.
+        all_ : bool
+            If true, assign tags to all organization members. If false, assign tags to the provided users.
+
+        exclude_project_id : typing.Optional[float]
+            Filter exclude_project_id by exact match
+
+        exclude_workspace_id : typing.Optional[float]
+            Filter exclude_workspace_id by exact match
+
+        is_deleted : typing.Optional[bool]
+            Filter is_deleted by exact match
+
+        role : typing.Optional[str]
+            Filter role by in list (comma-separated values)
+
+        tags : typing.Optional[str]
+            Filter tags by in list (comma-separated values)
+
+        user_last_activity_gte : typing.Optional[str]
+            Filter user__last_activity by greater than or equal to
+
+        user_last_activity_lte : typing.Optional[str]
+            Filter user__last_activity by less than or equal to
+
+        excluded : typing.Optional[typing.Sequence[int]]
+            List of user IDs to exclude from the assignment.
+
+        included : typing.Optional[typing.Sequence[int]]
+            List of user IDs to include in the assignment.
 
         overwrite : typing.Optional[bool]
             If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+
+        bulk_organization_member_tag_assignment_request_tags : typing.Optional[typing.Sequence[int]]
+            List of tag IDs to assign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -178,23 +217,31 @@ class MemberTagsClient:
 
         Examples
         --------
-        from label_studio_sdk import LabelStudio, OrganizationMemberTagAssignmentRequest
+        from label_studio_sdk import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
         client.organizations.member_tags.assign(
             id=1,
-            assignments=[
-                OrganizationMemberTagAssignmentRequest(
-                    tag_ids=[1],
-                    user_id=1,
-                )
-            ],
+            all_=True,
         )
         """
         _response = self._raw_client.assign(
-            id, assignments=assignments, overwrite=overwrite, request_options=request_options
+            id,
+            all_=all_,
+            exclude_project_id=exclude_project_id,
+            exclude_workspace_id=exclude_workspace_id,
+            is_deleted=is_deleted,
+            role=role,
+            tags=tags,
+            user_last_activity_gte=user_last_activity_gte,
+            user_last_activity_lte=user_last_activity_lte,
+            excluded=excluded,
+            included=included,
+            overwrite=overwrite,
+            bulk_organization_member_tag_assignment_request_tags=bulk_organization_member_tag_assignment_request_tags,
+            request_options=request_options,
         )
         return _response.data
 
@@ -575,8 +622,18 @@ class AsyncMemberTagsClient:
         self,
         id: int,
         *,
-        assignments: typing.Sequence[OrganizationMemberTagAssignmentRequest],
+        all_: bool,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
+        is_deleted: typing.Optional[bool] = None,
+        role: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
+        user_last_activity_gte: typing.Optional[str] = None,
+        user_last_activity_lte: typing.Optional[str] = None,
+        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
+        included: typing.Optional[typing.Sequence[int]] = OMIT,
         overwrite: typing.Optional[bool] = OMIT,
+        bulk_organization_member_tag_assignment_request_tags: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AssignMemberTagsResponse:
         """
@@ -593,11 +650,41 @@ class AsyncMemberTagsClient:
         id : int
             A unique integer value identifying this organization.
 
-        assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
-            List of member tag assignments to assign.
+        all_ : bool
+            If true, assign tags to all organization members. If false, assign tags to the provided users.
+
+        exclude_project_id : typing.Optional[float]
+            Filter exclude_project_id by exact match
+
+        exclude_workspace_id : typing.Optional[float]
+            Filter exclude_workspace_id by exact match
+
+        is_deleted : typing.Optional[bool]
+            Filter is_deleted by exact match
+
+        role : typing.Optional[str]
+            Filter role by in list (comma-separated values)
+
+        tags : typing.Optional[str]
+            Filter tags by in list (comma-separated values)
+
+        user_last_activity_gte : typing.Optional[str]
+            Filter user__last_activity by greater than or equal to
+
+        user_last_activity_lte : typing.Optional[str]
+            Filter user__last_activity by less than or equal to
+
+        excluded : typing.Optional[typing.Sequence[int]]
+            List of user IDs to exclude from the assignment.
+
+        included : typing.Optional[typing.Sequence[int]]
+            List of user IDs to include in the assignment.
 
         overwrite : typing.Optional[bool]
             If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+
+        bulk_organization_member_tag_assignment_request_tags : typing.Optional[typing.Sequence[int]]
+            List of tag IDs to assign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -611,10 +698,7 @@ class AsyncMemberTagsClient:
         --------
         import asyncio
 
-        from label_studio_sdk import (
-            AsyncLabelStudio,
-            OrganizationMemberTagAssignmentRequest,
-        )
+        from label_studio_sdk import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
@@ -624,19 +708,27 @@ class AsyncMemberTagsClient:
         async def main() -> None:
             await client.organizations.member_tags.assign(
                 id=1,
-                assignments=[
-                    OrganizationMemberTagAssignmentRequest(
-                        tag_ids=[1],
-                        user_id=1,
-                    )
-                ],
+                all_=True,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.assign(
-            id, assignments=assignments, overwrite=overwrite, request_options=request_options
+            id,
+            all_=all_,
+            exclude_project_id=exclude_project_id,
+            exclude_workspace_id=exclude_workspace_id,
+            is_deleted=is_deleted,
+            role=role,
+            tags=tags,
+            user_last_activity_gte=user_last_activity_gte,
+            user_last_activity_lte=user_last_activity_lte,
+            excluded=excluded,
+            included=included,
+            overwrite=overwrite,
+            bulk_organization_member_tag_assignment_request_tags=bulk_organization_member_tag_assignment_request_tags,
+            request_options=request_options,
         )
         return _response.data
 
