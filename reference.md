@@ -430,7 +430,7 @@ client.annotation_history.list_for_project(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-List all reviews for a specific annotation ID.
+List all reviews for a specific annotation ID. Only allowed for organizations with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -520,7 +520,7 @@ client.annotation_reviews.list()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Create a review for a specific annotation ID.
+Create a review for a specific annotation ID. Only allowed for organizations with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -652,7 +652,7 @@ client.annotation_reviews.create(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve a specific review by ID for an annotation.
+Retrieve a specific review by ID for an annotation. Only allowed for organizations with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -728,7 +728,7 @@ client.annotation_reviews.get(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Delete a review by ID
+Delete a review by ID. Only allowed for organizations with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -804,7 +804,7 @@ client.annotation_reviews.delete(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Update a specific review by ID.
+Update a specific review by ID. Only allowed for organizations with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -33742,7 +33742,7 @@ client.projects.stats.users_prediction_agreement(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Get review score and performance score statistics for multiple annotators within a project.
+Get review score and performance score statistics for multiple annotators within a project. Only allowed for accounts with reviewing features enabled.
 </dd>
 </dl>
 </dd>
@@ -33928,7 +33928,7 @@ client.projects.stats.user_prediction_agreement(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Get review score statistics for a specific user within a project.
+Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
 </dd>
 </dl>
 </dd>
