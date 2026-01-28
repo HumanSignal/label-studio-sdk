@@ -7,9 +7,10 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import invites, member_tags, members, permissions
-    from .member_tags import AssignMemberTagsResponse
+    from .member_tags import AssignMemberTagsResponse, ImportMemberTagsResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "AssignMemberTagsResponse": ".member_tags",
+    "ImportMemberTagsResponse": ".member_tags",
     "invites": ".invites",
     "member_tags": ".member_tags",
     "members": ".members",
@@ -38,4 +39,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AssignMemberTagsResponse", "invites", "member_tags", "members", "permissions"]
+__all__ = ["AssignMemberTagsResponse", "ImportMemberTagsResponse", "invites", "member_tags", "members", "permissions"]
