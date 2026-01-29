@@ -47,7 +47,7 @@ params = [
     (OT.TextTag, CT.LabelsTag, { "label": [ c.LABEL1, c.LABEL2 ], "start": 1, "end": 10 }, { "labels": [ c.LABEL1, c.LABEL2 ], "start": 1, "end": 10 }),
 
     ## Hypertext labeling
-    (OT.HyperTextTag, CT.HyperTextLabelsTag, { "start": 1, "end": 10, "startOffset": 10, "endOffset": 10, "label": c.LABEL1 }, { "start": 1, "end": 10, "startOffset": 10, "endOffset": 10, "htmllabels": [ c.LABEL1 ] }),
+    (OT.HyperTextTag, CT.HyperTextLabelsTag, { "start": 1, "end": 10, "startOffset": 10, "endOffset": 10, "label": c.LABEL1 }, { "start": 1, "end": 10, "startOffset": 10, "endOffset": 10, "hypertextlabels": [ c.LABEL1 ] }),
 
     ## Paragraphs labeling
     (OT.ParagraphsTag, CT.ParagraphLabelsTag, { "start": 0, "end": 0, "startOffset": 10, "endOffset": 10, "label": [ c.LABEL1 ] }, { "start": 0, "end": 0, "startOffset": 10, "endOffset": 10, "paragraphlabels": [ c.LABEL1 ] } ),
