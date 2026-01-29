@@ -9,13 +9,11 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
-from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.bad_request_error import BadRequestError
 from ...errors.forbidden_error import ForbiddenError
 from ...errors.not_found_error import NotFoundError
 from ...types.organization_member_tag import OrganizationMemberTag
-from ...types.organization_member_tag_assignment_request import OrganizationMemberTagAssignmentRequest
 from ...types.organization_member_tag_import_status import OrganizationMemberTagImportStatus
 from ...types.paginated_organization_member_tag_list import PaginatedOrganizationMemberTagList
 from .types.assign_member_tags_response import AssignMemberTagsResponse
@@ -179,8 +177,18 @@ class RawMemberTagsClient:
         self,
         id: int,
         *,
-        assignments: typing.Sequence[OrganizationMemberTagAssignmentRequest],
+        all_: bool,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
+        is_deleted: typing.Optional[bool] = None,
+        role: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
+        user_last_activity_gte: typing.Optional[str] = None,
+        user_last_activity_lte: typing.Optional[str] = None,
+        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
+        included: typing.Optional[typing.Sequence[int]] = OMIT,
         overwrite: typing.Optional[bool] = OMIT,
+        bulk_organization_member_tag_assignment_request_tags: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AssignMemberTagsResponse]:
         """
@@ -197,11 +205,41 @@ class RawMemberTagsClient:
         id : int
             A unique integer value identifying this organization.
 
-        assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
-            List of member tag assignments to assign.
+        all_ : bool
+            If true, assign tags to all organization members. If false, assign tags to the provided users.
+
+        exclude_project_id : typing.Optional[float]
+            Filter exclude_project_id by exact match
+
+        exclude_workspace_id : typing.Optional[float]
+            Filter exclude_workspace_id by exact match
+
+        is_deleted : typing.Optional[bool]
+            Filter is_deleted by exact match
+
+        role : typing.Optional[str]
+            Filter role by in list (comma-separated values)
+
+        tags : typing.Optional[str]
+            Filter tags by in list (comma-separated values)
+
+        user_last_activity_gte : typing.Optional[str]
+            Filter user__last_activity by greater than or equal to
+
+        user_last_activity_lte : typing.Optional[str]
+            Filter user__last_activity by less than or equal to
+
+        excluded : typing.Optional[typing.Sequence[int]]
+            List of user IDs to exclude from the assignment.
+
+        included : typing.Optional[typing.Sequence[int]]
+            List of user IDs to include in the assignment.
 
         overwrite : typing.Optional[bool]
             If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+
+        bulk_organization_member_tag_assignment_request_tags : typing.Optional[typing.Sequence[int]]
+            List of tag IDs to assign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -214,13 +252,21 @@ class RawMemberTagsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/organizations/{jsonable_encoder(id)}/member-tags/assignments",
             method="POST",
+            params={
+                "exclude_project_id": exclude_project_id,
+                "exclude_workspace_id": exclude_workspace_id,
+                "is_deleted": is_deleted,
+                "role": role,
+                "tags": tags,
+                "user__last_activity__gte": user_last_activity_gte,
+                "user__last_activity__lte": user_last_activity_lte,
+            },
             json={
-                "assignments": convert_and_respect_annotation_metadata(
-                    object_=assignments,
-                    annotation=typing.Sequence[OrganizationMemberTagAssignmentRequest],
-                    direction="write",
-                ),
+                "all": all_,
+                "excluded": excluded,
+                "included": included,
                 "overwrite": overwrite,
+                "tags": bulk_organization_member_tag_assignment_request_tags,
             },
             headers={
                 "content-type": "application/json",
@@ -794,8 +840,18 @@ class AsyncRawMemberTagsClient:
         self,
         id: int,
         *,
-        assignments: typing.Sequence[OrganizationMemberTagAssignmentRequest],
+        all_: bool,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
+        is_deleted: typing.Optional[bool] = None,
+        role: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
+        user_last_activity_gte: typing.Optional[str] = None,
+        user_last_activity_lte: typing.Optional[str] = None,
+        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
+        included: typing.Optional[typing.Sequence[int]] = OMIT,
         overwrite: typing.Optional[bool] = OMIT,
+        bulk_organization_member_tag_assignment_request_tags: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AssignMemberTagsResponse]:
         """
@@ -812,11 +868,41 @@ class AsyncRawMemberTagsClient:
         id : int
             A unique integer value identifying this organization.
 
-        assignments : typing.Sequence[OrganizationMemberTagAssignmentRequest]
-            List of member tag assignments to assign.
+        all_ : bool
+            If true, assign tags to all organization members. If false, assign tags to the provided users.
+
+        exclude_project_id : typing.Optional[float]
+            Filter exclude_project_id by exact match
+
+        exclude_workspace_id : typing.Optional[float]
+            Filter exclude_workspace_id by exact match
+
+        is_deleted : typing.Optional[bool]
+            Filter is_deleted by exact match
+
+        role : typing.Optional[str]
+            Filter role by in list (comma-separated values)
+
+        tags : typing.Optional[str]
+            Filter tags by in list (comma-separated values)
+
+        user_last_activity_gte : typing.Optional[str]
+            Filter user__last_activity by greater than or equal to
+
+        user_last_activity_lte : typing.Optional[str]
+            Filter user__last_activity by less than or equal to
+
+        excluded : typing.Optional[typing.Sequence[int]]
+            List of user IDs to exclude from the assignment.
+
+        included : typing.Optional[typing.Sequence[int]]
+            List of user IDs to include in the assignment.
 
         overwrite : typing.Optional[bool]
             If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+
+        bulk_organization_member_tag_assignment_request_tags : typing.Optional[typing.Sequence[int]]
+            List of tag IDs to assign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -829,13 +915,21 @@ class AsyncRawMemberTagsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/organizations/{jsonable_encoder(id)}/member-tags/assignments",
             method="POST",
+            params={
+                "exclude_project_id": exclude_project_id,
+                "exclude_workspace_id": exclude_workspace_id,
+                "is_deleted": is_deleted,
+                "role": role,
+                "tags": tags,
+                "user__last_activity__gte": user_last_activity_gte,
+                "user__last_activity__lte": user_last_activity_lte,
+            },
             json={
-                "assignments": convert_and_respect_annotation_metadata(
-                    object_=assignments,
-                    annotation=typing.Sequence[OrganizationMemberTagAssignmentRequest],
-                    direction="write",
-                ),
+                "all": all_,
+                "excluded": excluded,
+                "included": included,
                 "overwrite": overwrite,
+                "tags": bulk_organization_member_tag_assignment_request_tags,
             },
             headers={
                 "content-type": "application/json",

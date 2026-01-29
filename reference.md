@@ -29590,19 +29590,14 @@ Assign tags to multiple organization members in bulk.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio, OrganizationMemberTagAssignmentRequest
+from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.organizations.member_tags.assign(
     id=1,
-    assignments=[
-        OrganizationMemberTagAssignmentRequest(
-            tag_ids=[1],
-            user_id=1,
-        )
-    ],
+    all_=True,
 )
 
 ```
@@ -29627,7 +29622,79 @@ client.organizations.member_tags.assign(
 <dl>
 <dd>
 
-**assignments:** `typing.Sequence[OrganizationMemberTagAssignmentRequest]` — List of member tag assignments to assign.
+**all_:** `bool` — If true, assign tags to all organization members. If false, assign tags to the provided users.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exclude_project_id:** `typing.Optional[float]` — Filter exclude_project_id by exact match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exclude_workspace_id:** `typing.Optional[float]` — Filter exclude_workspace_id by exact match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_deleted:** `typing.Optional[bool]` — Filter is_deleted by exact match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` — Filter role by in list (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[str]` — Filter tags by in list (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_last_activity_gte:** `typing.Optional[str]` — Filter user__last_activity by greater than or equal to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_last_activity_lte:** `typing.Optional[str]` — Filter user__last_activity by less than or equal to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**excluded:** `typing.Optional[typing.Sequence[int]]` — List of user IDs to exclude from the assignment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**included:** `typing.Optional[typing.Sequence[int]]` — List of user IDs to include in the assignment.
     
 </dd>
 </dl>
@@ -29636,6 +29703,14 @@ client.organizations.member_tags.assign(
 <dd>
 
 **overwrite:** `typing.Optional[bool]` — If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bulk_organization_member_tag_assignment_request_tags:** `typing.Optional[typing.Sequence[int]]` — List of tag IDs to assign.
     
 </dd>
 </dl>
