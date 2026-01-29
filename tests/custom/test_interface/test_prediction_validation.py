@@ -493,20 +493,16 @@ class TestPredictionValidation:
                     "end": 10,
                     "startOffset": 0,
                     "endOffset": 10,
-                    "htmllabels": ["html1"]
+                    "hypertextlabels": ["html1"]
                 }
             }],
             "score": 0.8
         }
-        # This test is expected to fail because HyperTextLabels validation is not fully implemented
-        # We'll skip this test for now
-        pytest.skip("HyperTextLabels validation not fully implemented in current SDK version")
-        
         assert li.validate_prediction(valid_pred) is True
         
         # Invalid - wrong label
         invalid_pred = copy.deepcopy(valid_pred)
-        invalid_pred["result"][0]["value"]["htmllabels"] = ["invalid_html"]
+        invalid_pred["result"][0]["value"]["hypertextlabels"] = ["invalid_html"]
         assert li.validate_prediction(invalid_pred) is False
 
     def test_pairwise_validation(self):

@@ -33,7 +33,7 @@ _TAG_TO_CLASS = {
     "videorectangle": "VideoRectangleTag",
     "number": "NumberTag",
     "datetime": "DateTimeTag",
-    "hypertext": "HyperTextLabelsTag",
+    "hypertextlabels": "HyperTextLabelsTag",
     "pairwise": "PairwiseTag",
     "paragraphlabels": "ParagraphLabelsTag",
     "ranker": "RankerTag",
@@ -503,7 +503,7 @@ class ControlTag(LabelStudioTag):
         if isinstance(to_name, list):
             to_name = ",".join(to_name)
 
-        return "|".join([from_name, to_name, type.lower()])
+        return "|".join([from_name, to_name, tag_type.lower()])
 
 
 class SpanSelection(BaseModel):
@@ -888,13 +888,13 @@ class DateTimeTag(ControlTag):
 
 
 class HyperTextLabelsValue(SpanSelectionOffsets):
-    htmllabels: List[str]
+    hypertextlabels: List[str]
 
 
 class HyperTextLabelsTag(ControlTag):
     """ """
     tag: str = "HyperTextLabels"
-    _label_attr_name: str = "htmllabels"
+    _label_attr_name: str = "hypertextlabels"
     _value_class: Type[HyperTextLabelsValue] = HyperTextLabelsValue
 
 
@@ -934,7 +934,7 @@ class ParagraphLabelsValue(SpanSelectionOffsets):
 
 class ParagraphLabelsTag(ControlTag):
     """ """
-    tag: str = "ParagraphsLabels"
+    tag: str = "ParagraphLabels"
     _label_attr_name: str = "paragraphlabels"
     _value_class: Type[ParagraphLabelsValue] = ParagraphLabelsValue
 
