@@ -30,6 +30,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     allow_stream: typing.Optional[bool] = None
     annotation_limit_count: typing.Optional[int] = None
     annotation_limit_percent: typing.Optional[str] = None
+    annotator_evaluation_continuous_tasks: typing.Optional[int] = None
     annotator_evaluation_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Enable annotator evaluation for the project
@@ -203,6 +204,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     """
 
     state: typing.Optional[str] = None
+    strict_task_overlap: typing.Optional[bool] = None
     task_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Total task number in project

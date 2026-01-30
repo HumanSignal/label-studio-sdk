@@ -490,6 +490,7 @@ class ProjectsClient:
         agreement_threshold: typing.Optional[str] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
+        annotator_evaluation_continuous_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
@@ -528,6 +529,7 @@ class ProjectsClient:
         show_skip_button: typing.Optional[bool] = OMIT,
         show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        strict_task_overlap: typing.Optional[bool] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -552,6 +554,8 @@ class ProjectsClient:
         annotation_limit_count : typing.Optional[int]
 
         annotation_limit_percent : typing.Optional[str]
+
+        annotator_evaluation_continuous_tasks : typing.Optional[int]
 
         annotator_evaluation_enabled : typing.Optional[bool]
             Enable annotator evaluation for the project
@@ -651,6 +655,8 @@ class ProjectsClient:
 
         skip_queue : typing.Optional[SkipQueueEnum]
 
+        strict_task_overlap : typing.Optional[bool]
+
         task_data_login : typing.Optional[str]
             Task data credentials: login
 
@@ -688,6 +694,7 @@ class ProjectsClient:
             agreement_threshold=agreement_threshold,
             annotation_limit_count=annotation_limit_count,
             annotation_limit_percent=annotation_limit_percent,
+            annotator_evaluation_continuous_tasks=annotator_evaluation_continuous_tasks,
             annotator_evaluation_enabled=annotator_evaluation_enabled,
             annotator_evaluation_minimum_score=annotator_evaluation_minimum_score,
             annotator_evaluation_minimum_tasks=annotator_evaluation_minimum_tasks,
@@ -726,6 +733,7 @@ class ProjectsClient:
             show_skip_button=show_skip_button,
             show_unused_data_columns_to_annotators=show_unused_data_columns_to_annotators,
             skip_queue=skip_queue,
+            strict_task_overlap=strict_task_overlap,
             task_data_login=task_data_login,
             task_data_password=task_data_password,
             title=title,
@@ -1585,6 +1593,7 @@ class AsyncProjectsClient:
         agreement_threshold: typing.Optional[str] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
+        annotator_evaluation_continuous_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
@@ -1623,6 +1632,7 @@ class AsyncProjectsClient:
         show_skip_button: typing.Optional[bool] = OMIT,
         show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        strict_task_overlap: typing.Optional[bool] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -1647,6 +1657,8 @@ class AsyncProjectsClient:
         annotation_limit_count : typing.Optional[int]
 
         annotation_limit_percent : typing.Optional[str]
+
+        annotator_evaluation_continuous_tasks : typing.Optional[int]
 
         annotator_evaluation_enabled : typing.Optional[bool]
             Enable annotator evaluation for the project
@@ -1746,6 +1758,8 @@ class AsyncProjectsClient:
 
         skip_queue : typing.Optional[SkipQueueEnum]
 
+        strict_task_overlap : typing.Optional[bool]
+
         task_data_login : typing.Optional[str]
             Task data credentials: login
 
@@ -1791,6 +1805,7 @@ class AsyncProjectsClient:
             agreement_threshold=agreement_threshold,
             annotation_limit_count=annotation_limit_count,
             annotation_limit_percent=annotation_limit_percent,
+            annotator_evaluation_continuous_tasks=annotator_evaluation_continuous_tasks,
             annotator_evaluation_enabled=annotator_evaluation_enabled,
             annotator_evaluation_minimum_score=annotator_evaluation_minimum_score,
             annotator_evaluation_minimum_tasks=annotator_evaluation_minimum_tasks,
@@ -1829,6 +1844,7 @@ class AsyncProjectsClient:
             show_skip_button=show_skip_button,
             show_unused_data_columns_to_annotators=show_unused_data_columns_to_annotators,
             skip_queue=skip_queue,
+            strict_task_overlap=strict_task_overlap,
             task_data_login=task_data_login,
             task_data_password=task_data_password,
             title=title,

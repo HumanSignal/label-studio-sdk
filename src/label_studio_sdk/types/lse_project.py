@@ -28,6 +28,7 @@ class LseProject(UncheckedBaseModel):
 
     annotation_limit_count: typing.Optional[int] = None
     annotation_limit_percent: typing.Optional[str] = None
+    annotator_evaluation_continuous_tasks: typing.Optional[int] = None
     annotator_evaluation_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Enable annotator evaluation for the project
@@ -203,6 +204,7 @@ class LseProject(UncheckedBaseModel):
     """
 
     state: typing.Optional[str] = None
+    strict_task_overlap: typing.Optional[bool] = None
     task_data_login: typing.Optional[str] = pydantic.Field(default=None)
     """
     Task data credentials: login

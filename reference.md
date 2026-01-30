@@ -9599,6 +9599,14 @@ client.projects.update(
 <dl>
 <dd>
 
+**annotator_evaluation_continuous_tasks:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
     
 </dd>
@@ -9896,6 +9904,14 @@ client.projects.update(
 <dd>
 
 **skip_queue:** `typing.Optional[SkipQueueEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**strict_task_overlap:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
