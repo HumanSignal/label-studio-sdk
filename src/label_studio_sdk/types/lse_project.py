@@ -203,6 +203,7 @@ class LseProject(UncheckedBaseModel):
     """
 
     state: typing.Optional[str] = None
+    strict_task_overlap: typing.Optional[bool] = None
     task_data_login: typing.Optional[str] = pydantic.Field(default=None)
     """
     Task data credentials: login

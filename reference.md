@@ -9903,6 +9903,14 @@ client.projects.update(
 <dl>
 <dd>
 
+**strict_task_overlap:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **task_data_login:** `typing.Optional[str]` — Task data credentials: login
     
 </dd>

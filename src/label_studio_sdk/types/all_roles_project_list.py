@@ -203,6 +203,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     """
 
     state: typing.Optional[str] = None
+    strict_task_overlap: typing.Optional[bool] = None
     task_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Total task number in project
