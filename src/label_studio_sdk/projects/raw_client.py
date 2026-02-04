@@ -557,6 +557,7 @@ class RawProjectsClient:
         show_skip_button: typing.Optional[bool] = OMIT,
         show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        strict_task_overlap: typing.Optional[bool] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -680,6 +681,8 @@ class RawProjectsClient:
 
         skip_queue : typing.Optional[SkipQueueEnum]
 
+        strict_task_overlap : typing.Optional[bool]
+
         task_data_login : typing.Optional[str]
             Task data credentials: login
 
@@ -754,6 +757,7 @@ class RawProjectsClient:
                 "show_skip_button": show_skip_button,
                 "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "skip_queue": skip_queue,
+                "strict_task_overlap": strict_task_overlap,
                 "task_data_login": task_data_login,
                 "task_data_password": task_data_password,
                 "title": title,
@@ -1676,6 +1680,7 @@ class AsyncRawProjectsClient:
         show_skip_button: typing.Optional[bool] = OMIT,
         show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        strict_task_overlap: typing.Optional[bool] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -1799,6 +1804,8 @@ class AsyncRawProjectsClient:
 
         skip_queue : typing.Optional[SkipQueueEnum]
 
+        strict_task_overlap : typing.Optional[bool]
+
         task_data_login : typing.Optional[str]
             Task data credentials: login
 
@@ -1873,6 +1880,7 @@ class AsyncRawProjectsClient:
                 "show_skip_button": show_skip_button,
                 "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "skip_queue": skip_queue,
+                "strict_task_overlap": strict_task_overlap,
                 "task_data_login": task_data_login,
                 "task_data_password": task_data_password,
                 "title": title,

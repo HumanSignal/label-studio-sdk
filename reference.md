@@ -9903,6 +9903,14 @@ client.projects.update(
 <dl>
 <dd>
 
+**strict_task_overlap:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **task_data_login:** `typing.Optional[str]` — Task data credentials: login
     
 </dd>
@@ -37330,6 +37338,14 @@ client.prompts.runs.create(
 <dd>
 
 **job_id:** `typing.Optional[str]` — Job ID for inference job for a ModelRun e.g. Adala job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**only_missing_predictions:** `typing.Optional[bool]` — When true, only tasks without successful predictions for this prompt version are submitted for inference.
     
 </dd>
 </dl>
