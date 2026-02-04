@@ -28,6 +28,7 @@ class LseProjectUpdate(UncheckedBaseModel):
 
     annotation_limit_count: typing.Optional[int] = None
     annotation_limit_percent: typing.Optional[str] = None
+    annotator_evaluation_continuous_tasks: typing.Optional[int] = None
     annotator_evaluation_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Enable annotator evaluation for the project

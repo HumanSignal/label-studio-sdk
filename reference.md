@@ -9599,6 +9599,14 @@ client.projects.update(
 <dl>
 <dd>
 
+**annotator_evaluation_continuous_tasks:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
     
 </dd>

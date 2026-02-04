@@ -519,6 +519,7 @@ class RawProjectsClient:
         agreement_threshold: typing.Optional[str] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
+        annotator_evaluation_continuous_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
@@ -582,6 +583,8 @@ class RawProjectsClient:
         annotation_limit_count : typing.Optional[int]
 
         annotation_limit_percent : typing.Optional[str]
+
+        annotator_evaluation_continuous_tasks : typing.Optional[int]
 
         annotator_evaluation_enabled : typing.Optional[bool]
             Enable annotator evaluation for the project
@@ -713,6 +716,7 @@ class RawProjectsClient:
                 "agreement_threshold": agreement_threshold,
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,
+                "annotator_evaluation_continuous_tasks": annotator_evaluation_continuous_tasks,
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
                 "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
                 "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
@@ -1642,6 +1646,7 @@ class AsyncRawProjectsClient:
         agreement_threshold: typing.Optional[str] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
+        annotator_evaluation_continuous_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
@@ -1705,6 +1710,8 @@ class AsyncRawProjectsClient:
         annotation_limit_count : typing.Optional[int]
 
         annotation_limit_percent : typing.Optional[str]
+
+        annotator_evaluation_continuous_tasks : typing.Optional[int]
 
         annotator_evaluation_enabled : typing.Optional[bool]
             Enable annotator evaluation for the project
@@ -1836,6 +1843,7 @@ class AsyncRawProjectsClient:
                 "agreement_threshold": agreement_threshold,
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,
+                "annotator_evaluation_continuous_tasks": annotator_evaluation_continuous_tasks,
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
                 "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
                 "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
