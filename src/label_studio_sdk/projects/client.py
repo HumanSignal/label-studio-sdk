@@ -161,7 +161,7 @@ class ProjectsClient:
         *,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Any] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         description: typing.Optional[str] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
@@ -201,7 +201,7 @@ class ProjectsClient:
 
         color : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Any]
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
 
         created_by : typing.Optional[UserSimpleRequest]
@@ -497,7 +497,7 @@ class ProjectsClient:
         assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
         color: typing.Optional[str] = OMIT,
         comment_classification_config: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Any] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
@@ -569,7 +569,7 @@ class ProjectsClient:
 
         comment_classification_config : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Any]
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
 
         created_by : typing.Optional[UserSimpleRequest]
@@ -1228,7 +1228,7 @@ class AsyncProjectsClient:
         *,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Any] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         description: typing.Optional[str] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
@@ -1268,7 +1268,7 @@ class AsyncProjectsClient:
 
         color : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Any]
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
 
         created_by : typing.Optional[UserSimpleRequest]
@@ -1596,7 +1596,7 @@ class AsyncProjectsClient:
         assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
         color: typing.Optional[str] = OMIT,
         comment_classification_config: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Any] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
@@ -1668,7 +1668,7 @@ class AsyncProjectsClient:
 
         comment_classification_config : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Any]
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
 
         created_by : typing.Optional[UserSimpleRequest]
