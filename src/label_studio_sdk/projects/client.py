@@ -208,7 +208,7 @@ class ProjectsClient:
         color : typing.Optional[str]
 
         control_weights : typing.Optional[typing.Dict[str, typing.Optional[LseProjectCreateRequestControlWeightsValue]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+            Weights for each control tag used in agreement metrics.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -578,7 +578,7 @@ class ProjectsClient:
         comment_classification_config : typing.Optional[str]
 
         control_weights : typing.Optional[typing.Dict[str, typing.Optional[PatchedLseProjectUpdateRequestControlWeightsValue]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+            Weights for each control tag used in agreement metrics.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -1279,7 +1279,7 @@ class AsyncProjectsClient:
         color : typing.Optional[str]
 
         control_weights : typing.Optional[typing.Dict[str, typing.Optional[LseProjectCreateRequestControlWeightsValue]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+            Weights for each control tag used in agreement metrics.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -1681,7 +1681,7 @@ class AsyncProjectsClient:
         comment_classification_config : typing.Optional[str]
 
         control_weights : typing.Optional[typing.Dict[str, typing.Optional[PatchedLseProjectUpdateRequestControlWeightsValue]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+            Weights for each control tag used in agreement metrics.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
