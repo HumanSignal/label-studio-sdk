@@ -182,16 +182,16 @@ class ExportsClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
+        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
+        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
+        counters: typing.Optional[typing.Any] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         finished_at: typing.Optional[dt.datetime] = OMIT,
-        status: typing.Optional[Status7BfEnum] = OMIT,
         md5: typing.Optional[str] = OMIT,
-        counters: typing.Optional[typing.Any] = OMIT,
-        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
-        task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
-        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
         serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
+        status: typing.Optional[Status7BfEnum] = OMIT,
+        task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseExportCreate:
         """
@@ -202,26 +202,26 @@ class ExportsClient:
         id : int
             A unique integer value identifying this project.
 
-        title : typing.Optional[str]
+        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
+
+        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
+
+        counters : typing.Optional[typing.Any]
 
         created_by : typing.Optional[UserSimpleRequest]
 
         finished_at : typing.Optional[dt.datetime]
             Complete or fail time
 
-        status : typing.Optional[Status7BfEnum]
-
         md5 : typing.Optional[str]
 
-        counters : typing.Optional[typing.Any]
+        serialization_options : typing.Optional[SerializationOptionsRequest]
 
-        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
+        status : typing.Optional[Status7BfEnum]
 
         task_filter_options : typing.Optional[LseTaskFilterOptionsRequest]
 
-        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
-
-        serialization_options : typing.Optional[SerializationOptionsRequest]
+        title : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -244,16 +244,16 @@ class ExportsClient:
         """
         _response = self._raw_client.create(
             id,
-            title=title,
+            annotation_filter_options=annotation_filter_options,
+            converted_formats=converted_formats,
+            counters=counters,
             created_by=created_by,
             finished_at=finished_at,
-            status=status,
             md5=md5,
-            counters=counters,
-            converted_formats=converted_formats,
-            task_filter_options=task_filter_options,
-            annotation_filter_options=annotation_filter_options,
             serialization_options=serialization_options,
+            status=status,
+            task_filter_options=task_filter_options,
+            title=title,
             request_options=request_options,
         )
         return _response.data
@@ -605,16 +605,16 @@ class AsyncExportsClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
+        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
+        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
+        counters: typing.Optional[typing.Any] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         finished_at: typing.Optional[dt.datetime] = OMIT,
-        status: typing.Optional[Status7BfEnum] = OMIT,
         md5: typing.Optional[str] = OMIT,
-        counters: typing.Optional[typing.Any] = OMIT,
-        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
-        task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
-        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
         serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
+        status: typing.Optional[Status7BfEnum] = OMIT,
+        task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseExportCreate:
         """
@@ -625,26 +625,26 @@ class AsyncExportsClient:
         id : int
             A unique integer value identifying this project.
 
-        title : typing.Optional[str]
+        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
+
+        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
+
+        counters : typing.Optional[typing.Any]
 
         created_by : typing.Optional[UserSimpleRequest]
 
         finished_at : typing.Optional[dt.datetime]
             Complete or fail time
 
-        status : typing.Optional[Status7BfEnum]
-
         md5 : typing.Optional[str]
 
-        counters : typing.Optional[typing.Any]
+        serialization_options : typing.Optional[SerializationOptionsRequest]
 
-        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
+        status : typing.Optional[Status7BfEnum]
 
         task_filter_options : typing.Optional[LseTaskFilterOptionsRequest]
 
-        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
-
-        serialization_options : typing.Optional[SerializationOptionsRequest]
+        title : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -675,16 +675,16 @@ class AsyncExportsClient:
         """
         _response = await self._raw_client.create(
             id,
-            title=title,
+            annotation_filter_options=annotation_filter_options,
+            converted_formats=converted_formats,
+            counters=counters,
             created_by=created_by,
             finished_at=finished_at,
-            status=status,
             md5=md5,
-            counters=counters,
-            converted_formats=converted_formats,
-            task_filter_options=task_filter_options,
-            annotation_filter_options=annotation_filter_options,
             serialization_options=serialization_options,
+            status=status,
+            task_filter_options=task_filter_options,
+            title=title,
             request_options=request_options,
         )
         return _response.data

@@ -18,18 +18,28 @@ class Pause(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when this pause record was created
+    """
+
+    deleted_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when this pause record was soft-deleted
+    """
+
+    deleted_by: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    User who soft-deleted this pause record
+    """
+
     id: typing.Optional[int] = None
+    paused_by: typing.Optional[UserSimple] = None
     project: typing.Optional[int] = pydantic.Field(default=None)
     """
     Related project for which the pause is set
     """
 
-    user: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    User who is paused
-    """
-
-    paused_by: typing.Optional[UserSimple] = None
     reason: ReasonEnum = pydantic.Field()
     """
     Reason for pausing
@@ -41,29 +51,19 @@ class Pause(UncheckedBaseModel):
     * `CUSTOM_SCRIPT` - Custom script
     """
 
-    verbose_reason: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Detailed description of why the project is paused, will be readable by paused annotators
-    """
-
-    deleted_by: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    User who soft-deleted this pause record
-    """
-
-    deleted_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Timestamp when this pause record was soft-deleted
-    """
-
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Timestamp when this pause record was created
-    """
-
     updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Timestamp when this pause record was last updated
+    """
+
+    user: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    User who is paused
+    """
+
+    verbose_reason: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Detailed description of why the project is paused, will be readable by paused annotators
     """
 
     if IS_PYDANTIC_V2:

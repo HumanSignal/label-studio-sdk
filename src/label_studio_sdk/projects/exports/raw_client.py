@@ -214,16 +214,16 @@ class RawExportsClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
+        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
+        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
+        counters: typing.Optional[typing.Any] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         finished_at: typing.Optional[dt.datetime] = OMIT,
-        status: typing.Optional[Status7BfEnum] = OMIT,
         md5: typing.Optional[str] = OMIT,
-        counters: typing.Optional[typing.Any] = OMIT,
-        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
-        task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
-        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
         serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
+        status: typing.Optional[Status7BfEnum] = OMIT,
+        task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseExportCreate]:
         """
@@ -234,26 +234,26 @@ class RawExportsClient:
         id : int
             A unique integer value identifying this project.
 
-        title : typing.Optional[str]
+        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
+
+        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
+
+        counters : typing.Optional[typing.Any]
 
         created_by : typing.Optional[UserSimpleRequest]
 
         finished_at : typing.Optional[dt.datetime]
             Complete or fail time
 
-        status : typing.Optional[Status7BfEnum]
-
         md5 : typing.Optional[str]
 
-        counters : typing.Optional[typing.Any]
+        serialization_options : typing.Optional[SerializationOptionsRequest]
 
-        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
+        status : typing.Optional[Status7BfEnum]
 
         task_filter_options : typing.Optional[LseTaskFilterOptionsRequest]
 
-        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
-
-        serialization_options : typing.Optional[SerializationOptionsRequest]
+        title : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -267,26 +267,26 @@ class RawExportsClient:
             f"api/projects/{jsonable_encoder(id)}/exports/",
             method="POST",
             json={
-                "title": title,
+                "annotation_filter_options": convert_and_respect_annotation_metadata(
+                    object_=annotation_filter_options, annotation=LseAnnotationFilterOptionsRequest, direction="write"
+                ),
+                "converted_formats": convert_and_respect_annotation_metadata(
+                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormatRequest], direction="write"
+                ),
+                "counters": counters,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
                 "finished_at": finished_at,
-                "status": status,
                 "md5": md5,
-                "counters": counters,
-                "converted_formats": convert_and_respect_annotation_metadata(
-                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormatRequest], direction="write"
-                ),
-                "task_filter_options": convert_and_respect_annotation_metadata(
-                    object_=task_filter_options, annotation=LseTaskFilterOptionsRequest, direction="write"
-                ),
-                "annotation_filter_options": convert_and_respect_annotation_metadata(
-                    object_=annotation_filter_options, annotation=LseAnnotationFilterOptionsRequest, direction="write"
-                ),
                 "serialization_options": convert_and_respect_annotation_metadata(
                     object_=serialization_options, annotation=SerializationOptionsRequest, direction="write"
                 ),
+                "status": status,
+                "task_filter_options": convert_and_respect_annotation_metadata(
+                    object_=task_filter_options, annotation=LseTaskFilterOptionsRequest, direction="write"
+                ),
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -423,8 +423,8 @@ class RawExportsClient:
             f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/convert",
             method="POST",
             json={
-                "export_type": export_type,
                 "download_resources": download_resources,
+                "export_type": export_type,
             },
             headers={
                 "content-type": "application/json",
@@ -701,16 +701,16 @@ class AsyncRawExportsClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
+        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
+        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
+        counters: typing.Optional[typing.Any] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         finished_at: typing.Optional[dt.datetime] = OMIT,
-        status: typing.Optional[Status7BfEnum] = OMIT,
         md5: typing.Optional[str] = OMIT,
-        counters: typing.Optional[typing.Any] = OMIT,
-        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
-        task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
-        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
         serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
+        status: typing.Optional[Status7BfEnum] = OMIT,
+        task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseExportCreate]:
         """
@@ -721,26 +721,26 @@ class AsyncRawExportsClient:
         id : int
             A unique integer value identifying this project.
 
-        title : typing.Optional[str]
+        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
+
+        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
+
+        counters : typing.Optional[typing.Any]
 
         created_by : typing.Optional[UserSimpleRequest]
 
         finished_at : typing.Optional[dt.datetime]
             Complete or fail time
 
-        status : typing.Optional[Status7BfEnum]
-
         md5 : typing.Optional[str]
 
-        counters : typing.Optional[typing.Any]
+        serialization_options : typing.Optional[SerializationOptionsRequest]
 
-        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
+        status : typing.Optional[Status7BfEnum]
 
         task_filter_options : typing.Optional[LseTaskFilterOptionsRequest]
 
-        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
-
-        serialization_options : typing.Optional[SerializationOptionsRequest]
+        title : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -754,26 +754,26 @@ class AsyncRawExportsClient:
             f"api/projects/{jsonable_encoder(id)}/exports/",
             method="POST",
             json={
-                "title": title,
+                "annotation_filter_options": convert_and_respect_annotation_metadata(
+                    object_=annotation_filter_options, annotation=LseAnnotationFilterOptionsRequest, direction="write"
+                ),
+                "converted_formats": convert_and_respect_annotation_metadata(
+                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormatRequest], direction="write"
+                ),
+                "counters": counters,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
                 "finished_at": finished_at,
-                "status": status,
                 "md5": md5,
-                "counters": counters,
-                "converted_formats": convert_and_respect_annotation_metadata(
-                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormatRequest], direction="write"
-                ),
-                "task_filter_options": convert_and_respect_annotation_metadata(
-                    object_=task_filter_options, annotation=LseTaskFilterOptionsRequest, direction="write"
-                ),
-                "annotation_filter_options": convert_and_respect_annotation_metadata(
-                    object_=annotation_filter_options, annotation=LseAnnotationFilterOptionsRequest, direction="write"
-                ),
                 "serialization_options": convert_and_respect_annotation_metadata(
                     object_=serialization_options, annotation=SerializationOptionsRequest, direction="write"
                 ),
+                "status": status,
+                "task_filter_options": convert_and_respect_annotation_metadata(
+                    object_=task_filter_options, annotation=LseTaskFilterOptionsRequest, direction="write"
+                ),
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -910,8 +910,8 @@ class AsyncRawExportsClient:
             f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/convert",
             method="POST",
             json={
-                "export_type": export_type,
                 "download_resources": download_resources,
+                "export_type": export_type,
             },
             headers={
                 "content-type": "application/json",

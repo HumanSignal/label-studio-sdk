@@ -11,24 +11,8 @@ from .edition_enum import EditionEnum
 
 
 class VersionResponse(UncheckedBaseModel):
-    release: str = pydantic.Field()
-    """
-    Current release version of Label Studio
-    """
-
-    label_studio_os_package: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-os-package")] = (
-        pydantic.Field(alias="label-studio-os-package")
-    )
-    label_studio_os_backend: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-os-backend")] = (
-        pydantic.Field(alias="label-studio-os-backend")
-    )
-    label_studio_frontend: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-frontend")] = (
-        pydantic.Field(alias="label-studio-frontend")
-    )
+    backend: typing.Any
     dm2: typing.Any
-    label_studio_converter: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-converter")] = (
-        pydantic.Field(alias="label-studio-converter")
-    )
     edition: EditionEnum = pydantic.Field()
     """
     Label Studio edition (Community or Enterprise)
@@ -37,8 +21,23 @@ class VersionResponse(UncheckedBaseModel):
     * `Enterprise` - Enterprise
     """
 
+    label_studio_converter: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-converter")] = (
+        pydantic.Field(alias="label-studio-converter")
+    )
+    label_studio_frontend: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-frontend")] = (
+        pydantic.Field(alias="label-studio-frontend")
+    )
+    label_studio_os_backend: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-os-backend")] = (
+        pydantic.Field(alias="label-studio-os-backend")
+    )
+    label_studio_os_package: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-os-package")] = (
+        pydantic.Field(alias="label-studio-os-package")
+    )
     lsf: typing.Any
-    backend: typing.Any
+    release: str = pydantic.Field()
+    """
+    Current release version of Label Studio
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

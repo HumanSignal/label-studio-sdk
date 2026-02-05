@@ -10,13 +10,13 @@ from .user_simple import UserSimple
 
 
 class OrganizationMemberTag(UncheckedBaseModel):
+    created_at: typing.Optional[dt.datetime] = None
+    created_by: typing.Optional[UserSimple] = None
     id: typing.Optional[int] = None
-    organization: typing.Optional[int] = None
     label: str
     member_count: typing.Optional[int] = None
-    created_at: typing.Optional[dt.datetime] = None
+    organization: typing.Optional[int] = None
     updated_at: typing.Optional[dt.datetime] = None
-    created_by: typing.Optional[UserSimple] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

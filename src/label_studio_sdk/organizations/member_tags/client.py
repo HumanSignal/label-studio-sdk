@@ -139,6 +139,208 @@ class MemberTagsClient:
         _response = self._raw_client.create(id, label=label, request_options=request_options)
         return _response.data
 
+    def assign(
+        self,
+        id: int,
+        *,
+        all_: bool,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
+        is_deleted: typing.Optional[bool] = None,
+        role: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
+        user_last_activity_gte: typing.Optional[str] = None,
+        user_last_activity_lte: typing.Optional[str] = None,
+        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
+        included: typing.Optional[typing.Sequence[int]] = OMIT,
+        overwrite: typing.Optional[bool] = OMIT,
+        bulk_organization_member_tag_assignment_request_tags: typing.Optional[typing.Sequence[int]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AssignMemberTagsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign tags to multiple organization members in bulk.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        all_ : bool
+            If true, assign tags to all organization members. If false, assign tags to the provided users.
+
+        exclude_project_id : typing.Optional[float]
+            Filter exclude_project_id by exact match
+
+        exclude_workspace_id : typing.Optional[float]
+            Filter exclude_workspace_id by exact match
+
+        is_deleted : typing.Optional[bool]
+            Filter is_deleted by exact match
+
+        role : typing.Optional[str]
+            Filter role by in list (comma-separated values)
+
+        tags : typing.Optional[str]
+            Filter tags by in list (comma-separated values)
+
+        user_last_activity_gte : typing.Optional[str]
+            Filter user__last_activity by greater than or equal to
+
+        user_last_activity_lte : typing.Optional[str]
+            Filter user__last_activity by less than or equal to
+
+        excluded : typing.Optional[typing.Sequence[int]]
+            List of user IDs to exclude from the assignment.
+
+        included : typing.Optional[typing.Sequence[int]]
+            List of user IDs to include in the assignment.
+
+        overwrite : typing.Optional[bool]
+            If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+
+        bulk_organization_member_tag_assignment_request_tags : typing.Optional[typing.Sequence[int]]
+            List of tag IDs to assign.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AssignMemberTagsResponse
+            Number of tag assignments created
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.member_tags.assign(
+            id=1,
+            all_=True,
+        )
+        """
+        _response = self._raw_client.assign(
+            id,
+            all_=all_,
+            exclude_project_id=exclude_project_id,
+            exclude_workspace_id=exclude_workspace_id,
+            is_deleted=is_deleted,
+            role=role,
+            tags=tags,
+            user_last_activity_gte=user_last_activity_gte,
+            user_last_activity_lte=user_last_activity_lte,
+            excluded=excluded,
+            included=included,
+            overwrite=overwrite,
+            bulk_organization_member_tag_assignment_request_tags=bulk_organization_member_tag_assignment_request_tags,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def import_(
+        self, id: int, *, bulk_tags: str, file: core.File, request_options: typing.Optional[RequestOptions] = None
+    ) -> ImportMemberTagsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Upload a CSV file to bulk import member tags and assign them to organization members.
+
+        The CSV file must contain `email` and `tags` columns. The `tags` column should contain comma-separated tag labels (quoted if they contain commas). Tags that do not exist will be created.
+
+        Optionally, you can specify `bulk_tags` as a comma-separated list of tags to apply to all users in the CSV file.
+
+        The import runs asynchronously. Use the returned import job ID to check the status.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        bulk_tags : str
+
+        file : core.File
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ImportMemberTagsResponse
+            Import job created successfully
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.member_tags.import_(
+            id=1,
+            bulk_tags="bulk_tags",
+        )
+        """
+        _response = self._raw_client.import_(id, bulk_tags=bulk_tags, file=file, request_options=request_options)
+        return _response.data
+
+    def get_import(
+        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> OrganizationMemberTagImportStatus:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the status and results of a member tag import job.
+
+        The response includes the current status (created, in_progress, completed, failed), timestamps, and counts of tags created, assignments made, and users skipped.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        import_pk : int
+            A unique integer value identifying this import job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationMemberTagImportStatus
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.member_tags.get_import(
+            id=1,
+            import_pk=1,
+        )
+        """
+        _response = self._raw_client.get_import(id, import_pk, request_options=request_options)
+        return _response.data
+
     def get(
         self, id: int, tag_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> OrganizationMemberTag:
@@ -270,208 +472,6 @@ class MemberTagsClient:
         )
         """
         _response = self._raw_client.update(id, tag_pk, label=label, request_options=request_options)
-        return _response.data
-
-    def assign(
-        self,
-        id: int,
-        *,
-        all_: bool,
-        exclude_project_id: typing.Optional[float] = None,
-        exclude_workspace_id: typing.Optional[float] = None,
-        is_deleted: typing.Optional[bool] = None,
-        role: typing.Optional[str] = None,
-        tags: typing.Optional[str] = None,
-        user_last_activity_gte: typing.Optional[str] = None,
-        user_last_activity_lte: typing.Optional[str] = None,
-        included: typing.Optional[typing.Sequence[int]] = OMIT,
-        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
-        bulk_organization_member_tag_assignment_request_tags: typing.Optional[typing.Sequence[int]] = OMIT,
-        overwrite: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AssignMemberTagsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Assign tags to multiple organization members in bulk.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this organization.
-
-        all_ : bool
-            If true, assign tags to all organization members. If false, assign tags to the provided users.
-
-        exclude_project_id : typing.Optional[float]
-            Filter exclude_project_id by exact match
-
-        exclude_workspace_id : typing.Optional[float]
-            Filter exclude_workspace_id by exact match
-
-        is_deleted : typing.Optional[bool]
-            Filter is_deleted by exact match
-
-        role : typing.Optional[str]
-            Filter role by in list (comma-separated values)
-
-        tags : typing.Optional[str]
-            Filter tags by in list (comma-separated values)
-
-        user_last_activity_gte : typing.Optional[str]
-            Filter user__last_activity by greater than or equal to
-
-        user_last_activity_lte : typing.Optional[str]
-            Filter user__last_activity by less than or equal to
-
-        included : typing.Optional[typing.Sequence[int]]
-            List of user IDs to include in the assignment.
-
-        excluded : typing.Optional[typing.Sequence[int]]
-            List of user IDs to exclude from the assignment.
-
-        bulk_organization_member_tag_assignment_request_tags : typing.Optional[typing.Sequence[int]]
-            List of tag IDs to assign.
-
-        overwrite : typing.Optional[bool]
-            If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AssignMemberTagsResponse
-            Number of tag assignments created
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.organizations.member_tags.assign(
-            id=1,
-            all_=True,
-        )
-        """
-        _response = self._raw_client.assign(
-            id,
-            all_=all_,
-            exclude_project_id=exclude_project_id,
-            exclude_workspace_id=exclude_workspace_id,
-            is_deleted=is_deleted,
-            role=role,
-            tags=tags,
-            user_last_activity_gte=user_last_activity_gte,
-            user_last_activity_lte=user_last_activity_lte,
-            included=included,
-            excluded=excluded,
-            bulk_organization_member_tag_assignment_request_tags=bulk_organization_member_tag_assignment_request_tags,
-            overwrite=overwrite,
-            request_options=request_options,
-        )
-        return _response.data
-
-    def import_(
-        self, id: int, *, file: core.File, bulk_tags: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> ImportMemberTagsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Upload a CSV file to bulk import member tags and assign them to organization members.
-
-        The CSV file must contain `email` and `tags` columns. The `tags` column should contain comma-separated tag labels (quoted if they contain commas). Tags that do not exist will be created.
-
-        Optionally, you can specify `bulk_tags` as a comma-separated list of tags to apply to all users in the CSV file.
-
-        The import runs asynchronously. Use the returned import job ID to check the status.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this organization.
-
-        file : core.File
-            See core.File for more documentation
-
-        bulk_tags : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ImportMemberTagsResponse
-            Import job created successfully
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.organizations.member_tags.import_(
-            id=1,
-            bulk_tags="bulk_tags",
-        )
-        """
-        _response = self._raw_client.import_(id, file=file, bulk_tags=bulk_tags, request_options=request_options)
-        return _response.data
-
-    def get_import(
-        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> OrganizationMemberTagImportStatus:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve the status and results of a member tag import job.
-
-        The response includes the current status (created, in_progress, completed, failed), timestamps, and counts of tags created, assignments made, and users skipped.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this organization.
-
-        import_pk : int
-            A unique integer value identifying this import job.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        OrganizationMemberTagImportStatus
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.organizations.member_tags.get_import(
-            id=1,
-            import_pk=1,
-        )
-        """
-        _response = self._raw_client.get_import(id, import_pk, request_options=request_options)
         return _response.data
 
     @property
@@ -616,6 +616,232 @@ class AsyncMemberTagsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(id, label=label, request_options=request_options)
+        return _response.data
+
+    async def assign(
+        self,
+        id: int,
+        *,
+        all_: bool,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
+        is_deleted: typing.Optional[bool] = None,
+        role: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
+        user_last_activity_gte: typing.Optional[str] = None,
+        user_last_activity_lte: typing.Optional[str] = None,
+        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
+        included: typing.Optional[typing.Sequence[int]] = OMIT,
+        overwrite: typing.Optional[bool] = OMIT,
+        bulk_organization_member_tag_assignment_request_tags: typing.Optional[typing.Sequence[int]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AssignMemberTagsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign tags to multiple organization members in bulk.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        all_ : bool
+            If true, assign tags to all organization members. If false, assign tags to the provided users.
+
+        exclude_project_id : typing.Optional[float]
+            Filter exclude_project_id by exact match
+
+        exclude_workspace_id : typing.Optional[float]
+            Filter exclude_workspace_id by exact match
+
+        is_deleted : typing.Optional[bool]
+            Filter is_deleted by exact match
+
+        role : typing.Optional[str]
+            Filter role by in list (comma-separated values)
+
+        tags : typing.Optional[str]
+            Filter tags by in list (comma-separated values)
+
+        user_last_activity_gte : typing.Optional[str]
+            Filter user__last_activity by greater than or equal to
+
+        user_last_activity_lte : typing.Optional[str]
+            Filter user__last_activity by less than or equal to
+
+        excluded : typing.Optional[typing.Sequence[int]]
+            List of user IDs to exclude from the assignment.
+
+        included : typing.Optional[typing.Sequence[int]]
+            List of user IDs to include in the assignment.
+
+        overwrite : typing.Optional[bool]
+            If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+
+        bulk_organization_member_tag_assignment_request_tags : typing.Optional[typing.Sequence[int]]
+            List of tag IDs to assign.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AssignMemberTagsResponse
+            Number of tag assignments created
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.member_tags.assign(
+                id=1,
+                all_=True,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.assign(
+            id,
+            all_=all_,
+            exclude_project_id=exclude_project_id,
+            exclude_workspace_id=exclude_workspace_id,
+            is_deleted=is_deleted,
+            role=role,
+            tags=tags,
+            user_last_activity_gte=user_last_activity_gte,
+            user_last_activity_lte=user_last_activity_lte,
+            excluded=excluded,
+            included=included,
+            overwrite=overwrite,
+            bulk_organization_member_tag_assignment_request_tags=bulk_organization_member_tag_assignment_request_tags,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def import_(
+        self, id: int, *, bulk_tags: str, file: core.File, request_options: typing.Optional[RequestOptions] = None
+    ) -> ImportMemberTagsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Upload a CSV file to bulk import member tags and assign them to organization members.
+
+        The CSV file must contain `email` and `tags` columns. The `tags` column should contain comma-separated tag labels (quoted if they contain commas). Tags that do not exist will be created.
+
+        Optionally, you can specify `bulk_tags` as a comma-separated list of tags to apply to all users in the CSV file.
+
+        The import runs asynchronously. Use the returned import job ID to check the status.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        bulk_tags : str
+
+        file : core.File
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ImportMemberTagsResponse
+            Import job created successfully
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.member_tags.import_(
+                id=1,
+                bulk_tags="bulk_tags",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.import_(id, bulk_tags=bulk_tags, file=file, request_options=request_options)
+        return _response.data
+
+    async def get_import(
+        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> OrganizationMemberTagImportStatus:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the status and results of a member tag import job.
+
+        The response includes the current status (created, in_progress, completed, failed), timestamps, and counts of tags created, assignments made, and users skipped.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this organization.
+
+        import_pk : int
+            A unique integer value identifying this import job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationMemberTagImportStatus
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.member_tags.get_import(
+                id=1,
+                import_pk=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_import(id, import_pk, request_options=request_options)
         return _response.data
 
     async def get(
@@ -773,232 +999,6 @@ class AsyncMemberTagsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(id, tag_pk, label=label, request_options=request_options)
-        return _response.data
-
-    async def assign(
-        self,
-        id: int,
-        *,
-        all_: bool,
-        exclude_project_id: typing.Optional[float] = None,
-        exclude_workspace_id: typing.Optional[float] = None,
-        is_deleted: typing.Optional[bool] = None,
-        role: typing.Optional[str] = None,
-        tags: typing.Optional[str] = None,
-        user_last_activity_gte: typing.Optional[str] = None,
-        user_last_activity_lte: typing.Optional[str] = None,
-        included: typing.Optional[typing.Sequence[int]] = OMIT,
-        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
-        bulk_organization_member_tag_assignment_request_tags: typing.Optional[typing.Sequence[int]] = OMIT,
-        overwrite: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AssignMemberTagsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Assign tags to multiple organization members in bulk.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this organization.
-
-        all_ : bool
-            If true, assign tags to all organization members. If false, assign tags to the provided users.
-
-        exclude_project_id : typing.Optional[float]
-            Filter exclude_project_id by exact match
-
-        exclude_workspace_id : typing.Optional[float]
-            Filter exclude_workspace_id by exact match
-
-        is_deleted : typing.Optional[bool]
-            Filter is_deleted by exact match
-
-        role : typing.Optional[str]
-            Filter role by in list (comma-separated values)
-
-        tags : typing.Optional[str]
-            Filter tags by in list (comma-separated values)
-
-        user_last_activity_gte : typing.Optional[str]
-            Filter user__last_activity by greater than or equal to
-
-        user_last_activity_lte : typing.Optional[str]
-            Filter user__last_activity by less than or equal to
-
-        included : typing.Optional[typing.Sequence[int]]
-            List of user IDs to include in the assignment.
-
-        excluded : typing.Optional[typing.Sequence[int]]
-            List of user IDs to exclude from the assignment.
-
-        bulk_organization_member_tag_assignment_request_tags : typing.Optional[typing.Sequence[int]]
-            List of tag IDs to assign.
-
-        overwrite : typing.Optional[bool]
-            If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AssignMemberTagsResponse
-            Number of tag assignments created
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.organizations.member_tags.assign(
-                id=1,
-                all_=True,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.assign(
-            id,
-            all_=all_,
-            exclude_project_id=exclude_project_id,
-            exclude_workspace_id=exclude_workspace_id,
-            is_deleted=is_deleted,
-            role=role,
-            tags=tags,
-            user_last_activity_gte=user_last_activity_gte,
-            user_last_activity_lte=user_last_activity_lte,
-            included=included,
-            excluded=excluded,
-            bulk_organization_member_tag_assignment_request_tags=bulk_organization_member_tag_assignment_request_tags,
-            overwrite=overwrite,
-            request_options=request_options,
-        )
-        return _response.data
-
-    async def import_(
-        self, id: int, *, file: core.File, bulk_tags: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> ImportMemberTagsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Upload a CSV file to bulk import member tags and assign them to organization members.
-
-        The CSV file must contain `email` and `tags` columns. The `tags` column should contain comma-separated tag labels (quoted if they contain commas). Tags that do not exist will be created.
-
-        Optionally, you can specify `bulk_tags` as a comma-separated list of tags to apply to all users in the CSV file.
-
-        The import runs asynchronously. Use the returned import job ID to check the status.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this organization.
-
-        file : core.File
-            See core.File for more documentation
-
-        bulk_tags : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ImportMemberTagsResponse
-            Import job created successfully
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.organizations.member_tags.import_(
-                id=1,
-                bulk_tags="bulk_tags",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.import_(id, file=file, bulk_tags=bulk_tags, request_options=request_options)
-        return _response.data
-
-    async def get_import(
-        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> OrganizationMemberTagImportStatus:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve the status and results of a member tag import job.
-
-        The response includes the current status (created, in_progress, completed, failed), timestamps, and counts of tags created, assignments made, and users skipped.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this organization.
-
-        import_pk : int
-            A unique integer value identifying this import job.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        OrganizationMemberTagImportStatus
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.organizations.member_tags.get_import(
-                id=1,
-                import_pk=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_import(id, import_pk, request_options=request_options)
         return _response.data
 
     @property

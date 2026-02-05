@@ -17,8 +17,35 @@ class AnnotationHistory(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
-    id: typing.Optional[int] = None
+    action: typing.Optional[ActionEnum] = None
+    annotation_id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Corresponding annotation for this historical annotation
+    """
+
     comment: typing.Optional[str] = None
+    comment_id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Comment id sent with result
+    """
+
+    created_at: typing.Optional[dt.datetime] = None
+    created_by: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Created by user id
+    """
+
+    draft_id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Corresponding draft for this historical annotation
+    """
+
+    id: typing.Optional[int] = None
+    lead_time: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    How much time it took to annotate the task
+    """
+
     organization_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Organization for this annotation history
@@ -29,14 +56,9 @@ class AnnotationHistory(UncheckedBaseModel):
     Project for this annotation history
     """
 
-    annotation_id: typing.Optional[int] = pydantic.Field(default=None)
+    result: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
-    Corresponding annotation for this historical annotation
-    """
-
-    draft_id: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Corresponding draft for this historical annotation
+    Labeling result
     """
 
     review_id: typing.Optional[int] = pydantic.Field(default=None)
@@ -44,36 +66,14 @@ class AnnotationHistory(UncheckedBaseModel):
     AnnotationReview ID, using with review field
     """
 
-    task_id: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Task id
-    """
-
-    result: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Labeling result
-    """
-
-    lead_time: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    How much time it took to annotate the task
-    """
-
-    action: typing.Optional[ActionEnum] = None
     started_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     The time that a user started working on this revision of the annotation
     """
 
-    created_at: typing.Optional[dt.datetime] = None
-    created_by: typing.Optional[int] = pydantic.Field(default=None)
+    task_id: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Created by user id
-    """
-
-    comment_id: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Comment id sent with result
+    Task id
     """
 
     if IS_PYDANTIC_V2:

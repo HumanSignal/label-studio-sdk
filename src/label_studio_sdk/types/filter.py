@@ -9,21 +9,16 @@ from .child_filter import ChildFilter
 
 
 class Filter(UncheckedBaseModel):
-    id: typing.Optional[int] = None
     child_filter: typing.Optional[ChildFilter] = None
-    index: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Display order among root filters only
-    """
-
     column: str = pydantic.Field()
     """
     Field name
     """
 
-    type: str = pydantic.Field()
+    id: typing.Optional[int] = None
+    index: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Field type
+    Display order among root filters only
     """
 
     operator: str = pydantic.Field()
@@ -31,14 +26,19 @@ class Filter(UncheckedBaseModel):
     Filter operator
     """
 
-    value: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Filter value
-    """
-
     parent: typing.Optional[int] = pydantic.Field(default=None)
     """
     Optional parent filter to create one-level hierarchy (child filters are AND-merged with parent)
+    """
+
+    type: str = pydantic.Field()
+    """
+    Field type
+    """
+
+    value: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Filter value
     """
 
     if IS_PYDANTIC_V2:

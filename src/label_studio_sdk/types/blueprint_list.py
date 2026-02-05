@@ -9,6 +9,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class BlueprintList(UncheckedBaseModel):
+    created_at: typing.Optional[dt.datetime] = None
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Project description
+    """
+
     id: typing.Optional[int] = None
     share_id: typing.Optional[str] = None
     short_url: typing.Optional[str] = None
@@ -16,13 +22,6 @@ class BlueprintList(UncheckedBaseModel):
     """
     Blueprint name. Must be between 3 and 50 characters long.
     """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Project description
-    """
-
-    created_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

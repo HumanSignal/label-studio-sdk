@@ -10,25 +10,19 @@ from .status_c5a_enum import StatusC5AEnum
 
 
 class GcswifExportStorageRequest(UncheckedBaseModel):
-    synchronizable: typing.Optional[bool] = None
     bucket: typing.Optional[str] = pydantic.Field(default=None)
     """
     GCS bucket name
     """
 
-    prefix: typing.Optional[str] = pydantic.Field(default=None)
+    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    GCS bucket prefix
-    """
-
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage regex for filtering objects
+    Deletion from storage enabled
     """
 
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Interpret objects as BLOBs and generate URLs
+    Cloud storage description
     """
 
     google_application_credentials: typing.Optional[str] = pydantic.Field(default=None)
@@ -46,6 +40,11 @@ class GcswifExportStorageRequest(UncheckedBaseModel):
     Google project number
     """
 
+    google_service_account_email: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Google service account email
+    """
+
     google_wif_pool_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Google WIF pool ID
@@ -54,11 +53,6 @@ class GcswifExportStorageRequest(UncheckedBaseModel):
     google_wif_provider_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Google WIF provider ID
-    """
-
-    google_service_account_email: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Google service account email
     """
 
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
@@ -76,35 +70,41 @@ class GcswifExportStorageRequest(UncheckedBaseModel):
     Last sync job ID
     """
 
-    status: typing.Optional[StatusC5AEnum] = None
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
     meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Meta and debug information about storage processes
     """
 
-    title: typing.Optional[str] = pydantic.Field(default=None)
+    prefix: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cloud storage title
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage description
-    """
-
-    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Deletion from storage enabled
+    GCS bucket prefix
     """
 
     project: int = pydantic.Field()
     """
     A unique integer value identifying this project.
+    """
+
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage regex for filtering objects
+    """
+
+    status: typing.Optional[StatusC5AEnum] = None
+    synchronizable: typing.Optional[bool] = None
+    title: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage title
+    """
+
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Traceback report for the last failed sync
+    """
+
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs
     """
 
     if IS_PYDANTIC_V2:

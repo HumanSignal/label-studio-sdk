@@ -63,9 +63,9 @@ class ScimClient:
     def update(
         self,
         *,
-        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
-        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         projects_groups: typing.Optional[typing.Sequence[ProjectGroupRequest]] = OMIT,
+        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
+        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ScimSettingsUpdate:
         """
@@ -79,11 +79,11 @@ class ScimClient:
 
         Parameters
         ----------
-        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
-        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
+        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -101,21 +101,21 @@ class ScimClient:
             api_key="YOUR_API_KEY",
         )
         client.sso.scim.update(
-            workspaces_groups=[["Default workspace", "groups_test"]],
-            roles_groups=[["Administrator", "groups_test"]],
             projects_groups=[
                 ProjectGroupRequest(
-                    project_id=42,
                     group="groups_test",
+                    project_id=42,
                     role="Inherit",
                 )
             ],
+            roles_groups=[["Administrator", "groups_test"]],
+            workspaces_groups=[["Default workspace", "groups_test"]],
         )
         """
         _response = self._raw_client.update(
-            workspaces_groups=workspaces_groups,
-            roles_groups=roles_groups,
             projects_groups=projects_groups,
+            roles_groups=roles_groups,
+            workspaces_groups=workspaces_groups,
             request_options=request_options,
         )
         return _response.data
@@ -179,9 +179,9 @@ class AsyncScimClient:
     async def update(
         self,
         *,
-        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
-        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         projects_groups: typing.Optional[typing.Sequence[ProjectGroupRequest]] = OMIT,
+        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
+        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ScimSettingsUpdate:
         """
@@ -195,11 +195,11 @@ class AsyncScimClient:
 
         Parameters
         ----------
-        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
-        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
+        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -222,24 +222,24 @@ class AsyncScimClient:
 
         async def main() -> None:
             await client.sso.scim.update(
-                workspaces_groups=[["Default workspace", "groups_test"]],
-                roles_groups=[["Administrator", "groups_test"]],
                 projects_groups=[
                     ProjectGroupRequest(
-                        project_id=42,
                         group="groups_test",
+                        project_id=42,
                         role="Inherit",
                     )
                 ],
+                roles_groups=[["Administrator", "groups_test"]],
+                workspaces_groups=[["Default workspace", "groups_test"]],
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            workspaces_groups=workspaces_groups,
-            roles_groups=roles_groups,
             projects_groups=projects_groups,
+            roles_groups=roles_groups,
+            workspaces_groups=workspaces_groups,
             request_options=request_options,
         )
         return _response.data

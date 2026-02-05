@@ -68,18 +68,18 @@ class RawUsersClient:
     def update_current_user(
         self,
         *,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        custom_hotkeys: typing.Optional[typing.Any] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         active_organization: typing.Optional[int] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        custom_hotkeys: typing.Optional[typing.Any] = OMIT,
         date_joined: typing.Optional[dt.datetime] = OMIT,
-        password: typing.Optional[str] = OMIT,
-        onboarding_state: typing.Optional[str] = OMIT,
-        is_email_verified: typing.Optional[bool] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        is_email_verified: typing.Optional[bool] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        onboarding_state: typing.Optional[str] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseUserApi]:
         """
@@ -93,31 +93,31 @@ class RawUsersClient:
 
         Parameters
         ----------
-        first_name : typing.Optional[str]
-
-        last_name : typing.Optional[str]
-
-        username : typing.Optional[str]
-
-        custom_hotkeys : typing.Optional[typing.Any]
-            Custom keyboard shortcuts configuration for the user interface
-
-        phone : typing.Optional[str]
-
         active_organization : typing.Optional[int]
 
         allow_newsletters : typing.Optional[bool]
             Allow sending newsletters to user
 
+        custom_hotkeys : typing.Optional[typing.Any]
+            Custom keyboard shortcuts configuration for the user interface
+
         date_joined : typing.Optional[dt.datetime]
 
-        password : typing.Optional[str]
+        email_notification_settings : typing.Optional[typing.Any]
 
-        onboarding_state : typing.Optional[str]
+        first_name : typing.Optional[str]
 
         is_email_verified : typing.Optional[bool]
 
-        email_notification_settings : typing.Optional[typing.Any]
+        last_name : typing.Optional[str]
+
+        onboarding_state : typing.Optional[str]
+
+        password : typing.Optional[str]
+
+        phone : typing.Optional[str]
+
+        username : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -131,18 +131,18 @@ class RawUsersClient:
             "api/current-user",
             method="PATCH",
             json={
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "custom_hotkeys": custom_hotkeys,
-                "phone": phone,
                 "active_organization": active_organization,
                 "allow_newsletters": allow_newsletters,
+                "custom_hotkeys": custom_hotkeys,
                 "date_joined": date_joined,
-                "password": password,
-                "onboarding_state": onboarding_state,
-                "is_email_verified": is_email_verified,
                 "email_notification_settings": email_notification_settings,
+                "first_name": first_name,
+                "is_email_verified": is_email_verified,
+                "last_name": last_name,
+                "onboarding_state": onboarding_state,
+                "password": password,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -398,15 +398,15 @@ class RawUsersClient:
     def create(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        initials: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseUser]:
         """
@@ -414,32 +414,32 @@ class RawUsersClient:
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            User ID
-
-        first_name : typing.Optional[str]
-            First name of the user
-
-        last_name : typing.Optional[str]
-            Last name of the user
-
-        username : typing.Optional[str]
-            Username of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         avatar : typing.Optional[str]
             Avatar URL of the user
 
+        email : typing.Optional[str]
+            Email of the user
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        id : typing.Optional[int]
+            User ID
+
         initials : typing.Optional[str]
             Initials of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
 
         phone : typing.Optional[str]
             Phone number of the user
 
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
+        username : typing.Optional[str]
+            Username of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -453,15 +453,15 @@ class RawUsersClient:
             "api/users/",
             method="POST",
             json={
-                "id": id,
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "email": email,
-                "avatar": avatar,
-                "initials": initials,
-                "phone": phone,
                 "allow_newsletters": allow_newsletters,
+                "avatar": avatar,
+                "email": email,
+                "first_name": first_name,
+                "id": id,
+                "initials": initials,
+                "last_name": last_name,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -556,15 +556,15 @@ class RawUsersClient:
         self,
         id: int,
         *,
-        update_users_request_id: typing.Optional[int] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        initials: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        update_users_request_id: typing.Optional[int] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseUser]:
         """
@@ -577,32 +577,32 @@ class RawUsersClient:
         id : int
             User ID
 
-        update_users_request_id : typing.Optional[int]
-            User ID
-
-        first_name : typing.Optional[str]
-            First name of the user
-
-        last_name : typing.Optional[str]
-            Last name of the user
-
-        username : typing.Optional[str]
-            Username of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         avatar : typing.Optional[str]
             Avatar URL of the user
 
+        email : typing.Optional[str]
+            Email of the user
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        update_users_request_id : typing.Optional[int]
+            User ID
+
         initials : typing.Optional[str]
             Initials of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
 
         phone : typing.Optional[str]
             Phone number of the user
 
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
+        username : typing.Optional[str]
+            Username of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -616,15 +616,15 @@ class RawUsersClient:
             f"api/users/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "id": update_users_request_id,
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "email": email,
-                "avatar": avatar,
-                "initials": initials,
-                "phone": phone,
                 "allow_newsletters": allow_newsletters,
+                "avatar": avatar,
+                "email": email,
+                "first_name": first_name,
+                "id": update_users_request_id,
+                "initials": initials,
+                "last_name": last_name,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -697,18 +697,18 @@ class AsyncRawUsersClient:
     async def update_current_user(
         self,
         *,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        custom_hotkeys: typing.Optional[typing.Any] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         active_organization: typing.Optional[int] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        custom_hotkeys: typing.Optional[typing.Any] = OMIT,
         date_joined: typing.Optional[dt.datetime] = OMIT,
-        password: typing.Optional[str] = OMIT,
-        onboarding_state: typing.Optional[str] = OMIT,
-        is_email_verified: typing.Optional[bool] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        is_email_verified: typing.Optional[bool] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        onboarding_state: typing.Optional[str] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseUserApi]:
         """
@@ -722,31 +722,31 @@ class AsyncRawUsersClient:
 
         Parameters
         ----------
-        first_name : typing.Optional[str]
-
-        last_name : typing.Optional[str]
-
-        username : typing.Optional[str]
-
-        custom_hotkeys : typing.Optional[typing.Any]
-            Custom keyboard shortcuts configuration for the user interface
-
-        phone : typing.Optional[str]
-
         active_organization : typing.Optional[int]
 
         allow_newsletters : typing.Optional[bool]
             Allow sending newsletters to user
 
+        custom_hotkeys : typing.Optional[typing.Any]
+            Custom keyboard shortcuts configuration for the user interface
+
         date_joined : typing.Optional[dt.datetime]
 
-        password : typing.Optional[str]
+        email_notification_settings : typing.Optional[typing.Any]
 
-        onboarding_state : typing.Optional[str]
+        first_name : typing.Optional[str]
 
         is_email_verified : typing.Optional[bool]
 
-        email_notification_settings : typing.Optional[typing.Any]
+        last_name : typing.Optional[str]
+
+        onboarding_state : typing.Optional[str]
+
+        password : typing.Optional[str]
+
+        phone : typing.Optional[str]
+
+        username : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -760,18 +760,18 @@ class AsyncRawUsersClient:
             "api/current-user",
             method="PATCH",
             json={
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "custom_hotkeys": custom_hotkeys,
-                "phone": phone,
                 "active_organization": active_organization,
                 "allow_newsletters": allow_newsletters,
+                "custom_hotkeys": custom_hotkeys,
                 "date_joined": date_joined,
-                "password": password,
-                "onboarding_state": onboarding_state,
-                "is_email_verified": is_email_verified,
                 "email_notification_settings": email_notification_settings,
+                "first_name": first_name,
+                "is_email_verified": is_email_verified,
+                "last_name": last_name,
+                "onboarding_state": onboarding_state,
+                "password": password,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -1029,15 +1029,15 @@ class AsyncRawUsersClient:
     async def create(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        initials: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseUser]:
         """
@@ -1045,32 +1045,32 @@ class AsyncRawUsersClient:
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            User ID
-
-        first_name : typing.Optional[str]
-            First name of the user
-
-        last_name : typing.Optional[str]
-            Last name of the user
-
-        username : typing.Optional[str]
-            Username of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         avatar : typing.Optional[str]
             Avatar URL of the user
 
+        email : typing.Optional[str]
+            Email of the user
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        id : typing.Optional[int]
+            User ID
+
         initials : typing.Optional[str]
             Initials of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
 
         phone : typing.Optional[str]
             Phone number of the user
 
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
+        username : typing.Optional[str]
+            Username of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1084,15 +1084,15 @@ class AsyncRawUsersClient:
             "api/users/",
             method="POST",
             json={
-                "id": id,
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "email": email,
-                "avatar": avatar,
-                "initials": initials,
-                "phone": phone,
                 "allow_newsletters": allow_newsletters,
+                "avatar": avatar,
+                "email": email,
+                "first_name": first_name,
+                "id": id,
+                "initials": initials,
+                "last_name": last_name,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -1191,15 +1191,15 @@ class AsyncRawUsersClient:
         self,
         id: int,
         *,
-        update_users_request_id: typing.Optional[int] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        initials: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        update_users_request_id: typing.Optional[int] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseUser]:
         """
@@ -1212,32 +1212,32 @@ class AsyncRawUsersClient:
         id : int
             User ID
 
-        update_users_request_id : typing.Optional[int]
-            User ID
-
-        first_name : typing.Optional[str]
-            First name of the user
-
-        last_name : typing.Optional[str]
-            Last name of the user
-
-        username : typing.Optional[str]
-            Username of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         avatar : typing.Optional[str]
             Avatar URL of the user
 
+        email : typing.Optional[str]
+            Email of the user
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        update_users_request_id : typing.Optional[int]
+            User ID
+
         initials : typing.Optional[str]
             Initials of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
 
         phone : typing.Optional[str]
             Phone number of the user
 
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
+        username : typing.Optional[str]
+            Username of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1251,15 +1251,15 @@ class AsyncRawUsersClient:
             f"api/users/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "id": update_users_request_id,
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "email": email,
-                "avatar": avatar,
-                "initials": initials,
-                "phone": phone,
                 "allow_newsletters": allow_newsletters,
+                "avatar": avatar,
+                "email": email,
+                "first_name": first_name,
+                "id": update_users_request_id,
+                "initials": initials,
+                "last_name": last_name,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",

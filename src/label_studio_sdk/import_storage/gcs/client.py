@@ -69,17 +69,17 @@ class GcsClient:
     def create(
         self,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsImportStorage:
         """
@@ -87,11 +87,20 @@ class GcsClient:
 
         Parameters
         ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        bucket : typing.Optional[str]
+            GCS bucket name
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        description : typing.Optional[str]
+            Storage description
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -99,26 +108,17 @@ class GcsClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
-        bucket : typing.Optional[str]
-            GCS bucket name
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
+        title : typing.Optional[str]
+            Storage title
 
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-
-        google_project_id : typing.Optional[str]
-            Google project ID
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -138,17 +138,108 @@ class GcsClient:
         client.import_storage.gcs.create()
         """
         _response = self._raw_client.create(
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            presign=presign,
-            presign_ttl=presign_ttl,
-            title=title,
-            description=description,
-            project=project,
             bucket=bucket,
-            prefix=prefix,
+            description=description,
             google_application_credentials=google_application_credentials,
             google_project_id=google_project_id,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            project=project,
+            regex_filter=regex_filter,
+            title=title,
+            use_blob_urls=use_blob_urls,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def validate(
+        self,
+        *,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific GCS import storage connection.
+
+        Parameters
+        ----------
+        bucket : typing.Optional[str]
+            GCS bucket name
+
+        description : typing.Optional[str]
+            Storage description
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        presign : typing.Optional[bool]
+            Presign URLs for direct download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        project : typing.Optional[int]
+            Project ID
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        title : typing.Optional[str]
+            Storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.import_storage.gcs.validate()
+        """
+        _response = self._raw_client.validate(
+            bucket=bucket,
+            description=description,
+            google_application_credentials=google_application_credentials,
+            google_project_id=google_project_id,
+            id=id,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            project=project,
+            regex_filter=regex_filter,
+            title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -216,17 +307,17 @@ class GcsClient:
         self,
         id: int,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsImportStorage:
         """
@@ -236,11 +327,20 @@ class GcsClient:
         ----------
         id : int
 
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        bucket : typing.Optional[str]
+            GCS bucket name
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        description : typing.Optional[str]
+            Storage description
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -248,26 +348,17 @@ class GcsClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
-        bucket : typing.Optional[str]
-            GCS bucket name
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
+        title : typing.Optional[str]
+            Storage title
 
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-
-        google_project_id : typing.Optional[str]
-            Google project ID
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -290,17 +381,17 @@ class GcsClient:
         """
         _response = self._raw_client.update(
             id,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            presign=presign,
-            presign_ttl=presign_ttl,
-            title=title,
-            description=description,
-            project=project,
             bucket=bucket,
-            prefix=prefix,
+            description=description,
             google_application_credentials=google_application_credentials,
             google_project_id=google_project_id,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            project=project,
+            regex_filter=regex_filter,
+            title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -334,97 +425,6 @@ class GcsClient:
         )
         """
         _response = self._raw_client.sync(id, request_options=request_options)
-        return _response.data
-
-    def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific GCS import storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        presign : typing.Optional[bool]
-            Presign URLs for direct download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            GCS bucket name
-
-        prefix : typing.Optional[str]
-            GCS bucket prefix
-
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-
-        google_project_id : typing.Optional[str]
-            Google project ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.import_storage.gcs.validate()
-        """
-        _response = self._raw_client.validate(
-            id=id,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            presign=presign,
-            presign_ttl=presign_ttl,
-            title=title,
-            description=description,
-            project=project,
-            bucket=bucket,
-            prefix=prefix,
-            google_application_credentials=google_application_credentials,
-            google_project_id=google_project_id,
-            request_options=request_options,
-        )
         return _response.data
 
 
@@ -494,17 +494,17 @@ class AsyncGcsClient:
     async def create(
         self,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsImportStorage:
         """
@@ -512,11 +512,20 @@ class AsyncGcsClient:
 
         Parameters
         ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        bucket : typing.Optional[str]
+            GCS bucket name
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        description : typing.Optional[str]
+            Storage description
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -524,26 +533,17 @@ class AsyncGcsClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
-        bucket : typing.Optional[str]
-            GCS bucket name
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
+        title : typing.Optional[str]
+            Storage title
 
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-
-        google_project_id : typing.Optional[str]
-            Google project ID
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -571,17 +571,116 @@ class AsyncGcsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            presign=presign,
-            presign_ttl=presign_ttl,
-            title=title,
-            description=description,
-            project=project,
             bucket=bucket,
-            prefix=prefix,
+            description=description,
             google_application_credentials=google_application_credentials,
             google_project_id=google_project_id,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            project=project,
+            regex_filter=regex_filter,
+            title=title,
+            use_blob_urls=use_blob_urls,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def validate(
+        self,
+        *,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific GCS import storage connection.
+
+        Parameters
+        ----------
+        bucket : typing.Optional[str]
+            GCS bucket name
+
+        description : typing.Optional[str]
+            Storage description
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        presign : typing.Optional[bool]
+            Presign URLs for direct download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        project : typing.Optional[int]
+            Project ID
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        title : typing.Optional[str]
+            Storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.import_storage.gcs.validate()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.validate(
+            bucket=bucket,
+            description=description,
+            google_application_credentials=google_application_credentials,
+            google_project_id=google_project_id,
+            id=id,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            project=project,
+            regex_filter=regex_filter,
+            title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -665,17 +764,17 @@ class AsyncGcsClient:
         self,
         id: int,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsImportStorage:
         """
@@ -685,11 +784,20 @@ class AsyncGcsClient:
         ----------
         id : int
 
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        bucket : typing.Optional[str]
+            GCS bucket name
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        description : typing.Optional[str]
+            Storage description
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -697,26 +805,17 @@ class AsyncGcsClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
-        bucket : typing.Optional[str]
-            GCS bucket name
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
+        title : typing.Optional[str]
+            Storage title
 
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-
-        google_project_id : typing.Optional[str]
-            Google project ID
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -747,17 +846,17 @@ class AsyncGcsClient:
         """
         _response = await self._raw_client.update(
             id,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            presign=presign,
-            presign_ttl=presign_ttl,
-            title=title,
-            description=description,
-            project=project,
             bucket=bucket,
-            prefix=prefix,
+            description=description,
             google_application_credentials=google_application_credentials,
             google_project_id=google_project_id,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            project=project,
+            regex_filter=regex_filter,
+            title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -799,103 +898,4 @@ class AsyncGcsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.sync(id, request_options=request_options)
-        return _response.data
-
-    async def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific GCS import storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        presign : typing.Optional[bool]
-            Presign URLs for direct download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            GCS bucket name
-
-        prefix : typing.Optional[str]
-            GCS bucket prefix
-
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-
-        google_project_id : typing.Optional[str]
-            Google project ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.import_storage.gcs.validate()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.validate(
-            id=id,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            presign=presign,
-            presign_ttl=presign_ttl,
-            title=title,
-            description=description,
-            project=project,
-            bucket=bucket,
-            prefix=prefix,
-            google_application_credentials=google_application_credentials,
-            google_project_id=google_project_id,
-            request_options=request_options,
-        )
         return _response.data

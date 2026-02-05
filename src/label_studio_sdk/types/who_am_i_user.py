@@ -18,20 +18,6 @@ class WhoAmIUser(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
-    id: typing.Optional[int] = None
-    first_name: typing.Optional[str] = None
-    last_name: typing.Optional[str] = None
-    username: str
-    email: typing.Optional[str] = None
-    last_activity: typing.Optional[dt.datetime] = None
-    custom_hotkeys: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Custom keyboard shortcuts configuration for the user interface
-    """
-
-    avatar: typing.Optional[str] = None
-    initials: typing.Optional[str] = None
-    phone: typing.Optional[str] = None
     active_organization: typing.Optional[int] = None
     active_organization_meta: typing.Optional[str] = None
     allow_newsletters: typing.Optional[bool] = pydantic.Field(default=None)
@@ -39,12 +25,26 @@ class WhoAmIUser(UncheckedBaseModel):
     Allow sending newsletters to user
     """
 
+    avatar: typing.Optional[str] = None
+    custom_hotkeys: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Custom keyboard shortcuts configuration for the user interface
+    """
+
     date_joined: typing.Optional[dt.datetime] = None
-    org_membership: typing.Optional[typing.List[OrganizationMembership]] = None
+    email: typing.Optional[str] = None
+    first_name: typing.Optional[str] = None
+    id: typing.Optional[int] = None
+    initials: typing.Optional[str] = None
+    last_activity: typing.Optional[dt.datetime] = None
+    last_name: typing.Optional[str] = None
     lse_fields: typing.Optional[WhoAmILseFields] = None
-    pause: typing.Optional[str] = None
+    org_membership: typing.Optional[typing.List[OrganizationMembership]] = None
     organization_membership: typing.Optional[OrganizationMembership] = None
+    pause: typing.Optional[str] = None
     permissions: typing.Optional[typing.List[str]] = None
+    phone: typing.Optional[str] = None
+    username: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -12,75 +12,6 @@ from .status_c5a_enum import StatusC5AEnum
 
 
 class S3ExportStorage(UncheckedBaseModel):
-    id: typing.Optional[int] = None
-    type: typing.Optional[str] = None
-    synchronizable: typing.Optional[bool] = None
-    last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Last sync finished time
-    """
-
-    last_sync_count: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Count of tasks synced last time
-    """
-
-    last_sync_job: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Last sync job ID
-    """
-
-    status: typing.Optional[StatusC5AEnum] = None
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
-    meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Meta and debug information about storage processes
-    """
-
-    title: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage title
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage description
-    """
-
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Creation time
-    """
-
-    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Deletion from storage enabled
-    """
-
-    bucket: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    S3 bucket name
-    """
-
-    prefix: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    S3 bucket prefix
-    """
-
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage regex for filtering objects
-    """
-
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Interpret objects as BLOBs and generate URLs
-    """
-
     aws_access_key_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     AWS_ACCESS_KEY_ID
@@ -101,6 +32,62 @@ class S3ExportStorage(UncheckedBaseModel):
     AWS SSE KMS Key ID
     """
 
+    bucket: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    S3 bucket name
+    """
+
+    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Deletion from storage enabled
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Creation time
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage description
+    """
+
+    id: typing.Optional[int] = None
+    last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Last sync finished time
+    """
+
+    last_sync_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Count of tasks synced last time
+    """
+
+    last_sync_job: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Last sync job ID
+    """
+
+    meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Meta and debug information about storage processes
+    """
+
+    prefix: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    S3 bucket prefix
+    """
+
+    project: int = pydantic.Field()
+    """
+    A unique integer value identifying this project.
+    """
+
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage regex for filtering objects
+    """
+
     region_name: typing.Optional[str] = pydantic.Field(default=None)
     """
     AWS Region
@@ -113,9 +100,22 @@ class S3ExportStorage(UncheckedBaseModel):
     S3 Endpoint
     """
 
-    project: int = pydantic.Field()
+    status: typing.Optional[StatusC5AEnum] = None
+    synchronizable: typing.Optional[bool] = None
+    title: typing.Optional[str] = pydantic.Field(default=None)
     """
-    A unique integer value identifying this project.
+    Cloud storage title
+    """
+
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Traceback report for the last failed sync
+    """
+
+    type: typing.Optional[str] = None
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs
     """
 
     if IS_PYDANTIC_V2:

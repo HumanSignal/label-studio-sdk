@@ -97,6 +97,71 @@ class ViewsClient:
         _response = self._raw_client.create(data=data, project=project, request_options=request_options)
         return _response.data
 
+    def update_order(
+        self, *, ids: typing.Sequence[int], project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Update the order field of views based on the provided list of view IDs
+
+        Parameters
+        ----------
+        ids : typing.Sequence[int]
+            A list of view IDs in the desired order.
+
+        project : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.views.update_order(
+            ids=[1],
+            project=1,
+        )
+        """
+        _response = self._raw_client.update_order(ids=ids, project=project, request_options=request_options)
+        return _response.data
+
+    def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete all views for a specific project.
+
+        Parameters
+        ----------
+        project : int
+            Project ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.views.delete_all(
+            project=1,
+        )
+        """
+        _response = self._raw_client.delete_all(project=project, request_options=request_options)
+        return _response.data
+
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> View:
         """
         Get the details about a specific view in the data manager
@@ -202,71 +267,6 @@ class ViewsClient:
         _response = self._raw_client.update(id, data=data, project=project, request_options=request_options)
         return _response.data
 
-    def update_order(
-        self, *, project: int, ids: typing.Sequence[int], request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Update the order field of views based on the provided list of view IDs
-
-        Parameters
-        ----------
-        project : int
-
-        ids : typing.Sequence[int]
-            A list of view IDs in the desired order.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.views.update_order(
-            project=1,
-            ids=[1],
-        )
-        """
-        _response = self._raw_client.update_order(project=project, ids=ids, request_options=request_options)
-        return _response.data
-
-    def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete all views for a specific project.
-
-        Parameters
-        ----------
-        project : int
-            Project ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.views.delete_all(
-            project=1,
-        )
-        """
-        _response = self._raw_client.delete_all(project=project, request_options=request_options)
-        return _response.data
-
 
 class AsyncViewsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -366,6 +366,87 @@ class AsyncViewsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(data=data, project=project, request_options=request_options)
+        return _response.data
+
+    async def update_order(
+        self, *, ids: typing.Sequence[int], project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Update the order field of views based on the provided list of view IDs
+
+        Parameters
+        ----------
+        ids : typing.Sequence[int]
+            A list of view IDs in the desired order.
+
+        project : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.views.update_order(
+                ids=[1],
+                project=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_order(ids=ids, project=project, request_options=request_options)
+        return _response.data
+
+    async def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete all views for a specific project.
+
+        Parameters
+        ----------
+        project : int
+            Project ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.views.delete_all(
+                project=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_all(project=project, request_options=request_options)
         return _response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> View:
@@ -495,85 +576,4 @@ class AsyncViewsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(id, data=data, project=project, request_options=request_options)
-        return _response.data
-
-    async def update_order(
-        self, *, project: int, ids: typing.Sequence[int], request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Update the order field of views based on the provided list of view IDs
-
-        Parameters
-        ----------
-        project : int
-
-        ids : typing.Sequence[int]
-            A list of view IDs in the desired order.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.views.update_order(
-                project=1,
-                ids=[1],
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.update_order(project=project, ids=ids, request_options=request_options)
-        return _response.data
-
-    async def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete all views for a specific project.
-
-        Parameters
-        ----------
-        project : int
-            Project ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.views.delete_all(
-                project=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.delete_all(project=project, request_options=request_options)
         return _response.data

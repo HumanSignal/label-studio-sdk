@@ -10,35 +10,14 @@ from .status_c5a_enum import StatusC5AEnum
 
 
 class AzureServicePrincipalExportStorageRequest(UncheckedBaseModel):
-    synchronizable: typing.Optional[bool] = None
-    prefix: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Azure blob prefix name
-    """
-
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage regex for filtering objects
-    """
-
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Interpret objects as BLOBs and generate URLs
-    """
-
     account_name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Azure Blob account name
     """
 
-    container: typing.Optional[str] = pydantic.Field(default=None)
+    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Azure blob container
-    """
-
-    tenant_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Azure Tenant ID
+    Deletion from storage enabled
     """
 
     client_id: typing.Optional[str] = pydantic.Field(default=None)
@@ -51,9 +30,14 @@ class AzureServicePrincipalExportStorageRequest(UncheckedBaseModel):
     Azure Blob Service Principal Client Secret
     """
 
-    user_delegation_key: typing.Optional[str] = pydantic.Field(default=None)
+    container: typing.Optional[str] = pydantic.Field(default=None)
     """
-    User Delegation Key (Backend)
+    Azure blob container
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage description
     """
 
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
@@ -71,15 +55,31 @@ class AzureServicePrincipalExportStorageRequest(UncheckedBaseModel):
     Last sync job ID
     """
 
-    status: typing.Optional[StatusC5AEnum] = None
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
     meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Meta and debug information about storage processes
+    """
+
+    prefix: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Azure blob prefix name
+    """
+
+    project: int = pydantic.Field()
+    """
+    A unique integer value identifying this project.
+    """
+
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage regex for filtering objects
+    """
+
+    status: typing.Optional[StatusC5AEnum] = None
+    synchronizable: typing.Optional[bool] = None
+    tenant_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Azure Tenant ID
     """
 
     title: typing.Optional[str] = pydantic.Field(default=None)
@@ -87,19 +87,19 @@ class AzureServicePrincipalExportStorageRequest(UncheckedBaseModel):
     Cloud storage title
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cloud storage description
-    """
-
-    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Deletion from storage enabled
+    Traceback report for the last failed sync
     """
 
-    project: int = pydantic.Field()
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    A unique integer value identifying this project.
+    Interpret objects as BLOBs and generate URLs
+    """
+
+    user_delegation_key: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    User Delegation Key (Backend)
     """
 
     if IS_PYDANTIC_V2:

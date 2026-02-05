@@ -9,14 +9,14 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class LseTaskSerializerForAnnotatorsPredictionsItem(UncheckedBaseModel):
-    result: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
-    score: typing.Optional[float] = None
-    model_version: typing.Optional[str] = None
+    created_at: typing.Optional[dt.datetime] = None
     model: typing.Optional[typing.Dict[str, typing.Any]] = None
     model_run: typing.Optional[typing.Dict[str, typing.Any]] = None
-    task: typing.Optional[int] = None
+    model_version: typing.Optional[str] = None
     project: typing.Optional[int] = None
-    created_at: typing.Optional[dt.datetime] = None
+    result: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
+    score: typing.Optional[float] = None
+    task: typing.Optional[int] = None
     updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:

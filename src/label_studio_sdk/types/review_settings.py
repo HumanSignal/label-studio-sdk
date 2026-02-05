@@ -11,19 +11,15 @@ from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
 
 
 class ReviewSettings(UncheckedBaseModel):
-    id: typing.Optional[int] = None
-    requeue_rejected_tasks_to_annotator: typing.Optional[bool] = None
-    review_criteria: typing.Optional[ReviewCriteriaEnum] = pydantic.Field(default=None)
-    """
-    Criteria to mark task as reviewed
-    
-    * `all` - Task is reviewed if all annotations are reviewed
-    * `one` - Task is reviewed if at least one annotation is reviewed
-    """
-
     anonymize_annotations: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Hide annotator names from annotations while review
+    """
+
+    id: typing.Optional[int] = None
+    instruction: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Reviewer instructions in HTML format
     """
 
     only_finished_tasks: typing.Optional[bool] = pydantic.Field(default=None)
@@ -31,36 +27,7 @@ class ReviewSettings(UncheckedBaseModel):
     Show only finished tasks in the review stream
     """
 
-    instruction: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Reviewer instructions in HTML format
-    """
-
-    show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show instructions to the reviewers before they start
-    """
-
-    show_data_manager_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show the data manager to reviewers
-    """
-
-    show_unused_data_columns_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
-    """
-
-    show_agreement_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show the agreement column to reviewers
-    """
-
-    require_comment_on_reject: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    If set, the reviewer must leave a comment on reject
-    """
-
+    project: typing.Optional[int] = None
     requeue_rejected_tasks_mode: typing.Optional[RequeueRejectedTasksModeEnum] = pydantic.Field(default=None)
     """
     Requeue mode for rejected tasks
@@ -70,9 +37,28 @@ class ReviewSettings(UncheckedBaseModel):
     * `flexible` - Flexible
     """
 
+    requeue_rejected_tasks_to_annotator: typing.Optional[bool] = None
+    require_comment_on_reject: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If set, the reviewer must leave a comment on reject
+    """
+
+    review_criteria: typing.Optional[ReviewCriteriaEnum] = pydantic.Field(default=None)
+    """
+    Criteria to mark task as reviewed
+    
+    * `all` - Task is reviewed if all annotations are reviewed
+    * `one` - Task is reviewed if at least one annotation is reviewed
+    """
+
     review_only_manual_assignments: typing.Optional[bool] = pydantic.Field(default=None)
     """
     When set True, review queue is built only from manually assigned tasks
+    """
+
+    review_task_limit_percent: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Percent of tasks to include in review stream (0-100). Null/0 disables.
     """
 
     sampling: typing.Optional[ReviewSettingsSamplingEnum] = pydantic.Field(default=None)
@@ -83,12 +69,25 @@ class ReviewSettings(UncheckedBaseModel):
     * `random` - Random
     """
 
-    review_task_limit_percent: typing.Optional[str] = pydantic.Field(default=None)
+    show_agreement_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Percent of tasks to include in review stream (0-100). Null/0 disables.
+    Show the agreement column to reviewers
     """
 
-    project: typing.Optional[int] = None
+    show_data_manager_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Show the data manager to reviewers
+    """
+
+    show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Show instructions to the reviewers before they start
+    """
+
+    show_unused_data_columns_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

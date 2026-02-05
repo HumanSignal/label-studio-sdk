@@ -69,8 +69,8 @@ class RawCustomClient:
         id: int,
         *,
         code: str,
-        role: typing.Optional[str] = OMIT,
         region: typing.Optional[str] = OMIT,
+        role: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -89,11 +89,11 @@ class RawCustomClient:
         code : str
             The Python code for the custom metric function.
 
-        role : typing.Optional[str]
-            The AWS IAM role ARN for the Lambda function. Uses default if not provided.
-
         region : typing.Optional[str]
             The AWS region for the Lambda function. Uses default if not provided.
+
+        role : typing.Optional[str]
+            The AWS IAM role ARN for the Lambda function. Uses default if not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -107,8 +107,8 @@ class RawCustomClient:
             method="POST",
             json={
                 "code": code,
-                "role": role,
                 "region": region,
+                "role": role,
             },
             headers={
                 "content-type": "application/json",
@@ -298,8 +298,8 @@ class AsyncRawCustomClient:
         id: int,
         *,
         code: str,
-        role: typing.Optional[str] = OMIT,
         region: typing.Optional[str] = OMIT,
+        role: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -318,11 +318,11 @@ class AsyncRawCustomClient:
         code : str
             The Python code for the custom metric function.
 
-        role : typing.Optional[str]
-            The AWS IAM role ARN for the Lambda function. Uses default if not provided.
-
         region : typing.Optional[str]
             The AWS region for the Lambda function. Uses default if not provided.
+
+        role : typing.Optional[str]
+            The AWS IAM role ARN for the Lambda function. Uses default if not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -336,8 +336,8 @@ class AsyncRawCustomClient:
             method="POST",
             json={
                 "code": code,
-                "role": role,
                 "region": region,
+                "role": role,
             },
             headers={
                 "content-type": "application/json",

@@ -91,10 +91,10 @@ class WorkspacesClient:
         self,
         *,
         title: str,
-        description: typing.Optional[str] = OMIT,
         color: typing.Optional[str] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -111,16 +111,16 @@ class WorkspacesClient:
         title : str
             Workspace name
 
+        color : typing.Optional[str]
+
         description : typing.Optional[str]
             Workspace description
 
-        color : typing.Optional[str]
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
-
-        is_archived : typing.Optional[bool]
-            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -143,10 +143,10 @@ class WorkspacesClient:
         """
         _response = self._raw_client.create(
             title=title,
-            description=description,
             color=color,
-            is_personal=is_personal,
+            description=description,
             is_archived=is_archived,
+            is_personal=is_personal,
             request_options=request_options,
         )
         return _response.data
@@ -226,11 +226,11 @@ class WorkspacesClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         color: typing.Optional[str] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -246,19 +246,19 @@ class WorkspacesClient:
         ----------
         id : int
 
-        title : typing.Optional[str]
-            Workspace name
+        color : typing.Optional[str]
 
         description : typing.Optional[str]
             Workspace description
 
-        color : typing.Optional[str]
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
 
-        is_archived : typing.Optional[bool]
-            Workspace is archived
+        title : typing.Optional[str]
+            Workspace name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -281,11 +281,11 @@ class WorkspacesClient:
         """
         _response = self._raw_client.update(
             id,
-            title=title,
-            description=description,
             color=color,
-            is_personal=is_personal,
+            description=description,
             is_archived=is_archived,
+            is_personal=is_personal,
+            title=title,
             request_options=request_options,
         )
         return _response.data
@@ -390,10 +390,10 @@ class AsyncWorkspacesClient:
         self,
         *,
         title: str,
-        description: typing.Optional[str] = OMIT,
         color: typing.Optional[str] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -410,16 +410,16 @@ class AsyncWorkspacesClient:
         title : str
             Workspace name
 
+        color : typing.Optional[str]
+
         description : typing.Optional[str]
             Workspace description
 
-        color : typing.Optional[str]
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
-
-        is_archived : typing.Optional[bool]
-            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -450,10 +450,10 @@ class AsyncWorkspacesClient:
         """
         _response = await self._raw_client.create(
             title=title,
-            description=description,
             color=color,
-            is_personal=is_personal,
+            description=description,
             is_archived=is_archived,
+            is_personal=is_personal,
             request_options=request_options,
         )
         return _response.data
@@ -549,11 +549,11 @@ class AsyncWorkspacesClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         color: typing.Optional[str] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -569,19 +569,19 @@ class AsyncWorkspacesClient:
         ----------
         id : int
 
-        title : typing.Optional[str]
-            Workspace name
+        color : typing.Optional[str]
 
         description : typing.Optional[str]
             Workspace description
 
-        color : typing.Optional[str]
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
 
-        is_archived : typing.Optional[bool]
-            Workspace is archived
+        title : typing.Optional[str]
+            Workspace name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -612,11 +612,11 @@ class AsyncWorkspacesClient:
         """
         _response = await self._raw_client.update(
             id,
-            title=title,
-            description=description,
             color=color,
-            is_personal=is_personal,
+            description=description,
             is_archived=is_archived,
+            is_personal=is_personal,
+            title=title,
             request_options=request_options,
         )
         return _response.data

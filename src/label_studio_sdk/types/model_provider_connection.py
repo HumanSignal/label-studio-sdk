@@ -13,55 +13,19 @@ from .user_simple import UserSimple
 
 
 class ModelProviderConnection(UncheckedBaseModel):
-    id: typing.Optional[int] = None
-    created_by: typing.Optional[UserSimple] = None
-    model_params: typing.Optional[str] = pydantic.Field(default=None)
+    budget_alert_threshold: typing.Optional[float] = pydantic.Field(default=None)
     """
-    JSON schema for the model parameters available for the provider
-    """
-
-    provider: typing.Optional[ProviderEnum] = None
-    deployment_name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Azure OpenAI deployment name
-    """
-
-    endpoint: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Azure OpenAI endpoint
-    """
-
-    google_project_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Google project ID
-    """
-
-    google_location: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Google project location
-    """
-
-    cached_available_models: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    List of available models from the provider
-    """
-
-    scope: typing.Optional[ScopeEnum] = None
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    is_internal: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether the model provider connection is internal, not visible to the user
-    """
-
-    budget_limit: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Budget limit for the model provider connection (null if unlimited)
+    Budget alert threshold for the given provider connection
     """
 
     budget_last_reset_date: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Date and time the budget was last reset
+    """
+
+    budget_limit: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Budget limit for the model provider connection (null if unlimited)
     """
 
     budget_reset_period: typing.Optional[BudgetResetPeriodEnum] = pydantic.Field(default=None)
@@ -77,12 +41,48 @@ class ModelProviderConnection(UncheckedBaseModel):
     Tracked total budget spent for the given provider connection within the current budget period
     """
 
-    budget_alert_threshold: typing.Optional[float] = pydantic.Field(default=None)
+    cached_available_models: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Budget alert threshold for the given provider connection
+    List of available models from the provider
+    """
+
+    created_at: typing.Optional[dt.datetime] = None
+    created_by: typing.Optional[UserSimple] = None
+    deployment_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Azure OpenAI deployment name
+    """
+
+    endpoint: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Azure OpenAI endpoint
+    """
+
+    google_location: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Google project location
+    """
+
+    google_project_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Google project ID
+    """
+
+    id: typing.Optional[int] = None
+    is_internal: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the model provider connection is internal, not visible to the user
+    """
+
+    model_params: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    JSON schema for the model parameters available for the provider
     """
 
     organization: typing.Optional[int] = None
+    provider: typing.Optional[ProviderEnum] = None
+    scope: typing.Optional[ScopeEnum] = None
+    updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

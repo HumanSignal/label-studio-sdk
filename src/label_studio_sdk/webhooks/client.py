@@ -64,12 +64,12 @@ class WebhooksClient:
         self,
         *,
         url: str,
-        project: typing.Optional[int] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         headers: typing.Optional[typing.Any] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
@@ -80,13 +80,7 @@ class WebhooksClient:
         url : str
             URL of webhook
 
-        project : typing.Optional[int]
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
-
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Any]
             Key Value Json of headers
@@ -94,7 +88,13 @@ class WebhooksClient:
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+        project : typing.Optional[int]
+
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -117,14 +117,48 @@ class WebhooksClient:
         """
         _response = self._raw_client.create(
             url=url,
-            project=project,
-            send_payload=send_payload,
-            send_for_all_actions=send_for_all_actions,
+            actions=actions,
             headers=headers,
             is_active=is_active,
-            actions=actions,
+            project=project,
+            send_for_all_actions=send_for_all_actions,
+            send_payload=send_payload,
             request_options=request_options,
         )
+        return _response.data
+
+    def info(
+        self,
+        *,
+        organization_only: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> InfoWebhooksResponse:
+        """
+        Get descriptions of all available webhook actions to set up webhooks.
+
+        Parameters
+        ----------
+        organization_only : typing.Optional[bool]
+            organization-only or not
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        InfoWebhooksResponse
+            Object with webhook action descriptions.
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.info()
+        """
+        _response = self._raw_client.info(organization_only=organization_only, request_options=request_options)
         return _response.data
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
@@ -186,12 +220,12 @@ class WebhooksClient:
         self,
         id: int,
         *,
-        url: typing.Optional[str] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         headers: typing.Optional[typing.Any] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WebhookSerializerForUpdate:
         """
@@ -199,14 +233,7 @@ class WebhooksClient:
         ----------
         id : int
 
-        url : typing.Optional[str]
-            URL of webhook
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
-
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Any]
             Key Value Json of headers
@@ -214,7 +241,14 @@ class WebhooksClient:
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
+
+        url : typing.Optional[str]
+            URL of webhook
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -237,48 +271,14 @@ class WebhooksClient:
         """
         _response = self._raw_client.update(
             id,
-            url=url,
-            send_payload=send_payload,
-            send_for_all_actions=send_for_all_actions,
+            actions=actions,
             headers=headers,
             is_active=is_active,
-            actions=actions,
+            send_for_all_actions=send_for_all_actions,
+            send_payload=send_payload,
+            url=url,
             request_options=request_options,
         )
-        return _response.data
-
-    def info(
-        self,
-        *,
-        organization_only: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> InfoWebhooksResponse:
-        """
-        Get descriptions of all available webhook actions to set up webhooks.
-
-        Parameters
-        ----------
-        organization_only : typing.Optional[bool]
-            organization-only or not
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        InfoWebhooksResponse
-            Object with webhook action descriptions.
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.webhooks.info()
-        """
-        _response = self._raw_client.info(organization_only=organization_only, request_options=request_options)
         return _response.data
 
 
@@ -340,12 +340,12 @@ class AsyncWebhooksClient:
         self,
         *,
         url: str,
-        project: typing.Optional[int] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         headers: typing.Optional[typing.Any] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
@@ -356,13 +356,7 @@ class AsyncWebhooksClient:
         url : str
             URL of webhook
 
-        project : typing.Optional[int]
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
-
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Any]
             Key Value Json of headers
@@ -370,7 +364,13 @@ class AsyncWebhooksClient:
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+        project : typing.Optional[int]
+
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -401,14 +401,56 @@ class AsyncWebhooksClient:
         """
         _response = await self._raw_client.create(
             url=url,
-            project=project,
-            send_payload=send_payload,
-            send_for_all_actions=send_for_all_actions,
+            actions=actions,
             headers=headers,
             is_active=is_active,
-            actions=actions,
+            project=project,
+            send_for_all_actions=send_for_all_actions,
+            send_payload=send_payload,
             request_options=request_options,
         )
+        return _response.data
+
+    async def info(
+        self,
+        *,
+        organization_only: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> InfoWebhooksResponse:
+        """
+        Get descriptions of all available webhook actions to set up webhooks.
+
+        Parameters
+        ----------
+        organization_only : typing.Optional[bool]
+            organization-only or not
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        InfoWebhooksResponse
+            Object with webhook action descriptions.
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.info()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.info(organization_only=organization_only, request_options=request_options)
         return _response.data
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
@@ -486,12 +528,12 @@ class AsyncWebhooksClient:
         self,
         id: int,
         *,
-        url: typing.Optional[str] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         headers: typing.Optional[typing.Any] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WebhookSerializerForUpdate:
         """
@@ -499,14 +541,7 @@ class AsyncWebhooksClient:
         ----------
         id : int
 
-        url : typing.Optional[str]
-            URL of webhook
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
-
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         headers : typing.Optional[typing.Any]
             Key Value Json of headers
@@ -514,7 +549,14 @@ class AsyncWebhooksClient:
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
+
+        url : typing.Optional[str]
+            URL of webhook
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -545,54 +587,12 @@ class AsyncWebhooksClient:
         """
         _response = await self._raw_client.update(
             id,
-            url=url,
-            send_payload=send_payload,
-            send_for_all_actions=send_for_all_actions,
+            actions=actions,
             headers=headers,
             is_active=is_active,
-            actions=actions,
+            send_for_all_actions=send_for_all_actions,
+            send_payload=send_payload,
+            url=url,
             request_options=request_options,
         )
-        return _response.data
-
-    async def info(
-        self,
-        *,
-        organization_only: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> InfoWebhooksResponse:
-        """
-        Get descriptions of all available webhook actions to set up webhooks.
-
-        Parameters
-        ----------
-        organization_only : typing.Optional[bool]
-            organization-only or not
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        InfoWebhooksResponse
-            Object with webhook action descriptions.
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.webhooks.info()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.info(organization_only=organization_only, request_options=request_options)
         return _response.data

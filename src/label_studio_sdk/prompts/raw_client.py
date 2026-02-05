@@ -74,8 +74,8 @@ class RawPromptsClient:
                 "num_failed_predictions": num_failed_predictions,
             },
             json={
-                "job_id": job_id,
                 "failed_predictions": failed_predictions,
+                "job_id": job_id,
                 "modelrun_id": modelrun_id,
             },
             headers={
@@ -102,8 +102,8 @@ class RawPromptsClient:
     def batch_predictions(
         self,
         *,
-        results: typing.Sequence[typing.Any],
         modelrun_id: int,
+        results: typing.Sequence[typing.Any],
         num_predictions: typing.Optional[int] = None,
         job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -119,9 +119,9 @@ class RawPromptsClient:
 
         Parameters
         ----------
-        results : typing.Sequence[typing.Any]
-
         modelrun_id : int
+
+        results : typing.Sequence[typing.Any]
 
         num_predictions : typing.Optional[int]
             Number of predictions being sent (for telemetry only, has no effect)
@@ -144,8 +144,8 @@ class RawPromptsClient:
             },
             json={
                 "job_id": job_id,
-                "results": results,
                 "modelrun_id": modelrun_id,
+                "results": results,
             },
             headers={
                 "content-type": "application/json",
@@ -367,13 +367,13 @@ class RawPromptsClient:
         self,
         *,
         title: str,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         description: typing.Optional[str] = OMIT,
         input_fields: typing.Optional[typing.Any] = OMIT,
-        output_classes: typing.Optional[typing.Any] = OMIT,
         organization: typing.Optional[int] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        output_classes: typing.Optional[typing.Any] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ModelInterface]:
         """
@@ -390,21 +390,21 @@ class RawPromptsClient:
         title : str
             Model name
 
+        associated_projects : typing.Optional[typing.Sequence[int]]
+
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
-
-        skill_name : typing.Optional[SkillNameEnum]
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Any]
 
-        output_classes : typing.Optional[typing.Any]
-
         organization : typing.Optional[int]
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
+        output_classes : typing.Optional[typing.Any]
+
+        skill_name : typing.Optional[SkillNameEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -418,16 +418,16 @@ class RawPromptsClient:
             "api/prompts/",
             method="POST",
             json={
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "skill_name": skill_name,
-                "title": title,
                 "description": description,
                 "input_fields": input_fields,
-                "output_classes": output_classes,
                 "organization": organization,
-                "associated_projects": associated_projects,
+                "output_classes": output_classes,
+                "skill_name": skill_name,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -441,6 +441,66 @@ class RawPromptsClient:
                     ModelInterface,
                     construct_type(
                         type_=ModelInterface,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def compatible_projects(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PaginatedAllRolesProjectListList]:
+        """
+        Retrieve a list of compatible project for prompt.
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
+            Skill to filter by
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[PaginatedAllRolesProjectListList]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/prompts/compatible-projects",
+            method="GET",
+            params={
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "project_type": project_type,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PaginatedAllRolesProjectListList,
+                    construct_type(
+                        type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -532,14 +592,14 @@ class RawPromptsClient:
         self,
         id: str,
         *,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        skill_name: typing.Optional[SkillNameEnum] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         input_fields: typing.Optional[typing.Any] = OMIT,
-        output_classes: typing.Optional[typing.Any] = OMIT,
         organization: typing.Optional[int] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        output_classes: typing.Optional[typing.Any] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ModelInterface]:
         """
@@ -555,24 +615,24 @@ class RawPromptsClient:
         ----------
         id : str
 
+        associated_projects : typing.Optional[typing.Sequence[int]]
+
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
-
-        skill_name : typing.Optional[SkillNameEnum]
-
-        title : typing.Optional[str]
-            Model name
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Any]
 
-        output_classes : typing.Optional[typing.Any]
-
         organization : typing.Optional[int]
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
+        output_classes : typing.Optional[typing.Any]
+
+        skill_name : typing.Optional[SkillNameEnum]
+
+        title : typing.Optional[str]
+            Model name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -586,16 +646,16 @@ class RawPromptsClient:
             f"api/prompts/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "skill_name": skill_name,
-                "title": title,
                 "description": description,
                 "input_fields": input_fields,
-                "output_classes": output_classes,
                 "organization": organization,
-                "associated_projects": associated_projects,
+                "output_classes": output_classes,
+                "skill_name": skill_name,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -609,66 +669,6 @@ class RawPromptsClient:
                     ModelInterface,
                     construct_type(
                         type_=ModelInterface,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def compatible_projects(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[PaginatedAllRolesProjectListList]:
-        """
-        Retrieve a list of compatible project for prompt.
-
-        Parameters
-        ----------
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
-            Skill to filter by
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[PaginatedAllRolesProjectListList]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/prompts/compatible-projects",
-            method="GET",
-            params={
-                "ordering": ordering,
-                "page": page,
-                "page_size": page_size,
-                "project_type": project_type,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    PaginatedAllRolesProjectListList,
-                    construct_type(
-                        type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -727,8 +727,8 @@ class AsyncRawPromptsClient:
                 "num_failed_predictions": num_failed_predictions,
             },
             json={
-                "job_id": job_id,
                 "failed_predictions": failed_predictions,
+                "job_id": job_id,
                 "modelrun_id": modelrun_id,
             },
             headers={
@@ -755,8 +755,8 @@ class AsyncRawPromptsClient:
     async def batch_predictions(
         self,
         *,
-        results: typing.Sequence[typing.Any],
         modelrun_id: int,
+        results: typing.Sequence[typing.Any],
         num_predictions: typing.Optional[int] = None,
         job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -772,9 +772,9 @@ class AsyncRawPromptsClient:
 
         Parameters
         ----------
-        results : typing.Sequence[typing.Any]
-
         modelrun_id : int
+
+        results : typing.Sequence[typing.Any]
 
         num_predictions : typing.Optional[int]
             Number of predictions being sent (for telemetry only, has no effect)
@@ -797,8 +797,8 @@ class AsyncRawPromptsClient:
             },
             json={
                 "job_id": job_id,
-                "results": results,
                 "modelrun_id": modelrun_id,
+                "results": results,
             },
             headers={
                 "content-type": "application/json",
@@ -1020,13 +1020,13 @@ class AsyncRawPromptsClient:
         self,
         *,
         title: str,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         description: typing.Optional[str] = OMIT,
         input_fields: typing.Optional[typing.Any] = OMIT,
-        output_classes: typing.Optional[typing.Any] = OMIT,
         organization: typing.Optional[int] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        output_classes: typing.Optional[typing.Any] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ModelInterface]:
         """
@@ -1043,21 +1043,21 @@ class AsyncRawPromptsClient:
         title : str
             Model name
 
+        associated_projects : typing.Optional[typing.Sequence[int]]
+
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
-
-        skill_name : typing.Optional[SkillNameEnum]
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Any]
 
-        output_classes : typing.Optional[typing.Any]
-
         organization : typing.Optional[int]
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
+        output_classes : typing.Optional[typing.Any]
+
+        skill_name : typing.Optional[SkillNameEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1071,16 +1071,16 @@ class AsyncRawPromptsClient:
             "api/prompts/",
             method="POST",
             json={
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "skill_name": skill_name,
-                "title": title,
                 "description": description,
                 "input_fields": input_fields,
-                "output_classes": output_classes,
                 "organization": organization,
-                "associated_projects": associated_projects,
+                "output_classes": output_classes,
+                "skill_name": skill_name,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -1094,6 +1094,66 @@ class AsyncRawPromptsClient:
                     ModelInterface,
                     construct_type(
                         type_=ModelInterface,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def compatible_projects(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PaginatedAllRolesProjectListList]:
+        """
+        Retrieve a list of compatible project for prompt.
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
+            Skill to filter by
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[PaginatedAllRolesProjectListList]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/prompts/compatible-projects",
+            method="GET",
+            params={
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "project_type": project_type,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PaginatedAllRolesProjectListList,
+                    construct_type(
+                        type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1187,14 +1247,14 @@ class AsyncRawPromptsClient:
         self,
         id: str,
         *,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        skill_name: typing.Optional[SkillNameEnum] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         input_fields: typing.Optional[typing.Any] = OMIT,
-        output_classes: typing.Optional[typing.Any] = OMIT,
         organization: typing.Optional[int] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        output_classes: typing.Optional[typing.Any] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ModelInterface]:
         """
@@ -1210,24 +1270,24 @@ class AsyncRawPromptsClient:
         ----------
         id : str
 
+        associated_projects : typing.Optional[typing.Sequence[int]]
+
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
-
-        skill_name : typing.Optional[SkillNameEnum]
-
-        title : typing.Optional[str]
-            Model name
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Any]
 
-        output_classes : typing.Optional[typing.Any]
-
         organization : typing.Optional[int]
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
+        output_classes : typing.Optional[typing.Any]
+
+        skill_name : typing.Optional[SkillNameEnum]
+
+        title : typing.Optional[str]
+            Model name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1241,16 +1301,16 @@ class AsyncRawPromptsClient:
             f"api/prompts/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "skill_name": skill_name,
-                "title": title,
                 "description": description,
                 "input_fields": input_fields,
-                "output_classes": output_classes,
                 "organization": organization,
-                "associated_projects": associated_projects,
+                "output_classes": output_classes,
+                "skill_name": skill_name,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -1264,66 +1324,6 @@ class AsyncRawPromptsClient:
                     ModelInterface,
                     construct_type(
                         type_=ModelInterface,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def compatible_projects(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[PaginatedAllRolesProjectListList]:
-        """
-        Retrieve a list of compatible project for prompt.
-
-        Parameters
-        ----------
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
-            Skill to filter by
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[PaginatedAllRolesProjectListList]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/prompts/compatible-projects",
-            method="GET",
-            params={
-                "ordering": ordering,
-                "page": page,
-                "page_size": page_size,
-                "project_type": project_type,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    PaginatedAllRolesProjectListList,
-                    construct_type(
-                        type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

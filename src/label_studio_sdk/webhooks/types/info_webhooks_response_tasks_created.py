@@ -10,9 +10,9 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 
 
 class InfoWebhooksResponseTasksCreated(UncheckedBaseModel):
-    name: str
     description: str
     key: str
+    name: str
     organization_only: typing_extensions.Annotated[bool, FieldMetadata(alias="organization-only")] = pydantic.Field(
         alias="organization-only"
     )

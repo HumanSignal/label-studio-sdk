@@ -16,22 +16,10 @@ class WebhookSerializerForUpdate(UncheckedBaseModel):
     Used to forbid updating project field.
     """
 
-    id: typing.Optional[int] = None
-    organization: typing.Optional[int] = None
-    project: typing.Optional[int] = None
-    url: str = pydantic.Field()
+    actions: typing.Optional[typing.List[ActionsEnum]] = None
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    URL of webhook
-    """
-
-    send_payload: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    If value is False send only action
-    """
-
-    send_for_all_actions: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    If value is False - used only for actions from WebhookAction
+    Creation time
     """
 
     headers: typing.Optional[typing.Any] = pydantic.Field(default=None)
@@ -39,20 +27,32 @@ class WebhookSerializerForUpdate(UncheckedBaseModel):
     Key Value Json of headers
     """
 
+    id: typing.Optional[int] = None
     is_active: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If value is False the webhook is disabled
     """
 
-    actions: typing.Optional[typing.List[ActionsEnum]] = None
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    organization: typing.Optional[int] = None
+    project: typing.Optional[int] = None
+    send_for_all_actions: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Creation time
+    If value is False - used only for actions from WebhookAction
+    """
+
+    send_payload: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If value is False send only action
     """
 
     updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last update time
+    """
+
+    url: str = pydantic.Field()
+    """
+    URL of webhook
     """
 
     if IS_PYDANTIC_V2:

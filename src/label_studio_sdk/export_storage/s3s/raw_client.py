@@ -80,30 +80,30 @@ class RawS3SClient:
     def create(
         self,
         *,
-        role_arn: str,
         project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        role_arn: str,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        legacy_auth: typing.Optional[bool] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseS3ExportStorage]:
         """
@@ -117,51 +117,11 @@ class RawS3SClient:
 
         Parameters
         ----------
-        role_arn : str
-            AWS RoleArn
-
         project : int
             A unique integer value identifying this project.
 
-        synchronizable : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+        role_arn : str
+            AWS RoleArn
 
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
@@ -175,16 +135,56 @@ class RawS3SClient:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
         region_name : typing.Optional[str]
             AWS Region
 
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
-        external_id : typing.Optional[str]
-            AWS ExternalId
+        status : typing.Optional[StatusC5AEnum]
 
-        legacy_auth : typing.Optional[bool]
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -198,30 +198,30 @@ class RawS3SClient:
             "api/storages/export/s3s",
             method="POST",
             json={
-                "synchronizable": synchronizable,
-                "last_sync": last_sync,
-                "last_sync_count": last_sync_count,
-                "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
-                "meta": meta,
-                "title": title,
-                "description": description,
-                "can_delete_objects": can_delete_objects,
-                "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "external_id": external_id,
-                "role_arn": role_arn,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
                 "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
                 "project": project,
+                "regex_filter": regex_filter,
+                "region_name": region_name,
+                "role_arn": role_arn,
+                "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -239,6 +239,165 @@ class RawS3SClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def validate(
+        self,
+        *,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific S3 export storage connection that was set up with IAM role access.
+
+        Parameters
+        ----------
+        project : int
+            A unique integer value identifying this project.
+
+        role_arn : str
+            AWS RoleArn
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/storages/export/s3s/validate",
+            method="POST",
+            json={
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "external_id": external_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
+                "project": project,
+                "regex_filter": regex_filter,
+                "region_name": region_name,
+                "role_arn": role_arn,
+                "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -326,30 +485,30 @@ class RawS3SClient:
         self,
         id: int,
         *,
-        synchronizable: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
         legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseS3ExportStorage]:
         """
@@ -365,46 +524,6 @@ class RawS3SClient:
         ----------
         id : int
 
-        synchronizable : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -417,22 +536,62 @@ class RawS3SClient:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
-        region_name : typing.Optional[str]
-            AWS Region
+        bucket : typing.Optional[str]
+            S3 bucket name
 
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
 
         external_id : typing.Optional[str]
             AWS ExternalId
 
-        role_arn : typing.Optional[str]
-            AWS RoleArn
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
 
         legacy_auth : typing.Optional[bool]
 
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
         project : typing.Optional[int]
             A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        role_arn : typing.Optional[str]
+            AWS RoleArn
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -446,30 +605,30 @@ class RawS3SClient:
             f"api/storages/export/s3s/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "synchronizable": synchronizable,
-                "last_sync": last_sync,
-                "last_sync_count": last_sync_count,
-                "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
-                "meta": meta,
-                "title": title,
-                "description": description,
-                "can_delete_objects": can_delete_objects,
-                "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "external_id": external_id,
-                "role_arn": role_arn,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
                 "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
                 "project": project,
+                "regex_filter": regex_filter,
+                "region_name": region_name,
+                "role_arn": role_arn,
+                "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -531,165 +690,6 @@ class RawS3SClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def validate(
-        self,
-        *,
-        role_arn: str,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        aws_access_key_id: typing.Optional[str] = OMIT,
-        aws_secret_access_key: typing.Optional[str] = OMIT,
-        aws_session_token: typing.Optional[str] = OMIT,
-        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        legacy_auth: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[None]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific S3 export storage connection that was set up with IAM role access.
-
-        Parameters
-        ----------
-        role_arn : str
-            AWS RoleArn
-
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
-        aws_access_key_id : typing.Optional[str]
-            AWS_ACCESS_KEY_ID
-
-        aws_secret_access_key : typing.Optional[str]
-            AWS_SECRET_ACCESS_KEY
-
-        aws_session_token : typing.Optional[str]
-            AWS_SESSION_TOKEN
-
-        aws_sse_kms_key_id : typing.Optional[str]
-            AWS SSE KMS Key ID
-
-        region_name : typing.Optional[str]
-            AWS Region
-
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
-
-        external_id : typing.Optional[str]
-            AWS ExternalId
-
-        legacy_auth : typing.Optional[bool]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[None]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/storages/export/s3s/validate",
-            method="POST",
-            json={
-                "synchronizable": synchronizable,
-                "last_sync": last_sync,
-                "last_sync_count": last_sync_count,
-                "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
-                "meta": meta,
-                "title": title,
-                "description": description,
-                "can_delete_objects": can_delete_objects,
-                "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "aws_access_key_id": aws_access_key_id,
-                "aws_secret_access_key": aws_secret_access_key,
-                "aws_session_token": aws_session_token,
-                "aws_sse_kms_key_id": aws_sse_kms_key_id,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
-                "external_id": external_id,
-                "role_arn": role_arn,
-                "legacy_auth": legacy_auth,
-                "project": project,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -759,30 +759,30 @@ class AsyncRawS3SClient:
     async def create(
         self,
         *,
-        role_arn: str,
         project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        role_arn: str,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        legacy_auth: typing.Optional[bool] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseS3ExportStorage]:
         """
@@ -796,51 +796,11 @@ class AsyncRawS3SClient:
 
         Parameters
         ----------
-        role_arn : str
-            AWS RoleArn
-
         project : int
             A unique integer value identifying this project.
 
-        synchronizable : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+        role_arn : str
+            AWS RoleArn
 
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
@@ -854,16 +814,56 @@ class AsyncRawS3SClient:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
         region_name : typing.Optional[str]
             AWS Region
 
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
-        external_id : typing.Optional[str]
-            AWS ExternalId
+        status : typing.Optional[StatusC5AEnum]
 
-        legacy_auth : typing.Optional[bool]
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -877,30 +877,30 @@ class AsyncRawS3SClient:
             "api/storages/export/s3s",
             method="POST",
             json={
-                "synchronizable": synchronizable,
-                "last_sync": last_sync,
-                "last_sync_count": last_sync_count,
-                "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
-                "meta": meta,
-                "title": title,
-                "description": description,
-                "can_delete_objects": can_delete_objects,
-                "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "external_id": external_id,
-                "role_arn": role_arn,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
                 "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
                 "project": project,
+                "regex_filter": regex_filter,
+                "region_name": region_name,
+                "role_arn": role_arn,
+                "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -918,6 +918,165 @@ class AsyncRawS3SClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def validate(
+        self,
+        *,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific S3 export storage connection that was set up with IAM role access.
+
+        Parameters
+        ----------
+        project : int
+            A unique integer value identifying this project.
+
+        role_arn : str
+            AWS RoleArn
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/storages/export/s3s/validate",
+            method="POST",
+            json={
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "external_id": external_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
+                "project": project,
+                "regex_filter": regex_filter,
+                "region_name": region_name,
+                "role_arn": role_arn,
+                "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1007,30 +1166,30 @@ class AsyncRawS3SClient:
         self,
         id: int,
         *,
-        synchronizable: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
         legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseS3ExportStorage]:
         """
@@ -1046,46 +1205,6 @@ class AsyncRawS3SClient:
         ----------
         id : int
 
-        synchronizable : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -1098,22 +1217,62 @@ class AsyncRawS3SClient:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
-        region_name : typing.Optional[str]
-            AWS Region
+        bucket : typing.Optional[str]
+            S3 bucket name
 
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
 
         external_id : typing.Optional[str]
             AWS ExternalId
 
-        role_arn : typing.Optional[str]
-            AWS RoleArn
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
 
         legacy_auth : typing.Optional[bool]
 
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
         project : typing.Optional[int]
             A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        role_arn : typing.Optional[str]
+            AWS RoleArn
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1127,30 +1286,30 @@ class AsyncRawS3SClient:
             f"api/storages/export/s3s/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "synchronizable": synchronizable,
-                "last_sync": last_sync,
-                "last_sync_count": last_sync_count,
-                "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
-                "meta": meta,
-                "title": title,
-                "description": description,
-                "can_delete_objects": can_delete_objects,
-                "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "external_id": external_id,
-                "role_arn": role_arn,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
                 "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
                 "project": project,
+                "regex_filter": regex_filter,
+                "region_name": region_name,
+                "role_arn": role_arn,
+                "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -1212,165 +1371,6 @@ class AsyncRawS3SClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def validate(
-        self,
-        *,
-        role_arn: str,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        aws_access_key_id: typing.Optional[str] = OMIT,
-        aws_secret_access_key: typing.Optional[str] = OMIT,
-        aws_session_token: typing.Optional[str] = OMIT,
-        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        legacy_auth: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[None]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific S3 export storage connection that was set up with IAM role access.
-
-        Parameters
-        ----------
-        role_arn : str
-            AWS RoleArn
-
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
-        aws_access_key_id : typing.Optional[str]
-            AWS_ACCESS_KEY_ID
-
-        aws_secret_access_key : typing.Optional[str]
-            AWS_SECRET_ACCESS_KEY
-
-        aws_session_token : typing.Optional[str]
-            AWS_SESSION_TOKEN
-
-        aws_sse_kms_key_id : typing.Optional[str]
-            AWS SSE KMS Key ID
-
-        region_name : typing.Optional[str]
-            AWS Region
-
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
-
-        external_id : typing.Optional[str]
-            AWS ExternalId
-
-        legacy_auth : typing.Optional[bool]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[None]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/export/s3s/validate",
-            method="POST",
-            json={
-                "synchronizable": synchronizable,
-                "last_sync": last_sync,
-                "last_sync_count": last_sync_count,
-                "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
-                "meta": meta,
-                "title": title,
-                "description": description,
-                "can_delete_objects": can_delete_objects,
-                "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "aws_access_key_id": aws_access_key_id,
-                "aws_secret_access_key": aws_secret_access_key,
-                "aws_session_token": aws_session_token,
-                "aws_sse_kms_key_id": aws_sse_kms_key_id,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
-                "external_id": external_id,
-                "role_arn": role_arn,
-                "legacy_auth": legacy_auth,
-                "project": project,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

@@ -78,34 +78,34 @@ class DatabricksClient:
     def create(
         self,
         *,
-        host: str,
         catalog: str,
+        host: str,
+        project: int,
         schema: str,
         volume: str,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
         auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        token: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        verify_tls: typing.Optional[bool] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DatabricksImportStorage:
         """
@@ -119,22 +119,20 @@ class DatabricksClient:
 
         Parameters
         ----------
+        catalog : str
+            UC catalog name
+
         host : str
             Databricks workspace base URL (https://...)
 
-        catalog : str
-            UC catalog name
+        project : int
+            A unique integer value identifying this project.
 
         schema : str
             UC schema name
 
         volume : str
             UC volume name
-
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
 
         auth_type : typing.Optional[AuthTypeEnum]
             Authentication method: PAT, Databricks SP, or Azure AD SP
@@ -143,17 +141,14 @@ class DatabricksClient:
             * `dbx_sp` - Databricks Service Principal
             * `azure_ad_sp` - Azure AD Service Principal
 
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
         client_id : typing.Optional[str]
             Service principal client/application ID (required for SP modes)
 
         client_secret : typing.Optional[str]
             Service principal client secret (required for SP modes)
+
+        description : typing.Optional[str]
+            Cloud storage description
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -164,35 +159,11 @@ class DatabricksClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
         prefix : typing.Optional[str]
             Path under the volume
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Generate blob URLs in tasks
-
-        verify_tls : typing.Optional[bool]
-            Verify TLS certificates
-
-        request_timeout_s : typing.Optional[int]
-
-        stream_chunk_bytes : typing.Optional[int]
 
         presign : typing.Optional[bool]
             Presign not supported; always proxied
@@ -202,6 +173,35 @@ class DatabricksClient:
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
+
+        status : typing.Optional[StatusC5AEnum]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Generate blob URLs in tasks
+
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -219,42 +219,225 @@ class DatabricksClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.databricks.create(
-            host="host",
             catalog="catalog",
+            host="host",
+            project=1,
             schema="schema",
             volume="volume",
-            project=1,
         )
         """
         _response = self._raw_client.create(
-            host=host,
             catalog=catalog,
+            host=host,
+            project=project,
             schema=schema,
             volume=volume,
-            project=project,
-            synchronizable=synchronizable,
             auth_type=auth_type,
-            token=token,
-            tenant_id=tenant_id,
             client_id=client_id,
             client_secret=client_secret,
+            description=description,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
             last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
             meta=meta,
-            title=title,
-            description=description,
             prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            verify_tls=verify_tls,
-            request_timeout_s=request_timeout_s,
-            stream_chunk_bytes=stream_chunk_bytes,
             presign=presign,
             presign_ttl=presign_ttl,
             recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            request_timeout_s=request_timeout_s,
+            status=status,
+            stream_chunk_bytes=stream_chunk_bytes,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            token=token,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            verify_tls=verify_tls,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def validate(
+        self,
+        *,
+        catalog: str,
+        host: str,
+        project: int,
+        schema: str,
+        volume: str,
+        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Databricks Files import storage connection.
+
+        Parameters
+        ----------
+        catalog : str
+            UC catalog name
+
+        host : str
+            Databricks workspace base URL (https://...)
+
+        project : int
+            A unique integer value identifying this project.
+
+        schema : str
+            UC schema name
+
+        volume : str
+            UC volume name
+
+        auth_type : typing.Optional[AuthTypeEnum]
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
+
+        client_id : typing.Optional[str]
+            Service principal client/application ID (required for SP modes)
+
+        client_secret : typing.Optional[str]
+            Service principal client secret (required for SP modes)
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            Path under the volume
+
+        presign : typing.Optional[bool]
+            Presign not supported; always proxied
+
+        presign_ttl : typing.Optional[int]
+            Unused for Databricks; kept for compatibility
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
+
+        status : typing.Optional[StatusC5AEnum]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Generate blob URLs in tasks
+
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.import_storage.databricks.validate(
+            catalog="catalog",
+            host="host",
+            project=1,
+            schema="schema",
+            volume="volume",
+        )
+        """
+        _response = self._raw_client.validate(
+            catalog=catalog,
+            host=host,
+            project=project,
+            schema=schema,
+            volume=volume,
+            auth_type=auth_type,
+            client_id=client_id,
+            client_secret=client_secret,
+            description=description,
+            last_sync=last_sync,
+            last_sync_count=last_sync_count,
+            last_sync_job=last_sync_job,
+            meta=meta,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            request_timeout_s=request_timeout_s,
+            status=status,
+            stream_chunk_bytes=stream_chunk_bytes,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            token=token,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            verify_tls=verify_tls,
             request_options=request_options,
         )
         return _response.data
@@ -334,34 +517,34 @@ class DatabricksClient:
         self,
         id: int,
         *,
-        synchronizable: typing.Optional[bool] = OMIT,
         auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        token: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
+        catalog: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        host: typing.Optional[str] = OMIT,
-        catalog: typing.Optional[str] = OMIT,
-        schema: typing.Optional[str] = OMIT,
-        volume: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        verify_tls: typing.Optional[bool] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        schema: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
+        volume: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DatabricksImportStorage:
         """
@@ -377,8 +560,6 @@ class DatabricksClient:
         ----------
         id : int
 
-        synchronizable : typing.Optional[bool]
-
         auth_type : typing.Optional[AuthTypeEnum]
             Authentication method: PAT, Databricks SP, or Azure AD SP
 
@@ -386,17 +567,20 @@ class DatabricksClient:
             * `dbx_sp` - Databricks Service Principal
             * `azure_ad_sp` - Azure AD Service Principal
 
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
+        catalog : typing.Optional[str]
+            UC catalog name
 
         client_id : typing.Optional[str]
             Service principal client/application ID (required for SP modes)
 
         client_secret : typing.Optional[str]
             Service principal client secret (required for SP modes)
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        host : typing.Optional[str]
+            Databricks workspace base URL (https://...)
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -407,47 +591,11 @@ class DatabricksClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        host : typing.Optional[str]
-            Databricks workspace base URL (https://...)
-
-        catalog : typing.Optional[str]
-            UC catalog name
-
-        schema : typing.Optional[str]
-            UC schema name
-
-        volume : typing.Optional[str]
-            UC volume name
-
         prefix : typing.Optional[str]
             Path under the volume
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Generate blob URLs in tasks
-
-        verify_tls : typing.Optional[bool]
-            Verify TLS certificates
-
-        request_timeout_s : typing.Optional[int]
-
-        stream_chunk_bytes : typing.Optional[int]
 
         presign : typing.Optional[bool]
             Presign not supported; always proxied
@@ -455,11 +603,46 @@ class DatabricksClient:
         presign_ttl : typing.Optional[int]
             Unused for Databricks; kept for compatibility
 
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
+
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
 
-        project : typing.Optional[int]
-            A unique integer value identifying this project.
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
+
+        schema : typing.Optional[str]
+            UC schema name
+
+        status : typing.Optional[StatusC5AEnum]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Generate blob URLs in tasks
+
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
+
+        volume : typing.Optional[str]
+            UC volume name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -482,34 +665,34 @@ class DatabricksClient:
         """
         _response = self._raw_client.update(
             id,
-            synchronizable=synchronizable,
             auth_type=auth_type,
-            token=token,
-            tenant_id=tenant_id,
+            catalog=catalog,
             client_id=client_id,
             client_secret=client_secret,
+            description=description,
+            host=host,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
             last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
             meta=meta,
-            title=title,
-            description=description,
-            host=host,
-            catalog=catalog,
-            schema=schema,
-            volume=volume,
             prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            verify_tls=verify_tls,
-            request_timeout_s=request_timeout_s,
-            stream_chunk_bytes=stream_chunk_bytes,
             presign=presign,
             presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
             project=project,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            request_timeout_s=request_timeout_s,
+            schema=schema,
+            status=status,
+            stream_chunk_bytes=stream_chunk_bytes,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            token=token,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            verify_tls=verify_tls,
+            volume=volume,
             request_options=request_options,
         )
         return _response.data
@@ -548,189 +731,6 @@ class DatabricksClient:
         )
         """
         _response = self._raw_client.sync(id, request_options=request_options)
-        return _response.data
-
-    def validate(
-        self,
-        *,
-        host: str,
-        catalog: str,
-        schema: str,
-        volume: str,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        token: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        verify_tls: typing.Optional[bool] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific Databricks Files import storage connection.
-
-        Parameters
-        ----------
-        host : str
-            Databricks workspace base URL (https://...)
-
-        catalog : str
-            UC catalog name
-
-        schema : str
-            UC schema name
-
-        volume : str
-            UC volume name
-
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
-
-        auth_type : typing.Optional[AuthTypeEnum]
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
-
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
-        client_id : typing.Optional[str]
-            Service principal client/application ID (required for SP modes)
-
-        client_secret : typing.Optional[str]
-            Service principal client secret (required for SP modes)
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        prefix : typing.Optional[str]
-            Path under the volume
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Generate blob URLs in tasks
-
-        verify_tls : typing.Optional[bool]
-            Verify TLS certificates
-
-        request_timeout_s : typing.Optional[int]
-
-        stream_chunk_bytes : typing.Optional[int]
-
-        presign : typing.Optional[bool]
-            Presign not supported; always proxied
-
-        presign_ttl : typing.Optional[int]
-            Unused for Databricks; kept for compatibility
-
-        recursive_scan : typing.Optional[bool]
-            Perform recursive scan
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.import_storage.databricks.validate(
-            host="host",
-            catalog="catalog",
-            schema="schema",
-            volume="volume",
-            project=1,
-        )
-        """
-        _response = self._raw_client.validate(
-            host=host,
-            catalog=catalog,
-            schema=schema,
-            volume=volume,
-            project=project,
-            synchronizable=synchronizable,
-            auth_type=auth_type,
-            token=token,
-            tenant_id=tenant_id,
-            client_id=client_id,
-            client_secret=client_secret,
-            last_sync=last_sync,
-            last_sync_count=last_sync_count,
-            last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
-            meta=meta,
-            title=title,
-            description=description,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            verify_tls=verify_tls,
-            request_timeout_s=request_timeout_s,
-            stream_chunk_bytes=stream_chunk_bytes,
-            presign=presign,
-            presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
-            request_options=request_options,
-        )
         return _response.data
 
 
@@ -806,34 +806,34 @@ class AsyncDatabricksClient:
     async def create(
         self,
         *,
-        host: str,
         catalog: str,
+        host: str,
+        project: int,
         schema: str,
         volume: str,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
         auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        token: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        verify_tls: typing.Optional[bool] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DatabricksImportStorage:
         """
@@ -847,22 +847,20 @@ class AsyncDatabricksClient:
 
         Parameters
         ----------
+        catalog : str
+            UC catalog name
+
         host : str
             Databricks workspace base URL (https://...)
 
-        catalog : str
-            UC catalog name
+        project : int
+            A unique integer value identifying this project.
 
         schema : str
             UC schema name
 
         volume : str
             UC volume name
-
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
 
         auth_type : typing.Optional[AuthTypeEnum]
             Authentication method: PAT, Databricks SP, or Azure AD SP
@@ -871,17 +869,14 @@ class AsyncDatabricksClient:
             * `dbx_sp` - Databricks Service Principal
             * `azure_ad_sp` - Azure AD Service Principal
 
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
         client_id : typing.Optional[str]
             Service principal client/application ID (required for SP modes)
 
         client_secret : typing.Optional[str]
             Service principal client secret (required for SP modes)
+
+        description : typing.Optional[str]
+            Cloud storage description
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -892,35 +887,11 @@ class AsyncDatabricksClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
         prefix : typing.Optional[str]
             Path under the volume
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Generate blob URLs in tasks
-
-        verify_tls : typing.Optional[bool]
-            Verify TLS certificates
-
-        request_timeout_s : typing.Optional[int]
-
-        stream_chunk_bytes : typing.Optional[int]
 
         presign : typing.Optional[bool]
             Presign not supported; always proxied
@@ -930,6 +901,35 @@ class AsyncDatabricksClient:
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
+
+        status : typing.Optional[StatusC5AEnum]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Generate blob URLs in tasks
+
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -952,45 +952,236 @@ class AsyncDatabricksClient:
 
         async def main() -> None:
             await client.import_storage.databricks.create(
-                host="host",
                 catalog="catalog",
+                host="host",
+                project=1,
                 schema="schema",
                 volume="volume",
-                project=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            host=host,
             catalog=catalog,
+            host=host,
+            project=project,
             schema=schema,
             volume=volume,
-            project=project,
-            synchronizable=synchronizable,
             auth_type=auth_type,
-            token=token,
-            tenant_id=tenant_id,
             client_id=client_id,
             client_secret=client_secret,
+            description=description,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
             last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
             meta=meta,
-            title=title,
-            description=description,
             prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            verify_tls=verify_tls,
-            request_timeout_s=request_timeout_s,
-            stream_chunk_bytes=stream_chunk_bytes,
             presign=presign,
             presign_ttl=presign_ttl,
             recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            request_timeout_s=request_timeout_s,
+            status=status,
+            stream_chunk_bytes=stream_chunk_bytes,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            token=token,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            verify_tls=verify_tls,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def validate(
+        self,
+        *,
+        catalog: str,
+        host: str,
+        project: int,
+        schema: str,
+        volume: str,
+        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Databricks Files import storage connection.
+
+        Parameters
+        ----------
+        catalog : str
+            UC catalog name
+
+        host : str
+            Databricks workspace base URL (https://...)
+
+        project : int
+            A unique integer value identifying this project.
+
+        schema : str
+            UC schema name
+
+        volume : str
+            UC volume name
+
+        auth_type : typing.Optional[AuthTypeEnum]
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
+
+        client_id : typing.Optional[str]
+            Service principal client/application ID (required for SP modes)
+
+        client_secret : typing.Optional[str]
+            Service principal client secret (required for SP modes)
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            Path under the volume
+
+        presign : typing.Optional[bool]
+            Presign not supported; always proxied
+
+        presign_ttl : typing.Optional[int]
+            Unused for Databricks; kept for compatibility
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
+
+        status : typing.Optional[StatusC5AEnum]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Generate blob URLs in tasks
+
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.import_storage.databricks.validate(
+                catalog="catalog",
+                host="host",
+                project=1,
+                schema="schema",
+                volume="volume",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.validate(
+            catalog=catalog,
+            host=host,
+            project=project,
+            schema=schema,
+            volume=volume,
+            auth_type=auth_type,
+            client_id=client_id,
+            client_secret=client_secret,
+            description=description,
+            last_sync=last_sync,
+            last_sync_count=last_sync_count,
+            last_sync_job=last_sync_job,
+            meta=meta,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            request_timeout_s=request_timeout_s,
+            status=status,
+            stream_chunk_bytes=stream_chunk_bytes,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            token=token,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            verify_tls=verify_tls,
             request_options=request_options,
         )
         return _response.data
@@ -1086,34 +1277,34 @@ class AsyncDatabricksClient:
         self,
         id: int,
         *,
-        synchronizable: typing.Optional[bool] = OMIT,
         auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        token: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
+        catalog: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        host: typing.Optional[str] = OMIT,
-        catalog: typing.Optional[str] = OMIT,
-        schema: typing.Optional[str] = OMIT,
-        volume: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        verify_tls: typing.Optional[bool] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        schema: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
+        volume: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DatabricksImportStorage:
         """
@@ -1129,8 +1320,6 @@ class AsyncDatabricksClient:
         ----------
         id : int
 
-        synchronizable : typing.Optional[bool]
-
         auth_type : typing.Optional[AuthTypeEnum]
             Authentication method: PAT, Databricks SP, or Azure AD SP
 
@@ -1138,17 +1327,20 @@ class AsyncDatabricksClient:
             * `dbx_sp` - Databricks Service Principal
             * `azure_ad_sp` - Azure AD Service Principal
 
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
+        catalog : typing.Optional[str]
+            UC catalog name
 
         client_id : typing.Optional[str]
             Service principal client/application ID (required for SP modes)
 
         client_secret : typing.Optional[str]
             Service principal client secret (required for SP modes)
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        host : typing.Optional[str]
+            Databricks workspace base URL (https://...)
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -1159,47 +1351,11 @@ class AsyncDatabricksClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        host : typing.Optional[str]
-            Databricks workspace base URL (https://...)
-
-        catalog : typing.Optional[str]
-            UC catalog name
-
-        schema : typing.Optional[str]
-            UC schema name
-
-        volume : typing.Optional[str]
-            UC volume name
-
         prefix : typing.Optional[str]
             Path under the volume
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Generate blob URLs in tasks
-
-        verify_tls : typing.Optional[bool]
-            Verify TLS certificates
-
-        request_timeout_s : typing.Optional[int]
-
-        stream_chunk_bytes : typing.Optional[int]
 
         presign : typing.Optional[bool]
             Presign not supported; always proxied
@@ -1207,11 +1363,46 @@ class AsyncDatabricksClient:
         presign_ttl : typing.Optional[int]
             Unused for Databricks; kept for compatibility
 
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
+
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
 
-        project : typing.Optional[int]
-            A unique integer value identifying this project.
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
+
+        schema : typing.Optional[str]
+            UC schema name
+
+        status : typing.Optional[StatusC5AEnum]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Generate blob URLs in tasks
+
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
+
+        volume : typing.Optional[str]
+            UC volume name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1242,34 +1433,34 @@ class AsyncDatabricksClient:
         """
         _response = await self._raw_client.update(
             id,
-            synchronizable=synchronizable,
             auth_type=auth_type,
-            token=token,
-            tenant_id=tenant_id,
+            catalog=catalog,
             client_id=client_id,
             client_secret=client_secret,
+            description=description,
+            host=host,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
             last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
             meta=meta,
-            title=title,
-            description=description,
-            host=host,
-            catalog=catalog,
-            schema=schema,
-            volume=volume,
             prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            verify_tls=verify_tls,
-            request_timeout_s=request_timeout_s,
-            stream_chunk_bytes=stream_chunk_bytes,
             presign=presign,
             presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
             project=project,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            request_timeout_s=request_timeout_s,
+            schema=schema,
+            status=status,
+            stream_chunk_bytes=stream_chunk_bytes,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            token=token,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            verify_tls=verify_tls,
+            volume=volume,
             request_options=request_options,
         )
         return _response.data
@@ -1318,195 +1509,4 @@ class AsyncDatabricksClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.sync(id, request_options=request_options)
-        return _response.data
-
-    async def validate(
-        self,
-        *,
-        host: str,
-        catalog: str,
-        schema: str,
-        volume: str,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        token: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        verify_tls: typing.Optional[bool] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific Databricks Files import storage connection.
-
-        Parameters
-        ----------
-        host : str
-            Databricks workspace base URL (https://...)
-
-        catalog : str
-            UC catalog name
-
-        schema : str
-            UC schema name
-
-        volume : str
-            UC volume name
-
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
-
-        auth_type : typing.Optional[AuthTypeEnum]
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
-
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
-        client_id : typing.Optional[str]
-            Service principal client/application ID (required for SP modes)
-
-        client_secret : typing.Optional[str]
-            Service principal client secret (required for SP modes)
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        prefix : typing.Optional[str]
-            Path under the volume
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Generate blob URLs in tasks
-
-        verify_tls : typing.Optional[bool]
-            Verify TLS certificates
-
-        request_timeout_s : typing.Optional[int]
-
-        stream_chunk_bytes : typing.Optional[int]
-
-        presign : typing.Optional[bool]
-            Presign not supported; always proxied
-
-        presign_ttl : typing.Optional[int]
-            Unused for Databricks; kept for compatibility
-
-        recursive_scan : typing.Optional[bool]
-            Perform recursive scan
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.import_storage.databricks.validate(
-                host="host",
-                catalog="catalog",
-                schema="schema",
-                volume="volume",
-                project=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.validate(
-            host=host,
-            catalog=catalog,
-            schema=schema,
-            volume=volume,
-            project=project,
-            synchronizable=synchronizable,
-            auth_type=auth_type,
-            token=token,
-            tenant_id=tenant_id,
-            client_id=client_id,
-            client_secret=client_secret,
-            last_sync=last_sync,
-            last_sync_count=last_sync_count,
-            last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
-            meta=meta,
-            title=title,
-            description=description,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            verify_tls=verify_tls,
-            request_timeout_s=request_timeout_s,
-            stream_chunk_bytes=stream_chunk_bytes,
-            presign=presign,
-            presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
-            request_options=request_options,
-        )
         return _response.data

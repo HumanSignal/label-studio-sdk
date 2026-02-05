@@ -101,14 +101,14 @@ class RawRunsClient:
         version_id: int,
         *,
         project: int,
-        only_missing_predictions: typing.Optional[bool] = OMIT,
-        project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
         job_id: typing.Optional[str] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
-        total_correct_predictions: typing.Optional[int] = OMIT,
-        total_tasks: typing.Optional[int] = OMIT,
-        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
+        only_missing_predictions: typing.Optional[bool] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
+        project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
+        total_correct_predictions: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        total_tasks: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ModelRun]:
         """
@@ -128,23 +128,23 @@ class RawRunsClient:
 
         project : int
 
-        only_missing_predictions : typing.Optional[bool]
-            When true, only tasks without successful predictions for this prompt version are submitted for inference.
-
-        project_subset : typing.Optional[ProjectSubsetEnum]
-
         job_id : typing.Optional[str]
             Job ID for inference job for a ModelRun e.g. Adala job ID
 
-        total_predictions : typing.Optional[int]
+        only_missing_predictions : typing.Optional[bool]
+            When true, only tasks without successful predictions for this prompt version are submitted for inference.
 
-        total_correct_predictions : typing.Optional[int]
-
-        total_tasks : typing.Optional[int]
+        organization : typing.Optional[int]
 
         predictions_updated_at : typing.Optional[dt.datetime]
 
-        organization : typing.Optional[int]
+        project_subset : typing.Optional[ProjectSubsetEnum]
+
+        total_correct_predictions : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        total_tasks : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -158,15 +158,15 @@ class RawRunsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
             method="POST",
             json={
-                "only_missing_predictions": only_missing_predictions,
-                "project_subset": project_subset,
                 "job_id": job_id,
-                "total_predictions": total_predictions,
-                "total_correct_predictions": total_correct_predictions,
-                "total_tasks": total_tasks,
-                "predictions_updated_at": predictions_updated_at,
+                "only_missing_predictions": only_missing_predictions,
                 "organization": organization,
+                "predictions_updated_at": predictions_updated_at,
                 "project": project,
+                "project_subset": project_subset,
+                "total_correct_predictions": total_correct_predictions,
+                "total_predictions": total_predictions,
+                "total_tasks": total_tasks,
             },
             headers={
                 "content-type": "application/json",
@@ -325,14 +325,14 @@ class AsyncRawRunsClient:
         version_id: int,
         *,
         project: int,
-        only_missing_predictions: typing.Optional[bool] = OMIT,
-        project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
         job_id: typing.Optional[str] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
-        total_correct_predictions: typing.Optional[int] = OMIT,
-        total_tasks: typing.Optional[int] = OMIT,
-        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
+        only_missing_predictions: typing.Optional[bool] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
+        project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
+        total_correct_predictions: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        total_tasks: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ModelRun]:
         """
@@ -352,23 +352,23 @@ class AsyncRawRunsClient:
 
         project : int
 
-        only_missing_predictions : typing.Optional[bool]
-            When true, only tasks without successful predictions for this prompt version are submitted for inference.
-
-        project_subset : typing.Optional[ProjectSubsetEnum]
-
         job_id : typing.Optional[str]
             Job ID for inference job for a ModelRun e.g. Adala job ID
 
-        total_predictions : typing.Optional[int]
+        only_missing_predictions : typing.Optional[bool]
+            When true, only tasks without successful predictions for this prompt version are submitted for inference.
 
-        total_correct_predictions : typing.Optional[int]
-
-        total_tasks : typing.Optional[int]
+        organization : typing.Optional[int]
 
         predictions_updated_at : typing.Optional[dt.datetime]
 
-        organization : typing.Optional[int]
+        project_subset : typing.Optional[ProjectSubsetEnum]
+
+        total_correct_predictions : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        total_tasks : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -382,15 +382,15 @@ class AsyncRawRunsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
             method="POST",
             json={
-                "only_missing_predictions": only_missing_predictions,
-                "project_subset": project_subset,
                 "job_id": job_id,
-                "total_predictions": total_predictions,
-                "total_correct_predictions": total_correct_predictions,
-                "total_tasks": total_tasks,
-                "predictions_updated_at": predictions_updated_at,
+                "only_missing_predictions": only_missing_predictions,
                 "organization": organization,
+                "predictions_updated_at": predictions_updated_at,
                 "project": project,
+                "project_subset": project_subset,
+                "total_correct_predictions": total_correct_predictions,
+                "total_predictions": total_predictions,
+                "total_tasks": total_tasks,
             },
             headers={
                 "content-type": "application/json",

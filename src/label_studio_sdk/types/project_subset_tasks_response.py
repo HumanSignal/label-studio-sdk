@@ -9,8 +9,8 @@ from .project_subset_task_item import ProjectSubsetTaskItem
 
 
 class ProjectSubsetTasksResponse(UncheckedBaseModel):
-    previous_cursor: typing.Optional[str] = None
     next_cursor: typing.Optional[str] = None
+    previous_cursor: typing.Optional[str] = None
     task_count: typing.Optional[int] = pydantic.Field(default=None)
     """
     Present only when include_total=true

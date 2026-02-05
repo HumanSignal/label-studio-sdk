@@ -64,15 +64,15 @@ class SamlClient:
         self,
         *,
         domain: typing.Optional[str] = OMIT,
-        metadata_url: typing.Optional[str] = OMIT,
-        metadata_xml: typing.Optional[str] = OMIT,
         mapping_email: typing.Optional[str] = OMIT,
         mapping_first_name: typing.Optional[str] = OMIT,
-        mapping_last_name: typing.Optional[str] = OMIT,
         mapping_groups: typing.Optional[str] = OMIT,
-        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
-        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
+        mapping_last_name: typing.Optional[str] = OMIT,
+        metadata_url: typing.Optional[str] = OMIT,
+        metadata_xml: typing.Optional[str] = OMIT,
         projects_groups: typing.Optional[typing.Sequence[ProjectGroupRequest]] = OMIT,
+        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
+        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SamlSettingsUpdate:
         """
@@ -89,29 +89,29 @@ class SamlClient:
         domain : typing.Optional[str]
             Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
 
-        metadata_url : typing.Optional[str]
-            URL SAML metadata from IdP
-
-        metadata_xml : typing.Optional[str]
-            Metadata XML file
-
         mapping_email : typing.Optional[str]
             Mapping attributes: user email from SAML request
 
         mapping_first_name : typing.Optional[str]
             Mapping attributes: user first name from SAML request
 
-        mapping_last_name : typing.Optional[str]
-            Mapping attributes: user last name from SAML request
-
         mapping_groups : typing.Optional[str]
             Mapping attributes: groups attribute for user mapping to workspaces and roles
 
-        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+        mapping_last_name : typing.Optional[str]
+            Mapping attributes: user last name from SAML request
+
+        metadata_url : typing.Optional[str]
+            URL SAML metadata from IdP
+
+        metadata_xml : typing.Optional[str]
+            Metadata XML file
+
+        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
-        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
+        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -129,28 +129,28 @@ class SamlClient:
             api_key="YOUR_API_KEY",
         )
         client.sso.saml.update(
-            workspaces_groups=[["Default workspace", "groups_test"]],
-            roles_groups=[["Administrator", "groups_test"]],
             projects_groups=[
                 ProjectGroupRequest(
-                    project_id=42,
                     group="groups_test",
+                    project_id=42,
                     role="Inherit",
                 )
             ],
+            roles_groups=[["Administrator", "groups_test"]],
+            workspaces_groups=[["Default workspace", "groups_test"]],
         )
         """
         _response = self._raw_client.update(
             domain=domain,
-            metadata_url=metadata_url,
-            metadata_xml=metadata_xml,
             mapping_email=mapping_email,
             mapping_first_name=mapping_first_name,
-            mapping_last_name=mapping_last_name,
             mapping_groups=mapping_groups,
-            workspaces_groups=workspaces_groups,
-            roles_groups=roles_groups,
+            mapping_last_name=mapping_last_name,
+            metadata_url=metadata_url,
+            metadata_xml=metadata_xml,
             projects_groups=projects_groups,
+            roles_groups=roles_groups,
+            workspaces_groups=workspaces_groups,
             request_options=request_options,
         )
         return _response.data
@@ -215,15 +215,15 @@ class AsyncSamlClient:
         self,
         *,
         domain: typing.Optional[str] = OMIT,
-        metadata_url: typing.Optional[str] = OMIT,
-        metadata_xml: typing.Optional[str] = OMIT,
         mapping_email: typing.Optional[str] = OMIT,
         mapping_first_name: typing.Optional[str] = OMIT,
-        mapping_last_name: typing.Optional[str] = OMIT,
         mapping_groups: typing.Optional[str] = OMIT,
-        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
-        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
+        mapping_last_name: typing.Optional[str] = OMIT,
+        metadata_url: typing.Optional[str] = OMIT,
+        metadata_xml: typing.Optional[str] = OMIT,
         projects_groups: typing.Optional[typing.Sequence[ProjectGroupRequest]] = OMIT,
+        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
+        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SamlSettingsUpdate:
         """
@@ -240,29 +240,29 @@ class AsyncSamlClient:
         domain : typing.Optional[str]
             Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
 
-        metadata_url : typing.Optional[str]
-            URL SAML metadata from IdP
-
-        metadata_xml : typing.Optional[str]
-            Metadata XML file
-
         mapping_email : typing.Optional[str]
             Mapping attributes: user email from SAML request
 
         mapping_first_name : typing.Optional[str]
             Mapping attributes: user first name from SAML request
 
-        mapping_last_name : typing.Optional[str]
-            Mapping attributes: user last name from SAML request
-
         mapping_groups : typing.Optional[str]
             Mapping attributes: groups attribute for user mapping to workspaces and roles
 
-        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+        mapping_last_name : typing.Optional[str]
+            Mapping attributes: user last name from SAML request
+
+        metadata_url : typing.Optional[str]
+            URL SAML metadata from IdP
+
+        metadata_xml : typing.Optional[str]
+            Metadata XML file
+
+        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
-        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
+        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -285,15 +285,15 @@ class AsyncSamlClient:
 
         async def main() -> None:
             await client.sso.saml.update(
-                workspaces_groups=[["Default workspace", "groups_test"]],
-                roles_groups=[["Administrator", "groups_test"]],
                 projects_groups=[
                     ProjectGroupRequest(
-                        project_id=42,
                         group="groups_test",
+                        project_id=42,
                         role="Inherit",
                     )
                 ],
+                roles_groups=[["Administrator", "groups_test"]],
+                workspaces_groups=[["Default workspace", "groups_test"]],
             )
 
 
@@ -301,15 +301,15 @@ class AsyncSamlClient:
         """
         _response = await self._raw_client.update(
             domain=domain,
-            metadata_url=metadata_url,
-            metadata_xml=metadata_xml,
             mapping_email=mapping_email,
             mapping_first_name=mapping_first_name,
-            mapping_last_name=mapping_last_name,
             mapping_groups=mapping_groups,
-            workspaces_groups=workspaces_groups,
-            roles_groups=roles_groups,
+            mapping_last_name=mapping_last_name,
+            metadata_url=metadata_url,
+            metadata_xml=metadata_xml,
             projects_groups=projects_groups,
+            roles_groups=roles_groups,
+            workspaces_groups=workspaces_groups,
             request_options=request_options,
         )
         return _response.data

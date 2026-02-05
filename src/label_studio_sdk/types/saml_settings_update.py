@@ -18,16 +18,6 @@ class SamlSettingsUpdate(UncheckedBaseModel):
     Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
     """
 
-    metadata_url: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    URL SAML metadata from IdP
-    """
-
-    metadata_xml: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Metadata XML file
-    """
-
     mapping_email: typing.Optional[str] = pydantic.Field(default=None)
     """
     Mapping attributes: user email from SAML request
@@ -38,19 +28,29 @@ class SamlSettingsUpdate(UncheckedBaseModel):
     Mapping attributes: user first name from SAML request
     """
 
-    mapping_last_name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Mapping attributes: user last name from SAML request
-    """
-
     mapping_groups: typing.Optional[str] = pydantic.Field(default=None)
     """
     Mapping attributes: groups attribute for user mapping to workspaces and roles
     """
 
-    workspaces_groups: typing.Optional[typing.List[typing.List[str]]] = None
-    roles_groups: typing.Optional[typing.List[typing.List[str]]] = None
+    mapping_last_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: user last name from SAML request
+    """
+
+    metadata_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    URL SAML metadata from IdP
+    """
+
+    metadata_xml: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Metadata XML file
+    """
+
     projects_groups: typing.Optional[typing.List[ProjectGroup]] = None
+    roles_groups: typing.Optional[typing.List[typing.List[str]]] = None
+    workspaces_groups: typing.Optional[typing.List[typing.List[str]]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

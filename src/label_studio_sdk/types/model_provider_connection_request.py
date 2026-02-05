@@ -10,7 +10,6 @@ from .scope_enum import ScopeEnum
 
 
 class ModelProviderConnectionRequest(UncheckedBaseModel):
-    provider: typing.Optional[ProviderEnum] = None
     api_key: typing.Optional[str] = pydantic.Field(default=None)
     """
     Model provider API key
@@ -19,6 +18,16 @@ class ModelProviderConnectionRequest(UncheckedBaseModel):
     auth_token: typing.Optional[str] = pydantic.Field(default=None)
     """
     Model provider Auth token
+    """
+
+    budget_alert_threshold: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Budget alert threshold for the given provider connection
+    """
+
+    cached_available_models: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    List of available models from the provider
     """
 
     deployment_name: typing.Optional[str] = pydantic.Field(default=None)
@@ -36,31 +45,23 @@ class ModelProviderConnectionRequest(UncheckedBaseModel):
     The content of GOOGLE_APPLICATION_CREDENTIALS json file
     """
 
-    google_project_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Google project ID
-    """
-
     google_location: typing.Optional[str] = pydantic.Field(default=None)
     """
     Google project location
     """
 
-    cached_available_models: typing.Optional[str] = pydantic.Field(default=None)
+    google_project_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    List of available models from the provider
+    Google project ID
     """
 
-    scope: typing.Optional[ScopeEnum] = None
     is_internal: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether the model provider connection is internal, not visible to the user
     """
 
-    budget_alert_threshold: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Budget alert threshold for the given provider connection
-    """
+    provider: typing.Optional[ProviderEnum] = None
+    scope: typing.Optional[ScopeEnum] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

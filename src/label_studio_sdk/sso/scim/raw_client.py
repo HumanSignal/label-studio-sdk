@@ -64,9 +64,9 @@ class RawScimClient:
     def update(
         self,
         *,
-        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
-        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         projects_groups: typing.Optional[typing.Sequence[ProjectGroupRequest]] = OMIT,
+        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
+        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ScimSettingsUpdate]:
         """
@@ -80,11 +80,11 @@ class RawScimClient:
 
         Parameters
         ----------
-        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
-        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
+        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -98,11 +98,11 @@ class RawScimClient:
             "api/scim/settings",
             method="POST",
             json={
-                "workspaces_groups": workspaces_groups,
-                "roles_groups": roles_groups,
                 "projects_groups": convert_and_respect_annotation_metadata(
                     object_=projects_groups, annotation=typing.Sequence[ProjectGroupRequest], direction="write"
                 ),
+                "roles_groups": roles_groups,
+                "workspaces_groups": workspaces_groups,
             },
             headers={
                 "content-type": "application/json",
@@ -173,9 +173,9 @@ class AsyncRawScimClient:
     async def update(
         self,
         *,
-        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
-        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         projects_groups: typing.Optional[typing.Sequence[ProjectGroupRequest]] = OMIT,
+        roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
+        workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ScimSettingsUpdate]:
         """
@@ -189,11 +189,11 @@ class AsyncRawScimClient:
 
         Parameters
         ----------
-        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
-        projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
+        workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -207,11 +207,11 @@ class AsyncRawScimClient:
             "api/scim/settings",
             method="POST",
             json={
-                "workspaces_groups": workspaces_groups,
-                "roles_groups": roles_groups,
                 "projects_groups": convert_and_respect_annotation_metadata(
                     object_=projects_groups, annotation=typing.Sequence[ProjectGroupRequest], direction="write"
                 ),
+                "roles_groups": roles_groups,
+                "workspaces_groups": workspaces_groups,
             },
             headers={
                 "content-type": "application/json",

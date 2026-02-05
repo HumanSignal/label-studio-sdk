@@ -14,12 +14,12 @@ class OrganizationMemberTagImportStatus(UncheckedBaseModel):
     Serializer for the status of a member tag import job.
     """
 
-    id: typing.Optional[int] = None
-    status: typing.Optional[OrganizationMemberTagImportStatusStatusEnum] = None
+    assignments_created: typing.Optional[int] = None
     created_at: typing.Optional[dt.datetime] = None
     finished_at: typing.Optional[dt.datetime] = None
+    id: typing.Optional[int] = None
+    status: typing.Optional[OrganizationMemberTagImportStatusStatusEnum] = None
     tags_created: typing.Optional[int] = None
-    assignments_created: typing.Optional[int] = None
     users_skipped: typing.Optional[typing.Any] = None
 
     if IS_PYDANTIC_V2:

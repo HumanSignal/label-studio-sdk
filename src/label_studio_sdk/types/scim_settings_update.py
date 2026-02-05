@@ -9,9 +9,9 @@ from .project_group import ProjectGroup
 
 
 class ScimSettingsUpdate(UncheckedBaseModel):
-    workspaces_groups: typing.Optional[typing.List[typing.List[str]]] = None
-    roles_groups: typing.Optional[typing.List[typing.List[str]]] = None
     projects_groups: typing.Optional[typing.List[ProjectGroup]] = None
+    roles_groups: typing.Optional[typing.List[typing.List[str]]] = None
+    workspaces_groups: typing.Optional[typing.List[typing.List[str]]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

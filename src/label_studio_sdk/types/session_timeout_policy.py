@@ -9,6 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SessionTimeoutPolicy(UncheckedBaseModel):
+    created_at: typing.Optional[dt.datetime] = None
     max_session_age: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of minutes that a session can be active before needing to re-login
@@ -19,7 +20,6 @@ class SessionTimeoutPolicy(UncheckedBaseModel):
     Number of minutes that a session stays active without any activity
     """
 
-    created_at: typing.Optional[dt.datetime] = None
     updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:

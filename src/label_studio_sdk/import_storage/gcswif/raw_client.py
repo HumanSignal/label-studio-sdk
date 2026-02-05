@@ -81,28 +81,28 @@ class RawGcswifClient:
         self,
         *,
         project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
         google_project_number: typing.Optional[str] = OMIT,
+        google_service_account_email: typing.Optional[str] = OMIT,
         google_wif_pool_id: typing.Optional[str] = OMIT,
         google_wif_provider_id: typing.Optional[str] = OMIT,
-        google_service_account_email: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GcswifImportStorage]:
         """
@@ -119,21 +119,11 @@ class RawGcswifClient:
         project : int
             A unique integer value identifying this project.
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
         bucket : typing.Optional[str]
             GCS bucket name
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+        description : typing.Optional[str]
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
@@ -144,14 +134,14 @@ class RawGcswifClient:
         google_project_number : typing.Optional[str]
             Google project number
 
+        google_service_account_email : typing.Optional[str]
+            Google service account email
+
         google_wif_pool_id : typing.Optional[str]
             Google WIF pool ID
 
         google_wif_provider_id : typing.Optional[str]
             Google WIF provider ID
-
-        google_service_account_email : typing.Optional[str]
-            Google service account email
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -162,25 +152,35 @@ class RawGcswifClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
+        prefix : typing.Optional[str]
+            GCS bucket prefix
 
-        description : typing.Optional[str]
-            Cloud storage description
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -194,29 +194,29 @@ class RawGcswifClient:
             "api/storages/gcswif/",
             method="POST",
             json={
-                "synchronizable": synchronizable,
-                "presign": presign,
                 "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "description": description,
                 "google_application_credentials": google_application_credentials,
                 "google_project_id": google_project_id,
                 "google_project_number": google_project_number,
+                "google_service_account_email": google_service_account_email,
                 "google_wif_pool_id": google_wif_pool_id,
                 "google_wif_provider_id": google_wif_provider_id,
-                "google_service_account_email": google_service_account_email,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
                 "meta": meta,
-                "title": title,
-                "description": description,
+                "prefix": prefix,
+                "presign": presign,
                 "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
                 "project": project,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -234,6 +234,160 @@ class RawGcswifClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def validate(
+        self,
+        *,
+        project: int,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        google_project_number: typing.Optional[str] = OMIT,
+        google_service_account_email: typing.Optional[str] = OMIT,
+        google_wif_pool_id: typing.Optional[str] = OMIT,
+        google_wif_provider_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific GCS import storage connection that was set up with WIF authentication.
+
+        Parameters
+        ----------
+        project : int
+            A unique integer value identifying this project.
+
+        bucket : typing.Optional[str]
+            GCS bucket name
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        google_project_number : typing.Optional[str]
+            Google project number
+
+        google_service_account_email : typing.Optional[str]
+            Google service account email
+
+        google_wif_pool_id : typing.Optional[str]
+            Google WIF pool ID
+
+        google_wif_provider_id : typing.Optional[str]
+            Google WIF provider ID
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        presign : typing.Optional[bool]
+
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/storages/gcswif/validate",
+            method="POST",
+            json={
+                "bucket": bucket,
+                "description": description,
+                "google_application_credentials": google_application_credentials,
+                "google_project_id": google_project_id,
+                "google_project_number": google_project_number,
+                "google_service_account_email": google_service_account_email,
+                "google_wif_pool_id": google_wif_pool_id,
+                "google_wif_provider_id": google_wif_provider_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "meta": meta,
+                "prefix": prefix,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "project": project,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -321,29 +475,29 @@ class RawGcswifClient:
         self,
         id: int,
         *,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
         google_project_number: typing.Optional[str] = OMIT,
+        google_service_account_email: typing.Optional[str] = OMIT,
         google_wif_pool_id: typing.Optional[str] = OMIT,
         google_wif_provider_id: typing.Optional[str] = OMIT,
-        google_service_account_email: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GcswifImportStorage]:
         """
@@ -359,21 +513,11 @@ class RawGcswifClient:
         ----------
         id : int
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
         bucket : typing.Optional[str]
             GCS bucket name
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+        description : typing.Optional[str]
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
@@ -384,14 +528,14 @@ class RawGcswifClient:
         google_project_number : typing.Optional[str]
             Google project number
 
+        google_service_account_email : typing.Optional[str]
+            Google service account email
+
         google_wif_pool_id : typing.Optional[str]
             Google WIF pool ID
 
         google_wif_provider_id : typing.Optional[str]
             Google WIF provider ID
-
-        google_service_account_email : typing.Optional[str]
-            Google service account email
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -402,28 +546,38 @@ class RawGcswifClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
+        prefix : typing.Optional[str]
+            GCS bucket prefix
 
-        description : typing.Optional[str]
-            Cloud storage description
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
+
         recursive_scan : typing.Optional[bool]
             Perform recursive scan over the bucket content
 
-        project : typing.Optional[int]
-            A unique integer value identifying this project.
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -437,29 +591,29 @@ class RawGcswifClient:
             f"api/storages/gcswif/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "synchronizable": synchronizable,
-                "presign": presign,
                 "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "description": description,
                 "google_application_credentials": google_application_credentials,
                 "google_project_id": google_project_id,
                 "google_project_number": google_project_number,
+                "google_service_account_email": google_service_account_email,
                 "google_wif_pool_id": google_wif_pool_id,
                 "google_wif_provider_id": google_wif_provider_id,
-                "google_service_account_email": google_service_account_email,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
                 "meta": meta,
-                "title": title,
-                "description": description,
+                "prefix": prefix,
+                "presign": presign,
                 "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
                 "project": project,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -521,160 +675,6 @@ class RawGcswifClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def validate(
-        self,
-        *,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
-        google_project_number: typing.Optional[str] = OMIT,
-        google_wif_pool_id: typing.Optional[str] = OMIT,
-        google_wif_provider_id: typing.Optional[str] = OMIT,
-        google_service_account_email: typing.Optional[str] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[None]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific GCS import storage connection that was set up with WIF authentication.
-
-        Parameters
-        ----------
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        bucket : typing.Optional[str]
-            GCS bucket name
-
-        prefix : typing.Optional[str]
-            GCS bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file
-
-        google_project_id : typing.Optional[str]
-            Google project ID
-
-        google_project_number : typing.Optional[str]
-            Google project number
-
-        google_wif_pool_id : typing.Optional[str]
-            Google WIF pool ID
-
-        google_wif_provider_id : typing.Optional[str]
-            Google WIF provider ID
-
-        google_service_account_email : typing.Optional[str]
-            Google service account email
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
-
-        recursive_scan : typing.Optional[bool]
-            Perform recursive scan over the bucket content
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[None]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/storages/gcswif/validate",
-            method="POST",
-            json={
-                "synchronizable": synchronizable,
-                "presign": presign,
-                "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "google_application_credentials": google_application_credentials,
-                "google_project_id": google_project_id,
-                "google_project_number": google_project_number,
-                "google_wif_pool_id": google_wif_pool_id,
-                "google_wif_provider_id": google_wif_provider_id,
-                "google_service_account_email": google_service_account_email,
-                "last_sync": last_sync,
-                "last_sync_count": last_sync_count,
-                "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
-                "meta": meta,
-                "title": title,
-                "description": description,
-                "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
-                "project": project,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -745,28 +745,28 @@ class AsyncRawGcswifClient:
         self,
         *,
         project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
         google_project_number: typing.Optional[str] = OMIT,
+        google_service_account_email: typing.Optional[str] = OMIT,
         google_wif_pool_id: typing.Optional[str] = OMIT,
         google_wif_provider_id: typing.Optional[str] = OMIT,
-        google_service_account_email: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GcswifImportStorage]:
         """
@@ -783,21 +783,11 @@ class AsyncRawGcswifClient:
         project : int
             A unique integer value identifying this project.
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
         bucket : typing.Optional[str]
             GCS bucket name
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+        description : typing.Optional[str]
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
@@ -808,14 +798,14 @@ class AsyncRawGcswifClient:
         google_project_number : typing.Optional[str]
             Google project number
 
+        google_service_account_email : typing.Optional[str]
+            Google service account email
+
         google_wif_pool_id : typing.Optional[str]
             Google WIF pool ID
 
         google_wif_provider_id : typing.Optional[str]
             Google WIF provider ID
-
-        google_service_account_email : typing.Optional[str]
-            Google service account email
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -826,25 +816,35 @@ class AsyncRawGcswifClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
+        prefix : typing.Optional[str]
+            GCS bucket prefix
 
-        description : typing.Optional[str]
-            Cloud storage description
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -858,29 +858,29 @@ class AsyncRawGcswifClient:
             "api/storages/gcswif/",
             method="POST",
             json={
-                "synchronizable": synchronizable,
-                "presign": presign,
                 "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "description": description,
                 "google_application_credentials": google_application_credentials,
                 "google_project_id": google_project_id,
                 "google_project_number": google_project_number,
+                "google_service_account_email": google_service_account_email,
                 "google_wif_pool_id": google_wif_pool_id,
                 "google_wif_provider_id": google_wif_provider_id,
-                "google_service_account_email": google_service_account_email,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
                 "meta": meta,
-                "title": title,
-                "description": description,
+                "prefix": prefix,
+                "presign": presign,
                 "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
                 "project": project,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -898,6 +898,160 @@ class AsyncRawGcswifClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def validate(
+        self,
+        *,
+        project: int,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        google_project_number: typing.Optional[str] = OMIT,
+        google_service_account_email: typing.Optional[str] = OMIT,
+        google_wif_pool_id: typing.Optional[str] = OMIT,
+        google_wif_provider_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific GCS import storage connection that was set up with WIF authentication.
+
+        Parameters
+        ----------
+        project : int
+            A unique integer value identifying this project.
+
+        bucket : typing.Optional[str]
+            GCS bucket name
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        google_project_number : typing.Optional[str]
+            Google project number
+
+        google_service_account_email : typing.Optional[str]
+            Google service account email
+
+        google_wif_pool_id : typing.Optional[str]
+            Google WIF pool ID
+
+        google_wif_provider_id : typing.Optional[str]
+            Google WIF provider ID
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        presign : typing.Optional[bool]
+
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/storages/gcswif/validate",
+            method="POST",
+            json={
+                "bucket": bucket,
+                "description": description,
+                "google_application_credentials": google_application_credentials,
+                "google_project_id": google_project_id,
+                "google_project_number": google_project_number,
+                "google_service_account_email": google_service_account_email,
+                "google_wif_pool_id": google_wif_pool_id,
+                "google_wif_provider_id": google_wif_provider_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "meta": meta,
+                "prefix": prefix,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "project": project,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -987,29 +1141,29 @@ class AsyncRawGcswifClient:
         self,
         id: int,
         *,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
         google_project_number: typing.Optional[str] = OMIT,
+        google_service_account_email: typing.Optional[str] = OMIT,
         google_wif_pool_id: typing.Optional[str] = OMIT,
         google_wif_provider_id: typing.Optional[str] = OMIT,
-        google_service_account_email: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GcswifImportStorage]:
         """
@@ -1025,21 +1179,11 @@ class AsyncRawGcswifClient:
         ----------
         id : int
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
         bucket : typing.Optional[str]
             GCS bucket name
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+        description : typing.Optional[str]
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
@@ -1050,14 +1194,14 @@ class AsyncRawGcswifClient:
         google_project_number : typing.Optional[str]
             Google project number
 
+        google_service_account_email : typing.Optional[str]
+            Google service account email
+
         google_wif_pool_id : typing.Optional[str]
             Google WIF pool ID
 
         google_wif_provider_id : typing.Optional[str]
             Google WIF provider ID
-
-        google_service_account_email : typing.Optional[str]
-            Google service account email
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -1068,28 +1212,38 @@ class AsyncRawGcswifClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
+        prefix : typing.Optional[str]
+            GCS bucket prefix
 
-        description : typing.Optional[str]
-            Cloud storage description
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
+
         recursive_scan : typing.Optional[bool]
             Perform recursive scan over the bucket content
 
-        project : typing.Optional[int]
-            A unique integer value identifying this project.
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1103,29 +1257,29 @@ class AsyncRawGcswifClient:
             f"api/storages/gcswif/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "synchronizable": synchronizable,
-                "presign": presign,
                 "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "description": description,
                 "google_application_credentials": google_application_credentials,
                 "google_project_id": google_project_id,
                 "google_project_number": google_project_number,
+                "google_service_account_email": google_service_account_email,
                 "google_wif_pool_id": google_wif_pool_id,
                 "google_wif_provider_id": google_wif_provider_id,
-                "google_service_account_email": google_service_account_email,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
                 "meta": meta,
-                "title": title,
-                "description": description,
+                "prefix": prefix,
+                "presign": presign,
                 "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
                 "project": project,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -1187,160 +1341,6 @@ class AsyncRawGcswifClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def validate(
-        self,
-        *,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
-        google_project_number: typing.Optional[str] = OMIT,
-        google_wif_pool_id: typing.Optional[str] = OMIT,
-        google_wif_provider_id: typing.Optional[str] = OMIT,
-        google_service_account_email: typing.Optional[str] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[None]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific GCS import storage connection that was set up with WIF authentication.
-
-        Parameters
-        ----------
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        bucket : typing.Optional[str]
-            GCS bucket name
-
-        prefix : typing.Optional[str]
-            GCS bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file
-
-        google_project_id : typing.Optional[str]
-            Google project ID
-
-        google_project_number : typing.Optional[str]
-            Google project number
-
-        google_wif_pool_id : typing.Optional[str]
-            Google WIF pool ID
-
-        google_wif_provider_id : typing.Optional[str]
-            Google WIF provider ID
-
-        google_service_account_email : typing.Optional[str]
-            Google service account email
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
-
-        recursive_scan : typing.Optional[bool]
-            Perform recursive scan over the bucket content
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[None]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/gcswif/validate",
-            method="POST",
-            json={
-                "synchronizable": synchronizable,
-                "presign": presign,
-                "bucket": bucket,
-                "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "google_application_credentials": google_application_credentials,
-                "google_project_id": google_project_id,
-                "google_project_number": google_project_number,
-                "google_wif_pool_id": google_wif_pool_id,
-                "google_wif_provider_id": google_wif_provider_id,
-                "google_service_account_email": google_service_account_email,
-                "last_sync": last_sync,
-                "last_sync_count": last_sync_count,
-                "last_sync_job": last_sync_job,
-                "status": status,
-                "traceback": traceback,
-                "meta": meta,
-                "title": title,
-                "description": description,
-                "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
-                "project": project,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

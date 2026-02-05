@@ -10,38 +10,9 @@ from .status_c5a_enum import StatusC5AEnum
 
 
 class AzureServicePrincipalImportStorage(UncheckedBaseModel):
-    id: typing.Optional[int] = None
-    type: typing.Optional[str] = None
-    synchronizable: typing.Optional[bool] = None
-    presign: typing.Optional[bool] = None
-    prefix: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Azure blob prefix name
-    """
-
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage regex for filtering objects
-    """
-
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Interpret objects as BLOBs and generate URLs
-    """
-
     account_name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Azure Blob account name
-    """
-
-    container: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Azure blob container
-    """
-
-    tenant_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Azure Tenant ID
     """
 
     client_id: typing.Optional[str] = pydantic.Field(default=None)
@@ -54,11 +25,22 @@ class AzureServicePrincipalImportStorage(UncheckedBaseModel):
     Azure Blob Service Principal Client Secret
     """
 
-    user_delegation_key: typing.Optional[str] = pydantic.Field(default=None)
+    container: typing.Optional[str] = pydantic.Field(default=None)
     """
-    User Delegation Key (Backend)
+    Azure blob container
     """
 
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Creation time
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage description
+    """
+
+    id: typing.Optional[int] = None
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last sync finished time
@@ -74,35 +56,25 @@ class AzureServicePrincipalImportStorage(UncheckedBaseModel):
     Last sync job ID
     """
 
-    status: typing.Optional[StatusC5AEnum] = None
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
     meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Meta and debug information about storage processes
     """
 
-    title: typing.Optional[str] = pydantic.Field(default=None)
+    prefix: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cloud storage title
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage description
+    Azure blob prefix name
     """
 
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Creation time
-    """
-
+    presign: typing.Optional[bool] = None
     presign_ttl: typing.Optional[int] = pydantic.Field(default=None)
     """
     Presigned URLs TTL (in minutes)
+    """
+
+    project: int = pydantic.Field()
+    """
+    A unique integer value identifying this project.
     """
 
     recursive_scan: typing.Optional[bool] = pydantic.Field(default=None)
@@ -110,9 +82,37 @@ class AzureServicePrincipalImportStorage(UncheckedBaseModel):
     Perform recursive scan
     """
 
-    project: int = pydantic.Field()
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
     """
-    A unique integer value identifying this project.
+    Cloud storage regex for filtering objects
+    """
+
+    status: typing.Optional[StatusC5AEnum] = None
+    synchronizable: typing.Optional[bool] = None
+    tenant_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Azure Tenant ID
+    """
+
+    title: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage title
+    """
+
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Traceback report for the last failed sync
+    """
+
+    type: typing.Optional[str] = None
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs
+    """
+
+    user_delegation_key: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    User Delegation Key (Backend)
     """
 
     if IS_PYDANTIC_V2:

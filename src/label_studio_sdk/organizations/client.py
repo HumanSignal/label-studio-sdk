@@ -136,14 +136,14 @@ class OrganizationsClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
-        embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
-        custom_scripts_enabled: typing.Optional[bool] = OMIT,
-        embed_settings: typing.Optional[typing.Any] = OMIT,
-        email_notification_settings: typing.Optional[typing.Any] = OMIT,
-        token: typing.Optional[str] = OMIT,
         contact_info: typing.Optional[str] = OMIT,
         created_by: typing.Optional[int] = OMIT,
+        custom_scripts_enabled: typing.Optional[bool] = OMIT,
+        email_notification_settings: typing.Optional[typing.Any] = OMIT,
+        embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
+        embed_settings: typing.Optional[typing.Any] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganization:
         """
@@ -159,21 +159,21 @@ class OrganizationsClient:
         ----------
         id : int
 
-        title : typing.Optional[str]
-
-        embed_domains : typing.Optional[typing.Sequence[typing.Dict[str, str]]]
-
-        custom_scripts_enabled : typing.Optional[bool]
-
-        embed_settings : typing.Optional[typing.Any]
-
-        email_notification_settings : typing.Optional[typing.Any]
-
-        token : typing.Optional[str]
-
         contact_info : typing.Optional[str]
 
         created_by : typing.Optional[int]
+
+        custom_scripts_enabled : typing.Optional[bool]
+
+        email_notification_settings : typing.Optional[typing.Any]
+
+        embed_domains : typing.Optional[typing.Sequence[typing.Dict[str, str]]]
+
+        embed_settings : typing.Optional[typing.Any]
+
+        title : typing.Optional[str]
+
+        token : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -196,14 +196,14 @@ class OrganizationsClient:
         """
         _response = self._raw_client.update(
             id,
-            title=title,
-            embed_domains=embed_domains,
-            custom_scripts_enabled=custom_scripts_enabled,
-            embed_settings=embed_settings,
-            email_notification_settings=email_notification_settings,
-            token=token,
             contact_info=contact_info,
             created_by=created_by,
+            custom_scripts_enabled=custom_scripts_enabled,
+            email_notification_settings=email_notification_settings,
+            embed_domains=embed_domains,
+            embed_settings=embed_settings,
+            title=title,
+            token=token,
             request_options=request_options,
         )
         return _response.data
@@ -212,17 +212,17 @@ class OrganizationsClient:
         self,
         id: int,
         *,
-        organization: typing.Optional[int] = OMIT,
+        annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
+        custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
         default_role: typing.Optional[Role9E7Enum] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
+        email_notification_settings: typing.Optional[typing.Any] = OMIT,
         embed_domains: typing.Optional[typing.Any] = OMIT,
         embed_settings: typing.Optional[typing.Any] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
         extra_data_on_activity_logs: typing.Optional[bool] = OMIT,
-        custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        read_only_quick_view_enabled_at: typing.Optional[dt.datetime] = OMIT,
         label_stream_navigation_disabled_at: typing.Optional[dt.datetime] = OMIT,
-        email_notification_settings: typing.Optional[typing.Any] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        read_only_quick_view_enabled_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DefaultRole:
         """
@@ -238,8 +238,11 @@ class OrganizationsClient:
         ----------
         id : int
 
-        organization : typing.Optional[int]
-            A unique integer value identifying this organization.
+        annotator_reviewer_firewall_enabled_at : typing.Optional[dt.datetime]
+            Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
+
+        custom_scripts_enabled_at : typing.Optional[dt.datetime]
+            Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
 
         default_role : typing.Optional[Role9E7Enum]
             Default membership role for invited users
@@ -252,8 +255,8 @@ class OrganizationsClient:
             * `DI` - Deactivated
             * `NO` - Not Activated
 
-        external_id : typing.Optional[str]
-            External ID to uniquely identify this organization
+        email_notification_settings : typing.Optional[typing.Any]
+            Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
 
         embed_domains : typing.Optional[typing.Any]
             List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
@@ -261,22 +264,19 @@ class OrganizationsClient:
         embed_settings : typing.Optional[typing.Any]
             Embed settings for this organization
 
+        external_id : typing.Optional[str]
+            External ID to uniquely identify this organization
+
         extra_data_on_activity_logs : typing.Optional[bool]
-
-        custom_scripts_enabled_at : typing.Optional[dt.datetime]
-            Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
-
-        annotator_reviewer_firewall_enabled_at : typing.Optional[dt.datetime]
-            Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-
-        read_only_quick_view_enabled_at : typing.Optional[dt.datetime]
-            Set to current time to prevent creating or editing annotations in quick view.
 
         label_stream_navigation_disabled_at : typing.Optional[dt.datetime]
             Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
 
-        email_notification_settings : typing.Optional[typing.Any]
-            Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
+        organization : typing.Optional[int]
+            A unique integer value identifying this organization.
+
+        read_only_quick_view_enabled_at : typing.Optional[dt.datetime]
+            Set to current time to prevent creating or editing annotations in quick view.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -299,17 +299,17 @@ class OrganizationsClient:
         """
         _response = self._raw_client.update_default_role(
             id,
-            organization=organization,
+            annotator_reviewer_firewall_enabled_at=annotator_reviewer_firewall_enabled_at,
+            custom_scripts_enabled_at=custom_scripts_enabled_at,
             default_role=default_role,
-            external_id=external_id,
+            email_notification_settings=email_notification_settings,
             embed_domains=embed_domains,
             embed_settings=embed_settings,
+            external_id=external_id,
             extra_data_on_activity_logs=extra_data_on_activity_logs,
-            custom_scripts_enabled_at=custom_scripts_enabled_at,
-            annotator_reviewer_firewall_enabled_at=annotator_reviewer_firewall_enabled_at,
-            read_only_quick_view_enabled_at=read_only_quick_view_enabled_at,
             label_stream_navigation_disabled_at=label_stream_navigation_disabled_at,
-            email_notification_settings=email_notification_settings,
+            organization=organization,
+            read_only_quick_view_enabled_at=read_only_quick_view_enabled_at,
             request_options=request_options,
         )
         return _response.data
@@ -484,14 +484,14 @@ class AsyncOrganizationsClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
-        embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
-        custom_scripts_enabled: typing.Optional[bool] = OMIT,
-        embed_settings: typing.Optional[typing.Any] = OMIT,
-        email_notification_settings: typing.Optional[typing.Any] = OMIT,
-        token: typing.Optional[str] = OMIT,
         contact_info: typing.Optional[str] = OMIT,
         created_by: typing.Optional[int] = OMIT,
+        custom_scripts_enabled: typing.Optional[bool] = OMIT,
+        email_notification_settings: typing.Optional[typing.Any] = OMIT,
+        embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
+        embed_settings: typing.Optional[typing.Any] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganization:
         """
@@ -507,21 +507,21 @@ class AsyncOrganizationsClient:
         ----------
         id : int
 
-        title : typing.Optional[str]
-
-        embed_domains : typing.Optional[typing.Sequence[typing.Dict[str, str]]]
-
-        custom_scripts_enabled : typing.Optional[bool]
-
-        embed_settings : typing.Optional[typing.Any]
-
-        email_notification_settings : typing.Optional[typing.Any]
-
-        token : typing.Optional[str]
-
         contact_info : typing.Optional[str]
 
         created_by : typing.Optional[int]
+
+        custom_scripts_enabled : typing.Optional[bool]
+
+        email_notification_settings : typing.Optional[typing.Any]
+
+        embed_domains : typing.Optional[typing.Sequence[typing.Dict[str, str]]]
+
+        embed_settings : typing.Optional[typing.Any]
+
+        title : typing.Optional[str]
+
+        token : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -552,14 +552,14 @@ class AsyncOrganizationsClient:
         """
         _response = await self._raw_client.update(
             id,
-            title=title,
-            embed_domains=embed_domains,
-            custom_scripts_enabled=custom_scripts_enabled,
-            embed_settings=embed_settings,
-            email_notification_settings=email_notification_settings,
-            token=token,
             contact_info=contact_info,
             created_by=created_by,
+            custom_scripts_enabled=custom_scripts_enabled,
+            email_notification_settings=email_notification_settings,
+            embed_domains=embed_domains,
+            embed_settings=embed_settings,
+            title=title,
+            token=token,
             request_options=request_options,
         )
         return _response.data
@@ -568,17 +568,17 @@ class AsyncOrganizationsClient:
         self,
         id: int,
         *,
-        organization: typing.Optional[int] = OMIT,
+        annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
+        custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
         default_role: typing.Optional[Role9E7Enum] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
+        email_notification_settings: typing.Optional[typing.Any] = OMIT,
         embed_domains: typing.Optional[typing.Any] = OMIT,
         embed_settings: typing.Optional[typing.Any] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
         extra_data_on_activity_logs: typing.Optional[bool] = OMIT,
-        custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        read_only_quick_view_enabled_at: typing.Optional[dt.datetime] = OMIT,
         label_stream_navigation_disabled_at: typing.Optional[dt.datetime] = OMIT,
-        email_notification_settings: typing.Optional[typing.Any] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        read_only_quick_view_enabled_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DefaultRole:
         """
@@ -594,8 +594,11 @@ class AsyncOrganizationsClient:
         ----------
         id : int
 
-        organization : typing.Optional[int]
-            A unique integer value identifying this organization.
+        annotator_reviewer_firewall_enabled_at : typing.Optional[dt.datetime]
+            Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
+
+        custom_scripts_enabled_at : typing.Optional[dt.datetime]
+            Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
 
         default_role : typing.Optional[Role9E7Enum]
             Default membership role for invited users
@@ -608,8 +611,8 @@ class AsyncOrganizationsClient:
             * `DI` - Deactivated
             * `NO` - Not Activated
 
-        external_id : typing.Optional[str]
-            External ID to uniquely identify this organization
+        email_notification_settings : typing.Optional[typing.Any]
+            Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
 
         embed_domains : typing.Optional[typing.Any]
             List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
@@ -617,22 +620,19 @@ class AsyncOrganizationsClient:
         embed_settings : typing.Optional[typing.Any]
             Embed settings for this organization
 
+        external_id : typing.Optional[str]
+            External ID to uniquely identify this organization
+
         extra_data_on_activity_logs : typing.Optional[bool]
-
-        custom_scripts_enabled_at : typing.Optional[dt.datetime]
-            Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
-
-        annotator_reviewer_firewall_enabled_at : typing.Optional[dt.datetime]
-            Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-
-        read_only_quick_view_enabled_at : typing.Optional[dt.datetime]
-            Set to current time to prevent creating or editing annotations in quick view.
 
         label_stream_navigation_disabled_at : typing.Optional[dt.datetime]
             Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
 
-        email_notification_settings : typing.Optional[typing.Any]
-            Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
+        organization : typing.Optional[int]
+            A unique integer value identifying this organization.
+
+        read_only_quick_view_enabled_at : typing.Optional[dt.datetime]
+            Set to current time to prevent creating or editing annotations in quick view.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -663,17 +663,17 @@ class AsyncOrganizationsClient:
         """
         _response = await self._raw_client.update_default_role(
             id,
-            organization=organization,
+            annotator_reviewer_firewall_enabled_at=annotator_reviewer_firewall_enabled_at,
+            custom_scripts_enabled_at=custom_scripts_enabled_at,
             default_role=default_role,
-            external_id=external_id,
+            email_notification_settings=email_notification_settings,
             embed_domains=embed_domains,
             embed_settings=embed_settings,
+            external_id=external_id,
             extra_data_on_activity_logs=extra_data_on_activity_logs,
-            custom_scripts_enabled_at=custom_scripts_enabled_at,
-            annotator_reviewer_firewall_enabled_at=annotator_reviewer_firewall_enabled_at,
-            read_only_quick_view_enabled_at=read_only_quick_view_enabled_at,
             label_stream_navigation_disabled_at=label_stream_navigation_disabled_at,
-            email_notification_settings=email_notification_settings,
+            organization=organization,
+            read_only_quick_view_enabled_at=read_only_quick_view_enabled_at,
             request_options=request_options,
         )
         return _response.data

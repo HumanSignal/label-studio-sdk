@@ -11,25 +11,25 @@ from .project_subset_enum import ProjectSubsetEnum
 
 
 class ModelRun(UncheckedBaseModel):
+    completed_at: typing.Optional[dt.datetime] = None
+    created_at: typing.Optional[dt.datetime] = None
+    created_by: typing.Optional[int] = None
     id: typing.Optional[int] = None
-    parent_model: typing.Optional[int] = None
-    project_subset: typing.Optional[ProjectSubsetEnum] = None
-    status: typing.Optional[ModelRunStatusEnum] = None
     job_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Job ID for inference job for a ModelRun e.g. Adala job ID
     """
 
-    total_predictions: typing.Optional[int] = None
-    total_correct_predictions: typing.Optional[int] = None
-    total_tasks: typing.Optional[int] = None
-    created_at: typing.Optional[dt.datetime] = None
-    triggered_at: typing.Optional[dt.datetime] = None
-    predictions_updated_at: typing.Optional[dt.datetime] = None
-    completed_at: typing.Optional[dt.datetime] = None
     organization: typing.Optional[int] = None
+    parent_model: typing.Optional[int] = None
+    predictions_updated_at: typing.Optional[dt.datetime] = None
     project: int
-    created_by: typing.Optional[int] = None
+    project_subset: typing.Optional[ProjectSubsetEnum] = None
+    status: typing.Optional[ModelRunStatusEnum] = None
+    total_correct_predictions: typing.Optional[int] = None
+    total_predictions: typing.Optional[int] = None
+    total_tasks: typing.Optional[int] = None
+    triggered_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

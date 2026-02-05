@@ -21,11 +21,21 @@ class TaskAssignment(UncheckedBaseModel):
     - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     """
 
-    id: typing.Optional[int] = None
-    state: typing.Optional[str] = None
+    assignee: int = pydantic.Field()
+    """
+    Assigned user
+    """
+
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Time of assignment
+    """
+
+    id: typing.Optional[int] = None
+    state: typing.Optional[str] = None
+    task: int = pydantic.Field()
+    """
+    Assigned task
     """
 
     type: typing.Optional[TypeEnum] = pydantic.Field(default=None)
@@ -34,16 +44,6 @@ class TaskAssignment(UncheckedBaseModel):
     
     * `AN` - Annotate
     * `RE` - Review
-    """
-
-    assignee: int = pydantic.Field()
-    """
-    Assigned user
-    """
-
-    task: int = pydantic.Field()
-    """
-    Assigned task
     """
 
     if IS_PYDANTIC_V2:

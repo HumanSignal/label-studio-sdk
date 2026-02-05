@@ -8,8 +8,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class FileUpload(UncheckedBaseModel):
-    id: typing.Optional[int] = None
     file: str
+    id: typing.Optional[int] = None
     size: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:

@@ -69,18 +69,18 @@ class ModelProvidersClient:
     def create(
         self,
         *,
-        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
         google_location: typing.Optional[str] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ScopeEnum] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
         is_internal: typing.Optional[bool] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -94,13 +94,17 @@ class ModelProvidersClient:
 
         Parameters
         ----------
-        provider : typing.Optional[ProviderEnum]
-
         api_key : typing.Optional[str]
             Model provider API key
 
         auth_token : typing.Optional[str]
             Model provider Auth token
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
+
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
 
         deployment_name : typing.Optional[str]
             Azure OpenAI deployment name
@@ -111,22 +115,18 @@ class ModelProvidersClient:
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
-        google_project_id : typing.Optional[str]
-            Google project ID
-
         google_location : typing.Optional[str]
             Google project location
 
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
-
-        scope : typing.Optional[ScopeEnum]
+        google_project_id : typing.Optional[str]
+            Google project ID
 
         is_internal : typing.Optional[bool]
             Whether the model provider connection is internal, not visible to the user
 
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
+        provider : typing.Optional[ProviderEnum]
+
+        scope : typing.Optional[ScopeEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -146,20 +146,54 @@ class ModelProvidersClient:
         client.model_providers.create()
         """
         _response = self._raw_client.create(
-            provider=provider,
             api_key=api_key,
             auth_token=auth_token,
+            budget_alert_threshold=budget_alert_threshold,
+            cached_available_models=cached_available_models,
             deployment_name=deployment_name,
             endpoint=endpoint,
             google_application_credentials=google_application_credentials,
-            google_project_id=google_project_id,
             google_location=google_location,
-            cached_available_models=cached_available_models,
-            scope=scope,
+            google_project_id=google_project_id,
             is_internal=is_internal,
-            budget_alert_threshold=budget_alert_threshold,
+            provider=provider,
+            scope=scope,
             request_options=request_options,
         )
+        return _response.data
+
+    def list_model_provider_choices(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListModelProviderChoicesModelProvidersResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all possible model provider choices
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListModelProviderChoicesModelProvidersResponse
+            List of model provider choices
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.model_providers.list_model_provider_choices()
+        """
+        _response = self._raw_client.list_model_provider_choices(request_options=request_options)
         return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
@@ -237,18 +271,18 @@ class ModelProvidersClient:
         self,
         id: str,
         *,
-        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
         google_location: typing.Optional[str] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ScopeEnum] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
         is_internal: typing.Optional[bool] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -264,13 +298,17 @@ class ModelProvidersClient:
         ----------
         id : str
 
-        provider : typing.Optional[ProviderEnum]
-
         api_key : typing.Optional[str]
             Model provider API key
 
         auth_token : typing.Optional[str]
             Model provider Auth token
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
+
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
 
         deployment_name : typing.Optional[str]
             Azure OpenAI deployment name
@@ -281,22 +319,18 @@ class ModelProvidersClient:
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
-        google_project_id : typing.Optional[str]
-            Google project ID
-
         google_location : typing.Optional[str]
             Google project location
 
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
-
-        scope : typing.Optional[ScopeEnum]
+        google_project_id : typing.Optional[str]
+            Google project ID
 
         is_internal : typing.Optional[bool]
             Whether the model provider connection is internal, not visible to the user
 
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
+        provider : typing.Optional[ProviderEnum]
+
+        scope : typing.Optional[ScopeEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -319,54 +353,20 @@ class ModelProvidersClient:
         """
         _response = self._raw_client.update(
             id,
-            provider=provider,
             api_key=api_key,
             auth_token=auth_token,
+            budget_alert_threshold=budget_alert_threshold,
+            cached_available_models=cached_available_models,
             deployment_name=deployment_name,
             endpoint=endpoint,
             google_application_credentials=google_application_credentials,
-            google_project_id=google_project_id,
             google_location=google_location,
-            cached_available_models=cached_available_models,
-            scope=scope,
+            google_project_id=google_project_id,
             is_internal=is_internal,
-            budget_alert_threshold=budget_alert_threshold,
+            provider=provider,
+            scope=scope,
             request_options=request_options,
         )
-        return _response.data
-
-    def list_model_provider_choices(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ListModelProviderChoicesModelProvidersResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        List all possible model provider choices
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ListModelProviderChoicesModelProvidersResponse
-            List of model provider choices
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.model_providers.list_model_provider_choices()
-        """
-        _response = self._raw_client.list_model_provider_choices(request_options=request_options)
         return _response.data
 
 
@@ -433,18 +433,18 @@ class AsyncModelProvidersClient:
     async def create(
         self,
         *,
-        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
         google_location: typing.Optional[str] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ScopeEnum] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
         is_internal: typing.Optional[bool] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -458,13 +458,17 @@ class AsyncModelProvidersClient:
 
         Parameters
         ----------
-        provider : typing.Optional[ProviderEnum]
-
         api_key : typing.Optional[str]
             Model provider API key
 
         auth_token : typing.Optional[str]
             Model provider Auth token
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
+
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
 
         deployment_name : typing.Optional[str]
             Azure OpenAI deployment name
@@ -475,22 +479,18 @@ class AsyncModelProvidersClient:
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
-        google_project_id : typing.Optional[str]
-            Google project ID
-
         google_location : typing.Optional[str]
             Google project location
 
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
-
-        scope : typing.Optional[ScopeEnum]
+        google_project_id : typing.Optional[str]
+            Google project ID
 
         is_internal : typing.Optional[bool]
             Whether the model provider connection is internal, not visible to the user
 
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
+        provider : typing.Optional[ProviderEnum]
+
+        scope : typing.Optional[ScopeEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -518,20 +518,62 @@ class AsyncModelProvidersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            provider=provider,
             api_key=api_key,
             auth_token=auth_token,
+            budget_alert_threshold=budget_alert_threshold,
+            cached_available_models=cached_available_models,
             deployment_name=deployment_name,
             endpoint=endpoint,
             google_application_credentials=google_application_credentials,
-            google_project_id=google_project_id,
             google_location=google_location,
-            cached_available_models=cached_available_models,
-            scope=scope,
+            google_project_id=google_project_id,
             is_internal=is_internal,
-            budget_alert_threshold=budget_alert_threshold,
+            provider=provider,
+            scope=scope,
             request_options=request_options,
         )
+        return _response.data
+
+    async def list_model_provider_choices(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListModelProviderChoicesModelProvidersResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all possible model provider choices
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListModelProviderChoicesModelProvidersResponse
+            List of model provider choices
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.model_providers.list_model_provider_choices()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_model_provider_choices(request_options=request_options)
         return _response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
@@ -625,18 +667,18 @@ class AsyncModelProvidersClient:
         self,
         id: str,
         *,
-        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
         google_location: typing.Optional[str] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ScopeEnum] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
         is_internal: typing.Optional[bool] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -652,13 +694,17 @@ class AsyncModelProvidersClient:
         ----------
         id : str
 
-        provider : typing.Optional[ProviderEnum]
-
         api_key : typing.Optional[str]
             Model provider API key
 
         auth_token : typing.Optional[str]
             Model provider Auth token
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
+
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
 
         deployment_name : typing.Optional[str]
             Azure OpenAI deployment name
@@ -669,22 +715,18 @@ class AsyncModelProvidersClient:
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
-        google_project_id : typing.Optional[str]
-            Google project ID
-
         google_location : typing.Optional[str]
             Google project location
 
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
-
-        scope : typing.Optional[ScopeEnum]
+        google_project_id : typing.Optional[str]
+            Google project ID
 
         is_internal : typing.Optional[bool]
             Whether the model provider connection is internal, not visible to the user
 
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
+        provider : typing.Optional[ProviderEnum]
+
+        scope : typing.Optional[ScopeEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -715,60 +757,18 @@ class AsyncModelProvidersClient:
         """
         _response = await self._raw_client.update(
             id,
-            provider=provider,
             api_key=api_key,
             auth_token=auth_token,
+            budget_alert_threshold=budget_alert_threshold,
+            cached_available_models=cached_available_models,
             deployment_name=deployment_name,
             endpoint=endpoint,
             google_application_credentials=google_application_credentials,
-            google_project_id=google_project_id,
             google_location=google_location,
-            cached_available_models=cached_available_models,
-            scope=scope,
+            google_project_id=google_project_id,
             is_internal=is_internal,
-            budget_alert_threshold=budget_alert_threshold,
+            provider=provider,
+            scope=scope,
             request_options=request_options,
         )
-        return _response.data
-
-    async def list_model_provider_choices(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ListModelProviderChoicesModelProvidersResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        List all possible model provider choices
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ListModelProviderChoicesModelProvidersResponse
-            List of model provider choices
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.model_providers.list_model_provider_choices()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.list_model_provider_choices(request_options=request_options)
         return _response.data

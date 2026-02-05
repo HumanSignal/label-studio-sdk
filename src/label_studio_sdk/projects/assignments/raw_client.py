@@ -28,6 +28,94 @@ class RawAssignmentsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def bulk_assign(
+        self,
+        id: int,
+        *,
+        selected_items: BulkAssignAssignmentsRequestSelectedItems,
+        type: BulkAssignAssignmentsRequestType,
+        users: typing.Sequence[int],
+        filters: typing.Optional[BulkAssignAssignmentsRequestFilters] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[BulkAssignAssignmentsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign multiple users to a collection of tasks within a specific project.
+
+        Parameters
+        ----------
+        id : int
+
+        selected_items : BulkAssignAssignmentsRequestSelectedItems
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+
+        type : BulkAssignAssignmentsRequestType
+            Assignment type. Use AN for annotate or RE for review.
+
+        users : typing.Sequence[int]
+            List of user IDs to assign
+
+        filters : typing.Optional[BulkAssignAssignmentsRequestFilters]
+            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[BulkAssignAssignmentsResponse]
+            Success
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/tasks/assignees",
+            method="POST",
+            json={
+                "filters": convert_and_respect_annotation_metadata(
+                    object_=filters, annotation=BulkAssignAssignmentsRequestFilters, direction="write"
+                ),
+                "selectedItems": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=BulkAssignAssignmentsRequestSelectedItems, direction="write"
+                ),
+                "type": type,
+                "users": users,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BulkAssignAssignmentsResponse,
+                    construct_type(
+                        type_=BulkAssignAssignmentsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def list(
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[TaskAssignment]]:
@@ -268,16 +356,21 @@ class RawAssignmentsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def bulk_assign(
+
+class AsyncRawAssignmentsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def bulk_assign(
         self,
         id: int,
         *,
+        selected_items: BulkAssignAssignmentsRequestSelectedItems,
         type: BulkAssignAssignmentsRequestType,
         users: typing.Sequence[int],
-        selected_items: BulkAssignAssignmentsRequestSelectedItems,
         filters: typing.Optional[BulkAssignAssignmentsRequestFilters] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[BulkAssignAssignmentsResponse]:
+    ) -> AsyncHttpResponse[BulkAssignAssignmentsResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -291,14 +384,14 @@ class RawAssignmentsClient:
         ----------
         id : int
 
+        selected_items : BulkAssignAssignmentsRequestSelectedItems
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+
         type : BulkAssignAssignmentsRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]
             List of user IDs to assign
-
-        selected_items : BulkAssignAssignmentsRequestSelectedItems
-            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         filters : typing.Optional[BulkAssignAssignmentsRequestFilters]
             Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
@@ -308,21 +401,21 @@ class RawAssignmentsClient:
 
         Returns
         -------
-        HttpResponse[BulkAssignAssignmentsResponse]
+        AsyncHttpResponse[BulkAssignAssignmentsResponse]
             Success
         """
-        _response = self._client_wrapper.httpx_client.request(
+        _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/tasks/assignees",
             method="POST",
             json={
-                "type": type,
-                "users": users,
-                "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=BulkAssignAssignmentsRequestSelectedItems, direction="write"
-                ),
                 "filters": convert_and_respect_annotation_metadata(
                     object_=filters, annotation=BulkAssignAssignmentsRequestFilters, direction="write"
                 ),
+                "selectedItems": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=BulkAssignAssignmentsRequestSelectedItems, direction="write"
+                ),
+                "type": type,
+                "users": users,
             },
             headers={
                 "content-type": "application/json",
@@ -339,7 +432,7 @@ class RawAssignmentsClient:
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=_data)
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
                 raise BadRequestError(
                     headers=dict(_response.headers),
@@ -355,11 +448,6 @@ class RawAssignmentsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-
-class AsyncRawAssignmentsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
 
     async def list(
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
@@ -596,94 +684,6 @@ class AsyncRawAssignmentsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def bulk_assign(
-        self,
-        id: int,
-        *,
-        type: BulkAssignAssignmentsRequestType,
-        users: typing.Sequence[int],
-        selected_items: BulkAssignAssignmentsRequestSelectedItems,
-        filters: typing.Optional[BulkAssignAssignmentsRequestFilters] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[BulkAssignAssignmentsResponse]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Assign multiple users to a collection of tasks within a specific project.
-
-        Parameters
-        ----------
-        id : int
-
-        type : BulkAssignAssignmentsRequestType
-            Assignment type. Use AN for annotate or RE for review.
-
-        users : typing.Sequence[int]
-            List of user IDs to assign
-
-        selected_items : BulkAssignAssignmentsRequestSelectedItems
-            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-
-        filters : typing.Optional[BulkAssignAssignmentsRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[BulkAssignAssignmentsResponse]
-            Success
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/assignees",
-            method="POST",
-            json={
-                "type": type,
-                "users": users,
-                "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=BulkAssignAssignmentsRequestSelectedItems, direction="write"
-                ),
-                "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=BulkAssignAssignmentsRequestFilters, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    BulkAssignAssignmentsResponse,
-                    construct_type(
-                        type_=BulkAssignAssignmentsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

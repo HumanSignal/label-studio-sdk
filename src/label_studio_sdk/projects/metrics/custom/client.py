@@ -69,8 +69,8 @@ class CustomClient:
         id: int,
         *,
         code: str,
-        role: typing.Optional[str] = OMIT,
         region: typing.Optional[str] = OMIT,
+        role: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -89,11 +89,11 @@ class CustomClient:
         code : str
             The Python code for the custom metric function.
 
-        role : typing.Optional[str]
-            The AWS IAM role ARN for the Lambda function. Uses default if not provided.
-
         region : typing.Optional[str]
             The AWS region for the Lambda function. Uses default if not provided.
+
+        role : typing.Optional[str]
+            The AWS IAM role ARN for the Lambda function. Uses default if not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -115,7 +115,7 @@ class CustomClient:
         )
         """
         _response = self._raw_client.update_lambda(
-            id, code=code, role=role, region=region, request_options=request_options
+            id, code=code, region=region, role=role, request_options=request_options
         )
         return _response.data
 
@@ -279,8 +279,8 @@ class AsyncCustomClient:
         id: int,
         *,
         code: str,
-        role: typing.Optional[str] = OMIT,
         region: typing.Optional[str] = OMIT,
+        role: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -299,11 +299,11 @@ class AsyncCustomClient:
         code : str
             The Python code for the custom metric function.
 
-        role : typing.Optional[str]
-            The AWS IAM role ARN for the Lambda function. Uses default if not provided.
-
         region : typing.Optional[str]
             The AWS region for the Lambda function. Uses default if not provided.
+
+        role : typing.Optional[str]
+            The AWS IAM role ARN for the Lambda function. Uses default if not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -333,7 +333,7 @@ class AsyncCustomClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update_lambda(
-            id, code=code, role=role, region=region, request_options=request_options
+            id, code=code, region=region, role=role, request_options=request_options
         )
         return _response.data
 

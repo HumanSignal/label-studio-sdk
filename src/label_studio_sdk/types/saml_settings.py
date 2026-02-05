@@ -15,10 +15,32 @@ class SamlSettings(UncheckedBaseModel):
     that are needed for IdP configuration.
     """
 
-    token: typing.Optional[str] = None
+    acs_url: typing.Optional[str] = None
     domain: typing.Optional[str] = pydantic.Field(default=None)
     """
     Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
+    """
+
+    login_url: typing.Optional[str] = None
+    logout_url: typing.Optional[str] = None
+    mapping_email: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: user email from SAML request
+    """
+
+    mapping_first_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: user first name from SAML request
+    """
+
+    mapping_groups: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: groups attribute for user mapping to workspaces and roles
+    """
+
+    mapping_last_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mapping attributes: user last name from SAML request
     """
 
     metadata_url: typing.Optional[str] = pydantic.Field(default=None)
@@ -32,29 +54,10 @@ class SamlSettings(UncheckedBaseModel):
     """
 
     metadata_xml_url: typing.Optional[str] = None
-    mapping_email: typing.Optional[str] = pydantic.Field(default=None)
+    nameid_format: typing.Optional[str] = None
+    projects_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
-    Mapping attributes: user email from SAML request
-    """
-
-    mapping_first_name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Mapping attributes: user first name from SAML request
-    """
-
-    mapping_last_name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Mapping attributes: user last name from SAML request
-    """
-
-    mapping_groups: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Mapping attributes: groups attribute for user mapping to workspaces and roles
-    """
-
-    workspaces_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Workspaces to groups mapping
+    Projects to groups mapping
     """
 
     roles_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
@@ -62,15 +65,11 @@ class SamlSettings(UncheckedBaseModel):
     Roles to groups mapping
     """
 
-    projects_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    token: typing.Optional[str] = None
+    workspaces_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
-    Projects to groups mapping
+    Workspaces to groups mapping
     """
-
-    acs_url: typing.Optional[str] = None
-    login_url: typing.Optional[str] = None
-    logout_url: typing.Optional[str] = None
-    nameid_format: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -38,8 +38,8 @@ class BulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
-        included: typing.Optional[typing.Sequence[int]] = OMIT,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
+        included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PostBulkResponse:
@@ -73,9 +73,9 @@ class BulkClient:
         tags : typing.Optional[str]
             Filter tags by in list (comma-separated values)
 
-        included : typing.Optional[typing.Sequence[int]]
-
         excluded : typing.Optional[typing.Sequence[int]]
+
+        included : typing.Optional[typing.Sequence[int]]
 
         roles : typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]
 
@@ -107,8 +107,8 @@ class BulkClient:
             role=role,
             search=search,
             tags=tags,
-            included=included,
             excluded=excluded,
+            included=included,
             roles=roles,
             request_options=request_options,
         )
@@ -209,8 +209,8 @@ class AsyncBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
-        included: typing.Optional[typing.Sequence[int]] = OMIT,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
+        included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PostBulkResponse:
@@ -244,9 +244,9 @@ class AsyncBulkClient:
         tags : typing.Optional[str]
             Filter tags by in list (comma-separated values)
 
-        included : typing.Optional[typing.Sequence[int]]
-
         excluded : typing.Optional[typing.Sequence[int]]
+
+        included : typing.Optional[typing.Sequence[int]]
 
         roles : typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]
 
@@ -286,8 +286,8 @@ class AsyncBulkClient:
             role=role,
             search=search,
             tags=tags,
-            included=included,
             excluded=excluded,
+            included=included,
             roles=roles,
             request_options=request_options,
         )

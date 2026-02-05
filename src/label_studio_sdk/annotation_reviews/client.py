@@ -84,10 +84,10 @@ class AnnotationReviewsClient:
         annotation: int,
         async_postprocess: typing.Optional[bool] = None,
         accepted: typing.Optional[bool] = OMIT,
-        result: typing.Optional[typing.Any] = OMIT,
-        last_annotation_history: typing.Optional[int] = OMIT,
         comment: typing.Optional[str] = OMIT,
+        last_annotation_history: typing.Optional[int] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
+        result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AnnotationReview:
@@ -111,13 +111,13 @@ class AnnotationReviewsClient:
         accepted : typing.Optional[bool]
             Accepted or rejected (if false) flag
 
-        result : typing.Optional[typing.Any]
+        comment : typing.Optional[str]
 
         last_annotation_history : typing.Optional[int]
 
-        comment : typing.Optional[str]
-
         remove_from_queue : typing.Optional[bool]
+
+        result : typing.Optional[typing.Any]
 
         started_at : typing.Optional[dt.datetime]
 
@@ -144,10 +144,10 @@ class AnnotationReviewsClient:
             annotation=annotation,
             async_postprocess=async_postprocess,
             accepted=accepted,
-            result=result,
-            last_annotation_history=last_annotation_history,
             comment=comment,
+            last_annotation_history=last_annotation_history,
             remove_from_queue=remove_from_queue,
+            result=result,
             started_at=started_at,
             request_options=request_options,
         )
@@ -231,11 +231,11 @@ class AnnotationReviewsClient:
         id: int,
         *,
         accepted: typing.Optional[bool] = OMIT,
-        result: typing.Optional[typing.Any] = OMIT,
         annotation: typing.Optional[int] = OMIT,
-        last_annotation_history: typing.Optional[int] = OMIT,
         comment: typing.Optional[str] = OMIT,
+        last_annotation_history: typing.Optional[int] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
+        result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AnnotationReview:
@@ -256,16 +256,16 @@ class AnnotationReviewsClient:
         accepted : typing.Optional[bool]
             Accepted or rejected (if false) flag
 
-        result : typing.Optional[typing.Any]
-
         annotation : typing.Optional[int]
             Corresponding annotation
 
-        last_annotation_history : typing.Optional[int]
-
         comment : typing.Optional[str]
 
+        last_annotation_history : typing.Optional[int]
+
         remove_from_queue : typing.Optional[bool]
+
+        result : typing.Optional[typing.Any]
 
         started_at : typing.Optional[dt.datetime]
 
@@ -291,11 +291,11 @@ class AnnotationReviewsClient:
         _response = self._raw_client.update(
             id,
             accepted=accepted,
-            result=result,
             annotation=annotation,
-            last_annotation_history=last_annotation_history,
             comment=comment,
+            last_annotation_history=last_annotation_history,
             remove_from_queue=remove_from_queue,
+            result=result,
             started_at=started_at,
             request_options=request_options,
         )
@@ -382,10 +382,10 @@ class AsyncAnnotationReviewsClient:
         annotation: int,
         async_postprocess: typing.Optional[bool] = None,
         accepted: typing.Optional[bool] = OMIT,
-        result: typing.Optional[typing.Any] = OMIT,
-        last_annotation_history: typing.Optional[int] = OMIT,
         comment: typing.Optional[str] = OMIT,
+        last_annotation_history: typing.Optional[int] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
+        result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AnnotationReview:
@@ -409,13 +409,13 @@ class AsyncAnnotationReviewsClient:
         accepted : typing.Optional[bool]
             Accepted or rejected (if false) flag
 
-        result : typing.Optional[typing.Any]
+        comment : typing.Optional[str]
 
         last_annotation_history : typing.Optional[int]
 
-        comment : typing.Optional[str]
-
         remove_from_queue : typing.Optional[bool]
+
+        result : typing.Optional[typing.Any]
 
         started_at : typing.Optional[dt.datetime]
 
@@ -450,10 +450,10 @@ class AsyncAnnotationReviewsClient:
             annotation=annotation,
             async_postprocess=async_postprocess,
             accepted=accepted,
-            result=result,
-            last_annotation_history=last_annotation_history,
             comment=comment,
+            last_annotation_history=last_annotation_history,
             remove_from_queue=remove_from_queue,
+            result=result,
             started_at=started_at,
             request_options=request_options,
         )
@@ -553,11 +553,11 @@ class AsyncAnnotationReviewsClient:
         id: int,
         *,
         accepted: typing.Optional[bool] = OMIT,
-        result: typing.Optional[typing.Any] = OMIT,
         annotation: typing.Optional[int] = OMIT,
-        last_annotation_history: typing.Optional[int] = OMIT,
         comment: typing.Optional[str] = OMIT,
+        last_annotation_history: typing.Optional[int] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
+        result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AnnotationReview:
@@ -578,16 +578,16 @@ class AsyncAnnotationReviewsClient:
         accepted : typing.Optional[bool]
             Accepted or rejected (if false) flag
 
-        result : typing.Optional[typing.Any]
-
         annotation : typing.Optional[int]
             Corresponding annotation
 
-        last_annotation_history : typing.Optional[int]
-
         comment : typing.Optional[str]
 
+        last_annotation_history : typing.Optional[int]
+
         remove_from_queue : typing.Optional[bool]
+
+        result : typing.Optional[typing.Any]
 
         started_at : typing.Optional[dt.datetime]
 
@@ -621,11 +621,11 @@ class AsyncAnnotationReviewsClient:
         _response = await self._raw_client.update(
             id,
             accepted=accepted,
-            result=result,
             annotation=annotation,
-            last_annotation_history=last_annotation_history,
             comment=comment,
+            last_annotation_history=last_annotation_history,
             remove_from_queue=remove_from_queue,
+            result=result,
             started_at=started_at,
             request_options=request_options,
         )

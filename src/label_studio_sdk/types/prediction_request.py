@@ -8,29 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class PredictionRequest(UncheckedBaseModel):
-    result: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
-    """
-    List of prediction results for the task
-    """
-
-    model_version: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
-    """
-
-    score: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Prediction score
-    """
-
     cluster: typing.Optional[int] = pydantic.Field(default=None)
     """
     Cluster for the current prediction
-    """
-
-    neighbors: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Array of task IDs of the closest neighbors
     """
 
     mislabeling: typing.Optional[float] = pydantic.Field(default=None)
@@ -48,8 +28,28 @@ class PredictionRequest(UncheckedBaseModel):
     A run of a ModelVersion that created the prediction.
     """
 
-    task: int
+    model_version: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+    """
+
+    neighbors: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Array of task IDs of the closest neighbors
+    """
+
     project: typing.Optional[int] = None
+    result: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
+    """
+    List of prediction results for the task
+    """
+
+    score: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Prediction score
+    """
+
+    task: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -9,36 +9,36 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ActivityLog(UncheckedBaseModel):
-    id: typing.Optional[int] = None
-    user_id: int
-    email: str
-    user_agent: typing.Optional[str] = None
-    http_referer: typing.Optional[str] = None
-    request_url: str
-    request_method: str
-    response_code: str
     datetime: typing.Optional[dt.datetime] = None
-    ip_address: typing.Optional[str] = None
-    extra_data: typing.Optional[typing.Any] = None
     duration: typing.Optional[int] = pydantic.Field(default=None)
     """
     Duration of response generation in ms
     """
 
-    user_session: typing.Optional[str] = None
+    email: str
+    extra_data: typing.Optional[typing.Any] = None
+    http_referer: typing.Optional[str] = None
+    id: typing.Optional[int] = None
+    ip_address: typing.Optional[str] = None
+    organization_id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Organization id
+    """
+
     project_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Project id if request has it
     """
 
+    request_method: str
+    request_url: str
+    response_code: str
+    user_agent: typing.Optional[str] = None
+    user_id: int
+    user_session: typing.Optional[str] = None
     workspace_owner_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Owner id of workspace where action performed
-    """
-
-    organization_id: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Organization id
     """
 
     if IS_PYDANTIC_V2:

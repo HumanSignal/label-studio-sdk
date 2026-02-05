@@ -69,14 +69,14 @@ class AzureClient:
     def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
         account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobExportStorage:
         """
@@ -84,29 +84,29 @@ class AzureClient:
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         account_name : typing.Optional[str]
             Azure Blob account name
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -126,14 +126,90 @@ class AzureClient:
         client.export_storage.azure.create()
         """
         _response = self._raw_client.create(
-            can_delete_objects=can_delete_objects,
-            title=title,
-            description=description,
-            project=project,
-            container=container,
-            prefix=prefix,
-            account_name=account_name,
             account_key=account_key,
+            account_name=account_name,
+            can_delete_objects=can_delete_objects,
+            container=container,
+            description=description,
+            prefix=prefix,
+            project=project,
+            title=title,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def validate(
+        self,
+        *,
+        account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific Azure export storage connection.
+
+        Parameters
+        ----------
+        account_key : typing.Optional[str]
+            Azure Blob account key
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.export_storage.azure.validate()
+        """
+        _response = self._raw_client.validate(
+            account_key=account_key,
+            account_name=account_name,
+            can_delete_objects=can_delete_objects,
+            container=container,
+            description=description,
+            id=id,
+            prefix=prefix,
+            project=project,
+            title=title,
             request_options=request_options,
         )
         return _response.data
@@ -201,14 +277,14 @@ class AzureClient:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
         account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobExportStorage:
         """
@@ -218,29 +294,29 @@ class AzureClient:
         ----------
         id : int
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         account_name : typing.Optional[str]
             Azure Blob account name
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -263,14 +339,14 @@ class AzureClient:
         """
         _response = self._raw_client.update(
             id,
-            can_delete_objects=can_delete_objects,
-            title=title,
-            description=description,
-            project=project,
-            container=container,
-            prefix=prefix,
-            account_name=account_name,
             account_key=account_key,
+            account_name=account_name,
+            can_delete_objects=can_delete_objects,
+            container=container,
+            description=description,
+            prefix=prefix,
+            project=project,
+            title=title,
             request_options=request_options,
         )
         return _response.data
@@ -303,82 +379,6 @@ class AzureClient:
         )
         """
         _response = self._raw_client.sync(id, request_options=request_options)
-        return _response.data
-
-    def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific Azure export storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.export_storage.azure.validate()
-        """
-        _response = self._raw_client.validate(
-            id=id,
-            can_delete_objects=can_delete_objects,
-            title=title,
-            description=description,
-            project=project,
-            container=container,
-            prefix=prefix,
-            account_name=account_name,
-            account_key=account_key,
-            request_options=request_options,
-        )
         return _response.data
 
 
@@ -448,14 +448,14 @@ class AsyncAzureClient:
     async def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
         account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobExportStorage:
         """
@@ -463,29 +463,29 @@ class AsyncAzureClient:
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         account_name : typing.Optional[str]
             Azure Blob account name
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -513,14 +513,98 @@ class AsyncAzureClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            can_delete_objects=can_delete_objects,
-            title=title,
-            description=description,
-            project=project,
-            container=container,
-            prefix=prefix,
-            account_name=account_name,
             account_key=account_key,
+            account_name=account_name,
+            can_delete_objects=can_delete_objects,
+            container=container,
+            description=description,
+            prefix=prefix,
+            project=project,
+            title=title,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def validate(
+        self,
+        *,
+        account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific Azure export storage connection.
+
+        Parameters
+        ----------
+        account_key : typing.Optional[str]
+            Azure Blob account key
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.export_storage.azure.validate()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.validate(
+            account_key=account_key,
+            account_name=account_name,
+            can_delete_objects=can_delete_objects,
+            container=container,
+            description=description,
+            id=id,
+            prefix=prefix,
+            project=project,
+            title=title,
             request_options=request_options,
         )
         return _response.data
@@ -604,14 +688,14 @@ class AsyncAzureClient:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
         account_key: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobExportStorage:
         """
@@ -621,29 +705,29 @@ class AsyncAzureClient:
         ----------
         id : int
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         account_name : typing.Optional[str]
             Azure Blob account name
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -674,14 +758,14 @@ class AsyncAzureClient:
         """
         _response = await self._raw_client.update(
             id,
-            can_delete_objects=can_delete_objects,
-            title=title,
-            description=description,
-            project=project,
-            container=container,
-            prefix=prefix,
-            account_name=account_name,
             account_key=account_key,
+            account_name=account_name,
+            can_delete_objects=can_delete_objects,
+            container=container,
+            description=description,
+            prefix=prefix,
+            project=project,
+            title=title,
             request_options=request_options,
         )
         return _response.data
@@ -722,88 +806,4 @@ class AsyncAzureClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.sync(id, request_options=request_options)
-        return _response.data
-
-    async def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific Azure export storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.export_storage.azure.validate()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.validate(
-            id=id,
-            can_delete_objects=can_delete_objects,
-            title=title,
-            description=description,
-            project=project,
-            container=container,
-            prefix=prefix,
-            account_name=account_name,
-            account_key=account_key,
-            request_options=request_options,
-        )
         return _response.data

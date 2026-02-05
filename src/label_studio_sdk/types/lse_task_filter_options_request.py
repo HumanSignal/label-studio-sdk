@@ -12,14 +12,9 @@ from .skipped_enum import SkippedEnum
 
 
 class LseTaskFilterOptionsRequest(UncheckedBaseModel):
-    view: typing.Optional[int] = pydantic.Field(default=None)
+    annotated: typing.Optional[AnnotatedEnum] = pydantic.Field(default=None)
     """
-    Apply filters from the view ID (a tab from the Data Manager)
-    """
-
-    skipped: typing.Optional[SkippedEnum] = pydantic.Field(default=None)
-    """
-    `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
+    `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
     
     * `only` - only
     * `exclude` - exclude
@@ -35,15 +30,6 @@ class LseTaskFilterOptionsRequest(UncheckedBaseModel):
     * `None` - None
     """
 
-    annotated: typing.Optional[AnnotatedEnum] = pydantic.Field(default=None)
-    """
-    `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
-    
-    * `only` - only
-    * `exclude` - exclude
-    * `None` - None
-    """
-
     only_with_annotations: typing.Optional[bool] = None
     reviewed: typing.Optional[ReviewedEnum] = pydantic.Field(default=None)
     """
@@ -52,6 +38,20 @@ class LseTaskFilterOptionsRequest(UncheckedBaseModel):
     * `only` - only
     * `exclude` - exclude
     * `None` - None
+    """
+
+    skipped: typing.Optional[SkippedEnum] = pydantic.Field(default=None)
+    """
+    `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
+    
+    * `only` - only
+    * `exclude` - exclude
+    * `None` - None
+    """
+
+    view: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Apply filters from the view ID (a tab from the Data Manager)
     """
 
     if IS_PYDANTIC_V2:

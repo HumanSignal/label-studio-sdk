@@ -93,12 +93,12 @@ class CommentsClient:
         self,
         *,
         expand_created_by: typing.Optional[bool] = None,
-        region_ref: typing.Optional[typing.Any] = OMIT,
-        classifications: typing.Optional[typing.Any] = OMIT,
-        text: typing.Optional[str] = OMIT,
-        is_resolved: typing.Optional[bool] = OMIT,
-        draft: typing.Optional[int] = OMIT,
         annotation: typing.Optional[int] = OMIT,
+        classifications: typing.Optional[typing.Any] = OMIT,
+        draft: typing.Optional[int] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
+        region_ref: typing.Optional[typing.Any] = OMIT,
+        text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MaybeExpandedComment:
         """
@@ -115,21 +115,21 @@ class CommentsClient:
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
 
-        region_ref : typing.Optional[typing.Any]
-            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
+        annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Any]
             Classifications applied by a reviewer or annotator
 
-        text : typing.Optional[str]
-            Reviewer or annotator comment
+        draft : typing.Optional[int]
 
         is_resolved : typing.Optional[bool]
             True if the comment is resolved
 
-        draft : typing.Optional[int]
+        region_ref : typing.Optional[typing.Any]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
-        annotation : typing.Optional[int]
+        text : typing.Optional[str]
+            Reviewer or annotator comment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -150,15 +150,69 @@ class CommentsClient:
         """
         _response = self._raw_client.create(
             expand_created_by=expand_created_by,
-            region_ref=region_ref,
-            classifications=classifications,
-            text=text,
-            is_resolved=is_resolved,
-            draft=draft,
             annotation=annotation,
+            classifications=classifications,
+            draft=draft,
+            is_resolved=is_resolved,
+            region_ref=region_ref,
+            text=text,
             request_options=request_options,
         )
         return _response.data
+
+    def export(
+        self,
+        *,
+        annotation: typing.Optional[int] = None,
+        annotators: typing.Optional[str] = None,
+        draft: typing.Optional[int] = None,
+        expand_created_by: typing.Optional[bool] = None,
+        projects: typing.Optional[str] = None,
+        tz: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Export comments to CSV file
+
+        Parameters
+        ----------
+        annotation : typing.Optional[int]
+
+        annotators : typing.Optional[str]
+
+        draft : typing.Optional[int]
+
+        expand_created_by : typing.Optional[bool]
+
+        projects : typing.Optional[str]
+
+        tz : typing.Optional[str]
+            Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+            CSV file with comments
+        """
+        with self._raw_client.export(
+            annotation=annotation,
+            annotators=annotators,
+            draft=draft,
+            expand_created_by=expand_created_by,
+            projects=projects,
+            tz=tz,
+            request_options=request_options,
+        ) as r:
+            yield from r.data
 
     def get(
         self,
@@ -254,12 +308,12 @@ class CommentsClient:
         id: str,
         *,
         expand_created_by: typing.Optional[bool] = None,
-        region_ref: typing.Optional[typing.Any] = OMIT,
-        classifications: typing.Optional[typing.Any] = OMIT,
-        text: typing.Optional[str] = OMIT,
-        is_resolved: typing.Optional[bool] = OMIT,
-        draft: typing.Optional[int] = OMIT,
         annotation: typing.Optional[int] = OMIT,
+        classifications: typing.Optional[typing.Any] = OMIT,
+        draft: typing.Optional[int] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
+        region_ref: typing.Optional[typing.Any] = OMIT,
+        text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MaybeExpandedComment:
         """
@@ -278,21 +332,21 @@ class CommentsClient:
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
 
-        region_ref : typing.Optional[typing.Any]
-            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
+        annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Any]
             Classifications applied by a reviewer or annotator
 
-        text : typing.Optional[str]
-            Reviewer or annotator comment
+        draft : typing.Optional[int]
 
         is_resolved : typing.Optional[bool]
             True if the comment is resolved
 
-        draft : typing.Optional[int]
+        region_ref : typing.Optional[typing.Any]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
-        annotation : typing.Optional[int]
+        text : typing.Optional[str]
+            Reviewer or annotator comment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -316,69 +370,15 @@ class CommentsClient:
         _response = self._raw_client.update(
             id,
             expand_created_by=expand_created_by,
-            region_ref=region_ref,
-            classifications=classifications,
-            text=text,
-            is_resolved=is_resolved,
-            draft=draft,
             annotation=annotation,
+            classifications=classifications,
+            draft=draft,
+            is_resolved=is_resolved,
+            region_ref=region_ref,
+            text=text,
             request_options=request_options,
         )
         return _response.data
-
-    def export(
-        self,
-        *,
-        annotation: typing.Optional[int] = None,
-        annotators: typing.Optional[str] = None,
-        draft: typing.Optional[int] = None,
-        expand_created_by: typing.Optional[bool] = None,
-        projects: typing.Optional[str] = None,
-        tz: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Export comments to CSV file
-
-        Parameters
-        ----------
-        annotation : typing.Optional[int]
-
-        annotators : typing.Optional[str]
-
-        draft : typing.Optional[int]
-
-        expand_created_by : typing.Optional[bool]
-
-        projects : typing.Optional[str]
-
-        tz : typing.Optional[str]
-            Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-
-        Returns
-        -------
-        typing.Iterator[bytes]
-            CSV file with comments
-        """
-        with self._raw_client.export(
-            annotation=annotation,
-            annotators=annotators,
-            draft=draft,
-            expand_created_by=expand_created_by,
-            projects=projects,
-            tz=tz,
-            request_options=request_options,
-        ) as r:
-            yield from r.data
 
 
 class AsyncCommentsClient:
@@ -471,12 +471,12 @@ class AsyncCommentsClient:
         self,
         *,
         expand_created_by: typing.Optional[bool] = None,
-        region_ref: typing.Optional[typing.Any] = OMIT,
-        classifications: typing.Optional[typing.Any] = OMIT,
-        text: typing.Optional[str] = OMIT,
-        is_resolved: typing.Optional[bool] = OMIT,
-        draft: typing.Optional[int] = OMIT,
         annotation: typing.Optional[int] = OMIT,
+        classifications: typing.Optional[typing.Any] = OMIT,
+        draft: typing.Optional[int] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
+        region_ref: typing.Optional[typing.Any] = OMIT,
+        text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MaybeExpandedComment:
         """
@@ -493,21 +493,21 @@ class AsyncCommentsClient:
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
 
-        region_ref : typing.Optional[typing.Any]
-            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
+        annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Any]
             Classifications applied by a reviewer or annotator
 
-        text : typing.Optional[str]
-            Reviewer or annotator comment
+        draft : typing.Optional[int]
 
         is_resolved : typing.Optional[bool]
             True if the comment is resolved
 
-        draft : typing.Optional[int]
+        region_ref : typing.Optional[typing.Any]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
-        annotation : typing.Optional[int]
+        text : typing.Optional[str]
+            Reviewer or annotator comment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -536,15 +536,70 @@ class AsyncCommentsClient:
         """
         _response = await self._raw_client.create(
             expand_created_by=expand_created_by,
-            region_ref=region_ref,
-            classifications=classifications,
-            text=text,
-            is_resolved=is_resolved,
-            draft=draft,
             annotation=annotation,
+            classifications=classifications,
+            draft=draft,
+            is_resolved=is_resolved,
+            region_ref=region_ref,
+            text=text,
             request_options=request_options,
         )
         return _response.data
+
+    async def export(
+        self,
+        *,
+        annotation: typing.Optional[int] = None,
+        annotators: typing.Optional[str] = None,
+        draft: typing.Optional[int] = None,
+        expand_created_by: typing.Optional[bool] = None,
+        projects: typing.Optional[str] = None,
+        tz: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Export comments to CSV file
+
+        Parameters
+        ----------
+        annotation : typing.Optional[int]
+
+        annotators : typing.Optional[str]
+
+        draft : typing.Optional[int]
+
+        expand_created_by : typing.Optional[bool]
+
+        projects : typing.Optional[str]
+
+        tz : typing.Optional[str]
+            Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+            CSV file with comments
+        """
+        async with self._raw_client.export(
+            annotation=annotation,
+            annotators=annotators,
+            draft=draft,
+            expand_created_by=expand_created_by,
+            projects=projects,
+            tz=tz,
+            request_options=request_options,
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
 
     async def get(
         self,
@@ -658,12 +713,12 @@ class AsyncCommentsClient:
         id: str,
         *,
         expand_created_by: typing.Optional[bool] = None,
-        region_ref: typing.Optional[typing.Any] = OMIT,
-        classifications: typing.Optional[typing.Any] = OMIT,
-        text: typing.Optional[str] = OMIT,
-        is_resolved: typing.Optional[bool] = OMIT,
-        draft: typing.Optional[int] = OMIT,
         annotation: typing.Optional[int] = OMIT,
+        classifications: typing.Optional[typing.Any] = OMIT,
+        draft: typing.Optional[int] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
+        region_ref: typing.Optional[typing.Any] = OMIT,
+        text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MaybeExpandedComment:
         """
@@ -682,21 +737,21 @@ class AsyncCommentsClient:
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
 
-        region_ref : typing.Optional[typing.Any]
-            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
+        annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Any]
             Classifications applied by a reviewer or annotator
 
-        text : typing.Optional[str]
-            Reviewer or annotator comment
+        draft : typing.Optional[int]
 
         is_resolved : typing.Optional[bool]
             True if the comment is resolved
 
-        draft : typing.Optional[int]
+        region_ref : typing.Optional[typing.Any]
+            Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
 
-        annotation : typing.Optional[int]
+        text : typing.Optional[str]
+            Reviewer or annotator comment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -728,67 +783,12 @@ class AsyncCommentsClient:
         _response = await self._raw_client.update(
             id,
             expand_created_by=expand_created_by,
-            region_ref=region_ref,
-            classifications=classifications,
-            text=text,
-            is_resolved=is_resolved,
-            draft=draft,
             annotation=annotation,
+            classifications=classifications,
+            draft=draft,
+            is_resolved=is_resolved,
+            region_ref=region_ref,
+            text=text,
             request_options=request_options,
         )
         return _response.data
-
-    async def export(
-        self,
-        *,
-        annotation: typing.Optional[int] = None,
-        annotators: typing.Optional[str] = None,
-        draft: typing.Optional[int] = None,
-        expand_created_by: typing.Optional[bool] = None,
-        projects: typing.Optional[str] = None,
-        tz: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Export comments to CSV file
-
-        Parameters
-        ----------
-        annotation : typing.Optional[int]
-
-        annotators : typing.Optional[str]
-
-        draft : typing.Optional[int]
-
-        expand_created_by : typing.Optional[bool]
-
-        projects : typing.Optional[str]
-
-        tz : typing.Optional[str]
-            Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-
-        Returns
-        -------
-        typing.AsyncIterator[bytes]
-            CSV file with comments
-        """
-        async with self._raw_client.export(
-            annotation=annotation,
-            annotators=annotators,
-            draft=draft,
-            expand_created_by=expand_created_by,
-            projects=projects,
-            tz=tz,
-            request_options=request_options,
-        ) as r:
-            async for _chunk in r.data:
-                yield _chunk

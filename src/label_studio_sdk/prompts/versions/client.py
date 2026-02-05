@@ -113,13 +113,13 @@ class VersionsClient:
         self,
         prompt_id: int,
         *,
-        title: str,
         prompt: str,
         provider_model_id: str,
-        parent_model: typing.Optional[int] = OMIT,
-        provider: typing.Optional[ProviderEnum] = OMIT,
+        title: str,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        parent_model: typing.Optional[int] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ThirdPartyModelVersion:
         """
@@ -135,14 +135,18 @@ class VersionsClient:
         ----------
         prompt_id : int
 
-        title : str
-            Model name
-
         prompt : str
             Prompt to execute
 
         provider_model_id : str
             The model ID to use within the given provider, e.g. gpt-3.5
+
+        title : str
+            Model name
+
+        model_provider_connection : typing.Optional[int]
+
+        organization : typing.Optional[int]
 
         parent_model : typing.Optional[int]
             Parent model interface ID
@@ -157,10 +161,6 @@ class VersionsClient:
             * `Gemini` - Gemini
             * `Anthropic` - Anthropic
             * `Custom` - Custom
-
-        model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -179,20 +179,20 @@ class VersionsClient:
         )
         client.prompts.versions.create(
             prompt_id=1,
-            title="title",
             prompt="prompt",
             provider_model_id="provider_model_id",
+            title="title",
         )
         """
         _response = self._raw_client.create(
             prompt_id,
-            title=title,
             prompt=prompt,
             provider_model_id=provider_model_id,
-            parent_model=parent_model,
-            provider=provider,
+            title=title,
             model_provider_connection=model_provider_connection,
             organization=organization,
+            parent_model=parent_model,
+            provider=provider,
             request_options=request_options,
         )
         return _response.data
@@ -283,13 +283,13 @@ class VersionsClient:
         prompt_id: int,
         version_id: int,
         *,
+        model_provider_connection: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
-        model_provider_connection: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ThirdPartyModelVersion:
         """
@@ -307,11 +307,12 @@ class VersionsClient:
 
         version_id : int
 
+        model_provider_connection : typing.Optional[int]
+
+        organization : typing.Optional[int]
+
         parent_model : typing.Optional[int]
             Parent model interface ID
-
-        title : typing.Optional[str]
-            Model name
 
         prompt : typing.Optional[str]
             Prompt to execute
@@ -330,9 +331,8 @@ class VersionsClient:
         provider_model_id : typing.Optional[str]
             The model ID to use within the given provider, e.g. gpt-3.5
 
-        model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
+        title : typing.Optional[str]
+            Model name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -357,13 +357,13 @@ class VersionsClient:
         _response = self._raw_client.update(
             prompt_id,
             version_id,
+            model_provider_connection=model_provider_connection,
+            organization=organization,
             parent_model=parent_model,
-            title=title,
             prompt=prompt,
             provider=provider,
             provider_model_id=provider_model_id,
-            model_provider_connection=model_provider_connection,
-            organization=organization,
+            title=title,
             request_options=request_options,
         )
         return _response.data
@@ -465,9 +465,9 @@ class VersionsClient:
         prompt_id: int,
         version_id: int,
         *,
-        teacher_model_provider_connection_id: int,
-        teacher_model_name: str,
         project_id: int,
+        teacher_model_name: str,
+        teacher_model_provider_connection_id: int,
         async_: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
@@ -486,14 +486,14 @@ class VersionsClient:
 
         version_id : int
 
-        teacher_model_provider_connection_id : int
-            Model Provider Connection ID to use to refine the prompt
+        project_id : int
+            Project ID to target the refined prompt for
 
         teacher_model_name : str
             Name of the model to use to refine the prompt
 
-        project_id : int
-            Project ID to target the refined prompt for
+        teacher_model_provider_connection_id : int
+            Model Provider Connection ID to use to refine the prompt
 
         async_ : typing.Optional[bool]
             Whether to run the refinement asynchronously
@@ -516,17 +516,17 @@ class VersionsClient:
         client.prompts.versions.refine_prompt(
             prompt_id=1,
             version_id=1,
-            teacher_model_provider_connection_id=1,
-            teacher_model_name="teacher_model_name",
             project_id=1,
+            teacher_model_name="teacher_model_name",
+            teacher_model_provider_connection_id=1,
         )
         """
         _response = self._raw_client.refine_prompt(
             prompt_id,
             version_id,
-            teacher_model_provider_connection_id=teacher_model_provider_connection_id,
-            teacher_model_name=teacher_model_name,
             project_id=project_id,
+            teacher_model_name=teacher_model_name,
+            teacher_model_provider_connection_id=teacher_model_provider_connection_id,
             async_=async_,
             request_options=request_options,
         )
@@ -650,13 +650,13 @@ class AsyncVersionsClient:
         self,
         prompt_id: int,
         *,
-        title: str,
         prompt: str,
         provider_model_id: str,
-        parent_model: typing.Optional[int] = OMIT,
-        provider: typing.Optional[ProviderEnum] = OMIT,
+        title: str,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        parent_model: typing.Optional[int] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ThirdPartyModelVersion:
         """
@@ -672,14 +672,18 @@ class AsyncVersionsClient:
         ----------
         prompt_id : int
 
-        title : str
-            Model name
-
         prompt : str
             Prompt to execute
 
         provider_model_id : str
             The model ID to use within the given provider, e.g. gpt-3.5
+
+        title : str
+            Model name
+
+        model_provider_connection : typing.Optional[int]
+
+        organization : typing.Optional[int]
 
         parent_model : typing.Optional[int]
             Parent model interface ID
@@ -694,10 +698,6 @@ class AsyncVersionsClient:
             * `Gemini` - Gemini
             * `Anthropic` - Anthropic
             * `Custom` - Custom
-
-        model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -721,9 +721,9 @@ class AsyncVersionsClient:
         async def main() -> None:
             await client.prompts.versions.create(
                 prompt_id=1,
-                title="title",
                 prompt="prompt",
                 provider_model_id="provider_model_id",
+                title="title",
             )
 
 
@@ -731,13 +731,13 @@ class AsyncVersionsClient:
         """
         _response = await self._raw_client.create(
             prompt_id,
-            title=title,
             prompt=prompt,
             provider_model_id=provider_model_id,
-            parent_model=parent_model,
-            provider=provider,
+            title=title,
             model_provider_connection=model_provider_connection,
             organization=organization,
+            parent_model=parent_model,
+            provider=provider,
             request_options=request_options,
         )
         return _response.data
@@ -844,13 +844,13 @@ class AsyncVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
+        model_provider_connection: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
-        model_provider_connection: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ThirdPartyModelVersion:
         """
@@ -868,11 +868,12 @@ class AsyncVersionsClient:
 
         version_id : int
 
+        model_provider_connection : typing.Optional[int]
+
+        organization : typing.Optional[int]
+
         parent_model : typing.Optional[int]
             Parent model interface ID
-
-        title : typing.Optional[str]
-            Model name
 
         prompt : typing.Optional[str]
             Prompt to execute
@@ -891,9 +892,8 @@ class AsyncVersionsClient:
         provider_model_id : typing.Optional[str]
             The model ID to use within the given provider, e.g. gpt-3.5
 
-        model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
+        title : typing.Optional[str]
+            Model name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -926,13 +926,13 @@ class AsyncVersionsClient:
         _response = await self._raw_client.update(
             prompt_id,
             version_id,
+            model_provider_connection=model_provider_connection,
+            organization=organization,
             parent_model=parent_model,
-            title=title,
             prompt=prompt,
             provider=provider,
             provider_model_id=provider_model_id,
-            model_provider_connection=model_provider_connection,
-            organization=organization,
+            title=title,
             request_options=request_options,
         )
         return _response.data
@@ -1050,9 +1050,9 @@ class AsyncVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
-        teacher_model_provider_connection_id: int,
-        teacher_model_name: str,
         project_id: int,
+        teacher_model_name: str,
+        teacher_model_provider_connection_id: int,
         async_: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
@@ -1071,14 +1071,14 @@ class AsyncVersionsClient:
 
         version_id : int
 
-        teacher_model_provider_connection_id : int
-            Model Provider Connection ID to use to refine the prompt
+        project_id : int
+            Project ID to target the refined prompt for
 
         teacher_model_name : str
             Name of the model to use to refine the prompt
 
-        project_id : int
-            Project ID to target the refined prompt for
+        teacher_model_provider_connection_id : int
+            Model Provider Connection ID to use to refine the prompt
 
         async_ : typing.Optional[bool]
             Whether to run the refinement asynchronously
@@ -1106,9 +1106,9 @@ class AsyncVersionsClient:
             await client.prompts.versions.refine_prompt(
                 prompt_id=1,
                 version_id=1,
-                teacher_model_provider_connection_id=1,
-                teacher_model_name="teacher_model_name",
                 project_id=1,
+                teacher_model_name="teacher_model_name",
+                teacher_model_provider_connection_id=1,
             )
 
 
@@ -1117,9 +1117,9 @@ class AsyncVersionsClient:
         _response = await self._raw_client.refine_prompt(
             prompt_id,
             version_id,
-            teacher_model_provider_connection_id=teacher_model_provider_connection_id,
-            teacher_model_name=teacher_model_name,
             project_id=project_id,
+            teacher_model_name=teacher_model_name,
+            teacher_model_provider_connection_id=teacher_model_provider_connection_id,
             async_=async_,
             request_options=request_options,
         )

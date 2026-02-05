@@ -72,10 +72,10 @@ class RawPredictionsClient:
     def create(
         self,
         *,
-        task: typing.Optional[int] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         score: typing.Optional[float] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
+        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Prediction]:
         """
@@ -83,8 +83,8 @@ class RawPredictionsClient:
 
         Parameters
         ----------
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+        model_version : typing.Optional[str]
+            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
             Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
@@ -92,8 +92,8 @@ class RawPredictionsClient:
         score : typing.Optional[float]
             Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
 
-        model_version : typing.Optional[str]
-            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+        task : typing.Optional[int]
+            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -107,10 +107,10 @@ class RawPredictionsClient:
             "api/predictions/",
             method="POST",
             json={
-                "task": task,
+                "model_version": model_version,
                 "result": result,
                 "score": score,
-                "model_version": model_version,
+                "task": task,
             },
             headers={
                 "content-type": "application/json",
@@ -203,10 +203,10 @@ class RawPredictionsClient:
         self,
         id: int,
         *,
-        task: typing.Optional[int] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         score: typing.Optional[float] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
+        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Prediction]:
         """
@@ -217,8 +217,8 @@ class RawPredictionsClient:
         id : int
             Prediction ID
 
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+        model_version : typing.Optional[str]
+            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
             Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
@@ -226,8 +226,8 @@ class RawPredictionsClient:
         score : typing.Optional[float]
             Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
 
-        model_version : typing.Optional[str]
-            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+        task : typing.Optional[int]
+            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -241,10 +241,10 @@ class RawPredictionsClient:
             f"api/predictions/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "task": task,
+                "model_version": model_version,
                 "result": result,
                 "score": score,
-                "model_version": model_version,
+                "task": task,
             },
             headers={
                 "content-type": "application/json",
@@ -325,10 +325,10 @@ class AsyncRawPredictionsClient:
     async def create(
         self,
         *,
-        task: typing.Optional[int] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         score: typing.Optional[float] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
+        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Prediction]:
         """
@@ -336,8 +336,8 @@ class AsyncRawPredictionsClient:
 
         Parameters
         ----------
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+        model_version : typing.Optional[str]
+            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
             Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
@@ -345,8 +345,8 @@ class AsyncRawPredictionsClient:
         score : typing.Optional[float]
             Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
 
-        model_version : typing.Optional[str]
-            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+        task : typing.Optional[int]
+            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -360,10 +360,10 @@ class AsyncRawPredictionsClient:
             "api/predictions/",
             method="POST",
             json={
-                "task": task,
+                "model_version": model_version,
                 "result": result,
                 "score": score,
-                "model_version": model_version,
+                "task": task,
             },
             headers={
                 "content-type": "application/json",
@@ -460,10 +460,10 @@ class AsyncRawPredictionsClient:
         self,
         id: int,
         *,
-        task: typing.Optional[int] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         score: typing.Optional[float] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
+        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Prediction]:
         """
@@ -474,8 +474,8 @@ class AsyncRawPredictionsClient:
         id : int
             Prediction ID
 
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+        model_version : typing.Optional[str]
+            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
             Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
@@ -483,8 +483,8 @@ class AsyncRawPredictionsClient:
         score : typing.Optional[float]
             Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
 
-        model_version : typing.Optional[str]
-            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+        task : typing.Optional[int]
+            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -498,10 +498,10 @@ class AsyncRawPredictionsClient:
             f"api/predictions/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "task": task,
+                "model_version": model_version,
                 "result": result,
                 "score": score,
-                "model_version": model_version,
+                "task": task,
             },
             headers={
                 "content-type": "application/json",

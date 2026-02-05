@@ -150,8 +150,8 @@ class RawInvitesClient:
             method="POST",
             json={
                 "emails": emails,
-                "role": role,
                 "projects": projects,
+                "role": role,
                 "workspaces": workspaces,
             },
             headers={
@@ -314,8 +314,8 @@ class AsyncRawInvitesClient:
             method="POST",
             json={
                 "emails": emails,
-                "role": role,
                 "projects": projects,
+                "role": role,
                 "workspaces": workspaces,
             },
             headers={

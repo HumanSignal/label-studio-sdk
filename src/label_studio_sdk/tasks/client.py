@@ -214,21 +214,21 @@ class TasksClient:
         self,
         *,
         data: typing.Any,
-        meta: typing.Optional[typing.Any] = OMIT,
-        is_labeled: typing.Optional[bool] = OMIT,
         allow_skip: typing.Optional[bool] = OMIT,
-        overlap: typing.Optional[int] = OMIT,
-        inner_id: typing.Optional[int] = OMIT,
-        total_annotations: typing.Optional[int] = OMIT,
         cancelled_annotations: typing.Optional[int] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
-        comment_count: typing.Optional[int] = OMIT,
-        unresolved_comment_count: typing.Optional[int] = OMIT,
-        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        updated_by: typing.Optional[int] = OMIT,
-        file_upload: typing.Optional[int] = OMIT,
         comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
+        file_upload: typing.Optional[int] = OMIT,
+        inner_id: typing.Optional[int] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        unresolved_comment_count: typing.Optional[int] = OMIT,
+        updated_by: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseTask:
         """
@@ -238,50 +238,50 @@ class TasksClient:
         ----------
         data : typing.Any
 
-        meta : typing.Optional[typing.Any]
-            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
-
-        is_labeled : typing.Optional[bool]
-            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
-
         allow_skip : typing.Optional[bool]
             Whether this task can be skipped. Set to False to make task unskippable.
-
-        overlap : typing.Optional[int]
-            Number of distinct annotators that processed the current task
-
-        inner_id : typing.Optional[int]
-            Internal task ID in the project, starts with 1
-
-        total_annotations : typing.Optional[int]
-            Number of total annotations for the current task except cancelled annotations
 
         cancelled_annotations : typing.Optional[int]
             Number of total cancelled annotations for the current task
 
-        total_predictions : typing.Optional[int]
-            Number of total predictions for the current task
+        comment_authors : typing.Optional[typing.Sequence[int]]
+            Users who wrote comments
 
         comment_count : typing.Optional[int]
             Number of comments in the task including all annotations
 
-        unresolved_comment_count : typing.Optional[int]
-            Number of unresolved comments in the task including all annotations
+        file_upload : typing.Optional[int]
+            Uploaded file used as data source for this task
+
+        inner_id : typing.Optional[int]
+            Internal task ID in the project, starts with 1
+
+        is_labeled : typing.Optional[bool]
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
 
         last_comment_updated_at : typing.Optional[dt.datetime]
             When the last comment was updated
 
+        meta : typing.Optional[typing.Any]
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+
+        overlap : typing.Optional[int]
+            Number of distinct annotators that processed the current task
+
         project : typing.Optional[int]
             Project ID for this task
 
+        total_annotations : typing.Optional[int]
+            Number of total annotations for the current task except cancelled annotations
+
+        total_predictions : typing.Optional[int]
+            Number of total predictions for the current task
+
+        unresolved_comment_count : typing.Optional[int]
+            Number of unresolved comments in the task including all annotations
+
         updated_by : typing.Optional[int]
             Last annotator or reviewer who updated this task
-
-        file_upload : typing.Optional[int]
-            Uploaded file used as data source for this task
-
-        comment_authors : typing.Optional[typing.Sequence[int]]
-            Users who wrote comments
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -305,21 +305,21 @@ class TasksClient:
         """
         _response = self._raw_client.create(
             data=data,
-            meta=meta,
-            is_labeled=is_labeled,
             allow_skip=allow_skip,
-            overlap=overlap,
-            inner_id=inner_id,
-            total_annotations=total_annotations,
             cancelled_annotations=cancelled_annotations,
-            total_predictions=total_predictions,
-            comment_count=comment_count,
-            unresolved_comment_count=unresolved_comment_count,
-            last_comment_updated_at=last_comment_updated_at,
-            project=project,
-            updated_by=updated_by,
-            file_upload=file_upload,
             comment_authors=comment_authors,
+            comment_count=comment_count,
+            file_upload=file_upload,
+            inner_id=inner_id,
+            is_labeled=is_labeled,
+            last_comment_updated_at=last_comment_updated_at,
+            meta=meta,
+            overlap=overlap,
+            project=project,
+            total_annotations=total_annotations,
+            total_predictions=total_predictions,
+            unresolved_comment_count=unresolved_comment_count,
+            updated_by=updated_by,
             request_options=request_options,
         )
         return _response.data
@@ -389,28 +389,28 @@ class TasksClient:
         self,
         id: str,
         *,
-        inner_id: typing.Optional[int] = OMIT,
-        cancelled_annotations: typing.Optional[int] = OMIT,
-        total_annotations: typing.Optional[int] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
-        completed_at: typing.Optional[dt.datetime] = OMIT,
-        predictions_score: typing.Optional[float] = OMIT,
+        allow_skip: typing.Optional[bool] = OMIT,
         avg_lead_time: typing.Optional[float] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
+        completed_at: typing.Optional[dt.datetime] = OMIT,
+        data: typing.Optional[typing.Any] = OMIT,
         draft_exists: typing.Optional[bool] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        inner_id: typing.Optional[int] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        precomputed_agreement: typing.Optional[float] = OMIT,
+        predictions_score: typing.Optional[float] = OMIT,
+        project: typing.Optional[int] = OMIT,
         reviewed: typing.Optional[bool] = OMIT,
         reviews_accepted: typing.Optional[int] = OMIT,
         reviews_rejected: typing.Optional[int] = OMIT,
-        ground_truth: typing.Optional[bool] = OMIT,
-        data: typing.Optional[typing.Any] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        is_labeled: typing.Optional[bool] = OMIT,
-        allow_skip: typing.Optional[bool] = OMIT,
-        overlap: typing.Optional[int] = OMIT,
-        precomputed_agreement: typing.Optional[float] = OMIT,
-        comment_count: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
         unresolved_comment_count: typing.Optional[int] = OMIT,
-        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
-        project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RoleBasedTask:
         """
@@ -421,41 +421,35 @@ class TasksClient:
         id : str
             Task ID
 
-        inner_id : typing.Optional[int]
-
-        cancelled_annotations : typing.Optional[int]
-
-        total_annotations : typing.Optional[int]
-
-        total_predictions : typing.Optional[int]
-
-        completed_at : typing.Optional[dt.datetime]
-
-        predictions_score : typing.Optional[float]
+        allow_skip : typing.Optional[bool]
+            Whether this task can be skipped. Set to False to make task unskippable.
 
         avg_lead_time : typing.Optional[float]
 
-        draft_exists : typing.Optional[bool]
+        cancelled_annotations : typing.Optional[int]
 
-        reviewed : typing.Optional[bool]
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
 
-        reviews_accepted : typing.Optional[int]
-
-        reviews_rejected : typing.Optional[int]
-
-        ground_truth : typing.Optional[bool]
+        completed_at : typing.Optional[dt.datetime]
 
         data : typing.Optional[typing.Any]
             User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
 
-        meta : typing.Optional[typing.Any]
-            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+        draft_exists : typing.Optional[bool]
+
+        ground_truth : typing.Optional[bool]
+
+        inner_id : typing.Optional[int]
 
         is_labeled : typing.Optional[bool]
             True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
 
-        allow_skip : typing.Optional[bool]
-            Whether this task can be skipped. Set to False to make task unskippable.
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
+
+        meta : typing.Optional[typing.Any]
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
 
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
@@ -463,17 +457,23 @@ class TasksClient:
         precomputed_agreement : typing.Optional[float]
             Average agreement score for the task
 
-        comment_count : typing.Optional[int]
-            Number of comments in the task including all annotations
-
-        unresolved_comment_count : typing.Optional[int]
-            Number of unresolved comments in the task including all annotations
-
-        last_comment_updated_at : typing.Optional[dt.datetime]
-            When the last comment was updated
+        predictions_score : typing.Optional[float]
 
         project : typing.Optional[int]
             Project ID for this task
+
+        reviewed : typing.Optional[bool]
+
+        reviews_accepted : typing.Optional[int]
+
+        reviews_rejected : typing.Optional[int]
+
+        total_annotations : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        unresolved_comment_count : typing.Optional[int]
+            Number of unresolved comments in the task including all annotations
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -496,28 +496,28 @@ class TasksClient:
         """
         _response = self._raw_client.update(
             id,
-            inner_id=inner_id,
-            cancelled_annotations=cancelled_annotations,
-            total_annotations=total_annotations,
-            total_predictions=total_predictions,
-            completed_at=completed_at,
-            predictions_score=predictions_score,
+            allow_skip=allow_skip,
             avg_lead_time=avg_lead_time,
+            cancelled_annotations=cancelled_annotations,
+            comment_count=comment_count,
+            completed_at=completed_at,
+            data=data,
             draft_exists=draft_exists,
+            ground_truth=ground_truth,
+            inner_id=inner_id,
+            is_labeled=is_labeled,
+            last_comment_updated_at=last_comment_updated_at,
+            meta=meta,
+            overlap=overlap,
+            precomputed_agreement=precomputed_agreement,
+            predictions_score=predictions_score,
+            project=project,
             reviewed=reviewed,
             reviews_accepted=reviews_accepted,
             reviews_rejected=reviews_rejected,
-            ground_truth=ground_truth,
-            data=data,
-            meta=meta,
-            is_labeled=is_labeled,
-            allow_skip=allow_skip,
-            overlap=overlap,
-            precomputed_agreement=precomputed_agreement,
-            comment_count=comment_count,
+            total_annotations=total_annotations,
+            total_predictions=total_predictions,
             unresolved_comment_count=unresolved_comment_count,
-            last_comment_updated_at=last_comment_updated_at,
-            project=project,
             request_options=request_options,
         )
         return _response.data
@@ -528,10 +528,10 @@ class TasksClient:
         *,
         event_key: str,
         event_time: dt.datetime,
-        annotation_draft_id: typing.Optional[int] = OMIT,
         annotation: typing.Optional[int] = OMIT,
-        review: typing.Optional[int] = OMIT,
+        annotation_draft_id: typing.Optional[int] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
+        review: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskEvent:
         """
@@ -596,17 +596,17 @@ class TasksClient:
         event_time : dt.datetime
             Timestamp when the event occurred (frontend time)
 
-        annotation_draft_id : typing.Optional[int]
-            Draft annotation ID associated with this event
-
         annotation : typing.Optional[int]
             Annotation ID associated with this event
 
-        review : typing.Optional[int]
-            Review ID associated with this event
+        annotation_draft_id : typing.Optional[int]
+            Draft annotation ID associated with this event
 
         meta : typing.Optional[typing.Any]
             Additional event metadata (region data, hotkey info, etc.)
+
+        review : typing.Optional[int]
+            Review ID associated with this event
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -637,10 +637,10 @@ class TasksClient:
             id,
             event_key=event_key,
             event_time=event_time,
-            annotation_draft_id=annotation_draft_id,
             annotation=annotation,
-            review=review,
+            annotation_draft_id=annotation_draft_id,
             meta=meta,
+            review=review,
             request_options=request_options,
         )
         return _response.data
@@ -867,21 +867,21 @@ class AsyncTasksClient:
         self,
         *,
         data: typing.Any,
-        meta: typing.Optional[typing.Any] = OMIT,
-        is_labeled: typing.Optional[bool] = OMIT,
         allow_skip: typing.Optional[bool] = OMIT,
-        overlap: typing.Optional[int] = OMIT,
-        inner_id: typing.Optional[int] = OMIT,
-        total_annotations: typing.Optional[int] = OMIT,
         cancelled_annotations: typing.Optional[int] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
-        comment_count: typing.Optional[int] = OMIT,
-        unresolved_comment_count: typing.Optional[int] = OMIT,
-        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        updated_by: typing.Optional[int] = OMIT,
-        file_upload: typing.Optional[int] = OMIT,
         comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
+        file_upload: typing.Optional[int] = OMIT,
+        inner_id: typing.Optional[int] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        unresolved_comment_count: typing.Optional[int] = OMIT,
+        updated_by: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseTask:
         """
@@ -891,50 +891,50 @@ class AsyncTasksClient:
         ----------
         data : typing.Any
 
-        meta : typing.Optional[typing.Any]
-            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
-
-        is_labeled : typing.Optional[bool]
-            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
-
         allow_skip : typing.Optional[bool]
             Whether this task can be skipped. Set to False to make task unskippable.
-
-        overlap : typing.Optional[int]
-            Number of distinct annotators that processed the current task
-
-        inner_id : typing.Optional[int]
-            Internal task ID in the project, starts with 1
-
-        total_annotations : typing.Optional[int]
-            Number of total annotations for the current task except cancelled annotations
 
         cancelled_annotations : typing.Optional[int]
             Number of total cancelled annotations for the current task
 
-        total_predictions : typing.Optional[int]
-            Number of total predictions for the current task
+        comment_authors : typing.Optional[typing.Sequence[int]]
+            Users who wrote comments
 
         comment_count : typing.Optional[int]
             Number of comments in the task including all annotations
 
-        unresolved_comment_count : typing.Optional[int]
-            Number of unresolved comments in the task including all annotations
+        file_upload : typing.Optional[int]
+            Uploaded file used as data source for this task
+
+        inner_id : typing.Optional[int]
+            Internal task ID in the project, starts with 1
+
+        is_labeled : typing.Optional[bool]
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
 
         last_comment_updated_at : typing.Optional[dt.datetime]
             When the last comment was updated
 
+        meta : typing.Optional[typing.Any]
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+
+        overlap : typing.Optional[int]
+            Number of distinct annotators that processed the current task
+
         project : typing.Optional[int]
             Project ID for this task
 
+        total_annotations : typing.Optional[int]
+            Number of total annotations for the current task except cancelled annotations
+
+        total_predictions : typing.Optional[int]
+            Number of total predictions for the current task
+
+        unresolved_comment_count : typing.Optional[int]
+            Number of unresolved comments in the task including all annotations
+
         updated_by : typing.Optional[int]
             Last annotator or reviewer who updated this task
-
-        file_upload : typing.Optional[int]
-            Uploaded file used as data source for this task
-
-        comment_authors : typing.Optional[typing.Sequence[int]]
-            Users who wrote comments
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -969,21 +969,21 @@ class AsyncTasksClient:
         """
         _response = await self._raw_client.create(
             data=data,
-            meta=meta,
-            is_labeled=is_labeled,
             allow_skip=allow_skip,
-            overlap=overlap,
-            inner_id=inner_id,
-            total_annotations=total_annotations,
             cancelled_annotations=cancelled_annotations,
-            total_predictions=total_predictions,
-            comment_count=comment_count,
-            unresolved_comment_count=unresolved_comment_count,
-            last_comment_updated_at=last_comment_updated_at,
-            project=project,
-            updated_by=updated_by,
-            file_upload=file_upload,
             comment_authors=comment_authors,
+            comment_count=comment_count,
+            file_upload=file_upload,
+            inner_id=inner_id,
+            is_labeled=is_labeled,
+            last_comment_updated_at=last_comment_updated_at,
+            meta=meta,
+            overlap=overlap,
+            project=project,
+            total_annotations=total_annotations,
+            total_predictions=total_predictions,
+            unresolved_comment_count=unresolved_comment_count,
+            updated_by=updated_by,
             request_options=request_options,
         )
         return _response.data
@@ -1069,28 +1069,28 @@ class AsyncTasksClient:
         self,
         id: str,
         *,
-        inner_id: typing.Optional[int] = OMIT,
-        cancelled_annotations: typing.Optional[int] = OMIT,
-        total_annotations: typing.Optional[int] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
-        completed_at: typing.Optional[dt.datetime] = OMIT,
-        predictions_score: typing.Optional[float] = OMIT,
+        allow_skip: typing.Optional[bool] = OMIT,
         avg_lead_time: typing.Optional[float] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
+        completed_at: typing.Optional[dt.datetime] = OMIT,
+        data: typing.Optional[typing.Any] = OMIT,
         draft_exists: typing.Optional[bool] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        inner_id: typing.Optional[int] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        precomputed_agreement: typing.Optional[float] = OMIT,
+        predictions_score: typing.Optional[float] = OMIT,
+        project: typing.Optional[int] = OMIT,
         reviewed: typing.Optional[bool] = OMIT,
         reviews_accepted: typing.Optional[int] = OMIT,
         reviews_rejected: typing.Optional[int] = OMIT,
-        ground_truth: typing.Optional[bool] = OMIT,
-        data: typing.Optional[typing.Any] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        is_labeled: typing.Optional[bool] = OMIT,
-        allow_skip: typing.Optional[bool] = OMIT,
-        overlap: typing.Optional[int] = OMIT,
-        precomputed_agreement: typing.Optional[float] = OMIT,
-        comment_count: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
         unresolved_comment_count: typing.Optional[int] = OMIT,
-        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
-        project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RoleBasedTask:
         """
@@ -1101,41 +1101,35 @@ class AsyncTasksClient:
         id : str
             Task ID
 
-        inner_id : typing.Optional[int]
-
-        cancelled_annotations : typing.Optional[int]
-
-        total_annotations : typing.Optional[int]
-
-        total_predictions : typing.Optional[int]
-
-        completed_at : typing.Optional[dt.datetime]
-
-        predictions_score : typing.Optional[float]
+        allow_skip : typing.Optional[bool]
+            Whether this task can be skipped. Set to False to make task unskippable.
 
         avg_lead_time : typing.Optional[float]
 
-        draft_exists : typing.Optional[bool]
+        cancelled_annotations : typing.Optional[int]
 
-        reviewed : typing.Optional[bool]
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
 
-        reviews_accepted : typing.Optional[int]
-
-        reviews_rejected : typing.Optional[int]
-
-        ground_truth : typing.Optional[bool]
+        completed_at : typing.Optional[dt.datetime]
 
         data : typing.Optional[typing.Any]
             User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
 
-        meta : typing.Optional[typing.Any]
-            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+        draft_exists : typing.Optional[bool]
+
+        ground_truth : typing.Optional[bool]
+
+        inner_id : typing.Optional[int]
 
         is_labeled : typing.Optional[bool]
             True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
 
-        allow_skip : typing.Optional[bool]
-            Whether this task can be skipped. Set to False to make task unskippable.
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
+
+        meta : typing.Optional[typing.Any]
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
 
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
@@ -1143,17 +1137,23 @@ class AsyncTasksClient:
         precomputed_agreement : typing.Optional[float]
             Average agreement score for the task
 
-        comment_count : typing.Optional[int]
-            Number of comments in the task including all annotations
-
-        unresolved_comment_count : typing.Optional[int]
-            Number of unresolved comments in the task including all annotations
-
-        last_comment_updated_at : typing.Optional[dt.datetime]
-            When the last comment was updated
+        predictions_score : typing.Optional[float]
 
         project : typing.Optional[int]
             Project ID for this task
+
+        reviewed : typing.Optional[bool]
+
+        reviews_accepted : typing.Optional[int]
+
+        reviews_rejected : typing.Optional[int]
+
+        total_annotations : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        unresolved_comment_count : typing.Optional[int]
+            Number of unresolved comments in the task including all annotations
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1184,28 +1184,28 @@ class AsyncTasksClient:
         """
         _response = await self._raw_client.update(
             id,
-            inner_id=inner_id,
-            cancelled_annotations=cancelled_annotations,
-            total_annotations=total_annotations,
-            total_predictions=total_predictions,
-            completed_at=completed_at,
-            predictions_score=predictions_score,
+            allow_skip=allow_skip,
             avg_lead_time=avg_lead_time,
+            cancelled_annotations=cancelled_annotations,
+            comment_count=comment_count,
+            completed_at=completed_at,
+            data=data,
             draft_exists=draft_exists,
+            ground_truth=ground_truth,
+            inner_id=inner_id,
+            is_labeled=is_labeled,
+            last_comment_updated_at=last_comment_updated_at,
+            meta=meta,
+            overlap=overlap,
+            precomputed_agreement=precomputed_agreement,
+            predictions_score=predictions_score,
+            project=project,
             reviewed=reviewed,
             reviews_accepted=reviews_accepted,
             reviews_rejected=reviews_rejected,
-            ground_truth=ground_truth,
-            data=data,
-            meta=meta,
-            is_labeled=is_labeled,
-            allow_skip=allow_skip,
-            overlap=overlap,
-            precomputed_agreement=precomputed_agreement,
-            comment_count=comment_count,
+            total_annotations=total_annotations,
+            total_predictions=total_predictions,
             unresolved_comment_count=unresolved_comment_count,
-            last_comment_updated_at=last_comment_updated_at,
-            project=project,
             request_options=request_options,
         )
         return _response.data
@@ -1216,10 +1216,10 @@ class AsyncTasksClient:
         *,
         event_key: str,
         event_time: dt.datetime,
-        annotation_draft_id: typing.Optional[int] = OMIT,
         annotation: typing.Optional[int] = OMIT,
-        review: typing.Optional[int] = OMIT,
+        annotation_draft_id: typing.Optional[int] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
+        review: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskEvent:
         """
@@ -1284,17 +1284,17 @@ class AsyncTasksClient:
         event_time : dt.datetime
             Timestamp when the event occurred (frontend time)
 
-        annotation_draft_id : typing.Optional[int]
-            Draft annotation ID associated with this event
-
         annotation : typing.Optional[int]
             Annotation ID associated with this event
 
-        review : typing.Optional[int]
-            Review ID associated with this event
+        annotation_draft_id : typing.Optional[int]
+            Draft annotation ID associated with this event
 
         meta : typing.Optional[typing.Any]
             Additional event metadata (region data, hotkey info, etc.)
+
+        review : typing.Optional[int]
+            Review ID associated with this event
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1332,10 +1332,10 @@ class AsyncTasksClient:
             id,
             event_key=event_key,
             event_time=event_time,
-            annotation_draft_id=annotation_draft_id,
             annotation=annotation,
-            review=review,
+            annotation_draft_id=annotation_draft_id,
             meta=meta,
+            review=review,
             request_options=request_options,
         )
         return _response.data

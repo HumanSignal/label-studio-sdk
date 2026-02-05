@@ -12,17 +12,11 @@ from .user_simple import UserSimple
 
 
 class ModelInterfaceSerializerGet(UncheckedBaseModel):
-    id: typing.Optional[int] = None
+    associated_projects: typing.Optional[typing.List[AssociatedProject]] = None
+    created_at: typing.Optional[dt.datetime] = None
     created_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
     """
     User who created Dataset
-    """
-
-    skill_name: typing.Optional[SkillNameEnum] = None
-    associated_projects: typing.Optional[typing.List[AssociatedProject]] = None
-    title: str = pydantic.Field()
-    """
-    Model name
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)
@@ -30,11 +24,17 @@ class ModelInterfaceSerializerGet(UncheckedBaseModel):
     Model description
     """
 
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
+    id: typing.Optional[int] = None
     input_fields: typing.Optional[typing.Any] = None
-    output_classes: typing.Optional[typing.Any] = None
     organization: typing.Optional[int] = None
+    output_classes: typing.Optional[typing.Any] = None
+    skill_name: typing.Optional[SkillNameEnum] = None
+    title: str = pydantic.Field()
+    """
+    Model name
+    """
+
+    updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

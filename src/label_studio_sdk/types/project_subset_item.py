@@ -8,9 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ProjectSubsetItem(UncheckedBaseModel):
-    subset: str
-    count: int
     columns_schema: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
+    count: int
+    subset: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

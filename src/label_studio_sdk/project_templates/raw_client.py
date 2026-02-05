@@ -71,18 +71,18 @@ class RawProjectTemplatesClient:
     def create(
         self,
         *,
-        project_id: int,
         name: str,
-        description: typing.Optional[str] = OMIT,
-        tags: typing.Optional[typing.Any] = OMIT,
-        project_settings: typing.Optional[typing.Any] = OMIT,
-        review_settings: typing.Optional[typing.Any] = OMIT,
+        project_id: int,
         assignment_settings: typing.Optional[typing.Any] = OMIT,
-        require_comment_on_skip: typing.Optional[bool] = OMIT,
-        custom_script: typing.Optional[str] = OMIT,
-        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         created_by: typing.Optional[int] = OMIT,
+        custom_script: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        project_settings: typing.Optional[typing.Any] = OMIT,
+        require_comment_on_skip: typing.Optional[bool] = OMIT,
+        review_settings: typing.Optional[typing.Any] = OMIT,
+        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
+        tags: typing.Optional[typing.Any] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProjectTemplate]:
         """
@@ -96,34 +96,34 @@ class RawProjectTemplatesClient:
 
         Parameters
         ----------
-        project_id : int
-
         name : str
 
-        description : typing.Optional[str]
-
-        tags : typing.Optional[typing.Any]
-
-        project_settings : typing.Optional[typing.Any]
-            general dict serialized project settings
-
-        review_settings : typing.Optional[typing.Any]
-            general dict serialized review settings
+        project_id : int
 
         assignment_settings : typing.Optional[typing.Any]
             general dict serialized assignment settings
 
-        require_comment_on_skip : typing.Optional[bool]
-            flag to require comment on skip
+        created_by : typing.Optional[int]
 
         custom_script : typing.Optional[str]
             custom script (Plugin) for projects created from this template
 
-        show_unused_data_columns_to_annotators : typing.Optional[bool]
-
-        created_by : typing.Optional[int]
+        description : typing.Optional[str]
 
         organization : typing.Optional[int]
+
+        project_settings : typing.Optional[typing.Any]
+            general dict serialized project settings
+
+        require_comment_on_skip : typing.Optional[bool]
+            flag to require comment on skip
+
+        review_settings : typing.Optional[typing.Any]
+            general dict serialized review settings
+
+        show_unused_data_columns_to_annotators : typing.Optional[bool]
+
+        tags : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -137,18 +137,18 @@ class RawProjectTemplatesClient:
             "api/project-templates/",
             method="POST",
             json={
-                "project_id": project_id,
-                "name": name,
-                "description": description,
-                "tags": tags,
-                "project_settings": project_settings,
-                "review_settings": review_settings,
                 "assignment_settings": assignment_settings,
-                "require_comment_on_skip": require_comment_on_skip,
-                "custom_script": custom_script,
-                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "created_by": created_by,
+                "custom_script": custom_script,
+                "description": description,
+                "name": name,
                 "organization": organization,
+                "project_id": project_id,
+                "project_settings": project_settings,
+                "require_comment_on_skip": require_comment_on_skip,
+                "review_settings": review_settings,
+                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
+                "tags": tags,
             },
             headers={
                 "content-type": "application/json",
@@ -251,18 +251,18 @@ class RawProjectTemplatesClient:
         self,
         id: int,
         *,
-        project_id: typing.Optional[int] = OMIT,
-        name: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        tags: typing.Optional[typing.Any] = OMIT,
-        project_settings: typing.Optional[typing.Any] = OMIT,
-        review_settings: typing.Optional[typing.Any] = OMIT,
         assignment_settings: typing.Optional[typing.Any] = OMIT,
-        require_comment_on_skip: typing.Optional[bool] = OMIT,
-        custom_script: typing.Optional[str] = OMIT,
-        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         created_by: typing.Optional[int] = OMIT,
+        custom_script: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        name: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        project_id: typing.Optional[int] = OMIT,
+        project_settings: typing.Optional[typing.Any] = OMIT,
+        require_comment_on_skip: typing.Optional[bool] = OMIT,
+        review_settings: typing.Optional[typing.Any] = OMIT,
+        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
+        tags: typing.Optional[typing.Any] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProjectTemplate]:
         """
@@ -278,34 +278,34 @@ class RawProjectTemplatesClient:
         ----------
         id : int
 
-        project_id : typing.Optional[int]
-
-        name : typing.Optional[str]
-
-        description : typing.Optional[str]
-
-        tags : typing.Optional[typing.Any]
-
-        project_settings : typing.Optional[typing.Any]
-            general dict serialized project settings
-
-        review_settings : typing.Optional[typing.Any]
-            general dict serialized review settings
-
         assignment_settings : typing.Optional[typing.Any]
             general dict serialized assignment settings
 
-        require_comment_on_skip : typing.Optional[bool]
-            flag to require comment on skip
+        created_by : typing.Optional[int]
 
         custom_script : typing.Optional[str]
             custom script (Plugin) for projects created from this template
 
-        show_unused_data_columns_to_annotators : typing.Optional[bool]
+        description : typing.Optional[str]
 
-        created_by : typing.Optional[int]
+        name : typing.Optional[str]
 
         organization : typing.Optional[int]
+
+        project_id : typing.Optional[int]
+
+        project_settings : typing.Optional[typing.Any]
+            general dict serialized project settings
+
+        require_comment_on_skip : typing.Optional[bool]
+            flag to require comment on skip
+
+        review_settings : typing.Optional[typing.Any]
+            general dict serialized review settings
+
+        show_unused_data_columns_to_annotators : typing.Optional[bool]
+
+        tags : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -319,18 +319,18 @@ class RawProjectTemplatesClient:
             f"api/project-templates/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "project_id": project_id,
-                "name": name,
-                "description": description,
-                "tags": tags,
-                "project_settings": project_settings,
-                "review_settings": review_settings,
                 "assignment_settings": assignment_settings,
-                "require_comment_on_skip": require_comment_on_skip,
-                "custom_script": custom_script,
-                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "created_by": created_by,
+                "custom_script": custom_script,
+                "description": description,
+                "name": name,
                 "organization": organization,
+                "project_id": project_id,
+                "project_settings": project_settings,
+                "require_comment_on_skip": require_comment_on_skip,
+                "review_settings": review_settings,
+                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
+                "tags": tags,
             },
             headers={
                 "content-type": "application/json",
@@ -396,8 +396,8 @@ class RawProjectTemplatesClient:
             f"api/project-templates/{jsonable_encoder(id)}/create-project",
             method="POST",
             json={
-                "title": title,
                 "description": description,
+                "title": title,
                 "workspace_id": workspace_id,
             },
             headers={
@@ -477,18 +477,18 @@ class AsyncRawProjectTemplatesClient:
     async def create(
         self,
         *,
-        project_id: int,
         name: str,
-        description: typing.Optional[str] = OMIT,
-        tags: typing.Optional[typing.Any] = OMIT,
-        project_settings: typing.Optional[typing.Any] = OMIT,
-        review_settings: typing.Optional[typing.Any] = OMIT,
+        project_id: int,
         assignment_settings: typing.Optional[typing.Any] = OMIT,
-        require_comment_on_skip: typing.Optional[bool] = OMIT,
-        custom_script: typing.Optional[str] = OMIT,
-        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         created_by: typing.Optional[int] = OMIT,
+        custom_script: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        project_settings: typing.Optional[typing.Any] = OMIT,
+        require_comment_on_skip: typing.Optional[bool] = OMIT,
+        review_settings: typing.Optional[typing.Any] = OMIT,
+        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
+        tags: typing.Optional[typing.Any] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProjectTemplate]:
         """
@@ -502,34 +502,34 @@ class AsyncRawProjectTemplatesClient:
 
         Parameters
         ----------
-        project_id : int
-
         name : str
 
-        description : typing.Optional[str]
-
-        tags : typing.Optional[typing.Any]
-
-        project_settings : typing.Optional[typing.Any]
-            general dict serialized project settings
-
-        review_settings : typing.Optional[typing.Any]
-            general dict serialized review settings
+        project_id : int
 
         assignment_settings : typing.Optional[typing.Any]
             general dict serialized assignment settings
 
-        require_comment_on_skip : typing.Optional[bool]
-            flag to require comment on skip
+        created_by : typing.Optional[int]
 
         custom_script : typing.Optional[str]
             custom script (Plugin) for projects created from this template
 
-        show_unused_data_columns_to_annotators : typing.Optional[bool]
-
-        created_by : typing.Optional[int]
+        description : typing.Optional[str]
 
         organization : typing.Optional[int]
+
+        project_settings : typing.Optional[typing.Any]
+            general dict serialized project settings
+
+        require_comment_on_skip : typing.Optional[bool]
+            flag to require comment on skip
+
+        review_settings : typing.Optional[typing.Any]
+            general dict serialized review settings
+
+        show_unused_data_columns_to_annotators : typing.Optional[bool]
+
+        tags : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -543,18 +543,18 @@ class AsyncRawProjectTemplatesClient:
             "api/project-templates/",
             method="POST",
             json={
-                "project_id": project_id,
-                "name": name,
-                "description": description,
-                "tags": tags,
-                "project_settings": project_settings,
-                "review_settings": review_settings,
                 "assignment_settings": assignment_settings,
-                "require_comment_on_skip": require_comment_on_skip,
-                "custom_script": custom_script,
-                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "created_by": created_by,
+                "custom_script": custom_script,
+                "description": description,
+                "name": name,
                 "organization": organization,
+                "project_id": project_id,
+                "project_settings": project_settings,
+                "require_comment_on_skip": require_comment_on_skip,
+                "review_settings": review_settings,
+                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
+                "tags": tags,
             },
             headers={
                 "content-type": "application/json",
@@ -661,18 +661,18 @@ class AsyncRawProjectTemplatesClient:
         self,
         id: int,
         *,
-        project_id: typing.Optional[int] = OMIT,
-        name: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        tags: typing.Optional[typing.Any] = OMIT,
-        project_settings: typing.Optional[typing.Any] = OMIT,
-        review_settings: typing.Optional[typing.Any] = OMIT,
         assignment_settings: typing.Optional[typing.Any] = OMIT,
-        require_comment_on_skip: typing.Optional[bool] = OMIT,
-        custom_script: typing.Optional[str] = OMIT,
-        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         created_by: typing.Optional[int] = OMIT,
+        custom_script: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        name: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        project_id: typing.Optional[int] = OMIT,
+        project_settings: typing.Optional[typing.Any] = OMIT,
+        require_comment_on_skip: typing.Optional[bool] = OMIT,
+        review_settings: typing.Optional[typing.Any] = OMIT,
+        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
+        tags: typing.Optional[typing.Any] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProjectTemplate]:
         """
@@ -688,34 +688,34 @@ class AsyncRawProjectTemplatesClient:
         ----------
         id : int
 
-        project_id : typing.Optional[int]
-
-        name : typing.Optional[str]
-
-        description : typing.Optional[str]
-
-        tags : typing.Optional[typing.Any]
-
-        project_settings : typing.Optional[typing.Any]
-            general dict serialized project settings
-
-        review_settings : typing.Optional[typing.Any]
-            general dict serialized review settings
-
         assignment_settings : typing.Optional[typing.Any]
             general dict serialized assignment settings
 
-        require_comment_on_skip : typing.Optional[bool]
-            flag to require comment on skip
+        created_by : typing.Optional[int]
 
         custom_script : typing.Optional[str]
             custom script (Plugin) for projects created from this template
 
-        show_unused_data_columns_to_annotators : typing.Optional[bool]
+        description : typing.Optional[str]
 
-        created_by : typing.Optional[int]
+        name : typing.Optional[str]
 
         organization : typing.Optional[int]
+
+        project_id : typing.Optional[int]
+
+        project_settings : typing.Optional[typing.Any]
+            general dict serialized project settings
+
+        require_comment_on_skip : typing.Optional[bool]
+            flag to require comment on skip
+
+        review_settings : typing.Optional[typing.Any]
+            general dict serialized review settings
+
+        show_unused_data_columns_to_annotators : typing.Optional[bool]
+
+        tags : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -729,18 +729,18 @@ class AsyncRawProjectTemplatesClient:
             f"api/project-templates/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "project_id": project_id,
-                "name": name,
-                "description": description,
-                "tags": tags,
-                "project_settings": project_settings,
-                "review_settings": review_settings,
                 "assignment_settings": assignment_settings,
-                "require_comment_on_skip": require_comment_on_skip,
-                "custom_script": custom_script,
-                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "created_by": created_by,
+                "custom_script": custom_script,
+                "description": description,
+                "name": name,
                 "organization": organization,
+                "project_id": project_id,
+                "project_settings": project_settings,
+                "require_comment_on_skip": require_comment_on_skip,
+                "review_settings": review_settings,
+                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
+                "tags": tags,
             },
             headers={
                 "content-type": "application/json",
@@ -806,8 +806,8 @@ class AsyncRawProjectTemplatesClient:
             f"api/project-templates/{jsonable_encoder(id)}/create-project",
             method="POST",
             json={
-                "title": title,
                 "description": description,
+                "title": title,
                 "workspace_id": workspace_id,
             },
             headers={

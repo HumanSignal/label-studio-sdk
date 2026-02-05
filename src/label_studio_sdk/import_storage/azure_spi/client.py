@@ -78,27 +78,27 @@ class AzureSpiClient:
         self,
         *,
         project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        user_delegation_key: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureServicePrincipalImportStorage:
         """
@@ -115,27 +115,8 @@ class AzureSpiClient:
         project : int
             A unique integer value identifying this project.
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
         account_name : typing.Optional[str]
             Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
 
         client_id : typing.Optional[str]
             Azure Blob Service Principal Client ID
@@ -143,8 +124,11 @@ class AzureSpiClient:
         client_secret : typing.Optional[str]
             Azure Blob Service Principal Client Secret
 
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Cloud storage description
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -155,25 +139,41 @@ class AzureSpiClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
+        prefix : typing.Optional[str]
+            Azure blob prefix name
 
-        description : typing.Optional[str]
-            Cloud storage description
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure Tenant ID
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        user_delegation_key : typing.Optional[str]
+            User Delegation Key (Backend)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -196,27 +196,173 @@ class AzureSpiClient:
         """
         _response = self._raw_client.create(
             project=project,
-            synchronizable=synchronizable,
-            presign=presign,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
             account_name=account_name,
-            container=container,
-            tenant_id=tenant_id,
             client_id=client_id,
             client_secret=client_secret,
-            user_delegation_key=user_delegation_key,
+            container=container,
+            description=description,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
             last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
             meta=meta,
-            title=title,
-            description=description,
+            prefix=prefix,
+            presign=presign,
             presign_ttl=presign_ttl,
             recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            status=status,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            user_delegation_key=user_delegation_key,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def validate(
+        self,
+        *,
+        project: int,
+        account_name: typing.Optional[str] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        user_delegation_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Azure import storage connection that was set up with Service Principal authentication.
+
+        Parameters
+        ----------
+        project : int
+            A unique integer value identifying this project.
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        client_id : typing.Optional[str]
+            Azure Blob Service Principal Client ID
+
+        client_secret : typing.Optional[str]
+            Azure Blob Service Principal Client Secret
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        presign : typing.Optional[bool]
+
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure Tenant ID
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        user_delegation_key : typing.Optional[str]
+            User Delegation Key (Backend)
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.import_storage.azure_spi.validate(
+            project=1,
+        )
+        """
+        _response = self._raw_client.validate(
+            project=project,
+            account_name=account_name,
+            client_id=client_id,
+            client_secret=client_secret,
+            container=container,
+            description=description,
+            last_sync=last_sync,
+            last_sync_count=last_sync_count,
+            last_sync_job=last_sync_job,
+            meta=meta,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            status=status,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            user_delegation_key=user_delegation_key,
             request_options=request_options,
         )
         return _response.data
@@ -298,28 +444,28 @@ class AzureSpiClient:
         self,
         id: int,
         *,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        user_delegation_key: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureServicePrincipalImportStorage:
         """
@@ -335,27 +481,8 @@ class AzureSpiClient:
         ----------
         id : int
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
         account_name : typing.Optional[str]
             Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
 
         client_id : typing.Optional[str]
             Azure Blob Service Principal Client ID
@@ -363,8 +490,11 @@ class AzureSpiClient:
         client_secret : typing.Optional[str]
             Azure Blob Service Principal Client Secret
 
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Cloud storage description
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -375,28 +505,44 @@ class AzureSpiClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
+        prefix : typing.Optional[str]
+            Azure blob prefix name
 
-        description : typing.Optional[str]
-            Cloud storage description
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
+
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
 
-        project : typing.Optional[int]
-            A unique integer value identifying this project.
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure Tenant ID
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        user_delegation_key : typing.Optional[str]
+            User Delegation Key (Backend)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -419,28 +565,28 @@ class AzureSpiClient:
         """
         _response = self._raw_client.update(
             id,
-            synchronizable=synchronizable,
-            presign=presign,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
             account_name=account_name,
-            container=container,
-            tenant_id=tenant_id,
             client_id=client_id,
             client_secret=client_secret,
-            user_delegation_key=user_delegation_key,
+            container=container,
+            description=description,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
             last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
             meta=meta,
-            title=title,
-            description=description,
+            prefix=prefix,
+            presign=presign,
             presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
             project=project,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            status=status,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            user_delegation_key=user_delegation_key,
             request_options=request_options,
         )
         return _response.data
@@ -481,152 +627,6 @@ class AzureSpiClient:
         )
         """
         _response = self._raw_client.sync(id, request_options=request_options)
-        return _response.data
-
-    def validate(
-        self,
-        *,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific Azure import storage connection that was set up with Service Principal authentication.
-
-        Parameters
-        ----------
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
-
-        client_id : typing.Optional[str]
-            Azure Blob Service Principal Client ID
-
-        client_secret : typing.Optional[str]
-            Azure Blob Service Principal Client Secret
-
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
-
-        recursive_scan : typing.Optional[bool]
-            Perform recursive scan
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.import_storage.azure_spi.validate(
-            project=1,
-        )
-        """
-        _response = self._raw_client.validate(
-            project=project,
-            synchronizable=synchronizable,
-            presign=presign,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            account_name=account_name,
-            container=container,
-            tenant_id=tenant_id,
-            client_id=client_id,
-            client_secret=client_secret,
-            user_delegation_key=user_delegation_key,
-            last_sync=last_sync,
-            last_sync_count=last_sync_count,
-            last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
-            meta=meta,
-            title=title,
-            description=description,
-            presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
-            request_options=request_options,
-        )
         return _response.data
 
 
@@ -703,27 +703,27 @@ class AsyncAzureSpiClient:
         self,
         *,
         project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        user_delegation_key: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureServicePrincipalImportStorage:
         """
@@ -740,27 +740,8 @@ class AsyncAzureSpiClient:
         project : int
             A unique integer value identifying this project.
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
         account_name : typing.Optional[str]
             Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
 
         client_id : typing.Optional[str]
             Azure Blob Service Principal Client ID
@@ -768,8 +749,11 @@ class AsyncAzureSpiClient:
         client_secret : typing.Optional[str]
             Azure Blob Service Principal Client Secret
 
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Cloud storage description
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -780,25 +764,41 @@ class AsyncAzureSpiClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
+        prefix : typing.Optional[str]
+            Azure blob prefix name
 
-        description : typing.Optional[str]
-            Cloud storage description
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure Tenant ID
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        user_delegation_key : typing.Optional[str]
+            User Delegation Key (Backend)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -829,27 +829,181 @@ class AsyncAzureSpiClient:
         """
         _response = await self._raw_client.create(
             project=project,
-            synchronizable=synchronizable,
-            presign=presign,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
             account_name=account_name,
-            container=container,
-            tenant_id=tenant_id,
             client_id=client_id,
             client_secret=client_secret,
-            user_delegation_key=user_delegation_key,
+            container=container,
+            description=description,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
             last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
             meta=meta,
-            title=title,
-            description=description,
+            prefix=prefix,
+            presign=presign,
             presign_ttl=presign_ttl,
             recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            status=status,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            user_delegation_key=user_delegation_key,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def validate(
+        self,
+        *,
+        project: int,
+        account_name: typing.Optional[str] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        user_delegation_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Azure import storage connection that was set up with Service Principal authentication.
+
+        Parameters
+        ----------
+        project : int
+            A unique integer value identifying this project.
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        client_id : typing.Optional[str]
+            Azure Blob Service Principal Client ID
+
+        client_secret : typing.Optional[str]
+            Azure Blob Service Principal Client Secret
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        presign : typing.Optional[bool]
+
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure Tenant ID
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        user_delegation_key : typing.Optional[str]
+            User Delegation Key (Backend)
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.import_storage.azure_spi.validate(
+                project=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.validate(
+            project=project,
+            account_name=account_name,
+            client_id=client_id,
+            client_secret=client_secret,
+            container=container,
+            description=description,
+            last_sync=last_sync,
+            last_sync_count=last_sync_count,
+            last_sync_job=last_sync_job,
+            meta=meta,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            status=status,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            user_delegation_key=user_delegation_key,
             request_options=request_options,
         )
         return _response.data
@@ -947,28 +1101,28 @@ class AsyncAzureSpiClient:
         self,
         id: int,
         *,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        user_delegation_key: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureServicePrincipalImportStorage:
         """
@@ -984,27 +1138,8 @@ class AsyncAzureSpiClient:
         ----------
         id : int
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
         account_name : typing.Optional[str]
             Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
 
         client_id : typing.Optional[str]
             Azure Blob Service Principal Client ID
@@ -1012,8 +1147,11 @@ class AsyncAzureSpiClient:
         client_secret : typing.Optional[str]
             Azure Blob Service Principal Client Secret
 
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
+        container : typing.Optional[str]
+            Azure blob container
+
+        description : typing.Optional[str]
+            Cloud storage description
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -1024,28 +1162,44 @@ class AsyncAzureSpiClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
         meta : typing.Optional[typing.Any]
             Meta and debug information about storage processes
 
-        title : typing.Optional[str]
-            Cloud storage title
+        prefix : typing.Optional[str]
+            Azure blob prefix name
 
-        description : typing.Optional[str]
-            Cloud storage description
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
+
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
 
-        project : typing.Optional[int]
-            A unique integer value identifying this project.
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        tenant_id : typing.Optional[str]
+            Azure Tenant ID
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        user_delegation_key : typing.Optional[str]
+            User Delegation Key (Backend)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1076,28 +1230,28 @@ class AsyncAzureSpiClient:
         """
         _response = await self._raw_client.update(
             id,
-            synchronizable=synchronizable,
-            presign=presign,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
             account_name=account_name,
-            container=container,
-            tenant_id=tenant_id,
             client_id=client_id,
             client_secret=client_secret,
-            user_delegation_key=user_delegation_key,
+            container=container,
+            description=description,
             last_sync=last_sync,
             last_sync_count=last_sync_count,
             last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
             meta=meta,
-            title=title,
-            description=description,
+            prefix=prefix,
+            presign=presign,
             presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
             project=project,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            status=status,
+            synchronizable=synchronizable,
+            tenant_id=tenant_id,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            user_delegation_key=user_delegation_key,
             request_options=request_options,
         )
         return _response.data
@@ -1146,158 +1300,4 @@ class AsyncAzureSpiClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.sync(id, request_options=request_options)
-        return _response.data
-
-    async def validate(
-        self,
-        *,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific Azure import storage connection that was set up with Service Principal authentication.
-
-        Parameters
-        ----------
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
-
-        client_id : typing.Optional[str]
-            Azure Blob Service Principal Client ID
-
-        client_secret : typing.Optional[str]
-            Azure Blob Service Principal Client Secret
-
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
-
-        recursive_scan : typing.Optional[bool]
-            Perform recursive scan
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.import_storage.azure_spi.validate(
-                project=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.validate(
-            project=project,
-            synchronizable=synchronizable,
-            presign=presign,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            account_name=account_name,
-            container=container,
-            tenant_id=tenant_id,
-            client_id=client_id,
-            client_secret=client_secret,
-            user_delegation_key=user_delegation_key,
-            last_sync=last_sync,
-            last_sync_count=last_sync_count,
-            last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
-            meta=meta,
-            title=title,
-            description=description,
-            presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
-            request_options=request_options,
-        )
         return _response.data

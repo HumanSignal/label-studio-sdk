@@ -15,11 +15,11 @@ class UserSimple(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
-    id: typing.Optional[int] = None
-    first_name: typing.Optional[str] = None
-    last_name: typing.Optional[str] = None
-    email: typing.Optional[str] = None
     avatar: typing.Optional[str] = None
+    email: typing.Optional[str] = None
+    first_name: typing.Optional[str] = None
+    id: typing.Optional[int] = None
+    last_name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

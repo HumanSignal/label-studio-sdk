@@ -10,12 +10,19 @@ from .status_c5a_enum import StatusC5AEnum
 
 
 class RedisImportStorage(UncheckedBaseModel):
-    id: typing.Optional[int] = None
-    type: typing.Optional[str] = None
-    synchronizable: typing.Optional[bool] = None
-    path: typing.Optional[str] = pydantic.Field(default=None)
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    Storage prefix (optional)
+    Creation time
+    """
+
+    db: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Server Database
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage description
     """
 
     host: typing.Optional[str] = pydantic.Field(default=None)
@@ -23,26 +30,7 @@ class RedisImportStorage(UncheckedBaseModel):
     Server Host IP (optional)
     """
 
-    port: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Server Port (optional)
-    """
-
-    password: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Server Password (optional)
-    """
-
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage regex for filtering objects
-    """
-
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Interpret objects as BLOBs and generate URLs
-    """
-
+    id: typing.Optional[int] = None
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last sync finished time
@@ -58,40 +46,52 @@ class RedisImportStorage(UncheckedBaseModel):
     Last sync job ID
     """
 
-    status: typing.Optional[StatusC5AEnum] = None
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
     meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Meta and debug information about storage processes
     """
 
-    title: typing.Optional[str] = pydantic.Field(default=None)
+    password: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cloud storage title
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage description
+    Server Password (optional)
     """
 
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    path: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Creation time
+    Storage prefix (optional)
     """
 
-    db: typing.Optional[int] = pydantic.Field(default=None)
+    port: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Server Database
+    Server Port (optional)
     """
 
     project: int = pydantic.Field()
     """
     A unique integer value identifying this project.
+    """
+
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage regex for filtering objects
+    """
+
+    status: typing.Optional[StatusC5AEnum] = None
+    synchronizable: typing.Optional[bool] = None
+    title: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage title
+    """
+
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Traceback report for the last failed sync
+    """
+
+    type: typing.Optional[str] = None
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs
     """
 
     if IS_PYDANTIC_V2:

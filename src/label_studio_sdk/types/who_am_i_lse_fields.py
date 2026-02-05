@@ -11,20 +11,12 @@ from .trial_role_enum import TrialRoleEnum
 
 
 class WhoAmILseFields(UncheckedBaseModel):
+    active_organization_external_id: typing.Optional[str] = None
+    email_notification_settings: typing.Optional[str] = None
+    invite_activated: typing.Optional[bool] = None
     invite_expired: typing.Optional[str] = None
     invite_expired_at: typing.Optional[str] = None
     invited_at: typing.Optional[dt.datetime] = None
-    invite_activated: typing.Optional[bool] = None
-    trial_company: typing.Optional[str] = None
-    trial_role: typing.Optional[TrialRoleEnum] = None
-    trial_models_in_production: typing.Optional[str] = None
-    trial_experience_labeling: typing.Optional[str] = None
-    trial_license_enterprise: typing.Optional[bool] = None
-    social_auth_finished: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Is user finished social authentication
-    """
-
     invited_by: typing.Optional[int] = None
     onboarding_state: typing.Optional[OnboardingStateEnum] = pydantic.Field(default=None)
     """
@@ -38,8 +30,16 @@ class WhoAmILseFields(UncheckedBaseModel):
     * `complete` - Complete
     """
 
-    email_notification_settings: typing.Optional[str] = None
-    active_organization_external_id: typing.Optional[str] = None
+    social_auth_finished: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Is user finished social authentication
+    """
+
+    trial_company: typing.Optional[str] = None
+    trial_experience_labeling: typing.Optional[str] = None
+    trial_license_enterprise: typing.Optional[bool] = None
+    trial_models_in_production: typing.Optional[str] = None
+    trial_role: typing.Optional[TrialRoleEnum] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

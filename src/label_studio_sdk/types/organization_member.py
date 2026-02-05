@@ -16,21 +16,20 @@ class OrganizationMember(UncheckedBaseModel):
     which fields should be displayed.
     """
 
-    user: int = pydantic.Field()
-    """
-    User ID
-    """
-
+    annotations_count: typing.Optional[int] = None
+    contributed_projects_count: typing.Optional[int] = None
+    contributed_to_projects: typing.Optional[typing.List[OrganizationMemberContributedToProjectsItem]] = None
+    created_at: typing.Optional[dt.datetime] = None
+    created_projects: typing.Optional[typing.List[OrganizationMemberCreatedProjectsItem]] = None
     organization: int = pydantic.Field()
     """
     Organization ID
     """
 
-    contributed_projects_count: typing.Optional[int] = None
-    annotations_count: typing.Optional[int] = None
-    created_at: typing.Optional[dt.datetime] = None
-    created_projects: typing.Optional[typing.List[OrganizationMemberCreatedProjectsItem]] = None
-    contributed_to_projects: typing.Optional[typing.List[OrganizationMemberContributedToProjectsItem]] = None
+    user: int = pydantic.Field()
+    """
+    User ID
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -13,29 +13,29 @@ class LseProjectCounts(UncheckedBaseModel):
     make sure, that you use correct one(Project.objects.with_counts())
     """
 
-    id: typing.Optional[int] = None
-    task_number: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Total task number in project
-    """
-
     finished_task_number: typing.Optional[int] = None
-    total_predictions_number: typing.Optional[int] = None
-    total_annotations_number: typing.Optional[str] = None
-    num_tasks_with_annotations: typing.Optional[int] = None
-    useful_annotation_number: typing.Optional[int] = None
     ground_truth_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Honeypot annotation number in project
     """
 
-    skipped_annotations_number: typing.Optional[str] = None
-    rejected: typing.Optional[int] = None
-    queue_total: typing.Optional[str] = None
+    id: typing.Optional[int] = None
+    num_tasks_with_annotations: typing.Optional[int] = None
     queue_done: typing.Optional[int] = None
     queue_left: typing.Optional[int] = None
-    reviewed_number: typing.Optional[int] = None
+    queue_total: typing.Optional[str] = None
+    rejected: typing.Optional[int] = None
     review_total_tasks: typing.Optional[int] = None
+    reviewed_number: typing.Optional[int] = None
+    skipped_annotations_number: typing.Optional[str] = None
+    task_number: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Total task number in project
+    """
+
+    total_annotations_number: typing.Optional[str] = None
+    total_predictions_number: typing.Optional[int] = None
+    useful_annotation_number: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

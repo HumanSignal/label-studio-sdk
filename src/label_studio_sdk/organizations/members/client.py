@@ -136,8 +136,8 @@ class MembersClient:
         self,
         id: int,
         *,
-        user_id: typing.Optional[int] = OMIT,
         role: typing.Optional[Role9E7Enum] = OMIT,
+        user_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
         """
@@ -166,9 +166,9 @@ class MembersClient:
         id : int
             A unique integer value identifying this organization.
 
-        user_id : typing.Optional[int]
-
         role : typing.Optional[Role9E7Enum]
+
+        user_id : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -189,7 +189,7 @@ class MembersClient:
             id=1,
         )
         """
-        _response = self._raw_client.update(id, user_id=user_id, role=role, request_options=request_options)
+        _response = self._raw_client.update(id, role=role, user_id=user_id, request_options=request_options)
         return _response.data
 
     def get(
@@ -402,8 +402,8 @@ class AsyncMembersClient:
         self,
         id: int,
         *,
-        user_id: typing.Optional[int] = OMIT,
         role: typing.Optional[Role9E7Enum] = OMIT,
+        user_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
         """
@@ -432,9 +432,9 @@ class AsyncMembersClient:
         id : int
             A unique integer value identifying this organization.
 
-        user_id : typing.Optional[int]
-
         role : typing.Optional[Role9E7Enum]
+
+        user_id : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -463,7 +463,7 @@ class AsyncMembersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update(id, user_id=user_id, role=role, request_options=request_options)
+        _response = await self._raw_client.update(id, role=role, user_id=user_id, request_options=request_options)
         return _response.data
 
     async def get(

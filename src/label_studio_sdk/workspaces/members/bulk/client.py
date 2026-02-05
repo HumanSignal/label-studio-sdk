@@ -32,8 +32,8 @@ class BulkClient:
         id: int,
         *,
         all_: bool,
-        included: typing.Optional[typing.Sequence[int]] = OMIT,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
+        included: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PostBulkResponse:
         """
@@ -51,9 +51,9 @@ class BulkClient:
 
         all_ : bool
 
-        included : typing.Optional[typing.Sequence[int]]
-
         excluded : typing.Optional[typing.Sequence[int]]
+
+        included : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -76,7 +76,7 @@ class BulkClient:
         )
         """
         _response = self._raw_client.post(
-            id, all_=all_, included=included, excluded=excluded, request_options=request_options
+            id, all_=all_, excluded=excluded, included=included, request_options=request_options
         )
         return _response.data
 
@@ -137,8 +137,8 @@ class AsyncBulkClient:
         id: int,
         *,
         all_: bool,
-        included: typing.Optional[typing.Sequence[int]] = OMIT,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
+        included: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PostBulkResponse:
         """
@@ -156,9 +156,9 @@ class AsyncBulkClient:
 
         all_ : bool
 
-        included : typing.Optional[typing.Sequence[int]]
-
         excluded : typing.Optional[typing.Sequence[int]]
+
+        included : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -189,7 +189,7 @@ class AsyncBulkClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.post(
-            id, all_=all_, included=included, excluded=excluded, request_options=request_options
+            id, all_=all_, excluded=excluded, included=included, request_options=request_options
         )
         return _response.data
 

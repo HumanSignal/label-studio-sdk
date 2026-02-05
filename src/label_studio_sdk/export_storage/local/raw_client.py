@@ -72,11 +72,11 @@ class RawLocalClient:
     def create(
         self,
         *,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LocalFilesExportStorage]:
@@ -85,20 +85,20 @@ class RawLocalClient:
 
         Parameters
         ----------
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
 
         path : typing.Optional[str]
             Path to local directory
 
+        project : typing.Optional[int]
+            Project ID
+
         regex_filter : typing.Optional[str]
             Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
 
         use_blob_urls : typing.Optional[bool]
             Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
@@ -115,11 +115,11 @@ class RawLocalClient:
             "api/storages/export/localfiles",
             method="POST",
             json={
-                "title": title,
                 "description": description,
-                "project": project,
                 "path": path,
+                "project": project,
                 "regex_filter": regex_filter,
+                "title": title,
                 "use_blob_urls": use_blob_urls,
             },
             headers={
@@ -138,6 +138,77 @@ class RawLocalClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def validate(
+        self,
+        *,
+        description: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Validate a specific local file export storage connection.
+
+        Parameters
+        ----------
+        description : typing.Optional[str]
+            Storage description
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        path : typing.Optional[str]
+            Path to local directory
+
+        project : typing.Optional[int]
+            Project ID
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/storages/export/localfiles/validate",
+            method="POST",
+            json={
+                "description": description,
+                "id": id,
+                "path": path,
+                "project": project,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -213,11 +284,11 @@ class RawLocalClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LocalFilesExportStorage]:
@@ -228,20 +299,20 @@ class RawLocalClient:
         ----------
         id : int
 
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
 
         path : typing.Optional[str]
             Path to local directory
 
+        project : typing.Optional[int]
+            Project ID
+
         regex_filter : typing.Optional[str]
             Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
 
         use_blob_urls : typing.Optional[bool]
             Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
@@ -258,11 +329,11 @@ class RawLocalClient:
             f"api/storages/export/localfiles/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "title": title,
                 "description": description,
-                "project": project,
                 "path": path,
+                "project": project,
                 "regex_filter": regex_filter,
+                "title": title,
                 "use_blob_urls": use_blob_urls,
             },
             headers={
@@ -319,77 +390,6 @@ class RawLocalClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[None]:
-        """
-        Validate a specific local file export storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Path to local directory
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[None]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/storages/export/localfiles/validate",
-            method="POST",
-            json={
-                "id": id,
-                "title": title,
-                "description": description,
-                "project": project,
-                "path": path,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -453,11 +453,11 @@ class AsyncRawLocalClient:
     async def create(
         self,
         *,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LocalFilesExportStorage]:
@@ -466,20 +466,20 @@ class AsyncRawLocalClient:
 
         Parameters
         ----------
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
 
         path : typing.Optional[str]
             Path to local directory
 
+        project : typing.Optional[int]
+            Project ID
+
         regex_filter : typing.Optional[str]
             Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
 
         use_blob_urls : typing.Optional[bool]
             Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
@@ -496,11 +496,11 @@ class AsyncRawLocalClient:
             "api/storages/export/localfiles",
             method="POST",
             json={
-                "title": title,
                 "description": description,
-                "project": project,
                 "path": path,
+                "project": project,
                 "regex_filter": regex_filter,
+                "title": title,
                 "use_blob_urls": use_blob_urls,
             },
             headers={
@@ -519,6 +519,77 @@ class AsyncRawLocalClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def validate(
+        self,
+        *,
+        description: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Validate a specific local file export storage connection.
+
+        Parameters
+        ----------
+        description : typing.Optional[str]
+            Storage description
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        path : typing.Optional[str]
+            Path to local directory
+
+        project : typing.Optional[int]
+            Project ID
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/storages/export/localfiles/validate",
+            method="POST",
+            json={
+                "description": description,
+                "id": id,
+                "path": path,
+                "project": project,
+                "regex_filter": regex_filter,
+                "title": title,
+                "use_blob_urls": use_blob_urls,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -596,11 +667,11 @@ class AsyncRawLocalClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LocalFilesExportStorage]:
@@ -611,20 +682,20 @@ class AsyncRawLocalClient:
         ----------
         id : int
 
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
 
         path : typing.Optional[str]
             Path to local directory
 
+        project : typing.Optional[int]
+            Project ID
+
         regex_filter : typing.Optional[str]
             Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
 
         use_blob_urls : typing.Optional[bool]
             Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
@@ -641,11 +712,11 @@ class AsyncRawLocalClient:
             f"api/storages/export/localfiles/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "title": title,
                 "description": description,
-                "project": project,
                 "path": path,
+                "project": project,
                 "regex_filter": regex_filter,
+                "title": title,
                 "use_blob_urls": use_blob_urls,
             },
             headers={
@@ -702,77 +773,6 @@ class AsyncRawLocalClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[None]:
-        """
-        Validate a specific local file export storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Path to local directory
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[None]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/export/localfiles/validate",
-            method="POST",
-            json={
-                "id": id,
-                "title": title,
-                "description": description,
-                "project": project,
-                "path": path,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

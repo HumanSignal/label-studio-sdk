@@ -15,26 +15,26 @@ from .user_simple import UserSimple
 
 
 class LseExportCreate(UncheckedBaseModel):
-    title: typing.Optional[str] = None
-    id: typing.Optional[int] = None
-    created_by: typing.Optional[UserSimple] = None
+    annotation_filter_options: typing.Optional[LseAnnotationFilterOptions] = None
+    converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None
+    counters: typing.Optional[typing.Any] = None
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
     """
 
+    created_by: typing.Optional[UserSimple] = None
     finished_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Complete or fail time
     """
 
-    status: typing.Optional[Status7BfEnum] = None
+    id: typing.Optional[int] = None
     md5: typing.Optional[str] = None
-    counters: typing.Optional[typing.Any] = None
-    converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None
-    task_filter_options: typing.Optional[LseTaskFilterOptions] = None
-    annotation_filter_options: typing.Optional[LseAnnotationFilterOptions] = None
     serialization_options: typing.Optional[SerializationOptions] = None
+    status: typing.Optional[Status7BfEnum] = None
+    task_filter_options: typing.Optional[LseTaskFilterOptions] = None
+    title: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

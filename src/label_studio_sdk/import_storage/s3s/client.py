@@ -77,32 +77,32 @@ class S3SClient:
     def create(
         self,
         *,
-        role_arn: str,
         project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        role_arn: str,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
         legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseS3ImportStorage:
         """
@@ -116,50 +116,11 @@ class S3SClient:
 
         Parameters
         ----------
-        role_arn : str
-            AWS RoleArn
-
         project : int
             A unique integer value identifying this project.
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+        role_arn : str
+            AWS RoleArn
 
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
@@ -173,22 +134,61 @@ class S3SClient:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
-        region_name : typing.Optional[str]
-            AWS Region
+        bucket : typing.Optional[str]
+            S3 bucket name
 
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
+        description : typing.Optional[str]
+            Cloud storage description
 
         external_id : typing.Optional[str]
             AWS ExternalId
 
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
         legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -206,37 +206,203 @@ class S3SClient:
             api_key="YOUR_API_KEY",
         )
         client.import_storage.s3s.create(
-            role_arn="role_arn",
             project=1,
+            role_arn="role_arn",
         )
         """
         _response = self._raw_client.create(
-            role_arn=role_arn,
             project=project,
-            synchronizable=synchronizable,
-            presign=presign,
-            last_sync=last_sync,
-            last_sync_count=last_sync_count,
-            last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
-            meta=meta,
-            title=title,
-            description=description,
-            bucket=bucket,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
+            role_arn=role_arn,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
             aws_sse_kms_key_id=aws_sse_kms_key_id,
-            region_name=region_name,
-            s3endpoint=s3endpoint,
+            bucket=bucket,
+            description=description,
             external_id=external_id,
+            last_sync=last_sync,
+            last_sync_count=last_sync_count,
+            last_sync_job=last_sync_job,
             legacy_auth=legacy_auth,
+            meta=meta,
+            prefix=prefix,
+            presign=presign,
             presign_ttl=presign_ttl,
             recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            region_name=region_name,
+            s3endpoint=s3endpoint,
+            status=status,
+            synchronizable=synchronizable,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def validate(
+        self,
+        *,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific S3 import storage connection that was set up with IAM role access.
+
+        Parameters
+        ----------
+        project : int
+            A unique integer value identifying this project.
+
+        role_arn : str
+            AWS RoleArn
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        presign : typing.Optional[bool]
+
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.import_storage.s3s.validate(
+            project=1,
+            role_arn="role_arn",
+        )
+        """
+        _response = self._raw_client.validate(
+            project=project,
+            role_arn=role_arn,
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_session_token=aws_session_token,
+            aws_sse_kms_key_id=aws_sse_kms_key_id,
+            bucket=bucket,
+            description=description,
+            external_id=external_id,
+            last_sync=last_sync,
+            last_sync_count=last_sync_count,
+            last_sync_job=last_sync_job,
+            legacy_auth=legacy_auth,
+            meta=meta,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            region_name=region_name,
+            s3endpoint=s3endpoint,
+            status=status,
+            synchronizable=synchronizable,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -316,32 +482,32 @@ class S3SClient:
         self,
         id: int,
         *,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
         legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseS3ImportStorage:
         """
@@ -357,45 +523,6 @@ class S3SClient:
         ----------
         id : int
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -408,28 +535,67 @@ class S3SClient:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
-        region_name : typing.Optional[str]
-            AWS Region
+        bucket : typing.Optional[str]
+            S3 bucket name
 
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
+        description : typing.Optional[str]
+            Cloud storage description
 
         external_id : typing.Optional[str]
             AWS ExternalId
 
-        role_arn : typing.Optional[str]
-            AWS RoleArn
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
 
         legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
+
         recursive_scan : typing.Optional[bool]
             Perform recursive scan over the bucket content
 
-        project : typing.Optional[int]
-            A unique integer value identifying this project.
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        role_arn : typing.Optional[str]
+            AWS RoleArn
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -452,32 +618,32 @@ class S3SClient:
         """
         _response = self._raw_client.update(
             id,
-            synchronizable=synchronizable,
-            presign=presign,
-            last_sync=last_sync,
-            last_sync_count=last_sync_count,
-            last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
-            meta=meta,
-            title=title,
-            description=description,
-            bucket=bucket,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
             aws_sse_kms_key_id=aws_sse_kms_key_id,
-            region_name=region_name,
-            s3endpoint=s3endpoint,
+            bucket=bucket,
+            description=description,
             external_id=external_id,
-            role_arn=role_arn,
+            last_sync=last_sync,
+            last_sync_count=last_sync_count,
+            last_sync_job=last_sync_job,
             legacy_auth=legacy_auth,
+            meta=meta,
+            prefix=prefix,
+            presign=presign,
             presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
             project=project,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            region_name=region_name,
+            role_arn=role_arn,
+            s3endpoint=s3endpoint,
+            status=status,
+            synchronizable=synchronizable,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -516,172 +682,6 @@ class S3SClient:
         )
         """
         _response = self._raw_client.sync(id, request_options=request_options)
-        return _response.data
-
-    def validate(
-        self,
-        *,
-        role_arn: str,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        aws_access_key_id: typing.Optional[str] = OMIT,
-        aws_secret_access_key: typing.Optional[str] = OMIT,
-        aws_session_token: typing.Optional[str] = OMIT,
-        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        legacy_auth: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific S3 import storage connection that was set up with IAM role access.
-
-        Parameters
-        ----------
-        role_arn : str
-            AWS RoleArn
-
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
-        aws_access_key_id : typing.Optional[str]
-            AWS_ACCESS_KEY_ID
-
-        aws_secret_access_key : typing.Optional[str]
-            AWS_SECRET_ACCESS_KEY
-
-        aws_session_token : typing.Optional[str]
-            AWS_SESSION_TOKEN
-
-        aws_sse_kms_key_id : typing.Optional[str]
-            AWS SSE KMS Key ID
-
-        region_name : typing.Optional[str]
-            AWS Region
-
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
-
-        external_id : typing.Optional[str]
-            AWS ExternalId
-
-        legacy_auth : typing.Optional[bool]
-
-        presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
-
-        recursive_scan : typing.Optional[bool]
-            Perform recursive scan over the bucket content
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.import_storage.s3s.validate(
-            role_arn="role_arn",
-            project=1,
-        )
-        """
-        _response = self._raw_client.validate(
-            role_arn=role_arn,
-            project=project,
-            synchronizable=synchronizable,
-            presign=presign,
-            last_sync=last_sync,
-            last_sync_count=last_sync_count,
-            last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
-            meta=meta,
-            title=title,
-            description=description,
-            bucket=bucket,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            aws_access_key_id=aws_access_key_id,
-            aws_secret_access_key=aws_secret_access_key,
-            aws_session_token=aws_session_token,
-            aws_sse_kms_key_id=aws_sse_kms_key_id,
-            region_name=region_name,
-            s3endpoint=s3endpoint,
-            external_id=external_id,
-            legacy_auth=legacy_auth,
-            presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
-            request_options=request_options,
-        )
         return _response.data
 
 
@@ -757,32 +757,32 @@ class AsyncS3SClient:
     async def create(
         self,
         *,
-        role_arn: str,
         project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        role_arn: str,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
         legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseS3ImportStorage:
         """
@@ -796,50 +796,11 @@ class AsyncS3SClient:
 
         Parameters
         ----------
-        role_arn : str
-            AWS RoleArn
-
         project : int
             A unique integer value identifying this project.
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+        role_arn : str
+            AWS RoleArn
 
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
@@ -853,22 +814,61 @@ class AsyncS3SClient:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
-        region_name : typing.Optional[str]
-            AWS Region
+        bucket : typing.Optional[str]
+            S3 bucket name
 
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
+        description : typing.Optional[str]
+            Cloud storage description
 
         external_id : typing.Optional[str]
             AWS ExternalId
 
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
         legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -891,40 +891,214 @@ class AsyncS3SClient:
 
         async def main() -> None:
             await client.import_storage.s3s.create(
-                role_arn="role_arn",
                 project=1,
+                role_arn="role_arn",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            role_arn=role_arn,
             project=project,
-            synchronizable=synchronizable,
-            presign=presign,
-            last_sync=last_sync,
-            last_sync_count=last_sync_count,
-            last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
-            meta=meta,
-            title=title,
-            description=description,
-            bucket=bucket,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
+            role_arn=role_arn,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
             aws_sse_kms_key_id=aws_sse_kms_key_id,
-            region_name=region_name,
-            s3endpoint=s3endpoint,
+            bucket=bucket,
+            description=description,
             external_id=external_id,
+            last_sync=last_sync,
+            last_sync_count=last_sync_count,
+            last_sync_job=last_sync_job,
             legacy_auth=legacy_auth,
+            meta=meta,
+            prefix=prefix,
+            presign=presign,
             presign_ttl=presign_ttl,
             recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            region_name=region_name,
+            s3endpoint=s3endpoint,
+            status=status,
+            synchronizable=synchronizable,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def validate(
+        self,
+        *,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific S3 import storage connection that was set up with IAM role access.
+
+        Parameters
+        ----------
+        project : int
+            A unique integer value identifying this project.
+
+        role_arn : str
+            AWS RoleArn
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        presign : typing.Optional[bool]
+
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.import_storage.s3s.validate(
+                project=1,
+                role_arn="role_arn",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.validate(
+            project=project,
+            role_arn=role_arn,
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_session_token=aws_session_token,
+            aws_sse_kms_key_id=aws_sse_kms_key_id,
+            bucket=bucket,
+            description=description,
+            external_id=external_id,
+            last_sync=last_sync,
+            last_sync_count=last_sync_count,
+            last_sync_job=last_sync_job,
+            legacy_auth=legacy_auth,
+            meta=meta,
+            prefix=prefix,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            region_name=region_name,
+            s3endpoint=s3endpoint,
+            status=status,
+            synchronizable=synchronizable,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -1020,32 +1194,32 @@ class AsyncS3SClient:
         self,
         id: int,
         *,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
         legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseS3ImportStorage:
         """
@@ -1061,45 +1235,6 @@ class AsyncS3SClient:
         ----------
         id : int
 
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -1112,28 +1247,67 @@ class AsyncS3SClient:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
-        region_name : typing.Optional[str]
-            AWS Region
+        bucket : typing.Optional[str]
+            S3 bucket name
 
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
+        description : typing.Optional[str]
+            Cloud storage description
 
         external_id : typing.Optional[str]
             AWS ExternalId
 
-        role_arn : typing.Optional[str]
-            AWS RoleArn
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
 
         legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        presign : typing.Optional[bool]
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
+
         recursive_scan : typing.Optional[bool]
             Perform recursive scan over the bucket content
 
-        project : typing.Optional[int]
-            A unique integer value identifying this project.
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        role_arn : typing.Optional[str]
+            AWS RoleArn
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1164,32 +1338,32 @@ class AsyncS3SClient:
         """
         _response = await self._raw_client.update(
             id,
-            synchronizable=synchronizable,
-            presign=presign,
-            last_sync=last_sync,
-            last_sync_count=last_sync_count,
-            last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
-            meta=meta,
-            title=title,
-            description=description,
-            bucket=bucket,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
             aws_sse_kms_key_id=aws_sse_kms_key_id,
-            region_name=region_name,
-            s3endpoint=s3endpoint,
+            bucket=bucket,
+            description=description,
             external_id=external_id,
-            role_arn=role_arn,
+            last_sync=last_sync,
+            last_sync_count=last_sync_count,
+            last_sync_job=last_sync_job,
             legacy_auth=legacy_auth,
+            meta=meta,
+            prefix=prefix,
+            presign=presign,
             presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
             project=project,
+            recursive_scan=recursive_scan,
+            regex_filter=regex_filter,
+            region_name=region_name,
+            role_arn=role_arn,
+            s3endpoint=s3endpoint,
+            status=status,
+            synchronizable=synchronizable,
+            title=title,
+            traceback=traceback,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -1236,178 +1410,4 @@ class AsyncS3SClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.sync(id, request_options=request_options)
-        return _response.data
-
-    async def validate(
-        self,
-        *,
-        role_arn: str,
-        project: int,
-        synchronizable: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        aws_access_key_id: typing.Optional[str] = OMIT,
-        aws_secret_access_key: typing.Optional[str] = OMIT,
-        aws_session_token: typing.Optional[str] = OMIT,
-        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        legacy_auth: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific S3 import storage connection that was set up with IAM role access.
-
-        Parameters
-        ----------
-        role_arn : str
-            AWS RoleArn
-
-        project : int
-            A unique integer value identifying this project.
-
-        synchronizable : typing.Optional[bool]
-
-        presign : typing.Optional[bool]
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        status : typing.Optional[StatusC5AEnum]
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
-
-        aws_access_key_id : typing.Optional[str]
-            AWS_ACCESS_KEY_ID
-
-        aws_secret_access_key : typing.Optional[str]
-            AWS_SECRET_ACCESS_KEY
-
-        aws_session_token : typing.Optional[str]
-            AWS_SESSION_TOKEN
-
-        aws_sse_kms_key_id : typing.Optional[str]
-            AWS SSE KMS Key ID
-
-        region_name : typing.Optional[str]
-            AWS Region
-
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
-
-        external_id : typing.Optional[str]
-            AWS ExternalId
-
-        legacy_auth : typing.Optional[bool]
-
-        presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
-
-        recursive_scan : typing.Optional[bool]
-            Perform recursive scan over the bucket content
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.import_storage.s3s.validate(
-                role_arn="role_arn",
-                project=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.validate(
-            role_arn=role_arn,
-            project=project,
-            synchronizable=synchronizable,
-            presign=presign,
-            last_sync=last_sync,
-            last_sync_count=last_sync_count,
-            last_sync_job=last_sync_job,
-            status=status,
-            traceback=traceback,
-            meta=meta,
-            title=title,
-            description=description,
-            bucket=bucket,
-            prefix=prefix,
-            regex_filter=regex_filter,
-            use_blob_urls=use_blob_urls,
-            aws_access_key_id=aws_access_key_id,
-            aws_secret_access_key=aws_secret_access_key,
-            aws_session_token=aws_session_token,
-            aws_sse_kms_key_id=aws_sse_kms_key_id,
-            region_name=region_name,
-            s3endpoint=s3endpoint,
-            external_id=external_id,
-            legacy_auth=legacy_auth,
-            presign_ttl=presign_ttl,
-            recursive_scan=recursive_scan,
-            request_options=request_options,
-        )
         return _response.data

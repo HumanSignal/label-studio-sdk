@@ -118,6 +118,47 @@ class PermissionsClient:
         _response = self._raw_client.create(id, permission=permission, roles=roles, request_options=request_options)
         return _response.data
 
+    def get_options(
+        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ConfigurablePermissionOption]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
+
+        Parameters
+        ----------
+        id : int
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ConfigurablePermissionOption]
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.permissions.get_options(
+            id=1,
+        )
+        """
+        _response = self._raw_client.get_options(id, ordering=ordering, request_options=request_options)
+        return _response.data
+
     def get(
         self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> OrganizationPermission:
@@ -312,47 +353,6 @@ class PermissionsClient:
         )
         return _response.data
 
-    def get_options(
-        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ConfigurablePermissionOption]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
-
-        Parameters
-        ----------
-        id : int
-
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[ConfigurablePermissionOption]
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.organizations.permissions.get_options(
-            id=1,
-        )
-        """
-        _response = self._raw_client.get_options(id, ordering=ordering, request_options=request_options)
-        return _response.data
-
 
 class AsyncPermissionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -475,6 +475,55 @@ class AsyncPermissionsClient:
         _response = await self._raw_client.create(
             id, permission=permission, roles=roles, request_options=request_options
         )
+        return _response.data
+
+    async def get_options(
+        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ConfigurablePermissionOption]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
+
+        Parameters
+        ----------
+        id : int
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ConfigurablePermissionOption]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.permissions.get_options(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_options(id, ordering=ordering, request_options=request_options)
         return _response.data
 
     async def get(
@@ -703,53 +752,4 @@ class AsyncPermissionsClient:
             roles=roles,
             request_options=request_options,
         )
-        return _response.data
-
-    async def get_options(
-        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ConfigurablePermissionOption]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
-
-        Parameters
-        ----------
-        id : int
-
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[ConfigurablePermissionOption]
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.organizations.permissions.get_options(
-                id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_options(id, ordering=ordering, request_options=request_options)
         return _response.data

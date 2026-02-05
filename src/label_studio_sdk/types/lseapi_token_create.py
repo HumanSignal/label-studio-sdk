@@ -8,9 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class LseapiTokenCreate(UncheckedBaseModel):
-    token: typing.Optional[str] = None
     created_at: typing.Optional[str] = None
     expires_at: typing.Optional[str] = None
+    token: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

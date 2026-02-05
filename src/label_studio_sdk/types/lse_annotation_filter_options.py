@@ -9,19 +9,9 @@ from .reviewed_enum import ReviewedEnum
 
 
 class LseAnnotationFilterOptions(UncheckedBaseModel):
-    usual: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Include not skipped and not ground truth annotations
-    """
-
     ground_truth: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Include ground truth annotations
-    """
-
-    skipped: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Include skipped annotations
     """
 
     reviewed: typing.Optional[ReviewedEnum] = pydantic.Field(default=None)
@@ -31,6 +21,16 @@ class LseAnnotationFilterOptions(UncheckedBaseModel):
     * `only` - only
     * `exclude` - exclude
     * `None` - None
+    """
+
+    skipped: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Include skipped annotations
+    """
+
+    usual: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Include not skipped and not ground truth annotations
     """
 
     if IS_PYDANTIC_V2:

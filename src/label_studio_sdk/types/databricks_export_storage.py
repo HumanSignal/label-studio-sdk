@@ -17,9 +17,6 @@ class DatabricksExportStorage(UncheckedBaseModel):
     Serializer for Databricks export storage with multi-auth support.
     """
 
-    id: typing.Optional[int] = None
-    type: typing.Optional[str] = None
-    synchronizable: typing.Optional[bool] = None
     auth_type: typing.Optional[AuthTypeEnum] = pydantic.Field(default=None)
     """
     Authentication method: PAT, Databricks SP, or Azure AD SP
@@ -29,9 +26,14 @@ class DatabricksExportStorage(UncheckedBaseModel):
     * `azure_ad_sp` - Azure AD Service Principal
     """
 
-    tenant_id: typing.Optional[str] = pydantic.Field(default=None)
+    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Azure AD tenant ID (required for Azure AD SP mode)
+    Deletion from storage enabled
+    """
+
+    catalog: str = pydantic.Field()
+    """
+    UC catalog name
     """
 
     client_id: typing.Optional[str] = pydantic.Field(default=None)
@@ -39,6 +41,22 @@ class DatabricksExportStorage(UncheckedBaseModel):
     Service principal client/application ID (required for SP modes)
     """
 
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Creation time
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage description
+    """
+
+    host: str = pydantic.Field()
+    """
+    Databricks workspace base URL (https://...)
+    """
+
+    id: typing.Optional[int] = None
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last sync finished time
@@ -54,55 +72,19 @@ class DatabricksExportStorage(UncheckedBaseModel):
     Last sync job ID
     """
 
-    status: typing.Optional[StatusC5AEnum] = None
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
     meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Meta and debug information about storage processes
     """
 
-    title: typing.Optional[str] = pydantic.Field(default=None)
+    prefix: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cloud storage title
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage description
+    Export path prefix under the volume
     """
 
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    project: int = pydantic.Field()
     """
-    Creation time
-    """
-
-    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Deletion from storage enabled
-    """
-
-    host: str = pydantic.Field()
-    """
-    Databricks workspace base URL (https://...)
-    """
-
-    catalog: str = pydantic.Field()
-    """
-    UC catalog name
-    """
-
-    schema_: typing_extensions.Annotated[str, FieldMetadata(alias="schema")] = pydantic.Field(alias="schema")
-    """
-    UC schema name
-    """
-
-    volume: str = pydantic.Field()
-    """
-    UC volume name
+    A unique integer value identifying this project.
     """
 
     regex_filter: typing.Optional[str] = pydantic.Field(default=None)
@@ -110,6 +92,31 @@ class DatabricksExportStorage(UncheckedBaseModel):
     Regex for filtering objects
     """
 
+    request_timeout_s: typing.Optional[int] = None
+    schema_: typing_extensions.Annotated[str, FieldMetadata(alias="schema")] = pydantic.Field(alias="schema")
+    """
+    UC schema name
+    """
+
+    status: typing.Optional[StatusC5AEnum] = None
+    stream_chunk_bytes: typing.Optional[int] = None
+    synchronizable: typing.Optional[bool] = None
+    tenant_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Azure AD tenant ID (required for Azure AD SP mode)
+    """
+
+    title: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage title
+    """
+
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Traceback report for the last failed sync
+    """
+
+    type: typing.Optional[str] = None
     use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Generate blob URLs in tasks
@@ -120,16 +127,9 @@ class DatabricksExportStorage(UncheckedBaseModel):
     Verify TLS certificates
     """
 
-    request_timeout_s: typing.Optional[int] = None
-    stream_chunk_bytes: typing.Optional[int] = None
-    prefix: typing.Optional[str] = pydantic.Field(default=None)
+    volume: str = pydantic.Field()
     """
-    Export path prefix under the volume
-    """
-
-    project: int = pydantic.Field()
-    """
-    A unique integer value identifying this project.
+    UC volume name
     """
 
     if IS_PYDANTIC_V2:

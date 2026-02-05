@@ -85,10 +85,10 @@ class RawAnnotationReviewsClient:
         annotation: int,
         async_postprocess: typing.Optional[bool] = None,
         accepted: typing.Optional[bool] = OMIT,
-        result: typing.Optional[typing.Any] = OMIT,
-        last_annotation_history: typing.Optional[int] = OMIT,
         comment: typing.Optional[str] = OMIT,
+        last_annotation_history: typing.Optional[int] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
+        result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AnnotationReview]:
@@ -112,13 +112,13 @@ class RawAnnotationReviewsClient:
         accepted : typing.Optional[bool]
             Accepted or rejected (if false) flag
 
-        result : typing.Optional[typing.Any]
+        comment : typing.Optional[str]
 
         last_annotation_history : typing.Optional[int]
 
-        comment : typing.Optional[str]
-
         remove_from_queue : typing.Optional[bool]
+
+        result : typing.Optional[typing.Any]
 
         started_at : typing.Optional[dt.datetime]
 
@@ -138,11 +138,11 @@ class RawAnnotationReviewsClient:
             },
             json={
                 "accepted": accepted,
-                "result": result,
                 "annotation": annotation,
-                "last_annotation_history": last_annotation_history,
                 "comment": comment,
+                "last_annotation_history": last_annotation_history,
                 "remove_from_queue": remove_from_queue,
+                "result": result,
                 "started_at": started_at,
             },
             headers={
@@ -251,11 +251,11 @@ class RawAnnotationReviewsClient:
         id: int,
         *,
         accepted: typing.Optional[bool] = OMIT,
-        result: typing.Optional[typing.Any] = OMIT,
         annotation: typing.Optional[int] = OMIT,
-        last_annotation_history: typing.Optional[int] = OMIT,
         comment: typing.Optional[str] = OMIT,
+        last_annotation_history: typing.Optional[int] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
+        result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AnnotationReview]:
@@ -276,16 +276,16 @@ class RawAnnotationReviewsClient:
         accepted : typing.Optional[bool]
             Accepted or rejected (if false) flag
 
-        result : typing.Optional[typing.Any]
-
         annotation : typing.Optional[int]
             Corresponding annotation
 
-        last_annotation_history : typing.Optional[int]
-
         comment : typing.Optional[str]
 
+        last_annotation_history : typing.Optional[int]
+
         remove_from_queue : typing.Optional[bool]
+
+        result : typing.Optional[typing.Any]
 
         started_at : typing.Optional[dt.datetime]
 
@@ -302,11 +302,11 @@ class RawAnnotationReviewsClient:
             method="PATCH",
             json={
                 "accepted": accepted,
-                "result": result,
                 "annotation": annotation,
-                "last_annotation_history": last_annotation_history,
                 "comment": comment,
+                "last_annotation_history": last_annotation_history,
                 "remove_from_queue": remove_from_queue,
+                "result": result,
                 "started_at": started_at,
             },
             headers={
@@ -400,10 +400,10 @@ class AsyncRawAnnotationReviewsClient:
         annotation: int,
         async_postprocess: typing.Optional[bool] = None,
         accepted: typing.Optional[bool] = OMIT,
-        result: typing.Optional[typing.Any] = OMIT,
-        last_annotation_history: typing.Optional[int] = OMIT,
         comment: typing.Optional[str] = OMIT,
+        last_annotation_history: typing.Optional[int] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
+        result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AnnotationReview]:
@@ -427,13 +427,13 @@ class AsyncRawAnnotationReviewsClient:
         accepted : typing.Optional[bool]
             Accepted or rejected (if false) flag
 
-        result : typing.Optional[typing.Any]
+        comment : typing.Optional[str]
 
         last_annotation_history : typing.Optional[int]
 
-        comment : typing.Optional[str]
-
         remove_from_queue : typing.Optional[bool]
+
+        result : typing.Optional[typing.Any]
 
         started_at : typing.Optional[dt.datetime]
 
@@ -453,11 +453,11 @@ class AsyncRawAnnotationReviewsClient:
             },
             json={
                 "accepted": accepted,
-                "result": result,
                 "annotation": annotation,
-                "last_annotation_history": last_annotation_history,
                 "comment": comment,
+                "last_annotation_history": last_annotation_history,
                 "remove_from_queue": remove_from_queue,
+                "result": result,
                 "started_at": started_at,
             },
             headers={
@@ -568,11 +568,11 @@ class AsyncRawAnnotationReviewsClient:
         id: int,
         *,
         accepted: typing.Optional[bool] = OMIT,
-        result: typing.Optional[typing.Any] = OMIT,
         annotation: typing.Optional[int] = OMIT,
-        last_annotation_history: typing.Optional[int] = OMIT,
         comment: typing.Optional[str] = OMIT,
+        last_annotation_history: typing.Optional[int] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
+        result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AnnotationReview]:
@@ -593,16 +593,16 @@ class AsyncRawAnnotationReviewsClient:
         accepted : typing.Optional[bool]
             Accepted or rejected (if false) flag
 
-        result : typing.Optional[typing.Any]
-
         annotation : typing.Optional[int]
             Corresponding annotation
 
-        last_annotation_history : typing.Optional[int]
-
         comment : typing.Optional[str]
 
+        last_annotation_history : typing.Optional[int]
+
         remove_from_queue : typing.Optional[bool]
+
+        result : typing.Optional[typing.Any]
 
         started_at : typing.Optional[dt.datetime]
 
@@ -619,11 +619,11 @@ class AsyncRawAnnotationReviewsClient:
             method="PATCH",
             json={
                 "accepted": accepted,
-                "result": result,
                 "annotation": annotation,
-                "last_annotation_history": last_annotation_history,
                 "comment": comment,
+                "last_annotation_history": last_annotation_history,
                 "remove_from_queue": remove_from_queue,
+                "result": result,
                 "started_at": started_at,
             },
             headers={

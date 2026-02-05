@@ -9,11 +9,16 @@ from .filter_group import FilterGroup
 
 
 class View(UncheckedBaseModel):
-    id: typing.Optional[int] = None
-    filter_group: typing.Optional[FilterGroup] = None
     data: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Custom view data
+    """
+
+    filter_group: typing.Optional[FilterGroup] = None
+    id: typing.Optional[int] = None
+    order: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
     """
 
     ordering: typing.Optional[typing.Any] = pydantic.Field(default=None)
@@ -21,9 +26,9 @@ class View(UncheckedBaseModel):
     Ordering parameters
     """
 
-    order: typing.Optional[int] = pydantic.Field(default=None)
+    project: int = pydantic.Field()
     """
-    Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
+    Project ID
     """
 
     selected_items: typing.Optional[typing.Any] = pydantic.Field(default=None)
@@ -34,11 +39,6 @@ class View(UncheckedBaseModel):
     user: typing.Optional[int] = pydantic.Field(default=None)
     """
     User who made this view
-    """
-
-    project: int = pydantic.Field()
-    """
-    Project ID
     """
 
     if IS_PYDANTIC_V2:
