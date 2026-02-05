@@ -37353,14 +37353,6 @@ client.prompts.runs.create(
 <dl>
 <dd>
 
-**only_missing_predictions:** `typing.Optional[bool]` — When true, only tasks without successful predictions for this prompt version are submitted for inference.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **organization:** `typing.Optional[int]` 
     
 </dd>
