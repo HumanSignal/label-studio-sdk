@@ -66,7 +66,7 @@ class LseProjectResponse(UncheckedBaseModel):
     TTL in seconds for task reservations, on new and existing tasks
     """
 
-    data_types: typing.Optional[typing.Any] = None
+    data_types: typing.Optional[typing.Dict[str, typing.Any]] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Project description
