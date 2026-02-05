@@ -139,7 +139,7 @@ class LseProjectUpdate(UncheckedBaseModel):
 
     organization: typing.Optional[int] = None
     overlap_cohort_percentage: typing.Optional[int] = None
-    parsed_label_config: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    parsed_label_config: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     JSON-formatted labeling configuration
     """
