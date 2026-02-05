@@ -53,9 +53,9 @@ class AllRolesProjectList(UncheckedBaseModel):
     Flag to detect is project ready for bulk annotation
     """
 
-    control_weights: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    control_weights: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
-    Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+    Dict of weights for each control tag in metric calculation.
     """
 
     created_at: typing.Optional[dt.datetime] = None
@@ -70,7 +70,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     TTL in seconds for task reservations, on new and existing tasks
     """
 
-    data_types: typing.Optional[typing.Any] = None
+    data_types: typing.Optional[typing.Dict[str, typing.Any]] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Project description
@@ -141,7 +141,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     num_tasks_with_annotations: typing.Optional[int] = None
     organization: typing.Optional[int] = None
     overlap_cohort_percentage: typing.Optional[int] = None
-    parsed_label_config: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    parsed_label_config: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     JSON-formatted labeling configuration
     """
