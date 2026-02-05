@@ -6,7 +6,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .lse_project_create_control_weights_value import LseProjectCreateControlWeightsValue
 from .sampling_de5enum import SamplingDe5Enum
 from .skip_queue_enum import SkipQueueEnum
 from .user_simple import UserSimple
@@ -34,11 +33,9 @@ class LseProjectCreate(UncheckedBaseModel):
     Flag to detect is project ready for bulk annotation
     """
 
-    control_weights: typing.Optional[typing.Dict[str, typing.Optional[LseProjectCreateControlWeightsValue]]] = (
-        pydantic.Field(default=None)
-    )
+    control_weights: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
-    Weights for each control tag used in agreement metrics.
+    Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
     """
 
     created_at: typing.Optional[dt.datetime] = None

@@ -12,7 +12,6 @@ if typing.TYPE_CHECKING:
     from .activity_log_response import ActivityLogResponse
     from .agreement_methodology_enum import AgreementMethodologyEnum
     from .all_roles_project_list import AllRolesProjectList
-    from .all_roles_project_list_control_weights_value import AllRolesProjectListControlWeightsValue
     from .annotated_enum import AnnotatedEnum
     from .annotation import Annotation
     from .annotation_history import AnnotationHistory
@@ -83,14 +82,10 @@ if typing.TYPE_CHECKING:
     )
     from .lse_organization_member_list_created_projects_item import LseOrganizationMemberListCreatedProjectsItem
     from .lse_project import LseProject
-    from .lse_project_control_weights_value import LseProjectControlWeightsValue
     from .lse_project_counts import LseProjectCounts
     from .lse_project_create import LseProjectCreate
-    from .lse_project_create_control_weights_value import LseProjectCreateControlWeightsValue
     from .lse_project_response import LseProjectResponse
-    from .lse_project_response_control_weights_value import LseProjectResponseControlWeightsValue
     from .lse_project_update import LseProjectUpdate
-    from .lse_project_update_control_weights_value import LseProjectUpdateControlWeightsValue
     from .lse_s3export_storage import LseS3ExportStorage
     from .lse_s3export_storage_request import LseS3ExportStorageRequest
     from .lse_s3import_storage import LseS3ImportStorage
@@ -158,7 +153,6 @@ if typing.TYPE_CHECKING:
     from .prediction import Prediction
     from .prediction_request import PredictionRequest
     from .project import Project
-    from .project_control_weights_value import ProjectControlWeightsValue
     from .project_group import ProjectGroup
     from .project_group_request import ProjectGroupRequest
     from .project_group_role_enum import ProjectGroupRoleEnum
@@ -235,7 +229,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ActivityLogResponse": ".activity_log_response",
     "AgreementMethodologyEnum": ".agreement_methodology_enum",
     "AllRolesProjectList": ".all_roles_project_list",
-    "AllRolesProjectListControlWeightsValue": ".all_roles_project_list_control_weights_value",
     "AnnotatedEnum": ".annotated_enum",
     "Annotation": ".annotation",
     "AnnotationHistory": ".annotation_history",
@@ -304,14 +297,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LseOrganizationMemberListContributedToProjectsItem": ".lse_organization_member_list_contributed_to_projects_item",
     "LseOrganizationMemberListCreatedProjectsItem": ".lse_organization_member_list_created_projects_item",
     "LseProject": ".lse_project",
-    "LseProjectControlWeightsValue": ".lse_project_control_weights_value",
     "LseProjectCounts": ".lse_project_counts",
     "LseProjectCreate": ".lse_project_create",
-    "LseProjectCreateControlWeightsValue": ".lse_project_create_control_weights_value",
     "LseProjectResponse": ".lse_project_response",
-    "LseProjectResponseControlWeightsValue": ".lse_project_response_control_weights_value",
     "LseProjectUpdate": ".lse_project_update",
-    "LseProjectUpdateControlWeightsValue": ".lse_project_update_control_weights_value",
     "LseS3ExportStorage": ".lse_s3export_storage",
     "LseS3ExportStorageRequest": ".lse_s3export_storage_request",
     "LseS3ImportStorage": ".lse_s3import_storage",
@@ -375,7 +364,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Prediction": ".prediction",
     "PredictionRequest": ".prediction_request",
     "Project": ".project",
-    "ProjectControlWeightsValue": ".project_control_weights_value",
     "ProjectGroup": ".project_group",
     "ProjectGroupRequest": ".project_group_request",
     "ProjectGroupRoleEnum": ".project_group_role_enum",
@@ -476,7 +464,6 @@ __all__ = [
     "ActivityLogResponse",
     "AgreementMethodologyEnum",
     "AllRolesProjectList",
-    "AllRolesProjectListControlWeightsValue",
     "AnnotatedEnum",
     "Annotation",
     "AnnotationHistory",
@@ -545,14 +532,10 @@ __all__ = [
     "LseOrganizationMemberListContributedToProjectsItem",
     "LseOrganizationMemberListCreatedProjectsItem",
     "LseProject",
-    "LseProjectControlWeightsValue",
     "LseProjectCounts",
     "LseProjectCreate",
-    "LseProjectCreateControlWeightsValue",
     "LseProjectResponse",
-    "LseProjectResponseControlWeightsValue",
     "LseProjectUpdate",
-    "LseProjectUpdateControlWeightsValue",
     "LseS3ExportStorage",
     "LseS3ExportStorageRequest",
     "LseS3ImportStorage",
@@ -616,7 +599,6 @@ __all__ = [
     "Prediction",
     "PredictionRequest",
     "Project",
-    "ProjectControlWeightsValue",
     "ProjectGroup",
     "ProjectGroupRequest",
     "ProjectGroupRoleEnum",

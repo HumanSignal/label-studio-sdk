@@ -6,13 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        DuplicateProjectsResponse,
-        ImportPredictionsProjectsResponse,
-        ImportTasksProjectsResponse,
-        LseProjectCreateRequestControlWeightsValue,
-        PatchedLseProjectUpdateRequestControlWeightsValue,
-    )
+    from .types import DuplicateProjectsResponse, ImportPredictionsProjectsResponse, ImportTasksProjectsResponse
     from . import assignments, exports, members, metrics, pauses, roles, stats
     from .assignments import (
         AssignAssignmentsRequestType,
@@ -95,11 +89,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImportTasksProjectsResponse": ".types",
     "LeadTimeStatsResponse": ".stats",
     "LeadTimeStatsResponseLeadTimeStatsItem": ".stats",
-    "LseProjectCreateRequestControlWeightsValue": ".types",
     "ModelVersionAnnotatorAgreementStatsResponse": ".stats",
     "ModelVersionGroundTruthAgreementStatsResponse": ".stats",
     "ModelVersionPredictionAgreementStatsResponse": ".stats",
-    "PatchedLseProjectUpdateRequestControlWeightsValue": ".types",
     "TotalAgreementStatsResponse": ".stats",
     "TotalAgreementStatsResponseOne": ".stats",
     "TotalAgreementStatsResponseZero": ".stats",
@@ -179,11 +171,9 @@ __all__ = [
     "ImportTasksProjectsResponse",
     "LeadTimeStatsResponse",
     "LeadTimeStatsResponseLeadTimeStatsItem",
-    "LseProjectCreateRequestControlWeightsValue",
     "ModelVersionAnnotatorAgreementStatsResponse",
     "ModelVersionGroundTruthAgreementStatsResponse",
     "ModelVersionPredictionAgreementStatsResponse",
-    "PatchedLseProjectUpdateRequestControlWeightsValue",
     "TotalAgreementStatsResponse",
     "TotalAgreementStatsResponseOne",
     "TotalAgreementStatsResponseZero",
