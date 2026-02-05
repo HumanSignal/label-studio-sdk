@@ -9,13 +9,12 @@ from .filter import Filter
 
 
 class FilterGroup(UncheckedBaseModel):
+    id: typing.Optional[int] = None
+    filters: typing.List[Filter]
     conjunction: str = pydantic.Field()
     """
     Type of conjunction
     """
-
-    filters: typing.List[Filter]
-    id: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

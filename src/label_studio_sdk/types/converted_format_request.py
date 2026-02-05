@@ -9,8 +9,8 @@ from .status7bf_enum import Status7BfEnum
 
 
 class ConvertedFormatRequest(UncheckedBaseModel):
-    export_type: str
     status: typing.Optional[Status7BfEnum] = None
+    export_type: str
     traceback: typing.Optional[str] = pydantic.Field(default=None)
     """
     Traceback report in case of errors

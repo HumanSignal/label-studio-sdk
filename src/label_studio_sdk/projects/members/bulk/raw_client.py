@@ -32,8 +32,8 @@ class RawBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
-        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
+        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PostBulkResponse]:
@@ -67,9 +67,9 @@ class RawBulkClient:
         tags : typing.Optional[str]
             Filter tags by in list (comma-separated values)
 
-        excluded : typing.Optional[typing.Sequence[int]]
-
         included : typing.Optional[typing.Sequence[int]]
+
+        excluded : typing.Optional[typing.Sequence[int]]
 
         roles : typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]
 
@@ -93,8 +93,8 @@ class RawBulkClient:
             },
             json={
                 "all": all_,
-                "excluded": excluded,
                 "included": included,
+                "excluded": excluded,
                 "roles": convert_and_respect_annotation_metadata(
                     object_=roles, annotation=typing.Sequence[ProjectMemberBulkAssignRolesRequest], direction="write"
                 ),
@@ -209,8 +209,8 @@ class AsyncRawBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
-        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
+        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PostBulkResponse]:
@@ -244,9 +244,9 @@ class AsyncRawBulkClient:
         tags : typing.Optional[str]
             Filter tags by in list (comma-separated values)
 
-        excluded : typing.Optional[typing.Sequence[int]]
-
         included : typing.Optional[typing.Sequence[int]]
+
+        excluded : typing.Optional[typing.Sequence[int]]
 
         roles : typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]
 
@@ -270,8 +270,8 @@ class AsyncRawBulkClient:
             },
             json={
                 "all": all_,
-                "excluded": excluded,
                 "included": included,
+                "excluded": excluded,
                 "roles": convert_and_respect_annotation_metadata(
                     object_=roles, annotation=typing.Sequence[ProjectMemberBulkAssignRolesRequest], direction="write"
                 ),

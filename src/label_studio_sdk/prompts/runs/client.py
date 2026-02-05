@@ -105,14 +105,14 @@ class RunsClient:
         version_id: int,
         *,
         project: int,
-        job_id: typing.Optional[str] = OMIT,
         only_missing_predictions: typing.Optional[bool] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
         project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
-        total_correct_predictions: typing.Optional[int] = OMIT,
+        job_id: typing.Optional[str] = OMIT,
         total_predictions: typing.Optional[int] = OMIT,
+        total_correct_predictions: typing.Optional[int] = OMIT,
         total_tasks: typing.Optional[int] = OMIT,
+        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelRun:
         """
@@ -132,23 +132,23 @@ class RunsClient:
 
         project : int
 
-        job_id : typing.Optional[str]
-            Job ID for inference job for a ModelRun e.g. Adala job ID
-
         only_missing_predictions : typing.Optional[bool]
             When true, only tasks without successful predictions for this prompt version are submitted for inference.
 
-        organization : typing.Optional[int]
-
-        predictions_updated_at : typing.Optional[dt.datetime]
-
         project_subset : typing.Optional[ProjectSubsetEnum]
 
-        total_correct_predictions : typing.Optional[int]
+        job_id : typing.Optional[str]
+            Job ID for inference job for a ModelRun e.g. Adala job ID
 
         total_predictions : typing.Optional[int]
 
+        total_correct_predictions : typing.Optional[int]
+
         total_tasks : typing.Optional[int]
+
+        predictions_updated_at : typing.Optional[dt.datetime]
+
+        organization : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -175,14 +175,14 @@ class RunsClient:
             prompt_id,
             version_id,
             project=project,
-            job_id=job_id,
             only_missing_predictions=only_missing_predictions,
-            organization=organization,
-            predictions_updated_at=predictions_updated_at,
             project_subset=project_subset,
-            total_correct_predictions=total_correct_predictions,
+            job_id=job_id,
             total_predictions=total_predictions,
+            total_correct_predictions=total_correct_predictions,
             total_tasks=total_tasks,
+            predictions_updated_at=predictions_updated_at,
+            organization=organization,
             request_options=request_options,
         )
         return _response.data
@@ -335,14 +335,14 @@ class AsyncRunsClient:
         version_id: int,
         *,
         project: int,
-        job_id: typing.Optional[str] = OMIT,
         only_missing_predictions: typing.Optional[bool] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
         project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
-        total_correct_predictions: typing.Optional[int] = OMIT,
+        job_id: typing.Optional[str] = OMIT,
         total_predictions: typing.Optional[int] = OMIT,
+        total_correct_predictions: typing.Optional[int] = OMIT,
         total_tasks: typing.Optional[int] = OMIT,
+        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelRun:
         """
@@ -362,23 +362,23 @@ class AsyncRunsClient:
 
         project : int
 
-        job_id : typing.Optional[str]
-            Job ID for inference job for a ModelRun e.g. Adala job ID
-
         only_missing_predictions : typing.Optional[bool]
             When true, only tasks without successful predictions for this prompt version are submitted for inference.
 
-        organization : typing.Optional[int]
-
-        predictions_updated_at : typing.Optional[dt.datetime]
-
         project_subset : typing.Optional[ProjectSubsetEnum]
 
-        total_correct_predictions : typing.Optional[int]
+        job_id : typing.Optional[str]
+            Job ID for inference job for a ModelRun e.g. Adala job ID
 
         total_predictions : typing.Optional[int]
 
+        total_correct_predictions : typing.Optional[int]
+
         total_tasks : typing.Optional[int]
+
+        predictions_updated_at : typing.Optional[dt.datetime]
+
+        organization : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -413,14 +413,14 @@ class AsyncRunsClient:
             prompt_id,
             version_id,
             project=project,
-            job_id=job_id,
             only_missing_predictions=only_missing_predictions,
-            organization=organization,
-            predictions_updated_at=predictions_updated_at,
             project_subset=project_subset,
-            total_correct_predictions=total_correct_predictions,
+            job_id=job_id,
             total_predictions=total_predictions,
+            total_correct_predictions=total_correct_predictions,
             total_tasks=total_tasks,
+            predictions_updated_at=predictions_updated_at,
+            organization=organization,
             request_options=request_options,
         )
         return _response.data

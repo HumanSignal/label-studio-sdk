@@ -11,14 +11,12 @@ from .serialization_option import SerializationOption
 
 
 class SerializationOptions(UncheckedBaseModel):
-    annotations_completed_by: typing_extensions.Annotated[
-        typing.Optional[SerializationOption], FieldMetadata(alias="annotations__completed_by")
-    ] = pydantic.Field(alias="annotations__completed_by", default=None)
+    drafts: typing.Optional[SerializationOption] = pydantic.Field(default=None)
     """
     JSON dict with parameters
     """
 
-    drafts: typing.Optional[SerializationOption] = pydantic.Field(default=None)
+    predictions: typing.Optional[SerializationOption] = pydantic.Field(default=None)
     """
     JSON dict with parameters
     """
@@ -28,14 +26,16 @@ class SerializationOptions(UncheckedBaseModel):
     Include annotation history
     """
 
+    annotations_completed_by: typing_extensions.Annotated[
+        typing.Optional[SerializationOption], FieldMetadata(alias="annotations__completed_by")
+    ] = pydantic.Field(alias="annotations__completed_by", default=None)
+    """
+    JSON dict with parameters
+    """
+
     interpolate_key_frames: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Interpolate video key frames
-    """
-
-    predictions: typing.Optional[SerializationOption] = pydantic.Field(default=None)
-    """
-    JSON dict with parameters
     """
 
     if IS_PYDANTIC_V2:

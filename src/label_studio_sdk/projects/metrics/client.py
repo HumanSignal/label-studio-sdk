@@ -72,10 +72,10 @@ class MetricsClient:
         self,
         id: int,
         *,
+        metric_name: typing.Optional[str] = OMIT,
         additional_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         agreement_threshold: typing.Optional[int] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
-        metric_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MetricParam:
         """
@@ -91,13 +91,13 @@ class MetricsClient:
         ----------
         id : int
 
+        metric_name : typing.Optional[str]
+
         additional_params : typing.Optional[typing.Dict[str, typing.Any]]
 
         agreement_threshold : typing.Optional[int]
 
         max_additional_annotators_assignable : typing.Optional[int]
-
-        metric_name : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -120,10 +120,10 @@ class MetricsClient:
         """
         _response = self._raw_client.update(
             id,
+            metric_name=metric_name,
             additional_params=additional_params,
             agreement_threshold=agreement_threshold,
             max_additional_annotators_assignable=max_additional_annotators_assignable,
-            metric_name=metric_name,
             request_options=request_options,
         )
         return _response.data
@@ -202,10 +202,10 @@ class AsyncMetricsClient:
         self,
         id: int,
         *,
+        metric_name: typing.Optional[str] = OMIT,
         additional_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         agreement_threshold: typing.Optional[int] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
-        metric_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MetricParam:
         """
@@ -221,13 +221,13 @@ class AsyncMetricsClient:
         ----------
         id : int
 
+        metric_name : typing.Optional[str]
+
         additional_params : typing.Optional[typing.Dict[str, typing.Any]]
 
         agreement_threshold : typing.Optional[int]
 
         max_additional_annotators_assignable : typing.Optional[int]
-
-        metric_name : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -258,10 +258,10 @@ class AsyncMetricsClient:
         """
         _response = await self._raw_client.update(
             id,
+            metric_name=metric_name,
             additional_params=additional_params,
             agreement_threshold=agreement_threshold,
             max_additional_annotators_assignable=max_additional_annotators_assignable,
-            metric_name=metric_name,
             request_options=request_options,
         )
         return _response.data

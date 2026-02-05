@@ -8,29 +8,13 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ProjectTemplateRequest(UncheckedBaseModel):
-    assignment_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    general dict serialized assignment settings
-    """
-
-    created_by: typing.Optional[int] = None
-    custom_script: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    custom script (Plugin) for projects created from this template
-    """
-
-    description: typing.Optional[str] = None
-    name: str
-    organization: typing.Optional[int] = None
     project_id: int
+    name: str
+    description: typing.Optional[str] = None
+    tags: typing.Optional[typing.Any] = None
     project_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     general dict serialized project settings
-    """
-
-    require_comment_on_skip: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    flag to require comment on skip
     """
 
     review_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
@@ -38,8 +22,24 @@ class ProjectTemplateRequest(UncheckedBaseModel):
     general dict serialized review settings
     """
 
+    assignment_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    general dict serialized assignment settings
+    """
+
+    require_comment_on_skip: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    flag to require comment on skip
+    """
+
+    custom_script: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    custom script (Plugin) for projects created from this template
+    """
+
     show_unused_data_columns_to_annotators: typing.Optional[bool] = None
-    tags: typing.Optional[typing.Any] = None
+    created_by: typing.Optional[int] = None
+    organization: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

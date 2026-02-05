@@ -10,14 +10,9 @@ from .role9e7enum import Role9E7Enum
 
 
 class DefaultRole(UncheckedBaseModel):
-    annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    organization: int = pydantic.Field()
     """
-    Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-    """
-
-    custom_scripts_enabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
+    A unique integer value identifying this organization.
     """
 
     default_role: typing.Optional[Role9E7Enum] = pydantic.Field(default=None)
@@ -33,9 +28,9 @@ class DefaultRole(UncheckedBaseModel):
     * `NO` - Not Activated
     """
 
-    email_notification_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    external_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
+    External ID to uniquely identify this organization
     """
 
     embed_domains: typing.Optional[typing.Any] = pydantic.Field(default=None)
@@ -48,25 +43,30 @@ class DefaultRole(UncheckedBaseModel):
     Embed settings for this organization
     """
 
-    external_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    External ID to uniquely identify this organization
-    """
-
     extra_data_on_activity_logs: typing.Optional[bool] = None
-    label_stream_navigation_disabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    custom_scripts_enabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
+    Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
     """
 
-    organization: int = pydantic.Field()
+    annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    A unique integer value identifying this organization.
+    Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
     """
 
     read_only_quick_view_enabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Set to current time to prevent creating or editing annotations in quick view.
+    """
+
+    label_stream_navigation_disabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
+    """
+
+    email_notification_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
     """
 
     if IS_PYDANTIC_V2:

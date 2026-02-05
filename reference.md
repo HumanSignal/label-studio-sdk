@@ -582,7 +582,7 @@ client.annotation_reviews.create(
 <dl>
 <dd>
 
-**comment:** `typing.Optional[str]` 
+**result:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>
@@ -598,7 +598,7 @@ client.annotation_reviews.create(
 <dl>
 <dd>
 
-**remove_from_queue:** `typing.Optional[bool]` 
+**comment:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -606,7 +606,7 @@ client.annotation_reviews.create(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Any]` 
+**remove_from_queue:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -858,7 +858,7 @@ client.annotation_reviews.update(
 <dl>
 <dd>
 
-**annotation:** `typing.Optional[int]` — Corresponding annotation
+**result:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>
@@ -866,7 +866,7 @@ client.annotation_reviews.update(
 <dl>
 <dd>
 
-**comment:** `typing.Optional[str]` 
+**annotation:** `typing.Optional[int]` — Corresponding annotation
     
 </dd>
 </dl>
@@ -882,7 +882,7 @@ client.annotation_reviews.update(
 <dl>
 <dd>
 
-**remove_from_queue:** `typing.Optional[bool]` 
+**comment:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -890,7 +890,7 @@ client.annotation_reviews.update(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Any]` 
+**remove_from_queue:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -919,223 +919,6 @@ client.annotation_reviews.update(
 </details>
 
 ## Annotations
-<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">create_bulk</a>(...) -&gt; AsyncHttpResponse[typing.List[CreateBulkAnnotationsResponseItem]]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create multiple annotations at once
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.annotations.create_bulk()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**bulk_created:** `typing.Optional[bool]` — Annotation was created in bulk mode
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**completed_by:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**draft_created_at:** `typing.Optional[dt.datetime]` — Draft creation time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ground_truth:** `typing.Optional[bool]` — This annotation is a Ground Truth (ground_truth)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**import_id:** `typing.Optional[int]` — Original annotation ID that was at the import step or NULL if this annotation wasn't imported
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_action:** `typing.Optional[LastActionEnum]` 
-
-Action which was performed in the last annotation history item
-
-* `prediction` - Created from prediction
-* `propagated_annotation` - Created from another annotation
-* `imported` - Imported
-* `submitted` - Submitted
-* `updated` - Updated
-* `skipped` - Skipped
-* `accepted` - Accepted
-* `rejected` - Rejected
-* `fixed_and_accepted` - Fixed and accepted
-* `deleted_review` - Deleted review
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_created_by:** `typing.Optional[int]` — User who created the last annotation history item
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**lead_time:** `typing.Optional[float]` — How much time it took to annotate the task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**parent_annotation:** `typing.Optional[int]` — Points to the parent annotation from which this annotation was created
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**parent_prediction:** `typing.Optional[int]` — Points to the prediction from which this annotation was created
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID for this annotation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — List of annotation results for the task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**selected_items:** `typing.Optional[SelectedItemsRequest]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task:** `typing.Optional[int]` — Corresponding task for this annotation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tasks:** `typing.Optional[typing.Sequence[int]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**unique_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_by:** `typing.Optional[int]` — Last user who updated this annotation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**was_cancelled:** `typing.Optional[bool]` — User skipped the task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">get</a>(...) -&gt; AsyncHttpResponse[Annotation]</code></summary>
 <dl>
 <dd>
@@ -1310,26 +1093,26 @@ client = LabelStudio(
 )
 client.annotations.update(
     id=1,
-    ground_truth=True,
     result=[
         {
-            "from_name": "bboxes",
-            "image_rotation": 0,
-            "original_height": 1080,
             "original_width": 1920,
+            "original_height": 1080,
+            "image_rotation": 0,
+            "from_name": "bboxes",
             "to_name": "image",
             "type": "rectanglelabels",
             "value": {
+                "x": 20,
+                "y": 30,
+                "width": 50,
                 "height": 60,
                 "rotation": 0,
                 "values": {"rectanglelabels": ["Person"]},
-                "width": 50,
-                "x": 20,
-                "y": 30,
             },
         }
     ],
     was_cancelled=False,
+    ground_truth=True,
 )
 
 ```
@@ -1354,7 +1137,47 @@ client.annotations.update(
 <dl>
 <dd>
 
+**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task:** `typing.Optional[int]` — Corresponding task for this annotation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID for this annotation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **completed_by:** `typing.Optional[int]` — User ID of the person who created this annotation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_by:** `typing.Optional[int]` — Last user who updated this annotation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**was_cancelled:** `typing.Optional[bool]` — User skipped the task
     
 </dd>
 </dl>
@@ -1378,7 +1201,67 @@ client.annotations.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID for this annotation
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">create_bulk</a>(...) -&gt; AsyncHttpResponse[typing.List[CreateBulkAnnotationsResponseItem]]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create multiple annotations at once
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotations.create_bulk()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — List of annotation results for the task
     
 </dd>
 </dl>
@@ -1386,7 +1269,100 @@ client.annotations.update(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+**completed_by:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**unique_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tasks:** `typing.Optional[typing.Sequence[int]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_items:** `typing.Optional[SelectedItemsRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**was_cancelled:** `typing.Optional[bool]` — User skipped the task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ground_truth:** `typing.Optional[bool]` — This annotation is a Ground Truth (ground_truth)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft_created_at:** `typing.Optional[dt.datetime]` — Draft creation time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lead_time:** `typing.Optional[float]` — How much time it took to annotate the task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**import_id:** `typing.Optional[int]` — Original annotation ID that was at the import step or NULL if this annotation wasn't imported
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_action:** `typing.Optional[LastActionEnum]` 
+
+Action which was performed in the last annotation history item
+
+* `prediction` - Created from prediction
+* `propagated_annotation` - Created from another annotation
+* `imported` - Imported
+* `submitted` - Submitted
+* `updated` - Updated
+* `skipped` - Skipped
+* `accepted` - Accepted
+* `rejected` - Rejected
+* `fixed_and_accepted` - Fixed and accepted
+* `deleted_review` - Deleted review
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bulk_created:** `typing.Optional[bool]` — Annotation was created in bulk mode
     
 </dd>
 </dl>
@@ -1402,6 +1378,14 @@ client.annotations.update(
 <dl>
 <dd>
 
+**project:** `typing.Optional[int]` — Project ID for this annotation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **updated_by:** `typing.Optional[int]` — Last user who updated this annotation
     
 </dd>
@@ -1410,7 +1394,23 @@ client.annotations.update(
 <dl>
 <dd>
 
-**was_cancelled:** `typing.Optional[bool]` — User skipped the task
+**parent_prediction:** `typing.Optional[int]` — Points to the prediction from which this annotation was created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_annotation:** `typing.Optional[int]` — Points to the parent annotation from which this annotation was created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_created_by:** `typing.Optional[int]` — User who created the last annotation history item
     
 </dd>
 </dl>
@@ -1557,26 +1557,26 @@ client = LabelStudio(
 )
 client.annotations.create(
     id=1,
-    ground_truth=True,
     result=[
         {
-            "from_name": "bboxes",
-            "image_rotation": 0,
-            "original_height": 1080,
             "original_width": 1920,
+            "original_height": 1080,
+            "image_rotation": 0,
+            "from_name": "bboxes",
             "to_name": "image",
             "type": "rectanglelabels",
             "value": {
+                "x": 20,
+                "y": 30,
+                "width": 50,
                 "height": 60,
                 "rotation": 0,
                 "values": {"rectanglelabels": ["Person"]},
-                "width": 50,
-                "x": 20,
-                "y": 30,
             },
         }
     ],
     was_cancelled=False,
+    ground_truth=True,
 )
 
 ```
@@ -1601,38 +1601,6 @@ client.annotations.create(
 <dl>
 <dd>
 
-**completed_by:** `typing.Optional[int]` — User ID of the person who created this annotation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ground_truth:** `typing.Optional[bool]` — This annotation is a Ground Truth
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**lead_time:** `typing.Optional[float]` — How much time it took to annotate the task (in seconds)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID for this annotation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
     
 </dd>
@@ -1649,6 +1617,22 @@ client.annotations.create(
 <dl>
 <dd>
 
+**project:** `typing.Optional[int]` — Project ID for this annotation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**completed_by:** `typing.Optional[int]` — User ID of the person who created this annotation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **updated_by:** `typing.Optional[int]` — Last user who updated this annotation
     
 </dd>
@@ -1658,6 +1642,22 @@ client.annotations.create(
 <dd>
 
 **was_cancelled:** `typing.Optional[bool]` — User skipped the task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ground_truth:** `typing.Optional[bool]` — This annotation is a Ground Truth
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lead_time:** `typing.Optional[float]` — How much time it took to annotate the task (in seconds)
     
 </dd>
 </dl>
@@ -1921,7 +1921,7 @@ client.comments.create()
 <dl>
 <dd>
 
-**annotation:** `typing.Optional[int]` 
+**region_ref:** `typing.Optional[typing.Any]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
     
 </dd>
 </dl>
@@ -1937,7 +1937,7 @@ client.comments.create()
 <dl>
 <dd>
 
-**draft:** `typing.Optional[int]` 
+**text:** `typing.Optional[str]` — Reviewer or annotator comment
     
 </dd>
 </dl>
@@ -1953,7 +1953,7 @@ client.comments.create()
 <dl>
 <dd>
 
-**region_ref:** `typing.Optional[typing.Any]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
+**draft:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -1961,7 +1961,7 @@ client.comments.create()
 <dl>
 <dd>
 
-**text:** `typing.Optional[str]` — Reviewer or annotator comment
+**annotation:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -2221,7 +2221,7 @@ client.comments.update(
 <dl>
 <dd>
 
-**annotation:** `typing.Optional[int]` 
+**region_ref:** `typing.Optional[typing.Any]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
     
 </dd>
 </dl>
@@ -2237,7 +2237,7 @@ client.comments.update(
 <dl>
 <dd>
 
-**draft:** `typing.Optional[int]` 
+**text:** `typing.Optional[str]` — Reviewer or annotator comment
     
 </dd>
 </dl>
@@ -2253,7 +2253,7 @@ client.comments.update(
 <dl>
 <dd>
 
-**region_ref:** `typing.Optional[typing.Any]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
+**draft:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -2261,7 +2261,7 @@ client.comments.update(
 <dl>
 <dd>
 
-**text:** `typing.Optional[str]` — Reviewer or annotator comment
+**annotation:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -2402,6 +2402,46 @@ client.users.update_current_user()
 <dl>
 <dd>
 
+**first_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**custom_hotkeys:** `typing.Optional[typing.Any]` — Custom keyboard shortcuts configuration for the user interface
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **active_organization:** `typing.Optional[int]` 
     
 </dd>
@@ -2418,55 +2458,7 @@ client.users.update_current_user()
 <dl>
 <dd>
 
-**custom_hotkeys:** `typing.Optional[typing.Any]` — Custom keyboard shortcuts configuration for the user interface
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **date_joined:** `typing.Optional[dt.datetime]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_notification_settings:** `typing.Optional[typing.Any]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**first_name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_email_verified:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**onboarding_state:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -2482,7 +2474,7 @@ client.users.update_current_user()
 <dl>
 <dd>
 
-**phone:** `typing.Optional[str]` 
+**onboarding_state:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -2490,7 +2482,15 @@ client.users.update_current_user()
 <dl>
 <dd>
 
-**username:** `typing.Optional[str]` 
+**is_email_verified:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_notification_settings:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>
@@ -2934,23 +2934,7 @@ client.users.create()
 <dl>
 <dd>
 
-**allow_newsletters:** `typing.Optional[bool]` — Whether the user allows newsletters
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avatar:** `typing.Optional[str]` — Avatar URL of the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `typing.Optional[str]` — Email of the user
+**id:** `typing.Optional[int]` — User ID
     
 </dd>
 </dl>
@@ -2966,7 +2950,31 @@ client.users.create()
 <dl>
 <dd>
 
-**id:** `typing.Optional[int]` — User ID
+**last_name:** `typing.Optional[str]` — Last name of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `typing.Optional[str]` — Username of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `typing.Optional[str]` — Email of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avatar:** `typing.Optional[str]` — Avatar URL of the user
     
 </dd>
 </dl>
@@ -2982,14 +2990,6 @@ client.users.create()
 <dl>
 <dd>
 
-**last_name:** `typing.Optional[str]` — Last name of the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **phone:** `typing.Optional[str]` — Phone number of the user
     
 </dd>
@@ -2998,7 +2998,7 @@ client.users.create()
 <dl>
 <dd>
 
-**username:** `typing.Optional[str]` — Username of the user
+**allow_newsletters:** `typing.Optional[bool]` — Whether the user allows newsletters
     
 </dd>
 </dl>
@@ -3220,23 +3220,7 @@ client.users.update(
 <dl>
 <dd>
 
-**allow_newsletters:** `typing.Optional[bool]` — Whether the user allows newsletters
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avatar:** `typing.Optional[str]` — Avatar URL of the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `typing.Optional[str]` — Email of the user
+**update_users_request_id:** `typing.Optional[int]` — User ID
     
 </dd>
 </dl>
@@ -3252,7 +3236,31 @@ client.users.update(
 <dl>
 <dd>
 
-**update_users_request_id:** `typing.Optional[int]` — User ID
+**last_name:** `typing.Optional[str]` — Last name of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `typing.Optional[str]` — Username of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `typing.Optional[str]` — Email of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avatar:** `typing.Optional[str]` — Avatar URL of the user
     
 </dd>
 </dl>
@@ -3268,14 +3276,6 @@ client.users.update(
 <dl>
 <dd>
 
-**last_name:** `typing.Optional[str]` — Last name of the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **phone:** `typing.Optional[str]` — Phone number of the user
     
 </dd>
@@ -3284,7 +3284,7 @@ client.users.update(
 <dl>
 <dd>
 
-**username:** `typing.Optional[str]` — Username of the user
+**allow_newsletters:** `typing.Optional[bool]` — Whether the user allows newsletters
     
 </dd>
 </dl>
@@ -3426,11 +3426,11 @@ client.actions.create(
             )
         ],
     ),
-    ordering=["tasks:total_annotations"],
     selected_items=CreateActionsRequestSelectedItemsExcluded(
         all_=True,
         excluded=[124, 125, 126],
     ),
+    ordering=["tasks:total_annotations"],
 )
 
 ```
@@ -3479,7 +3479,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]` — List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+**selected_items:** `typing.Optional[CreateActionsRequestSelectedItems]` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
     
 </dd>
 </dl>
@@ -3487,7 +3487,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**selected_items:** `typing.Optional[CreateActionsRequestSelectedItems]` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+**ordering:** `typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]` — List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
     
 </dd>
 </dl>
@@ -3633,155 +3633,6 @@ client.views.create()
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">update_order</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the order field of views based on the provided list of view IDs
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.views.update_order(
-    ids=[1],
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ids:** `typing.Sequence[int]` — A list of view IDs in the desired order.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">delete_all</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete all views for a specific project.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.views.delete_all(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -4008,6 +3859,155 @@ client.views.update(
 <dd>
 
 **project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">update_order</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the order field of views based on the provided list of view IDs
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.views.update_order(
+    project=1,
+    ids=[1],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `typing.Sequence[int]` — A list of view IDs in the desired order.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">delete_all</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete all views for a specific project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.views.delete_all(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -4292,31 +4292,7 @@ client.organizations.update(
 <dl>
 <dd>
 
-**contact_info:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_scripts_enabled:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_notification_settings:** `typing.Optional[typing.Any]` 
+**title:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -4332,6 +4308,14 @@ client.organizations.update(
 <dl>
 <dd>
 
+**custom_scripts_enabled:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **embed_settings:** `typing.Optional[typing.Any]` 
     
 </dd>
@@ -4340,7 +4324,7 @@ client.organizations.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` 
+**email_notification_settings:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>
@@ -4349,6 +4333,22 @@ client.organizations.update(
 <dd>
 
 **token:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**contact_info:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -4432,15 +4432,7 @@ client.organizations.update_default_role(
 <dl>
 <dd>
 
-**annotator_reviewer_firewall_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
+**organization:** `typing.Optional[int]` — A unique integer value identifying this organization.
     
 </dd>
 </dl>
@@ -4466,7 +4458,7 @@ Default membership role for invited users
 <dl>
 <dd>
 
-**email_notification_settings:** `typing.Optional[typing.Any]` — Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
+**external_id:** `typing.Optional[str]` — External ID to uniquely identify this organization
     
 </dd>
 </dl>
@@ -4490,7 +4482,7 @@ Default membership role for invited users
 <dl>
 <dd>
 
-**external_id:** `typing.Optional[str]` — External ID to uniquely identify this organization
+**extra_data_on_activity_logs:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -4498,7 +4490,23 @@ Default membership role for invited users
 <dl>
 <dd>
 
-**extra_data_on_activity_logs:** `typing.Optional[bool]` 
+**custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotator_reviewer_firewall_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**read_only_quick_view_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
     
 </dd>
 </dl>
@@ -4514,15 +4522,7 @@ Default membership role for invited users
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` — A unique integer value identifying this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**read_only_quick_view_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
+**email_notification_settings:** `typing.Optional[typing.Any]` — Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
     
 </dd>
 </dl>
@@ -5165,7 +5165,7 @@ client.jwt_settings.update(
     List all configured ML backends for a specific project by ID.
     Use the following cURL command:
     ```bash
-    curl http://localhost:8000/api/ml?project={project_id} -H 'Authorization: Token abc123'
+    curl https://localhost:8080/api/ml?project={project_id} -H 'Authorization: Token abc123'
     
 </dd>
 </dl>
@@ -5238,7 +5238,7 @@ client.ml.list()
     Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
     command:
     ```bash
-    curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml -H 'Authorization: Token abc123'\
+    curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml -H 'Authorization: Token abc123'\
     --data '{"url": "http://localhost:9090", "project": {project_id}}' 
     
 </dd>
@@ -5276,47 +5276,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**auth_method:** `typing.Optional[CreateMlRequestAuthMethod]` — Auth method
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**basic_auth_pass:** `typing.Optional[str]` — Basic auth password
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**basic_auth_user:** `typing.Optional[str]` — Basic auth user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extra_params:** `typing.Optional[typing.Dict[str, typing.Any]]` — Extra parameters
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_interactive:** `typing.Optional[bool]` — Is interactive
+**url:** `typing.Optional[str]` — ML backend URL
     
 </dd>
 </dl>
@@ -5332,7 +5292,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**timeout:** `typing.Optional[int]` — Response model timeout
+**is_interactive:** `typing.Optional[bool]` — Is interactive
     
 </dd>
 </dl>
@@ -5348,7 +5308,47 @@ client.ml.create()
 <dl>
 <dd>
 
-**url:** `typing.Optional[str]` — ML backend URL
+**description:** `typing.Optional[str]` — Description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_method:** `typing.Optional[CreateMlRequestAuthMethod]` — Auth method
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**basic_auth_user:** `typing.Optional[str]` — Basic auth user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**basic_auth_pass:** `typing.Optional[str]` — Basic auth password
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extra_params:** `typing.Optional[typing.Dict[str, typing.Any]]` — Extra parameters
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**timeout:** `typing.Optional[int]` — Response model timeout
     
 </dd>
 </dl>
@@ -5384,7 +5384,7 @@ client.ml.create()
     Get details about a specific ML backend connection by ID. For example, make a GET request using the
     following cURL command:
     ```bash
-    curl http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+    curl https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
     
 </dd>
 </dl>
@@ -5459,7 +5459,7 @@ client.ml.get(
     Remove an existing ML backend connection by ID. For example, use the
     following cURL command:
     ```bash
-    curl -X DELETE http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+    curl -X DELETE https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
     
 </dd>
 </dl>
@@ -5533,7 +5533,7 @@ client.ml.delete(
 
     Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
     ```bash
-    curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
+    curl -X PATCH -H 'Content-type: application/json' https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
     --data '{"url": "http://localhost:9091"}' 
     
 </dd>
@@ -5581,47 +5581,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**auth_method:** `typing.Optional[UpdateMlRequestAuthMethod]` — Auth method
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**basic_auth_pass:** `typing.Optional[str]` — Basic auth password
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**basic_auth_user:** `typing.Optional[str]` — Basic auth user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extra_params:** `typing.Optional[typing.Dict[str, typing.Any]]` — Extra parameters
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_interactive:** `typing.Optional[bool]` — Is interactive
+**url:** `typing.Optional[str]` — ML backend URL
     
 </dd>
 </dl>
@@ -5637,7 +5597,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**timeout:** `typing.Optional[int]` — Response model timeout
+**is_interactive:** `typing.Optional[bool]` — Is interactive
     
 </dd>
 </dl>
@@ -5653,7 +5613,47 @@ client.ml.update(
 <dl>
 <dd>
 
-**url:** `typing.Optional[str]` — ML backend URL
+**description:** `typing.Optional[str]` — Description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_method:** `typing.Optional[UpdateMlRequestAuthMethod]` — Auth method
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**basic_auth_user:** `typing.Optional[str]` — Basic auth user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**basic_auth_pass:** `typing.Optional[str]` — Basic auth password
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extra_params:** `typing.Optional[typing.Dict[str, typing.Any]]` — Extra parameters
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**timeout:** `typing.Optional[int]` — Response model timeout
     
 </dd>
 </dl>
@@ -6136,6 +6136,14 @@ client.model_providers.create()
 <dl>
 <dd>
 
+**provider:** `typing.Optional[ProviderEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **api_key:** `typing.Optional[str]` — Model provider API key
     
 </dd>
@@ -6145,22 +6153,6 @@ client.model_providers.create()
 <dd>
 
 **auth_token:** `typing.Optional[str]` — Model provider Auth token
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cached_available_models:** `typing.Optional[str]` — List of available models from the provider
     
 </dd>
 </dl>
@@ -6192,14 +6184,6 @@ client.model_providers.create()
 <dl>
 <dd>
 
-**google_location:** `typing.Optional[str]` — Google project location
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **google_project_id:** `typing.Optional[str]` — Google project ID
     
 </dd>
@@ -6208,7 +6192,7 @@ client.model_providers.create()
 <dl>
 <dd>
 
-**is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user
+**google_location:** `typing.Optional[str]` — Google project location
     
 </dd>
 </dl>
@@ -6216,7 +6200,7 @@ client.model_providers.create()
 <dl>
 <dd>
 
-**provider:** `typing.Optional[ProviderEnum]` 
+**cached_available_models:** `typing.Optional[str]` — List of available models from the provider
     
 </dd>
 </dl>
@@ -6232,68 +6216,18 @@ client.model_providers.create()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user
     
 </dd>
 </dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">list_model_provider_choices</a>() -&gt; AsyncHttpResponse[ListModelProviderChoicesModelProvidersResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
 
 <dl>
 <dd>
 
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-List all possible model provider choices
+**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
+    
 </dd>
 </dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.model_providers.list_model_provider_choices()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
 
 <dl>
 <dd>
@@ -6526,6 +6460,14 @@ client.model_providers.update(
 <dl>
 <dd>
 
+**provider:** `typing.Optional[ProviderEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **api_key:** `typing.Optional[str]` — Model provider API key
     
 </dd>
@@ -6535,22 +6477,6 @@ client.model_providers.update(
 <dd>
 
 **auth_token:** `typing.Optional[str]` — Model provider Auth token
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cached_available_models:** `typing.Optional[str]` — List of available models from the provider
     
 </dd>
 </dl>
@@ -6582,6 +6508,14 @@ client.model_providers.update(
 <dl>
 <dd>
 
+**google_project_id:** `typing.Optional[str]` — Google project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **google_location:** `typing.Optional[str]` — Google project location
     
 </dd>
@@ -6590,7 +6524,15 @@ client.model_providers.update(
 <dl>
 <dd>
 
-**google_project_id:** `typing.Optional[str]` — Google project ID
+**cached_available_models:** `typing.Optional[str]` — List of available models from the provider
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scope:** `typing.Optional[ScopeEnum]` 
     
 </dd>
 </dl>
@@ -6606,7 +6548,7 @@ client.model_providers.update(
 <dl>
 <dd>
 
-**provider:** `typing.Optional[ProviderEnum]` 
+**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
     
 </dd>
 </dl>
@@ -6614,10 +6556,68 @@ client.model_providers.update(
 <dl>
 <dd>
 
-**scope:** `typing.Optional[ScopeEnum]` 
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">list_model_provider_choices</a>() -&gt; AsyncHttpResponse[ListModelProviderChoicesModelProvidersResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+List all possible model provider choices
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.model_providers.list_model_provider_choices()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>
@@ -6775,8 +6775,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.batch_predictions(
-    modelrun_id=1,
     results=[],
+    modelrun_id=1,
 )
 
 ```
@@ -6793,7 +6793,7 @@ client.prompts.batch_predictions(
 <dl>
 <dd>
 
-**modelrun_id:** `int` 
+**results:** `typing.Sequence[typing.Any]` 
     
 </dd>
 </dl>
@@ -6801,7 +6801,7 @@ client.prompts.batch_predictions(
 <dl>
 <dd>
 
-**results:** `typing.Sequence[typing.Any]` 
+**modelrun_id:** `int` 
     
 </dd>
 </dl>
@@ -7189,7 +7189,7 @@ client.prompts.create(
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` 
+**created_by:** `typing.Optional[UserSimpleRequest]` — User who created Dataset
     
 </dd>
 </dl>
@@ -7197,7 +7197,7 @@ client.prompts.create(
 <dl>
 <dd>
 
-**created_by:** `typing.Optional[UserSimpleRequest]` — User who created Dataset
+**skill_name:** `typing.Optional[SkillNameEnum]` 
     
 </dd>
 </dl>
@@ -7221,14 +7221,6 @@ client.prompts.create(
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **output_classes:** `typing.Optional[typing.Any]` 
     
 </dd>
@@ -7237,7 +7229,7 @@ client.prompts.create(
 <dl>
 <dd>
 
-**skill_name:** `typing.Optional[SkillNameEnum]` 
+**organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -7245,91 +7237,7 @@ client.prompts.create(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">compatible_projects</a>(...) -&gt; AsyncHttpResponse[PaginatedAllRolesProjectListList]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a list of compatible project for prompt.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.compatible_projects()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project_type:** `typing.Optional[CompatibleProjectsPromptsRequestProjectType]` — Skill to filter by
+**associated_projects:** `typing.Optional[typing.Sequence[int]]` 
     
 </dd>
 </dl>
@@ -7565,7 +7473,7 @@ client.prompts.update(
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` 
+**created_by:** `typing.Optional[UserSimpleRequest]` — User who created Dataset
     
 </dd>
 </dl>
@@ -7573,7 +7481,15 @@ client.prompts.update(
 <dl>
 <dd>
 
-**created_by:** `typing.Optional[UserSimpleRequest]` — User who created Dataset
+**skill_name:** `typing.Optional[SkillNameEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Model name
     
 </dd>
 </dl>
@@ -7597,14 +7513,6 @@ client.prompts.update(
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **output_classes:** `typing.Optional[typing.Any]` 
     
 </dd>
@@ -7613,7 +7521,7 @@ client.prompts.update(
 <dl>
 <dd>
 
-**skill_name:** `typing.Optional[SkillNameEnum]` 
+**organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -7621,7 +7529,99 @@ client.prompts.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Model name
+**associated_projects:** `typing.Optional[typing.Sequence[int]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">compatible_projects</a>(...) -&gt; AsyncHttpResponse[PaginatedAllRolesProjectListList]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of compatible project for prompt.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.compatible_projects()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — A page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_type:** `typing.Optional[CompatibleProjectsPromptsRequestProjectType]` — Skill to filter by
     
 </dd>
 </dl>
@@ -7751,26 +7751,26 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.predictions.create(
-    model_version="yolo-v8",
     result=[
         {
-            "from_name": "bboxes",
-            "image_rotation": 0,
-            "original_height": 1080,
             "original_width": 1920,
+            "original_height": 1080,
+            "image_rotation": 0,
+            "from_name": "bboxes",
             "to_name": "image",
             "type": "rectanglelabels",
             "value": {
+                "x": 20,
+                "y": 30,
+                "width": 50,
                 "height": 60,
                 "rotation": 0,
                 "values": {"rectanglelabels": ["Person"]},
-                "width": 50,
-                "x": 20,
-                "y": 30,
             },
         }
     ],
     score=0.95,
+    model_version="yolo-v8",
 )
 
 ```
@@ -7787,7 +7787,7 @@ client.predictions.create(
 <dl>
 <dd>
 
-**model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+**task:** `typing.Optional[int]` — Task ID for which the prediction is created
     
 </dd>
 </dl>
@@ -7811,7 +7811,7 @@ client.predictions.create(
 <dl>
 <dd>
 
-**task:** `typing.Optional[int]` — Task ID for which the prediction is created
+**model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
     
 </dd>
 </dl>
@@ -8005,26 +8005,26 @@ client = LabelStudio(
 )
 client.predictions.update(
     id=1,
-    model_version="yolo-v8",
     result=[
         {
-            "from_name": "bboxes",
-            "image_rotation": 0,
-            "original_height": 1080,
             "original_width": 1920,
+            "original_height": 1080,
+            "image_rotation": 0,
+            "from_name": "bboxes",
             "to_name": "image",
             "type": "rectanglelabels",
             "value": {
+                "x": 20,
+                "y": 30,
+                "width": 50,
                 "height": 60,
                 "rotation": 0,
                 "values": {"rectanglelabels": ["Person"]},
-                "width": 50,
-                "x": 20,
-                "y": 30,
             },
         }
     ],
     score=0.95,
+    model_version="yolo-v8",
 )
 
 ```
@@ -8049,7 +8049,7 @@ client.predictions.update(
 <dl>
 <dd>
 
-**model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+**task:** `typing.Optional[int]` — Task ID for which the prediction is created
     
 </dd>
 </dl>
@@ -8073,7 +8073,7 @@ client.predictions.update(
 <dl>
 <dd>
 
-**task:** `typing.Optional[int]` — Task ID for which the prediction is created
+**model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
     
 </dd>
 </dl>
@@ -8207,8 +8207,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.project_templates.create(
-    name="name",
     project_id=1,
+    name="name",
 )
 
 ```
@@ -8225,14 +8225,6 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **project_id:** `int` 
     
 </dd>
@@ -8241,23 +8233,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**assignment_settings:** `typing.Optional[typing.Any]` — general dict serialized assignment settings
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_script:** `typing.Optional[str]` — custom script (Plugin) for projects created from this template
+**name:** `str` 
     
 </dd>
 </dl>
@@ -8273,7 +8249,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
+**tags:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>
@@ -8289,6 +8265,22 @@ client.project_templates.create(
 <dl>
 <dd>
 
+**review_settings:** `typing.Optional[typing.Any]` — general dict serialized review settings
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignment_settings:** `typing.Optional[typing.Any]` — general dict serialized assignment settings
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **require_comment_on_skip:** `typing.Optional[bool]` — flag to require comment on skip
     
 </dd>
@@ -8297,7 +8289,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**review_settings:** `typing.Optional[typing.Any]` — general dict serialized review settings
+**custom_script:** `typing.Optional[str]` — custom script (Plugin) for projects created from this template
     
 </dd>
 </dl>
@@ -8313,7 +8305,15 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Any]` 
+**created_by:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -8549,31 +8549,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**assignment_settings:** `typing.Optional[typing.Any]` — general dict serialized assignment settings
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_script:** `typing.Optional[str]` — custom script (Plugin) for projects created from this template
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` 
+**project_id:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -8589,7 +8565,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
+**description:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -8597,7 +8573,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[int]` 
+**tags:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>
@@ -8613,6 +8589,22 @@ client.project_templates.update(
 <dl>
 <dd>
 
+**review_settings:** `typing.Optional[typing.Any]` — general dict serialized review settings
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignment_settings:** `typing.Optional[typing.Any]` — general dict serialized assignment settings
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **require_comment_on_skip:** `typing.Optional[bool]` — flag to require comment on skip
     
 </dd>
@@ -8621,7 +8613,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**review_settings:** `typing.Optional[typing.Any]` — general dict serialized review settings
+**custom_script:** `typing.Optional[str]` — custom script (Plugin) for projects created from this template
     
 </dd>
 </dl>
@@ -8637,7 +8629,15 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Any]` 
+**created_by:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -8961,31 +8961,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**color:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**control_weights:** `typing.Optional[typing.Any]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[UserSimpleRequest]` — Project owner
+**title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
     
 </dd>
 </dl>
@@ -9001,15 +8977,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**evaluate_predictions_automatically:** `typing.Optional[bool]` — Retrieve and display predictions when loading a task
+**label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
     
 </dd>
 </dl>
@@ -9025,127 +8993,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**is_draft:** `typing.Optional[bool]` — Whether or not the project is in the middle of being created
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_published:** `typing.Optional[bool]` — Whether or not the project is published to annotators
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**maximum_annotations:** `typing.Optional[int]` — Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**min_annotations_to_start_training:** `typing.Optional[int]` — Minimum number of completed tasks after which model training is started
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_version:** `typing.Optional[str]` — Machine learning model version
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**overlap_cohort_percentage:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reveal_preannotations_interactively:** `typing.Optional[bool]` — Reveal pre-annotations interactively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sampling:** `typing.Optional[SamplingDe5Enum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_annotation_history:** `typing.Optional[bool]` — Show annotation history to annotator
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_ground_truth_first:** `typing.Optional[bool]` — Onboarding mode (true): show ground truth tasks first in the labeling stream
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **show_instruction:** `typing.Optional[bool]` — Show instructions to the annotator before they start
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_overlap_first:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -9161,7 +9009,127 @@ client.projects.create()
 <dl>
 <dd>
 
-**skip_queue:** `typing.Optional[SkipQueueEnum]` 
+**enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_annotation_history:** `typing.Optional[bool]` — Show annotation history to annotator
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**color:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maximum_annotations:** `typing.Optional[int]` — Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_published:** `typing.Optional[bool]` — Whether or not the project is published to annotators
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_version:** `typing.Optional[str]` — Machine learning model version
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_draft:** `typing.Optional[bool]` — Whether or not the project is in the middle of being created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[UserSimpleRequest]` — Project owner
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**min_annotations_to_start_training:** `typing.Optional[int]` — Minimum number of completed tasks after which model training is started
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling:** `typing.Optional[SamplingDe5Enum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_ground_truth_first:** `typing.Optional[bool]` — Onboarding mode (true): show ground truth tasks first in the labeling stream
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_overlap_first:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**overlap_cohort_percentage:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -9185,7 +9153,39 @@ client.projects.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
+**control_weights:** `typing.Optional[typing.Any]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluate_predictions_automatically:** `typing.Optional[bool]` — Retrieve and display predictions when loading a task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**skip_queue:** `typing.Optional[SkipQueueEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reveal_preannotations_interactively:** `typing.Optional[bool]` — Reveal pre-annotations interactively
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
     
 </dd>
 </dl>
@@ -9194,146 +9194,6 @@ client.projects.create()
 <dd>
 
 **workspace:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list_counts</a>(...) -&gt; AsyncHttpResponse[PaginatedLseProjectCountsList]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns a list of projects with their counts. For example, task_number which is the total task number in project
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.list_counts()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**filter:** `typing.Optional[str]` — Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ids:** `typing.Optional[str]` — Filter id by in list
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**include:** `typing.Optional[str]` — Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `typing.Optional[int]` — A page number within the paginated result set.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_size:** `typing.Optional[int]` — Number of results to return per page.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search:** `typing.Optional[str]` — Search term for project title and description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**state:** `typing.Optional[str]` — Filter current_state by exact match
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Filter title by contains (case-insensitive)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**workspaces:** `typing.Optional[float]` — Filter workspaces by exact match
     
 </dd>
 </dl>
@@ -9567,6 +9427,262 @@ client.projects.update(
 <dl>
 <dd>
 
+**title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Project description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expert_instruction:** `typing.Optional[str]` — Labeling instructions in HTML format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_instruction:** `typing.Optional[bool]` — Show instructions to the annotator before they start
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_skip_button:** `typing.Optional[bool]` — Show a skip button in interface and allow annotators to skip the task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_annotation_history:** `typing.Optional[bool]` — Show annotation history to annotator
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**color:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maximum_annotations:** `typing.Optional[int]` — Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_published:** `typing.Optional[bool]` — Whether or not the project is published to annotators
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_version:** `typing.Optional[str]` — Machine learning model version
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_draft:** `typing.Optional[bool]` — Whether or not the project is in the middle of being created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[UserSimpleRequest]` — Project owner
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**min_annotations_to_start_training:** `typing.Optional[int]` — Minimum number of completed tasks after which model training is started
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling:** `typing.Optional[SamplingDe5Enum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_ground_truth_first:** `typing.Optional[bool]` — Onboarding mode (true): show ground truth tasks first in the labeling stream
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_overlap_first:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**overlap_cohort_percentage:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_data_login:** `typing.Optional[str]` — Task data credentials: login
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_data_password:** `typing.Optional[str]` — Task data credentials: password
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**control_weights:** `typing.Optional[typing.Any]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluate_predictions_automatically:** `typing.Optional[bool]` — Retrieve and display predictions when loading a task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**skip_queue:** `typing.Optional[SkipQueueEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reveal_preannotations_interactively:** `typing.Optional[bool]` — Reveal pre-annotations interactively
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**review_settings:** `typing.Optional[ReviewSettingsRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignment_settings:** `typing.Optional[AssignmentSettingsRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **agreement_methodology:** `typing.Optional[AgreementMethodologyEnum]` 
     
 </dd>
@@ -9575,7 +9691,47 @@ client.projects.update(
 <dl>
 <dd>
 
-**agreement_threshold:** `typing.Optional[str]` — Minimum percent agreement threshold for which minimum number of annotators must agree
+**custom_script:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment_classification_config:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**require_comment_on_skip:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**strict_task_overlap:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_unused_data_columns_to_annotators:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**custom_task_lock_ttl:** `typing.Optional[int]` — TTL in seconds for task reservations, on new and existing tasks
     
 </dd>
 </dl>
@@ -9599,15 +9755,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**annotator_evaluation_continuous_tasks:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
+**pause_on_failed_annotator_evaluation:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -9639,111 +9787,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**assignment_settings:** `typing.Optional[AssignmentSettingsRequest]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**color:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**comment_classification_config:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**control_weights:** `typing.Optional[typing.Any]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[UserSimpleRequest]` — Project owner
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_script:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_task_lock_ttl:** `typing.Optional[int]` — TTL in seconds for task reservations, on new and existing tasks
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Project description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**evaluate_predictions_automatically:** `typing.Optional[bool]` — Retrieve and display predictions when loading a task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**expert_instruction:** `typing.Optional[str]` — Labeling instructions in HTML format
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_draft:** `typing.Optional[bool]` — Whether or not the project is in the middle of being created
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_published:** `typing.Optional[bool]` — Whether or not the project is published to annotators
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
+**agreement_threshold:** `typing.Optional[str]` — Minimum percent agreement threshold for which minimum number of annotators must agree
     
 </dd>
 </dl>
@@ -9752,198 +9796,6 @@ client.projects.update(
 <dd>
 
 **max_additional_annotators_assignable:** `typing.Optional[int]` — Maximum number of additional annotators that can be assigned to a low agreement task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**maximum_annotations:** `typing.Optional[int]` — Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**min_annotations_to_start_training:** `typing.Optional[int]` — Minimum number of completed tasks after which model training is started
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_version:** `typing.Optional[str]` — Machine learning model version
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**overlap_cohort_percentage:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pause_on_failed_annotator_evaluation:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**require_comment_on_skip:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reveal_preannotations_interactively:** `typing.Optional[bool]` — Reveal pre-annotations interactively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**review_settings:** `typing.Optional[ReviewSettingsRequest]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sampling:** `typing.Optional[SamplingDe5Enum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_annotation_history:** `typing.Optional[bool]` — Show annotation history to annotator
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_ground_truth_first:** `typing.Optional[bool]` — Onboarding mode (true): show ground truth tasks first in the labeling stream
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_instruction:** `typing.Optional[bool]` — Show instructions to the annotator before they start
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_overlap_first:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_skip_button:** `typing.Optional[bool]` — Show a skip button in interface and allow annotators to skip the task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_unused_data_columns_to_annotators:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**skip_queue:** `typing.Optional[SkipQueueEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**strict_task_overlap:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task_data_login:** `typing.Optional[str]` — Task data credentials: login
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task_data_password:** `typing.Optional[str]` — Task data credentials: password
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**workspace:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -10074,8 +9926,8 @@ client = LabelStudio(
 client.projects.duplicate(
     id=1,
     mode="settings",
-    title="title",
     workspace=1,
+    title="title",
 )
 
 ```
@@ -10113,7 +9965,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 <dl>
 <dd>
 
-**title:** `str` — Title of duplicated project
+**workspace:** `int` — Workspace, where to place duplicated project
     
 </dd>
 </dl>
@@ -10121,7 +9973,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 <dl>
 <dd>
 
-**workspace:** `int` — Workspace, where to place duplicated project
+**title:** `str` — Title of duplicated project
     
 </dd>
 </dl>
@@ -10197,7 +10049,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 
             ```bash
             curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-            -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+            -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
             ```
 
             ### 2. **POST with files**
@@ -10213,7 +10065,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 
             ```bash
             curl -H 'Authorization: Token abc123' \
-            -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
+            -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
             ```
 
             ### 3. **POST with URL**
@@ -10221,7 +10073,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 
             ```bash
             curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-            -X POST 'http://localhost:8000/api/projects/1/import' \
+            -X POST 'https://localhost:8080/api/projects/1/import' \
             --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
             ```
 
@@ -10461,6 +10313,146 @@ client.projects.validate_label_config(
 <dd>
 
 **label_config:** `str` — Label config in XML format. See more about it in documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list_counts</a>(...) -&gt; AsyncHttpResponse[PaginatedLseProjectCountsList]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of projects with their counts. For example, task_number which is the total task number in project
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.list_counts()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[str]` — Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `typing.Optional[str]` — Filter id by in list
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include:** `typing.Optional[str]` — Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — A page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search term for project title and description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**state:** `typing.Optional[str]` — Filter current_state by exact match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Filter title by contains (case-insensitive)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspaces:** `typing.Optional[float]` — Filter workspaces by exact match
     
 </dd>
 </dl>
@@ -10864,47 +10856,7 @@ client.tasks.create(
 <dl>
 <dd>
 
-**allow_skip:** `typing.Optional[bool]` — Whether this task can be skipped. Set to False to make task unskippable.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cancelled_annotations:** `typing.Optional[int]` — Number of total cancelled annotations for the current task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**comment_authors:** `typing.Optional[typing.Sequence[int]]` — Users who wrote comments
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**comment_count:** `typing.Optional[int]` — Number of comments in the task including all annotations
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file_upload:** `typing.Optional[int]` — Uploaded file used as data source for this task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**inner_id:** `typing.Optional[int]` — Internal task ID in the project, starts with 1
+**meta:** `typing.Optional[typing.Any]` — Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
     
 </dd>
 </dl>
@@ -10920,15 +10872,7 @@ client.tasks.create(
 <dl>
 <dd>
 
-**last_comment_updated_at:** `typing.Optional[dt.datetime]` — When the last comment was updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+**allow_skip:** `typing.Optional[bool]` — Whether this task can be skipped. Set to False to make task unskippable.
     
 </dd>
 </dl>
@@ -10944,7 +10888,7 @@ client.tasks.create(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID for this task
+**inner_id:** `typing.Optional[int]` — Internal task ID in the project, starts with 1
     
 </dd>
 </dl>
@@ -10960,7 +10904,23 @@ client.tasks.create(
 <dl>
 <dd>
 
+**cancelled_annotations:** `typing.Optional[int]` — Number of total cancelled annotations for the current task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **total_predictions:** `typing.Optional[int]` — Number of total predictions for the current task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment_count:** `typing.Optional[int]` — Number of comments in the task including all annotations
     
 </dd>
 </dl>
@@ -10976,7 +10936,39 @@ client.tasks.create(
 <dl>
 <dd>
 
+**last_comment_updated_at:** `typing.Optional[dt.datetime]` — When the last comment was updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID for this task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **updated_by:** `typing.Optional[int]` — Last annotator or reviewer who updated this task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_upload:** `typing.Optional[int]` — Uploaded file used as data source for this task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment_authors:** `typing.Optional[typing.Sequence[int]]` — Users who wrote comments
     
 </dd>
 </dl>
@@ -11194,15 +11186,7 @@ client.tasks.update(
 <dl>
 <dd>
 
-**allow_skip:** `typing.Optional[bool]` — Whether this task can be skipped. Set to False to make task unskippable.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avg_lead_time:** `typing.Optional[float]` 
+**inner_id:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -11218,7 +11202,15 @@ client.tasks.update(
 <dl>
 <dd>
 
-**comment_count:** `typing.Optional[int]` — Number of comments in the task including all annotations
+**total_annotations:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**total_predictions:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -11234,78 +11226,6 @@ client.tasks.update(
 <dl>
 <dd>
 
-**data:** `typing.Optional[typing.Any]` — User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**draft_exists:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ground_truth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**inner_id:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_labeled:** `typing.Optional[bool]` — True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_comment_updated_at:** `typing.Optional[dt.datetime]` — When the last comment was updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**overlap:** `typing.Optional[int]` — Number of distinct annotators that processed the current task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**precomputed_agreement:** `typing.Optional[float]` — Average agreement score for the task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **predictions_score:** `typing.Optional[float]` 
     
 </dd>
@@ -11314,7 +11234,15 @@ client.tasks.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID for this task
+**avg_lead_time:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft_exists:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -11346,7 +11274,7 @@ client.tasks.update(
 <dl>
 <dd>
 
-**total_annotations:** `typing.Optional[int]` 
+**ground_truth:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -11354,7 +11282,55 @@ client.tasks.update(
 <dl>
 <dd>
 
-**total_predictions:** `typing.Optional[int]` 
+**data:** `typing.Optional[typing.Any]` — User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_labeled:** `typing.Optional[bool]` — True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allow_skip:** `typing.Optional[bool]` — Whether this task can be skipped. Set to False to make task unskippable.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**overlap:** `typing.Optional[int]` — Number of distinct annotators that processed the current task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**precomputed_agreement:** `typing.Optional[float]` — Average agreement score for the task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment_count:** `typing.Optional[int]` — Number of comments in the task including all annotations
     
 </dd>
 </dl>
@@ -11363,6 +11339,22 @@ client.tasks.update(
 <dd>
 
 **unresolved_comment_count:** `typing.Optional[int]` — Number of unresolved comments in the task including all annotations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_comment_updated_at:** `typing.Optional[dt.datetime]` — When the last comment was updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID for this task
     
 </dd>
 </dl>
@@ -11510,14 +11502,6 @@ client.tasks.create_event(
 <dl>
 <dd>
 
-**annotation:** `typing.Optional[int]` — Annotation ID associated with this event
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **annotation_draft_id:** `typing.Optional[int]` — Draft annotation ID associated with this event
     
 </dd>
@@ -11526,7 +11510,7 @@ client.tasks.create_event(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Additional event metadata (region data, hotkey info, etc.)
+**annotation:** `typing.Optional[int]` — Annotation ID associated with this event
     
 </dd>
 </dl>
@@ -11535,6 +11519,14 @@ client.tasks.create_event(
 <dd>
 
 **review:** `typing.Optional[int]` — Review ID associated with this event
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Additional event metadata (region data, hotkey info, etc.)
     
 </dd>
 </dl>
@@ -12340,7 +12332,23 @@ client.webhooks.create(
 <dl>
 <dd>
 
-**actions:** `typing.Optional[typing.Sequence[ActionsEnum]]` 
+**project:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_payload:** `typing.Optional[bool]` — If value is False send only action
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
     
 </dd>
 </dl>
@@ -12364,91 +12372,7 @@ client.webhooks.create(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**send_payload:** `typing.Optional[bool]` — If value is False send only action
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">info</a>(...) -&gt; AsyncHttpResponse[InfoWebhooksResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get descriptions of all available webhook actions to set up webhooks.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.info()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**organization_only:** `typing.Optional[bool]` — organization-only or not
+**actions:** `typing.Optional[typing.Sequence[ActionsEnum]]` 
     
 </dd>
 </dl>
@@ -12624,7 +12548,23 @@ client.webhooks.update(
 <dl>
 <dd>
 
-**actions:** `typing.Optional[typing.Sequence[ActionsEnum]]` 
+**url:** `typing.Optional[str]` — URL of webhook
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_payload:** `typing.Optional[bool]` — If value is False send only action
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
     
 </dd>
 </dl>
@@ -12648,7 +12588,7 @@ client.webhooks.update(
 <dl>
 <dd>
 
-**send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
+**actions:** `typing.Optional[typing.Sequence[ActionsEnum]]` 
     
 </dd>
 </dl>
@@ -12656,15 +12596,67 @@ client.webhooks.update(
 <dl>
 <dd>
 
-**send_payload:** `typing.Optional[bool]` — If value is False send only action
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">info</a>(...) -&gt; AsyncHttpResponse[InfoWebhooksResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
 
 <dl>
 <dd>
 
-**url:** `typing.Optional[str]` — URL of webhook
+<dl>
+<dd>
+
+Get descriptions of all available webhook actions to set up webhooks.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.webhooks.info()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organization_only:** `typing.Optional[bool]` — organization-only or not
     
 </dd>
 </dl>
@@ -12839,14 +12831,6 @@ client.workspaces.create(
 <dl>
 <dd>
 
-**color:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **description:** `typing.Optional[str]` — Workspace description
     
 </dd>
@@ -12855,7 +12839,7 @@ client.workspaces.create(
 <dl>
 <dd>
 
-**is_archived:** `typing.Optional[bool]` — Workspace is archived
+**color:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -12864,6 +12848,14 @@ client.workspaces.create(
 <dd>
 
 **is_personal:** `typing.Optional[bool]` — Workspace is a personal user workspace
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_archived:** `typing.Optional[bool]` — Workspace is archived
     
 </dd>
 </dl>
@@ -13099,7 +13091,7 @@ client.workspaces.update(
 <dl>
 <dd>
 
-**color:** `typing.Optional[str]` 
+**title:** `typing.Optional[str]` — Workspace name
     
 </dd>
 </dl>
@@ -13115,7 +13107,7 @@ client.workspaces.update(
 <dl>
 <dd>
 
-**is_archived:** `typing.Optional[bool]` — Workspace is archived
+**color:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -13131,7 +13123,7 @@ client.workspaces.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Workspace name
+**is_archived:** `typing.Optional[bool]` — Workspace is archived
     
 </dd>
 </dl>
@@ -13278,55 +13270,7 @@ client.export_storage.azure.create()
 <dl>
 <dd>
 
-**account_key:** `typing.Optional[str]` — Azure Blob account key
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
     
 </dd>
 </dl>
@@ -13342,115 +13286,7 @@ client.export_storage.azure.create()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific Azure export storage connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**account_key:** `typing.Optional[str]` — Azure Blob account key
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
     
 </dd>
 </dl>
@@ -13466,7 +13302,31 @@ client.export_storage.azure.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_key:** `typing.Optional[str]` — Azure Blob account key
     
 </dd>
 </dl>
@@ -13684,22 +13544,6 @@ client.export_storage.azure.update(
 <dl>
 <dd>
 
-**account_key:** `typing.Optional[str]` — Azure Blob account key
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
@@ -13708,7 +13552,7 @@ client.export_storage.azure.update(
 <dl>
 <dd>
 
-**container:** `typing.Optional[str]` — Azure blob container
+**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -13724,14 +13568,6 @@ client.export_storage.azure.update(
 <dl>
 <dd>
 
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **project:** `typing.Optional[int]` — Project ID
     
 </dd>
@@ -13740,7 +13576,31 @@ client.export_storage.azure.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_key:** `typing.Optional[str]` — Azure Blob account key
     
 </dd>
 </dl>
@@ -13811,6 +13671,138 @@ client.export_storage.azure.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific Azure export storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.azure.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_key:** `typing.Optional[str]` — Azure Blob account key
     
 </dd>
 </dl>
@@ -13979,6 +13971,38 @@ client.export_storage.azure_spi.create(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **account_name:** `typing.Optional[str]` — Azure Blob account name
     
 </dd>
@@ -13987,7 +14011,15 @@ client.export_storage.azure_spi.create(
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
     
 </dd>
 </dl>
@@ -14011,15 +14043,7 @@ client.export_storage.azure_spi.create(
 <dl>
 <dd>
 
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
+**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
     
 </dd>
 </dl>
@@ -14051,55 +14075,7 @@ client.export_storage.azure_spi.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -14115,7 +14091,7 @@ client.export_storage.azure_spi.create(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -14123,123 +14099,7 @@ client.export_storage.azure_spi.create(
 <dl>
 <dd>
 
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Validate a specific Azure export storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure_spi.validate(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
+**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -14255,103 +14115,7 @@ client.export_storage.azure_spi.validate(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -14587,6 +14351,38 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **account_name:** `typing.Optional[str]` — Azure Blob account name
     
 </dd>
@@ -14595,7 +14391,15 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
     
 </dd>
 </dl>
@@ -14619,15 +14423,7 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
+**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
     
 </dd>
 </dl>
@@ -14659,63 +14455,7 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -14731,7 +14471,7 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -14739,7 +14479,31 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -14816,6 +14580,234 @@ client.export_storage.azure_spi.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Validate a specific Azure export storage connection that was set up with Service Principal authentication.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.azure_spi.validate(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -14959,11 +14951,11 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.databricks.create(
-    catalog="catalog",
     host="host",
-    project=1,
+    catalog="catalog",
     schema="schema",
     volume="volume",
+    project=1,
 )
 
 ```
@@ -14980,14 +14972,6 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
-**catalog:** `str` — UC catalog name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **host:** `str` — Databricks workspace base URL (https://...)
     
 </dd>
@@ -14996,7 +14980,7 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
+**catalog:** `str` — UC catalog name
     
 </dd>
 </dl>
@@ -15020,6 +15004,22 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **auth_type:** `typing.Optional[AuthTypeEnum]` 
 
 Authentication method: PAT, Databricks SP, or Azure AD SP
@@ -15034,7 +15034,15 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
     
 </dd>
 </dl>
@@ -15051,14 +15059,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dd>
 
 **client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -15090,79 +15090,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Export path prefix under the volume
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_timeout_s:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
     
 </dd>
 </dl>
@@ -15178,7 +15106,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -15186,157 +15114,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Validate a specific Databricks Files export storage connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.databricks.validate(
-    catalog="catalog",
-    host="host",
-    project=1,
-    schema="schema",
-    volume="volume",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**catalog:** `str` — UC catalog name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `str` — Databricks workspace base URL (https://...)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schema:** `str` — UC schema name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**volume:** `str` — UC volume name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
+**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -15352,39 +15130,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Export path prefix under the volume
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -15393,70 +15139,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dd>
 
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_timeout_s:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
     
 </dd>
 </dl>
@@ -15473,6 +15155,30 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dd>
 
 **verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_timeout_s:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_chunk_bytes:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Export path prefix under the volume
     
 </dd>
 </dl>
@@ -15708,6 +15414,14 @@ client.export_storage.databricks.update(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **auth_type:** `typing.Optional[AuthTypeEnum]` 
 
 Authentication method: PAT, Databricks SP, or Azure AD SP
@@ -15722,7 +15436,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
     
 </dd>
 </dl>
@@ -15730,7 +15444,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**catalog:** `typing.Optional[str]` — UC catalog name
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
     
 </dd>
 </dl>
@@ -15747,22 +15461,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dd>
 
 **client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `typing.Optional[str]` — Databricks workspace base URL (https://...)
     
 </dd>
 </dl>
@@ -15794,54 +15492,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Export path prefix under the volume
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_timeout_s:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schema:** `typing.Optional[str]` — UC schema name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
     
 </dd>
@@ -15850,7 +15500,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**stream_chunk_bytes:** `typing.Optional[int]` 
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
     
 </dd>
 </dl>
@@ -15858,15 +15508,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -15882,7 +15524,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -15890,7 +15532,47 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `typing.Optional[str]` — Databricks workspace base URL (https://...)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**catalog:** `typing.Optional[str]` — UC catalog name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**schema:** `typing.Optional[str]` — UC schema name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**volume:** `typing.Optional[str]` — UC volume name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
     
 </dd>
 </dl>
@@ -15914,7 +15596,31 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**volume:** `typing.Optional[str]` — UC volume name
+**request_timeout_s:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_chunk_bytes:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Export path prefix under the volume
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -15991,6 +15697,292 @@ client.export_storage.databricks.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Validate a specific Databricks Files export storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.databricks.validate(
+    host="host",
+    catalog="catalog",
+    schema="schema",
+    volume="volume",
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**host:** `str` — Databricks workspace base URL (https://...)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**catalog:** `str` — UC catalog name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**schema:** `str` — UC schema name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**volume:** `str` — UC volume name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_timeout_s:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_chunk_bytes:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Export path prefix under the volume
     
 </dd>
 </dl>
@@ -16137,14 +16129,6 @@ client.export_storage.gcs.create()
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
     
 </dd>
@@ -16153,7 +16137,39 @@ client.export_storage.gcs.create()
 <dl>
 <dd>
 
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
     
 </dd>
 </dl>
@@ -16170,162 +16186,6 @@ client.export_storage.gcs.create()
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific GCS export storage connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcs.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -16543,14 +16403,6 @@ client.export_storage.gcs.update(
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
     
 </dd>
@@ -16559,7 +16411,39 @@ client.export_storage.gcs.update(
 <dl>
 <dd>
 
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
     
 </dd>
 </dl>
@@ -16576,30 +16460,6 @@ client.export_storage.gcs.update(
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -16670,6 +16530,138 @@ client.export_storage.gcs.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific GCS export storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.gcs.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
     
 </dd>
 </dl>
@@ -16838,6 +16830,14 @@ client.export_storage.gcswif.create(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **bucket:** `typing.Optional[str]` — GCS bucket name
     
 </dd>
@@ -16846,7 +16846,7 @@ client.export_storage.gcswif.create(
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
     
 </dd>
 </dl>
@@ -16854,7 +16854,15 @@ client.export_storage.gcswif.create(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Cloud storage description
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -16886,14 +16894,6 @@ client.export_storage.gcswif.create(
 <dl>
 <dd>
 
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
     
 </dd>
@@ -16903,6 +16903,14 @@ client.export_storage.gcswif.create(
 <dd>
 
 **google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_service_account_email:** `typing.Optional[str]` — Google service account email
     
 </dd>
 </dl>
@@ -16934,47 +16942,7 @@ client.export_storage.gcswif.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -16990,7 +16958,7 @@ client.export_storage.gcswif.create(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -16998,91 +16966,7 @@ client.export_storage.gcswif.create(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Validate a specific GCS export storage connection that was set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcswif.validate(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -17098,135 +16982,7 @@ client.export_storage.gcswif.validate(
 <dl>
 <dd>
 
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -17462,6 +17218,14 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **bucket:** `typing.Optional[str]` — GCS bucket name
     
 </dd>
@@ -17470,7 +17234,7 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
     
 </dd>
 </dl>
@@ -17478,7 +17242,15 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Cloud storage description
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -17510,14 +17282,6 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
     
 </dd>
@@ -17527,6 +17291,14 @@ client.export_storage.gcswif.update(
 <dd>
 
 **google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_service_account_email:** `typing.Optional[str]` — Google service account email
     
 </dd>
 </dl>
@@ -17558,55 +17330,7 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -17622,7 +17346,39 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -17699,6 +17455,242 @@ client.export_storage.gcswif.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Validate a specific GCS export storage connection that was set up with WIF authentication.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.gcswif.validate(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_number:** `typing.Optional[str]` — Google project number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_service_account_email:** `typing.Optional[str]` — Google service account email
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -17845,7 +17837,7 @@ client.export_storage.local.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -17853,7 +17845,7 @@ client.export_storage.local.create()
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` — Path to local directory
+**description:** `typing.Optional[str]` — Storage description
     
 </dd>
 </dl>
@@ -17869,106 +17861,6 @@ client.export_storage.local.create()
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific local file export storage connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.local.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **path:** `typing.Optional[str]` — Path to local directory
     
 </dd>
@@ -17977,23 +17869,7 @@ client.export_storage.local.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -18219,7 +18095,7 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -18227,7 +18103,7 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` — Path to local directory
+**description:** `typing.Optional[str]` — Storage description
     
 </dd>
 </dl>
@@ -18243,7 +18119,7 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+**path:** `typing.Optional[str]` — Path to local directory
     
 </dd>
 </dl>
@@ -18251,7 +18127,7 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
     
 </dd>
 </dl>
@@ -18330,6 +18206,122 @@ client.export_storage.local.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific local file export storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.local.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` — Path to local directory
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -18476,14 +18468,6 @@ client.export_storage.redis.create()
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **db:** `typing.Optional[int]` — Database ID of database to use
     
 </dd>
@@ -18492,47 +18476,7 @@ client.export_storage.redis.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `typing.Optional[str]` — Server Host IP (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` — Server Password (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**path:** `typing.Optional[str]` — Storage prefix (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**port:** `typing.Optional[str]` — Server Port (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
     
 </dd>
 </dl>
@@ -18548,123 +18492,7 @@ client.export_storage.redis.create()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific Redis export storage connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.redis.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**db:** `typing.Optional[int]` — Database ID of database to use
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `typing.Optional[str]` — Server Host IP (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` — Server Password (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**path:** `typing.Optional[str]` — Storage prefix (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**port:** `typing.Optional[str]` — Server Port (optional)
     
 </dd>
 </dl>
@@ -18680,7 +18508,31 @@ client.export_storage.redis.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**path:** `typing.Optional[str]` — Storage prefix (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `typing.Optional[str]` — Server Host IP (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**port:** `typing.Optional[str]` — Server Port (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `typing.Optional[str]` — Server Password (optional)
     
 </dd>
 </dl>
@@ -18898,6 +18750,14 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
+**db:** `typing.Optional[int]` — Database ID of database to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
     
 </dd>
@@ -18906,7 +18766,7 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
-**db:** `typing.Optional[int]` — Database ID of database to use
+**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -18922,15 +18782,7 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
-**host:** `typing.Optional[str]` — Server Host IP (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` — Server Password (optional)
+**project:** `typing.Optional[int]` — Project ID
     
 </dd>
 </dl>
@@ -18946,6 +18798,14 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
+**host:** `typing.Optional[str]` — Server Host IP (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **port:** `typing.Optional[str]` — Server Port (optional)
     
 </dd>
@@ -18954,15 +18814,7 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
+**password:** `typing.Optional[str]` — Server Password (optional)
     
 </dd>
 </dl>
@@ -19033,6 +18885,146 @@ client.export_storage.redis.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific Redis export storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.redis.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**db:** `typing.Optional[int]` — Database ID of database to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` — Storage prefix (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `typing.Optional[str]` — Server Host IP (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**port:** `typing.Optional[str]` — Server Port (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `typing.Optional[str]` — Server Password (optional)
     
 </dd>
 </dl>
@@ -19179,87 +19171,7 @@ client.export_storage.s3.create()
 <dl>
 <dd>
 
-**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
     
 </dd>
 </dl>
@@ -19275,62 +19187,34 @@ client.export_storage.s3.create()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**description:** `typing.Optional[str]` — Storage description
     
 </dd>
 </dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
 
 <dl>
 <dd>
 
-<dl>
-<dd>
-
-Validate a specific S3 export storage connection.
+**project:** `typing.Optional[int]` — Project ID
+    
 </dd>
 </dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
 
 <dl>
 <dd>
 
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3.validate()
-
-```
-</dd>
-</dl>
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
 </dd>
 </dl>
 
-#### ⚙️ Parameters
-
 <dl>
 <dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -19367,54 +19251,6 @@ client.export_storage.s3.validate()
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **region_name:** `typing.Optional[str]` — AWS Region
     
 </dd>
@@ -19424,14 +19260,6 @@ client.export_storage.s3.validate()
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -19649,6 +19477,54 @@ client.export_storage.s3.update(
 <dl>
 <dd>
 
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
     
 </dd>
@@ -19681,46 +19557,6 @@ client.export_storage.s3.update(
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **region_name:** `typing.Optional[str]` — AWS Region
     
 </dd>
@@ -19730,14 +19566,6 @@ client.export_storage.s3.update(
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -19808,6 +19636,170 @@ client.export_storage.s3.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific S3 export storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.s3.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
     
 </dd>
 </dl>
@@ -19951,8 +19943,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.s3s.create(
-    project=1,
     role_arn="role_arn",
+    project=1,
 )
 
 ```
@@ -19969,6 +19961,14 @@ client.export_storage.s3s.create(
 <dl>
 <dd>
 
+**role_arn:** `str` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **project:** `int` — A unique integer value identifying this project.
     
 </dd>
@@ -19977,7 +19977,111 @@ client.export_storage.s3s.create(
 <dl>
 <dd>
 
-**role_arn:** `str` — AWS RoleArn
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -20017,94 +20121,6 @@ client.export_storage.s3s.create(
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS ExternalId
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**legacy_auth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **region_name:** `typing.Optional[str]` — AWS Region
     
 </dd>
@@ -20121,187 +20137,6 @@ client.export_storage.s3s.create(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Validate a specific S3 export storage connection that was set up with IAM role access.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3s.validate(
-    project=1,
-    role_arn="role_arn",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `str` — AWS RoleArn
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **external_id:** `typing.Optional[str]` — AWS ExternalId
     
 </dd>
@@ -20310,111 +20145,7 @@ client.export_storage.s3s.validate(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **legacy_auth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -20650,6 +20381,118 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
     
 </dd>
@@ -20682,111 +20525,7 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS ExternalId
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**legacy_auth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `typing.Optional[str]` — AWS RoleArn
     
 </dd>
 </dl>
@@ -20802,7 +20541,7 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**external_id:** `typing.Optional[str]` — AWS ExternalId
     
 </dd>
 </dl>
@@ -20810,7 +20549,7 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
+**role_arn:** `typing.Optional[str]` — AWS RoleArn
     
 </dd>
 </dl>
@@ -20818,7 +20557,7 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Cloud storage title
+**legacy_auth:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -20826,15 +20565,7 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -20911,6 +20642,267 @@ client.export_storage.s3s.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Validate a specific S3 export storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.s3s.validate(
+    role_arn="role_arn",
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**role_arn:** `str` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS ExternalId
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_auth:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -21057,7 +21049,7 @@ client.import_storage.azure.create()
 <dl>
 <dd>
 
-**account_key:** `typing.Optional[str]` — Azure Blob account key
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
     
 </dd>
 </dl>
@@ -21065,31 +21057,7 @@ client.import_storage.azure.create()
 <dl>
 <dd>
 
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -21113,115 +21081,7 @@ client.import_storage.azure.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific Azure import storage connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**account_key:** `typing.Optional[str]` — Azure Blob account key
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
     
 </dd>
 </dl>
@@ -21237,7 +21097,15 @@ client.import_storage.azure.validate()
 <dl>
 <dd>
 
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
     
 </dd>
 </dl>
@@ -21253,7 +21121,7 @@ client.import_storage.azure.validate()
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+**account_name:** `typing.Optional[str]` — Azure Blob account name
     
 </dd>
 </dl>
@@ -21261,39 +21129,7 @@ client.import_storage.azure.validate()
 <dl>
 <dd>
 
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**account_key:** `typing.Optional[str]` — Azure Blob account key
     
 </dd>
 </dl>
@@ -21511,7 +21347,7 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**account_key:** `typing.Optional[str]` — Azure Blob account key
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
     
 </dd>
 </dl>
@@ -21519,31 +21355,7 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -21567,22 +21379,6 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **title:** `typing.Optional[str]` — Storage title
     
 </dd>
@@ -21591,7 +21387,47 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_key:** `typing.Optional[str]` — Azure Blob account key
     
 </dd>
 </dl>
@@ -21662,6 +21498,162 @@ client.import_storage.azure.sync(
 <dd>
 
 **id:** `int` — Storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific Azure import storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.azure.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_key:** `typing.Optional[str]` — Azure Blob account key
     
 </dd>
 </dl>
@@ -21830,7 +21822,63 @@ client.import_storage.azure_spi.create(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
     
 </dd>
 </dl>
@@ -21854,15 +21902,7 @@ client.import_storage.azure_spi.create(
 <dl>
 <dd>
 
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
+**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
     
 </dd>
 </dl>
@@ -21894,79 +21934,7 @@ client.import_storage.azure_spi.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -21982,7 +21950,7 @@ client.import_storage.azure_spi.create(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -21990,115 +21958,7 @@ client.import_storage.azure_spi.create(
 <dl>
 <dd>
 
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Validate a specific Azure import storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure_spi.validate(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
+**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -22114,54 +21974,6 @@ client.import_storage.azure_spi.validate(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
@@ -22171,70 +21983,6 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
     
 </dd>
 </dl>
@@ -22470,7 +22218,63 @@ client.import_storage.azure_spi.update(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
     
 </dd>
 </dl>
@@ -22494,15 +22298,7 @@ client.import_storage.azure_spi.update(
 <dl>
 <dd>
 
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
+**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
     
 </dd>
 </dl>
@@ -22534,87 +22330,7 @@ client.import_storage.azure_spi.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -22630,7 +22346,7 @@ client.import_storage.azure_spi.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -22638,7 +22354,39 @@ client.import_storage.azure_spi.update(
 <dl>
 <dd>
 
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -22715,6 +22463,250 @@ client.import_storage.azure_spi.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Validate a specific Azure import storage connection that was set up with Service Principal authentication.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.azure_spi.validate(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
     
 </dd>
 </dl>
@@ -22858,11 +22850,11 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.databricks.create(
-    catalog="catalog",
     host="host",
-    project=1,
+    catalog="catalog",
     schema="schema",
     volume="volume",
+    project=1,
 )
 
 ```
@@ -22879,14 +22871,6 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
-**catalog:** `str` — UC catalog name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **host:** `str` — Databricks workspace base URL (https://...)
     
 </dd>
@@ -22895,7 +22879,7 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
+**catalog:** `str` — UC catalog name
     
 </dd>
 </dl>
@@ -22919,6 +22903,22 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **auth_type:** `typing.Optional[AuthTypeEnum]` 
 
 Authentication method: PAT, Databricks SP, or Azure AD SP
@@ -22926,6 +22926,22 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 * `pat` - Personal Access Token
 * `dbx_sp` - Databricks Service Principal
 * `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
     
 </dd>
 </dl>
@@ -22942,14 +22958,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dd>
 
 **client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -22981,103 +22989,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Path under the volume
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign not supported; always proxied
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_timeout_s:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
     
 </dd>
 </dl>
@@ -23093,7 +23005,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -23101,149 +23013,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Validate a specific Databricks Files import storage connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.databricks.validate(
-    catalog="catalog",
-    host="host",
-    project=1,
-    schema="schema",
-    volume="volume",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**catalog:** `str` — UC catalog name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `str` — Databricks workspace base URL (https://...)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schema:** `str` — UC schema name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**volume:** `str` — UC volume name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
+**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -23259,39 +23029,47 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **prefix:** `typing.Optional[str]` — Path under the volume
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_timeout_s:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_chunk_bytes:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -23316,94 +23094,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_timeout_s:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
     
 </dd>
 </dl>
@@ -23639,6 +23329,14 @@ client.import_storage.databricks.update(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **auth_type:** `typing.Optional[AuthTypeEnum]` 
 
 Authentication method: PAT, Databricks SP, or Azure AD SP
@@ -23653,7 +23351,15 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**catalog:** `typing.Optional[str]` — UC catalog name
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
     
 </dd>
 </dl>
@@ -23670,22 +23376,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dd>
 
 **client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `typing.Optional[str]` — Databricks workspace base URL (https://...)
     
 </dd>
 </dl>
@@ -23717,78 +23407,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Path under the volume
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign not supported; always proxied
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_timeout_s:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schema:** `typing.Optional[str]` — UC schema name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
     
 </dd>
@@ -23797,7 +23415,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**stream_chunk_bytes:** `typing.Optional[int]` 
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
     
 </dd>
 </dl>
@@ -23805,15 +23423,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -23829,7 +23439,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -23837,7 +23447,47 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+**host:** `typing.Optional[str]` — Databricks workspace base URL (https://...)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**catalog:** `typing.Optional[str]` — UC catalog name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**schema:** `typing.Optional[str]` — UC schema name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**volume:** `typing.Optional[str]` — UC volume name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Path under the volume
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
     
 </dd>
 </dl>
@@ -23861,7 +23511,47 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**volume:** `typing.Optional[str]` — UC volume name
+**request_timeout_s:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_chunk_bytes:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign not supported; always proxied
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -23938,6 +23628,308 @@ client.import_storage.databricks.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Validate a specific Databricks Files import storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.databricks.validate(
+    host="host",
+    catalog="catalog",
+    schema="schema",
+    volume="volume",
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**host:** `str` — Databricks workspace base URL (https://...)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**catalog:** `str` — UC catalog name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**schema:** `str` — UC schema name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**volume:** `str` — UC volume name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Path under the volume
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_timeout_s:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_chunk_bytes:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign not supported; always proxied
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
     
 </dd>
 </dl>
@@ -24084,7 +24076,7 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — GCS bucket name
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
     
 </dd>
 </dl>
@@ -24092,31 +24084,7 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -24140,22 +24108,6 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **title:** `typing.Optional[str]` — Storage title
     
 </dd>
@@ -24164,7 +24116,7 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**description:** `typing.Optional[str]` — Storage description
     
 </dd>
 </dl>
@@ -24172,62 +24124,10 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**project:** `typing.Optional[int]` — Project ID
     
 </dd>
 </dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific GCS import storage connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcs.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
 
 <dl>
 <dd>
@@ -24240,7 +24140,7 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
     
 </dd>
 </dl>
@@ -24257,70 +24157,6 @@ client.import_storage.gcs.validate()
 <dd>
 
 **google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -24538,7 +24374,7 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — GCS bucket name
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
     
 </dd>
 </dl>
@@ -24546,31 +24382,7 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -24594,22 +24406,6 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **title:** `typing.Optional[str]` — Storage title
     
 </dd>
@@ -24618,7 +24414,47 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
     
 </dd>
 </dl>
@@ -24689,6 +24525,162 @@ client.import_storage.gcs.sync(
 <dd>
 
 **id:** `int` — Storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific GCS import storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.gcs.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
     
 </dd>
 </dl>
@@ -24857,6 +24849,22 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **bucket:** `typing.Optional[str]` — GCS bucket name
     
 </dd>
@@ -24865,7 +24873,23 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Cloud storage description
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -24897,14 +24921,6 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
     
 </dd>
@@ -24914,6 +24930,14 @@ client.import_storage.gcswif.create(
 <dd>
 
 **google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_service_account_email:** `typing.Optional[str]` — Google service account email
     
 </dd>
 </dl>
@@ -24945,71 +24969,7 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -25025,7 +24985,7 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
     
 </dd>
 </dl>
@@ -25033,83 +24993,7 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Validate a specific GCS import storage connection that was set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcswif.validate(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
+**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -25125,102 +25009,6 @@ client.import_storage.gcswif.validate(
 <dl>
 <dd>
 
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
@@ -25230,54 +25018,6 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -25513,6 +25253,22 @@ client.import_storage.gcswif.update(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **bucket:** `typing.Optional[str]` — GCS bucket name
     
 </dd>
@@ -25521,7 +25277,23 @@ client.import_storage.gcswif.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Cloud storage description
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -25553,14 +25325,6 @@ client.import_storage.gcswif.update(
 <dl>
 <dd>
 
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
     
 </dd>
@@ -25570,6 +25334,14 @@ client.import_storage.gcswif.update(
 <dd>
 
 **google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_service_account_email:** `typing.Optional[str]` — Google service account email
     
 </dd>
 </dl>
@@ -25601,79 +25373,7 @@ client.import_storage.gcswif.update(
 <dl>
 <dd>
 
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -25689,7 +25389,47 @@ client.import_storage.gcswif.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -25766,6 +25506,258 @@ client.import_storage.gcswif.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Validate a specific GCS import storage connection that was set up with WIF authentication.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.gcswif.validate(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_number:** `typing.Optional[str]` — Google project number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_service_account_email:** `typing.Optional[str]` — Google service account email
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -25912,7 +25904,7 @@ client.import_storage.local.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -25920,7 +25912,7 @@ client.import_storage.local.create()
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` — Path to local directory
+**description:** `typing.Optional[str]` — Storage description
     
 </dd>
 </dl>
@@ -25936,106 +25928,6 @@ client.import_storage.local.create()
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific local file import storage connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.local.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **path:** `typing.Optional[str]` — Path to local directory
     
 </dd>
@@ -26044,23 +25936,7 @@ client.import_storage.local.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -26286,7 +26162,7 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -26294,7 +26170,7 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` — Path to local directory
+**description:** `typing.Optional[str]` — Storage description
     
 </dd>
 </dl>
@@ -26310,7 +26186,7 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+**path:** `typing.Optional[str]` — Path to local directory
     
 </dd>
 </dl>
@@ -26318,7 +26194,7 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
     
 </dd>
 </dl>
@@ -26397,6 +26273,122 @@ client.import_storage.local.sync(
 <dd>
 
 **id:** `int` — Storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific local file import storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.local.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` — Path to local directory
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -26543,63 +26535,7 @@ client.import_storage.redis.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `typing.Optional[str]` — Server Host IP (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` — Server Password (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**path:** `typing.Optional[str]` — Storage prefix (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**port:** `typing.Optional[str]` — Server Port (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
@@ -26615,107 +26551,15 @@ client.import_storage.redis.create()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**title:** `typing.Optional[str]` — Storage title
     
 </dd>
 </dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific Redis import storage connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.redis.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
 
 <dl>
 <dd>
 
 **description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `typing.Optional[str]` — Server Host IP (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` — Server Password (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**path:** `typing.Optional[str]` — Storage prefix (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**port:** `typing.Optional[str]` — Server Port (optional)
     
 </dd>
 </dl>
@@ -26731,7 +26575,7 @@ client.import_storage.redis.validate()
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**path:** `typing.Optional[str]` — Storage prefix (optional)
     
 </dd>
 </dl>
@@ -26739,7 +26583,7 @@ client.import_storage.redis.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**host:** `typing.Optional[str]` — Server Host IP (optional)
     
 </dd>
 </dl>
@@ -26747,7 +26591,15 @@ client.import_storage.redis.validate()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**port:** `typing.Optional[str]` — Server Port (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `typing.Optional[str]` — Server Password (optional)
     
 </dd>
 </dl>
@@ -26965,55 +26817,15 @@ client.import_storage.redis.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `typing.Optional[str]` — Server Host IP (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` — Server Password (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**path:** `typing.Optional[str]` — Storage prefix (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**port:** `typing.Optional[str]` — Server Port (optional)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -27029,7 +26841,47 @@ client.import_storage.redis.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` — Storage prefix (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `typing.Optional[str]` — Server Host IP (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**port:** `typing.Optional[str]` — Server Port (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `typing.Optional[str]` — Server Password (optional)
     
 </dd>
 </dl>
@@ -27100,6 +26952,146 @@ client.import_storage.redis.sync(
 <dd>
 
 **id:** `int` — Storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific Redis import storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.redis.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` — Storage prefix (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `typing.Optional[str]` — Server Host IP (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**port:** `typing.Optional[str]` — Server Port (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `typing.Optional[str]` — Server Password (optional)
     
 </dd>
 </dl>
@@ -27246,7 +27238,7 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
     
 </dd>
 </dl>
@@ -27254,47 +27246,7 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -27318,39 +27270,7 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
     
 </dd>
 </dl>
@@ -27366,7 +27286,7 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**description:** `typing.Optional[str]` — Storage description
     
 </dd>
 </dl>
@@ -27374,62 +27294,26 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**project:** `typing.Optional[int]` — Project ID
     
 </dd>
 </dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
 
 <dl>
 <dd>
 
-<dl>
-<dd>
-
-Validate a specific S3 import storage connection.
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
 </dd>
 </dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
 
 <dl>
 <dd>
 
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3.validate()
-
-```
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
 </dd>
 </dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
 
 <dl>
 <dd>
@@ -27466,78 +27350,6 @@ client.import_storage.s3.validate()
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign URLs for download
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **region_name:** `typing.Optional[str]` — AWS Region
     
 </dd>
@@ -27547,22 +27359,6 @@ client.import_storage.s3.validate()
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -27780,6 +27576,86 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign URLs for download
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Scan recursively
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
     
 </dd>
@@ -27812,70 +27688,6 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign URLs for download
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **region_name:** `typing.Optional[str]` — AWS Region
     
 </dd>
@@ -27885,22 +27697,6 @@ client.import_storage.s3.update(
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     
 </dd>
 </dl>
@@ -27971,6 +27767,202 @@ client.import_storage.s3.sync(
 <dd>
 
 **id:** `int` — Storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific S3 import storage connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.s3.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign URLs for download
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Scan recursively
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
     
 </dd>
 </dl>
@@ -28114,8 +28106,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.import_storage.s3s.create(
-    project=1,
     role_arn="role_arn",
+    project=1,
 )
 
 ```
@@ -28132,6 +28124,14 @@ client.import_storage.s3s.create(
 <dl>
 <dd>
 
+**role_arn:** `str` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **project:** `int` — A unique integer value identifying this project.
     
 </dd>
@@ -28140,7 +28140,111 @@ client.import_storage.s3s.create(
 <dl>
 <dd>
 
-**role_arn:** `str` — AWS RoleArn
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -28180,110 +28284,6 @@ client.import_storage.s3s.create(
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS ExternalId
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**legacy_auth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **region_name:** `typing.Optional[str]` — AWS Region
     
 </dd>
@@ -28300,179 +28300,6 @@ client.import_storage.s3s.create(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Validate a specific S3 import storage connection that was set up with IAM role access.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3s.validate(
-    project=1,
-    role_arn="role_arn",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `str` — AWS RoleArn
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **external_id:** `typing.Optional[str]` — AWS ExternalId
     
 </dd>
@@ -28481,55 +28308,7 @@ client.import_storage.s3s.validate(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **legacy_auth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -28546,70 +28325,6 @@ client.import_storage.s3s.validate(
 <dd>
 
 **recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -28845,6 +28560,118 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
     
 </dd>
@@ -28877,127 +28704,7 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS ExternalId
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**legacy_auth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `typing.Optional[str]` — AWS RoleArn
     
 </dd>
 </dl>
@@ -29013,7 +28720,7 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**external_id:** `typing.Optional[str]` — AWS ExternalId
     
 </dd>
 </dl>
@@ -29021,7 +28728,7 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**synchronizable:** `typing.Optional[bool]` 
+**role_arn:** `typing.Optional[str]` — AWS RoleArn
     
 </dd>
 </dl>
@@ -29029,7 +28736,7 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Cloud storage title
+**legacy_auth:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -29037,7 +28744,7 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
 </dl>
@@ -29045,7 +28752,15 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -29122,6 +28837,283 @@ client.import_storage.s3s.sync(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Validate a specific S3 import storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.s3s.validate(
+    role_arn="role_arn",
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**role_arn:** `str` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS ExternalId
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_auth:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -29573,367 +29565,6 @@ client.organizations.member_tags.create(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">assign</a>(...) -&gt; AsyncHttpResponse[AssignMemberTagsResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Assign tags to multiple organization members in bulk.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.member_tags.assign(
-    id=1,
-    all_=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**all_:** `bool` — If true, assign tags to all organization members. If false, assign tags to the provided users.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**exclude_project_id:** `typing.Optional[float]` — Filter exclude_project_id by exact match
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**exclude_workspace_id:** `typing.Optional[float]` — Filter exclude_workspace_id by exact match
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_deleted:** `typing.Optional[bool]` — Filter is_deleted by exact match
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role:** `typing.Optional[str]` — Filter role by in list (comma-separated values)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tags:** `typing.Optional[str]` — Filter tags by in list (comma-separated values)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_last_activity_gte:** `typing.Optional[str]` — Filter user__last_activity by greater than or equal to
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_last_activity_lte:** `typing.Optional[str]` — Filter user__last_activity by less than or equal to
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**excluded:** `typing.Optional[typing.Sequence[int]]` — List of user IDs to exclude from the assignment.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**included:** `typing.Optional[typing.Sequence[int]]` — List of user IDs to include in the assignment.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**overwrite:** `typing.Optional[bool]` — If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bulk_organization_member_tag_assignment_request_tags:** `typing.Optional[typing.Sequence[int]]` — List of tag IDs to assign.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">import_</a>(...) -&gt; AsyncHttpResponse[ImportMemberTagsResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Upload a CSV file to bulk import member tags and assign them to organization members.
-
-The CSV file must contain `email` and `tags` columns. The `tags` column should contain comma-separated tag labels (quoted if they contain commas). Tags that do not exist will be created.
-
-Optionally, you can specify `bulk_tags` as a comma-separated list of tags to apply to all users in the CSV file.
-
-The import runs asynchronously. Use the returned import job ID to check the status.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.member_tags.import_(
-    id=1,
-    bulk_tags="bulk_tags",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bulk_tags:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">get_import</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTagImportStatus]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Retrieve the status and results of a member tag import job.
-
-The response includes the current status (created, in_progress, completed, failed), timestamps, and counts of tags created, assignments made, and users skipped.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.member_tags.get_import(
-    id=1,
-    import_pk=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**import_pk:** `int` — A unique integer value identifying this import job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">get</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTag]</code></summary>
 <dl>
 <dd>
@@ -30197,6 +29828,367 @@ client.organizations.member_tags.update(
 </dl>
 </details>
 
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">assign</a>(...) -&gt; AsyncHttpResponse[AssignMemberTagsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Assign tags to multiple organization members in bulk.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.member_tags.assign(
+    id=1,
+    all_=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**all_:** `bool` — If true, assign tags to all organization members. If false, assign tags to the provided users.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exclude_project_id:** `typing.Optional[float]` — Filter exclude_project_id by exact match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exclude_workspace_id:** `typing.Optional[float]` — Filter exclude_workspace_id by exact match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_deleted:** `typing.Optional[bool]` — Filter is_deleted by exact match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` — Filter role by in list (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[str]` — Filter tags by in list (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_last_activity_gte:** `typing.Optional[str]` — Filter user__last_activity by greater than or equal to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_last_activity_lte:** `typing.Optional[str]` — Filter user__last_activity by less than or equal to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**included:** `typing.Optional[typing.Sequence[int]]` — List of user IDs to include in the assignment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**excluded:** `typing.Optional[typing.Sequence[int]]` — List of user IDs to exclude from the assignment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bulk_organization_member_tag_assignment_request_tags:** `typing.Optional[typing.Sequence[int]]` — List of tag IDs to assign.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**overwrite:** `typing.Optional[bool]` — If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">import_</a>(...) -&gt; AsyncHttpResponse[ImportMemberTagsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Upload a CSV file to bulk import member tags and assign them to organization members.
+
+The CSV file must contain `email` and `tags` columns. The `tags` column should contain comma-separated tag labels (quoted if they contain commas). Tags that do not exist will be created.
+
+Optionally, you can specify `bulk_tags` as a comma-separated list of tags to apply to all users in the CSV file.
+
+The import runs asynchronously. Use the returned import job ID to check the status.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.member_tags.import_(
+    id=1,
+    bulk_tags="bulk_tags",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bulk_tags:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">get_import</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTagImportStatus]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Retrieve the status and results of a member tag import job.
+
+The response includes the current status (created, in_progress, completed, failed), timestamps, and counts of tags created, assignments made, and users skipped.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.member_tags.get_import(
+    id=1,
+    import_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**import_pk:** `int` — A unique integer value identifying this import job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Organizations Members
 <details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">list</a>(...) -&gt; AsyncHttpResponse[PaginatedLseOrganizationMemberListList]</code></summary>
 <dl>
@@ -30438,7 +30430,7 @@ client.organizations.members.update(
 <dl>
 <dd>
 
-**role:** `typing.Optional[Role9E7Enum]` 
+**user_id:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -30446,7 +30438,7 @@ client.organizations.members.update(
 <dl>
 <dd>
 
-**user_id:** `typing.Optional[int]` 
+**role:** `typing.Optional[Role9E7Enum]` 
     
 </dd>
 </dl>
@@ -30791,90 +30783,6 @@ client.organizations.permissions.create(
 <dd>
 
 **roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Explicit roles that have this permission within the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">get_options</a>(...) -&gt; AsyncHttpResponse[typing.List[ConfigurablePermissionOption]]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.permissions.get_options(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -31267,6 +31175,90 @@ client.organizations.permissions.update(
 </dl>
 </details>
 
+<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">get_options</a>(...) -&gt; AsyncHttpResponse[typing.List[ConfigurablePermissionOption]]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.permissions.get_options(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Organizations MemberTags Bulk
 <details><summary><code>client.organizations.member_tags.bulk.<a href="src/label_studio_sdk/organizations/member_tags/bulk/client.py">post</a>(...) -&gt; AsyncHttpResponse[PostBulkResponse]</code></summary>
 <dl>
@@ -31410,344 +31402,6 @@ client.organizations.member_tags.bulk.delete(
 <dd>
 
 **id:** `int` — A unique integer value identifying this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Projects Roles
-<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ProjectRole]]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-
-        List project roles for requested IDs for the current user
-        
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.roles.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ids:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">add</a>(...) -&gt; AsyncHttpResponse[ProjectRole]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-
-        Create project role for user allowing the user the same access level provided by organization role.
-        
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.roles.add(
-    project=1,
-    role="OW",
-    user=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role:** `Role9E7Enum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">remove</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-
-        Remove project role for user allowing the user the same access level provided by organization role.
-        
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.roles.remove(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this project role.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">get</a>(...) -&gt; AsyncHttpResponse[typing.List[ProjectRole]]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-
-        List users and their project level roles for a given project.
-        If user is not listed here and is a member of the project then they would behave as assigned role in organization.
-        
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.roles.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
     
 </dd>
 </dl>
@@ -31980,23 +31634,7 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**annotation_filter_options:** `typing.Optional[LseAnnotationFilterOptionsRequest]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**converted_formats:** `typing.Optional[typing.Sequence[ConvertedFormatRequest]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**counters:** `typing.Optional[typing.Any]` 
+**title:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -32020,6 +31658,14 @@ client.projects.exports.create(
 <dl>
 <dd>
 
+**status:** `typing.Optional[Status7BfEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **md5:** `typing.Optional[str]` 
     
 </dd>
@@ -32028,7 +31674,7 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**serialization_options:** `typing.Optional[SerializationOptionsRequest]` 
+**counters:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>
@@ -32036,7 +31682,7 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**status:** `typing.Optional[Status7BfEnum]` 
+**converted_formats:** `typing.Optional[typing.Sequence[ConvertedFormatRequest]]` 
     
 </dd>
 </dl>
@@ -32052,7 +31698,15 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` 
+**annotation_filter_options:** `typing.Optional[LseAnnotationFilterOptionsRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serialization_options:** `typing.Optional[SerializationOptionsRequest]` 
     
 </dd>
 </dl>
@@ -32629,6 +32283,14 @@ client.projects.metrics.update(
 <dl>
 <dd>
 
+**metric_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **additional_params:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
@@ -32646,14 +32308,6 @@ client.projects.metrics.update(
 <dd>
 
 **max_additional_annotators_assignable:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**metric_name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -33722,192 +33376,6 @@ client.projects.stats.update_stats(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_prediction_agreement</a>(...) -&gt; AsyncHttpResponse[UsersPredictionAgreementStatsResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Get prediction agreement statistics for multiple annotators within a project.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.stats.users_prediction_agreement(
-    id=1,
-    ids="ids",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ids:** `str` — Comma separated list of annotator user IDs to get agreement scores for
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**per_label:** `typing.Optional[bool]` — Per label
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_review_score</a>(...) -&gt; AsyncHttpResponse[UsersReviewScoreStatsResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Get review score and performance score statistics for multiple annotators within a project. Only allowed for accounts with reviewing features enabled.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.stats.users_review_score(
-    id=1,
-    ids="ids",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ids:** `str` — Comma separated list of annotator user IDs to get review scores for
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**per_label:** `typing.Optional[bool]` — Per label
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">user_prediction_agreement</a>(...) -&gt; AsyncHttpResponse[UserPredictionAgreementStatsResponse]</code></summary>
 <dl>
 <dd>
@@ -34094,6 +33562,192 @@ client.projects.stats.user_review_score(
 </dl>
 </details>
 
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_prediction_agreement</a>(...) -&gt; AsyncHttpResponse[UsersPredictionAgreementStatsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Get prediction agreement statistics for multiple annotators within a project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.stats.users_prediction_agreement(
+    id=1,
+    ids="ids",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `str` — Comma separated list of annotator user IDs to get agreement scores for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_label:** `typing.Optional[bool]` — Per label
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_review_score</a>(...) -&gt; AsyncHttpResponse[UsersReviewScoreStatsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Get review score and performance score statistics for multiple annotators within a project. Only allowed for accounts with reviewing features enabled.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.stats.users_review_score(
+    id=1,
+    ids="ids",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `str` — Comma separated list of annotator user IDs to get review scores for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_label:** `typing.Optional[bool]` — Per label
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">user_ground_truth_agreement</a>(...) -&gt; AsyncHttpResponse[UserGroundTruthAgreementStatsResponse]</code></summary>
 <dl>
 <dd>
@@ -34187,8 +33841,8 @@ client.projects.stats.user_ground_truth_agreement(
 </dl>
 </details>
 
-## Projects Assignments
-<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">bulk_assign</a>(...) -&gt; AsyncHttpResponse[BulkAssignAssignmentsResponse]</code></summary>
+## Projects Roles
+<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">get</a>(...) -&gt; AsyncHttpResponse[typing.List[ProjectRole]]</code></summary>
 <dl>
 <dd>
 
@@ -34206,7 +33860,10 @@ client.projects.stats.user_ground_truth_agreement(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Assign multiple users to a collection of tasks within a specific project.
+
+        List users and their project level roles for a given project.
+        If user is not listed here and is a member of the project then they would behave as assigned role in organization.
+        
 </dd>
 </dl>
 </dd>
@@ -34222,20 +33879,12 @@ Assign multiple users to a collection of tasks within a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
-from label_studio_sdk.projects.assignments import (
-    BulkAssignAssignmentsRequestSelectedItemsIncluded,
-)
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.assignments.bulk_assign(
+client.projects.roles.get(
     id=1,
-    selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
-        all_=True,
-    ),
-    type="AN",
-    users=[1],
 )
 
 ```
@@ -34260,7 +33909,75 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**selected_items:** `BulkAssignAssignmentsRequestSelectedItems` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ProjectRole]]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+
+        List project roles for requested IDs for the current user
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.roles.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ids:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -34268,23 +33985,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**type:** `BulkAssignAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**users:** `typing.Sequence[int]` — List of user IDs to assign
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**filters:** `typing.Optional[BulkAssignAssignmentsRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
 </dl>
@@ -34304,6 +34005,181 @@ client.projects.assignments.bulk_assign(
 </dl>
 </details>
 
+<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">add</a>(...) -&gt; AsyncHttpResponse[ProjectRole]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+
+        Create project role for user allowing the user the same access level provided by organization role.
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.roles.add(
+    role="OW",
+    user=1,
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**role:** `Role9E7Enum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">remove</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+
+        Remove project role for user allowing the user the same access level provided by organization role.
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.roles.remove(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project role.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Projects Assignments
 <details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[TaskAssignment]]</code></summary>
 <dl>
 <dd>
@@ -34677,6 +34553,122 @@ client.projects.assignments.update(
 <dd>
 
 **users:** `typing.Sequence[int]` — List of user IDs to assign
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">bulk_assign</a>(...) -&gt; AsyncHttpResponse[BulkAssignAssignmentsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Assign multiple users to a collection of tasks within a specific project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.projects.assignments import (
+    BulkAssignAssignmentsRequestSelectedItemsIncluded,
+)
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.assignments.bulk_assign(
+    id=1,
+    type="AN",
+    users=[1],
+    selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
+        all_=True,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `BulkAssignAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**users:** `typing.Sequence[int]` — List of user IDs to assign
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_items:** `BulkAssignAssignmentsRequestSelectedItems` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filters:** `typing.Optional[BulkAssignAssignmentsRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
     
 </dd>
 </dl>
@@ -35328,7 +35320,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**excluded:** `typing.Optional[typing.Sequence[int]]` 
+**included:** `typing.Optional[typing.Sequence[int]]` 
     
 </dd>
 </dl>
@@ -35336,7 +35328,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**included:** `typing.Optional[typing.Sequence[int]]` 
+**excluded:** `typing.Optional[typing.Sequence[int]]` 
     
 </dd>
 </dl>
@@ -35845,7 +35837,7 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
-**region:** `typing.Optional[str]` — The AWS region for the Lambda function. Uses default if not provided.
+**role:** `typing.Optional[str]` — The AWS IAM role ARN for the Lambda function. Uses default if not provided.
     
 </dd>
 </dl>
@@ -35853,7 +35845,7 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
-**role:** `typing.Optional[str]` — The AWS IAM role ARN for the Lambda function. Uses default if not provided.
+**region:** `typing.Optional[str]` — The AWS region for the Lambda function. Uses default if not provided.
     
 </dd>
 </dl>
@@ -36421,9 +36413,9 @@ client = LabelStudio(
 )
 client.prompts.versions.create(
     prompt_id=1,
+    title="title",
     prompt="prompt",
     provider_model_id="provider_model_id",
-    title="title",
 )
 
 ```
@@ -36448,6 +36440,14 @@ client.prompts.versions.create(
 <dl>
 <dd>
 
+**title:** `str` — Model name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **prompt:** `str` — Prompt to execute
     
 </dd>
@@ -36457,30 +36457,6 @@ client.prompts.versions.create(
 <dd>
 
 **provider_model_id:** `str` — The model ID to use within the given provider, e.g. gpt-3.5
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `str` — Model name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_provider_connection:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -36507,6 +36483,22 @@ The model provider to use e.g. OpenAI
 * `Gemini` - Gemini
 * `Anthropic` - Anthropic
 * `Custom` - Custom
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_provider_connection:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -36769,23 +36761,15 @@ client.prompts.versions.update(
 <dl>
 <dd>
 
-**model_provider_connection:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **parent_model:** `typing.Optional[int]` — Parent model interface ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Model name
     
 </dd>
 </dl>
@@ -36827,7 +36811,15 @@ The model provider to use e.g. OpenAI
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Model name
+**model_provider_connection:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -37066,9 +37058,9 @@ client = LabelStudio(
 client.prompts.versions.refine_prompt(
     prompt_id=1,
     version_id=1,
-    project_id=1,
-    teacher_model_name="teacher_model_name",
     teacher_model_provider_connection_id=1,
+    teacher_model_name="teacher_model_name",
+    project_id=1,
 )
 
 ```
@@ -37101,7 +37093,7 @@ client.prompts.versions.refine_prompt(
 <dl>
 <dd>
 
-**project_id:** `int` — Project ID to target the refined prompt for
+**teacher_model_provider_connection_id:** `int` — Model Provider Connection ID to use to refine the prompt
     
 </dd>
 </dl>
@@ -37117,7 +37109,7 @@ client.prompts.versions.refine_prompt(
 <dl>
 <dd>
 
-**teacher_model_provider_connection_id:** `int` — Model Provider Connection ID to use to refine the prompt
+**project_id:** `int` — Project ID to target the refined prompt for
     
 </dd>
 </dl>
@@ -37345,31 +37337,7 @@ client.prompts.runs.create(
 <dl>
 <dd>
 
-**job_id:** `typing.Optional[str]` — Job ID for inference job for a ModelRun e.g. Adala job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **only_missing_predictions:** `typing.Optional[bool]` — When true, only tasks without successful predictions for this prompt version are submitted for inference.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**predictions_updated_at:** `typing.Optional[dt.datetime]` 
     
 </dd>
 </dl>
@@ -37385,7 +37353,7 @@ client.prompts.runs.create(
 <dl>
 <dd>
 
-**total_correct_predictions:** `typing.Optional[int]` 
+**job_id:** `typing.Optional[str]` — Job ID for inference job for a ModelRun e.g. Adala job ID
     
 </dd>
 </dl>
@@ -37401,7 +37369,31 @@ client.prompts.runs.create(
 <dl>
 <dd>
 
+**total_correct_predictions:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **total_tasks:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**predictions_updated_at:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -37621,15 +37613,15 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.sso.saml.update(
+    workspaces_groups=[["Default workspace", "groups_test"]],
+    roles_groups=[["Administrator", "groups_test"]],
     projects_groups=[
         ProjectGroupRequest(
-            group="groups_test",
             project_id=42,
+            group="groups_test",
             role="Inherit",
         )
     ],
-    roles_groups=[["Administrator", "groups_test"]],
-    workspaces_groups=[["Default workspace", "groups_test"]],
 )
 
 ```
@@ -37654,38 +37646,6 @@ client.sso.saml.update(
 <dl>
 <dd>
 
-**mapping_email:** `typing.Optional[str]` — Mapping attributes: user email from SAML request
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**mapping_first_name:** `typing.Optional[str]` — Mapping attributes: user first name from SAML request
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**mapping_groups:** `typing.Optional[str]` — Mapping attributes: groups attribute for user mapping to workspaces and roles
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**mapping_last_name:** `typing.Optional[str]` — Mapping attributes: user last name from SAML request
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **metadata_url:** `typing.Optional[str]` — URL SAML metadata from IdP
     
 </dd>
@@ -37702,7 +37662,39 @@ client.sso.saml.update(
 <dl>
 <dd>
 
-**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` 
+**mapping_email:** `typing.Optional[str]` — Mapping attributes: user email from SAML request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_first_name:** `typing.Optional[str]` — Mapping attributes: user first name from SAML request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_last_name:** `typing.Optional[str]` — Mapping attributes: user last name from SAML request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping_groups:** `typing.Optional[str]` — Mapping attributes: groups attribute for user mapping to workspaces and roles
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
     
 </dd>
 </dl>
@@ -37718,7 +37710,7 @@ client.sso.saml.update(
 <dl>
 <dd>
 
-**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
+**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` 
     
 </dd>
 </dl>
@@ -37844,15 +37836,15 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.sso.scim.update(
+    workspaces_groups=[["Default workspace", "groups_test"]],
+    roles_groups=[["Administrator", "groups_test"]],
     projects_groups=[
         ProjectGroupRequest(
-            group="groups_test",
             project_id=42,
+            group="groups_test",
             role="Inherit",
         )
     ],
-    roles_groups=[["Administrator", "groups_test"]],
-    workspaces_groups=[["Default workspace", "groups_test"]],
 )
 
 ```
@@ -37869,7 +37861,7 @@ client.sso.scim.update(
 <dl>
 <dd>
 
-**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` 
+**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
     
 </dd>
 </dl>
@@ -37885,7 +37877,7 @@ client.sso.scim.update(
 <dl>
 <dd>
 
-**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
+**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` 
     
 </dd>
 </dl>
@@ -38463,7 +38455,7 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
-**excluded:** `typing.Optional[typing.Sequence[int]]` 
+**included:** `typing.Optional[typing.Sequence[int]]` 
     
 </dd>
 </dl>
@@ -38471,7 +38463,7 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
-**included:** `typing.Optional[typing.Sequence[int]]` 
+**excluded:** `typing.Optional[typing.Sequence[int]]` 
     
 </dd>
 </dl>

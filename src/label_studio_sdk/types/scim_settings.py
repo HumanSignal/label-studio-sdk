@@ -8,9 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ScimSettings(UncheckedBaseModel):
-    projects_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    workspaces_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
-    Projects to groups mapping
+    Workspaces to groups mapping
     """
 
     roles_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
@@ -18,9 +18,9 @@ class ScimSettings(UncheckedBaseModel):
     Roles to groups mapping
     """
 
-    workspaces_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    projects_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
-    Workspaces to groups mapping
+    Projects to groups mapping
     """
 
     if IS_PYDANTIC_V2:

@@ -8,8 +8,8 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 
 
 class ListModelVersionsMlResponse(UncheckedBaseModel):
-    message: typing.Optional[str] = None
     versions: typing.Optional[typing.List[str]] = None
+    message: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

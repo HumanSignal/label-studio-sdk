@@ -16,10 +16,12 @@ class TaskEvent(UncheckedBaseModel):
     ensuring proper data format and automatically setting required relationships.
     """
 
-    actor: typing.Optional[int] = None
-    annotation: typing.Optional[int] = pydantic.Field(default=None)
+    id: typing.Optional[int] = None
+    project: typing.Optional[int] = None
+    organization: typing.Optional[int] = None
+    task: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Annotation ID associated with this event
+    Task this event is associated with
     """
 
     annotation_draft_id: typing.Optional[int] = pydantic.Field(default=None)
@@ -27,7 +29,17 @@ class TaskEvent(UncheckedBaseModel):
     Draft annotation ID associated with this event
     """
 
-    created_at: typing.Optional[dt.datetime] = None
+    annotation: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Annotation ID associated with this event
+    """
+
+    review: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Review ID associated with this event
+    """
+
+    actor: typing.Optional[int] = None
     event_key: str = pydantic.Field()
     """
     Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
@@ -38,23 +50,12 @@ class TaskEvent(UncheckedBaseModel):
     Timestamp when the event occurred (frontend time)
     """
 
-    id: typing.Optional[int] = None
     meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Additional event metadata (region data, hotkey info, etc.)
     """
 
-    organization: typing.Optional[int] = None
-    project: typing.Optional[int] = None
-    review: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Review ID associated with this event
-    """
-
-    task: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Task this event is associated with
-    """
+    created_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

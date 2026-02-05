@@ -67,18 +67,18 @@ class UsersClient:
     def update_current_user(
         self,
         *,
+        first_name: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
+        custom_hotkeys: typing.Optional[typing.Any] = OMIT,
+        phone: typing.Optional[str] = OMIT,
         active_organization: typing.Optional[int] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
-        custom_hotkeys: typing.Optional[typing.Any] = OMIT,
         date_joined: typing.Optional[dt.datetime] = OMIT,
-        email_notification_settings: typing.Optional[typing.Any] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
-        is_email_verified: typing.Optional[bool] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        onboarding_state: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
+        onboarding_state: typing.Optional[str] = OMIT,
+        is_email_verified: typing.Optional[bool] = OMIT,
+        email_notification_settings: typing.Optional[typing.Any] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUserApi:
         """
@@ -92,31 +92,31 @@ class UsersClient:
 
         Parameters
         ----------
+        first_name : typing.Optional[str]
+
+        last_name : typing.Optional[str]
+
+        username : typing.Optional[str]
+
+        custom_hotkeys : typing.Optional[typing.Any]
+            Custom keyboard shortcuts configuration for the user interface
+
+        phone : typing.Optional[str]
+
         active_organization : typing.Optional[int]
 
         allow_newsletters : typing.Optional[bool]
             Allow sending newsletters to user
 
-        custom_hotkeys : typing.Optional[typing.Any]
-            Custom keyboard shortcuts configuration for the user interface
-
         date_joined : typing.Optional[dt.datetime]
-
-        email_notification_settings : typing.Optional[typing.Any]
-
-        first_name : typing.Optional[str]
-
-        is_email_verified : typing.Optional[bool]
-
-        last_name : typing.Optional[str]
-
-        onboarding_state : typing.Optional[str]
 
         password : typing.Optional[str]
 
-        phone : typing.Optional[str]
+        onboarding_state : typing.Optional[str]
 
-        username : typing.Optional[str]
+        is_email_verified : typing.Optional[bool]
+
+        email_notification_settings : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -136,18 +136,18 @@ class UsersClient:
         client.users.update_current_user()
         """
         _response = self._raw_client.update_current_user(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            custom_hotkeys=custom_hotkeys,
+            phone=phone,
             active_organization=active_organization,
             allow_newsletters=allow_newsletters,
-            custom_hotkeys=custom_hotkeys,
             date_joined=date_joined,
-            email_notification_settings=email_notification_settings,
-            first_name=first_name,
-            is_email_verified=is_email_verified,
-            last_name=last_name,
-            onboarding_state=onboarding_state,
             password=password,
-            phone=phone,
-            username=username,
+            onboarding_state=onboarding_state,
+            is_email_verified=is_email_verified,
+            email_notification_settings=email_notification_settings,
             request_options=request_options,
         )
         return _response.data
@@ -323,15 +323,15 @@ class UsersClient:
     def create(
         self,
         *,
-        allow_newsletters: typing.Optional[bool] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
-        initials: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
         last_name: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         username: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        allow_newsletters: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUser:
         """
@@ -339,32 +339,32 @@ class UsersClient:
 
         Parameters
         ----------
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
-
-        avatar : typing.Optional[str]
-            Avatar URL of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        id : typing.Optional[int]
+            User ID
 
         first_name : typing.Optional[str]
             First name of the user
 
-        id : typing.Optional[int]
-            User ID
+        last_name : typing.Optional[str]
+            Last name of the user
+
+        username : typing.Optional[str]
+            Username of the user
+
+        email : typing.Optional[str]
+            Email of the user
+
+        avatar : typing.Optional[str]
+            Avatar URL of the user
 
         initials : typing.Optional[str]
             Initials of the user
 
-        last_name : typing.Optional[str]
-            Last name of the user
-
         phone : typing.Optional[str]
             Phone number of the user
 
-        username : typing.Optional[str]
-            Username of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -384,15 +384,15 @@ class UsersClient:
         client.users.create()
         """
         _response = self._raw_client.create(
-            allow_newsletters=allow_newsletters,
-            avatar=avatar,
-            email=email,
-            first_name=first_name,
             id=id,
-            initials=initials,
+            first_name=first_name,
             last_name=last_name,
-            phone=phone,
             username=username,
+            email=email,
+            avatar=avatar,
+            initials=initials,
+            phone=phone,
+            allow_newsletters=allow_newsletters,
             request_options=request_options,
         )
         return _response.data
@@ -464,15 +464,15 @@ class UsersClient:
         self,
         id: int,
         *,
-        allow_newsletters: typing.Optional[bool] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
         update_users_request_id: typing.Optional[int] = OMIT,
-        initials: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
         last_name: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         username: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        allow_newsletters: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUser:
         """
@@ -485,32 +485,32 @@ class UsersClient:
         id : int
             User ID
 
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
-
-        avatar : typing.Optional[str]
-            Avatar URL of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        update_users_request_id : typing.Optional[int]
+            User ID
 
         first_name : typing.Optional[str]
             First name of the user
 
-        update_users_request_id : typing.Optional[int]
-            User ID
+        last_name : typing.Optional[str]
+            Last name of the user
+
+        username : typing.Optional[str]
+            Username of the user
+
+        email : typing.Optional[str]
+            Email of the user
+
+        avatar : typing.Optional[str]
+            Avatar URL of the user
 
         initials : typing.Optional[str]
             Initials of the user
 
-        last_name : typing.Optional[str]
-            Last name of the user
-
         phone : typing.Optional[str]
             Phone number of the user
 
-        username : typing.Optional[str]
-            Username of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -533,15 +533,15 @@ class UsersClient:
         """
         _response = self._raw_client.update(
             id,
-            allow_newsletters=allow_newsletters,
-            avatar=avatar,
-            email=email,
-            first_name=first_name,
             update_users_request_id=update_users_request_id,
-            initials=initials,
+            first_name=first_name,
             last_name=last_name,
-            phone=phone,
             username=username,
+            email=email,
+            avatar=avatar,
+            initials=initials,
+            phone=phone,
+            allow_newsletters=allow_newsletters,
             request_options=request_options,
         )
         return _response.data
@@ -605,18 +605,18 @@ class AsyncUsersClient:
     async def update_current_user(
         self,
         *,
+        first_name: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
+        custom_hotkeys: typing.Optional[typing.Any] = OMIT,
+        phone: typing.Optional[str] = OMIT,
         active_organization: typing.Optional[int] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
-        custom_hotkeys: typing.Optional[typing.Any] = OMIT,
         date_joined: typing.Optional[dt.datetime] = OMIT,
-        email_notification_settings: typing.Optional[typing.Any] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
-        is_email_verified: typing.Optional[bool] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        onboarding_state: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
+        onboarding_state: typing.Optional[str] = OMIT,
+        is_email_verified: typing.Optional[bool] = OMIT,
+        email_notification_settings: typing.Optional[typing.Any] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUserApi:
         """
@@ -630,31 +630,31 @@ class AsyncUsersClient:
 
         Parameters
         ----------
+        first_name : typing.Optional[str]
+
+        last_name : typing.Optional[str]
+
+        username : typing.Optional[str]
+
+        custom_hotkeys : typing.Optional[typing.Any]
+            Custom keyboard shortcuts configuration for the user interface
+
+        phone : typing.Optional[str]
+
         active_organization : typing.Optional[int]
 
         allow_newsletters : typing.Optional[bool]
             Allow sending newsletters to user
 
-        custom_hotkeys : typing.Optional[typing.Any]
-            Custom keyboard shortcuts configuration for the user interface
-
         date_joined : typing.Optional[dt.datetime]
-
-        email_notification_settings : typing.Optional[typing.Any]
-
-        first_name : typing.Optional[str]
-
-        is_email_verified : typing.Optional[bool]
-
-        last_name : typing.Optional[str]
-
-        onboarding_state : typing.Optional[str]
 
         password : typing.Optional[str]
 
-        phone : typing.Optional[str]
+        onboarding_state : typing.Optional[str]
 
-        username : typing.Optional[str]
+        is_email_verified : typing.Optional[bool]
+
+        email_notification_settings : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -682,18 +682,18 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update_current_user(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            custom_hotkeys=custom_hotkeys,
+            phone=phone,
             active_organization=active_organization,
             allow_newsletters=allow_newsletters,
-            custom_hotkeys=custom_hotkeys,
             date_joined=date_joined,
-            email_notification_settings=email_notification_settings,
-            first_name=first_name,
-            is_email_verified=is_email_verified,
-            last_name=last_name,
-            onboarding_state=onboarding_state,
             password=password,
-            phone=phone,
-            username=username,
+            onboarding_state=onboarding_state,
+            is_email_verified=is_email_verified,
+            email_notification_settings=email_notification_settings,
             request_options=request_options,
         )
         return _response.data
@@ -919,15 +919,15 @@ class AsyncUsersClient:
     async def create(
         self,
         *,
-        allow_newsletters: typing.Optional[bool] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
-        initials: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
         last_name: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         username: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        allow_newsletters: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUser:
         """
@@ -935,32 +935,32 @@ class AsyncUsersClient:
 
         Parameters
         ----------
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
-
-        avatar : typing.Optional[str]
-            Avatar URL of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        id : typing.Optional[int]
+            User ID
 
         first_name : typing.Optional[str]
             First name of the user
 
-        id : typing.Optional[int]
-            User ID
+        last_name : typing.Optional[str]
+            Last name of the user
+
+        username : typing.Optional[str]
+            Username of the user
+
+        email : typing.Optional[str]
+            Email of the user
+
+        avatar : typing.Optional[str]
+            Avatar URL of the user
 
         initials : typing.Optional[str]
             Initials of the user
 
-        last_name : typing.Optional[str]
-            Last name of the user
-
         phone : typing.Optional[str]
             Phone number of the user
 
-        username : typing.Optional[str]
-            Username of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -988,15 +988,15 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            allow_newsletters=allow_newsletters,
-            avatar=avatar,
-            email=email,
-            first_name=first_name,
             id=id,
-            initials=initials,
+            first_name=first_name,
             last_name=last_name,
-            phone=phone,
             username=username,
+            email=email,
+            avatar=avatar,
+            initials=initials,
+            phone=phone,
+            allow_newsletters=allow_newsletters,
             request_options=request_options,
         )
         return _response.data
@@ -1084,15 +1084,15 @@ class AsyncUsersClient:
         self,
         id: int,
         *,
-        allow_newsletters: typing.Optional[bool] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
         update_users_request_id: typing.Optional[int] = OMIT,
-        initials: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
         last_name: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         username: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        allow_newsletters: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUser:
         """
@@ -1105,32 +1105,32 @@ class AsyncUsersClient:
         id : int
             User ID
 
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
-
-        avatar : typing.Optional[str]
-            Avatar URL of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        update_users_request_id : typing.Optional[int]
+            User ID
 
         first_name : typing.Optional[str]
             First name of the user
 
-        update_users_request_id : typing.Optional[int]
-            User ID
+        last_name : typing.Optional[str]
+            Last name of the user
+
+        username : typing.Optional[str]
+            Username of the user
+
+        email : typing.Optional[str]
+            Email of the user
+
+        avatar : typing.Optional[str]
+            Avatar URL of the user
 
         initials : typing.Optional[str]
             Initials of the user
 
-        last_name : typing.Optional[str]
-            Last name of the user
-
         phone : typing.Optional[str]
             Phone number of the user
 
-        username : typing.Optional[str]
-            Username of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1161,15 +1161,15 @@ class AsyncUsersClient:
         """
         _response = await self._raw_client.update(
             id,
-            allow_newsletters=allow_newsletters,
-            avatar=avatar,
-            email=email,
-            first_name=first_name,
             update_users_request_id=update_users_request_id,
-            initials=initials,
+            first_name=first_name,
             last_name=last_name,
-            phone=phone,
             username=username,
+            email=email,
+            avatar=avatar,
+            initials=initials,
+            phone=phone,
+            allow_newsletters=allow_newsletters,
             request_options=request_options,
         )
         return _response.data

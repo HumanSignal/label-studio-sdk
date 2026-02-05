@@ -12,18 +12,18 @@ from .users_review_score_stats_response_review_score_value import UsersReviewSco
 
 
 class UsersReviewScoreStatsResponse(UncheckedBaseModel):
-    performance_score: typing.Optional[typing.Dict[str, UsersReviewScoreStatsResponsePerformanceScoreValue]] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Performance scores mapped by annotator ID
-    """
-
     review_score: typing.Optional[typing.Dict[str, UsersReviewScoreStatsResponseReviewScoreValue]] = pydantic.Field(
         default=None
     )
     """
     Review scores mapped by annotator ID
+    """
+
+    performance_score: typing.Optional[typing.Dict[str, UsersReviewScoreStatsResponsePerformanceScoreValue]] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Performance scores mapped by annotator ID
     """
 
     if IS_PYDANTIC_V2:

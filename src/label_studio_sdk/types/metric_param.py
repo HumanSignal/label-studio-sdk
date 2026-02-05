@@ -8,19 +8,19 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class MetricParam(UncheckedBaseModel):
-    agreement_threshold: typing.Optional[str] = None
-    allowed: typing.Optional[str] = None
-    max_additional_annotators_assignable: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Maximum number of additional annotators that can be assigned to a low agreement task
-    """
-
     metric_name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Evaluation metric chosen for this project
     """
 
     metric_params: typing.Optional[typing.Any] = None
+    agreement_threshold: typing.Optional[str] = None
+    max_additional_annotators_assignable: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of additional annotators that can be assigned to a low agreement task
+    """
+
+    allowed: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

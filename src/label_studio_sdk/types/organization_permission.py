@@ -11,19 +11,19 @@ from .role9e7enum import Role9E7Enum
 
 
 class OrganizationPermission(UncheckedBaseModel):
-    default: typing.Optional[typing.List[Default165Enum]] = None
-    group: typing.Optional[str] = None
     id: typing.Optional[int] = None
-    label: typing.Optional[str] = None
-    options: typing.Optional[typing.List[Options165Enum]] = None
     organization: typing.Optional[int] = None
     permission: str
+    label: typing.Optional[str] = None
+    tooltip: typing.Optional[str] = None
+    default: typing.Optional[typing.List[Default165Enum]] = None
     roles: typing.Optional[typing.List[Role9E7Enum]] = pydantic.Field(default=None)
     """
     Explicit roles that have this permission within the organization.
     """
 
-    tooltip: typing.Optional[str] = None
+    options: typing.Optional[typing.List[Options165Enum]] = None
+    group: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

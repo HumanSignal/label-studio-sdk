@@ -9,8 +9,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class LseTaskSerializerForAnnotatorsDraftsItem(UncheckedBaseModel):
-    created_at: typing.Optional[dt.datetime] = None
     result: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
+    created_at: typing.Optional[dt.datetime] = None
     updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:

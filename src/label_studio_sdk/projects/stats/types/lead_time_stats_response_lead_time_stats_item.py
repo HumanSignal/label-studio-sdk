@@ -8,6 +8,11 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 
 class LeadTimeStatsResponseLeadTimeStatsItem(UncheckedBaseModel):
+    user_id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    User ID
+    """
+
     mean_time: typing.Optional[float] = pydantic.Field(default=None)
     """
     Average lead time for the user
@@ -21,11 +26,6 @@ class LeadTimeStatsResponseLeadTimeStatsItem(UncheckedBaseModel):
     sum_lead_time: typing.Optional[float] = pydantic.Field(default=None)
     """
     Total lead time for the user
-    """
-
-    user_id: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    User ID
     """
 
     if IS_PYDANTIC_V2:

@@ -10,32 +10,32 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class BillingFlags(UncheckedBaseModel):
     activated_at: typing.Optional[dt.datetime] = None
-    allow_activity_log: bool
-    allow_ai: bool
-    allow_ask_ai: bool
-    allow_data_credentials: bool
-    allow_invite_people: bool
-    allow_invite_project_experts: bool
-    allow_nda: bool
-    allow_organization_webhooks: bool
-    allow_reviewing: bool
-    allow_sso: bool
-    allow_storage_proxy: bool
-    automax_enabled: bool
-    automax_token_exists: bool
     cloud_instance: bool
-    disable_members_page: bool
-    disable_project_imports: bool
-    early_adopter: bool
-    email_configured: bool
-    embed_domains: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
-    embed_enabled: bool
-    embed_settings: typing.Optional[typing.Dict[str, typing.Any]] = None
-    manual_role_management: bool
-    manual_workspace_management: bool
-    secure_mode: bool
-    storage_persistence: bool
+    allow_activity_log: bool
+    allow_invite_project_experts: bool
+    allow_sso: bool
+    allow_nda: bool
+    allow_reviewing: bool
     white_label_id: typing.Optional[str] = None
+    allow_data_credentials: bool
+    allow_organization_webhooks: bool
+    disable_members_page: bool
+    secure_mode: bool
+    manual_workspace_management: bool
+    manual_role_management: bool
+    disable_project_imports: bool
+    automax_token_exists: bool
+    automax_enabled: bool
+    storage_persistence: bool
+    allow_ai: bool
+    early_adopter: bool
+    allow_ask_ai: bool
+    allow_invite_people: bool
+    email_configured: bool
+    allow_storage_proxy: bool
+    embed_enabled: bool
+    embed_domains: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
+    embed_settings: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

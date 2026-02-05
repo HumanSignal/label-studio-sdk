@@ -33,73 +33,6 @@ class AssignmentsClient:
         """
         return self._raw_client
 
-    def bulk_assign(
-        self,
-        id: int,
-        *,
-        selected_items: BulkAssignAssignmentsRequestSelectedItems,
-        type: BulkAssignAssignmentsRequestType,
-        users: typing.Sequence[int],
-        filters: typing.Optional[BulkAssignAssignmentsRequestFilters] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> BulkAssignAssignmentsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Assign multiple users to a collection of tasks within a specific project.
-
-        Parameters
-        ----------
-        id : int
-
-        selected_items : BulkAssignAssignmentsRequestSelectedItems
-            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-
-        type : BulkAssignAssignmentsRequestType
-            Assignment type. Use AN for annotate or RE for review.
-
-        users : typing.Sequence[int]
-            List of user IDs to assign
-
-        filters : typing.Optional[BulkAssignAssignmentsRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BulkAssignAssignmentsResponse
-            Success
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-        from label_studio_sdk.projects.assignments import (
-            BulkAssignAssignmentsRequestSelectedItemsIncluded,
-        )
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.assignments.bulk_assign(
-            id=1,
-            selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
-                all_=True,
-            ),
-            type="AN",
-            users=[1],
-        )
-        """
-        _response = self._raw_client.bulk_assign(
-            id, selected_items=selected_items, type=type, users=users, filters=filters, request_options=request_options
-        )
-        return _response.data
-
     def list(
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[TaskAssignment]:
@@ -311,29 +244,13 @@ class AssignmentsClient:
         _response = self._raw_client.update(id, task_pk, type=type, users=users, request_options=request_options)
         return _response.data
 
-
-class AsyncAssignmentsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawAssignmentsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawAssignmentsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawAssignmentsClient
-        """
-        return self._raw_client
-
-    async def bulk_assign(
+    def bulk_assign(
         self,
         id: int,
         *,
-        selected_items: BulkAssignAssignmentsRequestSelectedItems,
         type: BulkAssignAssignmentsRequestType,
         users: typing.Sequence[int],
+        selected_items: BulkAssignAssignmentsRequestSelectedItems,
         filters: typing.Optional[BulkAssignAssignmentsRequestFilters] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkAssignAssignmentsResponse:
@@ -350,14 +267,14 @@ class AsyncAssignmentsClient:
         ----------
         id : int
 
-        selected_items : BulkAssignAssignmentsRequestSelectedItems
-            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-
         type : BulkAssignAssignmentsRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]
             List of user IDs to assign
+
+        selected_items : BulkAssignAssignmentsRequestSelectedItems
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         filters : typing.Optional[BulkAssignAssignmentsRequestFilters]
             Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
@@ -372,35 +289,43 @@ class AsyncAssignmentsClient:
 
         Examples
         --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
+        from label_studio_sdk import LabelStudio
         from label_studio_sdk.projects.assignments import (
             BulkAssignAssignmentsRequestSelectedItemsIncluded,
         )
 
-        client = AsyncLabelStudio(
+        client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-
-
-        async def main() -> None:
-            await client.projects.assignments.bulk_assign(
-                id=1,
-                selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
-                    all_=True,
-                ),
-                type="AN",
-                users=[1],
-            )
-
-
-        asyncio.run(main())
+        client.projects.assignments.bulk_assign(
+            id=1,
+            type="AN",
+            users=[1],
+            selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
+                all_=True,
+            ),
+        )
         """
-        _response = await self._raw_client.bulk_assign(
-            id, selected_items=selected_items, type=type, users=users, filters=filters, request_options=request_options
+        _response = self._raw_client.bulk_assign(
+            id, type=type, users=users, selected_items=selected_items, filters=filters, request_options=request_options
         )
         return _response.data
+
+
+class AsyncAssignmentsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawAssignmentsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawAssignmentsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawAssignmentsClient
+        """
+        return self._raw_client
 
     async def list(
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
@@ -643,4 +568,79 @@ class AsyncAssignmentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(id, task_pk, type=type, users=users, request_options=request_options)
+        return _response.data
+
+    async def bulk_assign(
+        self,
+        id: int,
+        *,
+        type: BulkAssignAssignmentsRequestType,
+        users: typing.Sequence[int],
+        selected_items: BulkAssignAssignmentsRequestSelectedItems,
+        filters: typing.Optional[BulkAssignAssignmentsRequestFilters] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BulkAssignAssignmentsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Assign multiple users to a collection of tasks within a specific project.
+
+        Parameters
+        ----------
+        id : int
+
+        type : BulkAssignAssignmentsRequestType
+            Assignment type. Use AN for annotate or RE for review.
+
+        users : typing.Sequence[int]
+            List of user IDs to assign
+
+        selected_items : BulkAssignAssignmentsRequestSelectedItems
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+
+        filters : typing.Optional[BulkAssignAssignmentsRequestFilters]
+            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BulkAssignAssignmentsResponse
+            Success
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+        from label_studio_sdk.projects.assignments import (
+            BulkAssignAssignmentsRequestSelectedItemsIncluded,
+        )
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.assignments.bulk_assign(
+                id=1,
+                type="AN",
+                users=[1],
+                selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
+                    all_=True,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.bulk_assign(
+            id, type=type, users=users, selected_items=selected_items, filters=filters, request_options=request_options
+        )
         return _response.data

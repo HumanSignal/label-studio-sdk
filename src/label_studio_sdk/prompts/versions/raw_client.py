@@ -116,13 +116,13 @@ class RawVersionsClient:
         self,
         prompt_id: int,
         *,
+        title: str,
         prompt: str,
         provider_model_id: str,
-        title: str,
-        model_provider_connection: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ThirdPartyModelVersion]:
         """
@@ -138,18 +138,14 @@ class RawVersionsClient:
         ----------
         prompt_id : int
 
+        title : str
+            Model name
+
         prompt : str
             Prompt to execute
 
         provider_model_id : str
             The model ID to use within the given provider, e.g. gpt-3.5
-
-        title : str
-            Model name
-
-        model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
 
         parent_model : typing.Optional[int]
             Parent model interface ID
@@ -165,6 +161,10 @@ class RawVersionsClient:
             * `Anthropic` - Anthropic
             * `Custom` - Custom
 
+        model_provider_connection : typing.Optional[int]
+
+        organization : typing.Optional[int]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -177,13 +177,13 @@ class RawVersionsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions",
             method="POST",
             json={
-                "model_provider_connection": model_provider_connection,
-                "organization": organization,
                 "parent_model": parent_model,
+                "title": title,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
-                "title": title,
+                "model_provider_connection": model_provider_connection,
+                "organization": organization,
             },
             headers={
                 "content-type": "application/json",
@@ -295,13 +295,13 @@ class RawVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
-        model_provider_connection: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ThirdPartyModelVersion]:
         """
@@ -319,12 +319,11 @@ class RawVersionsClient:
 
         version_id : int
 
-        model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
-
         parent_model : typing.Optional[int]
             Parent model interface ID
+
+        title : typing.Optional[str]
+            Model name
 
         prompt : typing.Optional[str]
             Prompt to execute
@@ -343,8 +342,9 @@ class RawVersionsClient:
         provider_model_id : typing.Optional[str]
             The model ID to use within the given provider, e.g. gpt-3.5
 
-        title : typing.Optional[str]
-            Model name
+        model_provider_connection : typing.Optional[int]
+
+        organization : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -358,13 +358,13 @@ class RawVersionsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="PATCH",
             json={
-                "model_provider_connection": model_provider_connection,
-                "organization": organization,
                 "parent_model": parent_model,
+                "title": title,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
-                "title": title,
+                "model_provider_connection": model_provider_connection,
+                "organization": organization,
             },
             headers={
                 "content-type": "application/json",
@@ -495,9 +495,9 @@ class RawVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
-        project_id: int,
-        teacher_model_name: str,
         teacher_model_provider_connection_id: int,
+        teacher_model_name: str,
+        project_id: int,
         async_: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[RefinedPromptResponse]:
@@ -516,14 +516,14 @@ class RawVersionsClient:
 
         version_id : int
 
-        project_id : int
-            Project ID to target the refined prompt for
+        teacher_model_provider_connection_id : int
+            Model Provider Connection ID to use to refine the prompt
 
         teacher_model_name : str
             Name of the model to use to refine the prompt
 
-        teacher_model_provider_connection_id : int
-            Model Provider Connection ID to use to refine the prompt
+        project_id : int
+            Project ID to target the refined prompt for
 
         async_ : typing.Optional[bool]
             Whether to run the refinement asynchronously
@@ -543,9 +543,9 @@ class RawVersionsClient:
                 "async": async_,
             },
             json={
-                "project_id": project_id,
-                "teacher_model_name": teacher_model_name,
                 "teacher_model_provider_connection_id": teacher_model_provider_connection_id,
+                "teacher_model_name": teacher_model_name,
+                "project_id": project_id,
             },
             headers={
                 "content-type": "application/json",
@@ -667,13 +667,13 @@ class AsyncRawVersionsClient:
         self,
         prompt_id: int,
         *,
+        title: str,
         prompt: str,
         provider_model_id: str,
-        title: str,
-        model_provider_connection: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ThirdPartyModelVersion]:
         """
@@ -689,18 +689,14 @@ class AsyncRawVersionsClient:
         ----------
         prompt_id : int
 
+        title : str
+            Model name
+
         prompt : str
             Prompt to execute
 
         provider_model_id : str
             The model ID to use within the given provider, e.g. gpt-3.5
-
-        title : str
-            Model name
-
-        model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
 
         parent_model : typing.Optional[int]
             Parent model interface ID
@@ -716,6 +712,10 @@ class AsyncRawVersionsClient:
             * `Anthropic` - Anthropic
             * `Custom` - Custom
 
+        model_provider_connection : typing.Optional[int]
+
+        organization : typing.Optional[int]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -728,13 +728,13 @@ class AsyncRawVersionsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions",
             method="POST",
             json={
-                "model_provider_connection": model_provider_connection,
-                "organization": organization,
                 "parent_model": parent_model,
+                "title": title,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
-                "title": title,
+                "model_provider_connection": model_provider_connection,
+                "organization": organization,
             },
             headers={
                 "content-type": "application/json",
@@ -846,13 +846,13 @@ class AsyncRawVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
-        model_provider_connection: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ThirdPartyModelVersion]:
         """
@@ -870,12 +870,11 @@ class AsyncRawVersionsClient:
 
         version_id : int
 
-        model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
-
         parent_model : typing.Optional[int]
             Parent model interface ID
+
+        title : typing.Optional[str]
+            Model name
 
         prompt : typing.Optional[str]
             Prompt to execute
@@ -894,8 +893,9 @@ class AsyncRawVersionsClient:
         provider_model_id : typing.Optional[str]
             The model ID to use within the given provider, e.g. gpt-3.5
 
-        title : typing.Optional[str]
-            Model name
+        model_provider_connection : typing.Optional[int]
+
+        organization : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -909,13 +909,13 @@ class AsyncRawVersionsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="PATCH",
             json={
-                "model_provider_connection": model_provider_connection,
-                "organization": organization,
                 "parent_model": parent_model,
+                "title": title,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
-                "title": title,
+                "model_provider_connection": model_provider_connection,
+                "organization": organization,
             },
             headers={
                 "content-type": "application/json",
@@ -1046,9 +1046,9 @@ class AsyncRawVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
-        project_id: int,
-        teacher_model_name: str,
         teacher_model_provider_connection_id: int,
+        teacher_model_name: str,
+        project_id: int,
         async_: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[RefinedPromptResponse]:
@@ -1067,14 +1067,14 @@ class AsyncRawVersionsClient:
 
         version_id : int
 
-        project_id : int
-            Project ID to target the refined prompt for
+        teacher_model_provider_connection_id : int
+            Model Provider Connection ID to use to refine the prompt
 
         teacher_model_name : str
             Name of the model to use to refine the prompt
 
-        teacher_model_provider_connection_id : int
-            Model Provider Connection ID to use to refine the prompt
+        project_id : int
+            Project ID to target the refined prompt for
 
         async_ : typing.Optional[bool]
             Whether to run the refinement asynchronously
@@ -1094,9 +1094,9 @@ class AsyncRawVersionsClient:
                 "async": async_,
             },
             json={
-                "project_id": project_id,
-                "teacher_model_name": teacher_model_name,
                 "teacher_model_provider_connection_id": teacher_model_provider_connection_id,
+                "teacher_model_name": teacher_model_name,
+                "project_id": project_id,
             },
             headers={
                 "content-type": "application/json",

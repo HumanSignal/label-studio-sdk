@@ -158,56 +158,6 @@ class RawPermissionsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_options(
-        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.List[ConfigurablePermissionOption]]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
-
-        Parameters
-        ----------
-        id : int
-
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[typing.List[ConfigurablePermissionOption]]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/options",
-            method="GET",
-            params={
-                "ordering": ordering,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.List[ConfigurablePermissionOption],
-                    construct_type(
-                        type_=typing.List[ConfigurablePermissionOption],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     def get(
         self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[OrganizationPermission]:
@@ -534,6 +484,56 @@ class RawPermissionsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_options(
+        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.List[ConfigurablePermissionOption]]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
+
+        Parameters
+        ----------
+        id : int
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.List[ConfigurablePermissionOption]]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/organizations/{jsonable_encoder(id)}/permissions/options",
+            method="GET",
+            params={
+                "ordering": ordering,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[ConfigurablePermissionOption],
+                    construct_type(
+                        type_=typing.List[ConfigurablePermissionOption],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawPermissionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -668,56 +668,6 @@ class AsyncRawPermissionsClient:
                         ),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get_options(
-        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.List[ConfigurablePermissionOption]]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
-
-        Parameters
-        ----------
-        id : int
-
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[typing.List[ConfigurablePermissionOption]]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/options",
-            method="GET",
-            params={
-                "ordering": ordering,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.List[ConfigurablePermissionOption],
-                    construct_type(
-                        type_=typing.List[ConfigurablePermissionOption],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1044,6 +994,56 @@ class AsyncRawPermissionsClient:
                         ),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_options(
+        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.List[ConfigurablePermissionOption]]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
+
+        Parameters
+        ----------
+        id : int
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.List[ConfigurablePermissionOption]]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/organizations/{jsonable_encoder(id)}/permissions/options",
+            method="GET",
+            params={
+                "ordering": ordering,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[ConfigurablePermissionOption],
+                    construct_type(
+                        type_=typing.List[ConfigurablePermissionOption],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

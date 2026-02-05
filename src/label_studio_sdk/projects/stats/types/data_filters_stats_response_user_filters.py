@@ -13,14 +13,14 @@ class DataFiltersStatsResponseUserFilters(UncheckedBaseModel):
     Data filter statistics by user and model
     """
 
-    stats: typing.Optional[typing.List[DataFiltersStatsResponseUserFiltersStatsItem]] = pydantic.Field(default=None)
-    """
-    List of filter configurations for users and models
-    """
-
     tasks_with_annotations: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Default filter tab for tasks with annotations
+    """
+
+    stats: typing.Optional[typing.List[DataFiltersStatsResponseUserFiltersStatsItem]] = pydantic.Field(default=None)
+    """
+    List of filter configurations for users and models
     """
 
     if IS_PYDANTIC_V2:

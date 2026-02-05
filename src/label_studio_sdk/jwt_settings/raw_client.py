@@ -85,9 +85,9 @@ class RawJwtSettingsClient:
             "api/jwt/settings",
             method="POST",
             json={
-                "api_token_ttl_days": api_token_ttl_days,
                 "api_tokens_enabled": api_tokens_enabled,
                 "legacy_api_tokens_enabled": legacy_api_tokens_enabled,
+                "api_token_ttl_days": api_token_ttl_days,
             },
             headers={
                 "content-type": "application/json",
@@ -184,9 +184,9 @@ class AsyncRawJwtSettingsClient:
             "api/jwt/settings",
             method="POST",
             json={
-                "api_token_ttl_days": api_token_ttl_days,
                 "api_tokens_enabled": api_tokens_enabled,
                 "legacy_api_tokens_enabled": legacy_api_tokens_enabled,
+                "api_token_ttl_days": api_token_ttl_days,
             },
             headers={
                 "content-type": "application/json",

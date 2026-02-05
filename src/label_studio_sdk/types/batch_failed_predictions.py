@@ -8,8 +8,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class BatchFailedPredictions(UncheckedBaseModel):
-    failed_predictions: typing.List[typing.Any]
     job_id: str
+    failed_predictions: typing.List[typing.Any]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

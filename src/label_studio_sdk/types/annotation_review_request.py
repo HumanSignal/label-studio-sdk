@@ -25,15 +25,15 @@ class AnnotationReviewRequest(UncheckedBaseModel):
     Accepted or rejected (if false) flag
     """
 
+    result: typing.Optional[typing.Any] = None
     annotation: int = pydantic.Field()
     """
     Corresponding annotation
     """
 
-    comment: typing.Optional[str] = None
     last_annotation_history: typing.Optional[int] = None
+    comment: typing.Optional[str] = None
     remove_from_queue: typing.Optional[bool] = None
-    result: typing.Optional[typing.Any] = None
     started_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:

@@ -9,9 +9,15 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class Prediction(UncheckedBaseModel):
-    cluster: typing.Optional[int] = pydantic.Field(default=None)
+    id: typing.Optional[int] = None
+    result: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
     """
-    Cluster for the current prediction
+    List of prediction results for the task
+    """
+
+    model_version: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
     """
 
     created_ago: typing.Optional[str] = pydantic.Field(default=None)
@@ -19,13 +25,28 @@ class Prediction(UncheckedBaseModel):
     Delta time from creation time
     """
 
-    created_at: typing.Optional[dt.datetime] = None
-    id: typing.Optional[int] = None
+    score: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Prediction score
+    """
+
+    cluster: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Cluster for the current prediction
+    """
+
+    neighbors: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Array of task IDs of the closest neighbors
+    """
+
     mislabeling: typing.Optional[float] = pydantic.Field(default=None)
     """
     Related task mislabeling score
     """
 
+    created_at: typing.Optional[dt.datetime] = None
+    updated_at: typing.Optional[dt.datetime] = None
     model: typing.Optional[int] = pydantic.Field(default=None)
     """
     An ML Backend instance that created the prediction.
@@ -36,29 +57,8 @@ class Prediction(UncheckedBaseModel):
     A run of a ModelVersion that created the prediction.
     """
 
-    model_version: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
-    """
-
-    neighbors: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Array of task IDs of the closest neighbors
-    """
-
-    project: typing.Optional[int] = None
-    result: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
-    """
-    List of prediction results for the task
-    """
-
-    score: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Prediction score
-    """
-
     task: int
-    updated_at: typing.Optional[dt.datetime] = None
+    project: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

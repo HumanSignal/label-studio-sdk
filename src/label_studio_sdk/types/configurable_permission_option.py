@@ -9,12 +9,12 @@ from .role9e7enum import Role9E7Enum
 
 
 class ConfigurablePermissionOption(UncheckedBaseModel):
-    default: typing.List[Role9E7Enum]
-    group: typing.Optional[str] = None
-    label: typing.Optional[str] = None
-    options: typing.List[Role9E7Enum]
     permission: str
+    label: typing.Optional[str] = None
     tooltip: typing.Optional[str] = None
+    default: typing.List[Role9E7Enum]
+    options: typing.List[Role9E7Enum]
+    group: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

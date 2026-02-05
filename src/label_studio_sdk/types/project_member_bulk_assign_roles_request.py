@@ -9,8 +9,8 @@ from .role9e7enum import Role9E7Enum
 
 
 class ProjectMemberBulkAssignRolesRequest(UncheckedBaseModel):
-    role: Role9E7Enum
     user_id: int
+    role: Role9E7Enum
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

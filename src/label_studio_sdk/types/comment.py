@@ -20,10 +20,21 @@ class Comment(UncheckedBaseModel):
     - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     """
 
-    annotation: typing.Optional[int] = None
+    id: typing.Optional[int] = None
+    state: typing.Optional[str] = None
+    region_ref: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
+    """
+
     classifications: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Classifications applied by a reviewer or annotator
+    """
+
+    text: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Reviewer or annotator comment
     """
 
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
@@ -31,22 +42,14 @@ class Comment(UncheckedBaseModel):
     Creation time
     """
 
-    created_by: typing.Optional[int] = pydantic.Field(default=None)
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    User who made this comment
+    Last updated time
     """
 
-    draft: typing.Optional[int] = None
-    id: typing.Optional[int] = None
     is_resolved: typing.Optional[bool] = pydantic.Field(default=None)
     """
     True if the comment is resolved
-    """
-
-    project: typing.Optional[int] = None
-    region_ref: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
     """
 
     resolved_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
@@ -54,16 +57,13 @@ class Comment(UncheckedBaseModel):
     Resolving time
     """
 
-    state: typing.Optional[str] = None
+    project: typing.Optional[int] = None
     task: typing.Optional[int] = None
-    text: typing.Optional[str] = pydantic.Field(default=None)
+    draft: typing.Optional[int] = None
+    annotation: typing.Optional[int] = None
+    created_by: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Reviewer or annotator comment
-    """
-
-    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Last updated time
+    User who made this comment
     """
 
     if IS_PYDANTIC_V2:

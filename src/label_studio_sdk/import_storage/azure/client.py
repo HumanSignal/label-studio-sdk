@@ -69,17 +69,17 @@ class AzureClient:
     def create(
         self,
         *,
-        account_key: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobImportStorage:
         """
@@ -87,20 +87,11 @@ class AzureClient:
 
         Parameters
         ----------
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        description : typing.Optional[str]
-            Storage description
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -108,17 +99,26 @@ class AzureClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        project : typing.Optional[int]
-            Project ID
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
         title : typing.Optional[str]
             Storage title
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        description : typing.Optional[str]
+            Storage description
+
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -138,108 +138,17 @@ class AzureClient:
         client.import_storage.azure.create()
         """
         _response = self._raw_client.create(
-            account_key=account_key,
-            account_name=account_name,
-            container=container,
-            description=description,
-            prefix=prefix,
+            regex_filter=regex_filter,
+            use_blob_urls=use_blob_urls,
             presign=presign,
             presign_ttl=presign_ttl,
-            project=project,
-            regex_filter=regex_filter,
             title=title,
-            use_blob_urls=use_blob_urls,
-            request_options=request_options,
-        )
-        return _response.data
-
-    def validate(
-        self,
-        *,
-        account_key: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        id: typing.Optional[int] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific Azure import storage connection.
-
-        Parameters
-        ----------
-        account_key : typing.Optional[str]
-            Azure Blob account key
-
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        description : typing.Optional[str]
-            Storage description
-
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        presign : typing.Optional[bool]
-            Presign URLs for direct download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        project : typing.Optional[int]
-            Project ID
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        title : typing.Optional[str]
-            Storage title
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.import_storage.azure.validate()
-        """
-        _response = self._raw_client.validate(
-            account_key=account_key,
-            account_name=account_name,
-            container=container,
             description=description,
-            id=id,
-            prefix=prefix,
-            presign=presign,
-            presign_ttl=presign_ttl,
             project=project,
-            regex_filter=regex_filter,
-            title=title,
-            use_blob_urls=use_blob_urls,
+            container=container,
+            prefix=prefix,
+            account_name=account_name,
+            account_key=account_key,
             request_options=request_options,
         )
         return _response.data
@@ -307,17 +216,17 @@ class AzureClient:
         self,
         id: int,
         *,
-        account_key: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobImportStorage:
         """
@@ -327,20 +236,11 @@ class AzureClient:
         ----------
         id : int
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        description : typing.Optional[str]
-            Storage description
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -348,17 +248,26 @@ class AzureClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        project : typing.Optional[int]
-            Project ID
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
         title : typing.Optional[str]
             Storage title
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        description : typing.Optional[str]
+            Storage description
+
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -381,17 +290,17 @@ class AzureClient:
         """
         _response = self._raw_client.update(
             id,
-            account_key=account_key,
-            account_name=account_name,
-            container=container,
-            description=description,
-            prefix=prefix,
+            regex_filter=regex_filter,
+            use_blob_urls=use_blob_urls,
             presign=presign,
             presign_ttl=presign_ttl,
-            project=project,
-            regex_filter=regex_filter,
             title=title,
-            use_blob_urls=use_blob_urls,
+            description=description,
+            project=project,
+            container=container,
+            prefix=prefix,
+            account_name=account_name,
+            account_key=account_key,
             request_options=request_options,
         )
         return _response.data
@@ -425,6 +334,97 @@ class AzureClient:
         )
         """
         _response = self._raw_client.sync(id, request_options=request_options)
+        return _response.data
+
+    def validate(
+        self,
+        *,
+        id: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific Azure import storage connection.
+
+        Parameters
+        ----------
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        presign : typing.Optional[bool]
+            Presign URLs for direct download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        title : typing.Optional[str]
+            Storage title
+
+        description : typing.Optional[str]
+            Storage description
+
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.import_storage.azure.validate()
+        """
+        _response = self._raw_client.validate(
+            id=id,
+            regex_filter=regex_filter,
+            use_blob_urls=use_blob_urls,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            title=title,
+            description=description,
+            project=project,
+            container=container,
+            prefix=prefix,
+            account_name=account_name,
+            account_key=account_key,
+            request_options=request_options,
+        )
         return _response.data
 
 
@@ -494,17 +494,17 @@ class AsyncAzureClient:
     async def create(
         self,
         *,
-        account_key: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobImportStorage:
         """
@@ -512,20 +512,11 @@ class AsyncAzureClient:
 
         Parameters
         ----------
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        description : typing.Optional[str]
-            Storage description
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -533,17 +524,26 @@ class AsyncAzureClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        project : typing.Optional[int]
-            Project ID
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
         title : typing.Optional[str]
             Storage title
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        description : typing.Optional[str]
+            Storage description
+
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -571,116 +571,17 @@ class AsyncAzureClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            account_key=account_key,
-            account_name=account_name,
-            container=container,
-            description=description,
-            prefix=prefix,
+            regex_filter=regex_filter,
+            use_blob_urls=use_blob_urls,
             presign=presign,
             presign_ttl=presign_ttl,
-            project=project,
-            regex_filter=regex_filter,
             title=title,
-            use_blob_urls=use_blob_urls,
-            request_options=request_options,
-        )
-        return _response.data
-
-    async def validate(
-        self,
-        *,
-        account_key: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        id: typing.Optional[int] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific Azure import storage connection.
-
-        Parameters
-        ----------
-        account_key : typing.Optional[str]
-            Azure Blob account key
-
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        description : typing.Optional[str]
-            Storage description
-
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        presign : typing.Optional[bool]
-            Presign URLs for direct download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        project : typing.Optional[int]
-            Project ID
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        title : typing.Optional[str]
-            Storage title
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.import_storage.azure.validate()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.validate(
-            account_key=account_key,
-            account_name=account_name,
-            container=container,
             description=description,
-            id=id,
-            prefix=prefix,
-            presign=presign,
-            presign_ttl=presign_ttl,
             project=project,
-            regex_filter=regex_filter,
-            title=title,
-            use_blob_urls=use_blob_urls,
+            container=container,
+            prefix=prefix,
+            account_name=account_name,
+            account_key=account_key,
             request_options=request_options,
         )
         return _response.data
@@ -764,17 +665,17 @@ class AsyncAzureClient:
         self,
         id: int,
         *,
-        account_key: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobImportStorage:
         """
@@ -784,20 +685,11 @@ class AsyncAzureClient:
         ----------
         id : int
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        description : typing.Optional[str]
-            Storage description
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         presign : typing.Optional[bool]
             Presign URLs for direct download
@@ -805,17 +697,26 @@ class AsyncAzureClient:
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
 
-        project : typing.Optional[int]
-            Project ID
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
         title : typing.Optional[str]
             Storage title
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        description : typing.Optional[str]
+            Storage description
+
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -846,17 +747,17 @@ class AsyncAzureClient:
         """
         _response = await self._raw_client.update(
             id,
-            account_key=account_key,
-            account_name=account_name,
-            container=container,
-            description=description,
-            prefix=prefix,
+            regex_filter=regex_filter,
+            use_blob_urls=use_blob_urls,
             presign=presign,
             presign_ttl=presign_ttl,
-            project=project,
-            regex_filter=regex_filter,
             title=title,
-            use_blob_urls=use_blob_urls,
+            description=description,
+            project=project,
+            container=container,
+            prefix=prefix,
+            account_name=account_name,
+            account_key=account_key,
             request_options=request_options,
         )
         return _response.data
@@ -898,4 +799,103 @@ class AsyncAzureClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.sync(id, request_options=request_options)
+        return _response.data
+
+    async def validate(
+        self,
+        *,
+        id: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific Azure import storage connection.
+
+        Parameters
+        ----------
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        presign : typing.Optional[bool]
+            Presign URLs for direct download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        title : typing.Optional[str]
+            Storage title
+
+        description : typing.Optional[str]
+            Storage description
+
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.import_storage.azure.validate()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.validate(
+            id=id,
+            regex_filter=regex_filter,
+            use_blob_urls=use_blob_urls,
+            presign=presign,
+            presign_ttl=presign_ttl,
+            title=title,
+            description=description,
+            project=project,
+            container=container,
+            prefix=prefix,
+            account_name=account_name,
+            account_key=account_key,
+            request_options=request_options,
+        )
         return _response.data

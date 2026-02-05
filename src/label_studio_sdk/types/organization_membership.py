@@ -8,13 +8,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class OrganizationMembership(UncheckedBaseModel):
+    role: str
     active: typing.Optional[str] = None
     organization_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Organization ID
     """
-
-    role: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

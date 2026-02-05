@@ -15,24 +15,22 @@ class LseTaskSerializerForAnnotators(UncheckedBaseModel):
     Data Manager Task Serializer with FSM state support.
     """
 
-    annotations: typing.Optional[str] = None
-    annotations_results: typing.Optional[str] = None
-    cancelled_annotations: typing.Optional[int] = None
-    comment_count: typing.Optional[str] = None
-    comments: typing.Optional[str] = None
+    id: typing.Optional[int] = None
+    data: typing.Any
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Time a task was created
     """
 
-    data: typing.Any
-    draft_exists: typing.Optional[bool] = None
+    annotations: typing.Optional[str] = None
     drafts: typing.Optional[typing.List[LseTaskSerializerForAnnotatorsDraftsItem]] = pydantic.Field(default=None)
     """
     Drafts for this task
     """
 
-    id: typing.Optional[int] = None
+    total_annotations: typing.Optional[int] = None
+    cancelled_annotations: typing.Optional[int] = None
+    annotations_results: typing.Optional[str] = None
     predictions: typing.Optional[typing.List[LseTaskSerializerForAnnotatorsPredictionsItem]] = pydantic.Field(
         default=None
     )
@@ -40,13 +38,15 @@ class LseTaskSerializerForAnnotators(UncheckedBaseModel):
     Predictions for this task
     """
 
-    predictions_results: typing.Optional[str] = None
-    predictions_score: typing.Optional[float] = None
-    reviews_rejected: typing.Optional[int] = None
-    state: typing.Optional[str] = None
-    total_annotations: typing.Optional[int] = None
     total_predictions: typing.Optional[int] = None
+    predictions_score: typing.Optional[float] = None
+    predictions_results: typing.Optional[str] = None
+    comments: typing.Optional[str] = None
+    comment_count: typing.Optional[str] = None
     unresolved_comment_count: typing.Optional[str] = None
+    reviews_rejected: typing.Optional[int] = None
+    draft_exists: typing.Optional[bool] = None
+    state: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

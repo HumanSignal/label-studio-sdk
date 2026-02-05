@@ -19,27 +19,28 @@ class CommentRequest(UncheckedBaseModel):
     - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     """
 
-    annotation: typing.Optional[int] = None
-    classifications: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Classifications applied by a reviewer or annotator
-    """
-
-    draft: typing.Optional[int] = None
-    is_resolved: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    True if the comment is resolved
-    """
-
     region_ref: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
+    """
+
+    classifications: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Classifications applied by a reviewer or annotator
     """
 
     text: typing.Optional[str] = pydantic.Field(default=None)
     """
     Reviewer or annotator comment
     """
+
+    is_resolved: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    True if the comment is resolved
+    """
+
+    draft: typing.Optional[int] = None
+    annotation: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

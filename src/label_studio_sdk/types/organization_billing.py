@@ -8,9 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class OrganizationBilling(UncheckedBaseModel):
-    enforce_session_concurrency: typing.Optional[str] = None
-    manual_role_management: typing.Optional[str] = None
     manual_workspace_management: typing.Optional[str] = None
+    manual_role_management: typing.Optional[str] = None
+    enforce_session_concurrency: typing.Optional[str] = None
     max_parallel_sessions: typing.Optional[str] = None
     session_concurrency_window_seconds: typing.Optional[str] = None
 

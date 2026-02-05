@@ -17,20 +17,11 @@ class Annotation(UncheckedBaseModel):
     if present, preventing N+1 queries. Use .with_state() on your queryset.
     """
 
-    bulk_created: typing.Optional[bool] = pydantic.Field(default=None)
+    id: typing.Optional[int] = None
+    state: typing.Optional[str] = None
+    result: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
     """
-    Annotation was created in bulk mode
-    """
-
-    completed_by: typing.Optional[int] = None
-    created_ago: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Time delta from creation time
-    """
-
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Creation time
+    List of annotation results for the task
     """
 
     created_username: typing.Optional[str] = pydantic.Field(default=None)
@@ -38,9 +29,15 @@ class Annotation(UncheckedBaseModel):
     Username string
     """
 
-    draft_created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    created_ago: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Draft creation time
+    Time delta from creation time
+    """
+
+    completed_by: typing.Optional[int] = None
+    was_cancelled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    User skipped the task
     """
 
     ground_truth: typing.Optional[bool] = pydantic.Field(default=None)
@@ -48,7 +45,26 @@ class Annotation(UncheckedBaseModel):
     This annotation is a Ground Truth (ground_truth)
     """
 
-    id: typing.Optional[int] = None
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Creation time
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Last updated time
+    """
+
+    draft_created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Draft creation time
+    """
+
+    lead_time: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    How much time it took to annotate the task
+    """
+
     import_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Original annotation ID that was at the import step or NULL if this annotation wasn't imported
@@ -70,24 +86,14 @@ class Annotation(UncheckedBaseModel):
     * `deleted_review` - Deleted review
     """
 
-    last_created_by: typing.Optional[int] = pydantic.Field(default=None)
+    bulk_created: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    User who created the last annotation history item
-    """
-
-    lead_time: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    How much time it took to annotate the task
+    Annotation was created in bulk mode
     """
 
-    parent_annotation: typing.Optional[int] = pydantic.Field(default=None)
+    task: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Points to the parent annotation from which this annotation was created
-    """
-
-    parent_prediction: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Points to the prediction from which this annotation was created
+    Corresponding task for this annotation
     """
 
     project: typing.Optional[int] = pydantic.Field(default=None)
@@ -95,30 +101,24 @@ class Annotation(UncheckedBaseModel):
     Project ID for this annotation
     """
 
-    result: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
-    """
-    List of annotation results for the task
-    """
-
-    state: typing.Optional[str] = None
-    task: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Corresponding task for this annotation
-    """
-
-    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Last updated time
-    """
-
     updated_by: typing.Optional[int] = pydantic.Field(default=None)
     """
     Last user who updated this annotation
     """
 
-    was_cancelled: typing.Optional[bool] = pydantic.Field(default=None)
+    parent_prediction: typing.Optional[int] = pydantic.Field(default=None)
     """
-    User skipped the task
+    Points to the prediction from which this annotation was created
+    """
+
+    parent_annotation: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Points to the parent annotation from which this annotation was created
+    """
+
+    last_created_by: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    User who created the last annotation history item
     """
 
     if IS_PYDANTIC_V2:

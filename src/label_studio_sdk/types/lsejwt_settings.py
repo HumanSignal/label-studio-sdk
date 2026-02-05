@@ -8,7 +8,6 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class LsejwtSettings(UncheckedBaseModel):
-    api_token_ttl_days: int
     api_tokens_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Enable JWT API token authentication for this organization
@@ -18,6 +17,8 @@ class LsejwtSettings(UncheckedBaseModel):
     """
     Enable legacy API token authentication for this organization
     """
+
+    api_token_ttl_days: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

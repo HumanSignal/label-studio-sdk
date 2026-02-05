@@ -68,12 +68,12 @@ class RawWebhooksClient:
         self,
         *,
         url: str,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
         headers: typing.Optional[typing.Any] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Webhook]:
         """
@@ -84,7 +84,13 @@ class RawWebhooksClient:
         url : str
             URL of webhook
 
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+        project : typing.Optional[int]
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
+
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
 
         headers : typing.Optional[typing.Any]
             Key Value Json of headers
@@ -92,13 +98,7 @@ class RawWebhooksClient:
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        project : typing.Optional[int]
-
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -112,13 +112,13 @@ class RawWebhooksClient:
             "api/webhooks/",
             method="POST",
             json={
-                "actions": actions,
+                "project": project,
+                "url": url,
+                "send_payload": send_payload,
+                "send_for_all_actions": send_for_all_actions,
                 "headers": headers,
                 "is_active": is_active,
-                "project": project,
-                "send_for_all_actions": send_for_all_actions,
-                "send_payload": send_payload,
-                "url": url,
+                "actions": actions,
             },
             headers={
                 "content-type": "application/json",
@@ -132,51 +132,6 @@ class RawWebhooksClient:
                     Webhook,
                     construct_type(
                         type_=Webhook,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def info(
-        self,
-        *,
-        organization_only: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[InfoWebhooksResponse]:
-        """
-        Get descriptions of all available webhook actions to set up webhooks.
-
-        Parameters
-        ----------
-        organization_only : typing.Optional[bool]
-            organization-only or not
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[InfoWebhooksResponse]
-            Object with webhook action descriptions.
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/webhooks/info/",
-            method="GET",
-            params={
-                "organization-only": organization_only,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    InfoWebhooksResponse,
-                    construct_type(
-                        type_=InfoWebhooksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -250,12 +205,12 @@ class RawWebhooksClient:
         self,
         id: int,
         *,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        url: typing.Optional[str] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
         headers: typing.Optional[typing.Any] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
-        url: typing.Optional[str] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WebhookSerializerForUpdate]:
         """
@@ -263,7 +218,14 @@ class RawWebhooksClient:
         ----------
         id : int
 
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+        url : typing.Optional[str]
+            URL of webhook
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
+
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
 
         headers : typing.Optional[typing.Any]
             Key Value Json of headers
@@ -271,14 +233,7 @@ class RawWebhooksClient:
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
-
-        url : typing.Optional[str]
-            URL of webhook
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -292,12 +247,12 @@ class RawWebhooksClient:
             f"api/webhooks/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "actions": actions,
+                "url": url,
+                "send_payload": send_payload,
+                "send_for_all_actions": send_for_all_actions,
                 "headers": headers,
                 "is_active": is_active,
-                "send_for_all_actions": send_for_all_actions,
-                "send_payload": send_payload,
-                "url": url,
+                "actions": actions,
             },
             headers={
                 "content-type": "application/json",
@@ -311,6 +266,51 @@ class RawWebhooksClient:
                     WebhookSerializerForUpdate,
                     construct_type(
                         type_=WebhookSerializerForUpdate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def info(
+        self,
+        *,
+        organization_only: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[InfoWebhooksResponse]:
+        """
+        Get descriptions of all available webhook actions to set up webhooks.
+
+        Parameters
+        ----------
+        organization_only : typing.Optional[bool]
+            organization-only or not
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[InfoWebhooksResponse]
+            Object with webhook action descriptions.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/webhooks/info/",
+            method="GET",
+            params={
+                "organization-only": organization_only,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    InfoWebhooksResponse,
+                    construct_type(
+                        type_=InfoWebhooksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -371,12 +371,12 @@ class AsyncRawWebhooksClient:
         self,
         *,
         url: str,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
         headers: typing.Optional[typing.Any] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Webhook]:
         """
@@ -387,7 +387,13 @@ class AsyncRawWebhooksClient:
         url : str
             URL of webhook
 
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+        project : typing.Optional[int]
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
+
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
 
         headers : typing.Optional[typing.Any]
             Key Value Json of headers
@@ -395,13 +401,7 @@ class AsyncRawWebhooksClient:
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        project : typing.Optional[int]
-
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -415,13 +415,13 @@ class AsyncRawWebhooksClient:
             "api/webhooks/",
             method="POST",
             json={
-                "actions": actions,
+                "project": project,
+                "url": url,
+                "send_payload": send_payload,
+                "send_for_all_actions": send_for_all_actions,
                 "headers": headers,
                 "is_active": is_active,
-                "project": project,
-                "send_for_all_actions": send_for_all_actions,
-                "send_payload": send_payload,
-                "url": url,
+                "actions": actions,
             },
             headers={
                 "content-type": "application/json",
@@ -435,51 +435,6 @@ class AsyncRawWebhooksClient:
                     Webhook,
                     construct_type(
                         type_=Webhook,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def info(
-        self,
-        *,
-        organization_only: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[InfoWebhooksResponse]:
-        """
-        Get descriptions of all available webhook actions to set up webhooks.
-
-        Parameters
-        ----------
-        organization_only : typing.Optional[bool]
-            organization-only or not
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[InfoWebhooksResponse]
-            Object with webhook action descriptions.
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/webhooks/info/",
-            method="GET",
-            params={
-                "organization-only": organization_only,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    InfoWebhooksResponse,
-                    construct_type(
-                        type_=InfoWebhooksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -557,12 +512,12 @@ class AsyncRawWebhooksClient:
         self,
         id: int,
         *,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        url: typing.Optional[str] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
         headers: typing.Optional[typing.Any] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
-        url: typing.Optional[str] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WebhookSerializerForUpdate]:
         """
@@ -570,7 +525,14 @@ class AsyncRawWebhooksClient:
         ----------
         id : int
 
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+        url : typing.Optional[str]
+            URL of webhook
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
+
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
 
         headers : typing.Optional[typing.Any]
             Key Value Json of headers
@@ -578,14 +540,7 @@ class AsyncRawWebhooksClient:
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
-
-        url : typing.Optional[str]
-            URL of webhook
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -599,12 +554,12 @@ class AsyncRawWebhooksClient:
             f"api/webhooks/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "actions": actions,
+                "url": url,
+                "send_payload": send_payload,
+                "send_for_all_actions": send_for_all_actions,
                 "headers": headers,
                 "is_active": is_active,
-                "send_for_all_actions": send_for_all_actions,
-                "send_payload": send_payload,
-                "url": url,
+                "actions": actions,
             },
             headers={
                 "content-type": "application/json",
@@ -618,6 +573,51 @@ class AsyncRawWebhooksClient:
                     WebhookSerializerForUpdate,
                     construct_type(
                         type_=WebhookSerializerForUpdate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def info(
+        self,
+        *,
+        organization_only: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[InfoWebhooksResponse]:
+        """
+        Get descriptions of all available webhook actions to set up webhooks.
+
+        Parameters
+        ----------
+        organization_only : typing.Optional[bool]
+            organization-only or not
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[InfoWebhooksResponse]
+            Object with webhook action descriptions.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/webhooks/info/",
+            method="GET",
+            params={
+                "organization-only": organization_only,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    InfoWebhooksResponse,
+                    construct_type(
+                        type_=InfoWebhooksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

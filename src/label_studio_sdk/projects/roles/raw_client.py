@@ -20,6 +20,53 @@ class RawRolesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def get(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.List[ProjectRole]]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+
+                List users and their project level roles for a given project.
+                If user is not listed here and is a member of the project then they would behave as assigned role in organization.
+
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.List[ProjectRole]]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/roles",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[ProjectRole],
+                    construct_type(
+                        type_=typing.List[ProjectRole],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def list(
         self,
         *,
@@ -78,7 +125,7 @@ class RawRolesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def add(
-        self, *, project: int, role: Role9E7Enum, user: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, role: Role9E7Enum, user: int, project: int, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ProjectRole]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -93,11 +140,11 @@ class RawRolesClient:
 
         Parameters
         ----------
-        project : int
-
         role : Role9E7Enum
 
         user : int
+
+        project : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -111,9 +158,9 @@ class RawRolesClient:
             "api/projects/roles/",
             method="POST",
             json={
-                "project": project,
                 "role": role,
                 "user": user,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -173,9 +220,14 @@ class RawRolesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get(
+
+class AsyncRawRolesClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def get(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.List[ProjectRole]]:
+    ) -> AsyncHttpResponse[typing.List[ProjectRole]]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -197,10 +249,10 @@ class RawRolesClient:
 
         Returns
         -------
-        HttpResponse[typing.List[ProjectRole]]
+        AsyncHttpResponse[typing.List[ProjectRole]]
 
         """
-        _response = self._client_wrapper.httpx_client.request(
+        _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/roles",
             method="GET",
             request_options=request_options,
@@ -214,16 +266,11 @@ class RawRolesClient:
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=_data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-
-class AsyncRawRolesClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
 
     async def list(
         self,
@@ -283,7 +330,7 @@ class AsyncRawRolesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def add(
-        self, *, project: int, role: Role9E7Enum, user: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, role: Role9E7Enum, user: int, project: int, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ProjectRole]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -298,11 +345,11 @@ class AsyncRawRolesClient:
 
         Parameters
         ----------
-        project : int
-
         role : Role9E7Enum
 
         user : int
+
+        project : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -316,9 +363,9 @@ class AsyncRawRolesClient:
             "api/projects/roles/",
             method="POST",
             json={
-                "project": project,
                 "role": role,
                 "user": user,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -375,53 +422,6 @@ class AsyncRawRolesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.List[ProjectRole]]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-
-                List users and their project level roles for a given project.
-                If user is not listed here and is a member of the project then they would behave as assigned role in organization.
-
-
-        Parameters
-        ----------
-        id : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[typing.List[ProjectRole]]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/roles",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.List[ProjectRole],
-                    construct_type(
-                        type_=typing.List[ProjectRole],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

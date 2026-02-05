@@ -65,10 +65,10 @@ class RawMetricsClient:
         self,
         id: int,
         *,
+        metric_name: typing.Optional[str] = OMIT,
         additional_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         agreement_threshold: typing.Optional[int] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
-        metric_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[MetricParam]:
         """
@@ -84,13 +84,13 @@ class RawMetricsClient:
         ----------
         id : int
 
+        metric_name : typing.Optional[str]
+
         additional_params : typing.Optional[typing.Dict[str, typing.Any]]
 
         agreement_threshold : typing.Optional[int]
 
         max_additional_annotators_assignable : typing.Optional[int]
-
-        metric_name : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -104,10 +104,10 @@ class RawMetricsClient:
             f"api/projects/{jsonable_encoder(id)}/metricparam/",
             method="POST",
             json={
+                "metric_name": metric_name,
                 "additional_params": additional_params,
                 "agreement_threshold": agreement_threshold,
                 "max_additional_annotators_assignable": max_additional_annotators_assignable,
-                "metric_name": metric_name,
             },
             headers={
                 "content-type": "application/json",
@@ -183,10 +183,10 @@ class AsyncRawMetricsClient:
         self,
         id: int,
         *,
+        metric_name: typing.Optional[str] = OMIT,
         additional_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         agreement_threshold: typing.Optional[int] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
-        metric_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[MetricParam]:
         """
@@ -202,13 +202,13 @@ class AsyncRawMetricsClient:
         ----------
         id : int
 
+        metric_name : typing.Optional[str]
+
         additional_params : typing.Optional[typing.Dict[str, typing.Any]]
 
         agreement_threshold : typing.Optional[int]
 
         max_additional_annotators_assignable : typing.Optional[int]
-
-        metric_name : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -222,10 +222,10 @@ class AsyncRawMetricsClient:
             f"api/projects/{jsonable_encoder(id)}/metricparam/",
             method="POST",
             json={
+                "metric_name": metric_name,
                 "additional_params": additional_params,
                 "agreement_threshold": agreement_threshold,
                 "max_additional_annotators_assignable": max_additional_annotators_assignable,
-                "metric_name": metric_name,
             },
             headers={
                 "content-type": "application/json",

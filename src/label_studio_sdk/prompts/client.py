@@ -106,8 +106,8 @@ class PromptsClient:
     def batch_predictions(
         self,
         *,
-        modelrun_id: int,
         results: typing.Sequence[typing.Any],
+        modelrun_id: int,
         num_predictions: typing.Optional[int] = None,
         job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -123,9 +123,9 @@ class PromptsClient:
 
         Parameters
         ----------
-        modelrun_id : int
-
         results : typing.Sequence[typing.Any]
+
+        modelrun_id : int
 
         num_predictions : typing.Optional[int]
             Number of predictions being sent (for telemetry only, has no effect)
@@ -148,13 +148,13 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.batch_predictions(
-            modelrun_id=1,
             results=[],
+            modelrun_id=1,
         )
         """
         _response = self._raw_client.batch_predictions(
-            modelrun_id=modelrun_id,
             results=results,
+            modelrun_id=modelrun_id,
             num_predictions=num_predictions,
             job_id=job_id,
             request_options=request_options,
@@ -324,13 +324,13 @@ class PromptsClient:
         self,
         *,
         title: str,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         description: typing.Optional[str] = OMIT,
         input_fields: typing.Optional[typing.Any] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         output_classes: typing.Optional[typing.Any] = OMIT,
-        skill_name: typing.Optional[SkillNameEnum] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
@@ -347,21 +347,21 @@ class PromptsClient:
         title : str
             Model name
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
-
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
+
+        skill_name : typing.Optional[SkillNameEnum]
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Any]
 
-        organization : typing.Optional[int]
-
         output_classes : typing.Optional[typing.Any]
 
-        skill_name : typing.Optional[SkillNameEnum]
+        organization : typing.Optional[int]
+
+        associated_projects : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -384,65 +384,13 @@ class PromptsClient:
         """
         _response = self._raw_client.create(
             title=title,
-            associated_projects=associated_projects,
             created_by=created_by,
+            skill_name=skill_name,
             description=description,
             input_fields=input_fields,
-            organization=organization,
             output_classes=output_classes,
-            skill_name=skill_name,
-            request_options=request_options,
-        )
-        return _response.data
-
-    def compatible_projects(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> PaginatedAllRolesProjectListList:
-        """
-        Retrieve a list of compatible project for prompt.
-
-        Parameters
-        ----------
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
-            Skill to filter by
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PaginatedAllRolesProjectListList
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.prompts.compatible_projects()
-        """
-        _response = self._raw_client.compatible_projects(
-            ordering=ordering,
-            page=page,
-            page_size=page_size,
-            project_type=project_type,
+            organization=organization,
+            associated_projects=associated_projects,
             request_options=request_options,
         )
         return _response.data
@@ -522,14 +470,14 @@ class PromptsClient:
         self,
         id: str,
         *,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        input_fields: typing.Optional[typing.Any] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        output_classes: typing.Optional[typing.Any] = OMIT,
         skill_name: typing.Optional[SkillNameEnum] = OMIT,
         title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        input_fields: typing.Optional[typing.Any] = OMIT,
+        output_classes: typing.Optional[typing.Any] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
@@ -545,24 +493,24 @@ class PromptsClient:
         ----------
         id : str
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
-
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
+
+        skill_name : typing.Optional[SkillNameEnum]
+
+        title : typing.Optional[str]
+            Model name
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Any]
 
-        organization : typing.Optional[int]
-
         output_classes : typing.Optional[typing.Any]
 
-        skill_name : typing.Optional[SkillNameEnum]
+        organization : typing.Optional[int]
 
-        title : typing.Optional[str]
-            Model name
+        associated_projects : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -585,14 +533,66 @@ class PromptsClient:
         """
         _response = self._raw_client.update(
             id,
-            associated_projects=associated_projects,
             created_by=created_by,
-            description=description,
-            input_fields=input_fields,
-            organization=organization,
-            output_classes=output_classes,
             skill_name=skill_name,
             title=title,
+            description=description,
+            input_fields=input_fields,
+            output_classes=output_classes,
+            organization=organization,
+            associated_projects=associated_projects,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def compatible_projects(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedAllRolesProjectListList:
+        """
+        Retrieve a list of compatible project for prompt.
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
+            Skill to filter by
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedAllRolesProjectListList
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.compatible_projects()
+        """
+        _response = self._raw_client.compatible_projects(
+            ordering=ordering,
+            page=page,
+            page_size=page_size,
+            project_type=project_type,
             request_options=request_options,
         )
         return _response.data
@@ -710,8 +710,8 @@ class AsyncPromptsClient:
     async def batch_predictions(
         self,
         *,
-        modelrun_id: int,
         results: typing.Sequence[typing.Any],
+        modelrun_id: int,
         num_predictions: typing.Optional[int] = None,
         job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -727,9 +727,9 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
-        modelrun_id : int
-
         results : typing.Sequence[typing.Any]
+
+        modelrun_id : int
 
         num_predictions : typing.Optional[int]
             Number of predictions being sent (for telemetry only, has no effect)
@@ -757,16 +757,16 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.batch_predictions(
-                modelrun_id=1,
                 results=[],
+                modelrun_id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.batch_predictions(
-            modelrun_id=modelrun_id,
             results=results,
+            modelrun_id=modelrun_id,
             num_predictions=num_predictions,
             job_id=job_id,
             request_options=request_options,
@@ -960,13 +960,13 @@ class AsyncPromptsClient:
         self,
         *,
         title: str,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         description: typing.Optional[str] = OMIT,
         input_fields: typing.Optional[typing.Any] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         output_classes: typing.Optional[typing.Any] = OMIT,
-        skill_name: typing.Optional[SkillNameEnum] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
@@ -983,21 +983,21 @@ class AsyncPromptsClient:
         title : str
             Model name
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
-
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
+
+        skill_name : typing.Optional[SkillNameEnum]
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Any]
 
-        organization : typing.Optional[int]
-
         output_classes : typing.Optional[typing.Any]
 
-        skill_name : typing.Optional[SkillNameEnum]
+        organization : typing.Optional[int]
+
+        associated_projects : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1028,73 +1028,13 @@ class AsyncPromptsClient:
         """
         _response = await self._raw_client.create(
             title=title,
-            associated_projects=associated_projects,
             created_by=created_by,
+            skill_name=skill_name,
             description=description,
             input_fields=input_fields,
-            organization=organization,
             output_classes=output_classes,
-            skill_name=skill_name,
-            request_options=request_options,
-        )
-        return _response.data
-
-    async def compatible_projects(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> PaginatedAllRolesProjectListList:
-        """
-        Retrieve a list of compatible project for prompt.
-
-        Parameters
-        ----------
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
-            Skill to filter by
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PaginatedAllRolesProjectListList
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.prompts.compatible_projects()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.compatible_projects(
-            ordering=ordering,
-            page=page,
-            page_size=page_size,
-            project_type=project_type,
+            organization=organization,
+            associated_projects=associated_projects,
             request_options=request_options,
         )
         return _response.data
@@ -1192,14 +1132,14 @@ class AsyncPromptsClient:
         self,
         id: str,
         *,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        input_fields: typing.Optional[typing.Any] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        output_classes: typing.Optional[typing.Any] = OMIT,
         skill_name: typing.Optional[SkillNameEnum] = OMIT,
         title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        input_fields: typing.Optional[typing.Any] = OMIT,
+        output_classes: typing.Optional[typing.Any] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
@@ -1215,24 +1155,24 @@ class AsyncPromptsClient:
         ----------
         id : str
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
-
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
+
+        skill_name : typing.Optional[SkillNameEnum]
+
+        title : typing.Optional[str]
+            Model name
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Any]
 
-        organization : typing.Optional[int]
-
         output_classes : typing.Optional[typing.Any]
 
-        skill_name : typing.Optional[SkillNameEnum]
+        organization : typing.Optional[int]
 
-        title : typing.Optional[str]
-            Model name
+        associated_projects : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1263,14 +1203,74 @@ class AsyncPromptsClient:
         """
         _response = await self._raw_client.update(
             id,
-            associated_projects=associated_projects,
             created_by=created_by,
-            description=description,
-            input_fields=input_fields,
-            organization=organization,
-            output_classes=output_classes,
             skill_name=skill_name,
             title=title,
+            description=description,
+            input_fields=input_fields,
+            output_classes=output_classes,
+            organization=organization,
+            associated_projects=associated_projects,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def compatible_projects(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedAllRolesProjectListList:
+        """
+        Retrieve a list of compatible project for prompt.
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
+            Skill to filter by
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedAllRolesProjectListList
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.compatible_projects()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.compatible_projects(
+            ordering=ordering,
+            page=page,
+            page_size=page_size,
+            project_type=project_type,
             request_options=request_options,
         )
         return _response.data

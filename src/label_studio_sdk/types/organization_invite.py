@@ -8,8 +8,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class OrganizationInvite(UncheckedBaseModel):
-    invite_url: typing.Optional[str] = None
     token: typing.Optional[str] = None
+    invite_url: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

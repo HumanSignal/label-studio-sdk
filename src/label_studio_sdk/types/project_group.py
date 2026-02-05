@@ -9,8 +9,8 @@ from .project_group_role_enum import ProjectGroupRoleEnum
 
 
 class ProjectGroup(UncheckedBaseModel):
-    group: str
     project_id: int
+    group: str
     role: ProjectGroupRoleEnum
 
     if IS_PYDANTIC_V2:

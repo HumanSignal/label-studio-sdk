@@ -19,18 +19,18 @@ class LseOrganizationMemberList(UncheckedBaseModel):
     which fields should be displayed.
     """
 
-    concurrency: typing.Optional[str] = None
-    contributed_to_projects: typing.Optional[typing.List[LseOrganizationMemberListContributedToProjectsItem]] = None
-    created_projects: typing.Optional[typing.List[LseOrganizationMemberListCreatedProjectsItem]] = None
     id: typing.Optional[int] = None
     organization: int = pydantic.Field()
     """
     Organization ID
     """
 
-    role: typing.Optional[str] = None
-    tags: typing.Optional[typing.List[SimpleOrganizationMemberTag]] = None
     user: LseUserOrganizationMemberList
+    created_projects: typing.Optional[typing.List[LseOrganizationMemberListCreatedProjectsItem]] = None
+    contributed_to_projects: typing.Optional[typing.List[LseOrganizationMemberListContributedToProjectsItem]] = None
+    role: typing.Optional[str] = None
+    concurrency: typing.Optional[str] = None
+    tags: typing.Optional[typing.List[SimpleOrganizationMemberTag]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

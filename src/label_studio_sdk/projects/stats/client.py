@@ -584,6 +584,108 @@ class StatsClient:
         _response = self._raw_client.update_stats(id, stat_type=stat_type, request_options=request_options)
         return _response.data
 
+    def user_prediction_agreement(
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UserPredictionAgreementStatsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get prediction agreement statistics for a specific user within a project.
+
+        Parameters
+        ----------
+        id : int
+
+        user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UserPredictionAgreementStatsResponse
+            Individual user prediction agreement statistics
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.user_prediction_agreement(
+            id=1,
+            user_pk=1,
+        )
+        """
+        _response = self._raw_client.user_prediction_agreement(
+            id, user_pk, per_label=per_label, request_options=request_options
+        )
+        return _response.data
+
+    def user_review_score(
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UserReviewScoreStatsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
+
+        Parameters
+        ----------
+        id : int
+
+        user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UserReviewScoreStatsResponse
+            Individual user review score statistics
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.user_review_score(
+            id=1,
+            user_pk=1,
+        )
+        """
+        _response = self._raw_client.user_review_score(
+            id, user_pk, per_label=per_label, request_options=request_options
+        )
+        return _response.data
+
     def users_prediction_agreement(
         self,
         id: int,
@@ -685,108 +787,6 @@ class StatsClient:
         """
         _response = self._raw_client.users_review_score(
             id, ids=ids, per_label=per_label, request_options=request_options
-        )
-        return _response.data
-
-    def user_prediction_agreement(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> UserPredictionAgreementStatsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get prediction agreement statistics for a specific user within a project.
-
-        Parameters
-        ----------
-        id : int
-
-        user_pk : int
-
-        per_label : typing.Optional[bool]
-            Calculate agreement per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UserPredictionAgreementStatsResponse
-            Individual user prediction agreement statistics
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.stats.user_prediction_agreement(
-            id=1,
-            user_pk=1,
-        )
-        """
-        _response = self._raw_client.user_prediction_agreement(
-            id, user_pk, per_label=per_label, request_options=request_options
-        )
-        return _response.data
-
-    def user_review_score(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> UserReviewScoreStatsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
-
-        Parameters
-        ----------
-        id : int
-
-        user_pk : int
-
-        per_label : typing.Optional[bool]
-            Calculate agreement per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UserReviewScoreStatsResponse
-            Individual user review score statistics
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.stats.user_review_score(
-            id=1,
-            user_pk=1,
-        )
-        """
-        _response = self._raw_client.user_review_score(
-            id, user_pk, per_label=per_label, request_options=request_options
         )
         return _response.data
 
@@ -1501,6 +1501,124 @@ class AsyncStatsClient:
         _response = await self._raw_client.update_stats(id, stat_type=stat_type, request_options=request_options)
         return _response.data
 
+    async def user_prediction_agreement(
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UserPredictionAgreementStatsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get prediction agreement statistics for a specific user within a project.
+
+        Parameters
+        ----------
+        id : int
+
+        user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UserPredictionAgreementStatsResponse
+            Individual user prediction agreement statistics
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.user_prediction_agreement(
+                id=1,
+                user_pk=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.user_prediction_agreement(
+            id, user_pk, per_label=per_label, request_options=request_options
+        )
+        return _response.data
+
+    async def user_review_score(
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UserReviewScoreStatsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
+
+        Parameters
+        ----------
+        id : int
+
+        user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UserReviewScoreStatsResponse
+            Individual user review score statistics
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.user_review_score(
+                id=1,
+                user_pk=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.user_review_score(
+            id, user_pk, per_label=per_label, request_options=request_options
+        )
+        return _response.data
+
     async def users_prediction_agreement(
         self,
         id: int,
@@ -1618,124 +1736,6 @@ class AsyncStatsClient:
         """
         _response = await self._raw_client.users_review_score(
             id, ids=ids, per_label=per_label, request_options=request_options
-        )
-        return _response.data
-
-    async def user_prediction_agreement(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> UserPredictionAgreementStatsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get prediction agreement statistics for a specific user within a project.
-
-        Parameters
-        ----------
-        id : int
-
-        user_pk : int
-
-        per_label : typing.Optional[bool]
-            Calculate agreement per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UserPredictionAgreementStatsResponse
-            Individual user prediction agreement statistics
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.stats.user_prediction_agreement(
-                id=1,
-                user_pk=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.user_prediction_agreement(
-            id, user_pk, per_label=per_label, request_options=request_options
-        )
-        return _response.data
-
-    async def user_review_score(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> UserReviewScoreStatsResponse:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
-
-        Parameters
-        ----------
-        id : int
-
-        user_pk : int
-
-        per_label : typing.Optional[bool]
-            Calculate agreement per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UserReviewScoreStatsResponse
-            Individual user review score statistics
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.stats.user_review_score(
-                id=1,
-                user_pk=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.user_review_score(
-            id, user_pk, per_label=per_label, request_options=request_options
         )
         return _response.data
 

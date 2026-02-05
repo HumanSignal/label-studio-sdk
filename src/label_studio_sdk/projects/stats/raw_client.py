@@ -663,6 +663,120 @@ class RawStatsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def user_prediction_agreement(
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[UserPredictionAgreementStatsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get prediction agreement statistics for a specific user within a project.
+
+        Parameters
+        ----------
+        id : int
+
+        user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[UserPredictionAgreementStatsResponse]
+            Individual user prediction agreement statistics
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/prediction",
+            method="GET",
+            params={
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UserPredictionAgreementStatsResponse,
+                    construct_type(
+                        type_=UserPredictionAgreementStatsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def user_review_score(
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[UserReviewScoreStatsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
+
+        Parameters
+        ----------
+        id : int
+
+        user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[UserReviewScoreStatsResponse]
+            Individual user review score statistics
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/review_score",
+            method="GET",
+            params={
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UserReviewScoreStatsResponse,
+                    construct_type(
+                        type_=UserReviewScoreStatsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def users_prediction_agreement(
         self,
         id: int,
@@ -772,120 +886,6 @@ class RawStatsClient:
                     UsersReviewScoreStatsResponse,
                     construct_type(
                         type_=UsersReviewScoreStatsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def user_prediction_agreement(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[UserPredictionAgreementStatsResponse]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get prediction agreement statistics for a specific user within a project.
-
-        Parameters
-        ----------
-        id : int
-
-        user_pk : int
-
-        per_label : typing.Optional[bool]
-            Calculate agreement per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[UserPredictionAgreementStatsResponse]
-            Individual user prediction agreement statistics
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/prediction",
-            method="GET",
-            params={
-                "per_label": per_label,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UserPredictionAgreementStatsResponse,
-                    construct_type(
-                        type_=UserPredictionAgreementStatsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def user_review_score(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[UserReviewScoreStatsResponse]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
-
-        Parameters
-        ----------
-        id : int
-
-        user_pk : int
-
-        per_label : typing.Optional[bool]
-            Calculate agreement per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[UserReviewScoreStatsResponse]
-            Individual user review score statistics
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/review_score",
-            method="GET",
-            params={
-                "per_label": per_label,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UserReviewScoreStatsResponse,
-                    construct_type(
-                        type_=UserReviewScoreStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1589,6 +1589,120 @@ class AsyncRawStatsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def user_prediction_agreement(
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[UserPredictionAgreementStatsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get prediction agreement statistics for a specific user within a project.
+
+        Parameters
+        ----------
+        id : int
+
+        user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[UserPredictionAgreementStatsResponse]
+            Individual user prediction agreement statistics
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/prediction",
+            method="GET",
+            params={
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UserPredictionAgreementStatsResponse,
+                    construct_type(
+                        type_=UserPredictionAgreementStatsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def user_review_score(
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[UserReviewScoreStatsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
+
+        Parameters
+        ----------
+        id : int
+
+        user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[UserReviewScoreStatsResponse]
+            Individual user review score statistics
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/review_score",
+            method="GET",
+            params={
+                "per_label": per_label,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UserReviewScoreStatsResponse,
+                    construct_type(
+                        type_=UserReviewScoreStatsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def users_prediction_agreement(
         self,
         id: int,
@@ -1698,120 +1812,6 @@ class AsyncRawStatsClient:
                     UsersReviewScoreStatsResponse,
                     construct_type(
                         type_=UsersReviewScoreStatsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def user_prediction_agreement(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[UserPredictionAgreementStatsResponse]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get prediction agreement statistics for a specific user within a project.
-
-        Parameters
-        ----------
-        id : int
-
-        user_pk : int
-
-        per_label : typing.Optional[bool]
-            Calculate agreement per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[UserPredictionAgreementStatsResponse]
-            Individual user prediction agreement statistics
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/prediction",
-            method="GET",
-            params={
-                "per_label": per_label,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UserPredictionAgreementStatsResponse,
-                    construct_type(
-                        type_=UserPredictionAgreementStatsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def user_review_score(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[UserReviewScoreStatsResponse]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
-
-        Parameters
-        ----------
-        id : int
-
-        user_pk : int
-
-        per_label : typing.Optional[bool]
-            Calculate agreement per label
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[UserReviewScoreStatsResponse]
-            Individual user review score statistics
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/review_score",
-            method="GET",
-            params={
-                "per_label": per_label,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UserReviewScoreStatsResponse,
-                    construct_type(
-                        type_=UserReviewScoreStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

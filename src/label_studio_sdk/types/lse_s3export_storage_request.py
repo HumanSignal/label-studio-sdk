@@ -12,6 +12,68 @@ from .status_c5a_enum import StatusC5AEnum
 
 
 class LseS3ExportStorageRequest(UncheckedBaseModel):
+    synchronizable: typing.Optional[bool] = None
+    last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Last sync finished time
+    """
+
+    last_sync_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Count of tasks synced last time
+    """
+
+    last_sync_job: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Last sync job ID
+    """
+
+    status: typing.Optional[StatusC5AEnum] = None
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Traceback report for the last failed sync
+    """
+
+    meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Meta and debug information about storage processes
+    """
+
+    title: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage title
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage description
+    """
+
+    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Deletion from storage enabled
+    """
+
+    bucket: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    S3 bucket name
+    """
+
+    prefix: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    S3 bucket prefix
+    """
+
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage regex for filtering objects
+    """
+
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs
+    """
+
     aws_access_key_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     AWS_ACCESS_KEY_ID
@@ -32,70 +94,9 @@ class LseS3ExportStorageRequest(UncheckedBaseModel):
     AWS SSE KMS Key ID
     """
 
-    bucket: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    S3 bucket name
-    """
-
-    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Deletion from storage enabled
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage description
-    """
-
-    external_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    AWS ExternalId
-    """
-
-    last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Last sync finished time
-    """
-
-    last_sync_count: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Count of tasks synced last time
-    """
-
-    last_sync_job: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Last sync job ID
-    """
-
-    legacy_auth: typing.Optional[bool] = None
-    meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Meta and debug information about storage processes
-    """
-
-    prefix: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    S3 bucket prefix
-    """
-
-    project: int = pydantic.Field()
-    """
-    A unique integer value identifying this project.
-    """
-
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage regex for filtering objects
-    """
-
     region_name: typing.Optional[str] = pydantic.Field(default=None)
     """
     AWS Region
-    """
-
-    role_arn: str = pydantic.Field()
-    """
-    AWS RoleArn
     """
 
     s3endpoint: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="s3_endpoint")] = pydantic.Field(
@@ -105,21 +106,20 @@ class LseS3ExportStorageRequest(UncheckedBaseModel):
     S3 Endpoint
     """
 
-    status: typing.Optional[StatusC5AEnum] = None
-    synchronizable: typing.Optional[bool] = None
-    title: typing.Optional[str] = pydantic.Field(default=None)
+    external_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cloud storage title
+    AWS ExternalId
     """
 
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
+    role_arn: str = pydantic.Field()
     """
-    Traceback report for the last failed sync
+    AWS RoleArn
     """
 
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    legacy_auth: typing.Optional[bool] = None
+    project: int = pydantic.Field()
     """
-    Interpret objects as BLOBs and generate URLs
+    A unique integer value identifying this project.
     """
 
     if IS_PYDANTIC_V2:

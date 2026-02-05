@@ -10,28 +10,12 @@ from .actions_enum import ActionsEnum
 
 
 class Webhook(UncheckedBaseModel):
-    actions: typing.Optional[typing.List[ActionsEnum]] = None
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Creation time
-    """
-
-    headers: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Key Value Json of headers
-    """
-
     id: typing.Optional[int] = None
-    is_active: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    If value is False the webhook is disabled
-    """
-
     organization: typing.Optional[int] = None
     project: typing.Optional[int] = None
-    send_for_all_actions: typing.Optional[bool] = pydantic.Field(default=None)
+    url: str = pydantic.Field()
     """
-    If value is False - used only for actions from WebhookAction
+    URL of webhook
     """
 
     send_payload: typing.Optional[bool] = pydantic.Field(default=None)
@@ -39,14 +23,30 @@ class Webhook(UncheckedBaseModel):
     If value is False send only action
     """
 
+    send_for_all_actions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If value is False - used only for actions from WebhookAction
+    """
+
+    headers: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Key Value Json of headers
+    """
+
+    is_active: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If value is False the webhook is disabled
+    """
+
+    actions: typing.Optional[typing.List[ActionsEnum]] = None
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Creation time
+    """
+
     updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last update time
-    """
-
-    url: str = pydantic.Field()
-    """
-    URL of webhook
     """
 
     if IS_PYDANTIC_V2:

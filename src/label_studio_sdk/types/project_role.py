@@ -10,9 +10,9 @@ from .role9e7enum import Role9E7Enum
 
 class ProjectRole(UncheckedBaseModel):
     id: typing.Optional[int] = None
-    project: int
     role: Role9E7Enum
     user: int
+    project: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

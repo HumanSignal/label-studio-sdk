@@ -15,31 +15,32 @@ class Workspace(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
-    color: typing.Optional[str] = None
-    created_by: typing.Optional[int] = None
-    created_by_user: typing.Optional[str] = None
+    id: typing.Optional[int] = None
+    title: str = pydantic.Field()
+    """
+    Workspace name
+    """
+
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Workspace description
     """
 
-    id: typing.Optional[int] = None
-    is_archived: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Workspace is archived
-    """
-
+    color: typing.Optional[str] = None
     is_personal: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Workspace is a personal user workspace
     """
 
+    is_archived: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Workspace is archived
+    """
+
+    created_by: typing.Optional[int] = None
+    created_by_user: typing.Optional[str] = None
     membership: typing.Optional[str] = None
     projects_count: typing.Optional[int] = None
-    title: str = pydantic.Field()
-    """
-    Workspace name
-    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

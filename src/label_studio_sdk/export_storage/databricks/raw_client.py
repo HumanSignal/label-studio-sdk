@@ -81,32 +81,32 @@ class RawDatabricksClient:
     def create(
         self,
         *,
-        catalog: str,
         host: str,
-        project: int,
+        catalog: str,
         schema: str,
         volume: str,
+        project: int,
+        synchronizable: typing.Optional[bool] = OMIT,
         auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
-        synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         verify_tls: typing.Optional[bool] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DatabricksExportStorage]:
         """
@@ -120,20 +120,22 @@ class RawDatabricksClient:
 
         Parameters
         ----------
-        catalog : str
-            UC catalog name
-
         host : str
             Databricks workspace base URL (https://...)
 
-        project : int
-            A unique integer value identifying this project.
+        catalog : str
+            UC catalog name
 
         schema : str
             UC schema name
 
         volume : str
             UC volume name
+
+        project : int
+            A unique integer value identifying this project.
+
+        synchronizable : typing.Optional[bool]
 
         auth_type : typing.Optional[AuthTypeEnum]
             Authentication method: PAT, Databricks SP, or Azure AD SP
@@ -142,17 +144,17 @@ class RawDatabricksClient:
             * `dbx_sp` - Databricks Service Principal
             * `azure_ad_sp` - Azure AD Service Principal
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
+
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
 
         client_id : typing.Optional[str]
             Service principal client/application ID (required for SP modes)
 
         client_secret : typing.Optional[str]
             Service principal client secret (required for SP modes)
-
-        description : typing.Optional[str]
-            Cloud storage description
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -163,40 +165,38 @@ class RawDatabricksClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        prefix : typing.Optional[str]
-            Export path prefix under the volume
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        request_timeout_s : typing.Optional[int]
-
         status : typing.Optional[StatusC5AEnum]
 
-        stream_chunk_bytes : typing.Optional[int]
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
 
-        synchronizable : typing.Optional[bool]
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
 
         title : typing.Optional[str]
             Cloud storage title
 
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
+        description : typing.Optional[str]
+            Cloud storage description
 
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
 
         use_blob_urls : typing.Optional[bool]
             Generate blob URLs in tasks
 
         verify_tls : typing.Optional[bool]
             Verify TLS certificates
+
+        request_timeout_s : typing.Optional[int]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        prefix : typing.Optional[str]
+            Export path prefix under the volume
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -210,32 +210,32 @@ class RawDatabricksClient:
             "api/storages/export/databricks",
             method="POST",
             json={
+                "synchronizable": synchronizable,
                 "auth_type": auth_type,
-                "can_delete_objects": can_delete_objects,
-                "catalog": catalog,
+                "token": token,
+                "tenant_id": tenant_id,
                 "client_id": client_id,
                 "client_secret": client_secret,
-                "description": description,
-                "host": host,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
-                "meta": meta,
-                "prefix": prefix,
-                "project": project,
-                "regex_filter": regex_filter,
-                "request_timeout_s": request_timeout_s,
-                "schema": schema,
                 "status": status,
-                "stream_chunk_bytes": stream_chunk_bytes,
-                "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
-                "title": title,
-                "token": token,
                 "traceback": traceback,
+                "meta": meta,
+                "title": title,
+                "description": description,
+                "can_delete_objects": can_delete_objects,
+                "host": host,
+                "catalog": catalog,
+                "schema": schema,
+                "volume": volume,
+                "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
                 "verify_tls": verify_tls,
-                "volume": volume,
+                "request_timeout_s": request_timeout_s,
+                "stream_chunk_bytes": stream_chunk_bytes,
+                "prefix": prefix,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -253,178 +253,6 @@ class RawDatabricksClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def validate(
-        self,
-        *,
-        catalog: str,
-        host: str,
-        project: int,
-        schema: str,
-        volume: str,
-        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
-        synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        token: typing.Optional[str] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        verify_tls: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[None]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific Databricks Files export storage connection.
-
-        Parameters
-        ----------
-        catalog : str
-            UC catalog name
-
-        host : str
-            Databricks workspace base URL (https://...)
-
-        project : int
-            A unique integer value identifying this project.
-
-        schema : str
-            UC schema name
-
-        volume : str
-            UC volume name
-
-        auth_type : typing.Optional[AuthTypeEnum]
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        client_id : typing.Optional[str]
-            Service principal client/application ID (required for SP modes)
-
-        client_secret : typing.Optional[str]
-            Service principal client secret (required for SP modes)
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        prefix : typing.Optional[str]
-            Export path prefix under the volume
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        request_timeout_s : typing.Optional[int]
-
-        status : typing.Optional[StatusC5AEnum]
-
-        stream_chunk_bytes : typing.Optional[int]
-
-        synchronizable : typing.Optional[bool]
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        use_blob_urls : typing.Optional[bool]
-            Generate blob URLs in tasks
-
-        verify_tls : typing.Optional[bool]
-            Verify TLS certificates
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[None]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/storages/export/databricks/validate",
-            method="POST",
-            json={
-                "auth_type": auth_type,
-                "can_delete_objects": can_delete_objects,
-                "catalog": catalog,
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "description": description,
-                "host": host,
-                "last_sync": last_sync,
-                "last_sync_count": last_sync_count,
-                "last_sync_job": last_sync_job,
-                "meta": meta,
-                "prefix": prefix,
-                "project": project,
-                "regex_filter": regex_filter,
-                "request_timeout_s": request_timeout_s,
-                "schema": schema,
-                "status": status,
-                "stream_chunk_bytes": stream_chunk_bytes,
-                "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
-                "title": title,
-                "token": token,
-                "traceback": traceback,
-                "use_blob_urls": use_blob_urls,
-                "verify_tls": verify_tls,
-                "volume": volume,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -512,32 +340,32 @@ class RawDatabricksClient:
         self,
         id: int,
         *,
+        synchronizable: typing.Optional[bool] = OMIT,
         auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        catalog: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        host: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
-        schema: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
-        synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        host: typing.Optional[str] = OMIT,
+        catalog: typing.Optional[str] = OMIT,
+        schema: typing.Optional[str] = OMIT,
+        volume: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         verify_tls: typing.Optional[bool] = OMIT,
-        volume: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DatabricksExportStorage]:
         """
@@ -553,6 +381,8 @@ class RawDatabricksClient:
         ----------
         id : int
 
+        synchronizable : typing.Optional[bool]
+
         auth_type : typing.Optional[AuthTypeEnum]
             Authentication method: PAT, Databricks SP, or Azure AD SP
 
@@ -560,23 +390,17 @@ class RawDatabricksClient:
             * `dbx_sp` - Databricks Service Principal
             * `azure_ad_sp` - Azure AD Service Principal
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
 
-        catalog : typing.Optional[str]
-            UC catalog name
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
 
         client_id : typing.Optional[str]
             Service principal client/application ID (required for SP modes)
 
         client_secret : typing.Optional[str]
             Service principal client secret (required for SP modes)
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        host : typing.Optional[str]
-            Databricks workspace base URL (https://...)
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -587,40 +411,37 @@ class RawDatabricksClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        prefix : typing.Optional[str]
-            Export path prefix under the volume
-
-        project : typing.Optional[int]
-            A unique integer value identifying this project.
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        request_timeout_s : typing.Optional[int]
-
-        schema : typing.Optional[str]
-            UC schema name
-
         status : typing.Optional[StatusC5AEnum]
 
-        stream_chunk_bytes : typing.Optional[int]
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
 
-        synchronizable : typing.Optional[bool]
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
 
         title : typing.Optional[str]
             Cloud storage title
 
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
+        description : typing.Optional[str]
+            Cloud storage description
 
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        host : typing.Optional[str]
+            Databricks workspace base URL (https://...)
+
+        catalog : typing.Optional[str]
+            UC catalog name
+
+        schema : typing.Optional[str]
+            UC schema name
+
+        volume : typing.Optional[str]
+            UC volume name
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
 
         use_blob_urls : typing.Optional[bool]
             Generate blob URLs in tasks
@@ -628,8 +449,15 @@ class RawDatabricksClient:
         verify_tls : typing.Optional[bool]
             Verify TLS certificates
 
-        volume : typing.Optional[str]
-            UC volume name
+        request_timeout_s : typing.Optional[int]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        prefix : typing.Optional[str]
+            Export path prefix under the volume
+
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -643,32 +471,32 @@ class RawDatabricksClient:
             f"api/storages/export/databricks/{jsonable_encoder(id)}",
             method="PATCH",
             json={
+                "synchronizable": synchronizable,
                 "auth_type": auth_type,
-                "can_delete_objects": can_delete_objects,
-                "catalog": catalog,
+                "token": token,
+                "tenant_id": tenant_id,
                 "client_id": client_id,
                 "client_secret": client_secret,
-                "description": description,
-                "host": host,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
-                "meta": meta,
-                "prefix": prefix,
-                "project": project,
-                "regex_filter": regex_filter,
-                "request_timeout_s": request_timeout_s,
-                "schema": schema,
                 "status": status,
-                "stream_chunk_bytes": stream_chunk_bytes,
-                "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
-                "title": title,
-                "token": token,
                 "traceback": traceback,
+                "meta": meta,
+                "title": title,
+                "description": description,
+                "can_delete_objects": can_delete_objects,
+                "host": host,
+                "catalog": catalog,
+                "schema": schema,
+                "volume": volume,
+                "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
                 "verify_tls": verify_tls,
-                "volume": volume,
+                "request_timeout_s": request_timeout_s,
+                "stream_chunk_bytes": stream_chunk_bytes,
+                "prefix": prefix,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -730,6 +558,178 @@ class RawDatabricksClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def validate(
+        self,
+        *,
+        host: str,
+        catalog: str,
+        schema: str,
+        volume: str,
+        project: int,
+        synchronizable: typing.Optional[bool] = OMIT,
+        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Databricks Files export storage connection.
+
+        Parameters
+        ----------
+        host : str
+            Databricks workspace base URL (https://...)
+
+        catalog : str
+            UC catalog name
+
+        schema : str
+            UC schema name
+
+        volume : str
+            UC volume name
+
+        project : int
+            A unique integer value identifying this project.
+
+        synchronizable : typing.Optional[bool]
+
+        auth_type : typing.Optional[AuthTypeEnum]
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
+
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
+
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
+        client_id : typing.Optional[str]
+            Service principal client/application ID (required for SP modes)
+
+        client_secret : typing.Optional[str]
+            Service principal client secret (required for SP modes)
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        status : typing.Optional[StatusC5AEnum]
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Generate blob URLs in tasks
+
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
+
+        request_timeout_s : typing.Optional[int]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        prefix : typing.Optional[str]
+            Export path prefix under the volume
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/storages/export/databricks/validate",
+            method="POST",
+            json={
+                "synchronizable": synchronizable,
+                "auth_type": auth_type,
+                "token": token,
+                "tenant_id": tenant_id,
+                "client_id": client_id,
+                "client_secret": client_secret,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "status": status,
+                "traceback": traceback,
+                "meta": meta,
+                "title": title,
+                "description": description,
+                "can_delete_objects": can_delete_objects,
+                "host": host,
+                "catalog": catalog,
+                "schema": schema,
+                "volume": volume,
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
+                "verify_tls": verify_tls,
+                "request_timeout_s": request_timeout_s,
+                "stream_chunk_bytes": stream_chunk_bytes,
+                "prefix": prefix,
+                "project": project,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -799,32 +799,32 @@ class AsyncRawDatabricksClient:
     async def create(
         self,
         *,
-        catalog: str,
         host: str,
-        project: int,
+        catalog: str,
         schema: str,
         volume: str,
+        project: int,
+        synchronizable: typing.Optional[bool] = OMIT,
         auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
-        synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         verify_tls: typing.Optional[bool] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DatabricksExportStorage]:
         """
@@ -838,20 +838,22 @@ class AsyncRawDatabricksClient:
 
         Parameters
         ----------
-        catalog : str
-            UC catalog name
-
         host : str
             Databricks workspace base URL (https://...)
 
-        project : int
-            A unique integer value identifying this project.
+        catalog : str
+            UC catalog name
 
         schema : str
             UC schema name
 
         volume : str
             UC volume name
+
+        project : int
+            A unique integer value identifying this project.
+
+        synchronizable : typing.Optional[bool]
 
         auth_type : typing.Optional[AuthTypeEnum]
             Authentication method: PAT, Databricks SP, or Azure AD SP
@@ -860,17 +862,17 @@ class AsyncRawDatabricksClient:
             * `dbx_sp` - Databricks Service Principal
             * `azure_ad_sp` - Azure AD Service Principal
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
+
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
 
         client_id : typing.Optional[str]
             Service principal client/application ID (required for SP modes)
 
         client_secret : typing.Optional[str]
             Service principal client secret (required for SP modes)
-
-        description : typing.Optional[str]
-            Cloud storage description
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -881,40 +883,38 @@ class AsyncRawDatabricksClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        prefix : typing.Optional[str]
-            Export path prefix under the volume
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        request_timeout_s : typing.Optional[int]
-
         status : typing.Optional[StatusC5AEnum]
 
-        stream_chunk_bytes : typing.Optional[int]
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
 
-        synchronizable : typing.Optional[bool]
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
 
         title : typing.Optional[str]
             Cloud storage title
 
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
+        description : typing.Optional[str]
+            Cloud storage description
 
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
 
         use_blob_urls : typing.Optional[bool]
             Generate blob URLs in tasks
 
         verify_tls : typing.Optional[bool]
             Verify TLS certificates
+
+        request_timeout_s : typing.Optional[int]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        prefix : typing.Optional[str]
+            Export path prefix under the volume
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -928,32 +928,32 @@ class AsyncRawDatabricksClient:
             "api/storages/export/databricks",
             method="POST",
             json={
+                "synchronizable": synchronizable,
                 "auth_type": auth_type,
-                "can_delete_objects": can_delete_objects,
-                "catalog": catalog,
+                "token": token,
+                "tenant_id": tenant_id,
                 "client_id": client_id,
                 "client_secret": client_secret,
-                "description": description,
-                "host": host,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
-                "meta": meta,
-                "prefix": prefix,
-                "project": project,
-                "regex_filter": regex_filter,
-                "request_timeout_s": request_timeout_s,
-                "schema": schema,
                 "status": status,
-                "stream_chunk_bytes": stream_chunk_bytes,
-                "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
-                "title": title,
-                "token": token,
                 "traceback": traceback,
+                "meta": meta,
+                "title": title,
+                "description": description,
+                "can_delete_objects": can_delete_objects,
+                "host": host,
+                "catalog": catalog,
+                "schema": schema,
+                "volume": volume,
+                "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
                 "verify_tls": verify_tls,
-                "volume": volume,
+                "request_timeout_s": request_timeout_s,
+                "stream_chunk_bytes": stream_chunk_bytes,
+                "prefix": prefix,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -971,178 +971,6 @@ class AsyncRawDatabricksClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def validate(
-        self,
-        *,
-        catalog: str,
-        host: str,
-        project: int,
-        schema: str,
-        volume: str,
-        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        last_sync: typing.Optional[dt.datetime] = OMIT,
-        last_sync_count: typing.Optional[int] = OMIT,
-        last_sync_job: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
-        synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        token: typing.Optional[str] = OMIT,
-        traceback: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        verify_tls: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[None]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Validate a specific Databricks Files export storage connection.
-
-        Parameters
-        ----------
-        catalog : str
-            UC catalog name
-
-        host : str
-            Databricks workspace base URL (https://...)
-
-        project : int
-            A unique integer value identifying this project.
-
-        schema : str
-            UC schema name
-
-        volume : str
-            UC volume name
-
-        auth_type : typing.Optional[AuthTypeEnum]
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        client_id : typing.Optional[str]
-            Service principal client/application ID (required for SP modes)
-
-        client_secret : typing.Optional[str]
-            Service principal client secret (required for SP modes)
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        last_sync : typing.Optional[dt.datetime]
-            Last sync finished time
-
-        last_sync_count : typing.Optional[int]
-            Count of tasks synced last time
-
-        last_sync_job : typing.Optional[str]
-            Last sync job ID
-
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        prefix : typing.Optional[str]
-            Export path prefix under the volume
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        request_timeout_s : typing.Optional[int]
-
-        status : typing.Optional[StatusC5AEnum]
-
-        stream_chunk_bytes : typing.Optional[int]
-
-        synchronizable : typing.Optional[bool]
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
-
-        title : typing.Optional[str]
-            Cloud storage title
-
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
-
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
-
-        use_blob_urls : typing.Optional[bool]
-            Generate blob URLs in tasks
-
-        verify_tls : typing.Optional[bool]
-            Verify TLS certificates
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[None]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/export/databricks/validate",
-            method="POST",
-            json={
-                "auth_type": auth_type,
-                "can_delete_objects": can_delete_objects,
-                "catalog": catalog,
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "description": description,
-                "host": host,
-                "last_sync": last_sync,
-                "last_sync_count": last_sync_count,
-                "last_sync_job": last_sync_job,
-                "meta": meta,
-                "prefix": prefix,
-                "project": project,
-                "regex_filter": regex_filter,
-                "request_timeout_s": request_timeout_s,
-                "schema": schema,
-                "status": status,
-                "stream_chunk_bytes": stream_chunk_bytes,
-                "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
-                "title": title,
-                "token": token,
-                "traceback": traceback,
-                "use_blob_urls": use_blob_urls,
-                "verify_tls": verify_tls,
-                "volume": volume,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1232,32 +1060,32 @@ class AsyncRawDatabricksClient:
         self,
         id: int,
         *,
+        synchronizable: typing.Optional[bool] = OMIT,
         auth_type: typing.Optional[AuthTypeEnum] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        catalog: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        host: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        meta: typing.Optional[typing.Any] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        request_timeout_s: typing.Optional[int] = OMIT,
-        schema: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
-        stream_chunk_bytes: typing.Optional[int] = OMIT,
-        synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        host: typing.Optional[str] = OMIT,
+        catalog: typing.Optional[str] = OMIT,
+        schema: typing.Optional[str] = OMIT,
+        volume: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         verify_tls: typing.Optional[bool] = OMIT,
-        volume: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DatabricksExportStorage]:
         """
@@ -1273,6 +1101,8 @@ class AsyncRawDatabricksClient:
         ----------
         id : int
 
+        synchronizable : typing.Optional[bool]
+
         auth_type : typing.Optional[AuthTypeEnum]
             Authentication method: PAT, Databricks SP, or Azure AD SP
 
@@ -1280,23 +1110,17 @@ class AsyncRawDatabricksClient:
             * `dbx_sp` - Databricks Service Principal
             * `azure_ad_sp` - Azure AD Service Principal
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
 
-        catalog : typing.Optional[str]
-            UC catalog name
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
 
         client_id : typing.Optional[str]
             Service principal client/application ID (required for SP modes)
 
         client_secret : typing.Optional[str]
             Service principal client secret (required for SP modes)
-
-        description : typing.Optional[str]
-            Cloud storage description
-
-        host : typing.Optional[str]
-            Databricks workspace base URL (https://...)
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -1307,40 +1131,37 @@ class AsyncRawDatabricksClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        meta : typing.Optional[typing.Any]
-            Meta and debug information about storage processes
-
-        prefix : typing.Optional[str]
-            Export path prefix under the volume
-
-        project : typing.Optional[int]
-            A unique integer value identifying this project.
-
-        regex_filter : typing.Optional[str]
-            Regex for filtering objects
-
-        request_timeout_s : typing.Optional[int]
-
-        schema : typing.Optional[str]
-            UC schema name
-
         status : typing.Optional[StatusC5AEnum]
 
-        stream_chunk_bytes : typing.Optional[int]
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
 
-        synchronizable : typing.Optional[bool]
-
-        tenant_id : typing.Optional[str]
-            Azure AD tenant ID (required for Azure AD SP mode)
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
 
         title : typing.Optional[str]
             Cloud storage title
 
-        token : typing.Optional[str]
-            Databricks personal access token (required for PAT mode)
+        description : typing.Optional[str]
+            Cloud storage description
 
-        traceback : typing.Optional[str]
-            Traceback report for the last failed sync
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        host : typing.Optional[str]
+            Databricks workspace base URL (https://...)
+
+        catalog : typing.Optional[str]
+            UC catalog name
+
+        schema : typing.Optional[str]
+            UC schema name
+
+        volume : typing.Optional[str]
+            UC volume name
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
 
         use_blob_urls : typing.Optional[bool]
             Generate blob URLs in tasks
@@ -1348,8 +1169,15 @@ class AsyncRawDatabricksClient:
         verify_tls : typing.Optional[bool]
             Verify TLS certificates
 
-        volume : typing.Optional[str]
-            UC volume name
+        request_timeout_s : typing.Optional[int]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        prefix : typing.Optional[str]
+            Export path prefix under the volume
+
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1363,32 +1191,32 @@ class AsyncRawDatabricksClient:
             f"api/storages/export/databricks/{jsonable_encoder(id)}",
             method="PATCH",
             json={
+                "synchronizable": synchronizable,
                 "auth_type": auth_type,
-                "can_delete_objects": can_delete_objects,
-                "catalog": catalog,
+                "token": token,
+                "tenant_id": tenant_id,
                 "client_id": client_id,
                 "client_secret": client_secret,
-                "description": description,
-                "host": host,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
-                "meta": meta,
-                "prefix": prefix,
-                "project": project,
-                "regex_filter": regex_filter,
-                "request_timeout_s": request_timeout_s,
-                "schema": schema,
                 "status": status,
-                "stream_chunk_bytes": stream_chunk_bytes,
-                "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
-                "title": title,
-                "token": token,
                 "traceback": traceback,
+                "meta": meta,
+                "title": title,
+                "description": description,
+                "can_delete_objects": can_delete_objects,
+                "host": host,
+                "catalog": catalog,
+                "schema": schema,
+                "volume": volume,
+                "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
                 "verify_tls": verify_tls,
-                "volume": volume,
+                "request_timeout_s": request_timeout_s,
+                "stream_chunk_bytes": stream_chunk_bytes,
+                "prefix": prefix,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -1450,6 +1278,178 @@ class AsyncRawDatabricksClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def validate(
+        self,
+        *,
+        host: str,
+        catalog: str,
+        schema: str,
+        volume: str,
+        project: int,
+        synchronizable: typing.Optional[bool] = OMIT,
+        auth_type: typing.Optional[AuthTypeEnum] = OMIT,
+        token: typing.Optional[str] = OMIT,
+        tenant_id: typing.Optional[str] = OMIT,
+        client_id: typing.Optional[str] = OMIT,
+        client_secret: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        meta: typing.Optional[typing.Any] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Databricks Files export storage connection.
+
+        Parameters
+        ----------
+        host : str
+            Databricks workspace base URL (https://...)
+
+        catalog : str
+            UC catalog name
+
+        schema : str
+            UC schema name
+
+        volume : str
+            UC volume name
+
+        project : int
+            A unique integer value identifying this project.
+
+        synchronizable : typing.Optional[bool]
+
+        auth_type : typing.Optional[AuthTypeEnum]
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
+
+        token : typing.Optional[str]
+            Databricks personal access token (required for PAT mode)
+
+        tenant_id : typing.Optional[str]
+            Azure AD tenant ID (required for Azure AD SP mode)
+
+        client_id : typing.Optional[str]
+            Service principal client/application ID (required for SP modes)
+
+        client_secret : typing.Optional[str]
+            Service principal client secret (required for SP modes)
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        status : typing.Optional[StatusC5AEnum]
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        meta : typing.Optional[typing.Any]
+            Meta and debug information about storage processes
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Generate blob URLs in tasks
+
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
+
+        request_timeout_s : typing.Optional[int]
+
+        stream_chunk_bytes : typing.Optional[int]
+
+        prefix : typing.Optional[str]
+            Export path prefix under the volume
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/storages/export/databricks/validate",
+            method="POST",
+            json={
+                "synchronizable": synchronizable,
+                "auth_type": auth_type,
+                "token": token,
+                "tenant_id": tenant_id,
+                "client_id": client_id,
+                "client_secret": client_secret,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "status": status,
+                "traceback": traceback,
+                "meta": meta,
+                "title": title,
+                "description": description,
+                "can_delete_objects": can_delete_objects,
+                "host": host,
+                "catalog": catalog,
+                "schema": schema,
+                "volume": volume,
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
+                "verify_tls": verify_tls,
+                "request_timeout_s": request_timeout_s,
+                "stream_chunk_bytes": stream_chunk_bytes,
+                "prefix": prefix,
+                "project": project,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

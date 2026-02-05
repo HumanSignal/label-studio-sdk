@@ -20,14 +20,10 @@ class AnnotationReview(UncheckedBaseModel):
     - fflag_feat_fit_710_fsm_state_fields (state field display in APIs)
     """
 
-    accepted: typing.Optional[bool] = pydantic.Field(default=None)
+    id: typing.Optional[int] = None
+    created_by: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Accepted or rejected (if false) flag
-    """
-
-    annotation: int = pydantic.Field()
-    """
-    Corresponding annotation
+    User who made this review
     """
 
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
@@ -35,9 +31,16 @@ class AnnotationReview(UncheckedBaseModel):
     Creation time
     """
 
-    created_by: typing.Optional[int] = pydantic.Field(default=None)
+    accepted: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    User who made this review
+    Accepted or rejected (if false) flag
+    """
+
+    state: typing.Optional[str] = None
+    result: typing.Optional[typing.Any] = None
+    annotation: int = pydantic.Field()
+    """
+    Corresponding annotation
     """
 
     fixed_annotation_history: typing.Optional[int] = pydantic.Field(default=None)
@@ -45,17 +48,14 @@ class AnnotationReview(UncheckedBaseModel):
     Fixed annotation history item by the reviewer
     """
 
-    id: typing.Optional[int] = None
-    last_annotation_history: typing.Optional[int] = None
     previous_annotation_history: typing.Optional[int] = pydantic.Field(default=None)
     """
     Previous annotation history item by the annotator
     """
 
+    last_annotation_history: typing.Optional[int] = None
     remove_from_queue: typing.Optional[bool] = None
-    result: typing.Optional[typing.Any] = None
     started_at: typing.Optional[dt.datetime] = None
-    state: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

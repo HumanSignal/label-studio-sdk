@@ -8,12 +8,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ProjectSubsetTaskItem(UncheckedBaseModel):
-    data: typing.Dict[str, typing.Any]
-    error: typing.Optional[typing.Dict[str, typing.Any]] = None
-    ground_truth: typing.Optional[typing.Dict[str, typing.Any]] = None
     id: typing.Optional[int] = None
-    prediction: typing.Optional[typing.Dict[str, typing.Any]] = None
+    data: typing.Dict[str, typing.Any]
     score: typing.Optional[float] = None
+    ground_truth: typing.Optional[typing.Dict[str, typing.Any]] = None
+    prediction: typing.Optional[typing.Dict[str, typing.Any]] = None
+    error: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

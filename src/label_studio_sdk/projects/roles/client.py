@@ -27,6 +27,45 @@ class RolesClient:
         """
         return self._raw_client
 
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ProjectRole]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+
+                List users and their project level roles for a given project.
+                If user is not listed here and is a member of the project then they would behave as assigned role in organization.
+
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ProjectRole]
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.roles.get(
+            id=1,
+        )
+        """
+        _response = self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
     def list(
         self,
         *,
@@ -73,7 +112,7 @@ class RolesClient:
         return _response.data
 
     def add(
-        self, *, project: int, role: Role9E7Enum, user: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, role: Role9E7Enum, user: int, project: int, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectRole:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -88,11 +127,11 @@ class RolesClient:
 
         Parameters
         ----------
-        project : int
-
         role : Role9E7Enum
 
         user : int
+
+        project : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -110,12 +149,12 @@ class RolesClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.roles.add(
-            project=1,
             role="OW",
             user=1,
+            project=1,
         )
         """
-        _response = self._raw_client.add(project=project, role=role, user=user, request_options=request_options)
+        _response = self._raw_client.add(role=role, user=user, project=project, request_options=request_options)
         return _response.data
 
     def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -156,7 +195,25 @@ class RolesClient:
         _response = self._raw_client.remove(id, request_options=request_options)
         return _response.data
 
-    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ProjectRole]:
+
+class AsyncRolesClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawRolesClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawRolesClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawRolesClient
+        """
+        return self._raw_client
+
+    async def get(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ProjectRole]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -183,33 +240,25 @@ class RolesClient:
 
         Examples
         --------
-        from label_studio_sdk import LabelStudio
+        import asyncio
 
-        client = LabelStudio(
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.roles.get(
-            id=1,
-        )
+
+
+        async def main() -> None:
+            await client.projects.roles.get(
+                id=1,
+            )
+
+
+        asyncio.run(main())
         """
-        _response = self._raw_client.get(id, request_options=request_options)
+        _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data
-
-
-class AsyncRolesClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawRolesClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawRolesClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawRolesClient
-        """
-        return self._raw_client
 
     async def list(
         self,
@@ -265,7 +314,7 @@ class AsyncRolesClient:
         return _response.data
 
     async def add(
-        self, *, project: int, role: Role9E7Enum, user: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, role: Role9E7Enum, user: int, project: int, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectRole:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -280,11 +329,11 @@ class AsyncRolesClient:
 
         Parameters
         ----------
-        project : int
-
         role : Role9E7Enum
 
         user : int
+
+        project : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -307,15 +356,15 @@ class AsyncRolesClient:
 
         async def main() -> None:
             await client.projects.roles.add(
-                project=1,
                 role="OW",
                 user=1,
+                project=1,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.add(project=project, role=role, user=user, request_options=request_options)
+        _response = await self._raw_client.add(role=role, user=user, project=project, request_options=request_options)
         return _response.data
 
     async def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -362,53 +411,4 @@ class AsyncRolesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.remove(id, request_options=request_options)
-        return _response.data
-
-    async def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ProjectRole]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-
-                List users and their project level roles for a given project.
-                If user is not listed here and is a member of the project then they would behave as assigned role in organization.
-
-
-        Parameters
-        ----------
-        id : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[ProjectRole]
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.roles.get(
-                id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data

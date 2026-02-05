@@ -11,9 +11,14 @@ from .role9e7enum import Role9E7Enum
 
 
 class LseOrganization(UncheckedBaseModel):
-    billing: OrganizationBilling
-    created_at: typing.Optional[dt.datetime] = None
-    custom_scripts_enabled: typing.Optional[str] = None
+    id: typing.Optional[int] = None
+    external_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    External ID to uniquely identify this organization
+    """
+
+    title: typing.Optional[str] = None
+    token: typing.Optional[str] = None
     default_role: typing.Optional[Role9E7Enum] = pydantic.Field(default=None)
     """
     Default membership role for invited users
@@ -27,7 +32,8 @@ class LseOrganization(UncheckedBaseModel):
     * `NO` - Not Activated
     """
 
-    email_notification_settings: typing.Optional[str] = None
+    created_at: typing.Optional[dt.datetime] = None
+    billing: OrganizationBilling
     embed_domains: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
@@ -38,14 +44,8 @@ class LseOrganization(UncheckedBaseModel):
     Embed settings for this organization
     """
 
-    external_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    External ID to uniquely identify this organization
-    """
-
-    id: typing.Optional[int] = None
-    title: typing.Optional[str] = None
-    token: typing.Optional[str] = None
+    custom_scripts_enabled: typing.Optional[str] = None
+    email_notification_settings: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

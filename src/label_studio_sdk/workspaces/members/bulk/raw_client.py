@@ -25,8 +25,8 @@ class RawBulkClient:
         id: int,
         *,
         all_: bool,
-        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
+        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PostBulkResponse]:
         """
@@ -44,9 +44,9 @@ class RawBulkClient:
 
         all_ : bool
 
-        excluded : typing.Optional[typing.Sequence[int]]
-
         included : typing.Optional[typing.Sequence[int]]
+
+        excluded : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -61,8 +61,8 @@ class RawBulkClient:
             method="POST",
             json={
                 "all": all_,
-                "excluded": excluded,
                 "included": included,
+                "excluded": excluded,
             },
             headers={
                 "content-type": "application/json",
@@ -139,8 +139,8 @@ class AsyncRawBulkClient:
         id: int,
         *,
         all_: bool,
-        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
+        excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PostBulkResponse]:
         """
@@ -158,9 +158,9 @@ class AsyncRawBulkClient:
 
         all_ : bool
 
-        excluded : typing.Optional[typing.Sequence[int]]
-
         included : typing.Optional[typing.Sequence[int]]
+
+        excluded : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -175,8 +175,8 @@ class AsyncRawBulkClient:
             method="POST",
             json={
                 "all": all_,
-                "excluded": excluded,
                 "included": included,
+                "excluded": excluded,
             },
             headers={
                 "content-type": "application/json",

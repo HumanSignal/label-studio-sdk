@@ -8,19 +8,19 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class InferenceRunCostEstimate(UncheckedBaseModel):
+    prompt_cost_usd: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cost of the prompt (in USD)
+    """
+
     completion_cost_usd: typing.Optional[str] = pydantic.Field(default=None)
     """
     Cost of the completion (in USD)
     """
 
-    error_message: typing.Optional[str] = pydantic.Field(default=None)
+    total_cost_usd: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Error message details
-    """
-
-    error_type: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Type of error (e.g. "Timeout", "Rate Limit", etc)
+    Total cost of the inference (in USD)
     """
 
     is_error: typing.Optional[bool] = pydantic.Field(default=None)
@@ -28,14 +28,14 @@ class InferenceRunCostEstimate(UncheckedBaseModel):
     Whether an error occurred or not
     """
 
-    prompt_cost_usd: typing.Optional[str] = pydantic.Field(default=None)
+    error_type: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cost of the prompt (in USD)
+    Type of error (e.g. "Timeout", "Rate Limit", etc)
     """
 
-    total_cost_usd: typing.Optional[str] = pydantic.Field(default=None)
+    error_message: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Total cost of the inference (in USD)
+    Error message details
     """
 
     if IS_PYDANTIC_V2:

@@ -8,14 +8,14 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 
 class FinishedTasksStatsResponse(UncheckedBaseModel):
-    finished: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of finished tasks
-    """
-
     id: typing.Optional[int] = pydantic.Field(default=None)
     """
     User ID
+    """
+
+    finished: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of finished tasks
     """
 
     progress: typing.Optional[int] = pydantic.Field(default=None)

@@ -10,17 +10,24 @@ from .status_c5a_enum import StatusC5AEnum
 
 
 class LocalFilesImportStorage(UncheckedBaseModel):
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Creation time
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage description
-    """
-
     id: typing.Optional[int] = None
+    type: typing.Optional[str] = None
+    synchronizable: typing.Optional[bool] = None
+    path: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Local path
+    """
+
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Regex for filtering objects
+    """
+
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs
+    """
+
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last sync finished time
@@ -36,19 +43,30 @@ class LocalFilesImportStorage(UncheckedBaseModel):
     Last sync job ID
     """
 
+    status: typing.Optional[StatusC5AEnum] = None
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Traceback report for the last failed sync
+    """
+
     meta: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Meta and debug information about storage processes
     """
 
-    path: typing.Optional[str] = pydantic.Field(default=None)
+    title: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Local path
+    Cloud storage title
     """
 
-    project: int = pydantic.Field()
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    A unique integer value identifying this project.
+    Cloud storage description
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Creation time
     """
 
     recursive_scan: typing.Optional[bool] = pydantic.Field(default=None)
@@ -56,27 +74,9 @@ class LocalFilesImportStorage(UncheckedBaseModel):
     Perform recursive scan over the directory content
     """
 
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
+    project: int = pydantic.Field()
     """
-    Regex for filtering objects
-    """
-
-    status: typing.Optional[StatusC5AEnum] = None
-    synchronizable: typing.Optional[bool] = None
-    title: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage title
-    """
-
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
-    type: typing.Optional[str] = None
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Interpret objects as BLOBs and generate URLs
+    A unique integer value identifying this project.
     """
 
     if IS_PYDANTIC_V2:

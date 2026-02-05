@@ -11,18 +11,21 @@ from .user_simple import UserSimple
 
 
 class ThirdPartyModelVersion(UncheckedBaseModel):
-    created_at: typing.Optional[dt.datetime] = None
+    id: typing.Optional[int] = None
     created_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
     """
     User who created Dataset
     """
 
-    id: typing.Optional[int] = None
-    model_provider_connection: typing.Optional[int] = None
-    organization: typing.Optional[int] = None
+    score: typing.Optional[str] = None
     parent_model: typing.Optional[int] = pydantic.Field(default=None)
     """
     Parent model interface ID
+    """
+
+    title: str = pydantic.Field()
+    """
+    Model name
     """
 
     prompt: str = pydantic.Field()
@@ -48,13 +51,10 @@ class ThirdPartyModelVersion(UncheckedBaseModel):
     The model ID to use within the given provider, e.g. gpt-3.5
     """
 
-    score: typing.Optional[str] = None
-    title: str = pydantic.Field()
-    """
-    Model name
-    """
-
+    created_at: typing.Optional[dt.datetime] = None
     updated_at: typing.Optional[dt.datetime] = None
+    model_provider_connection: typing.Optional[int] = None
+    organization: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

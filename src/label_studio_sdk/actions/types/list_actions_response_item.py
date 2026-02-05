@@ -10,12 +10,12 @@ from .list_actions_response_item_permission import ListActionsResponseItemPermis
 
 
 class ListActionsResponseItem(UncheckedBaseModel):
-    dialog: typing.Optional[ListActionsResponseItemDialog] = None
-    experimental: typing.Optional[bool] = None
     id: typing.Optional[str] = None
+    title: typing.Optional[str] = None
     order: typing.Optional[int] = None
     permission: typing.Optional[ListActionsResponseItemPermission] = None
-    title: typing.Optional[str] = None
+    experimental: typing.Optional[bool] = None
+    dialog: typing.Optional[ListActionsResponseItemDialog] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

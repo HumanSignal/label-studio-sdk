@@ -158,35 +158,35 @@ class RawProjectsClient:
     def create(
         self,
         *,
-        annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
-        color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Any] = OMIT,
-        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        enable_empty_annotation: typing.Optional[bool] = OMIT,
-        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
-        expert_instruction: typing.Optional[str] = OMIT,
-        is_draft: typing.Optional[bool] = OMIT,
-        is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
-        maximum_annotations: typing.Optional[int] = OMIT,
-        min_annotations_to_start_training: typing.Optional[int] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        overlap_cohort_percentage: typing.Optional[int] = OMIT,
-        pinned_at: typing.Optional[dt.datetime] = OMIT,
-        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
-        show_annotation_history: typing.Optional[bool] = OMIT,
-        show_collab_predictions: typing.Optional[bool] = OMIT,
-        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        expert_instruction: typing.Optional[str] = OMIT,
         show_instruction: typing.Optional[bool] = OMIT,
-        show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        enable_empty_annotation: typing.Optional[bool] = OMIT,
+        show_annotation_history: typing.Optional[bool] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        is_published: typing.Optional[bool] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        is_draft: typing.Optional[bool] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        min_annotations_to_start_training: typing.Optional[int] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
+        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
+        show_overlap_first: typing.Optional[bool] = OMIT,
+        overlap_cohort_percentage: typing.Optional[int] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Any] = OMIT,
+        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
+        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        pinned_at: typing.Optional[dt.datetime] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseProjectCreate]:
@@ -195,77 +195,66 @@ class RawProjectsClient:
 
         Parameters
         ----------
-        annotator_evaluation_enabled : typing.Optional[bool]
-            Enable annotator evaluation for the project
-
-        color : typing.Optional[str]
-
-        control_weights : typing.Optional[typing.Any]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
-
-        created_by : typing.Optional[UserSimpleRequest]
-            Project owner
+        title : typing.Optional[str]
+            Project name. Must be between 3 and 50 characters long.
 
         description : typing.Optional[str]
             Project description
 
-        enable_empty_annotation : typing.Optional[bool]
-            Allow annotators to submit empty annotations
-
-        evaluate_predictions_automatically : typing.Optional[bool]
-            Retrieve and display predictions when loading a task
+        label_config : typing.Optional[str]
+            Label config in XML format. See more about it in documentation
 
         expert_instruction : typing.Optional[str]
             Labeling instructions in HTML format
 
-        is_draft : typing.Optional[bool]
-            Whether or not the project is in the middle of being created
-
-        is_published : typing.Optional[bool]
-            Whether or not the project is published to annotators
-
-        label_config : typing.Optional[str]
-            Label config in XML format. See more about it in documentation
-
-        maximum_annotations : typing.Optional[int]
-            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-
-        min_annotations_to_start_training : typing.Optional[int]
-            Minimum number of completed tasks after which model training is started
-
-        model_version : typing.Optional[str]
-            Machine learning model version
-
-        organization : typing.Optional[int]
-
-        overlap_cohort_percentage : typing.Optional[int]
-
-        pinned_at : typing.Optional[dt.datetime]
-            Pinned date and time
-
-        reveal_preannotations_interactively : typing.Optional[bool]
-            Reveal pre-annotations interactively
-
-        sampling : typing.Optional[SamplingDe5Enum]
-
-        show_annotation_history : typing.Optional[bool]
-            Show annotation history to annotator
-
-        show_collab_predictions : typing.Optional[bool]
-            If set, the annotator can view model predictions
-
-        show_ground_truth_first : typing.Optional[bool]
-            Onboarding mode (true): show ground truth tasks first in the labeling stream
-
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
-
-        show_overlap_first : typing.Optional[bool]
 
         show_skip_button : typing.Optional[bool]
             Show a skip button in interface and allow annotators to skip the task
 
-        skip_queue : typing.Optional[SkipQueueEnum]
+        enable_empty_annotation : typing.Optional[bool]
+            Allow annotators to submit empty annotations
+
+        show_annotation_history : typing.Optional[bool]
+            Show annotation history to annotator
+
+        organization : typing.Optional[int]
+
+        color : typing.Optional[str]
+
+        maximum_annotations : typing.Optional[int]
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+
+        is_published : typing.Optional[bool]
+            Whether or not the project is published to annotators
+
+        model_version : typing.Optional[str]
+            Machine learning model version
+
+        is_draft : typing.Optional[bool]
+            Whether or not the project is in the middle of being created
+
+        created_by : typing.Optional[UserSimpleRequest]
+            Project owner
+
+        min_annotations_to_start_training : typing.Optional[int]
+            Minimum number of completed tasks after which model training is started
+
+        show_collab_predictions : typing.Optional[bool]
+            If set, the annotator can view model predictions
+
+        sampling : typing.Optional[SamplingDe5Enum]
+
+        show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
+
+        annotator_evaluation_enabled : typing.Optional[bool]
+            Enable annotator evaluation for the project
+
+        show_overlap_first : typing.Optional[bool]
+
+        overlap_cohort_percentage : typing.Optional[int]
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -273,8 +262,19 @@ class RawProjectsClient:
         task_data_password : typing.Optional[str]
             Task data credentials: password
 
-        title : typing.Optional[str]
-            Project name. Must be between 3 and 50 characters long.
+        control_weights : typing.Optional[typing.Any]
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+
+        evaluate_predictions_automatically : typing.Optional[bool]
+            Retrieve and display predictions when loading a task
+
+        skip_queue : typing.Optional[SkipQueueEnum]
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal pre-annotations interactively
+
+        pinned_at : typing.Optional[dt.datetime]
+            Pinned date and time
 
         workspace : typing.Optional[int]
 
@@ -290,37 +290,37 @@ class RawProjectsClient:
             "api/projects/",
             method="POST",
             json={
-                "annotator_evaluation_enabled": annotator_evaluation_enabled,
+                "title": title,
+                "description": description,
+                "label_config": label_config,
+                "expert_instruction": expert_instruction,
+                "show_instruction": show_instruction,
+                "show_skip_button": show_skip_button,
+                "enable_empty_annotation": enable_empty_annotation,
+                "show_annotation_history": show_annotation_history,
+                "organization": organization,
                 "color": color,
-                "control_weights": control_weights,
+                "maximum_annotations": maximum_annotations,
+                "is_published": is_published,
+                "model_version": model_version,
+                "is_draft": is_draft,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "description": description,
-                "enable_empty_annotation": enable_empty_annotation,
-                "evaluate_predictions_automatically": evaluate_predictions_automatically,
-                "expert_instruction": expert_instruction,
-                "is_draft": is_draft,
-                "is_published": is_published,
-                "label_config": label_config,
-                "maximum_annotations": maximum_annotations,
                 "min_annotations_to_start_training": min_annotations_to_start_training,
-                "model_version": model_version,
-                "organization": organization,
-                "overlap_cohort_percentage": overlap_cohort_percentage,
-                "pinned_at": pinned_at,
-                "reveal_preannotations_interactively": reveal_preannotations_interactively,
-                "sampling": sampling,
-                "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
+                "sampling": sampling,
                 "show_ground_truth_first": show_ground_truth_first,
-                "show_instruction": show_instruction,
+                "annotator_evaluation_enabled": annotator_evaluation_enabled,
                 "show_overlap_first": show_overlap_first,
-                "show_skip_button": show_skip_button,
-                "skip_queue": skip_queue,
+                "overlap_cohort_percentage": overlap_cohort_percentage,
                 "task_data_login": task_data_login,
                 "task_data_password": task_data_password,
-                "title": title,
+                "control_weights": control_weights,
+                "evaluate_predictions_automatically": evaluate_predictions_automatically,
+                "skip_queue": skip_queue,
+                "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "pinned_at": pinned_at,
                 "workspace": workspace,
             },
             headers={
@@ -335,96 +335,6 @@ class RawProjectsClient:
                     LseProjectCreate,
                     construct_type(
                         type_=LseProjectCreate,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def list_counts(
-        self,
-        *,
-        filter: typing.Optional[str] = None,
-        ids: typing.Optional[str] = None,
-        include: typing.Optional[str] = None,
-        ordering: typing.Optional[str] = None,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
-        state: typing.Optional[str] = None,
-        title: typing.Optional[str] = None,
-        workspaces: typing.Optional[float] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[PaginatedLseProjectCountsList]:
-        """
-        Returns a list of projects with their counts. For example, task_number which is the total task number in project
-
-        Parameters
-        ----------
-        filter : typing.Optional[str]
-            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
-
-        ids : typing.Optional[str]
-            Filter id by in list
-
-        include : typing.Optional[str]
-            Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
-
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        search : typing.Optional[str]
-            Search term for project title and description
-
-        state : typing.Optional[str]
-            Filter current_state by exact match
-
-        title : typing.Optional[str]
-            Filter title by contains (case-insensitive)
-
-        workspaces : typing.Optional[float]
-            Filter workspaces by exact match
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[PaginatedLseProjectCountsList]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/projects/counts/",
-            method="GET",
-            params={
-                "filter": filter,
-                "ids": ids,
-                "include": include,
-                "ordering": ordering,
-                "page": page,
-                "page_size": page_size,
-                "search": search,
-                "state": state,
-                "title": title,
-                "workspaces": workspaces,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    PaginatedLseProjectCountsList,
-                    construct_type(
-                        type_=PaginatedLseProjectCountsList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -515,54 +425,53 @@ class RawProjectsClient:
         id: int,
         *,
         members_limit: typing.Optional[int] = None,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        label_config: typing.Optional[str] = OMIT,
+        expert_instruction: typing.Optional[str] = OMIT,
+        show_instruction: typing.Optional[bool] = OMIT,
+        show_skip_button: typing.Optional[bool] = OMIT,
+        enable_empty_annotation: typing.Optional[bool] = OMIT,
+        show_annotation_history: typing.Optional[bool] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        is_published: typing.Optional[bool] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        is_draft: typing.Optional[bool] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        min_annotations_to_start_training: typing.Optional[int] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
+        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
+        show_overlap_first: typing.Optional[bool] = OMIT,
+        overlap_cohort_percentage: typing.Optional[int] = OMIT,
+        task_data_login: typing.Optional[str] = OMIT,
+        task_data_password: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Any] = OMIT,
+        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
+        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        pinned_at: typing.Optional[dt.datetime] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
+        review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
+        assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
         agreement_methodology: typing.Optional[AgreementMethodologyEnum] = OMIT,
-        agreement_threshold: typing.Optional[str] = OMIT,
+        custom_script: typing.Optional[str] = OMIT,
+        comment_classification_config: typing.Optional[str] = OMIT,
+        require_comment_on_skip: typing.Optional[bool] = OMIT,
+        strict_task_overlap: typing.Optional[bool] = OMIT,
+        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
+        custom_task_lock_ttl: typing.Optional[int] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
-        annotator_evaluation_continuous_tasks: typing.Optional[int] = OMIT,
-        annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
+        pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_onboarding_tasks: typing.Optional[int] = OMIT,
-        assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
-        color: typing.Optional[str] = OMIT,
-        comment_classification_config: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Any] = OMIT,
-        created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        custom_script: typing.Optional[str] = OMIT,
-        custom_task_lock_ttl: typing.Optional[int] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        enable_empty_annotation: typing.Optional[bool] = OMIT,
-        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
-        expert_instruction: typing.Optional[str] = OMIT,
-        is_draft: typing.Optional[bool] = OMIT,
-        is_published: typing.Optional[bool] = OMIT,
-        label_config: typing.Optional[str] = OMIT,
+        agreement_threshold: typing.Optional[str] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
-        maximum_annotations: typing.Optional[int] = OMIT,
-        min_annotations_to_start_training: typing.Optional[int] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        overlap_cohort_percentage: typing.Optional[int] = OMIT,
-        pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
-        pinned_at: typing.Optional[dt.datetime] = OMIT,
-        require_comment_on_skip: typing.Optional[bool] = OMIT,
-        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
-        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
-        show_annotation_history: typing.Optional[bool] = OMIT,
-        show_collab_predictions: typing.Optional[bool] = OMIT,
-        show_ground_truth_first: typing.Optional[bool] = OMIT,
-        show_instruction: typing.Optional[bool] = OMIT,
-        show_overlap_first: typing.Optional[bool] = OMIT,
-        show_skip_button: typing.Optional[bool] = OMIT,
-        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
-        strict_task_overlap: typing.Optional[bool] = OMIT,
-        task_data_login: typing.Optional[str] = OMIT,
-        task_data_password: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseProjectUpdate]:
         """
@@ -575,116 +484,66 @@ class RawProjectsClient:
         members_limit : typing.Optional[int]
             Maximum number of members to return
 
-        agreement_methodology : typing.Optional[AgreementMethodologyEnum]
-
-        agreement_threshold : typing.Optional[str]
-            Minimum percent agreement threshold for which minimum number of annotators must agree
-
-        annotation_limit_count : typing.Optional[int]
-
-        annotation_limit_percent : typing.Optional[str]
-
-        annotator_evaluation_continuous_tasks : typing.Optional[int]
-
-        annotator_evaluation_enabled : typing.Optional[bool]
-            Enable annotator evaluation for the project
-
-        annotator_evaluation_minimum_score : typing.Optional[str]
-
-        annotator_evaluation_minimum_tasks : typing.Optional[int]
-
-        annotator_evaluation_onboarding_tasks : typing.Optional[int]
-
-        assignment_settings : typing.Optional[AssignmentSettingsRequest]
-
-        color : typing.Optional[str]
-
-        comment_classification_config : typing.Optional[str]
-
-        control_weights : typing.Optional[typing.Any]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
-
-        created_by : typing.Optional[UserSimpleRequest]
-            Project owner
-
-        custom_script : typing.Optional[str]
-
-        custom_task_lock_ttl : typing.Optional[int]
-            TTL in seconds for task reservations, on new and existing tasks
+        title : typing.Optional[str]
+            Project name. Must be between 3 and 50 characters long.
 
         description : typing.Optional[str]
             Project description
 
-        enable_empty_annotation : typing.Optional[bool]
-            Allow annotators to submit empty annotations
-
-        evaluate_predictions_automatically : typing.Optional[bool]
-            Retrieve and display predictions when loading a task
+        label_config : typing.Optional[str]
+            Label config in XML format. See more about it in documentation
 
         expert_instruction : typing.Optional[str]
             Labeling instructions in HTML format
 
-        is_draft : typing.Optional[bool]
-            Whether or not the project is in the middle of being created
-
-        is_published : typing.Optional[bool]
-            Whether or not the project is published to annotators
-
-        label_config : typing.Optional[str]
-            Label config in XML format. See more about it in documentation
-
-        max_additional_annotators_assignable : typing.Optional[int]
-            Maximum number of additional annotators that can be assigned to a low agreement task
-
-        maximum_annotations : typing.Optional[int]
-            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-
-        min_annotations_to_start_training : typing.Optional[int]
-            Minimum number of completed tasks after which model training is started
-
-        model_version : typing.Optional[str]
-            Machine learning model version
-
-        organization : typing.Optional[int]
-
-        overlap_cohort_percentage : typing.Optional[int]
-
-        pause_on_failed_annotator_evaluation : typing.Optional[bool]
-
-        pinned_at : typing.Optional[dt.datetime]
-            Pinned date and time
-
-        require_comment_on_skip : typing.Optional[bool]
-
-        reveal_preannotations_interactively : typing.Optional[bool]
-            Reveal pre-annotations interactively
-
-        review_settings : typing.Optional[ReviewSettingsRequest]
-
-        sampling : typing.Optional[SamplingDe5Enum]
-
-        show_annotation_history : typing.Optional[bool]
-            Show annotation history to annotator
-
-        show_collab_predictions : typing.Optional[bool]
-            If set, the annotator can view model predictions
-
-        show_ground_truth_first : typing.Optional[bool]
-            Onboarding mode (true): show ground truth tasks first in the labeling stream
-
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
-
-        show_overlap_first : typing.Optional[bool]
 
         show_skip_button : typing.Optional[bool]
             Show a skip button in interface and allow annotators to skip the task
 
-        show_unused_data_columns_to_annotators : typing.Optional[bool]
+        enable_empty_annotation : typing.Optional[bool]
+            Allow annotators to submit empty annotations
 
-        skip_queue : typing.Optional[SkipQueueEnum]
+        show_annotation_history : typing.Optional[bool]
+            Show annotation history to annotator
 
-        strict_task_overlap : typing.Optional[bool]
+        organization : typing.Optional[int]
+
+        color : typing.Optional[str]
+
+        maximum_annotations : typing.Optional[int]
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+
+        is_published : typing.Optional[bool]
+            Whether or not the project is published to annotators
+
+        model_version : typing.Optional[str]
+            Machine learning model version
+
+        is_draft : typing.Optional[bool]
+            Whether or not the project is in the middle of being created
+
+        created_by : typing.Optional[UserSimpleRequest]
+            Project owner
+
+        min_annotations_to_start_training : typing.Optional[int]
+            Minimum number of completed tasks after which model training is started
+
+        show_collab_predictions : typing.Optional[bool]
+            If set, the annotator can view model predictions
+
+        sampling : typing.Optional[SamplingDe5Enum]
+
+        show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
+
+        annotator_evaluation_enabled : typing.Optional[bool]
+            Enable annotator evaluation for the project
+
+        show_overlap_first : typing.Optional[bool]
+
+        overlap_cohort_percentage : typing.Optional[int]
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -692,10 +551,58 @@ class RawProjectsClient:
         task_data_password : typing.Optional[str]
             Task data credentials: password
 
-        title : typing.Optional[str]
-            Project name. Must be between 3 and 50 characters long.
+        control_weights : typing.Optional[typing.Any]
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+
+        evaluate_predictions_automatically : typing.Optional[bool]
+            Retrieve and display predictions when loading a task
+
+        skip_queue : typing.Optional[SkipQueueEnum]
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal pre-annotations interactively
+
+        pinned_at : typing.Optional[dt.datetime]
+            Pinned date and time
 
         workspace : typing.Optional[int]
+
+        review_settings : typing.Optional[ReviewSettingsRequest]
+
+        assignment_settings : typing.Optional[AssignmentSettingsRequest]
+
+        agreement_methodology : typing.Optional[AgreementMethodologyEnum]
+
+        custom_script : typing.Optional[str]
+
+        comment_classification_config : typing.Optional[str]
+
+        require_comment_on_skip : typing.Optional[bool]
+
+        strict_task_overlap : typing.Optional[bool]
+
+        show_unused_data_columns_to_annotators : typing.Optional[bool]
+
+        custom_task_lock_ttl : typing.Optional[int]
+            TTL in seconds for task reservations, on new and existing tasks
+
+        annotation_limit_count : typing.Optional[int]
+
+        annotation_limit_percent : typing.Optional[str]
+
+        pause_on_failed_annotator_evaluation : typing.Optional[bool]
+
+        annotator_evaluation_minimum_score : typing.Optional[str]
+
+        annotator_evaluation_minimum_tasks : typing.Optional[int]
+
+        annotator_evaluation_onboarding_tasks : typing.Optional[int]
+
+        agreement_threshold : typing.Optional[str]
+            Minimum percent agreement threshold for which minimum number of annotators must agree
+
+        max_additional_annotators_assignable : typing.Optional[int]
+            Maximum number of additional annotators that can be assigned to a low agreement task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -712,60 +619,59 @@ class RawProjectsClient:
                 "members_limit": members_limit,
             },
             json={
-                "agreement_methodology": agreement_methodology,
-                "agreement_threshold": agreement_threshold,
-                "annotation_limit_count": annotation_limit_count,
-                "annotation_limit_percent": annotation_limit_percent,
-                "annotator_evaluation_continuous_tasks": annotator_evaluation_continuous_tasks,
-                "annotator_evaluation_enabled": annotator_evaluation_enabled,
-                "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
-                "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
-                "annotator_evaluation_onboarding_tasks": annotator_evaluation_onboarding_tasks,
-                "assignment_settings": convert_and_respect_annotation_metadata(
-                    object_=assignment_settings, annotation=AssignmentSettingsRequest, direction="write"
-                ),
+                "title": title,
+                "description": description,
+                "label_config": label_config,
+                "expert_instruction": expert_instruction,
+                "show_instruction": show_instruction,
+                "show_skip_button": show_skip_button,
+                "enable_empty_annotation": enable_empty_annotation,
+                "show_annotation_history": show_annotation_history,
+                "organization": organization,
                 "color": color,
-                "comment_classification_config": comment_classification_config,
-                "control_weights": control_weights,
+                "maximum_annotations": maximum_annotations,
+                "is_published": is_published,
+                "model_version": model_version,
+                "is_draft": is_draft,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "custom_script": custom_script,
-                "custom_task_lock_ttl": custom_task_lock_ttl,
-                "description": description,
-                "enable_empty_annotation": enable_empty_annotation,
-                "evaluate_predictions_automatically": evaluate_predictions_automatically,
-                "expert_instruction": expert_instruction,
-                "is_draft": is_draft,
-                "is_published": is_published,
-                "label_config": label_config,
-                "max_additional_annotators_assignable": max_additional_annotators_assignable,
-                "maximum_annotations": maximum_annotations,
                 "min_annotations_to_start_training": min_annotations_to_start_training,
-                "model_version": model_version,
-                "organization": organization,
+                "show_collab_predictions": show_collab_predictions,
+                "sampling": sampling,
+                "show_ground_truth_first": show_ground_truth_first,
+                "annotator_evaluation_enabled": annotator_evaluation_enabled,
+                "show_overlap_first": show_overlap_first,
                 "overlap_cohort_percentage": overlap_cohort_percentage,
-                "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
-                "pinned_at": pinned_at,
-                "require_comment_on_skip": require_comment_on_skip,
+                "task_data_login": task_data_login,
+                "task_data_password": task_data_password,
+                "control_weights": control_weights,
+                "evaluate_predictions_automatically": evaluate_predictions_automatically,
+                "skip_queue": skip_queue,
                 "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "pinned_at": pinned_at,
+                "workspace": workspace,
                 "review_settings": convert_and_respect_annotation_metadata(
                     object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
                 ),
-                "sampling": sampling,
-                "show_annotation_history": show_annotation_history,
-                "show_collab_predictions": show_collab_predictions,
-                "show_ground_truth_first": show_ground_truth_first,
-                "show_instruction": show_instruction,
-                "show_overlap_first": show_overlap_first,
-                "show_skip_button": show_skip_button,
-                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
-                "skip_queue": skip_queue,
+                "assignment_settings": convert_and_respect_annotation_metadata(
+                    object_=assignment_settings, annotation=AssignmentSettingsRequest, direction="write"
+                ),
+                "agreement_methodology": agreement_methodology,
+                "custom_script": custom_script,
+                "comment_classification_config": comment_classification_config,
+                "require_comment_on_skip": require_comment_on_skip,
                 "strict_task_overlap": strict_task_overlap,
-                "task_data_login": task_data_login,
-                "task_data_password": task_data_password,
-                "title": title,
-                "workspace": workspace,
+                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
+                "custom_task_lock_ttl": custom_task_lock_ttl,
+                "annotation_limit_count": annotation_limit_count,
+                "annotation_limit_percent": annotation_limit_percent,
+                "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
+                "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
+                "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
+                "annotator_evaluation_onboarding_tasks": annotator_evaluation_onboarding_tasks,
+                "agreement_threshold": agreement_threshold,
+                "max_additional_annotators_assignable": max_additional_annotators_assignable,
             },
             headers={
                 "content-type": "application/json",
@@ -831,8 +737,8 @@ class RawProjectsClient:
         id: int,
         *,
         mode: ModeEnum,
-        title: str,
         workspace: int,
+        title: str,
         description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DuplicateProjectsResponse]:
@@ -855,11 +761,11 @@ class RawProjectsClient:
             * `settings` - Only settings
             * `settings,data` - Settings and tasks
 
-        title : str
-            Title of duplicated project
-
         workspace : int
             Workspace, where to place duplicated project
+
+        title : str
+            Title of duplicated project
 
         description : typing.Optional[str]
             Description of duplicated project
@@ -876,10 +782,10 @@ class RawProjectsClient:
             f"api/projects/{jsonable_encoder(id)}/duplicate/",
             method="POST",
             json={
-                "description": description,
                 "mode": mode,
-                "title": title,
                 "workspace": workspace,
+                "title": title,
+                "description": description,
             },
             headers={
                 "content-type": "application/json",
@@ -949,7 +855,7 @@ class RawProjectsClient:
         
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \\
-                    -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+                    -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
                     ```
         
                     ### 2. **POST with files**
@@ -965,7 +871,7 @@ class RawProjectsClient:
         
                     ```bash
                     curl -H 'Authorization: Token abc123' \\
-                    -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
+                    -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
                     ```
         
                     ### 3. **POST with URL**
@@ -973,7 +879,7 @@ class RawProjectsClient:
         
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \\
-                    -X POST 'http://localhost:8000/api/projects/1/import' \\
+                    -X POST 'https://localhost:8080/api/projects/1/import' \\
                     --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
                     ```
         
@@ -1159,6 +1065,96 @@ class RawProjectsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def list_counts(
+        self,
+        *,
+        filter: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        include: typing.Optional[str] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        state: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        workspaces: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PaginatedLseProjectCountsList]:
+        """
+        Returns a list of projects with their counts. For example, task_number which is the total task number in project
+
+        Parameters
+        ----------
+        filter : typing.Optional[str]
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+
+        ids : typing.Optional[str]
+            Filter id by in list
+
+        include : typing.Optional[str]
+            Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        search : typing.Optional[str]
+            Search term for project title and description
+
+        state : typing.Optional[str]
+            Filter current_state by exact match
+
+        title : typing.Optional[str]
+            Filter title by contains (case-insensitive)
+
+        workspaces : typing.Optional[float]
+            Filter workspaces by exact match
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[PaginatedLseProjectCountsList]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/projects/counts/",
+            method="GET",
+            params={
+                "filter": filter,
+                "ids": ids,
+                "include": include,
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "search": search,
+                "state": state,
+                "title": title,
+                "workspaces": workspaces,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PaginatedLseProjectCountsList,
+                    construct_type(
+                        type_=PaginatedLseProjectCountsList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -1283,35 +1279,35 @@ class AsyncRawProjectsClient:
     async def create(
         self,
         *,
-        annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
-        color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Any] = OMIT,
-        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        enable_empty_annotation: typing.Optional[bool] = OMIT,
-        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
-        expert_instruction: typing.Optional[str] = OMIT,
-        is_draft: typing.Optional[bool] = OMIT,
-        is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
-        maximum_annotations: typing.Optional[int] = OMIT,
-        min_annotations_to_start_training: typing.Optional[int] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        overlap_cohort_percentage: typing.Optional[int] = OMIT,
-        pinned_at: typing.Optional[dt.datetime] = OMIT,
-        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
-        show_annotation_history: typing.Optional[bool] = OMIT,
-        show_collab_predictions: typing.Optional[bool] = OMIT,
-        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        expert_instruction: typing.Optional[str] = OMIT,
         show_instruction: typing.Optional[bool] = OMIT,
-        show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        enable_empty_annotation: typing.Optional[bool] = OMIT,
+        show_annotation_history: typing.Optional[bool] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        is_published: typing.Optional[bool] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        is_draft: typing.Optional[bool] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        min_annotations_to_start_training: typing.Optional[int] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
+        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
+        show_overlap_first: typing.Optional[bool] = OMIT,
+        overlap_cohort_percentage: typing.Optional[int] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Any] = OMIT,
+        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
+        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        pinned_at: typing.Optional[dt.datetime] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseProjectCreate]:
@@ -1320,77 +1316,66 @@ class AsyncRawProjectsClient:
 
         Parameters
         ----------
-        annotator_evaluation_enabled : typing.Optional[bool]
-            Enable annotator evaluation for the project
-
-        color : typing.Optional[str]
-
-        control_weights : typing.Optional[typing.Any]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
-
-        created_by : typing.Optional[UserSimpleRequest]
-            Project owner
+        title : typing.Optional[str]
+            Project name. Must be between 3 and 50 characters long.
 
         description : typing.Optional[str]
             Project description
 
-        enable_empty_annotation : typing.Optional[bool]
-            Allow annotators to submit empty annotations
-
-        evaluate_predictions_automatically : typing.Optional[bool]
-            Retrieve and display predictions when loading a task
+        label_config : typing.Optional[str]
+            Label config in XML format. See more about it in documentation
 
         expert_instruction : typing.Optional[str]
             Labeling instructions in HTML format
 
-        is_draft : typing.Optional[bool]
-            Whether or not the project is in the middle of being created
-
-        is_published : typing.Optional[bool]
-            Whether or not the project is published to annotators
-
-        label_config : typing.Optional[str]
-            Label config in XML format. See more about it in documentation
-
-        maximum_annotations : typing.Optional[int]
-            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-
-        min_annotations_to_start_training : typing.Optional[int]
-            Minimum number of completed tasks after which model training is started
-
-        model_version : typing.Optional[str]
-            Machine learning model version
-
-        organization : typing.Optional[int]
-
-        overlap_cohort_percentage : typing.Optional[int]
-
-        pinned_at : typing.Optional[dt.datetime]
-            Pinned date and time
-
-        reveal_preannotations_interactively : typing.Optional[bool]
-            Reveal pre-annotations interactively
-
-        sampling : typing.Optional[SamplingDe5Enum]
-
-        show_annotation_history : typing.Optional[bool]
-            Show annotation history to annotator
-
-        show_collab_predictions : typing.Optional[bool]
-            If set, the annotator can view model predictions
-
-        show_ground_truth_first : typing.Optional[bool]
-            Onboarding mode (true): show ground truth tasks first in the labeling stream
-
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
-
-        show_overlap_first : typing.Optional[bool]
 
         show_skip_button : typing.Optional[bool]
             Show a skip button in interface and allow annotators to skip the task
 
-        skip_queue : typing.Optional[SkipQueueEnum]
+        enable_empty_annotation : typing.Optional[bool]
+            Allow annotators to submit empty annotations
+
+        show_annotation_history : typing.Optional[bool]
+            Show annotation history to annotator
+
+        organization : typing.Optional[int]
+
+        color : typing.Optional[str]
+
+        maximum_annotations : typing.Optional[int]
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+
+        is_published : typing.Optional[bool]
+            Whether or not the project is published to annotators
+
+        model_version : typing.Optional[str]
+            Machine learning model version
+
+        is_draft : typing.Optional[bool]
+            Whether or not the project is in the middle of being created
+
+        created_by : typing.Optional[UserSimpleRequest]
+            Project owner
+
+        min_annotations_to_start_training : typing.Optional[int]
+            Minimum number of completed tasks after which model training is started
+
+        show_collab_predictions : typing.Optional[bool]
+            If set, the annotator can view model predictions
+
+        sampling : typing.Optional[SamplingDe5Enum]
+
+        show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
+
+        annotator_evaluation_enabled : typing.Optional[bool]
+            Enable annotator evaluation for the project
+
+        show_overlap_first : typing.Optional[bool]
+
+        overlap_cohort_percentage : typing.Optional[int]
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -1398,8 +1383,19 @@ class AsyncRawProjectsClient:
         task_data_password : typing.Optional[str]
             Task data credentials: password
 
-        title : typing.Optional[str]
-            Project name. Must be between 3 and 50 characters long.
+        control_weights : typing.Optional[typing.Any]
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+
+        evaluate_predictions_automatically : typing.Optional[bool]
+            Retrieve and display predictions when loading a task
+
+        skip_queue : typing.Optional[SkipQueueEnum]
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal pre-annotations interactively
+
+        pinned_at : typing.Optional[dt.datetime]
+            Pinned date and time
 
         workspace : typing.Optional[int]
 
@@ -1415,37 +1411,37 @@ class AsyncRawProjectsClient:
             "api/projects/",
             method="POST",
             json={
-                "annotator_evaluation_enabled": annotator_evaluation_enabled,
+                "title": title,
+                "description": description,
+                "label_config": label_config,
+                "expert_instruction": expert_instruction,
+                "show_instruction": show_instruction,
+                "show_skip_button": show_skip_button,
+                "enable_empty_annotation": enable_empty_annotation,
+                "show_annotation_history": show_annotation_history,
+                "organization": organization,
                 "color": color,
-                "control_weights": control_weights,
+                "maximum_annotations": maximum_annotations,
+                "is_published": is_published,
+                "model_version": model_version,
+                "is_draft": is_draft,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "description": description,
-                "enable_empty_annotation": enable_empty_annotation,
-                "evaluate_predictions_automatically": evaluate_predictions_automatically,
-                "expert_instruction": expert_instruction,
-                "is_draft": is_draft,
-                "is_published": is_published,
-                "label_config": label_config,
-                "maximum_annotations": maximum_annotations,
                 "min_annotations_to_start_training": min_annotations_to_start_training,
-                "model_version": model_version,
-                "organization": organization,
-                "overlap_cohort_percentage": overlap_cohort_percentage,
-                "pinned_at": pinned_at,
-                "reveal_preannotations_interactively": reveal_preannotations_interactively,
-                "sampling": sampling,
-                "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
+                "sampling": sampling,
                 "show_ground_truth_first": show_ground_truth_first,
-                "show_instruction": show_instruction,
+                "annotator_evaluation_enabled": annotator_evaluation_enabled,
                 "show_overlap_first": show_overlap_first,
-                "show_skip_button": show_skip_button,
-                "skip_queue": skip_queue,
+                "overlap_cohort_percentage": overlap_cohort_percentage,
                 "task_data_login": task_data_login,
                 "task_data_password": task_data_password,
-                "title": title,
+                "control_weights": control_weights,
+                "evaluate_predictions_automatically": evaluate_predictions_automatically,
+                "skip_queue": skip_queue,
+                "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "pinned_at": pinned_at,
                 "workspace": workspace,
             },
             headers={
@@ -1460,96 +1456,6 @@ class AsyncRawProjectsClient:
                     LseProjectCreate,
                     construct_type(
                         type_=LseProjectCreate,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def list_counts(
-        self,
-        *,
-        filter: typing.Optional[str] = None,
-        ids: typing.Optional[str] = None,
-        include: typing.Optional[str] = None,
-        ordering: typing.Optional[str] = None,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
-        state: typing.Optional[str] = None,
-        title: typing.Optional[str] = None,
-        workspaces: typing.Optional[float] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[PaginatedLseProjectCountsList]:
-        """
-        Returns a list of projects with their counts. For example, task_number which is the total task number in project
-
-        Parameters
-        ----------
-        filter : typing.Optional[str]
-            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
-
-        ids : typing.Optional[str]
-            Filter id by in list
-
-        include : typing.Optional[str]
-            Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
-
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        search : typing.Optional[str]
-            Search term for project title and description
-
-        state : typing.Optional[str]
-            Filter current_state by exact match
-
-        title : typing.Optional[str]
-            Filter title by contains (case-insensitive)
-
-        workspaces : typing.Optional[float]
-            Filter workspaces by exact match
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[PaginatedLseProjectCountsList]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/projects/counts/",
-            method="GET",
-            params={
-                "filter": filter,
-                "ids": ids,
-                "include": include,
-                "ordering": ordering,
-                "page": page,
-                "page_size": page_size,
-                "search": search,
-                "state": state,
-                "title": title,
-                "workspaces": workspaces,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    PaginatedLseProjectCountsList,
-                    construct_type(
-                        type_=PaginatedLseProjectCountsList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1642,54 +1548,53 @@ class AsyncRawProjectsClient:
         id: int,
         *,
         members_limit: typing.Optional[int] = None,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        label_config: typing.Optional[str] = OMIT,
+        expert_instruction: typing.Optional[str] = OMIT,
+        show_instruction: typing.Optional[bool] = OMIT,
+        show_skip_button: typing.Optional[bool] = OMIT,
+        enable_empty_annotation: typing.Optional[bool] = OMIT,
+        show_annotation_history: typing.Optional[bool] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        is_published: typing.Optional[bool] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        is_draft: typing.Optional[bool] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        min_annotations_to_start_training: typing.Optional[int] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
+        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
+        show_overlap_first: typing.Optional[bool] = OMIT,
+        overlap_cohort_percentage: typing.Optional[int] = OMIT,
+        task_data_login: typing.Optional[str] = OMIT,
+        task_data_password: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Any] = OMIT,
+        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
+        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        pinned_at: typing.Optional[dt.datetime] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
+        review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
+        assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
         agreement_methodology: typing.Optional[AgreementMethodologyEnum] = OMIT,
-        agreement_threshold: typing.Optional[str] = OMIT,
+        custom_script: typing.Optional[str] = OMIT,
+        comment_classification_config: typing.Optional[str] = OMIT,
+        require_comment_on_skip: typing.Optional[bool] = OMIT,
+        strict_task_overlap: typing.Optional[bool] = OMIT,
+        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
+        custom_task_lock_ttl: typing.Optional[int] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
-        annotator_evaluation_continuous_tasks: typing.Optional[int] = OMIT,
-        annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
+        pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_onboarding_tasks: typing.Optional[int] = OMIT,
-        assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
-        color: typing.Optional[str] = OMIT,
-        comment_classification_config: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Any] = OMIT,
-        created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        custom_script: typing.Optional[str] = OMIT,
-        custom_task_lock_ttl: typing.Optional[int] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        enable_empty_annotation: typing.Optional[bool] = OMIT,
-        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
-        expert_instruction: typing.Optional[str] = OMIT,
-        is_draft: typing.Optional[bool] = OMIT,
-        is_published: typing.Optional[bool] = OMIT,
-        label_config: typing.Optional[str] = OMIT,
+        agreement_threshold: typing.Optional[str] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
-        maximum_annotations: typing.Optional[int] = OMIT,
-        min_annotations_to_start_training: typing.Optional[int] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        overlap_cohort_percentage: typing.Optional[int] = OMIT,
-        pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
-        pinned_at: typing.Optional[dt.datetime] = OMIT,
-        require_comment_on_skip: typing.Optional[bool] = OMIT,
-        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
-        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
-        show_annotation_history: typing.Optional[bool] = OMIT,
-        show_collab_predictions: typing.Optional[bool] = OMIT,
-        show_ground_truth_first: typing.Optional[bool] = OMIT,
-        show_instruction: typing.Optional[bool] = OMIT,
-        show_overlap_first: typing.Optional[bool] = OMIT,
-        show_skip_button: typing.Optional[bool] = OMIT,
-        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
-        strict_task_overlap: typing.Optional[bool] = OMIT,
-        task_data_login: typing.Optional[str] = OMIT,
-        task_data_password: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseProjectUpdate]:
         """
@@ -1702,116 +1607,66 @@ class AsyncRawProjectsClient:
         members_limit : typing.Optional[int]
             Maximum number of members to return
 
-        agreement_methodology : typing.Optional[AgreementMethodologyEnum]
-
-        agreement_threshold : typing.Optional[str]
-            Minimum percent agreement threshold for which minimum number of annotators must agree
-
-        annotation_limit_count : typing.Optional[int]
-
-        annotation_limit_percent : typing.Optional[str]
-
-        annotator_evaluation_continuous_tasks : typing.Optional[int]
-
-        annotator_evaluation_enabled : typing.Optional[bool]
-            Enable annotator evaluation for the project
-
-        annotator_evaluation_minimum_score : typing.Optional[str]
-
-        annotator_evaluation_minimum_tasks : typing.Optional[int]
-
-        annotator_evaluation_onboarding_tasks : typing.Optional[int]
-
-        assignment_settings : typing.Optional[AssignmentSettingsRequest]
-
-        color : typing.Optional[str]
-
-        comment_classification_config : typing.Optional[str]
-
-        control_weights : typing.Optional[typing.Any]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
-
-        created_by : typing.Optional[UserSimpleRequest]
-            Project owner
-
-        custom_script : typing.Optional[str]
-
-        custom_task_lock_ttl : typing.Optional[int]
-            TTL in seconds for task reservations, on new and existing tasks
+        title : typing.Optional[str]
+            Project name. Must be between 3 and 50 characters long.
 
         description : typing.Optional[str]
             Project description
 
-        enable_empty_annotation : typing.Optional[bool]
-            Allow annotators to submit empty annotations
-
-        evaluate_predictions_automatically : typing.Optional[bool]
-            Retrieve and display predictions when loading a task
+        label_config : typing.Optional[str]
+            Label config in XML format. See more about it in documentation
 
         expert_instruction : typing.Optional[str]
             Labeling instructions in HTML format
 
-        is_draft : typing.Optional[bool]
-            Whether or not the project is in the middle of being created
-
-        is_published : typing.Optional[bool]
-            Whether or not the project is published to annotators
-
-        label_config : typing.Optional[str]
-            Label config in XML format. See more about it in documentation
-
-        max_additional_annotators_assignable : typing.Optional[int]
-            Maximum number of additional annotators that can be assigned to a low agreement task
-
-        maximum_annotations : typing.Optional[int]
-            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-
-        min_annotations_to_start_training : typing.Optional[int]
-            Minimum number of completed tasks after which model training is started
-
-        model_version : typing.Optional[str]
-            Machine learning model version
-
-        organization : typing.Optional[int]
-
-        overlap_cohort_percentage : typing.Optional[int]
-
-        pause_on_failed_annotator_evaluation : typing.Optional[bool]
-
-        pinned_at : typing.Optional[dt.datetime]
-            Pinned date and time
-
-        require_comment_on_skip : typing.Optional[bool]
-
-        reveal_preannotations_interactively : typing.Optional[bool]
-            Reveal pre-annotations interactively
-
-        review_settings : typing.Optional[ReviewSettingsRequest]
-
-        sampling : typing.Optional[SamplingDe5Enum]
-
-        show_annotation_history : typing.Optional[bool]
-            Show annotation history to annotator
-
-        show_collab_predictions : typing.Optional[bool]
-            If set, the annotator can view model predictions
-
-        show_ground_truth_first : typing.Optional[bool]
-            Onboarding mode (true): show ground truth tasks first in the labeling stream
-
         show_instruction : typing.Optional[bool]
             Show instructions to the annotator before they start
-
-        show_overlap_first : typing.Optional[bool]
 
         show_skip_button : typing.Optional[bool]
             Show a skip button in interface and allow annotators to skip the task
 
-        show_unused_data_columns_to_annotators : typing.Optional[bool]
+        enable_empty_annotation : typing.Optional[bool]
+            Allow annotators to submit empty annotations
 
-        skip_queue : typing.Optional[SkipQueueEnum]
+        show_annotation_history : typing.Optional[bool]
+            Show annotation history to annotator
 
-        strict_task_overlap : typing.Optional[bool]
+        organization : typing.Optional[int]
+
+        color : typing.Optional[str]
+
+        maximum_annotations : typing.Optional[int]
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+
+        is_published : typing.Optional[bool]
+            Whether or not the project is published to annotators
+
+        model_version : typing.Optional[str]
+            Machine learning model version
+
+        is_draft : typing.Optional[bool]
+            Whether or not the project is in the middle of being created
+
+        created_by : typing.Optional[UserSimpleRequest]
+            Project owner
+
+        min_annotations_to_start_training : typing.Optional[int]
+            Minimum number of completed tasks after which model training is started
+
+        show_collab_predictions : typing.Optional[bool]
+            If set, the annotator can view model predictions
+
+        sampling : typing.Optional[SamplingDe5Enum]
+
+        show_ground_truth_first : typing.Optional[bool]
+            Onboarding mode (true): show ground truth tasks first in the labeling stream
+
+        annotator_evaluation_enabled : typing.Optional[bool]
+            Enable annotator evaluation for the project
+
+        show_overlap_first : typing.Optional[bool]
+
+        overlap_cohort_percentage : typing.Optional[int]
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -1819,10 +1674,58 @@ class AsyncRawProjectsClient:
         task_data_password : typing.Optional[str]
             Task data credentials: password
 
-        title : typing.Optional[str]
-            Project name. Must be between 3 and 50 characters long.
+        control_weights : typing.Optional[typing.Any]
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+
+        evaluate_predictions_automatically : typing.Optional[bool]
+            Retrieve and display predictions when loading a task
+
+        skip_queue : typing.Optional[SkipQueueEnum]
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal pre-annotations interactively
+
+        pinned_at : typing.Optional[dt.datetime]
+            Pinned date and time
 
         workspace : typing.Optional[int]
+
+        review_settings : typing.Optional[ReviewSettingsRequest]
+
+        assignment_settings : typing.Optional[AssignmentSettingsRequest]
+
+        agreement_methodology : typing.Optional[AgreementMethodologyEnum]
+
+        custom_script : typing.Optional[str]
+
+        comment_classification_config : typing.Optional[str]
+
+        require_comment_on_skip : typing.Optional[bool]
+
+        strict_task_overlap : typing.Optional[bool]
+
+        show_unused_data_columns_to_annotators : typing.Optional[bool]
+
+        custom_task_lock_ttl : typing.Optional[int]
+            TTL in seconds for task reservations, on new and existing tasks
+
+        annotation_limit_count : typing.Optional[int]
+
+        annotation_limit_percent : typing.Optional[str]
+
+        pause_on_failed_annotator_evaluation : typing.Optional[bool]
+
+        annotator_evaluation_minimum_score : typing.Optional[str]
+
+        annotator_evaluation_minimum_tasks : typing.Optional[int]
+
+        annotator_evaluation_onboarding_tasks : typing.Optional[int]
+
+        agreement_threshold : typing.Optional[str]
+            Minimum percent agreement threshold for which minimum number of annotators must agree
+
+        max_additional_annotators_assignable : typing.Optional[int]
+            Maximum number of additional annotators that can be assigned to a low agreement task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1839,60 +1742,59 @@ class AsyncRawProjectsClient:
                 "members_limit": members_limit,
             },
             json={
-                "agreement_methodology": agreement_methodology,
-                "agreement_threshold": agreement_threshold,
-                "annotation_limit_count": annotation_limit_count,
-                "annotation_limit_percent": annotation_limit_percent,
-                "annotator_evaluation_continuous_tasks": annotator_evaluation_continuous_tasks,
-                "annotator_evaluation_enabled": annotator_evaluation_enabled,
-                "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
-                "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
-                "annotator_evaluation_onboarding_tasks": annotator_evaluation_onboarding_tasks,
-                "assignment_settings": convert_and_respect_annotation_metadata(
-                    object_=assignment_settings, annotation=AssignmentSettingsRequest, direction="write"
-                ),
+                "title": title,
+                "description": description,
+                "label_config": label_config,
+                "expert_instruction": expert_instruction,
+                "show_instruction": show_instruction,
+                "show_skip_button": show_skip_button,
+                "enable_empty_annotation": enable_empty_annotation,
+                "show_annotation_history": show_annotation_history,
+                "organization": organization,
                 "color": color,
-                "comment_classification_config": comment_classification_config,
-                "control_weights": control_weights,
+                "maximum_annotations": maximum_annotations,
+                "is_published": is_published,
+                "model_version": model_version,
+                "is_draft": is_draft,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "custom_script": custom_script,
-                "custom_task_lock_ttl": custom_task_lock_ttl,
-                "description": description,
-                "enable_empty_annotation": enable_empty_annotation,
-                "evaluate_predictions_automatically": evaluate_predictions_automatically,
-                "expert_instruction": expert_instruction,
-                "is_draft": is_draft,
-                "is_published": is_published,
-                "label_config": label_config,
-                "max_additional_annotators_assignable": max_additional_annotators_assignable,
-                "maximum_annotations": maximum_annotations,
                 "min_annotations_to_start_training": min_annotations_to_start_training,
-                "model_version": model_version,
-                "organization": organization,
+                "show_collab_predictions": show_collab_predictions,
+                "sampling": sampling,
+                "show_ground_truth_first": show_ground_truth_first,
+                "annotator_evaluation_enabled": annotator_evaluation_enabled,
+                "show_overlap_first": show_overlap_first,
                 "overlap_cohort_percentage": overlap_cohort_percentage,
-                "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
-                "pinned_at": pinned_at,
-                "require_comment_on_skip": require_comment_on_skip,
+                "task_data_login": task_data_login,
+                "task_data_password": task_data_password,
+                "control_weights": control_weights,
+                "evaluate_predictions_automatically": evaluate_predictions_automatically,
+                "skip_queue": skip_queue,
                 "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "pinned_at": pinned_at,
+                "workspace": workspace,
                 "review_settings": convert_and_respect_annotation_metadata(
                     object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
                 ),
-                "sampling": sampling,
-                "show_annotation_history": show_annotation_history,
-                "show_collab_predictions": show_collab_predictions,
-                "show_ground_truth_first": show_ground_truth_first,
-                "show_instruction": show_instruction,
-                "show_overlap_first": show_overlap_first,
-                "show_skip_button": show_skip_button,
-                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
-                "skip_queue": skip_queue,
+                "assignment_settings": convert_and_respect_annotation_metadata(
+                    object_=assignment_settings, annotation=AssignmentSettingsRequest, direction="write"
+                ),
+                "agreement_methodology": agreement_methodology,
+                "custom_script": custom_script,
+                "comment_classification_config": comment_classification_config,
+                "require_comment_on_skip": require_comment_on_skip,
                 "strict_task_overlap": strict_task_overlap,
-                "task_data_login": task_data_login,
-                "task_data_password": task_data_password,
-                "title": title,
-                "workspace": workspace,
+                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
+                "custom_task_lock_ttl": custom_task_lock_ttl,
+                "annotation_limit_count": annotation_limit_count,
+                "annotation_limit_percent": annotation_limit_percent,
+                "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
+                "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
+                "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
+                "annotator_evaluation_onboarding_tasks": annotator_evaluation_onboarding_tasks,
+                "agreement_threshold": agreement_threshold,
+                "max_additional_annotators_assignable": max_additional_annotators_assignable,
             },
             headers={
                 "content-type": "application/json",
@@ -1958,8 +1860,8 @@ class AsyncRawProjectsClient:
         id: int,
         *,
         mode: ModeEnum,
-        title: str,
         workspace: int,
+        title: str,
         description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DuplicateProjectsResponse]:
@@ -1982,11 +1884,11 @@ class AsyncRawProjectsClient:
             * `settings` - Only settings
             * `settings,data` - Settings and tasks
 
-        title : str
-            Title of duplicated project
-
         workspace : int
             Workspace, where to place duplicated project
+
+        title : str
+            Title of duplicated project
 
         description : typing.Optional[str]
             Description of duplicated project
@@ -2003,10 +1905,10 @@ class AsyncRawProjectsClient:
             f"api/projects/{jsonable_encoder(id)}/duplicate/",
             method="POST",
             json={
-                "description": description,
                 "mode": mode,
-                "title": title,
                 "workspace": workspace,
+                "title": title,
+                "description": description,
             },
             headers={
                 "content-type": "application/json",
@@ -2076,7 +1978,7 @@ class AsyncRawProjectsClient:
         
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \\
-                    -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+                    -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
                     ```
         
                     ### 2. **POST with files**
@@ -2092,7 +1994,7 @@ class AsyncRawProjectsClient:
         
                     ```bash
                     curl -H 'Authorization: Token abc123' \\
-                    -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
+                    -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
                     ```
         
                     ### 3. **POST with URL**
@@ -2100,7 +2002,7 @@ class AsyncRawProjectsClient:
         
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \\
-                    -X POST 'http://localhost:8000/api/projects/1/import' \\
+                    -X POST 'https://localhost:8080/api/projects/1/import' \\
                     --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
                     ```
         
@@ -2277,6 +2179,96 @@ class AsyncRawProjectsClient:
                     ProjectLabelConfig,
                     construct_type(
                         type_=ProjectLabelConfig,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_counts(
+        self,
+        *,
+        filter: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        include: typing.Optional[str] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        state: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        workspaces: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PaginatedLseProjectCountsList]:
+        """
+        Returns a list of projects with their counts. For example, task_number which is the total task number in project
+
+        Parameters
+        ----------
+        filter : typing.Optional[str]
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+
+        ids : typing.Optional[str]
+            Filter id by in list
+
+        include : typing.Optional[str]
+            Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        search : typing.Optional[str]
+            Search term for project title and description
+
+        state : typing.Optional[str]
+            Filter current_state by exact match
+
+        title : typing.Optional[str]
+            Filter title by contains (case-insensitive)
+
+        workspaces : typing.Optional[float]
+            Filter workspaces by exact match
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[PaginatedLseProjectCountsList]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/projects/counts/",
+            method="GET",
+            params={
+                "filter": filter,
+                "ids": ids,
+                "include": include,
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "search": search,
+                "state": state,
+                "title": title,
+                "workspaces": workspaces,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PaginatedLseProjectCountsList,
+                    construct_type(
+                        type_=PaginatedLseProjectCountsList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
