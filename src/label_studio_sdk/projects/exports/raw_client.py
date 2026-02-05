@@ -54,15 +54,15 @@ class RawExportsClient:
                 For example, to export JSON annotations for a project to a file called `annotations.json`,
                 run the following from the command line:
                 ```bash
-                curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
                 To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
                 ```bash
-                curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
                 To export specific tasks with IDs of 123 and 345, run the following from the command line:
                 ```bash
-                curl -X GET 'https://localhost:8080/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
 
 
@@ -540,15 +540,15 @@ class AsyncRawExportsClient:
                 For example, to export JSON annotations for a project to a file called `annotations.json`,
                 run the following from the command line:
                 ```bash
-                curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
                 To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
                 ```bash
-                curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
                 To export specific tasks with IDs of 123 and 345, run the following from the command line:
                 ```bash
-                curl -X GET 'https://localhost:8080/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
 
 

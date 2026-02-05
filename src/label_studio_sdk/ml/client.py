@@ -37,7 +37,7 @@ class MlClient:
             List all configured ML backends for a specific project by ID.
             Use the following cURL command:
             ```bash
-            curl https://localhost:8080/api/ml?project={project_id} -H 'Authorization: Token abc123'
+            curl http://localhost:8000/api/ml?project={project_id} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -85,7 +85,7 @@ class MlClient:
             Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
             command:
             ```bash
-            curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml -H 'Authorization: Token abc123'\\
+            curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml -H 'Authorization: Token abc123'\\
             --data '{"url": "http://localhost:9090", "project": {project_id}}' 
             
         
@@ -159,7 +159,7 @@ class MlClient:
             Get details about a specific ML backend connection by ID. For example, make a GET request using the
             following cURL command:
             ```bash
-            curl https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+            curl http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -194,7 +194,7 @@ class MlClient:
             Remove an existing ML backend connection by ID. For example, use the
             following cURL command:
             ```bash
-            curl -X DELETE https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+            curl -X DELETE http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -242,7 +242,7 @@ class MlClient:
         
             Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
             ```bash
-            curl -X PATCH -H 'Content-type: application/json' https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\\
+            curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\\
             --data '{"url": "http://localhost:9091"}' 
             
         
@@ -516,7 +516,7 @@ class AsyncMlClient:
             List all configured ML backends for a specific project by ID.
             Use the following cURL command:
             ```bash
-            curl https://localhost:8080/api/ml?project={project_id} -H 'Authorization: Token abc123'
+            curl http://localhost:8000/api/ml?project={project_id} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -572,7 +572,7 @@ class AsyncMlClient:
             Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
             command:
             ```bash
-            curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml -H 'Authorization: Token abc123'\\
+            curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml -H 'Authorization: Token abc123'\\
             --data '{"url": "http://localhost:9090", "project": {project_id}}' 
             
         
@@ -654,7 +654,7 @@ class AsyncMlClient:
             Get details about a specific ML backend connection by ID. For example, make a GET request using the
             following cURL command:
             ```bash
-            curl https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+            curl http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -697,7 +697,7 @@ class AsyncMlClient:
             Remove an existing ML backend connection by ID. For example, use the
             following cURL command:
             ```bash
-            curl -X DELETE https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+            curl -X DELETE http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -753,7 +753,7 @@ class AsyncMlClient:
         
             Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
             ```bash
-            curl -X PATCH -H 'Content-type: application/json' https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\\
+            curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\\
             --data '{"url": "http://localhost:9091"}' 
             
         
