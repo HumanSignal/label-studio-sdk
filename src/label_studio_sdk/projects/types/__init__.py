@@ -9,10 +9,16 @@ if typing.TYPE_CHECKING:
     from .duplicate_projects_response import DuplicateProjectsResponse
     from .import_predictions_projects_response import ImportPredictionsProjectsResponse
     from .import_tasks_projects_response import ImportTasksProjectsResponse
+    from .lse_project_create_request_control_weights_value import LseProjectCreateRequestControlWeightsValue
+    from .patched_lse_project_update_request_control_weights_value import (
+        PatchedLseProjectUpdateRequestControlWeightsValue,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "DuplicateProjectsResponse": ".duplicate_projects_response",
     "ImportPredictionsProjectsResponse": ".import_predictions_projects_response",
     "ImportTasksProjectsResponse": ".import_tasks_projects_response",
+    "LseProjectCreateRequestControlWeightsValue": ".lse_project_create_request_control_weights_value",
+    "PatchedLseProjectUpdateRequestControlWeightsValue": ".patched_lse_project_update_request_control_weights_value",
 }
 
 
@@ -37,4 +43,10 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["DuplicateProjectsResponse", "ImportPredictionsProjectsResponse", "ImportTasksProjectsResponse"]
+__all__ = [
+    "DuplicateProjectsResponse",
+    "ImportPredictionsProjectsResponse",
+    "ImportTasksProjectsResponse",
+    "LseProjectCreateRequestControlWeightsValue",
+    "PatchedLseProjectUpdateRequestControlWeightsValue",
+]
