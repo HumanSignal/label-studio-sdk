@@ -28,6 +28,9 @@ from .configs import (
     PREDICTION_TEXTAREA_CONFIG,
     PREDICTION_TIMESERIES_LABELS_CONFIG,
     PREDICTION_COMPLEX_CONFIG,
+    PREDICTION_CHAT_CONFIG,
+    PREDICTION_REACTCODE_CONFIG,
+    PREDICTION_REACTCODE_CONFIG_WITHOUT_TO_NAME,
 )
 
 
@@ -1083,3 +1086,112 @@ class TestPredictionValidation:
                 }
             ]
         }
+
+    # ------------------------------------------------------------------
+    # Self-referencing tags: tags where from_name == to_name
+    # These validate the auto-created control tags for <Chat> and <ReactCode>.
+    # ------------------------------------------------------------------
+
+    def test_chat_prediction_validation(self):
+        """Test Chat self-referencing tag: from_name == to_name, type == 'chatmessage'."""
+        li = LabelInterface(PREDICTION_CHAT_CONFIG)
+
+        # Valid prediction
+        valid_pred = {
+            "result": [{
+                "from_name": "chat",
+                "to_name": "chat",
+                "type": "chatmessage",
+                "value": {
+                    "chatmessage": {
+                        "role": "assistant",
+                        "content": "Hello, how can I help you?"
+                    }
+                }
+            }],
+            "score": 0.9
+        }
+        assert li.validate_prediction(valid_pred) is True
+
+        # Valid - with optional createdAt field
+        valid_pred_with_ts = copy.deepcopy(valid_pred)
+        valid_pred_with_ts["result"][0]["value"]["chatmessage"]["createdAt"] = 1700000000
+        assert li.validate_prediction(valid_pred_with_ts) is True
+
+        # Invalid - missing required "content" field
+        invalid_pred = copy.deepcopy(valid_pred)
+        del invalid_pred["result"][0]["value"]["chatmessage"]["content"]
+        assert li.validate_prediction(invalid_pred) is False
+
+        # Invalid - missing required "role" field
+        invalid_pred = copy.deepcopy(valid_pred)
+        del invalid_pred["result"][0]["value"]["chatmessage"]["role"]
+        assert li.validate_prediction(invalid_pred) is False
+
+        # Invalid - missing "chatmessage" key entirely
+        invalid_pred = copy.deepcopy(valid_pred)
+        invalid_pred["result"][0]["value"] = {"text": "wrong structure"}
+        assert li.validate_prediction(invalid_pred) is False
+
+        # Invalid - wrong type (should be "chatmessage", not "chat")
+        invalid_pred = copy.deepcopy(valid_pred)
+        invalid_pred["result"][0]["type"] = "chat"
+        assert li.validate_prediction(invalid_pred) is False
+
+    @pytest.mark.parametrize("config", [
+        PREDICTION_REACTCODE_CONFIG,
+        PREDICTION_REACTCODE_CONFIG_WITHOUT_TO_NAME,
+    ], ids=["with_toName", "without_toName"])
+    def test_reactcode_prediction_validation(self, config):
+        """Test ReactCode self-referencing tag: from_name == to_name, type == 'reactcode'."""
+        li = LabelInterface(config)
+
+        # Valid prediction with outputs matching the config
+        valid_pred = {
+            "result": [{
+                "from_name": "code",
+                "to_name": "code",
+                "type": "reactcode",
+                "value": {
+                    "reactcode": {
+                        "field1": "value1",
+                        "field2": "value2"
+                    }
+                }
+            }],
+            "score": 0.85
+        }
+        errors = li.validate_prediction(valid_pred, return_errors=True)
+        assert li.validate_prediction(valid_pred) is True, f"Expected valid prediction, got errors: {errors}"
+
+        # Valid - reactcode value can contain any dict (Dict[str, Any])
+        valid_pred_extra = copy.deepcopy(valid_pred)
+        valid_pred_extra["result"][0]["value"]["reactcode"]["extra"] = 42
+        errors = li.validate_prediction(valid_pred_extra, return_errors=True)
+        assert li.validate_prediction(valid_pred_extra) is True, f"Expected valid prediction, got errors: {errors}"
+
+        # Invalid - missing "reactcode" key entirely
+        invalid_pred = copy.deepcopy(valid_pred)
+        invalid_pred["result"][0]["value"] = {"text": "wrong structure"}
+        assert li.validate_prediction(invalid_pred) is False
+
+        # Invalid - wrong type (should be "reactcode")
+        invalid_pred = copy.deepcopy(valid_pred)
+        invalid_pred["result"][0]["type"] = "code"
+        assert li.validate_prediction(invalid_pred) is False
+
+        # Invalid - from_name doesn't match to_name
+        invalid_pred = copy.deepcopy(valid_pred)
+        invalid_pred["result"][0]["to_name"] = "other"
+        assert li.validate_prediction(invalid_pred) is False
+
+    @pytest.mark.parametrize("config", [
+        PREDICTION_CHAT_CONFIG,
+        PREDICTION_REACTCODE_CONFIG,
+        PREDICTION_REACTCODE_CONFIG_WITHOUT_TO_NAME,
+    ], ids=["chat", "reactcode_with_toName", "reactcode_without_toName"])
+    def test_self_referencing_tag_empty_result(self, config):
+        """Empty result arrays should be valid for self-referencing tags (Chat, ReactCode)."""
+        li = LabelInterface(config)
+        empty_pred = {"result": [], "score": 0.5}
+        assert li.validate_prediction(empty_pred) is True
