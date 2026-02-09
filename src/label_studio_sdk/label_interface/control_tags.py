@@ -595,18 +595,23 @@ class LabelsTag(ControlTag):
         region = context.get('region', {})
         result = context.get('result', [])
 
+        # Only check for split-format pairs if the current region is a labels region
         if (region.get('type') or '').lower() != 'labels':
             return None
 
+        # Check if the current region has an id
         region_id = region.get('id')
         if region_id is None:
             return None
 
+        # Iterate through all regions to find a matching geometry partner
         for r in result:
             if not isinstance(r, dict):
                 continue
             r_type = (r.get('type') or '').lower()
+            # Checks if sibling region has the same id and is a geometry type
             if r.get('id') == region_id and r_type in geometry_type_to_value_class:
+                # Return the geometry value class to validate the attributes of the current region
                 return geometry_type_to_value_class[r_type]
 
         return None
