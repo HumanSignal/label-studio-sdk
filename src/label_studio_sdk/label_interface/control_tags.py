@@ -42,6 +42,8 @@ _TAG_TO_CLASS = {
     "taxonomy": "TaxonomyTag",
     "textarea": "TextAreaTag",
     "timeserieslabels": "TimeSeriesLabelsTag",
+    
+    # SELF-REFERENCING TAGS
     "chatmessage": "ChatMessageTag",
     "reactcode": "ReactCodeTag",
 }
