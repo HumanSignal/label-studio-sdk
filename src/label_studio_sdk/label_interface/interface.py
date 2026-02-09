@@ -832,7 +832,10 @@ class LabelInterface:
                     continue
 
                 if region.get('type') != "relation":
-                    region_errors = self.validate_region(region, return_errors=True, region_index=i)
+                    region_errors = self.validate_region(
+                        region, return_errors=True, region_index=i,
+                        context={'result': result, 'region': region},
+                    )
                     errors.extend(region_errors)
                     if not region_errors:  # Only add to regions if no errors
                         regions.append(region)
@@ -886,12 +889,14 @@ class LabelInterface:
         """
         return self._validate_object(prediction, return_errors)
 
-    def _validate_region_logic(self, region, region_index=0) -> Tuple[bool, List[str]]:
+    def _validate_region_logic(self, region, region_index=0, context=None) -> Tuple[bool, List[str]]:
         """Helper method to perform region validation logic.
 
         Args:
             region (dict): The region to be validated.
             region_index (int): Index of the region for error reporting.
+            context (dict, optional): Additional context forwarded to
+                ``control.validate_value()``.
 
         Returns:
             tuple: (is_valid, errors) where is_valid is bool and errors is list of strings.
@@ -934,7 +939,7 @@ class LabelInterface:
 
         # Validate the value using control's validate_value method
         try:
-            if not control.validate_value(region["value"]):
+            if not control.validate_value(region["value"], context=context):
                 # Prefer a clearer message for rectangle geometry bounds
                 tag_lower = getattr(control, 'tag', '').lower()
                 if tag_lower in ('rectangle', 'rectanglelabels'):
@@ -985,7 +990,7 @@ class LabelInterface:
         except Exception:
             return "unknown validation rules"
 
-    def validate_region(self, region, return_errors=False, region_index=0):
+    def validate_region(self, region, return_errors=False, region_index=0, context=None):
         """Validates a region from the annotation against the current
         configuration.
 
@@ -999,12 +1004,16 @@ class LabelInterface:
             region (dict): The region to be validated.
             return_errors (bool): If True, returns a list of error messages instead of boolean
             region_index (int): Index of the region for error reporting (used when return_errors=True)
+            context (dict, optional): Additional context passed through to
+                ``control.validate_value()``.  May contain ``result`` (the
+                full result list) and ``region`` (the current region dict)
+                so that control tags can inspect sibling regions.
 
         Returns:
             Union[bool, List[str]]: If return_errors=False, returns True/False.
                                    If return_errors=True, returns list of error messages.
         """
-        is_valid, errors = self._validate_region_logic(region, region_index)
+        is_valid, errors = self._validate_region_logic(region, region_index, context=context)
 
         if return_errors:
             return errors
