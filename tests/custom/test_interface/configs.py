@@ -377,3 +377,22 @@ PREDICTION_COMPLEX_CONFIG = """
   </Labels>
 </View>
 """
+
+# Self-referencing tag configs: tags where from_name == to_name
+PREDICTION_CHAT_CONFIG = """
+<View>
+  <Chat name="chat" value="$messages"/>
+</View>
+"""
+
+PREDICTION_REACTCODE_CONFIG = """
+<View>
+  <ReactCode style="height: 95vh" name="code" toName="code" outputs="field1, field2"/>
+</View>
+"""
+
+PREDICTION_REACTCODE_CONFIG_WITHOUT_TO_NAME = """
+<View>
+  <ReactCode style="height: 95vh" name="code" outputs="field1, field2"/>
+</View>
+"""
