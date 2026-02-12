@@ -6,7 +6,7 @@ import os
 import re
 import xml.etree.ElementTree
 from urllib.parse import urlencode
-from typing import Optional
+from typing import List, Optional
 
 from .base import LabelStudioTag, get_tag_class
 
@@ -154,6 +154,10 @@ class ObjectTag(LabelStudioTag):
             "value": '$' + self.value if self.value is not None else None
         }
 
+    def validate_config(self) -> List[str]:
+        """Validate tag-specific attribute values. Override in subclasses. Returns list of error messages."""
+        return []
+
     # and have generate_example in each
     def generate_example_value(self, mode="upload", secure_mode=False):
         """ """
@@ -224,13 +228,56 @@ class TextTag(ObjectTag):
             return examples.get("TextRaw")
 
 
+MIN_PLAYBACK_SPEED = 0.05
+MAX_PLAYBACK_SPEED = 10
 class VideoTag(ObjectTag):
     """ """
     tag: str = "Video"
+
+
     
     def _generate_example(self, examples, only_urls=False):
         """ """
         return examples.get("Video")
+
+    def _parse_speed_attr(self, attr_name: str) -> Optional[float]:
+        """Parse a playback speed attribute from tag attrs. Returns None if not present or invalid."""
+        if not self.attr:
+            return None
+        # XML attributes may be stored with original casing
+        raw = self.attr.get(attr_name) or self.attr.get(attr_name.lower())
+        if raw is None or (isinstance(raw, str) and raw.strip() == ""):
+            return None
+        try:
+            return float(raw)
+        except (TypeError, ValueError):
+            return None
+
+    def validate_config(self) -> List[str]:
+        """Validate Video tag playback speed attribute values. Returns list of error messages."""
+        errors: List[str] = []
+        default_speed = self._parse_speed_attr("defaultPlaybackSpeed")
+        min_speed = self._parse_speed_attr("minPlaybackSpeed")
+
+        if default_speed is not None:
+            if default_speed < MIN_PLAYBACK_SPEED or default_speed > MAX_PLAYBACK_SPEED:
+                errors.append(
+                    f'Video tag "{self.name}": defaultPlaybackSpeed must be '
+                    f"between {MIN_PLAYBACK_SPEED} and {MAX_PLAYBACK_SPEED}, got {default_speed}"
+                )
+        if min_speed is not None:
+            if min_speed < MIN_PLAYBACK_SPEED or min_speed > MAX_PLAYBACK_SPEED:
+                errors.append(
+                    f'Video tag "{self.name}": minPlaybackSpeed must be '
+                    f"between {MIN_PLAYBACK_SPEED} and {MAX_PLAYBACK_SPEED}, got {min_speed}"
+                )
+        if default_speed is not None and min_speed is not None:
+            if min_speed > default_speed:
+                errors.append(
+                    f'Video tag "{self.name}": minPlaybackSpeed ({min_speed}) '
+                    f"must not exceed defaultPlaybackSpeed ({default_speed})"
+                )
+        return errors
 
 
 class HyperTextTag(ObjectTag):
