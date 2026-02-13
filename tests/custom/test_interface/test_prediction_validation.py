@@ -1195,3 +1195,231 @@ class TestPredictionValidation:
         li = LabelInterface(config)
         empty_pred = {"result": [], "score": 0.5}
         assert li.validate_prediction(empty_pred) is True
+
+    # ------------------------------------------------------------------
+    # Split format: geometry + labels as separate results sharing the same id
+    # ------------------------------------------------------------------
+
+    SPLIT_FORMAT_CONFIG = """
+    <View>
+      <Image name="image" value="$image" maxHeight="auto"/>
+      <Labels name="label" toName="image">
+        <Label value="Item"/>
+        <Label value="Other"/>
+      </Labels>
+      <Rectangle name="bbox" toName="image"/>
+      <Polygon name="poly" toName="image"/>
+    </View>
+    """
+
+    def test_split_format_polygon_with_labels(self):
+        """Split format: polygon + labels sharing the same id should validate."""
+        li = LabelInterface(self.SPLIT_FORMAT_CONFIG)
+
+        pred = {
+            "result": [
+                {
+                    "id": "poly1",
+                    "type": "polygon",
+                    "from_name": "poly",
+                    "to_name": "image",
+                    "value": {
+                        "points": [[10, 40], [8, 41], [8, 45], [37, 45], [36, 44]]
+                    },
+                    "original_width": 1656,
+                    "original_height": 2342,
+                },
+                {
+                    "id": "poly1",
+                    "type": "labels",
+                    "from_name": "label",
+                    "to_name": "image",
+                    "value": {
+                        "points": [[10, 40], [8, 41], [8, 45], [37, 45], [36, 44]],
+                        "labels": ["Item"],
+                    },
+                    "original_width": 1656,
+                    "original_height": 2342,
+                },
+            ]
+        }
+        assert li.validate_prediction(pred) is True
+        errors = li.validate_prediction(pred, return_errors=True)
+        assert errors == []
+
+    def test_split_format_rectangle_with_labels(self):
+        """Split format: rectangle + labels sharing the same id should validate."""
+        li = LabelInterface(self.SPLIT_FORMAT_CONFIG)
+
+        pred = {
+            "result": [
+                {
+                    "id": "rect1",
+                    "type": "rectangle",
+                    "from_name": "bbox",
+                    "to_name": "image",
+                    "value": {"x": 5, "y": 10, "width": 30, "height": 20, "rotation": 0},
+                },
+                {
+                    "id": "rect1",
+                    "type": "labels",
+                    "from_name": "label",
+                    "to_name": "image",
+                    "value": {
+                        "x": 5, "y": 10, "width": 30, "height": 20,
+                        "labels": ["Item"], "rotation": 0,
+                    },
+                },
+            ]
+        }
+        assert li.validate_prediction(pred) is True
+
+    def test_split_format_mixed_geometry_types(self):
+        """Split format with both rectangle and polygon pairs in one prediction."""
+        li = LabelInterface(self.SPLIT_FORMAT_CONFIG)
+
+        pred = {
+            "result": [
+                {
+                    "id": "rect1", "type": "rectangle",
+                    "from_name": "bbox", "to_name": "image",
+                    "value": {"x": 5, "y": 10, "width": 30, "height": 20, "rotation": 0},
+                },
+                {
+                    "id": "rect1", "type": "labels",
+                    "from_name": "label", "to_name": "image",
+                    "value": {"x": 5, "y": 10, "width": 30, "height": 20, "labels": ["Item"], "rotation": 0},
+                },
+                {
+                    "id": "poly1", "type": "polygon",
+                    "from_name": "poly", "to_name": "image",
+                    "value": {"points": [[50, 50], [70, 50], [70, 70], [50, 70]]},
+                },
+                {
+                    "id": "poly1", "type": "labels",
+                    "from_name": "label", "to_name": "image",
+                    "value": {"points": [[50, 50], [70, 50], [70, 70], [50, 70]], "labels": ["Other"]},
+                },
+            ]
+        }
+        assert li.validate_prediction(pred) is True
+
+    def test_split_format_invalid_label_value(self):
+        """Split format with an invalid label should still fail validation."""
+        li = LabelInterface(self.SPLIT_FORMAT_CONFIG)
+
+        pred = {
+            "result": [
+                {
+                    "id": "poly1", "type": "polygon",
+                    "from_name": "poly", "to_name": "image",
+                    "value": {"points": [[10, 10], [20, 10], [20, 20]]},
+                },
+                {
+                    "id": "poly1", "type": "labels",
+                    "from_name": "label", "to_name": "image",
+                    "value": {"points": [[10, 10], [20, 10], [20, 20]], "labels": ["INVALID"]},
+                },
+            ]
+        }
+        assert li.validate_prediction(pred) is False
+        errors = li.validate_prediction(pred, return_errors=True)
+        assert any("Invalid value" in e for e in errors)
+
+    def test_split_format_labels_without_geometry_partner(self):
+        """A standalone labels result (no geometry partner with same id) is NOT
+        detected as split format and should fail strict LabelsValue validation
+        (requires start/end)."""
+        li = LabelInterface(self.SPLIT_FORMAT_CONFIG)
+
+        pred = {
+            "result": [
+                {
+                    "id": "orphan1", "type": "labels",
+                    "from_name": "label", "to_name": "image",
+                    "value": {"points": [[10, 10]], "labels": ["Item"]},
+                },
+            ]
+        }
+        # Without a geometry partner, split_format=False so strict
+        # LabelsValue (requiring start/end) is used → should fail.
+        assert li.validate_prediction(pred) is False
+
+    def test_split_format_customer_exact_data(self):
+        """Exact reproduction of the customer's reported data from UTC-539."""
+        li = LabelInterface(self.SPLIT_FORMAT_CONFIG)
+
+        pred = {
+            "result": [
+                {
+                    "id": "TuNajNh1Di",
+                    "type": "polygon",
+                    "value": {
+                        "points": [
+                            [10.828681302093385, 40.51219122131345],
+                            [8.265036443862948, 40.92312606323242],
+                            [7.969370810180719, 45.365310905151375],
+                            [9.1171875, 45.375],
+                            [22.953125, 45.4375],
+                            [37.54082816841115, 45.37968484191895],
+                            [36.0625, 44.28125],
+                            [32.4375, 43.09375],
+                            [30.984375, 41.84375],
+                            [29.046875, 41.03125],
+                        ]
+                    },
+                    "to_name": "image",
+                    "from_name": "poly",
+                    "image_rotation": 0,
+                    "original_width": 1656,
+                    "original_height": 2342,
+                },
+                {
+                    "id": "TuNajNh1Di",
+                    "type": "labels",
+                    "value": {
+                        "points": [
+                            [10.828681302093385, 40.51219122131345],
+                            [8.265036443862948, 40.92312606323242],
+                            [7.969370810180719, 45.365310905151375],
+                            [9.1171875, 45.375],
+                            [22.953125, 45.4375],
+                            [37.54082816841115, 45.37968484191895],
+                            [36.0625, 44.28125],
+                            [32.4375, 43.09375],
+                            [30.984375, 41.84375],
+                            [29.046875, 41.03125],
+                        ],
+                        "labels": ["Item"],
+                    },
+                    "to_name": "image",
+                    "from_name": "label",
+                    "image_rotation": 0,
+                    "original_width": 1656,
+                    "original_height": 2342,
+                },
+            ]
+        }
+        assert li.validate_prediction(pred) is True
+
+    def test_split_format_invalid_geometry_in_labels(self):
+        """Split format where the labels companion has invalid geometry fields
+        should fail -- geometry is validated against the partner's model."""
+        li = LabelInterface(self.SPLIT_FORMAT_CONFIG)
+
+        pred = {
+            "result": [
+                {
+                    "id": "rect1", "type": "rectangle",
+                    "from_name": "bbox", "to_name": "image",
+                    "value": {"x": 5, "y": 10, "width": 30, "height": 20, "rotation": 0},
+                },
+                {
+                    "id": "rect1", "type": "labels",
+                    "from_name": "label", "to_name": "image",
+                    # x=200 is out of bounds for RectangleValue (le=100)
+                    "value": {"x": 200, "y": 10, "width": 30, "height": 20, "labels": ["Item"]},
+                },
+            ]
+        }
+        assert li.validate_prediction(pred) is False
