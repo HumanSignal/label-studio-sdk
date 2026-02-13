@@ -7,8 +7,10 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .create_bulk_annotations_response_item import CreateBulkAnnotationsResponseItem
+    from .delete_bulk_annotations_response import DeleteBulkAnnotationsResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "CreateBulkAnnotationsResponseItem": ".create_bulk_annotations_response_item"
+    "CreateBulkAnnotationsResponseItem": ".create_bulk_annotations_response_item",
+    "DeleteBulkAnnotationsResponse": ".delete_bulk_annotations_response",
 }
 
 
@@ -33,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateBulkAnnotationsResponseItem"]
+__all__ = ["CreateBulkAnnotationsResponseItem", "DeleteBulkAnnotationsResponse"]
