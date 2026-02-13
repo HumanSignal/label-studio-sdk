@@ -44,7 +44,7 @@ jobs:
       - name: Git Configure
         uses: ./.github/actions-hub/actions/git-configure
         with:
-            username: "${{ github.actor }}"
+          username: "${{ github.actor }}"
 
       - name: Checkout branch
         run: git checkout "${{ inputs.branch_name }}" || git checkout -b "${{ inputs.branch_name }}"
