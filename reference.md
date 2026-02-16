@@ -1136,6 +1136,66 @@ Action which was performed in the last annotation history item
 </dl>
 </details>
 
+<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">delete_bulk</a>() -&gt; AsyncHttpResponse[DeleteBulkAnnotationsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotations.delete_bulk()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">get</a>(...) -&gt; AsyncHttpResponse[Annotation]</code></summary>
 <dl>
 <dd>
