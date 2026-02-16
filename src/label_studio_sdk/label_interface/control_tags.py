@@ -298,7 +298,7 @@ class ControlTag(LabelStudioTag):
             return self._validate_labels(value.get(self._label_attr_name))
         return False
 
-    def validate_value(self, value: dict) -> bool:
+    def validate_value(self, value: dict, context: Optional[dict] = None) -> bool:
         """
         Given "value" from [annotation result format](https://labelstud.io/guide/task_format),
         validate if it's a valid value for this control tag.
@@ -311,6 +311,11 @@ class ControlTag(LabelStudioTag):
             ```python
             RectangleTag(name="rect", to_name=["img"], tag="rectangle", attr={}).validate_value({"x": 10, "y": 10, "width": 10, "height": 10, "rotation": 10})
             ```
+        context : dict, optional
+            Additional context about sibling regions.  May contain
+            ``result`` (the full result list) and ``region`` (the current
+            region dict).  Subclasses can inspect this to adjust
+            validation behaviour.
 
         Returns:
         --------
@@ -567,6 +572,79 @@ class LabelsTag(ControlTag):
     _label_attr_name: str = "labels"
     _value_class: Type[LabelsValue] = LabelsValue
 
+    def _get_split_partner_value_class(self, context: dict) -> Optional[Type[BaseModel]]:
+        """Return the geometry value class if this region is a split-format labels companion.
+
+        In split format a geometry result (rectangle, polygon, …) and a
+        separate labels result share the same ``id``.  When detected, this
+        method returns the geometry partner's pydantic value class so the
+        labels value can be validated against the expected geometry fields.
+
+        Returns ``None`` when the region is not part of a split-format pair.
+        """
+        # Lazy import avoided: the mapping references value classes defined
+        # later in this file, but they are available at call time.
+        geometry_type_to_value_class: Dict[str, Type[BaseModel]] = {
+            'rectangle': RectangleValue,
+            'polygon': PolygonValue,
+            'ellipse': EllipseValue,
+            'keypoint': KeyPointValue,
+            'brush': BrushValue,
+        }
+
+        region = context.get('region', {})
+        result = context.get('result', [])
+
+        # Only check for split-format pairs if the current region is a labels region
+        if (region.get('type') or '').lower() != 'labels':
+            return None
+
+        # Check if the current region has an id
+        region_id = region.get('id')
+        if region_id is None:
+            return None
+
+        # Iterate through all regions to find a matching geometry partner
+        for r in result:
+            if not isinstance(r, dict):
+                continue
+            r_type = (r.get('type') or '').lower()
+            # Checks if sibling region has the same id and is a geometry type
+            if r.get('id') == region_id and r_type in geometry_type_to_value_class:
+                # Return the geometry value class to validate the attributes of the current region
+                return geometry_type_to_value_class[r_type]
+
+        return None
+
+    def validate_value(self, value: dict, context: Optional[dict] = None) -> bool:
+        """Validate value, selecting the pydantic model based on format.
+
+        When the ``context`` indicates this region is the labels companion
+        of a split-format pair the partner's geometry value class (e.g.
+        :class:`RectangleValue`, :class:`PolygonValue`) is used to
+        validate the geometry fields.  The ``labels`` subset is validated
+        separately via :meth:`_validate_value_labels`.
+
+        Otherwise the strict :class:`LabelsValue` model is used
+        (``start`` and ``end`` required alongside ``labels``).
+        """
+        if isinstance(value, dict) and self.name in value and isinstance(value[self.name], dict):
+            value = value[self.name]
+
+        if not self._validate_value_labels(value):
+            return False
+
+        geometry_value_class = (
+            self._get_split_partner_value_class(context) if context else None
+        )
+        # Use the geometry partner's value class for split format,
+        # otherwise the default text-span LabelsValue.
+        value_class = geometry_value_class or self._value_class
+        try:
+            value_class(**value)
+            return True
+        except Exception:
+            return False
 
     def to_json_schema(self):
         """
@@ -961,7 +1039,7 @@ class RankerTag(ControlTag):
     tag: str = "Ranker"
     _value_class: Type[RankerValue] = RankerValue
 
-    def validate_value(self, value: dict) -> bool:
+    def validate_value(self, value: dict, **kwargs) -> bool:
         """
         Accept only:
           - {"ranker": {"<control_tag_name>": [str, ...]}}
@@ -1069,7 +1147,7 @@ class ChatMessageTag(ControlTag):
 class RelationsTag(ControlTag):
     """ """
     tag: str = "Relations"
-    def validate_value(self, ) -> bool:
+    def validate_value(self, **kwargs) -> bool:
         """ """
         raise NotImplemented("""Should not be called directly, instead
         use validate_relation() method found in LabelInterface class""")
