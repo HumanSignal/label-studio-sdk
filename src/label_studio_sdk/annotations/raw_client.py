@@ -27,6 +27,77 @@ class RawAnnotationsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def delete_bulk(
+        self, *, ids: typing.Sequence[int], project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[DeleteBulkAnnotationsResponse]:
+        """
+        Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
+
+        Parameters
+        ----------
+        ids : typing.Sequence[int]
+            List of annotation IDs to delete
+
+        project : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DeleteBulkAnnotationsResponse]
+            Annotations deleted successfully
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/annotations/bulk-delete/",
+            method="POST",
+            json={
+                "ids": ids,
+                "project": project,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeleteBulkAnnotationsResponse,
+                    construct_type(
+                        type_=DeleteBulkAnnotationsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def create_bulk(
         self,
         *,
@@ -165,64 +236,6 @@ class RawAnnotationsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def delete_bulk(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[DeleteBulkAnnotationsResponse]:
-        """
-        Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[DeleteBulkAnnotationsResponse]
-            Annotations deleted successfully
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/annotations/bulk/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    DeleteBulkAnnotationsResponse,
-                    construct_type(
-                        type_=DeleteBulkAnnotationsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -532,6 +545,77 @@ class AsyncRawAnnotationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    async def delete_bulk(
+        self, *, ids: typing.Sequence[int], project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[DeleteBulkAnnotationsResponse]:
+        """
+        Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
+
+        Parameters
+        ----------
+        ids : typing.Sequence[int]
+            List of annotation IDs to delete
+
+        project : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DeleteBulkAnnotationsResponse]
+            Annotations deleted successfully
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/annotations/bulk-delete/",
+            method="POST",
+            json={
+                "ids": ids,
+                "project": project,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeleteBulkAnnotationsResponse,
+                    construct_type(
+                        type_=DeleteBulkAnnotationsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def create_bulk(
         self,
         *,
@@ -670,64 +754,6 @@ class AsyncRawAnnotationsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def delete_bulk(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[DeleteBulkAnnotationsResponse]:
-        """
-        Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[DeleteBulkAnnotationsResponse]
-            Annotations deleted successfully
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/annotations/bulk/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    DeleteBulkAnnotationsResponse,
-                    construct_type(
-                        type_=DeleteBulkAnnotationsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
