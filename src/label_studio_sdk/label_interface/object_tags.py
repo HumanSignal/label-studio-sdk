@@ -230,53 +230,53 @@ class TextTag(ObjectTag):
 
 MIN_PLAYBACK_SPEED = 0.05
 MAX_PLAYBACK_SPEED = 10
+
+
 class VideoTag(ObjectTag):
     """ """
     tag: str = "Video"
 
-
-    
     def _generate_example(self, examples, only_urls=False):
         """ """
         return examples.get("Video")
 
-    def _parse_speed_attr(self, attr_name: str) -> Optional[float]:
-        """Parse a playback speed attribute from tag attrs. Returns None if not present or invalid."""
-        if not self.attr:
-            return None
-        # XML attributes may be stored with original casing
-        raw = self.attr.get(attr_name) or self.attr.get(attr_name.lower())
-        if raw is None or (isinstance(raw, str) and raw.strip() == ""):
-            return None
-        try:
-            return float(raw)
-        except (TypeError, ValueError):
-            return None
-
     def validate_config(self) -> List[str]:
         """Validate Video tag playback speed attribute values. Returns list of error messages."""
         errors: List[str] = []
-        default_speed = self._parse_speed_attr("defaultPlaybackSpeed")
-        min_speed = self._parse_speed_attr("minPlaybackSpeed")
+        speed_attrs = {
+            "defaultPlaybackSpeed": self.get_attr("defaultPlaybackSpeed"),
+            "minPlaybackSpeed": self.get_attr("minPlaybackSpeed"),
+        }
 
-        if default_speed is not None:
-            if default_speed < MIN_PLAYBACK_SPEED or default_speed > MAX_PLAYBACK_SPEED:
+        parsed: dict[str, float] = {}
+        for attr_name, raw in speed_attrs.items():
+            if raw is None:
+                continue
+            try:
+                parsed[attr_name] = float(raw)
+            except (TypeError, ValueError):
                 errors.append(
-                    f'Video tag "{self.name}": defaultPlaybackSpeed must be '
-                    f"between {MIN_PLAYBACK_SPEED} and {MAX_PLAYBACK_SPEED}, got {default_speed}"
+                    f'Video tag "{self.name}": {attr_name} must be a number, got "{raw}"'
                 )
-        if min_speed is not None:
-            if min_speed < MIN_PLAYBACK_SPEED or min_speed > MAX_PLAYBACK_SPEED:
-                errors.append(
-                    f'Video tag "{self.name}": minPlaybackSpeed must be '
-                    f"between {MIN_PLAYBACK_SPEED} and {MAX_PLAYBACK_SPEED}, got {min_speed}"
-                )
-        if default_speed is not None and min_speed is not None:
-            if min_speed > default_speed:
-                errors.append(
-                    f'Video tag "{self.name}": minPlaybackSpeed ({min_speed}) '
-                    f"must not exceed defaultPlaybackSpeed ({default_speed})"
-                )
+
+        default_speed = parsed.get("defaultPlaybackSpeed")
+        min_speed = parsed.get("minPlaybackSpeed")
+
+        if default_speed is not None and not (MIN_PLAYBACK_SPEED <= default_speed <= MAX_PLAYBACK_SPEED):
+            errors.append(
+                f'Video tag "{self.name}": defaultPlaybackSpeed must be '
+                f"between {MIN_PLAYBACK_SPEED} and {MAX_PLAYBACK_SPEED}, got {default_speed}"
+            )
+        if min_speed is not None and not (MIN_PLAYBACK_SPEED <= min_speed <= MAX_PLAYBACK_SPEED):
+            errors.append(
+                f'Video tag "{self.name}": minPlaybackSpeed must be '
+                f"between {MIN_PLAYBACK_SPEED} and {MAX_PLAYBACK_SPEED}, got {min_speed}"
+            )
+        if default_speed is not None and min_speed is not None and min_speed > default_speed:
+            errors.append(
+                f'Video tag "{self.name}": minPlaybackSpeed ({min_speed}) '
+                f"must not exceed defaultPlaybackSpeed ({default_speed})"
+            )
         return errors
 
 

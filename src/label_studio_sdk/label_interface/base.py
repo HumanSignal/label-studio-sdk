@@ -27,6 +27,20 @@ class LabelStudioTag(BaseModel):
     attr: Optional[Dict] = {}
     tag: Optional[str] = ""
 
+    def get_attr(self, attr_name: str, default: Any = None) -> Any:
+        """Get a raw attribute value by name, with case-insensitive fallback.
+
+        Returns ``default`` when the attribute is missing or blank.
+        """
+        if not self.attr:
+            return default
+        value = self.attr.get(attr_name)
+        if value is None:
+            value = self.attr.get(attr_name.lower())
+        if value is None or (isinstance(value, str) and value.strip() == ""):
+            return default
+        return value
+
     def match(
         self,
         tag_type: str,

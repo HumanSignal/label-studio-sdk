@@ -95,6 +95,19 @@ def test_video_tag_validate_config_default_below_min():
     assert str(MIN_PLAYBACK_SPEED) in errors[0]
 
 
+def test_video_tag_validate_config_non_numeric_speed():
+    """VideoTag.validate_config() returns error for non-numeric playback speed values."""
+    tag = Element(
+        "Video",
+        {"name": "video", "value": "$video", "defaultPlaybackSpeed": "fast"},
+    )
+    video_tag = ObjectTag.parse_node(tag)
+    errors = video_tag.validate_config()
+    assert len(errors) == 1
+    assert "must be a number" in errors[0]
+    assert "fast" in errors[0]
+
+
 def test_parse():
     tag = Element("tag", {"name": "my_name", "value": "my_value"})
     object_tag = ObjectTag.parse_node(tag)
