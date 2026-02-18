@@ -134,12 +134,15 @@ jobs:
           path: ./.github/actions-hub
 
       - name: Setup node
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
         uses: actions/setup-node@v6
 
       - name: Install Fern
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
         run: npm install -g fern-api@latest
 
       - name: Set Fern Generator Branch and Mode
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
         env:
           BRANCH_NAME: "${{ steps.get-branch.outputs.branch_name }}"
           FERN_GENERATOR_PATH: "fern/generators.yml"
@@ -149,14 +152,17 @@ jobs:
           cat "${FERN_GENERATOR_PATH}"
 
       - name: Check Fern API is valid
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
         run: fern check
 
       - name: Generate Python SDK
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: fern generate --group python-sdk-staging --log-level debug
 
       - name: Find or Create PR
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
         uses: ./.github/actions-hub/actions/follow-merge-find-or-create-pull-request
         id: get-pr
         with:
@@ -167,6 +173,7 @@ jobs:
           upstream_prs_urls: "${{ steps.upstream-prs.outputs.upstream_prs_urls }}"
 
       - name: Add PR Assignees
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
         uses: ./.github/actions-hub/actions/github-add-pull-request-assignees
         continue-on-error: true
         with:
@@ -175,7 +182,7 @@ jobs:
           assignees: "${{ steps.upstream-prs.outputs.assignees }},${{ github.event.client_payload.github.actor }}"
 
       - name: Add PR state Labels
-        if: steps.upstream-prs.outputs.status == 'stale'
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator && steps.upstream-prs.outputs.status == 'stale'
         uses: ./.github/actions-hub/actions/github-add-pull-request-labels
         continue-on-error: true
         with:
@@ -184,7 +191,7 @@ jobs:
           labels: "FM Stale"
 
       - name: Convert to ready for review
-        if: steps.upstream-prs.outputs.status == 'merged'
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator && steps.upstream-prs.outputs.status == 'merged'
         id: ready-for-review-pr
         shell: bash
         env:
@@ -202,7 +209,7 @@ jobs:
           '
 
       - name: Enable AutoMerge
-        if: steps.upstream-prs.outputs.status == 'merged'
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator && steps.upstream-prs.outputs.status == 'merged'
         continue-on-error: true
         shell: bash
         env:
@@ -220,7 +227,7 @@ jobs:
             }'
 
       - name: Close PR
-        if: steps.upstream-prs.outputs.status == 'closed'
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator && steps.upstream-prs.outputs.status == 'closed'
         continue-on-error: true
         shell: bash
         env:
