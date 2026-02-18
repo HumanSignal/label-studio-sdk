@@ -10,6 +10,7 @@ from ..types.last_action_enum import LastActionEnum
 from ..types.selected_items_request import SelectedItemsRequest
 from .raw_client import AsyncRawAnnotationsClient, RawAnnotationsClient
 from .types.create_bulk_annotations_response_item import CreateBulkAnnotationsResponseItem
+from .types.delete_bulk_annotations_response import DeleteBulkAnnotationsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -29,6 +30,42 @@ class AnnotationsClient:
         RawAnnotationsClient
         """
         return self._raw_client
+
+    def delete_bulk(
+        self, *, ids: typing.Sequence[int], project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteBulkAnnotationsResponse:
+        """
+        Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
+
+        Parameters
+        ----------
+        ids : typing.Sequence[int]
+            List of annotation IDs to delete
+
+        project : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteBulkAnnotationsResponse
+            Annotations deleted successfully
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.annotations.delete_bulk(
+            ids=[1],
+            project=1,
+        )
+        """
+        _response = self._raw_client.delete_bulk(ids=ids, project=project, request_options=request_options)
+        return _response.data
 
     def create_bulk(
         self,
@@ -481,6 +518,50 @@ class AsyncAnnotationsClient:
         AsyncRawAnnotationsClient
         """
         return self._raw_client
+
+    async def delete_bulk(
+        self, *, ids: typing.Sequence[int], project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteBulkAnnotationsResponse:
+        """
+        Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
+
+        Parameters
+        ----------
+        ids : typing.Sequence[int]
+            List of annotation IDs to delete
+
+        project : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteBulkAnnotationsResponse
+            Annotations deleted successfully
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.annotations.delete_bulk(
+                ids=[1],
+                project=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_bulk(ids=ids, project=project, request_options=request_options)
+        return _response.data
 
     async def create_bulk(
         self,

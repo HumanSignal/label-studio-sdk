@@ -274,7 +274,7 @@ if typing.TYPE_CHECKING:
     )
     from .activity_logs import ListActivityLogsRequestMethod
     from .annotation_history import DeleteAnnotationHistoryResponse
-    from .annotations import CreateBulkAnnotationsResponseItem
+    from .annotations import CreateBulkAnnotationsResponseItem, DeleteBulkAnnotationsResponse
     from .client import AsyncLabelStudio, LabelStudio
     from .environment import LabelStudioEnvironment
     from .export_storage import ListTypesExportStorageResponseItem
@@ -394,6 +394,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Default165Enum": ".types",
     "DefaultRole": ".types",
     "DeleteAnnotationHistoryResponse": ".annotation_history",
+    "DeleteBulkAnnotationsResponse": ".annotations",
     "DuplicateProjectsResponse": ".projects",
     "EditionEnum": ".types",
     "Export": ".types",
@@ -729,6 +730,7 @@ __all__ = [
     "Default165Enum",
     "DefaultRole",
     "DeleteAnnotationHistoryResponse",
+    "DeleteBulkAnnotationsResponse",
     "DuplicateProjectsResponse",
     "EditionEnum",
     "Export",
