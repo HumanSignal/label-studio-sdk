@@ -160,10 +160,58 @@ def test_validate_relation():
     assert conf.validate_relation(d, [ r1._dict(), r2._dict() ]) == True
     assert conf.validate_relation(d, [ r1._dict(), r3._dict() ]) == False
     assert conf.validate_relation(d, [ r2._dict(), r3._dict() ]) == False
-    
-# def test_validate_with_data():
-#     """ """
-    
-def test_validation_error_messages():
-    """ """
-    
+
+
+def test_label_interface_validate_video_config_valid():
+    """LabelInterface.validate() passes for valid Video config with playback speed attrs."""
+    VIDEO_CONF_VALID = """
+    <View>
+    <Video name="video" value="$video" framerate="25" defaultPlaybackSpeed="2" minPlaybackSpeed="0.5"/>
+    <VideoRectangle name="box" toName="video" />
+    </View>
+    """
+    li = LabelInterface(VIDEO_CONF_VALID)
+    li.validate()  # does not raise
+
+
+def test_label_interface_validate_video_config_invalid_default_above_max():
+    """LabelInterface.validate() raises when defaultPlaybackSpeed > 10."""
+    VIDEO_CONF_INVALID_DEFAULT_ABOVE_MAX = """
+    <View>
+    <Video name="video" value="$video" defaultPlaybackSpeed="15"/>
+    <VideoRectangle name="box" toName="video" />
+    </View>
+    """
+    li = LabelInterface(VIDEO_CONF_INVALID_DEFAULT_ABOVE_MAX)
+    with pytest.raises(LabelStudioValidationErrorSentryIgnored) as exc_info:
+        li.validate()
+    assert "defaultPlaybackSpeed" in str(exc_info.value)
+    assert "15" in str(exc_info.value)
+
+
+def test_label_interface_validate_video_config_invalid_min_above_default():
+    """LabelInterface.validate() raises when minPlaybackSpeed > defaultPlaybackSpeed."""
+    VIDEO_CONF_INVALID_MIN_ABOVE_DEFAULT = """
+    <View>
+    <Video name="video" value="$video" defaultPlaybackSpeed="5" minPlaybackSpeed="10"/>
+    <VideoRectangle name="box" toName="video" />
+    </View>
+    """
+    li = LabelInterface(VIDEO_CONF_INVALID_MIN_ABOVE_DEFAULT)
+    with pytest.raises(LabelStudioValidationErrorSentryIgnored) as exc_info:
+        li.validate()
+    assert "minPlaybackSpeed" in str(exc_info.value)
+    assert "must not exceed defaultPlaybackSpeed" in str(exc_info.value)
+
+
+def test_label_interface_is_valid_false_for_invalid_video_config():
+    """LabelInterface.is_valid returns False for invalid Video playback speed config."""
+    VIDEO_CONF_INVALID_DEFAULT_ABOVE_MAX = """
+    <View>
+    <Video name="video" value="$video" defaultPlaybackSpeed="15"/>
+    <VideoRectangle name="box" toName="video" />
+    </View>
+    """
+    li = LabelInterface(VIDEO_CONF_INVALID_DEFAULT_ABOVE_MAX)
+    assert li.is_valid is False
+

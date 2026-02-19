@@ -726,6 +726,16 @@ class LabelInterface:
                 "Label config contains non-unique names: " + ", ".join(all_names)
             )
 
+    def _tag_attribute_validation(self):
+        """Validate tag-specific attribute values (e.g. Video playback speed)."""
+        errors: List[str] = []
+        if self._objects:
+            for obj in self._objects.values():
+                if hasattr(obj, "validate_config"):
+                    errors.extend(obj.validate_config())
+        if errors:
+            raise LabelStudioValidationErrorSentryIgnored("\n".join(errors))
+
     @property
     def is_valid(self):
         """ """
@@ -753,6 +763,7 @@ class LabelInterface:
         self._schema_validation(config_string)
         self._unique_names_validation(config_string)
         self._to_name_validation(config_string)
+        self._tag_attribute_validation()
 
     @classmethod
     def validate_with_data(cls, config):
