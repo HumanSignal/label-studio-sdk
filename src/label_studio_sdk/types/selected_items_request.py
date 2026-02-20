@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SelectedItemsRequest(UncheckedBaseModel):
-    all_: typing_extensions.Annotated[bool, FieldMetadata(alias="all")] = pydantic.Field(alias="all")
+    all_: typing_extensions.Annotated[bool, FieldMetadata(alias="all"), pydantic.Field(alias="all")]
     excluded: typing.Optional[typing.List[int]] = None
     included: typing.Optional[typing.List[int]] = None
 

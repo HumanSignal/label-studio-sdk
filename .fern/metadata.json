@@ -1,7 +1,7 @@
 {
-  "cliVersion": "3.46.0",
+  "cliVersion": "3.81.1",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "4.48.1",
+  "generatorVersion": "4.59.0",
   "generatorConfig": {
     "pydantic_config": {
       "skip_validation": true
@@ -47,5 +47,5 @@
     },
     "pyproject_toml": "[project.scripts]\nlabel-studio-converter = \"label_studio_sdk.converter.main:main\"\n"
   },
-  "sdkVersion": "2.0.18"
+  "sdkVersion": "0.0.1357"
 }

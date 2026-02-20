@@ -11,9 +11,9 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 class BulkAssignAssignmentsResponse(UncheckedBaseModel):
     assignments: typing.Optional[int] = None
-    async_: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="async")] = pydantic.Field(
-        alias="async", default=None
-    )
+    async_: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="async"), pydantic.Field(alias="async")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
