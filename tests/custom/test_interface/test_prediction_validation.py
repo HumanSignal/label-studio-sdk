@@ -120,14 +120,95 @@ class TestPredictionValidation:
         }
         assert li.validate_prediction(valid_pred) is True
         
-        # Invalid - wrong RLE format
+        # Invalid - negative byte value
         invalid_pred = copy.deepcopy(valid_pred)
-        invalid_pred["result"][0]["value"]["rle"] = [1, 2, 3]
+        invalid_pred["result"][0]["value"]["rle"] = [-1, 2, 3, 4]
         assert li.validate_prediction(invalid_pred) is False
         
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'brush'" in error for error in errors)
+
+    def test_brush_rle_with_zero_bytes(self):
+        """Test that RLE data containing zero bytes is accepted.
+
+        Label Studio's RLE is a byte-stream where 0 is a valid byte.
+        The SDK's own mask2rle() routinely produces zeros.
+        """
+        li = LabelInterface(PREDICTION_BRUSH_CONFIG)
+
+        rle_with_zeros = [0, 1, 222, 96, 57, 27, 255, 175, 135, 0, 141, 3,
+                          129, 83, 128, 71, 127, 63, 252, 104, 28, 10, 124,
+                          2, 223, 252, 104, 28, 10, 124, 2, 56, 8, 255, 227,
+                          128, 255, 255, 224, 28, 154, 252, 0]
+        pred = {
+            "result": [{
+                "from_name": "brush",
+                "to_name": "image",
+                "type": "brush",
+                "value": {
+                    "format": "rle",
+                    "rle": rle_with_zeros,
+                }
+            }],
+            "score": 0.9
+        }
+        assert li.validate_prediction(pred) is True
+
+    def test_brush_rle_full_byte_range(self):
+        """RLE containing every possible byte value (0-255) must be valid."""
+        li = LabelInterface(PREDICTION_BRUSH_CONFIG)
+        pred = {
+            "result": [{
+                "from_name": "brush",
+                "to_name": "image",
+                "type": "brush",
+                "value": {
+                    "format": "rle",
+                    "rle": list(range(256)),
+                }
+            }],
+            "score": 0.5
+        }
+        assert li.validate_prediction(pred) is True
+
+    def test_brush_rle_invalid_byte_values(self):
+        """RLE with values outside [0, 255] must be rejected."""
+        li = LabelInterface(PREDICTION_BRUSH_CONFIG)
+        base = {
+            "result": [{
+                "from_name": "brush",
+                "to_name": "image",
+                "type": "brush",
+                "value": {
+                    "format": "rle",
+                    "rle": None,
+                }
+            }],
+            "score": 0.5
+        }
+
+        for bad_rle in [[-1, 0, 1], [0, 256, 1], [0, 1, -128], []]:
+            pred = copy.deepcopy(base)
+            pred["result"][0]["value"]["rle"] = bad_rle
+            assert li.validate_prediction(pred) is False, f"Should reject rle={bad_rle}"
+
+    def test_brush_rle_odd_length_is_valid(self):
+        """Odd-length RLE lists are valid (the byte-stream has no even-length constraint)."""
+        li = LabelInterface(PREDICTION_BRUSH_CONFIG)
+        pred = {
+            "result": [{
+                "from_name": "brush",
+                "to_name": "image",
+                "type": "brush",
+                "value": {
+                    "format": "rle",
+                    "rle": [1, 2, 3],
+                }
+            }],
+            "score": 0.5
+        }
+        assert li.validate_prediction(pred) is True
 
     def test_brush_labels_validation(self):
         """Test BrushLabels tag validation"""
@@ -157,6 +238,31 @@ class TestPredictionValidation:
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'brushlabels'" in error for error in errors)
+
+    def test_brush_labels_rle_with_zero_bytes(self):
+        """BrushLabels with RLE containing zeros must be accepted (UTC-596 customer scenario)."""
+        config = """<View>
+          <Image name="image" value="$image" zoom="true"/>
+          <BrushLabels name="label_rle" toName="image">
+            <Label value="abcdefg" background="rgba(179, 123, 99, 0.5)"/>
+          </BrushLabels>
+        </View>"""
+        li = LabelInterface(config)
+
+        pred = {
+            "result": [{
+                "from_name": "label_rle",
+                "to_name": "image",
+                "type": "brushlabels",
+                "value": {
+                    "format": "rle",
+                    "rle": [11, 232, 12, 0, 5, 10],
+                    "brushlabels": ["abcdefg"],
+                }
+            }],
+            "score": 0.9
+        }
+        assert li.validate_prediction(pred) is True
 
     def test_ellipse_validation(self):
         """Test Ellipse tag validation"""

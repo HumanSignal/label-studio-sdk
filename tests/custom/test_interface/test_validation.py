@@ -67,8 +67,11 @@ def test_validate_brush():
                       attr={}, tag="control")
     
     tag.set_object(obj)
-    assert tag.validate_value({ "format": "rle", "rle": [ 1,2,3 ] }) is False
+    assert tag.validate_value({ "format": "rle", "rle": [ 1,2,3 ] }) is True
     assert tag.validate_value({ "format": "rle", "rle": [ 2,3,3,2 ] }) is True
+    assert tag.validate_value({ "format": "rle", "rle": [-1, 0, 1] }) is False
+    assert tag.validate_value({ "format": "rle", "rle": [0, 256, 1] }) is False
+    assert tag.validate_value({ "format": "rle", "rle": [] }) is False
 
     
 def test_validate_annotation():
