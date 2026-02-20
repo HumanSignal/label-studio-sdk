@@ -11,11 +11,10 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 class AgreementAnnotatorStatsResponse(UncheckedBaseModel):
     agreement_per_annotator: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="Agreement_per_annotator")
-    ] = pydantic.Field(alias="Agreement_per_annotator", default=None)
-    """
-    Agreement score for the annotator (0-1)
-    """
+        typing.Optional[float],
+        FieldMetadata(alias="Agreement_per_annotator"),
+        pydantic.Field(alias="Agreement_per_annotator", description="Agreement score for the annotator (0-1)"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

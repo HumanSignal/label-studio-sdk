@@ -13,9 +13,9 @@ class InfoWebhooksResponseAnnotationsCreated(UncheckedBaseModel):
     description: str
     key: str
     name: str
-    organization_only: typing_extensions.Annotated[bool, FieldMetadata(alias="organization-only")] = pydantic.Field(
-        alias="organization-only"
-    )
+    organization_only: typing_extensions.Annotated[
+        bool, FieldMetadata(alias="organization-only"), pydantic.Field(alias="organization-only")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

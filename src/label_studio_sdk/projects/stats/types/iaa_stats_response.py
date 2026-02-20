@@ -13,13 +13,14 @@ from .iaa_stats_response_std import IaaStatsResponseStd
 
 
 class IaaStatsResponse(UncheckedBaseModel):
-    iaa: typing_extensions.Annotated[typing.Optional[IaaStatsResponseIaa], FieldMetadata(alias="IAA")] = pydantic.Field(
-        alias="IAA", default=None
-    )
-    """
-    Inter-Annotator Agreement matrix - 2D array when per_label=false, object with label keys when per_label=true
-    """
-
+    iaa: typing_extensions.Annotated[
+        typing.Optional[IaaStatsResponseIaa],
+        FieldMetadata(alias="IAA"),
+        pydantic.Field(
+            alias="IAA",
+            description="Inter-Annotator Agreement matrix - 2D array when per_label=false, object with label keys when per_label=true",
+        ),
+    ] = None
     common_tasks: typing.Optional[IaaStatsResponseCommonTasks] = pydantic.Field(default=None)
     """
     Common tasks matrix - 2D array when per_label=false, object with label keys when per_label=true

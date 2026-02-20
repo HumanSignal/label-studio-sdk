@@ -110,13 +110,11 @@ class LseS3ImportStorage(UncheckedBaseModel):
     AWS RoleArn
     """
 
-    s3endpoint: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="s3_endpoint")] = pydantic.Field(
-        alias="s3_endpoint", default=None
-    )
-    """
-    S3 Endpoint
-    """
-
+    s3endpoint: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="s3_endpoint"),
+        pydantic.Field(alias="s3_endpoint", description="S3 Endpoint"),
+    ] = None
     status: typing.Optional[StatusC5AEnum] = None
     synchronizable: typing.Optional[bool] = None
     title: typing.Optional[str] = pydantic.Field(default=None)
