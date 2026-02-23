@@ -18,7 +18,6 @@ import numpy as np
 import requests
 from PIL import Image
 from lxml import etree
-from nltk.tokenize.treebank import TreebankWordTokenizer
 
 from label_studio_sdk._extensions.label_studio_tools.core.utils.params import get_env
 from label_studio_sdk._extensions.label_studio_tools.core.utils.io import safe_build_path
@@ -33,7 +32,7 @@ LOCAL_FILES_DOCUMENT_ROOT = get_env(
     "LOCAL_FILES_DOCUMENT_ROOT", default=os.path.abspath(os.sep)
 )
 
-TreebankWordTokenizer.PUNCTUATION = [
+_TREEBANK_PUNCTUATION = [
     (re.compile(r"([:,])([^\d])"), r" \1 \2"),
     (re.compile(r"([:,])$"), r" \1 "),
     (re.compile(r"\.\.\."), r" ... "),
@@ -45,6 +44,19 @@ TreebankWordTokenizer.PUNCTUATION = [
     (re.compile(r"[?!]"), r" \g<0> "),
     (re.compile(r"([^'])' "), r"\1 ' "),
 ]
+
+
+def _get_treebank_tokenizer():
+    try:
+        from nltk.tokenize.treebank import TreebankWordTokenizer
+    except ImportError as exc:
+        raise ImportError(
+            "nltk is required for CONLL2003 export tokenization. "
+            "Install with `pip install label-studio-sdk[conll]`."
+        ) from exc
+
+    TreebankWordTokenizer.PUNCTUATION = _TREEBANK_PUNCTUATION
+    return TreebankWordTokenizer()
 
 
 class ExpandFullPath(argparse.Action):
@@ -66,9 +78,7 @@ def tokenize(text):
 
 def create_tokens_and_tags(text, spans):
     # tokens_and_idx = tokenize(text) # This function doesn't work properly if text contains multiple whitespaces...
-    token_index_tuples = [
-        token for token in TreebankWordTokenizer().span_tokenize(text)
-    ]
+    token_index_tuples = [token for token in _get_treebank_tokenizer().span_tokenize(text)]
     tokens_and_idx = [(text[start:end], start) for start, end in token_index_tuples]
     if spans and all(
         [

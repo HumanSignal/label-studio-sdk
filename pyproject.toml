@@ -44,7 +44,7 @@ ijson = ">=3.2.3"
 jsf = "^0.11.2"
 jsonschema = ">=4.23.0"
 lxml = ">=4.2.5"
-nltk = "^3.9.1"
+nltk = { version = "^3.9.1", optional = true }
 numpy = ">=2.2,<3.0.0"
 opencv-python-headless = "^4.12.0"
 pandas = ">=0.24.0"
@@ -67,6 +67,9 @@ python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
 respx = "^0.22.0"
 ruff = "==0.11.5"
+
+[tool.poetry.extras]
+conll = ["nltk"]
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
