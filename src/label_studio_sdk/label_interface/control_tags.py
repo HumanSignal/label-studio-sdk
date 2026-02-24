@@ -689,29 +689,24 @@ class LabelsTag(ControlTag):
 
 ## Image tags
 
-def validate_rle(list):
-    """
-    Validate if a list is correctly formatted in Run-Length Encoding (RLE).
+def validate_rle(rle_list):
+    """Validate that *rle_list* is a valid Label Studio RLE byte stream.
 
-    A correctly formatted RLE list should follow 'value, count' pairs. 
-    For example, [2,3,3,2] is a valid RLE list representing [2,2,2,3,3].
+    Label Studio encodes brush masks as a custom bit-stream serialised to
+    a list of byte values (0-255). See ``encode_rle`` / ``decode_rle`` in
+    ``label_studio_sdk.converter.brush`` for the codec implementation.
 
     Parameters:
-        list : a list of integers
+        rle_list : list[int]
+            A list of integers, each in the range [0, 255].
 
     Returns:
-        bool : True if the list is correctly formatted in RLE, False otherwise
+        bool : True if *rle_list* is non-empty and every element is a
+               valid byte value, False otherwise.
     """
-    # If the list length is odd, it's invalid.
-    if len(list) % 2 != 0:
+    if not rle_list:
         return False
-
-    # Check 'value, count' pairs. The count should always be greater than zero.
-    for i in range(1, len(list), 2):
-        if list[i] <= 0:
-            return False
-
-    return True
+    return all(isinstance(v, int) and 0 <= v <= 255 for v in rle_list)
 
 
 class BrushValue(BaseModel):
