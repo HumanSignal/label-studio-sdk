@@ -16,12 +16,12 @@ class ActivityLogResponse(UncheckedBaseModel):
     """
 
     data: typing.List[ActivityLog]
-    records_filtered: typing_extensions.Annotated[int, FieldMetadata(alias="recordsFiltered")] = pydantic.Field(
-        alias="recordsFiltered"
-    )
-    records_total: typing_extensions.Annotated[int, FieldMetadata(alias="recordsTotal")] = pydantic.Field(
-        alias="recordsTotal"
-    )
+    records_filtered: typing_extensions.Annotated[
+        int, FieldMetadata(alias="recordsFiltered"), pydantic.Field(alias="recordsFiltered")
+    ]
+    records_total: typing_extensions.Annotated[
+        int, FieldMetadata(alias="recordsTotal"), pydantic.Field(alias="recordsTotal")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
