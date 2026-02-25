@@ -9,9 +9,24 @@ from .project_group_role_enum import ProjectGroupRoleEnum
 
 
 class ProjectGroupRequest(UncheckedBaseModel):
-    group: str
-    project_id: int
-    role: ProjectGroupRoleEnum
+    group: str = pydantic.Field()
+    """
+    Group name
+    """
+
+    project_id: int = pydantic.Field()
+    """
+    Project ID
+    """
+
+    role: ProjectGroupRoleEnum = pydantic.Field()
+    """
+    Project role (Inherit, Annotator, Reviewer)
+    
+    * `Inherit` - Inherit
+    * `Annotator` - Annotator
+    * `Reviewer` - Reviewer
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

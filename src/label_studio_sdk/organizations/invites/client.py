@@ -66,6 +66,7 @@ class InvitesClient:
         Parameters
         ----------
         email : str
+            Email address
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -109,12 +110,24 @@ class InvitesClient:
         Parameters
         ----------
         emails : typing.Sequence[str]
+            Email addresses
 
         role : Role9E7Enum
+            Organization role
+
+            * `OW` - Owner
+            * `AD` - Administrator
+            * `MA` - Manager
+            * `RE` - Reviewer
+            * `AN` - Annotator
+            * `DI` - Deactivated
+            * `NO` - Not Activated
 
         projects : typing.Optional[typing.Sequence[int]]
+            Project IDs to grant access to
 
         workspaces : typing.Optional[typing.Sequence[int]]
+            Workspace IDs to grant access to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -203,6 +216,7 @@ class AsyncInvitesClient:
         Parameters
         ----------
         email : str
+            Email address
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -254,12 +268,24 @@ class AsyncInvitesClient:
         Parameters
         ----------
         emails : typing.Sequence[str]
+            Email addresses
 
         role : Role9E7Enum
+            Organization role
+
+            * `OW` - Owner
+            * `AD` - Administrator
+            * `MA` - Manager
+            * `RE` - Reviewer
+            * `AN` - Annotator
+            * `DI` - Deactivated
+            * `NO` - Not Activated
 
         projects : typing.Optional[typing.Sequence[int]]
+            Project IDs to grant access to
 
         workspaces : typing.Optional[typing.Sequence[int]]
+            Workspace IDs to grant access to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -48,9 +48,20 @@ class SamlSettingsUpdate(UncheckedBaseModel):
     Metadata XML file
     """
 
-    projects_groups: typing.Optional[typing.List[ProjectGroup]] = None
-    roles_groups: typing.Optional[typing.List[typing.List[str]]] = None
-    workspaces_groups: typing.Optional[typing.List[typing.List[str]]] = None
+    projects_groups: typing.Optional[typing.List[ProjectGroup]] = pydantic.Field(default=None)
+    """
+    Projects to Groups Mapping. List of objects with project_id, group, role.
+    """
+
+    roles_groups: typing.Optional[typing.List[typing.List[str]]] = pydantic.Field(default=None)
+    """
+    Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+    """
+
+    workspaces_groups: typing.Optional[typing.List[typing.List[str]]] = pydantic.Field(default=None)
+    """
+    Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

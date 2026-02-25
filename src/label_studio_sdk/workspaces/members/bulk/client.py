@@ -50,10 +50,13 @@ class BulkClient:
         id : int
 
         all_ : bool
+            Apply to all workspace members
 
         excluded : typing.Optional[typing.Sequence[int]]
+            Excluded user IDs
 
         included : typing.Optional[typing.Sequence[int]]
+            Included user IDs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -155,10 +158,13 @@ class AsyncBulkClient:
         id : int
 
         all_ : bool
+            Apply to all workspace members
 
         excluded : typing.Optional[typing.Sequence[int]]
+            Excluded user IDs
 
         included : typing.Optional[typing.Sequence[int]]
+            Included user IDs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

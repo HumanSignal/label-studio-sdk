@@ -98,7 +98,7 @@ class RawPermissionsClient:
         permission : str
 
         roles : typing.Optional[typing.Sequence[Role9E7Enum]]
-            Explicit roles that have this permission within the organization.
+            Organization roles
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -305,7 +305,7 @@ class RawPermissionsClient:
         permission : str
 
         roles : typing.Optional[typing.Sequence[Role9E7Enum]]
-            Explicit roles that have this permission within the organization.
+            Organization roles
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -463,7 +463,7 @@ class RawPermissionsClient:
         patched_organization_permission_request_permission : typing.Optional[str]
 
         roles : typing.Optional[typing.Sequence[Role9E7Enum]]
-            Explicit roles that have this permission within the organization.
+            Organization roles
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -613,7 +613,7 @@ class AsyncRawPermissionsClient:
         permission : str
 
         roles : typing.Optional[typing.Sequence[Role9E7Enum]]
-            Explicit roles that have this permission within the organization.
+            Organization roles
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -820,7 +820,7 @@ class AsyncRawPermissionsClient:
         permission : str
 
         roles : typing.Optional[typing.Sequence[Role9E7Enum]]
-            Explicit roles that have this permission within the organization.
+            Organization roles
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -978,7 +978,7 @@ class AsyncRawPermissionsClient:
         patched_organization_permission_request_permission : typing.Optional[str]
 
         roles : typing.Optional[typing.Sequence[Role9E7Enum]]
-            Explicit roles that have this permission within the organization.
+            Organization roles
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

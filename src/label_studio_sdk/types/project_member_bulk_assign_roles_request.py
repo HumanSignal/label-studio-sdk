@@ -9,8 +9,23 @@ from .role9e7enum import Role9E7Enum
 
 
 class ProjectMemberBulkAssignRolesRequest(UncheckedBaseModel):
-    role: Role9E7Enum
-    user_id: int
+    role: Role9E7Enum = pydantic.Field()
+    """
+    Role
+    
+    * `OW` - Owner
+    * `AD` - Administrator
+    * `MA` - Manager
+    * `RE` - Reviewer
+    * `AN` - Annotator
+    * `DI` - Deactivated
+    * `NO` - Not Activated
+    """
+
+    user_id: int = pydantic.Field()
+    """
+    User ID
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

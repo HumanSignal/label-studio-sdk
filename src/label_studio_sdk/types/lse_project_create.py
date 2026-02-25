@@ -46,7 +46,7 @@ class LseProjectCreate(UncheckedBaseModel):
 
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Project description
+    Project Description
     """
 
     enable_empty_annotation: typing.Optional[bool] = pydantic.Field(default=None)
@@ -185,7 +185,7 @@ class LseProjectCreate(UncheckedBaseModel):
 
     title: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Project name. Must be between 3 and 50 characters long.
+    Project Title
     """
 
     total_annotations_number: typing.Optional[int] = pydantic.Field(default=None)
@@ -203,7 +203,10 @@ class LseProjectCreate(UncheckedBaseModel):
     Useful annotation number in project not including skipped_annotations_number and ground_truth_number. Total annotations = annotation_number + skipped_annotations_number + ground_truth_number
     """
 
-    workspace: typing.Optional[int] = None
+    workspace: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    In Workspace
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

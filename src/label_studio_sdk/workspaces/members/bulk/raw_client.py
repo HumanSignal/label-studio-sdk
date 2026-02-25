@@ -43,10 +43,13 @@ class RawBulkClient:
         id : int
 
         all_ : bool
+            Apply to all workspace members
 
         excluded : typing.Optional[typing.Sequence[int]]
+            Excluded user IDs
 
         included : typing.Optional[typing.Sequence[int]]
+            Included user IDs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -157,10 +160,13 @@ class AsyncRawBulkClient:
         id : int
 
         all_ : bool
+            Apply to all workspace members
 
         excluded : typing.Optional[typing.Sequence[int]]
+            Excluded user IDs
 
         included : typing.Optional[typing.Sequence[int]]
+            Included user IDs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

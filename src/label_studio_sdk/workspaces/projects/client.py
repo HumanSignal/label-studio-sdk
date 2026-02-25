@@ -77,6 +77,7 @@ class ProjectsClient:
         id : int
 
         project : int
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -210,6 +211,7 @@ class AsyncProjectsClient:
         id : int
 
         project : int
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
