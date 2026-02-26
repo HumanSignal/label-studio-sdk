@@ -1,5 +1,5 @@
 {
-  "cliVersion": "3.46.0",
+  "cliVersion": "3.90.0",
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "4.48.1",
   "generatorConfig": {
@@ -47,5 +47,5 @@
     },
     "pyproject_toml": "[project.scripts]\nlabel-studio-converter = \"label_studio_sdk.converter.main:main\"\n"
   },
-  "sdkVersion": "0.0.1"
+  "sdkVersion": "0.0.2"
 }
