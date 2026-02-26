@@ -1066,6 +1066,10 @@ class RatingTag(ControlTag):
     _value_class: Type[RatingValue] = RatingValue
     _label_attr_name: str = "rating"
 
+    def set_labels(self, labels: List[str]):
+        max_rating = int(self.attr.get('maxRating', 5))
+        self.labels = [str(i) for i in range(1, max_rating + 1)]
+
     def _validate_value_labels(self, value):
         """Override to handle rating values correctly - ratings are not labels"""
         if self._label_attr_name not in value:
