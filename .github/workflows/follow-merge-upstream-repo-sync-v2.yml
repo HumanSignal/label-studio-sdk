@@ -159,7 +159,7 @@ jobs:
         if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        run: fern generate --group python-sdk-staging --log-level debug
+        run: fern generate --group python-sdk-staging --log-level debug --version AUTO
 
       - name: Find or Create PR
         if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
