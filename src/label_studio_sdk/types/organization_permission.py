@@ -20,7 +20,7 @@ class OrganizationPermission(UncheckedBaseModel):
     permission: str
     roles: typing.Optional[typing.List[Role9E7Enum]] = pydantic.Field(default=None)
     """
-    Explicit roles that have this permission within the organization.
+    Organization roles
     """
 
     tooltip: typing.Optional[str] = None

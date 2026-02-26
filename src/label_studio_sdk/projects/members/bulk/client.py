@@ -57,6 +57,7 @@ class BulkClient:
         id : int
 
         all_ : bool
+            Apply to all project members
 
         last_activity_gte : typing.Optional[str]
             Filter by last activity (ISO 8601 formatted date). Only when all=True.
@@ -74,10 +75,13 @@ class BulkClient:
             Filter tags by in list (comma-separated values)
 
         excluded : typing.Optional[typing.Sequence[int]]
+            Excluded user IDs
 
         included : typing.Optional[typing.Sequence[int]]
+            Included user IDs
 
         roles : typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]
+            Member roles
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -228,6 +232,7 @@ class AsyncBulkClient:
         id : int
 
         all_ : bool
+            Apply to all project members
 
         last_activity_gte : typing.Optional[str]
             Filter by last activity (ISO 8601 formatted date). Only when all=True.
@@ -245,10 +250,13 @@ class AsyncBulkClient:
             Filter tags by in list (comma-separated values)
 
         excluded : typing.Optional[typing.Sequence[int]]
+            Excluded user IDs
 
         included : typing.Optional[typing.Sequence[int]]
+            Included user IDs
 
         roles : typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]
+            Member roles
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

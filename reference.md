@@ -4387,7 +4387,7 @@ client.organizations.update(
 <dl>
 <dd>
 
-**custom_scripts_enabled:** `typing.Optional[bool]` 
+**custom_scripts_enabled:** `typing.Optional[bool]` — Plugins
     
 </dd>
 </dl>
@@ -4395,7 +4395,7 @@ client.organizations.update(
 <dl>
 <dd>
 
-**email_notification_settings:** `typing.Optional[typing.Any]` 
+**email_notification_settings:** `typing.Optional[typing.Any]` — Email Notification Settings
     
 </dd>
 </dl>
@@ -4403,7 +4403,7 @@ client.organizations.update(
 <dl>
 <dd>
 
-**embed_domains:** `typing.Optional[typing.Sequence[typing.Dict[str, str]]]` 
+**embed_domains:** `typing.Optional[typing.Sequence[typing.Dict[str, str]]]` — Supported domains
     
 </dd>
 </dl>
@@ -4411,7 +4411,7 @@ client.organizations.update(
 <dl>
 <dd>
 
-**embed_settings:** `typing.Optional[typing.Any]` 
+**embed_settings:** `typing.Optional[typing.Any]` — Public Verification Key and Public Verification Algorithms configuration
     
 </dd>
 </dl>
@@ -4419,7 +4419,7 @@ client.organizations.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` 
+**title:** `typing.Optional[str]` — Organization name
     
 </dd>
 </dl>
@@ -9072,7 +9072,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Project description
+**description:** `typing.Optional[str]` — Project Description
     
 </dd>
 </dl>
@@ -9264,7 +9264,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
+**title:** `typing.Optional[str]` — Project Title
     
 </dd>
 </dl>
@@ -9272,7 +9272,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**workspace:** `typing.Optional[int]` 
+**workspace:** `typing.Optional[int]` — In Workspace
     
 </dd>
 </dl>
@@ -9647,6 +9647,11 @@ client.projects.update(
 <dd>
 
 **agreement_methodology:** `typing.Optional[AgreementMethodologyEnum]` 
+
+Methodology (Consensus / Pairwise Averaging)
+
+* `consensus` - Consensus
+* `pairwise` - Pairwise Averaging
     
 </dd>
 </dl>
@@ -9654,7 +9659,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**agreement_threshold:** `typing.Optional[str]` — Minimum percent agreement threshold for which minimum number of annotators must agree
+**agreement_threshold:** `typing.Optional[str]` — Agreement threshold
     
 </dd>
 </dl>
@@ -9662,7 +9667,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**annotation_limit_count:** `typing.Optional[int]` 
+**annotation_limit_count:** `typing.Optional[int]` — Limit by number of tasks
     
 </dd>
 </dl>
@@ -9670,7 +9675,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**annotation_limit_percent:** `typing.Optional[str]` 
+**annotation_limit_percent:** `typing.Optional[str]` — Limit by percentage of tasks
     
 </dd>
 </dl>
@@ -9678,7 +9683,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**annotator_evaluation_continuous_tasks:** `typing.Optional[int]` 
+**annotator_evaluation_continuous_tasks:** `typing.Optional[int]` — Continuous Evaluation: Required tasks
     
 </dd>
 </dl>
@@ -9686,7 +9691,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
+**annotator_evaluation_enabled:** `typing.Optional[bool]` — Evaluate all annotators against ground truth
     
 </dd>
 </dl>
@@ -9694,7 +9699,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**annotator_evaluation_minimum_score:** `typing.Optional[str]` 
+**annotator_evaluation_minimum_score:** `typing.Optional[str]` — Score required to pass evaluation
     
 </dd>
 </dl>
@@ -9702,7 +9707,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**annotator_evaluation_minimum_tasks:** `typing.Optional[int]` 
+**annotator_evaluation_minimum_tasks:** `typing.Optional[int]` — Number of tasks for evaluation
     
 </dd>
 </dl>
@@ -9710,7 +9715,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**annotator_evaluation_onboarding_tasks:** `typing.Optional[int]` 
+**annotator_evaluation_onboarding_tasks:** `typing.Optional[int]` — Onboarding Evaluation: Required tasks
     
 </dd>
 </dl>
@@ -9726,7 +9731,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**color:** `typing.Optional[str]` 
+**color:** `typing.Optional[str]` — Color
     
 </dd>
 </dl>
@@ -9758,7 +9763,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**custom_script:** `typing.Optional[str]` 
+**custom_script:** `typing.Optional[str]` — Plugins
     
 </dd>
 </dl>
@@ -9766,7 +9771,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**custom_task_lock_ttl:** `typing.Optional[int]` — TTL in seconds for task reservations, on new and existing tasks
+**custom_task_lock_ttl:** `typing.Optional[int]` — Task reservation time. TTL in seconds (UI displays and edits this value in minutes).
     
 </dd>
 </dl>
@@ -9774,7 +9779,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Project description
+**description:** `typing.Optional[str]` — Description
     
 </dd>
 </dl>
@@ -9782,7 +9787,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
+**enable_empty_annotation:** `typing.Optional[bool]` — Allow empty annotations
     
 </dd>
 </dl>
@@ -9798,7 +9803,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**expert_instruction:** `typing.Optional[str]` — Labeling instructions in HTML format
+**expert_instruction:** `typing.Optional[str]` — Instructions
     
 </dd>
 </dl>
@@ -9822,7 +9827,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
+**label_config:** `typing.Optional[str]` — Labeling Configuration
     
 </dd>
 </dl>
@@ -9830,7 +9835,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**max_additional_annotators_assignable:** `typing.Optional[int]` — Maximum number of additional annotators that can be assigned to a low agreement task
+**max_additional_annotators_assignable:** `typing.Optional[int]` — Maximum additional annotators
     
 </dd>
 </dl>
@@ -9838,7 +9843,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**maximum_annotations:** `typing.Optional[int]` — Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+**maximum_annotations:** `typing.Optional[int]` — Annotations per task
     
 </dd>
 </dl>
@@ -9870,7 +9875,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**overlap_cohort_percentage:** `typing.Optional[int]` 
+**overlap_cohort_percentage:** `typing.Optional[int]` — Annotations per task coverage
     
 </dd>
 </dl>
@@ -9878,7 +9883,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**pause_on_failed_annotator_evaluation:** `typing.Optional[bool]` 
+**pause_on_failed_annotator_evaluation:** `typing.Optional[bool]` — Pause annotator on failed evaluation
     
 </dd>
 </dl>
@@ -9894,7 +9899,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**require_comment_on_skip:** `typing.Optional[bool]` 
+**require_comment_on_skip:** `typing.Optional[bool]` — Require comment to skip
     
 </dd>
 </dl>
@@ -9926,7 +9931,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**show_annotation_history:** `typing.Optional[bool]` — Show annotation history to annotator
+**show_annotation_history:** `typing.Optional[bool]` — Show Data Manager to Annotators
     
 </dd>
 </dl>
@@ -9934,7 +9939,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
+**show_collab_predictions:** `typing.Optional[bool]` — Use predictions to pre-label Tasks
     
 </dd>
 </dl>
@@ -9950,7 +9955,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**show_instruction:** `typing.Optional[bool]` — Show instructions to the annotator before they start
+**show_instruction:** `typing.Optional[bool]` — Show instructions before labeling
     
 </dd>
 </dl>
@@ -9958,7 +9963,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**show_overlap_first:** `typing.Optional[bool]` 
+**show_overlap_first:** `typing.Optional[bool]` — Show tasks with overlap first
     
 </dd>
 </dl>
@@ -9966,7 +9971,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**show_skip_button:** `typing.Optional[bool]` — Show a skip button in interface and allow annotators to skip the task
+**show_skip_button:** `typing.Optional[bool]` — Allow skipping tasks
     
 </dd>
 </dl>
@@ -9974,7 +9979,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**show_unused_data_columns_to_annotators:** `typing.Optional[bool]` 
+**show_unused_data_columns_to_annotators:** `typing.Optional[bool]` — Show only columns used in labeling configuration to Annotators. API uses inverse field semantics here: set false to show only used columns, set true to show all task.data columns.
     
 </dd>
 </dl>
@@ -9990,7 +9995,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**strict_task_overlap:** `typing.Optional[bool]` 
+**strict_task_overlap:** `typing.Optional[bool]` — Enforce strict overlap limit
     
 </dd>
 </dl>
@@ -9998,7 +10003,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**task_data_login:** `typing.Optional[str]` — Task data credentials: login
+**task_data_login:** `typing.Optional[str]` — Login
     
 </dd>
 </dl>
@@ -10006,7 +10011,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**task_data_password:** `typing.Optional[str]` — Task data credentials: password
+**task_data_password:** `typing.Optional[str]` — Password
     
 </dd>
 </dl>
@@ -10014,7 +10019,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
+**title:** `typing.Optional[str]` — Project Name
     
 </dd>
 </dl>
@@ -10022,7 +10027,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**workspace:** `typing.Optional[int]` 
+**workspace:** `typing.Optional[int]` — Workspace
     
 </dd>
 </dl>
@@ -10181,7 +10186,7 @@ client.projects.duplicate(
 
 **mode:** `ModeEnum` 
 
-Data that you want to duplicate: settings only, with tasks, with annotations
+What to Duplicate (Project configuration only / Project configuration and tasks)
 
 * `settings` - Only settings
 * `settings,data` - Settings and tasks
@@ -10192,7 +10197,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 <dl>
 <dd>
 
-**title:** `str` — Title of duplicated project
+**title:** `str` — Project Name
     
 </dd>
 </dl>
@@ -10200,7 +10205,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 <dl>
 <dd>
 
-**workspace:** `int` — Workspace, where to place duplicated project
+**workspace:** `int` — Destination Workspace
     
 </dd>
 </dl>
@@ -10208,7 +10213,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Description of duplicated project
+**description:** `typing.Optional[str]` — Project Description
     
 </dd>
 </dl>
@@ -12910,7 +12915,7 @@ client.workspaces.create(
 <dl>
 <dd>
 
-**title:** `str` — Workspace name
+**title:** `str` — Workspace Name
     
 </dd>
 </dl>
@@ -12918,7 +12923,7 @@ client.workspaces.create(
 <dl>
 <dd>
 
-**color:** `typing.Optional[str]` 
+**color:** `typing.Optional[str]` — Color
     
 </dd>
 </dl>
@@ -13178,7 +13183,7 @@ client.workspaces.update(
 <dl>
 <dd>
 
-**color:** `typing.Optional[str]` 
+**color:** `typing.Optional[str]` — Color
     
 </dd>
 </dl>
@@ -13210,7 +13215,7 @@ client.workspaces.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Workspace name
+**title:** `typing.Optional[str]` — Workspace Name
     
 </dd>
 </dl>
@@ -29337,7 +29342,7 @@ client.organizations.invites.revoke_invite(
 <dl>
 <dd>
 
-**email:** `str` 
+**email:** `str` — Email address
     
 </dd>
 </dl>
@@ -29414,7 +29419,7 @@ client.organizations.invites.send_email(
 <dl>
 <dd>
 
-**emails:** `typing.Sequence[str]` 
+**emails:** `typing.Sequence[str]` — Email addresses
     
 </dd>
 </dl>
@@ -29423,6 +29428,16 @@ client.organizations.invites.send_email(
 <dd>
 
 **role:** `Role9E7Enum` 
+
+Organization role
+
+* `OW` - Owner
+* `AD` - Administrator
+* `MA` - Manager
+* `RE` - Reviewer
+* `AN` - Annotator
+* `DI` - Deactivated
+* `NO` - Not Activated
     
 </dd>
 </dl>
@@ -29430,7 +29445,7 @@ client.organizations.invites.send_email(
 <dl>
 <dd>
 
-**projects:** `typing.Optional[typing.Sequence[int]]` 
+**projects:** `typing.Optional[typing.Sequence[int]]` — Project IDs to grant access to
     
 </dd>
 </dl>
@@ -29438,7 +29453,7 @@ client.organizations.invites.send_email(
 <dl>
 <dd>
 
-**workspaces:** `typing.Optional[typing.Sequence[int]]` 
+**workspaces:** `typing.Optional[typing.Sequence[int]]` — Workspace IDs to grant access to
     
 </dd>
 </dl>
@@ -29632,7 +29647,7 @@ client.organizations.member_tags.create(
 <dl>
 <dd>
 
-**label:** `str` 
+**label:** `str` — Label
     
 </dd>
 </dl>
@@ -30256,7 +30271,7 @@ client.organizations.member_tags.update(
 <dl>
 <dd>
 
-**label:** `typing.Optional[str]` 
+**label:** `typing.Optional[str]` — Label
     
 </dd>
 </dl>
@@ -30518,6 +30533,16 @@ client.organizations.members.update(
 <dd>
 
 **role:** `typing.Optional[Role9E7Enum]` 
+
+Organization role
+
+* `OW` - Owner
+* `AD` - Administrator
+* `MA` - Manager
+* `RE` - Reviewer
+* `AN` - Annotator
+* `DI` - Deactivated
+* `NO` - Not Activated
     
 </dd>
 </dl>
@@ -30525,7 +30550,7 @@ client.organizations.members.update(
 <dl>
 <dd>
 
-**user_id:** `typing.Optional[int]` 
+**user_id:** `typing.Optional[int]` — Member
     
 </dd>
 </dl>
@@ -30869,7 +30894,7 @@ client.organizations.permissions.create(
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Explicit roles that have this permission within the organization.
+**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Organization roles
     
 </dd>
 </dl>
@@ -31140,7 +31165,7 @@ client.organizations.permissions.replace(
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Explicit roles that have this permission within the organization.
+**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Organization roles
     
 </dd>
 </dl>
@@ -31326,7 +31351,7 @@ client.organizations.permissions.update(
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Explicit roles that have this permission within the organization.
+**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Organization roles
     
 </dd>
 </dl>
@@ -32708,7 +32733,7 @@ client.projects.metrics.update(
 <dl>
 <dd>
 
-**additional_params:** `typing.Optional[typing.Dict[str, typing.Any]]` 
+**additional_params:** `typing.Optional[typing.Dict[str, typing.Any]]` — Agreement metric parameters
     
 </dd>
 </dl>
@@ -32732,7 +32757,7 @@ client.projects.metrics.update(
 <dl>
 <dd>
 
-**metric_name:** `typing.Optional[str]` 
+**metric_name:** `typing.Optional[str]` — Agreement metric
     
 </dd>
 </dl>
@@ -35359,7 +35384,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**all_:** `bool` 
+**all_:** `bool` — Apply to all project members
     
 </dd>
 </dl>
@@ -35407,7 +35432,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**excluded:** `typing.Optional[typing.Sequence[int]]` 
+**excluded:** `typing.Optional[typing.Sequence[int]]` — Excluded user IDs
     
 </dd>
 </dl>
@@ -35415,7 +35440,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**included:** `typing.Optional[typing.Sequence[int]]` 
+**included:** `typing.Optional[typing.Sequence[int]]` — Included user IDs
     
 </dd>
 </dl>
@@ -35423,7 +35448,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]` 
+**roles:** `typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]` — Member roles
     
 </dd>
 </dl>
@@ -37781,7 +37806,7 @@ client.sso.saml.update(
 <dl>
 <dd>
 
-**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` 
+**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` — Projects to Groups Mapping. List of objects with project_id, group, role.
     
 </dd>
 </dl>
@@ -37789,7 +37814,7 @@ client.sso.saml.update(
 <dl>
 <dd>
 
-**roles_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
+**roles_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` — Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
     
 </dd>
 </dl>
@@ -37797,7 +37822,7 @@ client.sso.saml.update(
 <dl>
 <dd>
 
-**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
+**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` — Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
     
 </dd>
 </dl>
@@ -37948,7 +37973,7 @@ client.sso.scim.update(
 <dl>
 <dd>
 
-**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` 
+**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` — Projects to Groups Mapping. List of objects with project_id, group, role.
     
 </dd>
 </dl>
@@ -37956,7 +37981,7 @@ client.sso.scim.update(
 <dl>
 <dd>
 
-**roles_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
+**roles_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` — Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
     
 </dd>
 </dl>
@@ -37964,7 +37989,7 @@ client.sso.scim.update(
 <dl>
 <dd>
 
-**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` 
+**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` — Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
     
 </dd>
 </dl>
@@ -38372,7 +38397,7 @@ client.workspaces.projects.add(
 <dl>
 <dd>
 
-**project:** `int` 
+**project:** `int` — Project ID
     
 </dd>
 </dl>
@@ -38534,7 +38559,7 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
-**all_:** `bool` 
+**all_:** `bool` — Apply to all workspace members
     
 </dd>
 </dl>
@@ -38542,7 +38567,7 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
-**excluded:** `typing.Optional[typing.Sequence[int]]` 
+**excluded:** `typing.Optional[typing.Sequence[int]]` — Excluded user IDs
     
 </dd>
 </dl>
@@ -38550,7 +38575,7 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
-**included:** `typing.Optional[typing.Sequence[int]]` 
+**included:** `typing.Optional[typing.Sequence[int]]` — Included user IDs
     
 </dd>
 </dl>

@@ -175,14 +175,19 @@ class RawOrganizationsClient:
         created_by : typing.Optional[int]
 
         custom_scripts_enabled : typing.Optional[bool]
+            Plugins
 
         email_notification_settings : typing.Optional[typing.Any]
+            Email Notification Settings
 
         embed_domains : typing.Optional[typing.Sequence[typing.Dict[str, str]]]
+            Supported domains
 
         embed_settings : typing.Optional[typing.Any]
+            Public Verification Key and Public Verification Algorithms configuration
 
         title : typing.Optional[str]
+            Organization name
 
         token : typing.Optional[str]
 
@@ -531,14 +536,19 @@ class AsyncRawOrganizationsClient:
         created_by : typing.Optional[int]
 
         custom_scripts_enabled : typing.Optional[bool]
+            Plugins
 
         email_notification_settings : typing.Optional[typing.Any]
+            Email Notification Settings
 
         embed_domains : typing.Optional[typing.Sequence[typing.Dict[str, str]]]
+            Supported domains
 
         embed_settings : typing.Optional[typing.Any]
+            Public Verification Key and Public Verification Algorithms configuration
 
         title : typing.Optional[str]
+            Organization name
 
         token : typing.Optional[str]
 

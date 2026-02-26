@@ -115,6 +115,7 @@ class MemberTagsClient:
             A unique integer value identifying this organization.
 
         label : str
+            Label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -450,6 +451,7 @@ class MemberTagsClient:
             A unique integer value identifying this member tag.
 
         label : typing.Optional[str]
+            Label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -586,6 +588,7 @@ class AsyncMemberTagsClient:
             A unique integer value identifying this organization.
 
         label : str
+            Label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -969,6 +972,7 @@ class AsyncMemberTagsClient:
             A unique integer value identifying this member tag.
 
         label : typing.Optional[str]
+            Label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

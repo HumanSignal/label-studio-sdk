@@ -92,12 +92,14 @@ class MetricsClient:
         id : int
 
         additional_params : typing.Optional[typing.Dict[str, typing.Any]]
+            Agreement metric parameters
 
         agreement_threshold : typing.Optional[int]
 
         max_additional_annotators_assignable : typing.Optional[int]
 
         metric_name : typing.Optional[str]
+            Agreement metric
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -222,12 +224,14 @@ class AsyncMetricsClient:
         id : int
 
         additional_params : typing.Optional[typing.Dict[str, typing.Any]]
+            Agreement metric parameters
 
         agreement_threshold : typing.Optional[int]
 
         max_additional_annotators_assignable : typing.Optional[int]
 
         metric_name : typing.Optional[str]
+            Agreement metric
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

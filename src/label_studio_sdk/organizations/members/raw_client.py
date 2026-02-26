@@ -168,8 +168,18 @@ class RawMembersClient:
             A unique integer value identifying this organization.
 
         role : typing.Optional[Role9E7Enum]
+            Organization role
+
+            * `OW` - Owner
+            * `AD` - Administrator
+            * `MA` - Manager
+            * `RE` - Reviewer
+            * `AN` - Annotator
+            * `DI` - Deactivated
+            * `NO` - Not Activated
 
         user_id : typing.Optional[int]
+            Member
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -473,8 +483,18 @@ class AsyncRawMembersClient:
             A unique integer value identifying this organization.
 
         role : typing.Optional[Role9E7Enum]
+            Organization role
+
+            * `OW` - Owner
+            * `AD` - Administrator
+            * `MA` - Manager
+            * `RE` - Reviewer
+            * `AN` - Annotator
+            * `DI` - Deactivated
+            * `NO` - Not Activated
 
         user_id : typing.Optional[int]
+            Member
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

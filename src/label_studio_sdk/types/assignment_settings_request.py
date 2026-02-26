@@ -11,7 +11,7 @@ from .label_stream_task_distribution_enum import LabelStreamTaskDistributionEnum
 class AssignmentSettingsRequest(UncheckedBaseModel):
     label_stream_task_distribution: typing.Optional[LabelStreamTaskDistributionEnum] = pydantic.Field(default=None)
     """
-    Modes for distributing tasks to annotators
+    Automatic / Manual
     
     * `auto_distribution` - Label Stream distributes tasks automatically to annotators
     * `assigned_only` - Label Stream shows tasks only to assigned users

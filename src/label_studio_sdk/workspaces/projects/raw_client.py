@@ -80,6 +80,7 @@ class RawProjectsClient:
         id : int
 
         project : int
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -208,6 +209,7 @@ class AsyncRawProjectsClient:
         id : int
 
         project : int
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

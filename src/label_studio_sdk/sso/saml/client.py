@@ -108,10 +108,13 @@ class SamlClient:
             Metadata XML file
 
         projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
+            Projects to Groups Mapping. List of objects with project_id, group, role.
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+            Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
 
         workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+            Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -259,10 +262,13 @@ class AsyncSamlClient:
             Metadata XML file
 
         projects_groups : typing.Optional[typing.Sequence[ProjectGroupRequest]]
+            Projects to Groups Mapping. List of objects with project_id, group, role.
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+            Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
 
         workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+            Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

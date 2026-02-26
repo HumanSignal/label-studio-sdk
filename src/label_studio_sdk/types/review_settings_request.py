@@ -18,7 +18,7 @@ class ReviewSettingsRequest(UncheckedBaseModel):
 
     instruction: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Reviewer instructions in HTML format
+    Instructions
     """
 
     only_finished_tasks: typing.Optional[bool] = pydantic.Field(default=None)
@@ -29,7 +29,7 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     project: typing.Optional[int] = None
     requeue_rejected_tasks_mode: typing.Optional[RequeueRejectedTasksModeEnum] = pydantic.Field(default=None)
     """
-    Requeue mode for rejected tasks
+    Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
     
     * `requeue` - Requeue
     * `remove` - Remove
@@ -38,12 +38,12 @@ class ReviewSettingsRequest(UncheckedBaseModel):
 
     require_comment_on_reject: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If set, the reviewer must leave a comment on reject
+    Reviewers must leave a comment on reject
     """
 
     review_criteria: typing.Optional[ReviewCriteriaEnum] = pydantic.Field(default=None)
     """
-    Criteria to mark task as reviewed
+    Task is reviewed after at least one accepted annotation / Task is reviewed when all annotations are reviewed
     
     * `all` - Task is reviewed if all annotations are reviewed
     * `one` - Task is reviewed if at least one annotation is reviewed
@@ -51,17 +51,17 @@ class ReviewSettingsRequest(UncheckedBaseModel):
 
     review_only_manual_assignments: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    When set True, review queue is built only from manually assigned tasks
+    Show only manually assigned tasks in the review stream
     """
 
     review_task_limit_percent: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Percent of tasks to include in review stream (0-100). Null/0 disables.
+    Task limit (%)
     """
 
     sampling: typing.Optional[ReviewSettingsSamplingEnum] = pydantic.Field(default=None)
     """
-    Task sampling strategy in the review stream (by task id or random)
+    By Task ID / Random
     
     * `task_id` - By Task ID
     * `random` - Random
@@ -69,22 +69,22 @@ class ReviewSettingsRequest(UncheckedBaseModel):
 
     show_agreement_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Show the agreement column to reviewers
+    Show agreement to reviewers in the Data Manager
     """
 
     show_data_manager_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Show the data manager to reviewers
+    Show the Data Manager to reviewers
     """
 
     show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Show instructions to the reviewers before they start
+    Show before reviewing
     """
 
     show_unused_data_columns_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+    Show unused task data columns to reviewers in the Data Manager
     """
 
     if IS_PYDANTIC_V2:

@@ -109,9 +109,10 @@ class WorkspacesClient:
         Parameters
         ----------
         title : str
-            Workspace name
+            Workspace Name
 
         color : typing.Optional[str]
+            Color
 
         description : typing.Optional[str]
             Workspace description
@@ -247,6 +248,7 @@ class WorkspacesClient:
         id : int
 
         color : typing.Optional[str]
+            Color
 
         description : typing.Optional[str]
             Workspace description
@@ -258,7 +260,7 @@ class WorkspacesClient:
             Workspace is a personal user workspace
 
         title : typing.Optional[str]
-            Workspace name
+            Workspace Name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -408,9 +410,10 @@ class AsyncWorkspacesClient:
         Parameters
         ----------
         title : str
-            Workspace name
+            Workspace Name
 
         color : typing.Optional[str]
+            Color
 
         description : typing.Optional[str]
             Workspace description
@@ -570,6 +573,7 @@ class AsyncWorkspacesClient:
         id : int
 
         color : typing.Optional[str]
+            Color
 
         description : typing.Optional[str]
             Workspace description
@@ -581,7 +585,7 @@ class AsyncWorkspacesClient:
             Workspace is a personal user workspace
 
         title : typing.Optional[str]
-            Workspace name
+            Workspace Name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
