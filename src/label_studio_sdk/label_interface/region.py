@@ -14,14 +14,16 @@ class Region(BaseModel):
     """
 
     id: str = Field(default_factory=lambda: str(uuid4()))
+    parentID: Optional[str] = None
     from_tag: Any
     to_tag: Any
     value: Any
     relations: Optional[List[Dict]] = []
+    score: Optional[float] = None
 
     def _dict(self):
         """ """
-        return {
+        out = {
             "id": self.id,
             "from_name": self.from_tag.name,
             "to_name": self.to_tag.name,
@@ -29,6 +31,11 @@ class Region(BaseModel):
             # TODO This needs to be improved
             "value": self.value.dict(),
         }
+        if self.parentID:
+            out["parentID"] = self.parentID
+        if self.score:
+            out["score"] = self.score
+        return out
 
     def _dict_relations(self):
         """ """
