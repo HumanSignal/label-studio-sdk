@@ -71,6 +71,7 @@ def create_bbox(annotation, categories, from_name, image_height, image_width, to
         "image_rotation": 0,
         "original_width": image_width,
         "original_height": image_height,
+	"score": annotation['score'],
     }
     return item
 
