@@ -175,6 +175,7 @@ def get_local_path(
     if is_local_storage_file:
         filepath = url.split("?d=")[1]
         filepath = safe_build_path(LOCAL_FILES_DOCUMENT_ROOT, filepath)
+        shutil.copy(filepath, cache_dir, follow_symlinks=True)
         if os.path.exists(filepath):
             logger.debug(
                 f"Local Storage file path exists locally, use it as a local file: {filepath}"
