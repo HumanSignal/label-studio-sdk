@@ -277,19 +277,29 @@ class Converter(object):
                 input_data, output_data, output_image_dir=image_dir, is_dir=is_dir
             )
         elif format == Format.BRUSH_TO_NUMPY:
-            items = (
-                self.iter_from_dir(input_data)
-                if is_dir
-                else self.iter_from_json_file(input_data)
+            image_dir = kwargs.get("image_dir")
+            label_dir = kwargs.get("label_dir")
+            brush.convert_to_brush(
+                self,
+                input_data,
+                output_data,
+                output_image_dir=image_dir,
+                output_label_dir=label_dir,
+                is_dir=is_dir,
+                out_format="numpy",
             )
-            brush.convert_task_dir(items, output_data, out_format="numpy")
         elif format == Format.BRUSH_TO_PNG:
-            items = (
-                self.iter_from_dir(input_data)
-                if is_dir
-                else self.iter_from_json_file(input_data)
+            image_dir = kwargs.get("image_dir")
+            label_dir = kwargs.get("label_dir")
+            brush.convert_to_brush(
+                self,
+                input_data,
+                output_data,
+                output_image_dir=image_dir,
+                output_label_dir=label_dir,
+                is_dir=is_dir,
+                out_format="png",
             )
-            brush.convert_task_dir(items, output_data, out_format="png")
         elif format == Format.ASR_MANIFEST:
             items = (
                 self.iter_from_dir(input_data)
