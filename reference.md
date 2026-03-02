@@ -4621,6 +4621,259 @@ Default membership role for invited users
 </dl>
 </details>
 
+## Fsm
+<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">state_history</a>(...) -&gt; AsyncPager[StateModel, PaginatedStateModelList]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the state history of an entity
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+response = client.fsm.state_history(
+    entity_name="entity_name",
+    entity_id=1,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**entity_name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entity_id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_from:** `typing.Optional[str]` — Filter for state history items created at or after the ISO 8601 formatted date (YYYY-MM-DDTHH:MM:SS)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_to:** `typing.Optional[str]` — Filter for state history items created at or before the ISO 8601 formatted date (YYYY-MM-DDTHH:MM:SS)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — A page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**previous_state:** `typing.Optional[str]` — Filter previous_state by exact match (case-insensitive)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**state:** `typing.Optional[str]` — Filter state by exact match (case-insensitive)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**transition_name:** `typing.Optional[str]` — Filter transition_name by exact match (case-insensitive)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**triggered_by:** `typing.Optional[float]` — Filter triggered_by by exact match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">execute_transition</a>(...) -&gt; AsyncHttpResponse[FsmTransitionExecuteResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute a registered manual transition for an entity.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.fsm.execute_transition(
+    entity_name="entity_name",
+    entity_id=1,
+    transition_name="transition_name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**entity_name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entity_id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**transition_name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**transition_data:** `typing.Optional[typing.Dict[str, typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Files
 <details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">get</a>(...) -&gt; AsyncHttpResponse[FileUpload]</code></summary>
 <dl>
