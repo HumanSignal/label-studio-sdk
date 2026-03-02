@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
     from .comments.client import AsyncCommentsClient, CommentsClient
     from .export_storage.client import AsyncExportStorageClient, ExportStorageClient
     from .files.client import AsyncFilesClient, FilesClient
+    from .fsm.client import AsyncFsmClient, FsmClient
     from .import_storage.client import AsyncImportStorageClient, ImportStorageClient
     from .jwt_settings.client import AsyncJwtSettingsClient, JwtSettingsClient
     from .ml.client import AsyncMlClient, MlClient
@@ -119,6 +120,7 @@ class LabelStudioBase:
         self._actions: typing.Optional[ActionsClient] = None
         self._views: typing.Optional[ViewsClient] = None
         self._organizations: typing.Optional[OrganizationsClient] = None
+        self._fsm: typing.Optional[FsmClient] = None
         self._files: typing.Optional[FilesClient] = None
         self._jwt_settings: typing.Optional[JwtSettingsClient] = None
         self._ml: typing.Optional[MlClient] = None
@@ -216,6 +218,14 @@ class LabelStudioBase:
 
             self._organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
         return self._organizations
+
+    @property
+    def fsm(self):
+        if self._fsm is None:
+            from .fsm.client import FsmClient  # noqa: E402
+
+            self._fsm = FsmClient(client_wrapper=self._client_wrapper)
+        return self._fsm
 
     @property
     def files(self):
@@ -433,6 +443,7 @@ class AsyncLabelStudioBase:
         self._actions: typing.Optional[AsyncActionsClient] = None
         self._views: typing.Optional[AsyncViewsClient] = None
         self._organizations: typing.Optional[AsyncOrganizationsClient] = None
+        self._fsm: typing.Optional[AsyncFsmClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
         self._jwt_settings: typing.Optional[AsyncJwtSettingsClient] = None
         self._ml: typing.Optional[AsyncMlClient] = None
@@ -530,6 +541,14 @@ class AsyncLabelStudioBase:
 
             self._organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
         return self._organizations
+
+    @property
+    def fsm(self):
+        if self._fsm is None:
+            from .fsm.client import AsyncFsmClient  # noqa: E402
+
+            self._fsm = AsyncFsmClient(client_wrapper=self._client_wrapper)
+        return self._fsm
 
     @property
     def files(self):
