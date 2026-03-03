@@ -4106,8 +4106,8 @@ client.views.update(
 </dl>
 </details>
 
-## Organizations
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">api_fsm_backfill_create</a>() -&gt; AsyncHttpResponse[typing.Any]</code></summary>
+## Fsm
+<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">api_fsm_backfill_create</a>(...) -&gt; AsyncHttpResponse[typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -4145,7 +4145,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.organizations.api_fsm_backfill_create()
+client.fsm.api_fsm_backfill_create()
 
 ```
 </dd>
@@ -4157,6 +4157,14 @@ client.organizations.api_fsm_backfill_create()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project_id:** `typing.Optional[int]` — Optional project ID to trigger backfill for a single project
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -4173,7 +4181,89 @@ client.organizations.api_fsm_backfill_create()
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">api_fsm_backfill_jobs_retrieve</a>() -&gt; AsyncHttpResponse[typing.Any]</code></summary>
+<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">api_fsm_backfill_destroy</a>(...) -&gt; AsyncHttpResponse[typing.Any]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Cancel FSM state backfill jobs for the authenticated user's active organization. Can cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.fsm.api_fsm_backfill_destroy()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**job_id:** `typing.Optional[int]` — Optional specific job ID to cancel
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_id:** `typing.Optional[int]` — Optional project ID to cancel its active jobs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">api_fsm_backfill_jobs_retrieve</a>() -&gt; AsyncHttpResponse[typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -4211,7 +4301,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.organizations.api_fsm_backfill_jobs_retrieve()
+client.fsm.api_fsm_backfill_jobs_retrieve()
 
 ```
 </dd>
@@ -4239,7 +4329,7 @@ client.organizations.api_fsm_backfill_jobs_retrieve()
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">api_fsm_backfill_status_retrieve</a>(...) -&gt; AsyncHttpResponse[typing.Any]</code></summary>
+<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">api_fsm_backfill_status_retrieve</a>(...) -&gt; AsyncHttpResponse[typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -4277,7 +4367,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.organizations.api_fsm_backfill_status_retrieve()
+client.fsm.api_fsm_backfill_status_retrieve()
 
 ```
 </dd>
@@ -4301,129 +4391,7 @@ client.organizations.api_fsm_backfill_status_retrieve()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">reset_token</a>() -&gt; AsyncHttpResponse[OrganizationInvite]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Reset the token used in the invitation link to invite someone to an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.reset_token()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[OrganizationId]]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-        Return a list of the organizations you've created or that you have access to.
-        
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+**project_id:** `typing.Optional[int]` — Optional project ID to retrieve the latest job status for a project. If omitted, returns aggregated org status.
     
 </dd>
 </dl>
@@ -4443,391 +4411,6 @@ client.organizations.list()
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">get</a>(...) -&gt; AsyncHttpResponse[LseOrganization]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the settings for a specific organization by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update</a>(...) -&gt; AsyncHttpResponse[LseOrganization]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Update organization details including title, embed domains, and Plugins settings.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**contact_info:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_scripts_enabled:** `typing.Optional[bool]` — Plugins
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_notification_settings:** `typing.Optional[typing.Any]` — Email Notification Settings
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_domains:** `typing.Optional[typing.Sequence[typing.Dict[str, str]]]` — Supported domains
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_settings:** `typing.Optional[typing.Any]` — Public Verification Key and Public Verification Algorithms configuration
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Organization name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update_default_role</a>(...) -&gt; AsyncHttpResponse[DefaultRole]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Update the default role for members of a specific organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.update_default_role(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**annotator_reviewer_firewall_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**default_role:** `typing.Optional[Role9E7Enum]` 
-
-Default membership role for invited users
-
-* `OW` - Owner
-* `AD` - Administrator
-* `MA` - Manager
-* `RE` - Reviewer
-* `AN` - Annotator
-* `DI` - Deactivated
-* `NO` - Not Activated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_notification_settings:** `typing.Optional[typing.Any]` — Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_domains:** `typing.Optional[typing.Any]` — List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_settings:** `typing.Optional[typing.Any]` — Embed settings for this organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — External ID to uniquely identify this organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extra_data_on_activity_logs:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**label_stream_navigation_disabled_at:** `typing.Optional[dt.datetime]` — Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` — A unique integer value identifying this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**read_only_quick_view_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Fsm
 <details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">state_history</a>(...) -&gt; AsyncPager[StateModel, PaginatedStateModelList]</code></summary>
 <dl>
 <dd>
@@ -5532,6 +5115,521 @@ client.files.download(
 <dd>
 
 **filename:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Organizations
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">reset_token</a>() -&gt; AsyncHttpResponse[OrganizationInvite]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Reset the token used in the invitation link to invite someone to an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.reset_token()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[OrganizationId]]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+        Return a list of the organizations you've created or that you have access to.
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">get</a>(...) -&gt; AsyncHttpResponse[LseOrganization]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the settings for a specific organization by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update</a>(...) -&gt; AsyncHttpResponse[LseOrganization]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Update organization details including title, embed domains, and Plugins settings.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**contact_info:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**custom_scripts_enabled:** `typing.Optional[bool]` — Plugins
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_notification_settings:** `typing.Optional[typing.Any]` — Email Notification Settings
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embed_domains:** `typing.Optional[typing.Sequence[typing.Dict[str, str]]]` — Supported domains
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embed_settings:** `typing.Optional[typing.Any]` — Public Verification Key and Public Verification Algorithms configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Organization name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update_default_role</a>(...) -&gt; AsyncHttpResponse[DefaultRole]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Update the default role for members of a specific organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.organizations.update_default_role(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotator_reviewer_firewall_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**default_role:** `typing.Optional[Role9E7Enum]` 
+
+Default membership role for invited users
+
+* `OW` - Owner
+* `AD` - Administrator
+* `MA` - Manager
+* `RE` - Reviewer
+* `AN` - Annotator
+* `DI` - Deactivated
+* `NO` - Not Activated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_notification_settings:** `typing.Optional[typing.Any]` — Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embed_domains:** `typing.Optional[typing.Any]` — List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embed_settings:** `typing.Optional[typing.Any]` — Embed settings for this organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — External ID to uniquely identify this organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extra_data_on_activity_logs:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label_stream_navigation_disabled_at:** `typing.Optional[dt.datetime]` — Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` — A unique integer value identifying this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**read_only_quick_view_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
     
 </dd>
 </dl>

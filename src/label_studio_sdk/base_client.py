@@ -119,9 +119,9 @@ class LabelStudioBase:
         self._users: typing.Optional[UsersClient] = None
         self._actions: typing.Optional[ActionsClient] = None
         self._views: typing.Optional[ViewsClient] = None
-        self._organizations: typing.Optional[OrganizationsClient] = None
         self._fsm: typing.Optional[FsmClient] = None
         self._files: typing.Optional[FilesClient] = None
+        self._organizations: typing.Optional[OrganizationsClient] = None
         self._jwt_settings: typing.Optional[JwtSettingsClient] = None
         self._ml: typing.Optional[MlClient] = None
         self._model_providers: typing.Optional[ModelProvidersClient] = None
@@ -212,14 +212,6 @@ class LabelStudioBase:
         return self._views
 
     @property
-    def organizations(self):
-        if self._organizations is None:
-            from .organizations.client import OrganizationsClient  # noqa: E402
-
-            self._organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
-        return self._organizations
-
-    @property
     def fsm(self):
         if self._fsm is None:
             from .fsm.client import FsmClient  # noqa: E402
@@ -234,6 +226,14 @@ class LabelStudioBase:
 
             self._files = FilesClient(client_wrapper=self._client_wrapper)
         return self._files
+
+    @property
+    def organizations(self):
+        if self._organizations is None:
+            from .organizations.client import OrganizationsClient  # noqa: E402
+
+            self._organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
+        return self._organizations
 
     @property
     def jwt_settings(self):
@@ -442,9 +442,9 @@ class AsyncLabelStudioBase:
         self._users: typing.Optional[AsyncUsersClient] = None
         self._actions: typing.Optional[AsyncActionsClient] = None
         self._views: typing.Optional[AsyncViewsClient] = None
-        self._organizations: typing.Optional[AsyncOrganizationsClient] = None
         self._fsm: typing.Optional[AsyncFsmClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
+        self._organizations: typing.Optional[AsyncOrganizationsClient] = None
         self._jwt_settings: typing.Optional[AsyncJwtSettingsClient] = None
         self._ml: typing.Optional[AsyncMlClient] = None
         self._model_providers: typing.Optional[AsyncModelProvidersClient] = None
@@ -535,14 +535,6 @@ class AsyncLabelStudioBase:
         return self._views
 
     @property
-    def organizations(self):
-        if self._organizations is None:
-            from .organizations.client import AsyncOrganizationsClient  # noqa: E402
-
-            self._organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
-        return self._organizations
-
-    @property
     def fsm(self):
         if self._fsm is None:
             from .fsm.client import AsyncFsmClient  # noqa: E402
@@ -557,6 +549,14 @@ class AsyncLabelStudioBase:
 
             self._files = AsyncFilesClient(client_wrapper=self._client_wrapper)
         return self._files
+
+    @property
+    def organizations(self):
+        if self._organizations is None:
+            from .organizations.client import AsyncOrganizationsClient  # noqa: E402
+
+            self._organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
+        return self._organizations
 
     @property
     def jwt_settings(self):
