@@ -57,6 +57,7 @@ if typing.TYPE_CHECKING:
     from .filter import Filter
     from .filter_group import FilterGroup
     from .finished_enum import FinishedEnum
+    from .fsm_transition_execute_response import FsmTransitionExecuteResponse
     from .gcs_export_storage import GcsExportStorage
     from .gcs_import_storage import GcsImportStorage
     from .gcswif_export_storage import GcswifExportStorage
@@ -148,6 +149,7 @@ if typing.TYPE_CHECKING:
     from .paginated_project_member import PaginatedProjectMember
     from .paginated_project_subset_tasks_response_list import PaginatedProjectSubsetTasksResponseList
     from .paginated_role_based_task_list import PaginatedRoleBasedTaskList
+    from .paginated_state_model_list import PaginatedStateModelList
     from .pause import Pause
     from .pause_request import PauseRequest
     from .prediction import Prediction
@@ -200,7 +202,17 @@ if typing.TYPE_CHECKING:
     from .skill_name_enum import SkillNameEnum
     from .skip_queue_enum import SkipQueueEnum
     from .skipped_enum import SkippedEnum
+    from .state_backfill_cancel_response import StateBackfillCancelResponse
+    from .state_backfill_job_item import StateBackfillJobItem
+    from .state_backfill_job_item_response import StateBackfillJobItemResponse
+    from .state_backfill_job_list_response import StateBackfillJobListResponse
+    from .state_backfill_org_status import StateBackfillOrgStatus
+    from .state_backfill_progress import StateBackfillProgress
+    from .state_backfill_response import StateBackfillResponse
+    from .state_backfill_status_response import StateBackfillStatusResponse
     from .state_enum import StateEnum
+    from .state_model import StateModel
+    from .state_triggered_by import StateTriggeredBy
     from .status7bf_enum import Status7BfEnum
     from .status_c5a_enum import StatusC5AEnum
     from .task_assignment import TaskAssignment
@@ -210,6 +222,7 @@ if typing.TYPE_CHECKING:
     from .token_refresh_response import TokenRefreshResponse
     from .token_rotate_response import TokenRotateResponse
     from .trial_role_enum import TrialRoleEnum
+    from .triggered_by import TriggeredBy
     from .type_enum import TypeEnum
     from .user_simple import UserSimple
     from .user_simple_request import UserSimpleRequest
@@ -274,6 +287,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Filter": ".filter",
     "FilterGroup": ".filter_group",
     "FinishedEnum": ".finished_enum",
+    "FsmTransitionExecuteResponse": ".fsm_transition_execute_response",
     "GcsExportStorage": ".gcs_export_storage",
     "GcsImportStorage": ".gcs_import_storage",
     "GcswifExportStorage": ".gcswif_export_storage",
@@ -359,6 +373,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PaginatedProjectMember": ".paginated_project_member",
     "PaginatedProjectSubsetTasksResponseList": ".paginated_project_subset_tasks_response_list",
     "PaginatedRoleBasedTaskList": ".paginated_role_based_task_list",
+    "PaginatedStateModelList": ".paginated_state_model_list",
     "Pause": ".pause",
     "PauseRequest": ".pause_request",
     "Prediction": ".prediction",
@@ -411,7 +426,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SkillNameEnum": ".skill_name_enum",
     "SkipQueueEnum": ".skip_queue_enum",
     "SkippedEnum": ".skipped_enum",
+    "StateBackfillCancelResponse": ".state_backfill_cancel_response",
+    "StateBackfillJobItem": ".state_backfill_job_item",
+    "StateBackfillJobItemResponse": ".state_backfill_job_item_response",
+    "StateBackfillJobListResponse": ".state_backfill_job_list_response",
+    "StateBackfillOrgStatus": ".state_backfill_org_status",
+    "StateBackfillProgress": ".state_backfill_progress",
+    "StateBackfillResponse": ".state_backfill_response",
+    "StateBackfillStatusResponse": ".state_backfill_status_response",
     "StateEnum": ".state_enum",
+    "StateModel": ".state_model",
+    "StateTriggeredBy": ".state_triggered_by",
     "Status7BfEnum": ".status7bf_enum",
     "StatusC5AEnum": ".status_c5a_enum",
     "TaskAssignment": ".task_assignment",
@@ -421,6 +446,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TokenRefreshResponse": ".token_refresh_response",
     "TokenRotateResponse": ".token_rotate_response",
     "TrialRoleEnum": ".trial_role_enum",
+    "TriggeredBy": ".triggered_by",
     "TypeEnum": ".type_enum",
     "UserSimple": ".user_simple",
     "UserSimpleRequest": ".user_simple_request",
@@ -509,6 +535,7 @@ __all__ = [
     "Filter",
     "FilterGroup",
     "FinishedEnum",
+    "FsmTransitionExecuteResponse",
     "GcsExportStorage",
     "GcsImportStorage",
     "GcswifExportStorage",
@@ -594,6 +621,7 @@ __all__ = [
     "PaginatedProjectMember",
     "PaginatedProjectSubsetTasksResponseList",
     "PaginatedRoleBasedTaskList",
+    "PaginatedStateModelList",
     "Pause",
     "PauseRequest",
     "Prediction",
@@ -646,7 +674,17 @@ __all__ = [
     "SkillNameEnum",
     "SkipQueueEnum",
     "SkippedEnum",
+    "StateBackfillCancelResponse",
+    "StateBackfillJobItem",
+    "StateBackfillJobItemResponse",
+    "StateBackfillJobListResponse",
+    "StateBackfillOrgStatus",
+    "StateBackfillProgress",
+    "StateBackfillResponse",
+    "StateBackfillStatusResponse",
     "StateEnum",
+    "StateModel",
+    "StateTriggeredBy",
     "Status7BfEnum",
     "StatusC5AEnum",
     "TaskAssignment",
@@ -656,6 +694,7 @@ __all__ = [
     "TokenRefreshResponse",
     "TokenRotateResponse",
     "TrialRoleEnum",
+    "TriggeredBy",
     "TypeEnum",
     "UserSimple",
     "UserSimpleRequest",
