@@ -4,7 +4,7 @@ dynamic = ["version"]
 
 [tool.poetry]
 name = "label-studio-sdk"
-version = "1.23.1.dev"
+version = "2.0.19.dev"
 description = ""
 readme = "README.md"
 authors = []
