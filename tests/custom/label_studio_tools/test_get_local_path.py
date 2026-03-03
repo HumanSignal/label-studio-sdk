@@ -137,7 +137,7 @@ def test_get_local_path_storage_proxy_filename_and_auth(monkeypatch, tmp_path):
     )
 
     # filename should come from filepath and keep extension
-    url_hash = hashlib.md5(f"{hostname}{url}".encode()).hexdigest()[:8]
+    url_hash = hashlib.md5(f"{hostname}{url}".encode(), usedforsecurity=False).hexdigest()[:8]
     assert local_path.endswith(f"{url_hash}__1.jpg")
 
     # ensure request url was rewritten to hostname
@@ -214,7 +214,7 @@ def test_get_local_path_upload_is_rewritten_to_storage_proxy(monkeypatch, tmp_pa
     )
 
     expected_full_url = f"{hostname}/storage-data/uploaded/?filepath=upload/5/1.jpg"
-    expected_hash = hashlib.md5(expected_full_url.encode()).hexdigest()[:8]
+    expected_hash = hashlib.md5(expected_full_url.encode(), usedforsecurity=False).hexdigest()[:8]
     assert local_path.endswith(f"{expected_hash}__1.jpg")
 
     assert requested.url == expected_full_url
@@ -256,7 +256,7 @@ def test_get_local_path_upload_proxy_fallback_to_data_upload(monkeypatch, tmp_pa
         )
 
     fallback_url = f"{hostname}/data/upload/5/1.jpg"
-    expected_hash = hashlib.md5(fallback_url.encode()).hexdigest()[:8]
+    expected_hash = hashlib.md5(fallback_url.encode(), usedforsecurity=False).hexdigest()[:8]
     assert local_path.endswith(f"{expected_hash}__1.jpg")
     assert calls[0].startswith(f"{hostname}/storage-data/uploaded/?filepath=upload/5/1.jpg")
     assert calls[-1] == fallback_url

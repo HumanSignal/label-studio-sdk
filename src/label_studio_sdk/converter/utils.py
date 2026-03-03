@@ -182,8 +182,9 @@ def download(
                 basename
                 + "_"
                 + hashlib.md5(
-                    url.encode() + str(datetime.datetime.now().timestamp()).encode()
-                ).hexdigest()[:4]
+                    url.encode() + str(datetime.datetime.now().timestamp()).encode(),
+                    usedforsecurity=False,
+            ).hexdigest()[:4]
                 + ext
             )
 
