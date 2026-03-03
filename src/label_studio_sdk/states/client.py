@@ -7,31 +7,35 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.fsm_transition_execute_response import FsmTransitionExecuteResponse
 from ..types.paginated_state_model_list import PaginatedStateModelList
+from ..types.state_backfill_cancel_response import StateBackfillCancelResponse
+from ..types.state_backfill_job_list_response import StateBackfillJobListResponse
+from ..types.state_backfill_response import StateBackfillResponse
+from ..types.state_backfill_status_response import StateBackfillStatusResponse
 from ..types.state_model import StateModel
-from .raw_client import AsyncRawFsmClient, RawFsmClient
+from .raw_client import AsyncRawStatesClient, RawStatesClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class FsmClient:
+class StatesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawFsmClient(client_wrapper=client_wrapper)
+        self._raw_client = RawStatesClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawFsmClient:
+    def with_raw_response(self) -> RawStatesClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawFsmClient
+        RawStatesClient
         """
         return self._raw_client
 
-    def api_fsm_backfill_create(
+    def trigger_backfill(
         self, *, project_id: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> StateBackfillResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -39,7 +43,7 @@ class FsmClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Trigger FSM state backfill for the authenticated user's active organization. Creates initial state records for entities without FSM states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+        Trigger state backfill for the authenticated user's active organization. Creates initial state records for entities without states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
 
         Parameters
         ----------
@@ -51,7 +55,7 @@ class FsmClient:
 
         Returns
         -------
-        typing.Any
+        StateBackfillResponse
 
 
         Examples
@@ -61,18 +65,18 @@ class FsmClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.fsm.api_fsm_backfill_create()
+        client.states.trigger_backfill()
         """
-        _response = self._raw_client.api_fsm_backfill_create(project_id=project_id, request_options=request_options)
+        _response = self._raw_client.trigger_backfill(project_id=project_id, request_options=request_options)
         return _response.data
 
-    def api_fsm_backfill_destroy(
+    def cancel_backfill(
         self,
         *,
         job_id: typing.Optional[int] = None,
         project_id: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> StateBackfillCancelResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -80,7 +84,7 @@ class FsmClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Cancel FSM state backfill jobs for the authenticated user's active organization. Can cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
+        Cancel state backfill jobs for the authenticated user's active organization. Can cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
 
         Parameters
         ----------
@@ -95,7 +99,7 @@ class FsmClient:
 
         Returns
         -------
-        typing.Any
+        StateBackfillCancelResponse
 
 
         Examples
@@ -105,14 +109,16 @@ class FsmClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.fsm.api_fsm_backfill_destroy()
+        client.states.cancel_backfill()
         """
-        _response = self._raw_client.api_fsm_backfill_destroy(
+        _response = self._raw_client.cancel_backfill(
             job_id=job_id, project_id=project_id, request_options=request_options
         )
         return _response.data
 
-    def api_fsm_backfill_jobs_retrieve(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def list_backfills(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> StateBackfillJobListResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -120,7 +126,7 @@ class FsmClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve the latest 10 FSM backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+        Retrieve the latest 10 state backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
 
         Parameters
         ----------
@@ -129,7 +135,7 @@ class FsmClient:
 
         Returns
         -------
-        typing.Any
+        StateBackfillJobListResponse
 
 
         Examples
@@ -139,18 +145,18 @@ class FsmClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.fsm.api_fsm_backfill_jobs_retrieve()
+        client.states.list_backfills()
         """
-        _response = self._raw_client.api_fsm_backfill_jobs_retrieve(request_options=request_options)
+        _response = self._raw_client.list_backfills(request_options=request_options)
         return _response.data
 
-    def api_fsm_backfill_status_retrieve(
+    def get_backfill_status(
         self,
         *,
         job_id: typing.Optional[int] = None,
         project_id: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> StateBackfillStatusResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -158,7 +164,7 @@ class FsmClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve the status of an FSM backfill job for the authenticated user's active organization. By default returns the latest job, or specify job_id to get a specific job. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+        Retrieve the status of a state backfill job for the authenticated user's active organization. By default returns the aggregated org status, or specify job_id or project_id to get explicit job statuses. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
 
         Parameters
         ----------
@@ -173,7 +179,7 @@ class FsmClient:
 
         Returns
         -------
-        typing.Any
+        StateBackfillStatusResponse
 
 
         Examples
@@ -183,9 +189,9 @@ class FsmClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.fsm.api_fsm_backfill_status_retrieve()
+        client.states.get_backfill_status()
         """
-        _response = self._raw_client.api_fsm_backfill_status_retrieve(
+        _response = self._raw_client.get_backfill_status(
             job_id=job_id, project_id=project_id, request_options=request_options
         )
         return _response.data
@@ -263,7 +269,7 @@ class FsmClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        response = client.fsm.state_history(
+        response = client.states.state_history(
             entity_name="entity_name",
             entity_id=1,
         )
@@ -331,7 +337,7 @@ class FsmClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.fsm.execute_transition(
+        client.states.execute_transition(
             entity_name="entity_name",
             entity_id=1,
             transition_name="transition_name",
@@ -347,24 +353,24 @@ class FsmClient:
         return _response.data
 
 
-class AsyncFsmClient:
+class AsyncStatesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawFsmClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawStatesClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawFsmClient:
+    def with_raw_response(self) -> AsyncRawStatesClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawFsmClient
+        AsyncRawStatesClient
         """
         return self._raw_client
 
-    async def api_fsm_backfill_create(
+    async def trigger_backfill(
         self, *, project_id: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> StateBackfillResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -372,7 +378,7 @@ class AsyncFsmClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Trigger FSM state backfill for the authenticated user's active organization. Creates initial state records for entities without FSM states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+        Trigger state backfill for the authenticated user's active organization. Creates initial state records for entities without states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
 
         Parameters
         ----------
@@ -384,7 +390,7 @@ class AsyncFsmClient:
 
         Returns
         -------
-        typing.Any
+        StateBackfillResponse
 
 
         Examples
@@ -399,23 +405,21 @@ class AsyncFsmClient:
 
 
         async def main() -> None:
-            await client.fsm.api_fsm_backfill_create()
+            await client.states.trigger_backfill()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.api_fsm_backfill_create(
-            project_id=project_id, request_options=request_options
-        )
+        _response = await self._raw_client.trigger_backfill(project_id=project_id, request_options=request_options)
         return _response.data
 
-    async def api_fsm_backfill_destroy(
+    async def cancel_backfill(
         self,
         *,
         job_id: typing.Optional[int] = None,
         project_id: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> StateBackfillCancelResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -423,7 +427,7 @@ class AsyncFsmClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Cancel FSM state backfill jobs for the authenticated user's active organization. Can cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
+        Cancel state backfill jobs for the authenticated user's active organization. Can cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
 
         Parameters
         ----------
@@ -438,7 +442,7 @@ class AsyncFsmClient:
 
         Returns
         -------
-        typing.Any
+        StateBackfillCancelResponse
 
 
         Examples
@@ -453,19 +457,19 @@ class AsyncFsmClient:
 
 
         async def main() -> None:
-            await client.fsm.api_fsm_backfill_destroy()
+            await client.states.cancel_backfill()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.api_fsm_backfill_destroy(
+        _response = await self._raw_client.cancel_backfill(
             job_id=job_id, project_id=project_id, request_options=request_options
         )
         return _response.data
 
-    async def api_fsm_backfill_jobs_retrieve(
+    async def list_backfills(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> StateBackfillJobListResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -473,7 +477,7 @@ class AsyncFsmClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve the latest 10 FSM backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+        Retrieve the latest 10 state backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
 
         Parameters
         ----------
@@ -482,7 +486,7 @@ class AsyncFsmClient:
 
         Returns
         -------
-        typing.Any
+        StateBackfillJobListResponse
 
 
         Examples
@@ -497,21 +501,21 @@ class AsyncFsmClient:
 
 
         async def main() -> None:
-            await client.fsm.api_fsm_backfill_jobs_retrieve()
+            await client.states.list_backfills()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.api_fsm_backfill_jobs_retrieve(request_options=request_options)
+        _response = await self._raw_client.list_backfills(request_options=request_options)
         return _response.data
 
-    async def api_fsm_backfill_status_retrieve(
+    async def get_backfill_status(
         self,
         *,
         job_id: typing.Optional[int] = None,
         project_id: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> StateBackfillStatusResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -519,7 +523,7 @@ class AsyncFsmClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve the status of an FSM backfill job for the authenticated user's active organization. By default returns the latest job, or specify job_id to get a specific job. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+        Retrieve the status of a state backfill job for the authenticated user's active organization. By default returns the aggregated org status, or specify job_id or project_id to get explicit job statuses. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
 
         Parameters
         ----------
@@ -534,7 +538,7 @@ class AsyncFsmClient:
 
         Returns
         -------
-        typing.Any
+        StateBackfillStatusResponse
 
 
         Examples
@@ -549,12 +553,12 @@ class AsyncFsmClient:
 
 
         async def main() -> None:
-            await client.fsm.api_fsm_backfill_status_retrieve()
+            await client.states.get_backfill_status()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.api_fsm_backfill_status_retrieve(
+        _response = await self._raw_client.get_backfill_status(
             job_id=job_id, project_id=project_id, request_options=request_options
         )
         return _response.data
@@ -637,7 +641,7 @@ class AsyncFsmClient:
 
 
         async def main() -> None:
-            response = await client.fsm.state_history(
+            response = await client.states.state_history(
                 entity_name="entity_name",
                 entity_id=1,
             )
@@ -714,7 +718,7 @@ class AsyncFsmClient:
 
 
         async def main() -> None:
-            await client.fsm.execute_transition(
+            await client.states.execute_transition(
                 entity_name="entity_name",
                 entity_id=1,
                 transition_name="transition_name",

@@ -4106,8 +4106,8 @@ client.views.update(
 </dl>
 </details>
 
-## Fsm
-<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">api_fsm_backfill_create</a>(...) -&gt; AsyncHttpResponse[typing.Any]</code></summary>
+## States
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">trigger_backfill</a>(...) -&gt; AsyncHttpResponse[StateBackfillResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4125,7 +4125,7 @@ client.views.update(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Trigger FSM state backfill for the authenticated user's active organization. Creates initial state records for entities without FSM states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+Trigger state backfill for the authenticated user's active organization. Creates initial state records for entities without states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
 </dd>
 </dl>
 </dd>
@@ -4145,7 +4145,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.fsm.api_fsm_backfill_create()
+client.states.trigger_backfill()
 
 ```
 </dd>
@@ -4181,7 +4181,7 @@ client.fsm.api_fsm_backfill_create()
 </dl>
 </details>
 
-<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">api_fsm_backfill_destroy</a>(...) -&gt; AsyncHttpResponse[typing.Any]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">cancel_backfill</a>(...) -&gt; AsyncHttpResponse[StateBackfillCancelResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4199,7 +4199,7 @@ client.fsm.api_fsm_backfill_create()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Cancel FSM state backfill jobs for the authenticated user's active organization. Can cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
+Cancel state backfill jobs for the authenticated user's active organization. Can cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
 </dd>
 </dl>
 </dd>
@@ -4219,7 +4219,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.fsm.api_fsm_backfill_destroy()
+client.states.cancel_backfill()
 
 ```
 </dd>
@@ -4263,7 +4263,7 @@ client.fsm.api_fsm_backfill_destroy()
 </dl>
 </details>
 
-<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">api_fsm_backfill_jobs_retrieve</a>() -&gt; AsyncHttpResponse[typing.Any]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">list_backfills</a>() -&gt; AsyncHttpResponse[StateBackfillJobListResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4281,7 +4281,7 @@ client.fsm.api_fsm_backfill_destroy()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve the latest 10 FSM backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+Retrieve the latest 10 state backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
 </dd>
 </dl>
 </dd>
@@ -4301,7 +4301,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.fsm.api_fsm_backfill_jobs_retrieve()
+client.states.list_backfills()
 
 ```
 </dd>
@@ -4329,7 +4329,7 @@ client.fsm.api_fsm_backfill_jobs_retrieve()
 </dl>
 </details>
 
-<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">api_fsm_backfill_status_retrieve</a>(...) -&gt; AsyncHttpResponse[typing.Any]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">get_backfill_status</a>(...) -&gt; AsyncHttpResponse[StateBackfillStatusResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4347,7 +4347,7 @@ client.fsm.api_fsm_backfill_jobs_retrieve()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve the status of an FSM backfill job for the authenticated user's active organization. By default returns the latest job, or specify job_id to get a specific job. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+Retrieve the status of a state backfill job for the authenticated user's active organization. By default returns the aggregated org status, or specify job_id or project_id to get explicit job statuses. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
 </dd>
 </dl>
 </dd>
@@ -4367,7 +4367,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.fsm.api_fsm_backfill_status_retrieve()
+client.states.get_backfill_status()
 
 ```
 </dd>
@@ -4411,7 +4411,7 @@ client.fsm.api_fsm_backfill_status_retrieve()
 </dl>
 </details>
 
-<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">state_history</a>(...) -&gt; AsyncPager[StateModel, PaginatedStateModelList]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">state_history</a>(...) -&gt; AsyncPager[StateModel, PaginatedStateModelList]</code></summary>
 <dl>
 <dd>
 
@@ -4449,7 +4449,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-response = client.fsm.state_history(
+response = client.states.state_history(
     entity_name="entity_name",
     entity_id=1,
 )
@@ -4573,7 +4573,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.fsm.<a href="src/label_studio_sdk/fsm/client.py">execute_transition</a>(...) -&gt; AsyncHttpResponse[FsmTransitionExecuteResponse]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">execute_transition</a>(...) -&gt; AsyncHttpResponse[FsmTransitionExecuteResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4611,7 +4611,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.fsm.execute_transition(
+client.states.execute_transition(
     entity_name="entity_name",
     entity_id=1,
     transition_name="transition_name",
