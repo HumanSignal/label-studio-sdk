@@ -140,6 +140,7 @@ class LseProject(UncheckedBaseModel):
     """
 
     id: typing.Optional[int] = None
+    is_dimensions_enabled: typing.Optional[str] = None
     is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether or not the project is in the middle of being created
