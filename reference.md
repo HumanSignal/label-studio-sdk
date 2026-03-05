@@ -9461,7 +9461,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**archived:** `typing.Optional[bool]` — Filter archived by exact match
+**archived:** `typing.Optional[bool]` — Filter by projects that belong to archived workspaces
     
 </dd>
 </dl>
@@ -9917,7 +9917,7 @@ client.projects.list_counts()
 <dl>
 <dd>
 
-**archived:** `typing.Optional[bool]` — Filter archived by exact match
+**archived:** `typing.Optional[bool]` — Filter by projects that belong to archived workspaces
     
 </dd>
 </dl>
@@ -30357,7 +30357,7 @@ client.organizations.member_tags.assign(
 <dl>
 <dd>
 
-**role:** `typing.Optional[str]` — Filter role by in list (comma-separated values)
+**role:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
 </dl>
@@ -30365,7 +30365,7 @@ client.organizations.member_tags.assign(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[str]` — Filter tags by in list (comma-separated values)
+**tags:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
 </dl>
@@ -36017,7 +36017,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[str]` — Filter tags by in list (comma-separated values)
+**tags:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
 </dl>
@@ -36157,7 +36157,7 @@ client.projects.members.bulk.delete(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[str]` — Filter tags by in list (comma-separated values)
+**tags:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
 </dl>

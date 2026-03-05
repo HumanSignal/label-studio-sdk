@@ -66,7 +66,7 @@ class RawBulkClient:
             Search term for filtering members by name, email, or username. Only when all=True.
 
         tags : typing.Optional[str]
-            Filter tags by in list (comma-separated values)
+            Multiple values may be separated by commas. (comma-separated values)
 
         excluded : typing.Optional[typing.Sequence[int]]
             Excluded user IDs
@@ -161,7 +161,7 @@ class RawBulkClient:
             Search term for filtering members by name, email, or username. Only when all=True.
 
         tags : typing.Optional[str]
-            Filter tags by in list (comma-separated values)
+            Multiple values may be separated by commas. (comma-separated values)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -247,7 +247,7 @@ class AsyncRawBulkClient:
             Search term for filtering members by name, email, or username. Only when all=True.
 
         tags : typing.Optional[str]
-            Filter tags by in list (comma-separated values)
+            Multiple values may be separated by commas. (comma-separated values)
 
         excluded : typing.Optional[typing.Sequence[int]]
             Excluded user IDs
@@ -342,7 +342,7 @@ class AsyncRawBulkClient:
             Search term for filtering members by name, email, or username. Only when all=True.
 
         tags : typing.Optional[str]
-            Filter tags by in list (comma-separated values)
+            Multiple values may be separated by commas. (comma-separated values)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -65,7 +65,7 @@ class RawProjectsClient:
         Parameters
         ----------
         archived : typing.Optional[bool]
-            Filter archived by exact match
+            Filter by projects that belong to archived workspaces
 
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
@@ -373,7 +373,7 @@ class RawProjectsClient:
         Parameters
         ----------
         archived : typing.Optional[bool]
-            Filter archived by exact match
+            Filter by projects that belong to archived workspaces
 
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
@@ -1218,7 +1218,7 @@ class AsyncRawProjectsClient:
         Parameters
         ----------
         archived : typing.Optional[bool]
-            Filter archived by exact match
+            Filter by projects that belong to archived workspaces
 
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
@@ -1529,7 +1529,7 @@ class AsyncRawProjectsClient:
         Parameters
         ----------
         archived : typing.Optional[bool]
-            Filter archived by exact match
+            Filter by projects that belong to archived workspaces
 
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
