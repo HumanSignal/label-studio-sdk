@@ -68,6 +68,7 @@ class ProjectsClient:
     def list(
         self,
         *,
+        archived: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
@@ -86,6 +87,9 @@ class ProjectsClient:
 
         Parameters
         ----------
+        archived : typing.Optional[bool]
+            Filter by projects that belong to archived workspaces
+
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
@@ -142,6 +146,7 @@ class ProjectsClient:
             yield page
         """
         return self._raw_client.list(
+            archived=archived,
             filter=filter,
             ids=ids,
             include=include,
@@ -335,6 +340,7 @@ class ProjectsClient:
     def list_counts(
         self,
         *,
+        archived: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
@@ -352,6 +358,9 @@ class ProjectsClient:
 
         Parameters
         ----------
+        archived : typing.Optional[bool]
+            Filter by projects that belong to archived workspaces
+
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
@@ -400,6 +409,7 @@ class ProjectsClient:
         client.projects.list_counts()
         """
         _response = self._raw_client.list_counts(
+            archived=archived,
             filter=filter,
             ids=ids,
             include=include,
@@ -1150,6 +1160,7 @@ class AsyncProjectsClient:
     async def list(
         self,
         *,
+        archived: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
@@ -1168,6 +1179,9 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
+        archived : typing.Optional[bool]
+            Filter by projects that belong to archived workspaces
+
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
@@ -1233,6 +1247,7 @@ class AsyncProjectsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            archived=archived,
             filter=filter,
             ids=ids,
             include=include,
@@ -1434,6 +1449,7 @@ class AsyncProjectsClient:
     async def list_counts(
         self,
         *,
+        archived: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
@@ -1451,6 +1467,9 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
+        archived : typing.Optional[bool]
+            Filter by projects that belong to archived workspaces
+
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
@@ -1507,6 +1526,7 @@ class AsyncProjectsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list_counts(
+            archived=archived,
             filter=filter,
             ids=ids,
             include=include,

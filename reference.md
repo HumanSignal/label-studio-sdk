@@ -9461,6 +9461,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**archived:** `typing.Optional[bool]` — Filter by projects that belong to archived workspaces
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **filter:** `typing.Optional[str]` — Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
     
 </dd>
@@ -9905,6 +9913,14 @@ client.projects.list_counts()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**archived:** `typing.Optional[bool]` — Filter by projects that belong to archived workspaces
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -13393,6 +13409,14 @@ client.workspaces.list()
 <dd>
 
 **include_all_workspaces:** `typing.Optional[bool]` — Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_archived:** `typing.Optional[bool]` — Filter by archived status. Set to false to exclude archived workspaces.
     
 </dd>
 </dl>
@@ -30333,7 +30357,7 @@ client.organizations.member_tags.assign(
 <dl>
 <dd>
 
-**role:** `typing.Optional[str]` — Filter role by in list (comma-separated values)
+**role:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
 </dl>
@@ -30341,7 +30365,7 @@ client.organizations.member_tags.assign(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[str]` — Filter tags by in list (comma-separated values)
+**tags:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
 </dl>
@@ -35993,7 +36017,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[str]` — Filter tags by in list (comma-separated values)
+**tags:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
 </dl>
@@ -36133,7 +36157,7 @@ client.projects.members.bulk.delete(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[str]` — Filter tags by in list (comma-separated values)
+**tags:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
 </dl>
