@@ -38,6 +38,7 @@ class WorkspacesClient:
         self,
         *,
         include_all_workspaces: typing.Optional[bool] = None,
+        is_archived: typing.Optional[bool] = None,
         is_personal: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -55,6 +56,9 @@ class WorkspacesClient:
         ----------
         include_all_workspaces : typing.Optional[bool]
             Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+
+        is_archived : typing.Optional[bool]
+            Filter by archived status. Set to false to exclude archived workspaces.
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace.
@@ -81,6 +85,7 @@ class WorkspacesClient:
         """
         _response = self._raw_client.list(
             include_all_workspaces=include_all_workspaces,
+            is_archived=is_archived,
             is_personal=is_personal,
             ordering=ordering,
             request_options=request_options,
@@ -331,6 +336,7 @@ class AsyncWorkspacesClient:
         self,
         *,
         include_all_workspaces: typing.Optional[bool] = None,
+        is_archived: typing.Optional[bool] = None,
         is_personal: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -348,6 +354,9 @@ class AsyncWorkspacesClient:
         ----------
         include_all_workspaces : typing.Optional[bool]
             Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+
+        is_archived : typing.Optional[bool]
+            Filter by archived status. Set to false to exclude archived workspaces.
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace.
@@ -382,6 +391,7 @@ class AsyncWorkspacesClient:
         """
         _response = await self._raw_client.list(
             include_all_workspaces=include_all_workspaces,
+            is_archived=is_archived,
             is_personal=is_personal,
             ordering=ordering,
             request_options=request_options,

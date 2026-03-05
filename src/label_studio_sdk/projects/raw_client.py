@@ -45,6 +45,7 @@ class RawProjectsClient:
     def list(
         self,
         *,
+        archived: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
@@ -63,6 +64,9 @@ class RawProjectsClient:
 
         Parameters
         ----------
+        archived : typing.Optional[bool]
+            Filter archived by exact match
+
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
@@ -110,6 +114,7 @@ class RawProjectsClient:
             "api/projects/",
             method="GET",
             params={
+                "archived": archived,
                 "filter": filter,
                 "ids": ids,
                 "include": include,
@@ -136,6 +141,7 @@ class RawProjectsClient:
                 _items = _parsed_response.results
                 _has_next = True
                 _get_next = lambda: self.list(
+                    archived=archived,
                     filter=filter,
                     ids=ids,
                     include=include,
@@ -348,6 +354,7 @@ class RawProjectsClient:
     def list_counts(
         self,
         *,
+        archived: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
@@ -365,6 +372,9 @@ class RawProjectsClient:
 
         Parameters
         ----------
+        archived : typing.Optional[bool]
+            Filter archived by exact match
+
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
@@ -407,6 +417,7 @@ class RawProjectsClient:
             "api/projects/counts/",
             method="GET",
             params={
+                "archived": archived,
                 "filter": filter,
                 "ids": ids,
                 "include": include,
@@ -1187,6 +1198,7 @@ class AsyncRawProjectsClient:
     async def list(
         self,
         *,
+        archived: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
@@ -1205,6 +1217,9 @@ class AsyncRawProjectsClient:
 
         Parameters
         ----------
+        archived : typing.Optional[bool]
+            Filter archived by exact match
+
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
@@ -1252,6 +1267,7 @@ class AsyncRawProjectsClient:
             "api/projects/",
             method="GET",
             params={
+                "archived": archived,
                 "filter": filter,
                 "ids": ids,
                 "include": include,
@@ -1280,6 +1296,7 @@ class AsyncRawProjectsClient:
 
                 async def _get_next():
                     return await self.list(
+                        archived=archived,
                         filter=filter,
                         ids=ids,
                         include=include,
@@ -1493,6 +1510,7 @@ class AsyncRawProjectsClient:
     async def list_counts(
         self,
         *,
+        archived: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
@@ -1510,6 +1528,9 @@ class AsyncRawProjectsClient:
 
         Parameters
         ----------
+        archived : typing.Optional[bool]
+            Filter archived by exact match
+
         filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
@@ -1552,6 +1573,7 @@ class AsyncRawProjectsClient:
             "api/projects/counts/",
             method="GET",
             params={
+                "archived": archived,
                 "filter": filter,
                 "ids": ids,
                 "include": include,
