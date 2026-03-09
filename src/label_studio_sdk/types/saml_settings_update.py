@@ -18,6 +18,11 @@ class SamlSettingsUpdate(UncheckedBaseModel):
     Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
     """
 
+    idp_provider: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Identity Provider preset key (e.g. okta, azure, google, custom)
+    """
+
     mapping_email: typing.Optional[str] = pydantic.Field(default=None)
     """
     Mapping attributes: user email from SAML request

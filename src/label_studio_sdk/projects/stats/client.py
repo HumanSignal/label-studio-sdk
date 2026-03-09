@@ -4,6 +4,8 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.label_distribution_counts_response import LabelDistributionCountsResponse
+from ...types.label_distribution_structure_response import LabelDistributionStructureResponse
 from .raw_client import AsyncRawStatsClient, RawStatsClient
 from .types.agreement_annotator_stats_response import AgreementAnnotatorStatsResponse
 from .types.agreement_annotators_stats_response import AgreementAnnotatorsStatsResponse
@@ -454,6 +456,99 @@ class StatsClient:
         )
         """
         _response = self._raw_client.finished_tasks(id, user_pk=user_pk, request_options=request_options)
+        return _response.data
+
+    def label_distribution_counts(
+        self,
+        id: int,
+        *,
+        choice_keys: typing.Optional[str] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LabelDistributionCountsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`.
+
+        Parameters
+        ----------
+        id : int
+
+        choice_keys : typing.Optional[str]
+            Explicit choice keys to fetch, joined by "___PIPE___" (for example: "label___SEP___pos___PIPE___quality___SEP___4"). When provided, pagination params are ignored.
+
+        limit : typing.Optional[int]
+            Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
+
+        offset : typing.Optional[int]
+            Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LabelDistributionCountsResponse
+            Label distribution counts
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.label_distribution_counts(
+            id=1,
+        )
+        """
+        _response = self._raw_client.label_distribution_counts(
+            id, choice_keys=choice_keys, limit=limit, offset=offset, request_options=request_options
+        )
+        return _response.data
+
+    def label_distribution_structure(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LabelDistributionStructureResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns dimensions and flattened `choice_keys` for a project. Use this response to drive paginated or targeted calls to the label distribution counts endpoint.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LabelDistributionStructureResponse
+            Label distribution structure
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.label_distribution_structure(
+            id=1,
+        )
+        """
+        _response = self._raw_client.label_distribution_structure(id, request_options=request_options)
         return _response.data
 
     def lead_time(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LeadTimeStatsResponse:
@@ -1345,6 +1440,115 @@ class AsyncStatsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.finished_tasks(id, user_pk=user_pk, request_options=request_options)
+        return _response.data
+
+    async def label_distribution_counts(
+        self,
+        id: int,
+        *,
+        choice_keys: typing.Optional[str] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LabelDistributionCountsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`.
+
+        Parameters
+        ----------
+        id : int
+
+        choice_keys : typing.Optional[str]
+            Explicit choice keys to fetch, joined by "___PIPE___" (for example: "label___SEP___pos___PIPE___quality___SEP___4"). When provided, pagination params are ignored.
+
+        limit : typing.Optional[int]
+            Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
+
+        offset : typing.Optional[int]
+            Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LabelDistributionCountsResponse
+            Label distribution counts
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.label_distribution_counts(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.label_distribution_counts(
+            id, choice_keys=choice_keys, limit=limit, offset=offset, request_options=request_options
+        )
+        return _response.data
+
+    async def label_distribution_structure(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LabelDistributionStructureResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns dimensions and flattened `choice_keys` for a project. Use this response to drive paginated or targeted calls to the label distribution counts endpoint.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LabelDistributionStructureResponse
+            Label distribution structure
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.label_distribution_structure(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.label_distribution_structure(id, request_options=request_options)
         return _response.data
 
     async def lead_time(

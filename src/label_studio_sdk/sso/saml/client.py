@@ -64,6 +64,7 @@ class SamlClient:
         self,
         *,
         domain: typing.Optional[str] = OMIT,
+        idp_provider: typing.Optional[str] = OMIT,
         mapping_email: typing.Optional[str] = OMIT,
         mapping_first_name: typing.Optional[str] = OMIT,
         mapping_groups: typing.Optional[str] = OMIT,
@@ -88,6 +89,9 @@ class SamlClient:
         ----------
         domain : typing.Optional[str]
             Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
+
+        idp_provider : typing.Optional[str]
+            Identity Provider preset key (e.g. okta, azure, google, custom)
 
         mapping_email : typing.Optional[str]
             Mapping attributes: user email from SAML request
@@ -145,6 +149,7 @@ class SamlClient:
         """
         _response = self._raw_client.update(
             domain=domain,
+            idp_provider=idp_provider,
             mapping_email=mapping_email,
             mapping_first_name=mapping_first_name,
             mapping_groups=mapping_groups,
@@ -156,6 +161,37 @@ class SamlClient:
             workspaces_groups=workspaces_groups,
             request_options=request_options,
         )
+        return _response.data
+
+    def reset(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Reset SAML2 settings for the currently active organization. This clears all configured fields (domain, metadata, attribute mappings, group mappings) back to their defaults without deleting the underlying settings record.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.sso.saml.reset()
+        """
+        _response = self._raw_client.reset(request_options=request_options)
         return _response.data
 
 
@@ -218,6 +254,7 @@ class AsyncSamlClient:
         self,
         *,
         domain: typing.Optional[str] = OMIT,
+        idp_provider: typing.Optional[str] = OMIT,
         mapping_email: typing.Optional[str] = OMIT,
         mapping_first_name: typing.Optional[str] = OMIT,
         mapping_groups: typing.Optional[str] = OMIT,
@@ -242,6 +279,9 @@ class AsyncSamlClient:
         ----------
         domain : typing.Optional[str]
             Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD
+
+        idp_provider : typing.Optional[str]
+            Identity Provider preset key (e.g. okta, azure, google, custom)
 
         mapping_email : typing.Optional[str]
             Mapping attributes: user email from SAML request
@@ -307,6 +347,7 @@ class AsyncSamlClient:
         """
         _response = await self._raw_client.update(
             domain=domain,
+            idp_provider=idp_provider,
             mapping_email=mapping_email,
             mapping_first_name=mapping_first_name,
             mapping_groups=mapping_groups,
@@ -318,4 +359,43 @@ class AsyncSamlClient:
             workspaces_groups=workspaces_groups,
             request_options=request_options,
         )
+        return _response.data
+
+    async def reset(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Reset SAML2 settings for the currently active organization. This clears all configured fields (domain, metadata, attribute mappings, group mappings) back to their defaults without deleting the underlying settings record.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.sso.saml.reset()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.reset(request_options=request_options)
         return _response.data

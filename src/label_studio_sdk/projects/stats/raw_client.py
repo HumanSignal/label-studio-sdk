@@ -9,6 +9,8 @@ from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
+from ...types.label_distribution_counts_response import LabelDistributionCountsResponse
+from ...types.label_distribution_structure_response import LabelDistributionStructureResponse
 from .types.agreement_annotator_stats_response import AgreementAnnotatorStatsResponse
 from .types.agreement_annotators_stats_response import AgreementAnnotatorsStatsResponse
 from .types.data_filters_stats_response import DataFiltersStatsResponse
@@ -500,6 +502,114 @@ class RawStatsClient:
                     FinishedTasksStatsResponse,
                     construct_type(
                         type_=FinishedTasksStatsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def label_distribution_counts(
+        self,
+        id: int,
+        *,
+        choice_keys: typing.Optional[str] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[LabelDistributionCountsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`.
+
+        Parameters
+        ----------
+        id : int
+
+        choice_keys : typing.Optional[str]
+            Explicit choice keys to fetch, joined by "___PIPE___" (for example: "label___SEP___pos___PIPE___quality___SEP___4"). When provided, pagination params are ignored.
+
+        limit : typing.Optional[int]
+            Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
+
+        offset : typing.Optional[int]
+            Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[LabelDistributionCountsResponse]
+            Label distribution counts
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/stats/label-distribution/counts",
+            method="GET",
+            params={
+                "choice_keys": choice_keys,
+                "limit": limit,
+                "offset": offset,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    LabelDistributionCountsResponse,
+                    construct_type(
+                        type_=LabelDistributionCountsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def label_distribution_structure(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[LabelDistributionStructureResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns dimensions and flattened `choice_keys` for a project. Use this response to drive paginated or targeted calls to the label distribution counts endpoint.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[LabelDistributionStructureResponse]
+            Label distribution structure
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/stats/label-distribution/structure",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    LabelDistributionStructureResponse,
+                    construct_type(
+                        type_=LabelDistributionStructureResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1426,6 +1536,114 @@ class AsyncRawStatsClient:
                     FinishedTasksStatsResponse,
                     construct_type(
                         type_=FinishedTasksStatsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def label_distribution_counts(
+        self,
+        id: int,
+        *,
+        choice_keys: typing.Optional[str] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[LabelDistributionCountsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`.
+
+        Parameters
+        ----------
+        id : int
+
+        choice_keys : typing.Optional[str]
+            Explicit choice keys to fetch, joined by "___PIPE___" (for example: "label___SEP___pos___PIPE___quality___SEP___4"). When provided, pagination params are ignored.
+
+        limit : typing.Optional[int]
+            Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
+
+        offset : typing.Optional[int]
+            Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[LabelDistributionCountsResponse]
+            Label distribution counts
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/stats/label-distribution/counts",
+            method="GET",
+            params={
+                "choice_keys": choice_keys,
+                "limit": limit,
+                "offset": offset,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    LabelDistributionCountsResponse,
+                    construct_type(
+                        type_=LabelDistributionCountsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def label_distribution_structure(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[LabelDistributionStructureResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns dimensions and flattened `choice_keys` for a project. Use this response to drive paginated or targeted calls to the label distribution counts endpoint.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[LabelDistributionStructureResponse]
+            Label distribution structure
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/stats/label-distribution/structure",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    LabelDistributionStructureResponse,
+                    construct_type(
+                        type_=LabelDistributionStructureResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
