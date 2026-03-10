@@ -67,6 +67,11 @@ if typing.TYPE_CHECKING:
     from .hotkeys import Hotkeys
     from .import_api_request import ImportApiRequest
     from .inference_run_cost_estimate import InferenceRunCostEstimate
+    from .label_distribution_counts_response import LabelDistributionCountsResponse
+    from .label_distribution_counts_row import LabelDistributionCountsRow
+    from .label_distribution_counts_totals import LabelDistributionCountsTotals
+    from .label_distribution_structure_dimension import LabelDistributionStructureDimension
+    from .label_distribution_structure_response import LabelDistributionStructureResponse
     from .label_stream_task_distribution_enum import LabelStreamTaskDistributionEnum
     from .last_action_enum import LastActionEnum
     from .local_files_export_storage import LocalFilesExportStorage
@@ -297,6 +302,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Hotkeys": ".hotkeys",
     "ImportApiRequest": ".import_api_request",
     "InferenceRunCostEstimate": ".inference_run_cost_estimate",
+    "LabelDistributionCountsResponse": ".label_distribution_counts_response",
+    "LabelDistributionCountsRow": ".label_distribution_counts_row",
+    "LabelDistributionCountsTotals": ".label_distribution_counts_totals",
+    "LabelDistributionStructureDimension": ".label_distribution_structure_dimension",
+    "LabelDistributionStructureResponse": ".label_distribution_structure_response",
     "LabelStreamTaskDistributionEnum": ".label_stream_task_distribution_enum",
     "LastActionEnum": ".last_action_enum",
     "LocalFilesExportStorage": ".local_files_export_storage",
@@ -545,6 +555,11 @@ __all__ = [
     "Hotkeys",
     "ImportApiRequest",
     "InferenceRunCostEstimate",
+    "LabelDistributionCountsResponse",
+    "LabelDistributionCountsRow",
+    "LabelDistributionCountsTotals",
+    "LabelDistributionStructureDimension",
+    "LabelDistributionStructureResponse",
     "LabelStreamTaskDistributionEnum",
     "LastActionEnum",
     "LocalFilesExportStorage",
