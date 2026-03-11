@@ -11,6 +11,12 @@ if typing.TYPE_CHECKING:
     from .activity_log import ActivityLog
     from .activity_log_response import ActivityLogResponse
     from .agreement_methodology_enum import AgreementMethodologyEnum
+    from .agreement_selection_group_request import AgreementSelectionGroupRequest
+    from .agreement_selection_request import AgreementSelectionRequest
+    from .agreement_v2backfill_cancel_response import AgreementV2BackfillCancelResponse
+    from .agreement_v2backfill_job import AgreementV2BackfillJob
+    from .agreement_v2backfill_job_status_enum import AgreementV2BackfillJobStatusEnum
+    from .agreement_v2backfill_trigger_response import AgreementV2BackfillTriggerResponse
     from .all_roles_project_list import AllRolesProjectList
     from .annotated_enum import AnnotatedEnum
     from .annotation import Annotation
@@ -53,6 +59,8 @@ if typing.TYPE_CHECKING:
     from .databricks_import_storage_request import DatabricksImportStorageRequest
     from .default165enum import Default165Enum
     from .default_role import DefaultRole
+    from .dimension import Dimension
+    from .dimension_list import DimensionList
     from .edition_enum import EditionEnum
     from .export import Export
     from .file_upload import FileUpload
@@ -222,6 +230,7 @@ if typing.TYPE_CHECKING:
     from .state_triggered_by import StateTriggeredBy
     from .status7bf_enum import Status7BfEnum
     from .status_c5a_enum import StatusC5AEnum
+    from .task_agreement_matrix_response import TaskAgreementMatrixResponse
     from .task_assignment import TaskAssignment
     from .task_event import TaskEvent
     from .third_party_model_version import ThirdPartyModelVersion
@@ -248,6 +257,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ActivityLog": ".activity_log",
     "ActivityLogResponse": ".activity_log_response",
     "AgreementMethodologyEnum": ".agreement_methodology_enum",
+    "AgreementSelectionGroupRequest": ".agreement_selection_group_request",
+    "AgreementSelectionRequest": ".agreement_selection_request",
+    "AgreementV2BackfillCancelResponse": ".agreement_v2backfill_cancel_response",
+    "AgreementV2BackfillJob": ".agreement_v2backfill_job",
+    "AgreementV2BackfillJobStatusEnum": ".agreement_v2backfill_job_status_enum",
+    "AgreementV2BackfillTriggerResponse": ".agreement_v2backfill_trigger_response",
     "AllRolesProjectList": ".all_roles_project_list",
     "AnnotatedEnum": ".annotated_enum",
     "Annotation": ".annotation",
@@ -290,6 +305,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DatabricksImportStorageRequest": ".databricks_import_storage_request",
     "Default165Enum": ".default165enum",
     "DefaultRole": ".default_role",
+    "Dimension": ".dimension",
+    "DimensionList": ".dimension_list",
     "EditionEnum": ".edition_enum",
     "Export": ".export",
     "FileUpload": ".file_upload",
@@ -453,6 +470,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StateTriggeredBy": ".state_triggered_by",
     "Status7BfEnum": ".status7bf_enum",
     "StatusC5AEnum": ".status_c5a_enum",
+    "TaskAgreementMatrixResponse": ".task_agreement_matrix_response",
     "TaskAssignment": ".task_assignment",
     "TaskEvent": ".task_event",
     "ThirdPartyModelVersion": ".third_party_model_version",
@@ -503,6 +521,12 @@ __all__ = [
     "ActivityLog",
     "ActivityLogResponse",
     "AgreementMethodologyEnum",
+    "AgreementSelectionGroupRequest",
+    "AgreementSelectionRequest",
+    "AgreementV2BackfillCancelResponse",
+    "AgreementV2BackfillJob",
+    "AgreementV2BackfillJobStatusEnum",
+    "AgreementV2BackfillTriggerResponse",
     "AllRolesProjectList",
     "AnnotatedEnum",
     "Annotation",
@@ -545,6 +569,8 @@ __all__ = [
     "DatabricksImportStorageRequest",
     "Default165Enum",
     "DefaultRole",
+    "Dimension",
+    "DimensionList",
     "EditionEnum",
     "Export",
     "FileUpload",
@@ -708,6 +734,7 @@ __all__ = [
     "StateTriggeredBy",
     "Status7BfEnum",
     "StatusC5AEnum",
+    "TaskAgreementMatrixResponse",
     "TaskAssignment",
     "TaskEvent",
     "ThirdPartyModelVersion",
