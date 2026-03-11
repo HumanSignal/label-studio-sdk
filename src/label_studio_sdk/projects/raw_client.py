@@ -16,7 +16,6 @@ from ..errors.bad_request_error import BadRequestError
 from ..types.agreement_methodology_enum import AgreementMethodologyEnum
 from ..types.all_roles_project_list import AllRolesProjectList
 from ..types.assignment_settings_request import AssignmentSettingsRequest
-from ..types.control_tag_weight_request import ControlTagWeightRequest
 from ..types.import_api_request import ImportApiRequest
 from ..types.lse_project_create import LseProjectCreate
 from ..types.lse_project_response import LseProjectResponse
@@ -167,7 +166,7 @@ class RawProjectsClient:
         *,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         description: typing.Optional[str] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
@@ -207,8 +206,8 @@ class RawProjectsClient:
 
         color : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]]
-            Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
+            Dict of weights for each control tag in metric calculation.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -300,11 +299,7 @@ class RawProjectsClient:
             json={
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
                 "color": color,
-                "control_weights": convert_and_respect_annotation_metadata(
-                    object_=control_weights,
-                    annotation=typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]],
-                    direction="write",
-                ),
+                "control_weights": control_weights,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
@@ -544,7 +539,7 @@ class RawProjectsClient:
         assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
         color: typing.Optional[str] = OMIT,
         comment_classification_config: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
@@ -629,8 +624,8 @@ class RawProjectsClient:
 
         comment_classification_config : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]]
-            Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
+            Dict of weights for each control tag in metric calculation.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -762,11 +757,7 @@ class RawProjectsClient:
                 ),
                 "color": color,
                 "comment_classification_config": comment_classification_config,
-                "control_weights": convert_and_respect_annotation_metadata(
-                    object_=control_weights,
-                    annotation=typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]],
-                    direction="write",
-                ),
+                "control_weights": control_weights,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
@@ -1331,7 +1322,7 @@ class AsyncRawProjectsClient:
         *,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         description: typing.Optional[str] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
@@ -1371,8 +1362,8 @@ class AsyncRawProjectsClient:
 
         color : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]]
-            Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
+            Dict of weights for each control tag in metric calculation.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -1464,11 +1455,7 @@ class AsyncRawProjectsClient:
             json={
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
                 "color": color,
-                "control_weights": convert_and_respect_annotation_metadata(
-                    object_=control_weights,
-                    annotation=typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]],
-                    direction="write",
-                ),
+                "control_weights": control_weights,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
@@ -1710,7 +1697,7 @@ class AsyncRawProjectsClient:
         assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
         color: typing.Optional[str] = OMIT,
         comment_classification_config: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
@@ -1795,8 +1782,8 @@ class AsyncRawProjectsClient:
 
         comment_classification_config : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]]
-            Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
+            Dict of weights for each control tag in metric calculation.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -1928,11 +1915,7 @@ class AsyncRawProjectsClient:
                 ),
                 "color": color,
                 "comment_classification_config": comment_classification_config,
-                "control_weights": convert_and_respect_annotation_metadata(
-                    object_=control_weights,
-                    annotation=typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]],
-                    direction="write",
-                ),
+                "control_weights": control_weights,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),

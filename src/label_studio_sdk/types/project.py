@@ -6,7 +6,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .control_tag_weight import ControlTagWeight
 from .sampling_de5enum import SamplingDe5Enum
 from .skip_queue_enum import SkipQueueEnum
 from .user_simple import UserSimple
@@ -34,9 +33,9 @@ class Project(UncheckedBaseModel):
     Flag to detect is project ready for bulk annotation
     """
 
-    control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeight]]] = pydantic.Field(default=None)
+    control_weights: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
-    Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
+    Dict of weights for each control tag in metric calculation.
     """
 
     created_at: typing.Optional[dt.datetime] = None

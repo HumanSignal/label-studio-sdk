@@ -42,8 +42,6 @@ if typing.TYPE_CHECKING:
     from .comment_request import CommentRequest
     from .comment_serializer_with_expanded_user import CommentSerializerWithExpandedUser
     from .configurable_permission_option import ConfigurablePermissionOption
-    from .control_tag_weight import ControlTagWeight
-    from .control_tag_weight_request import ControlTagWeightRequest
     from .converted_format import ConvertedFormat
     from .converted_format_request import ConvertedFormatRequest
     from .count_limit import CountLimit
@@ -279,8 +277,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CommentRequest": ".comment_request",
     "CommentSerializerWithExpandedUser": ".comment_serializer_with_expanded_user",
     "ConfigurablePermissionOption": ".configurable_permission_option",
-    "ControlTagWeight": ".control_tag_weight",
-    "ControlTagWeightRequest": ".control_tag_weight_request",
     "ConvertedFormat": ".converted_format",
     "ConvertedFormatRequest": ".converted_format_request",
     "CountLimit": ".count_limit",
@@ -534,8 +530,6 @@ __all__ = [
     "CommentRequest",
     "CommentSerializerWithExpandedUser",
     "ConfigurablePermissionOption",
-    "ControlTagWeight",
-    "ControlTagWeightRequest",
     "ConvertedFormat",
     "ConvertedFormatRequest",
     "CountLimit",

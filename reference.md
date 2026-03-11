@@ -9633,7 +9633,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]]` — Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
+**control_weights:** `typing.Optional[typing.Dict[str, typing.Any]]` — Dict of weights for each control tag in metric calculation.
     
 </dd>
 </dl>
@@ -10332,7 +10332,7 @@ Methodology (Consensus / Pairwise Averaging)
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]]` — Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
+**control_weights:** `typing.Optional[typing.Dict[str, typing.Any]]` — Dict of weights for each control tag in metric calculation.
     
 </dd>
 </dl>
