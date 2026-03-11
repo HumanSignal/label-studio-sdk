@@ -7,7 +7,8 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import ListTasksRequestFields
-_dynamic_imports: typing.Dict[str, str] = {"ListTasksRequestFields": ".types"}
+    from . import agreement_matrix
+_dynamic_imports: typing.Dict[str, str] = {"ListTasksRequestFields": ".types", "agreement_matrix": ".agreement_matrix"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +32,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ListTasksRequestFields"]
+__all__ = ["ListTasksRequestFields", "agreement_matrix"]
