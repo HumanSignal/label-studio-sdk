@@ -11,6 +11,7 @@ from ..core.request_options import RequestOptions
 from ..types.agreement_methodology_enum import AgreementMethodologyEnum
 from ..types.all_roles_project_list import AllRolesProjectList
 from ..types.assignment_settings_request import AssignmentSettingsRequest
+from ..types.control_tag_weight_request import ControlTagWeightRequest
 from ..types.import_api_request import ImportApiRequest
 from ..types.lse_project_create import LseProjectCreate
 from ..types.lse_project_response import LseProjectResponse
@@ -166,7 +167,7 @@ class ProjectsClient:
         *,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         description: typing.Optional[str] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
@@ -206,8 +207,8 @@ class ProjectsClient:
 
         color : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
-            Dict of weights for each control tag in metric calculation.
+        control_weights : typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]]
+            Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -509,7 +510,7 @@ class ProjectsClient:
         assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
         color: typing.Optional[str] = OMIT,
         comment_classification_config: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
@@ -594,8 +595,8 @@ class ProjectsClient:
 
         comment_classification_config : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
-            Dict of weights for each control tag in metric calculation.
+        control_weights : typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]]
+            Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -1267,7 +1268,7 @@ class AsyncProjectsClient:
         *,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         description: typing.Optional[str] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
@@ -1307,8 +1308,8 @@ class AsyncProjectsClient:
 
         color : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
-            Dict of weights for each control tag in metric calculation.
+        control_weights : typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]]
+            Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
@@ -1642,7 +1643,7 @@ class AsyncProjectsClient:
         assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
         color: typing.Optional[str] = OMIT,
         comment_classification_config: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
@@ -1727,8 +1728,8 @@ class AsyncProjectsClient:
 
         comment_classification_config : typing.Optional[str]
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
-            Dict of weights for each control tag in metric calculation.
+        control_weights : typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]]
+            Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
 
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
