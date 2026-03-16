@@ -7,6 +7,7 @@ from ...core.request_options import RequestOptions
 from ...types.project_group_request import ProjectGroupRequest
 from ...types.saml_settings import SamlSettings
 from ...types.saml_settings_update import SamlSettingsUpdate
+from ...types.validate_saml_metadata_url_response import ValidateSamlMetadataUrlResponse
 from .raw_client import AsyncRawSamlClient, RawSamlClient
 
 # this is used as the default value for optional parameters
@@ -192,6 +193,44 @@ class SamlClient:
         client.sso.saml.reset()
         """
         _response = self._raw_client.reset(request_options=request_options)
+        return _response.data
+
+    def validate_metadata_url(
+        self, *, metadata_url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> ValidateSamlMetadataUrlResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a SAML metadata URL by fetching it and checking whether it returns valid XML, without saving any settings.
+
+        Parameters
+        ----------
+        metadata_url : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ValidateSamlMetadataUrlResponse
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.sso.saml.validate_metadata_url(
+            metadata_url="metadata_url",
+        )
+        """
+        _response = self._raw_client.validate_metadata_url(metadata_url=metadata_url, request_options=request_options)
         return _response.data
 
 
@@ -398,4 +437,52 @@ class AsyncSamlClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.reset(request_options=request_options)
+        return _response.data
+
+    async def validate_metadata_url(
+        self, *, metadata_url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> ValidateSamlMetadataUrlResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a SAML metadata URL by fetching it and checking whether it returns valid XML, without saving any settings.
+
+        Parameters
+        ----------
+        metadata_url : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ValidateSamlMetadataUrlResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.sso.saml.validate_metadata_url(
+                metadata_url="metadata_url",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.validate_metadata_url(
+            metadata_url=metadata_url, request_options=request_options
+        )
         return _response.data
