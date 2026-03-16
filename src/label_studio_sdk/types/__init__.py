@@ -242,6 +242,7 @@ if typing.TYPE_CHECKING:
     from .type_enum import TypeEnum
     from .user_simple import UserSimple
     from .user_simple_request import UserSimpleRequest
+    from .validate_saml_metadata_url_response import ValidateSamlMetadataUrlResponse
     from .version_response import VersionResponse
     from .view import View
     from .webhook import Webhook
@@ -482,6 +483,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TypeEnum": ".type_enum",
     "UserSimple": ".user_simple",
     "UserSimpleRequest": ".user_simple_request",
+    "ValidateSamlMetadataUrlResponse": ".validate_saml_metadata_url_response",
     "VersionResponse": ".version_response",
     "View": ".view",
     "Webhook": ".webhook",
@@ -746,6 +748,7 @@ __all__ = [
     "TypeEnum",
     "UserSimple",
     "UserSimpleRequest",
+    "ValidateSamlMetadataUrlResponse",
     "VersionResponse",
     "View",
     "Webhook",

@@ -12,6 +12,7 @@ from ...core.unchecked_base_model import construct_type
 from ...types.project_group_request import ProjectGroupRequest
 from ...types.saml_settings import SamlSettings
 from ...types.saml_settings_update import SamlSettingsUpdate
+from ...types.validate_saml_metadata_url_response import ValidateSamlMetadataUrlResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -200,6 +201,57 @@ class RawSamlClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def validate_metadata_url(
+        self, *, metadata_url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ValidateSamlMetadataUrlResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a SAML metadata URL by fetching it and checking whether it returns valid XML, without saving any settings.
+
+        Parameters
+        ----------
+        metadata_url : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ValidateSamlMetadataUrlResponse]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/saml/settings/validate-metadata-url",
+            method="POST",
+            json={
+                "metadata_url": metadata_url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ValidateSamlMetadataUrlResponse,
+                    construct_type(
+                        type_=ValidateSamlMetadataUrlResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawSamlClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -379,6 +431,57 @@ class AsyncRawSamlClient:
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def validate_metadata_url(
+        self, *, metadata_url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ValidateSamlMetadataUrlResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a SAML metadata URL by fetching it and checking whether it returns valid XML, without saving any settings.
+
+        Parameters
+        ----------
+        metadata_url : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ValidateSamlMetadataUrlResponse]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/saml/settings/validate-metadata-url",
+            method="POST",
+            json={
+                "metadata_url": metadata_url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ValidateSamlMetadataUrlResponse,
+                    construct_type(
+                        type_=ValidateSamlMetadataUrlResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
