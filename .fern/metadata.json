@@ -39,7 +39,7 @@
       "opencv-python-headless": "^4.12.0,<4.13",
       "datamodel-code-generator": "0.26.1",
       "jsf": "^0.11.2",
-      "pyjwt": "^2.10.1",
+      "pyjwt": "^2.12.0",
       "urllib3": ">=2.5.0"
     },
     "extra_dev_dependencies": {
