@@ -22,7 +22,7 @@ def new_task(out_type, root_url, file_name):
         dict: Label Studio task structure with image data and empty result array
     """
     return {
-        "data": {"image": os.path.join(root_url, file_name)},
+        "data": {"image": root_url + file_name},
         # 'annotations' or 'predictions'
         out_type: [
             {
