@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .azure_spi.client import AsyncAzureSpiClient, AzureSpiClient
     from .databricks.client import AsyncDatabricksClient, DatabricksClient
     from .gcs.client import AsyncGcsClient, GcsClient
+    from .gcs_sa.client import AsyncGcsSaClient, GcsSaClient
     from .gcswif.client import AsyncGcswifClient, GcswifClient
     from .local.client import AsyncLocalClient, LocalClient
     from .redis.client import AsyncRedisClient, RedisClient
@@ -29,6 +30,7 @@ class ExportStorageClient:
         self._azure_spi: typing.Optional[AzureSpiClient] = None
         self._databricks: typing.Optional[DatabricksClient] = None
         self._gcs: typing.Optional[GcsClient] = None
+        self._gcs_sa: typing.Optional[GcsSaClient] = None
         self._gcswif: typing.Optional[GcswifClient] = None
         self._local: typing.Optional[LocalClient] = None
         self._redis: typing.Optional[RedisClient] = None
@@ -107,6 +109,14 @@ class ExportStorageClient:
         return self._gcs
 
     @property
+    def gcs_sa(self):
+        if self._gcs_sa is None:
+            from .gcs_sa.client import GcsSaClient  # noqa: E402
+
+            self._gcs_sa = GcsSaClient(client_wrapper=self._client_wrapper)
+        return self._gcs_sa
+
+    @property
     def gcswif(self):
         if self._gcswif is None:
             from .gcswif.client import GcswifClient  # noqa: E402
@@ -155,6 +165,7 @@ class AsyncExportStorageClient:
         self._azure_spi: typing.Optional[AsyncAzureSpiClient] = None
         self._databricks: typing.Optional[AsyncDatabricksClient] = None
         self._gcs: typing.Optional[AsyncGcsClient] = None
+        self._gcs_sa: typing.Optional[AsyncGcsSaClient] = None
         self._gcswif: typing.Optional[AsyncGcswifClient] = None
         self._local: typing.Optional[AsyncLocalClient] = None
         self._redis: typing.Optional[AsyncRedisClient] = None
@@ -239,6 +250,14 @@ class AsyncExportStorageClient:
 
             self._gcs = AsyncGcsClient(client_wrapper=self._client_wrapper)
         return self._gcs
+
+    @property
+    def gcs_sa(self):
+        if self._gcs_sa is None:
+            from .gcs_sa.client import AsyncGcsSaClient  # noqa: E402
+
+            self._gcs_sa = AsyncGcsSaClient(client_wrapper=self._client_wrapper)
+        return self._gcs_sa
 
     @property
     def gcswif(self):

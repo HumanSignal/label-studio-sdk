@@ -70,6 +70,10 @@ if typing.TYPE_CHECKING:
     from .fsm_transition_execute_response import FsmTransitionExecuteResponse
     from .gcs_export_storage import GcsExportStorage
     from .gcs_import_storage import GcsImportStorage
+    from .gcssa_export_storage import GcssaExportStorage
+    from .gcssa_export_storage_request import GcssaExportStorageRequest
+    from .gcssa_import_storage import GcssaImportStorage
+    from .gcssa_import_storage_request import GcssaImportStorageRequest
     from .gcswif_export_storage import GcswifExportStorage
     from .gcswif_export_storage_request import GcswifExportStorageRequest
     from .gcswif_import_storage import GcswifImportStorage
@@ -317,6 +321,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FsmTransitionExecuteResponse": ".fsm_transition_execute_response",
     "GcsExportStorage": ".gcs_export_storage",
     "GcsImportStorage": ".gcs_import_storage",
+    "GcssaExportStorage": ".gcssa_export_storage",
+    "GcssaExportStorageRequest": ".gcssa_export_storage_request",
+    "GcssaImportStorage": ".gcssa_import_storage",
+    "GcssaImportStorageRequest": ".gcssa_import_storage_request",
     "GcswifExportStorage": ".gcswif_export_storage",
     "GcswifExportStorageRequest": ".gcswif_export_storage_request",
     "GcswifImportStorage": ".gcswif_import_storage",
@@ -582,6 +590,10 @@ __all__ = [
     "FsmTransitionExecuteResponse",
     "GcsExportStorage",
     "GcsImportStorage",
+    "GcssaExportStorage",
+    "GcssaExportStorageRequest",
+    "GcssaImportStorage",
+    "GcssaImportStorageRequest",
     "GcswifExportStorage",
     "GcswifExportStorageRequest",
     "GcswifImportStorage",

@@ -29,6 +29,7 @@ class LseOrganizationMemberList(UncheckedBaseModel):
     """
 
     role: typing.Optional[str] = None
+    role_source: typing.Optional[str] = None
     tags: typing.Optional[typing.List[SimpleOrganizationMemberTag]] = None
     user: LseUserOrganizationMemberList
 

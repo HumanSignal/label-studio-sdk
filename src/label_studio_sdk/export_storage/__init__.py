@@ -7,13 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import ListTypesExportStorageResponseItem
-    from . import azure, azure_spi, databricks, gcs, gcswif, local, redis, s3, s3s
+    from . import azure, azure_spi, databricks, gcs, gcs_sa, gcswif, local, redis, s3, s3s
 _dynamic_imports: typing.Dict[str, str] = {
     "ListTypesExportStorageResponseItem": ".types",
     "azure": ".azure",
     "azure_spi": ".azure_spi",
     "databricks": ".databricks",
     "gcs": ".gcs",
+    "gcs_sa": ".gcs_sa",
     "gcswif": ".gcswif",
     "local": ".local",
     "redis": ".redis",
@@ -49,6 +50,7 @@ __all__ = [
     "azure_spi",
     "databricks",
     "gcs",
+    "gcs_sa",
     "gcswif",
     "local",
     "redis",

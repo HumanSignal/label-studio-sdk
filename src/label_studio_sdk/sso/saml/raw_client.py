@@ -67,6 +67,7 @@ class RawSamlClient:
         *,
         domain: typing.Optional[str] = OMIT,
         idp_provider: typing.Optional[str] = OMIT,
+        manual_role_management: typing.Optional[bool] = OMIT,
         mapping_email: typing.Optional[str] = OMIT,
         mapping_first_name: typing.Optional[str] = OMIT,
         mapping_groups: typing.Optional[str] = OMIT,
@@ -94,6 +95,9 @@ class RawSamlClient:
 
         idp_provider : typing.Optional[str]
             Identity Provider preset key (e.g. okta, azure, google, custom)
+
+        manual_role_management : typing.Optional[bool]
+            Allow manually assigning organization roles instead of IdP-managed groups. None = use billing default.
 
         mapping_email : typing.Optional[str]
             Mapping attributes: user email from SAML request
@@ -136,6 +140,7 @@ class RawSamlClient:
             json={
                 "domain": domain,
                 "idp_provider": idp_provider,
+                "manual_role_management": manual_role_management,
                 "mapping_email": mapping_email,
                 "mapping_first_name": mapping_first_name,
                 "mapping_groups": mapping_groups,
@@ -211,7 +216,7 @@ class RawSamlClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Validate a SAML metadata URL by fetching it and checking whether it returns valid XML, without saving any settings.
+        Validate a SAML metadata URL by fetching it and checking for valid XML, without saving.
 
         Parameters
         ----------
@@ -302,6 +307,7 @@ class AsyncRawSamlClient:
         *,
         domain: typing.Optional[str] = OMIT,
         idp_provider: typing.Optional[str] = OMIT,
+        manual_role_management: typing.Optional[bool] = OMIT,
         mapping_email: typing.Optional[str] = OMIT,
         mapping_first_name: typing.Optional[str] = OMIT,
         mapping_groups: typing.Optional[str] = OMIT,
@@ -329,6 +335,9 @@ class AsyncRawSamlClient:
 
         idp_provider : typing.Optional[str]
             Identity Provider preset key (e.g. okta, azure, google, custom)
+
+        manual_role_management : typing.Optional[bool]
+            Allow manually assigning organization roles instead of IdP-managed groups. None = use billing default.
 
         mapping_email : typing.Optional[str]
             Mapping attributes: user email from SAML request
@@ -371,6 +380,7 @@ class AsyncRawSamlClient:
             json={
                 "domain": domain,
                 "idp_provider": idp_provider,
+                "manual_role_management": manual_role_management,
                 "mapping_email": mapping_email,
                 "mapping_first_name": mapping_first_name,
                 "mapping_groups": mapping_groups,
@@ -446,7 +456,7 @@ class AsyncRawSamlClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Validate a SAML metadata URL by fetching it and checking whether it returns valid XML, without saving any settings.
+        Validate a SAML metadata URL by fetching it and checking for valid XML, without saving.
 
         Parameters
         ----------

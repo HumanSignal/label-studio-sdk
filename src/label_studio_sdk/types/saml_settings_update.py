@@ -23,6 +23,11 @@ class SamlSettingsUpdate(UncheckedBaseModel):
     Identity Provider preset key (e.g. okta, azure, google, custom)
     """
 
+    manual_role_management: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Allow manually assigning organization roles instead of IdP-managed groups. None = use billing default.
+    """
+
     mapping_email: typing.Optional[str] = pydantic.Field(default=None)
     """
     Mapping attributes: user email from SAML request

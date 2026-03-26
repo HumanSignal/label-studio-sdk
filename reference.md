@@ -17962,6 +17962,939 @@ client.export_storage.gcs.sync(
 </dl>
 </details>
 
+## ExportStorage GcsSa
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[GcssaExportStorage]]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Get a list of all GCS export storage connections set up with SA Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.gcs_sa.list(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">create</a>(...) -&gt; AsyncHttpResponse[GcssaExportStorage]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Create a GCS export storage connection with SA Impersonation to store annotations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.gcs_sa.create(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_service_account_email:** `typing.Optional[str]` — Service account email to impersonate for GCS access
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Validate a specific GCS export storage connection set up with SA Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.gcs_sa.validate(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_service_account_email:** `typing.Optional[str]` — Service account email to impersonate for GCS access
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">get</a>(...) -&gt; AsyncHttpResponse[GcssaExportStorage]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Get a specific GCS export storage connection set up with SA Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.gcs_sa.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Delete a specific GCS export storage connection set up with SA Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.gcs_sa.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">update</a>(...) -&gt; AsyncHttpResponse[GcssaExportStorage]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Update a specific GCS export storage connection set up with SA Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.gcs_sa.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_service_account_email:** `typing.Optional[str]` — Service account email to impersonate for GCS access
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">sync</a>(...) -&gt; AsyncHttpResponse[GcssaExportStorage]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Sync annotations to a GCS SA export storage.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.gcs_sa.sync(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ExportStorage Gcswif
 <details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[GcswifExportStorage]]</code></summary>
 <dl>
@@ -25962,6 +26895,987 @@ client.import_storage.gcs.sync(
 <dd>
 
 **id:** `int` — Storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ImportStorage GcsSa
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[GcssaImportStorage]]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Get list of all GCS import storage connections set up with Service Account Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.gcs_sa.list(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">create</a>(...) -&gt; AsyncHttpResponse[GcssaImportStorage]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Create GCS import storage with Service Account Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.gcs_sa.create(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_service_account_email:** `typing.Optional[str]` — Service account email to impersonate for GCS access
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Validate a specific GCS import storage connection set up with SA Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.gcs_sa.validate(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_service_account_email:** `typing.Optional[str]` — Service account email to impersonate for GCS access
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">get</a>(...) -&gt; AsyncHttpResponse[GcssaImportStorage]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Get a specific GCS import storage connection set up with SA Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.gcs_sa.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Delete a specific GCS import storage connection set up with SA Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.gcs_sa.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">update</a>(...) -&gt; AsyncHttpResponse[GcssaImportStorage]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Update a specific GCS import storage connection set up with SA Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.gcs_sa.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — GCS bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**google_project_id:** `typing.Optional[str]` — Google project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — GCS bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusC5AEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_service_account_email:** `typing.Optional[str]` — Service account email to impersonate for GCS access
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">sync</a>(...) -&gt; AsyncHttpResponse[GcssaImportStorage]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Sync tasks from a GCS import storage connection set up with SA Impersonation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.gcs_sa.sync(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
     
 </dd>
 </dl>
@@ -39131,6 +41045,14 @@ client.sso.saml.update(
 <dl>
 <dd>
 
+**manual_role_management:** `typing.Optional[bool]` — Allow manually assigning organization roles instead of IdP-managed groups. None = use billing default.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **mapping_email:** `typing.Optional[str]` — Mapping attributes: user email from SAML request
     
 </dd>
@@ -39299,7 +41221,7 @@ client.sso.saml.reset()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Validate a SAML metadata URL by fetching it and checking whether it returns valid XML, without saving any settings.
+Validate a SAML metadata URL by fetching it and checking for valid XML, without saving.
 </dd>
 </dl>
 </dd>
