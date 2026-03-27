@@ -25,9 +25,9 @@
     "pyproject_python_version": ">=3.10,<4",
     "extra_dependencies": {
       "pandas": ">=0.24.0",
-      "requests": ">=2.22.0",
+      "requests": ">=2.33.0",
       "Pillow": ">=11.3.0",
-      "nltk": "^3.9.3",
+      "nltk": "^3.9.4",
       "ujson": ">=5.8.0",
       "ijson": ">=3.2.3",
       "appdirs": ">=1.4.3",
