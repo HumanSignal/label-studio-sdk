@@ -153,6 +153,7 @@ class RawOrganizationsClient:
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
         embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
         embed_settings: typing.Optional[typing.Any] = OMIT,
+        react_code_settings: typing.Optional[typing.Any] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -186,6 +187,9 @@ class RawOrganizationsClient:
         embed_settings : typing.Optional[typing.Any]
             Public Verification Key and Public Verification Algorithms configuration
 
+        react_code_settings : typing.Optional[typing.Any]
+            ReactCode settings
+
         title : typing.Optional[str]
             Organization name
 
@@ -209,6 +213,7 @@ class RawOrganizationsClient:
                 "email_notification_settings": email_notification_settings,
                 "embed_domains": embed_domains,
                 "embed_settings": embed_settings,
+                "react_code_settings": react_code_settings,
                 "title": title,
                 "token": token,
             },
@@ -280,6 +285,7 @@ class RawOrganizationsClient:
         extra_data_on_activity_logs: typing.Optional[bool] = OMIT,
         label_stream_navigation_disabled_at: typing.Optional[dt.datetime] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        react_code_settings: typing.Optional[typing.Any] = OMIT,
         read_only_quick_view_enabled_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DefaultRole]:
@@ -333,6 +339,9 @@ class RawOrganizationsClient:
         organization : typing.Optional[int]
             A unique integer value identifying this organization.
 
+        react_code_settings : typing.Optional[typing.Any]
+            ReactCode tag security settings. Structure: {"mode": "disabled"|"src_only"|"everything", "allowed_origins": ["https://..."], "allowed_permissions": ["camera", ...]}
+
         read_only_quick_view_enabled_at : typing.Optional[dt.datetime]
             Set to current time to prevent creating or editing annotations in quick view.
 
@@ -358,6 +367,7 @@ class RawOrganizationsClient:
                 "extra_data_on_activity_logs": extra_data_on_activity_logs,
                 "label_stream_navigation_disabled_at": label_stream_navigation_disabled_at,
                 "organization": organization,
+                "react_code_settings": react_code_settings,
                 "read_only_quick_view_enabled_at": read_only_quick_view_enabled_at,
             },
             headers={
@@ -514,6 +524,7 @@ class AsyncRawOrganizationsClient:
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
         embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
         embed_settings: typing.Optional[typing.Any] = OMIT,
+        react_code_settings: typing.Optional[typing.Any] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -547,6 +558,9 @@ class AsyncRawOrganizationsClient:
         embed_settings : typing.Optional[typing.Any]
             Public Verification Key and Public Verification Algorithms configuration
 
+        react_code_settings : typing.Optional[typing.Any]
+            ReactCode settings
+
         title : typing.Optional[str]
             Organization name
 
@@ -570,6 +584,7 @@ class AsyncRawOrganizationsClient:
                 "email_notification_settings": email_notification_settings,
                 "embed_domains": embed_domains,
                 "embed_settings": embed_settings,
+                "react_code_settings": react_code_settings,
                 "title": title,
                 "token": token,
             },
@@ -641,6 +656,7 @@ class AsyncRawOrganizationsClient:
         extra_data_on_activity_logs: typing.Optional[bool] = OMIT,
         label_stream_navigation_disabled_at: typing.Optional[dt.datetime] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        react_code_settings: typing.Optional[typing.Any] = OMIT,
         read_only_quick_view_enabled_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DefaultRole]:
@@ -694,6 +710,9 @@ class AsyncRawOrganizationsClient:
         organization : typing.Optional[int]
             A unique integer value identifying this organization.
 
+        react_code_settings : typing.Optional[typing.Any]
+            ReactCode tag security settings. Structure: {"mode": "disabled"|"src_only"|"everything", "allowed_origins": ["https://..."], "allowed_permissions": ["camera", ...]}
+
         read_only_quick_view_enabled_at : typing.Optional[dt.datetime]
             Set to current time to prevent creating or editing annotations in quick view.
 
@@ -719,6 +738,7 @@ class AsyncRawOrganizationsClient:
                 "extra_data_on_activity_logs": extra_data_on_activity_logs,
                 "label_stream_navigation_disabled_at": label_stream_navigation_disabled_at,
                 "organization": organization,
+                "react_code_settings": react_code_settings,
                 "read_only_quick_view_enabled_at": read_only_quick_view_enabled_at,
             },
             headers={

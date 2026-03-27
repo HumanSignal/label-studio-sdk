@@ -44,6 +44,7 @@ class LseOrganization(UncheckedBaseModel):
     """
 
     id: typing.Optional[int] = None
+    react_code_settings: typing.Optional[str] = None
     title: typing.Optional[str] = None
     token: typing.Optional[str] = None
 

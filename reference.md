@@ -6043,6 +6043,14 @@ client.organizations.update(
 <dl>
 <dd>
 
+**react_code_settings:** `typing.Optional[typing.Any]` — ReactCode settings
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` — Organization name
     
 </dd>
@@ -6218,6 +6226,14 @@ Default membership role for invited users
 <dd>
 
 **organization:** `typing.Optional[int]` — A unique integer value identifying this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**react_code_settings:** `typing.Optional[typing.Any]` — ReactCode tag security settings. Structure: {"mode": "disabled"|"src_only"|"everything", "allowed_origins": ["https://..."], "allowed_permissions": ["camera", ...]}
     
 </dd>
 </dl>

@@ -64,6 +64,11 @@ class DefaultRole(UncheckedBaseModel):
     A unique integer value identifying this organization.
     """
 
+    react_code_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    ReactCode tag security settings. Structure: {"mode": "disabled"|"src_only"|"everything", "allowed_origins": ["https://..."], "allowed_permissions": ["camera", ...]}
+    """
+
     read_only_quick_view_enabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Set to current time to prevent creating or editing annotations in quick view.
