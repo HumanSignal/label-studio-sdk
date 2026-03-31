@@ -396,3 +396,13 @@ PREDICTION_REACTCODE_CONFIG_WITHOUT_TO_NAME = """
   <ReactCode style="height: 95vh" name="code" outputs="field1, field2"/>
 </View>
 """
+
+PREDICTION_VIDEO_VECTOR_LABELS_CONFIG = """
+<View>
+  <Video name="video" value="$video"/>
+  <VideoVectorLabels name="box" toName="video">
+    <Label value="Boundary"/>
+    <Label value="Road"/>
+  </VideoVectorLabels>
+</View>
+"""

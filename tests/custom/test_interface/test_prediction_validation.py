@@ -31,6 +31,7 @@ from .configs import (
     PREDICTION_CHAT_CONFIG,
     PREDICTION_REACTCODE_CONFIG,
     PREDICTION_REACTCODE_CONFIG_WITHOUT_TO_NAME,
+    PREDICTION_VIDEO_VECTOR_LABELS_CONFIG,
 )
 
 
@@ -539,6 +540,51 @@ class TestPredictionValidation:
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'videorectangle'" in error for error in errors)
+
+    def test_video_vector_labels_validation(self):
+        """Test VideoVectorLabels tag validation"""
+        li = LabelInterface(PREDICTION_VIDEO_VECTOR_LABELS_CONFIG)
+        valid_pred = {
+            "result": [{
+                "from_name": "box",
+                "to_name": "video",
+                "type": "videovectorlabels",
+                "value": {
+                    "labels": ["Boundary"],
+                    "duration": 17.48,
+                    "framesCount": 437,
+                    "sequence": [{
+                        "time": 0.04,
+                        "frame": 1,
+                        "closed": False,
+                        "enabled": True,
+                        "vertices": [
+                            {"x": 23.28, "y": 44.79, "id": "v1", "isBezier": False},
+                            {"x": 59.06, "y": 37.92, "id": "v2", "isBezier": False, "prevPointId": "v1"},
+                            {"x": 72.34, "y": 64.58, "id": "v3", "isBezier": False, "prevPointId": "v2"}
+                        ]
+                    }]
+                }
+            }]
+        }
+        assert li.validate_prediction(valid_pred) is True
+        invalid_pred = {
+            "result": [{
+                "from_name": "box",
+                "to_name": "video",
+                "type": "videovectorlabels",
+                "value": {
+                    "labels": ["NonExistentLabel"],
+                    "sequence": [{
+                        "frame": 1,
+                        "vertices": [
+                            {"x": 23.28, "y": 44.79}
+                        ]
+                    }]
+                }
+            }]
+        }
+        assert li.validate_prediction(invalid_pred) is False
 
     def test_number_validation(self):
         """Test Number tag validation"""
