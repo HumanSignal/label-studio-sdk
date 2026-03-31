@@ -128,6 +128,9 @@ class RawBulkClient:
         self,
         id: int,
         *,
+        all_: typing.Optional[bool] = None,
+        excluded: typing.Optional[str] = None,
+        included: typing.Optional[str] = None,
         last_activity_gte: typing.Optional[str] = None,
         last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
@@ -142,11 +145,20 @@ class RawBulkClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Unassign project members in bulk. Allows the same request body as bulk assign.
+        Unassign project members in bulk. Pass selector fields via query parameters (`all`, `included`, `excluded`) and optional member filters (`search`, `role`, `tags`, `last_activity__gte`, `last_activity__lte`). For backward compatibility, a JSON body with bulk fields is still accepted.
 
         Parameters
         ----------
         id : int
+
+        all_ : typing.Optional[bool]
+            Apply unassignment to all currently matched project members.
+
+        excluded : typing.Optional[str]
+            Comma-separated list of user IDs to keep assigned when `all=true`.
+
+        included : typing.Optional[str]
+            Comma-separated list of user IDs to unassign when `all=false`.
 
         last_activity_gte : typing.Optional[str]
             Filter by last activity (ISO 8601 formatted date). Only when all=True.
@@ -175,6 +187,9 @@ class RawBulkClient:
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="DELETE",
             params={
+                "all": all_,
+                "excluded": excluded,
+                "included": included,
                 "last_activity__gte": last_activity_gte,
                 "last_activity__lte": last_activity_lte,
                 "role": role,
@@ -309,6 +324,9 @@ class AsyncRawBulkClient:
         self,
         id: int,
         *,
+        all_: typing.Optional[bool] = None,
+        excluded: typing.Optional[str] = None,
+        included: typing.Optional[str] = None,
         last_activity_gte: typing.Optional[str] = None,
         last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
@@ -323,11 +341,20 @@ class AsyncRawBulkClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Unassign project members in bulk. Allows the same request body as bulk assign.
+        Unassign project members in bulk. Pass selector fields via query parameters (`all`, `included`, `excluded`) and optional member filters (`search`, `role`, `tags`, `last_activity__gte`, `last_activity__lte`). For backward compatibility, a JSON body with bulk fields is still accepted.
 
         Parameters
         ----------
         id : int
+
+        all_ : typing.Optional[bool]
+            Apply unassignment to all currently matched project members.
+
+        excluded : typing.Optional[str]
+            Comma-separated list of user IDs to keep assigned when `all=true`.
+
+        included : typing.Optional[str]
+            Comma-separated list of user IDs to unassign when `all=false`.
 
         last_activity_gte : typing.Optional[str]
             Filter by last activity (ISO 8601 formatted date). Only when all=True.
@@ -356,6 +383,9 @@ class AsyncRawBulkClient:
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="DELETE",
             params={
+                "all": all_,
+                "excluded": excluded,
+                "included": included,
                 "last_activity__gte": last_activity_gte,
                 "last_activity__lte": last_activity_lte,
                 "role": role,

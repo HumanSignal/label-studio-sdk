@@ -83,7 +83,17 @@ class BulkClient:
         )
         return _response.data
 
-    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteBulkResponse:
+    def delete(
+        self,
+        id: int,
+        *,
+        all_: typing.Optional[bool] = None,
+        excluded: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        included: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DeleteBulkResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -91,11 +101,26 @@ class BulkClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Unassign workspace members in bulk. Allows the same request body as bulk assign.
+        Unassign workspace members in bulk. Pass selector fields via query parameters (`all`, `included`, `excluded`) and optional paginated-list filters (`search`, `ids`). For backward compatibility, a JSON body with bulk fields is still accepted.
 
         Parameters
         ----------
         id : int
+
+        all_ : typing.Optional[bool]
+            Apply unassignment to all currently matched workspace members.
+
+        excluded : typing.Optional[str]
+            Comma-separated list of user IDs to keep assigned when `all=true`.
+
+        ids : typing.Optional[str]
+            Comma-separated list of user IDs to filter matched members.
+
+        included : typing.Optional[str]
+            Comma-separated list of user IDs to unassign when `all=false`.
+
+        search : typing.Optional[str]
+            Search term for filtering matched members by name or email.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -116,7 +141,9 @@ class BulkClient:
             id=1,
         )
         """
-        _response = self._raw_client.delete(id, request_options=request_options)
+        _response = self._raw_client.delete(
+            id, all_=all_, excluded=excluded, ids=ids, included=included, search=search, request_options=request_options
+        )
         return _response.data
 
 
@@ -199,7 +226,17 @@ class AsyncBulkClient:
         )
         return _response.data
 
-    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteBulkResponse:
+    async def delete(
+        self,
+        id: int,
+        *,
+        all_: typing.Optional[bool] = None,
+        excluded: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        included: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DeleteBulkResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -207,11 +244,26 @@ class AsyncBulkClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Unassign workspace members in bulk. Allows the same request body as bulk assign.
+        Unassign workspace members in bulk. Pass selector fields via query parameters (`all`, `included`, `excluded`) and optional paginated-list filters (`search`, `ids`). For backward compatibility, a JSON body with bulk fields is still accepted.
 
         Parameters
         ----------
         id : int
+
+        all_ : typing.Optional[bool]
+            Apply unassignment to all currently matched workspace members.
+
+        excluded : typing.Optional[str]
+            Comma-separated list of user IDs to keep assigned when `all=true`.
+
+        ids : typing.Optional[str]
+            Comma-separated list of user IDs to filter matched members.
+
+        included : typing.Optional[str]
+            Comma-separated list of user IDs to unassign when `all=false`.
+
+        search : typing.Optional[str]
+            Search term for filtering matched members by name or email.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -240,5 +292,7 @@ class AsyncBulkClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(id, request_options=request_options)
+        _response = await self._raw_client.delete(
+            id, all_=all_, excluded=excluded, ids=ids, included=included, search=search, request_options=request_options
+        )
         return _response.data

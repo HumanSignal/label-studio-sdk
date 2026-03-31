@@ -101,7 +101,9 @@ class ProjectsClient:
         _response = self._raw_client.add(id, project=project, request_options=request_options)
         return _response.data
 
-    def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def remove(
+        self, id: int, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -109,11 +111,14 @@ class ProjectsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a project from a specific workspace.
+        Remove a project from a specific workspace. Pass the project ID via the `project` query parameter. For backward compatibility, a JSON body with `project` is still accepted.
 
         Parameters
         ----------
         id : int
+
+        project : typing.Optional[int]
+            Project ID to remove from the workspace.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -133,7 +138,7 @@ class ProjectsClient:
             id=1,
         )
         """
-        _response = self._raw_client.remove(id, request_options=request_options)
+        _response = self._raw_client.remove(id, project=project, request_options=request_options)
         return _response.data
 
 
@@ -243,7 +248,9 @@ class AsyncProjectsClient:
         _response = await self._raw_client.add(id, project=project, request_options=request_options)
         return _response.data
 
-    async def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def remove(
+        self, id: int, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -251,11 +258,14 @@ class AsyncProjectsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a project from a specific workspace.
+        Remove a project from a specific workspace. Pass the project ID via the `project` query parameter. For backward compatibility, a JSON body with `project` is still accepted.
 
         Parameters
         ----------
         id : int
+
+        project : typing.Optional[int]
+            Project ID to remove from the workspace.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -283,5 +293,5 @@ class AsyncProjectsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.remove(id, request_options=request_options)
+        _response = await self._raw_client.remove(id, project=project, request_options=request_options)
         return _response.data

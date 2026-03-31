@@ -123,7 +123,9 @@ class MembersClient:
         _response = self._raw_client.create(id, user=user, workspace=workspace, request_options=request_options)
         return _response.data
 
-    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(
+        self, id: int, *, user_id: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -131,11 +133,14 @@ class MembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
+        Remove a specific member by ID from a workspace. Pass the member ID via the `user_id` query parameter. For backward compatibility, a JSON body with `user_id` (or `user`) is still accepted.
 
         Parameters
         ----------
         id : int
+
+        user_id : typing.Optional[int]
+            User ID to remove from the workspace.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -155,7 +160,7 @@ class MembersClient:
             id=1,
         )
         """
-        _response = self._raw_client.delete(id, request_options=request_options)
+        _response = self._raw_client.delete(id, user_id=user_id, request_options=request_options)
         return _response.data
 
     @property
@@ -297,7 +302,9 @@ class AsyncMembersClient:
         _response = await self._raw_client.create(id, user=user, workspace=workspace, request_options=request_options)
         return _response.data
 
-    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(
+        self, id: int, *, user_id: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -305,11 +312,14 @@ class AsyncMembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
+        Remove a specific member by ID from a workspace. Pass the member ID via the `user_id` query parameter. For backward compatibility, a JSON body with `user_id` (or `user`) is still accepted.
 
         Parameters
         ----------
         id : int
+
+        user_id : typing.Optional[int]
+            User ID to remove from the workspace.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -337,7 +347,7 @@ class AsyncMembersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(id, request_options=request_options)
+        _response = await self._raw_client.delete(id, user_id=user_id, request_options=request_options)
         return _response.data
 
     @property

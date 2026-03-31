@@ -89,7 +89,15 @@ class RawBulkClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        all_: typing.Optional[bool] = None,
+        excluded: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        included: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeleteBulkResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -98,11 +106,26 @@ class RawBulkClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Unassign workspace members in bulk. Allows the same request body as bulk assign.
+        Unassign workspace members in bulk. Pass selector fields via query parameters (`all`, `included`, `excluded`) and optional paginated-list filters (`search`, `ids`). For backward compatibility, a JSON body with bulk fields is still accepted.
 
         Parameters
         ----------
         id : int
+
+        all_ : typing.Optional[bool]
+            Apply unassignment to all currently matched workspace members.
+
+        excluded : typing.Optional[str]
+            Comma-separated list of user IDs to keep assigned when `all=true`.
+
+        ids : typing.Optional[str]
+            Comma-separated list of user IDs to filter matched members.
+
+        included : typing.Optional[str]
+            Comma-separated list of user IDs to unassign when `all=false`.
+
+        search : typing.Optional[str]
+            Search term for filtering matched members by name or email.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -115,6 +138,13 @@ class RawBulkClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/workspaces/{jsonable_encoder(id)}/memberships/bulk/",
             method="DELETE",
+            params={
+                "all": all_,
+                "excluded": excluded,
+                "ids": ids,
+                "included": included,
+                "search": search,
+            },
             request_options=request_options,
         )
         try:
@@ -206,7 +236,15 @@ class AsyncRawBulkClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        all_: typing.Optional[bool] = None,
+        excluded: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        included: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeleteBulkResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -215,11 +253,26 @@ class AsyncRawBulkClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Unassign workspace members in bulk. Allows the same request body as bulk assign.
+        Unassign workspace members in bulk. Pass selector fields via query parameters (`all`, `included`, `excluded`) and optional paginated-list filters (`search`, `ids`). For backward compatibility, a JSON body with bulk fields is still accepted.
 
         Parameters
         ----------
         id : int
+
+        all_ : typing.Optional[bool]
+            Apply unassignment to all currently matched workspace members.
+
+        excluded : typing.Optional[str]
+            Comma-separated list of user IDs to keep assigned when `all=true`.
+
+        ids : typing.Optional[str]
+            Comma-separated list of user IDs to filter matched members.
+
+        included : typing.Optional[str]
+            Comma-separated list of user IDs to unassign when `all=false`.
+
+        search : typing.Optional[str]
+            Search term for filtering matched members by name or email.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -232,6 +285,13 @@ class AsyncRawBulkClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/workspaces/{jsonable_encoder(id)}/memberships/bulk/",
             method="DELETE",
+            params={
+                "all": all_,
+                "excluded": excluded,
+                "ids": ids,
+                "included": included,
+                "search": search,
+            },
             request_options=request_options,
         )
         try:

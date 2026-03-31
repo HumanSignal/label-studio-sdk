@@ -100,7 +100,7 @@ class RawBulkClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, ids: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DeleteBulkResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -109,12 +109,15 @@ class RawBulkClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete multiple member tags from the organization in bulk. Allows the same request body as bulk create.
+        Delete multiple member tags from the organization in bulk. Pass tag IDs via the `ids` query parameter (comma-separated or repeated). For backward compatibility, a JSON body with `ids` is still accepted.
 
         Parameters
         ----------
         id : int
             A unique integer value identifying this organization.
+
+        ids : typing.Optional[str]
+            Tag IDs to delete. Accepts comma-separated values (e.g., `1,2`) or repeated params.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -127,6 +130,9 @@ class RawBulkClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/organizations/{jsonable_encoder(id)}/member-tags/bulk",
             method="DELETE",
+            params={
+                "ids": ids,
+            },
             request_options=request_options,
         )
         try:
@@ -249,7 +255,7 @@ class AsyncRawBulkClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, ids: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DeleteBulkResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -258,12 +264,15 @@ class AsyncRawBulkClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete multiple member tags from the organization in bulk. Allows the same request body as bulk create.
+        Delete multiple member tags from the organization in bulk. Pass tag IDs via the `ids` query parameter (comma-separated or repeated). For backward compatibility, a JSON body with `ids` is still accepted.
 
         Parameters
         ----------
         id : int
             A unique integer value identifying this organization.
+
+        ids : typing.Optional[str]
+            Tag IDs to delete. Accepts comma-separated values (e.g., `1,2`) or repeated params.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -276,6 +285,9 @@ class AsyncRawBulkClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/organizations/{jsonable_encoder(id)}/member-tags/bulk",
             method="DELETE",
+            params={
+                "ids": ids,
+            },
             request_options=request_options,
         )
         try:

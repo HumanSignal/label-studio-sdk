@@ -72,7 +72,9 @@ class RawMembersClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def remove(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def remove(
+        self, id: int, *, user: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -80,11 +82,14 @@ class RawMembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a member from a specific project.
+        Remove a member from a specific project. Pass the member ID via the `user` query parameter. For backward compatibility, a JSON body with `user` is still accepted.
 
         Parameters
         ----------
         id : int
+
+        user : typing.Optional[int]
+            User ID to remove from the project. Optional for backward compatibility with DELETE body.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -96,6 +101,9 @@ class RawMembersClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/members/",
             method="DELETE",
+            params={
+                "user": user,
+            },
             request_options=request_options,
         )
         try:
@@ -165,7 +173,7 @@ class AsyncRawMembersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def remove(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, user: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -174,11 +182,14 @@ class AsyncRawMembersClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a member from a specific project.
+        Remove a member from a specific project. Pass the member ID via the `user` query parameter. For backward compatibility, a JSON body with `user` is still accepted.
 
         Parameters
         ----------
         id : int
+
+        user : typing.Optional[int]
+            User ID to remove from the project. Optional for backward compatibility with DELETE body.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -190,6 +201,9 @@ class AsyncRawMembersClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/members/",
             method="DELETE",
+            params={
+                "user": user,
+            },
             request_options=request_options,
         )
         try:

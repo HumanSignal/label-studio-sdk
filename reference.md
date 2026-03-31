@@ -34594,7 +34594,7 @@ client.organizations.member_tags.bulk.post(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Delete multiple member tags from the organization in bulk. Allows the same request body as bulk create.
+Delete multiple member tags from the organization in bulk. Pass tag IDs via the `ids` query parameter (comma-separated or repeated). For backward compatibility, a JSON body with `ids` is still accepted.
 </dd>
 </dl>
 </dd>
@@ -34633,6 +34633,14 @@ client.organizations.member_tags.bulk.delete(
 <dd>
 
 **id:** `int` — A unique integer value identifying this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `typing.Optional[str]` — Tag IDs to delete. Accepts comma-separated values (e.g., `1,2`) or repeated params.
     
 </dd>
 </dl>
@@ -35653,7 +35661,7 @@ client.projects.members.add(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Remove a member from a specific project.
+Remove a member from a specific project. Pass the member ID via the `user` query parameter. For backward compatibility, a JSON body with `user` is still accepted.
 </dd>
 </dl>
 </dd>
@@ -35692,6 +35700,14 @@ client.projects.members.remove(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user:** `typing.Optional[int]` — User ID to remove from the project. Optional for backward compatibility with DELETE body.
     
 </dd>
 </dl>
@@ -38781,7 +38797,7 @@ client.projects.members.bulk.post(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Unassign project members in bulk. Allows the same request body as bulk assign.
+Unassign project members in bulk. Pass selector fields via query parameters (`all`, `included`, `excluded`) and optional member filters (`search`, `role`, `tags`, `last_activity__gte`, `last_activity__lte`). For backward compatibility, a JSON body with bulk fields is still accepted.
 </dd>
 </dl>
 </dd>
@@ -38820,6 +38836,30 @@ client.projects.members.bulk.delete(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**all_:** `typing.Optional[bool]` — Apply unassignment to all currently matched project members.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**excluded:** `typing.Optional[str]` — Comma-separated list of user IDs to keep assigned when `all=true`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**included:** `typing.Optional[str]` — Comma-separated list of user IDs to unassign when `all=false`.
     
 </dd>
 </dl>
@@ -42191,7 +42231,7 @@ client.workspaces.members.create(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
+Remove a specific member by ID from a workspace. Pass the member ID via the `user_id` query parameter. For backward compatibility, a JSON body with `user_id` (or `user`) is still accepted.
 </dd>
 </dl>
 </dd>
@@ -42230,6 +42270,14 @@ client.workspaces.members.delete(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_id:** `typing.Optional[int]` — User ID to remove from the workspace.
     
 </dd>
 </dl>
@@ -42429,7 +42477,7 @@ client.workspaces.projects.add(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Remove a project from a specific workspace.
+Remove a project from a specific workspace. Pass the project ID via the `project` query parameter. For backward compatibility, a JSON body with `project` is still accepted.
 </dd>
 </dl>
 </dd>
@@ -42468,6 +42516,14 @@ client.workspaces.projects.remove(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID to remove from the workspace.
     
 </dd>
 </dl>
@@ -42607,7 +42663,7 @@ client.workspaces.members.bulk.post(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Unassign workspace members in bulk. Allows the same request body as bulk assign.
+Unassign workspace members in bulk. Pass selector fields via query parameters (`all`, `included`, `excluded`) and optional paginated-list filters (`search`, `ids`). For backward compatibility, a JSON body with bulk fields is still accepted.
 </dd>
 </dl>
 </dd>
@@ -42646,6 +42702,46 @@ client.workspaces.members.bulk.delete(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**all_:** `typing.Optional[bool]` — Apply unassignment to all currently matched workspace members.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**excluded:** `typing.Optional[str]` — Comma-separated list of user IDs to keep assigned when `all=true`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `typing.Optional[str]` — Comma-separated list of user IDs to filter matched members.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**included:** `typing.Optional[str]` — Comma-separated list of user IDs to unassign when `all=false`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search term for filtering matched members by name or email.
     
 </dd>
 </dl>
