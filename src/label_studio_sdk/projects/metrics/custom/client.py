@@ -5,6 +5,8 @@ import typing
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
 from .raw_client import AsyncRawCustomClient, RawCustomClient
+from .types.get_function_custom_response import GetFunctionCustomResponse
+from .types.get_gcp_function_custom_response import GetGcpFunctionCustomResponse
 from .types.get_lambda_custom_response import GetLambdaCustomResponse
 
 # this is used as the default value for optional parameters
@@ -210,6 +212,230 @@ class CustomClient:
         )
         """
         _response = self._raw_client.check_function(id, code=code, request_options=request_options)
+        return _response.data
+
+    def get_function(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetFunctionCustomResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get the custom metric function code for this project. The server routes to the active cloud provider (AWS Lambda or GCP Cloud Functions) based on the CUSTOM_METRIC_PROVIDER setting.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetFunctionCustomResponse
+            Function code and deployment status
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.metrics.custom.get_function(
+            id=1,
+        )
+        """
+        _response = self._raw_client.get_function(id, request_options=request_options)
+        return _response.data
+
+    def deploy_function(self, id: int, *, code: str, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create or update the custom metric function for this project. The server routes to the active cloud provider (AWS Lambda or GCP Cloud Functions) based on the CUSTOM_METRIC_PROVIDER setting.
+
+        Parameters
+        ----------
+        id : int
+
+        code : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.metrics.custom.deploy_function(
+            id=1,
+            code="code",
+        )
+        """
+        _response = self._raw_client.deploy_function(id, code=code, request_options=request_options)
+        return _response.data
+
+    def get_function_logs(
+        self,
+        id: int,
+        *,
+        end_date: typing.Optional[str] = None,
+        limit: typing.Optional[int] = None,
+        start_date: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Dict[str, typing.Any]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get execution logs for the custom metric function. The server routes to the active cloud provider based on the CUSTOM_METRIC_PROVIDER setting.
+
+        Parameters
+        ----------
+        id : int
+
+        end_date : typing.Optional[str]
+            End date for log filtering in format %Y-%m-%d
+
+        limit : typing.Optional[int]
+            Limit the number of logs to return
+
+        start_date : typing.Optional[str]
+            Start date for log filtering in format %Y-%m-%d
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, typing.Any]
+            List of function execution logs
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.metrics.custom.get_function_logs(
+            id=1,
+        )
+        """
+        _response = self._raw_client.get_function_logs(
+            id, end_date=end_date, limit=limit, start_date=start_date, request_options=request_options
+        )
+        return _response.data
+
+    def get_gcp_function(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetGcpFunctionCustomResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get the GCP Cloud Function code for the custom metric configured for this project.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetGcpFunctionCustomResponse
+            Cloud Function code and deployment status
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.metrics.custom.get_gcp_function(
+            id=1,
+        )
+        """
+        _response = self._raw_client.get_gcp_function(id, request_options=request_options)
+        return _response.data
+
+    def update_gcp_function(
+        self,
+        id: int,
+        *,
+        code: str,
+        project: typing.Optional[str] = OMIT,
+        region: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create or update the GCP Cloud Function used for custom metrics in this project.
+
+        Parameters
+        ----------
+        id : int
+
+        code : str
+            The Python code for the custom metric function.
+
+        project : typing.Optional[str]
+            The GCP project ID. Uses default if not provided.
+
+        region : typing.Optional[str]
+            The GCP region for the Cloud Function. Uses default if not provided.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.metrics.custom.update_gcp_function(
+            id=1,
+            code="code",
+        )
+        """
+        _response = self._raw_client.update_gcp_function(
+            id, code=code, project=project, region=region, request_options=request_options
+        )
         return _response.data
 
 
@@ -446,4 +672,270 @@ class AsyncCustomClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.check_function(id, code=code, request_options=request_options)
+        return _response.data
+
+    async def get_function(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetFunctionCustomResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get the custom metric function code for this project. The server routes to the active cloud provider (AWS Lambda or GCP Cloud Functions) based on the CUSTOM_METRIC_PROVIDER setting.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetFunctionCustomResponse
+            Function code and deployment status
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.metrics.custom.get_function(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_function(id, request_options=request_options)
+        return _response.data
+
+    async def deploy_function(
+        self, id: int, *, code: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create or update the custom metric function for this project. The server routes to the active cloud provider (AWS Lambda or GCP Cloud Functions) based on the CUSTOM_METRIC_PROVIDER setting.
+
+        Parameters
+        ----------
+        id : int
+
+        code : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.metrics.custom.deploy_function(
+                id=1,
+                code="code",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.deploy_function(id, code=code, request_options=request_options)
+        return _response.data
+
+    async def get_function_logs(
+        self,
+        id: int,
+        *,
+        end_date: typing.Optional[str] = None,
+        limit: typing.Optional[int] = None,
+        start_date: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Dict[str, typing.Any]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get execution logs for the custom metric function. The server routes to the active cloud provider based on the CUSTOM_METRIC_PROVIDER setting.
+
+        Parameters
+        ----------
+        id : int
+
+        end_date : typing.Optional[str]
+            End date for log filtering in format %Y-%m-%d
+
+        limit : typing.Optional[int]
+            Limit the number of logs to return
+
+        start_date : typing.Optional[str]
+            Start date for log filtering in format %Y-%m-%d
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, typing.Any]
+            List of function execution logs
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.metrics.custom.get_function_logs(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_function_logs(
+            id, end_date=end_date, limit=limit, start_date=start_date, request_options=request_options
+        )
+        return _response.data
+
+    async def get_gcp_function(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetGcpFunctionCustomResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get the GCP Cloud Function code for the custom metric configured for this project.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetGcpFunctionCustomResponse
+            Cloud Function code and deployment status
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.metrics.custom.get_gcp_function(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_gcp_function(id, request_options=request_options)
+        return _response.data
+
+    async def update_gcp_function(
+        self,
+        id: int,
+        *,
+        code: str,
+        project: typing.Optional[str] = OMIT,
+        region: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create or update the GCP Cloud Function used for custom metrics in this project.
+
+        Parameters
+        ----------
+        id : int
+
+        code : str
+            The Python code for the custom metric function.
+
+        project : typing.Optional[str]
+            The GCP project ID. Uses default if not provided.
+
+        region : typing.Optional[str]
+            The GCP region for the Cloud Function. Uses default if not provided.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.metrics.custom.update_gcp_function(
+                id=1,
+                code="code",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_gcp_function(
+            id, code=code, project=project, region=region, request_options=request_options
+        )
         return _response.data

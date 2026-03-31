@@ -6,9 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .get_function_custom_response import GetFunctionCustomResponse
+    from .get_function_custom_response_status import GetFunctionCustomResponseStatus
+    from .get_gcp_function_custom_response import GetGcpFunctionCustomResponse
+    from .get_gcp_function_custom_response_status import GetGcpFunctionCustomResponseStatus
     from .get_lambda_custom_response import GetLambdaCustomResponse
     from .get_lambda_custom_response_status import GetLambdaCustomResponseStatus
 _dynamic_imports: typing.Dict[str, str] = {
+    "GetFunctionCustomResponse": ".get_function_custom_response",
+    "GetFunctionCustomResponseStatus": ".get_function_custom_response_status",
+    "GetGcpFunctionCustomResponse": ".get_gcp_function_custom_response",
+    "GetGcpFunctionCustomResponseStatus": ".get_gcp_function_custom_response_status",
     "GetLambdaCustomResponse": ".get_lambda_custom_response",
     "GetLambdaCustomResponseStatus": ".get_lambda_custom_response_status",
 }
@@ -35,4 +43,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["GetLambdaCustomResponse", "GetLambdaCustomResponseStatus"]
+__all__ = [
+    "GetFunctionCustomResponse",
+    "GetFunctionCustomResponseStatus",
+    "GetGcpFunctionCustomResponse",
+    "GetGcpFunctionCustomResponseStatus",
+    "GetLambdaCustomResponse",
+    "GetLambdaCustomResponseStatus",
+]

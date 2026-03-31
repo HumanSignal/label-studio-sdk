@@ -6,8 +6,19 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import GetLambdaCustomResponse, GetLambdaCustomResponseStatus
+    from .types import (
+        GetFunctionCustomResponse,
+        GetFunctionCustomResponseStatus,
+        GetGcpFunctionCustomResponse,
+        GetGcpFunctionCustomResponseStatus,
+        GetLambdaCustomResponse,
+        GetLambdaCustomResponseStatus,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "GetFunctionCustomResponse": ".types",
+    "GetFunctionCustomResponseStatus": ".types",
+    "GetGcpFunctionCustomResponse": ".types",
+    "GetGcpFunctionCustomResponseStatus": ".types",
     "GetLambdaCustomResponse": ".types",
     "GetLambdaCustomResponseStatus": ".types",
 }
@@ -34,4 +45,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["GetLambdaCustomResponse", "GetLambdaCustomResponseStatus"]
+__all__ = [
+    "GetFunctionCustomResponse",
+    "GetFunctionCustomResponseStatus",
+    "GetGcpFunctionCustomResponse",
+    "GetGcpFunctionCustomResponseStatus",
+    "GetLambdaCustomResponse",
+    "GetLambdaCustomResponseStatus",
+]
