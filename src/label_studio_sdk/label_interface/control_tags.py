@@ -31,6 +31,8 @@ _TAG_TO_CLASS = {
     "rectangle": "RectangleTag",
     "rectanglelabels": "RectangleLabelsTag",
     "videorectangle": "VideoRectangleTag",
+    "videovector": "VideoVectorTag",
+    "videovectorlabels": "VideoVectorLabelsTag",
     "number": "NumberTag",
     "datetime": "DateTimeTag",
     "hypertextlabels": "HyperTextLabelsTag",
@@ -901,8 +903,39 @@ class VideoRectangleTag(ControlTag):
     tag: str = "VideoRectangle"
     _label_attr_name: str = "labels"
     _value_class: Type[VideoRectangleValue] = VideoRectangleValue
-    
-    
+
+
+class VideoVectorSequenceValue(BaseModel):
+    time: Optional[float] = None
+    frame: int
+    closed: Optional[bool] = False
+    enabled: Optional[bool] = True
+    vertices: List[VectorVertex]
+
+
+class VideoVectorValue(BaseModel):
+    framesCount: Optional[int] = None
+    duration: Optional[float] = None
+    sequence: List[VideoVectorSequenceValue]
+
+
+class VideoVectorLabelsValue(VideoVectorValue):
+    labels: Optional[List[str]] = None
+
+
+class VideoVectorTag(ControlTag):
+    """ """
+    tag: str = "VideoVector"
+    _value_class: Type[VideoVectorValue] = VideoVectorValue
+
+
+class VideoVectorLabelsTag(ControlTag):
+    """ """
+    tag: str = "VideoVectorLabels"
+    _label_attr_name: str = "labels"
+    _value_class: Type[VideoVectorLabelsValue] = VideoVectorLabelsValue
+
+
 class NumberValue(BaseModel):
     number: float
     

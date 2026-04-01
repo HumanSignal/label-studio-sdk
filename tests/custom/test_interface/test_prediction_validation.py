@@ -16,6 +16,7 @@ from .configs import (
     PREDICTION_RECTANGLE_CONFIG,
     PREDICTION_RECTANGLE_LABELS_CONFIG,
     PREDICTION_VIDEO_RECTANGLE_CONFIG,
+    PREDICTION_VIDEO_VECTOR_LABELS_CONFIG,
     PREDICTION_NUMBER_CONFIG,
     PREDICTION_DATETIME_CONFIG,
     PREDICTION_HYPERTEXT_LABELS_CONFIG,
@@ -539,6 +540,65 @@ class TestPredictionValidation:
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("Invalid value for control 'videorectangle'" in error for error in errors)
+
+    def test_video_vector_labels_validation(self):
+        """Test VideoVectorLabels tag validation"""
+        li = LabelInterface(PREDICTION_VIDEO_VECTOR_LABELS_CONFIG)
+
+        # Valid prediction
+        valid_pred = {
+            "result": [{
+                "from_name": "box",
+                "to_name": "video",
+                "type": "videovectorlabels",
+                "value": {
+                    "labels": ["Boundary"],
+                    "duration": 17.48,
+                    "framesCount": 437,
+                    "sequence": [{
+                        "time": 0.04,
+                        "frame": 1,
+                        "closed": False,
+                        "enabled": True,
+                        "vertices": [
+                            {"x": 23.28, "y": 44.79, "id": "v1", "isBezier": False},
+                            {"x": 59.06, "y": 37.92, "id": "v2", "isBezier": False, "prevPointId": "v1"},
+                            {"x": 72.34, "y": 64.58, "id": "v3", "isBezier": False, "prevPointId": "v2"}
+                        ]
+                    }]
+                }
+            }],
+            "score": 0.9
+        }
+        assert li.validate_prediction(valid_pred) is True
+
+        # Invalid - wrong label
+        invalid_pred = copy.deepcopy(valid_pred)
+        invalid_pred["result"][0]["value"]["labels"] = ["NonExistentLabel"]
+        assert li.validate_prediction(invalid_pred) is False
+
+        errors = li.validate_prediction(invalid_pred, return_errors=True)
+        assert any("Invalid value for control 'box'" in error for error in errors)
+
+        # Valid - minimal fields (no duration/framesCount)
+        minimal_pred = {
+            "result": [{
+                "from_name": "box",
+                "to_name": "video",
+                "type": "videovectorlabels",
+                "value": {
+                    "labels": ["Road"],
+                    "sequence": [{
+                        "frame": 1,
+                        "vertices": [
+                            {"x": 10.0, "y": 20.0},
+                            {"x": 30.0, "y": 40.0}
+                        ]
+                    }]
+                }
+            }]
+        }
+        assert li.validate_prediction(minimal_pred) is True
 
     def test_number_validation(self):
         """Test Number tag validation"""

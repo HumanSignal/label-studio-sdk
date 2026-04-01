@@ -261,6 +261,16 @@ PREDICTION_VIDEO_RECTANGLE_CONFIG = """
 </View>
 """
 
+PREDICTION_VIDEO_VECTOR_LABELS_CONFIG = """
+<View>
+  <Video name="video" value="$video"/>
+  <VideoVectorLabels name="box" toName="video">
+    <Label value="Boundary"/>
+    <Label value="Road"/>
+  </VideoVectorLabels>
+</View>
+"""
+
 PREDICTION_NUMBER_CONFIG = """
 <View>
   <Text name="text" value="$text"/>
