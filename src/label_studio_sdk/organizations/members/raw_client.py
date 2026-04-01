@@ -16,6 +16,7 @@ from ...types.lse_organization_member_list import LseOrganizationMemberList
 from ...types.organization_member import OrganizationMember
 from ...types.paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
 from ...types.role9e7enum import Role9E7Enum
+from .types.list_members_request_scope import ListMembersRequestScope
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -36,6 +37,7 @@ class RawMembersClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         role: typing.Optional[str] = None,
+        scope: typing.Optional[ListMembersRequestScope] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -88,6 +90,9 @@ class RawMembersClient:
             - `NO` = Not Activated
             - `DI` = Disabled
 
+        scope : typing.Optional[ListMembersRequestScope]
+            Member visibility scope. `accessible` (default) limits Managers to members in their projects/workspaces. `all` returns all organization members. Only affects Manager role.
+
         search : typing.Optional[str]
             A search term.
 
@@ -113,6 +118,7 @@ class RawMembersClient:
                 "page": page,
                 "page_size": page_size,
                 "role": role,
+                "scope": scope,
                 "search": search,
                 "tags": tags,
             },
@@ -351,6 +357,7 @@ class AsyncRawMembersClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         role: typing.Optional[str] = None,
+        scope: typing.Optional[ListMembersRequestScope] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -403,6 +410,9 @@ class AsyncRawMembersClient:
             - `NO` = Not Activated
             - `DI` = Disabled
 
+        scope : typing.Optional[ListMembersRequestScope]
+            Member visibility scope. `accessible` (default) limits Managers to members in their projects/workspaces. `all` returns all organization members. Only affects Manager role.
+
         search : typing.Optional[str]
             A search term.
 
@@ -428,6 +438,7 @@ class AsyncRawMembersClient:
                 "page": page,
                 "page_size": page_size,
                 "role": role,
+                "scope": scope,
                 "search": search,
                 "tags": tags,
             },

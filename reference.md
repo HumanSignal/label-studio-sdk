@@ -33546,6 +33546,14 @@ Filter members by organization role. Accepts single role or comma-separated list
 <dl>
 <dd>
 
+**scope:** `typing.Optional[ListMembersRequestScope]` — Member visibility scope. `accessible` (default) limits Managers to members in their projects/workspaces. `all` returns all organization members. Only affects Manager role.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **search:** `typing.Optional[str]` — A search term.
     
 </dd>

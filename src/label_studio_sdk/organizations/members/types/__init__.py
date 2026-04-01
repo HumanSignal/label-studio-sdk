@@ -6,18 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import invites, member_tags, members, permissions
-    from .member_tags import AssignMemberTagsResponse, ImportMemberTagsResponse
-    from .members import ListMembersRequestScope
-_dynamic_imports: typing.Dict[str, str] = {
-    "AssignMemberTagsResponse": ".member_tags",
-    "ImportMemberTagsResponse": ".member_tags",
-    "ListMembersRequestScope": ".members",
-    "invites": ".invites",
-    "member_tags": ".member_tags",
-    "members": ".members",
-    "permissions": ".permissions",
-}
+    from .list_members_request_scope import ListMembersRequestScope
+_dynamic_imports: typing.Dict[str, str] = {"ListMembersRequestScope": ".list_members_request_scope"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -41,12 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "AssignMemberTagsResponse",
-    "ImportMemberTagsResponse",
-    "ListMembersRequestScope",
-    "invites",
-    "member_tags",
-    "members",
-    "permissions",
-]
+__all__ = ["ListMembersRequestScope"]
