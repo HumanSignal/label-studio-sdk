@@ -1,11 +1,12 @@
 # Specify files that shouldn't be modified by Fern
 
-# READMEs
+# PyPI / GitHub project readme (in the monorepo this file is also reachable as
+# libs/label-studio-sdk/README.md via the workspace symlink).
 README.md
 LICENSE
 
 # manual extensions, use generators.yml to include specific top-level imports from here
-# this directory also includes legacy label_studio_tools/ package
+# this directory also includes legacy label_studio_tools/ package and the Typer CLI
 src/label_studio_sdk/_extensions
 src/label_studio_sdk/label_interface
 src/label_studio_sdk/client.py

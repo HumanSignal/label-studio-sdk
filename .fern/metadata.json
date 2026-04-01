@@ -40,12 +40,13 @@
       "datamodel-code-generator": "0.26.1",
       "jsf": "^0.11.2",
       "pyjwt": "^2.12.0",
-      "urllib3": ">=2.5.0"
+      "urllib3": ">=2.5.0",
+      "typer": ">=0.12.3"
     },
     "extra_dev_dependencies": {
       "respx": "^0.22.0"
     },
-    "pyproject_toml": "[project.scripts]\nlabel-studio-converter = \"label_studio_sdk.converter.main:main\"\n"
+    "pyproject_toml": "[project.scripts]\nlabel-studio-converter = \"label_studio_sdk.converter.main:main\"\nlabel-studio-sdk = \"label_studio_sdk._extensions.cli.main:main\"\n"
   },
   "sdkVersion": "2.0.20"
 }

@@ -32,6 +32,47 @@ client = LabelStudio(
 )
 ```
 
+## CLI
+
+The SDK also includes a CLI entrypoint that mirrors SDK resources and methods.
+
+On **leaf commands** (for example `projects create`), use **`-h`** for minimal help (one-line summary, SDK signature, and options) and **`--help`** for the full generated documentation (parameters, examples, return shape, and options). Top-level groups only register **`--help`**.
+
+```bash
+export LABEL_STUDIO_API_KEY="YOUR_API_KEY"
+export LABEL_STUDIO_URL="YOUR_BASE_URL"
+
+# minimal help for one command
+label-studio-sdk projects create -h
+
+# full help (longer)
+label-studio-sdk projects create --help
+
+# top-level
+label-studio-sdk --help
+
+# List projects
+label-studio-sdk projects list
+
+# Create a project (generic key=value params)
+label-studio-sdk projects create \
+  --param title="CLI Example" \
+  --param 'label_config=<View><Text name="text" value="$text"/></View>'
+```
+
+### Running the CLI with uv
+
+```bash
+# from PyPI
+uv run --with label_studio_sdk label-studio-sdk --help
+
+# from github
+uv run --with git+https://github.com/HumanSignal/label-studio-sdk.git label-studio-sdk --help
+
+# from local
+uv run --with-editable . label-studio-sdk --help
+```
+
 # Versions
 
 ## SDK 2.0.0
