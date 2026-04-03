@@ -25,7 +25,11 @@ class LseTaskSerializerForAnnotators(UncheckedBaseModel):
     Time a task was created
     """
 
-    data: typing.Any
+    data: typing.Dict[str, typing.Any] = pydantic.Field()
+    """
+    User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+    """
+
     draft_exists: typing.Optional[bool] = None
     drafts: typing.Optional[typing.List[LseTaskSerializerForAnnotatorsDraftsItem]] = pydantic.Field(default=None)
     """

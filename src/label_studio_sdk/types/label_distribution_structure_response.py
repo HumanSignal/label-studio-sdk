@@ -9,7 +9,7 @@ from .label_distribution_structure_dimension import LabelDistributionStructureDi
 
 
 class LabelDistributionStructureResponse(UncheckedBaseModel):
-    choice_keys: typing.Optional[str] = pydantic.Field(default=None)
+    choice_keys: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     All project choice keys in stable order, joined with "___PIPE___" when passed as query param.
     """

@@ -10,7 +10,9 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 
 class BulkAssignAssignmentsRequestSelectedItemsIncluded(UncheckedBaseModel):
-    all_: typing_extensions.Annotated[bool, FieldMetadata(alias="all")] = pydantic.Field(alias="all")
+    all_: typing_extensions.Annotated[typing.Literal[False], FieldMetadata(alias="all")] = pydantic.Field(
+        alias="all", default=False
+    )
     """
     No tasks are selected
     """

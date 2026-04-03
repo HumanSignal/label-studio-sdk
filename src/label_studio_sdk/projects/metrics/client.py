@@ -77,7 +77,7 @@ class MetricsClient:
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
         metric_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> MetricParam:
+    ) -> typing.Optional[MetricParam]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -106,7 +106,7 @@ class MetricsClient:
 
         Returns
         -------
-        MetricParam
+        typing.Optional[MetricParam]
             Updated metrics configuration
 
         Examples
@@ -209,7 +209,7 @@ class AsyncMetricsClient:
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
         metric_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> MetricParam:
+    ) -> typing.Optional[MetricParam]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -238,7 +238,7 @@ class AsyncMetricsClient:
 
         Returns
         -------
-        MetricParam
+        typing.Optional[MetricParam]
             Updated metrics configuration
 
         Examples

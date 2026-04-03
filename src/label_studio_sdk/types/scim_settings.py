@@ -5,22 +5,23 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .project_group import ProjectGroup
 
 
 class ScimSettings(UncheckedBaseModel):
-    projects_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    projects_groups: typing.Optional[typing.List[ProjectGroup]] = pydantic.Field(default=None)
     """
-    Projects to groups mapping
-    """
-
-    roles_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Roles to groups mapping
+    Projects to Groups Mapping. List of objects with project_id, group, role.
     """
 
-    workspaces_groups: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    roles_groups: typing.Optional[typing.List[typing.List[str]]] = pydantic.Field(default=None)
     """
-    Workspaces to groups mapping
+    Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+    """
+
+    workspaces_groups: typing.Optional[typing.List[typing.List[str]]] = pydantic.Field(default=None)
+    """
+    Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
     """
 
     if IS_PYDANTIC_V2:

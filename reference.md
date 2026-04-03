@@ -4103,7 +4103,6 @@ client.actions.create(
     ),
     ordering=["tasks:total_annotations"],
     selected_items=CreateActionsRequestSelectedItemsExcluded(
-        all_=True,
         excluded=[124, 125, 126],
     ),
 )
@@ -11522,14 +11521,18 @@ What to Duplicate (Project configuration only / Project configuration and tasks)
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk import ImportApiRequest, LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.import_tasks(
     id=1,
-    request=[],
+    request=[
+        ImportApiRequest(
+            data={"key": "value"},
+        )
+    ],
 )
 
 ```
@@ -12137,7 +12140,7 @@ client.tasks.create(
 <dl>
 <dd>
 
-**data:** `typing.Any` 
+**data:** `typing.Dict[str, typing.Any]` — User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
     
 </dd>
 </dl>
@@ -12515,7 +12518,7 @@ client.tasks.update(
 <dl>
 <dd>
 
-**data:** `typing.Optional[typing.Any]` — User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+**data:** `typing.Optional[typing.Dict[str, typing.Any]]` — User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
     
 </dd>
 </dl>
@@ -35812,7 +35815,7 @@ client.projects.metrics.get(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.<a href="src/label_studio_sdk/projects/metrics/client.py">update</a>(...) -&gt; AsyncHttpResponse[MetricParam]</code></summary>
+<details><summary><code>client.projects.metrics.<a href="src/label_studio_sdk/projects/metrics/client.py">update</a>(...) -&gt; AsyncHttpResponse[typing.Optional[MetricParam]]</code></summary>
 <dl>
 <dd>
 
@@ -36975,7 +36978,7 @@ client.projects.stats.lead_time(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">total_agreement</a>(...) -&gt; AsyncHttpResponse[TotalAgreementStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">total_agreement</a>(...) -&gt; AsyncHttpResponse[typing.Optional[TotalAgreementStatsResponse]]</code></summary>
 <dl>
 <dd>
 
@@ -37654,9 +37657,7 @@ client = LabelStudio(
 )
 client.projects.assignments.bulk_assign(
     id=1,
-    selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
-        all_=True,
-    ),
+    selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(),
     type="AN",
     users=[1],
 )

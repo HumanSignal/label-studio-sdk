@@ -271,7 +271,7 @@ class RawTasksClient:
     def create(
         self,
         *,
-        data: typing.Any,
+        data: typing.Dict[str, typing.Any],
         allow_skip: typing.Optional[bool] = OMIT,
         cancelled_annotations: typing.Optional[int] = OMIT,
         comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
@@ -294,7 +294,8 @@ class RawTasksClient:
 
         Parameters
         ----------
-        data : typing.Any
+        data : typing.Dict[str, typing.Any]
+            User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
 
         allow_skip : typing.Optional[bool]
             Whether this task can be skipped. Set to False to make task unskippable.
@@ -466,7 +467,7 @@ class RawTasksClient:
         cancelled_annotations: typing.Optional[int] = OMIT,
         comment_count: typing.Optional[int] = OMIT,
         completed_at: typing.Optional[dt.datetime] = OMIT,
-        data: typing.Optional[typing.Any] = OMIT,
+        data: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         draft_exists: typing.Optional[bool] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
         inner_id: typing.Optional[int] = OMIT,
@@ -505,7 +506,7 @@ class RawTasksClient:
 
         completed_at : typing.Optional[dt.datetime]
 
-        data : typing.Optional[typing.Any]
+        data : typing.Optional[typing.Dict[str, typing.Any]]
             User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
 
         draft_exists : typing.Optional[bool]
@@ -1022,7 +1023,7 @@ class AsyncRawTasksClient:
     async def create(
         self,
         *,
-        data: typing.Any,
+        data: typing.Dict[str, typing.Any],
         allow_skip: typing.Optional[bool] = OMIT,
         cancelled_annotations: typing.Optional[int] = OMIT,
         comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
@@ -1045,7 +1046,8 @@ class AsyncRawTasksClient:
 
         Parameters
         ----------
-        data : typing.Any
+        data : typing.Dict[str, typing.Any]
+            User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
 
         allow_skip : typing.Optional[bool]
             Whether this task can be skipped. Set to False to make task unskippable.
@@ -1221,7 +1223,7 @@ class AsyncRawTasksClient:
         cancelled_annotations: typing.Optional[int] = OMIT,
         comment_count: typing.Optional[int] = OMIT,
         completed_at: typing.Optional[dt.datetime] = OMIT,
-        data: typing.Optional[typing.Any] = OMIT,
+        data: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         draft_exists: typing.Optional[bool] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
         inner_id: typing.Optional[int] = OMIT,
@@ -1260,7 +1262,7 @@ class AsyncRawTasksClient:
 
         completed_at : typing.Optional[dt.datetime]
 
-        data : typing.Optional[typing.Any]
+        data : typing.Optional[typing.Dict[str, typing.Any]]
             User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
 
         draft_exists : typing.Optional[bool]

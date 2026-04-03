@@ -669,7 +669,7 @@ class RawStatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[TotalAgreementStatsResponse]:
+    ) -> HttpResponse[typing.Optional[TotalAgreementStatsResponse]]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -693,7 +693,7 @@ class RawStatsClient:
 
         Returns
         -------
-        HttpResponse[TotalAgreementStatsResponse]
+        HttpResponse[typing.Optional[TotalAgreementStatsResponse]]
             Total agreement
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -705,11 +705,13 @@ class RawStatsClient:
             request_options=request_options,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    TotalAgreementStatsResponse,
+                    typing.Optional[TotalAgreementStatsResponse],
                     construct_type(
-                        type_=TotalAgreementStatsResponse,  # type: ignore
+                        type_=typing.Optional[TotalAgreementStatsResponse],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1703,7 +1705,7 @@ class AsyncRawStatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[TotalAgreementStatsResponse]:
+    ) -> AsyncHttpResponse[typing.Optional[TotalAgreementStatsResponse]]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1727,7 +1729,7 @@ class AsyncRawStatsClient:
 
         Returns
         -------
-        AsyncHttpResponse[TotalAgreementStatsResponse]
+        AsyncHttpResponse[typing.Optional[TotalAgreementStatsResponse]]
             Total agreement
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1739,11 +1741,13 @@ class AsyncRawStatsClient:
             request_options=request_options,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    TotalAgreementStatsResponse,
+                    typing.Optional[TotalAgreementStatsResponse],
                     construct_type(
-                        type_=TotalAgreementStatsResponse,  # type: ignore
+                        type_=typing.Optional[TotalAgreementStatsResponse],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

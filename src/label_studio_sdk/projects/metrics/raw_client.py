@@ -70,7 +70,7 @@ class RawMetricsClient:
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
         metric_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[MetricParam]:
+    ) -> HttpResponse[typing.Optional[MetricParam]]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -99,7 +99,7 @@ class RawMetricsClient:
 
         Returns
         -------
-        HttpResponse[MetricParam]
+        HttpResponse[typing.Optional[MetricParam]]
             Updated metrics configuration
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -118,11 +118,13 @@ class RawMetricsClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    MetricParam,
+                    typing.Optional[MetricParam],
                     construct_type(
-                        type_=MetricParam,  # type: ignore
+                        type_=typing.Optional[MetricParam],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -190,7 +192,7 @@ class AsyncRawMetricsClient:
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
         metric_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[MetricParam]:
+    ) -> AsyncHttpResponse[typing.Optional[MetricParam]]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -219,7 +221,7 @@ class AsyncRawMetricsClient:
 
         Returns
         -------
-        AsyncHttpResponse[MetricParam]
+        AsyncHttpResponse[typing.Optional[MetricParam]]
             Updated metrics configuration
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -238,11 +240,13 @@ class AsyncRawMetricsClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    MetricParam,
+                    typing.Optional[MetricParam],
                     construct_type(
-                        type_=MetricParam,  # type: ignore
+                        type_=typing.Optional[MetricParam],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

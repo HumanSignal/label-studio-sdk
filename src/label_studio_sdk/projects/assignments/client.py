@@ -88,9 +88,7 @@ class AssignmentsClient:
         )
         client.projects.assignments.bulk_assign(
             id=1,
-            selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
-                all_=True,
-            ),
+            selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(),
             type="AN",
             users=[1],
         )
@@ -387,9 +385,7 @@ class AsyncAssignmentsClient:
         async def main() -> None:
             await client.projects.assignments.bulk_assign(
                 id=1,
-                selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
-                    all_=True,
-                ),
+                selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(),
                 type="AN",
                 users=[1],
             )

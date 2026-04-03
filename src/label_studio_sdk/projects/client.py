@@ -974,14 +974,18 @@ class ProjectsClient:
         
         Examples
         --------
-        from label_studio_sdk import LabelStudio
+        from label_studio_sdk import ImportApiRequest, LabelStudio
         
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
         client.projects.import_tasks(
             id=1,
-            request=[],
+            request=[
+                ImportApiRequest(
+                    data={"key": "value"},
+                )
+            ],
         )
         """
         _response = self._raw_client.import_tasks(
@@ -2133,7 +2137,7 @@ class AsyncProjectsClient:
         --------
         import asyncio
         
-        from label_studio_sdk import AsyncLabelStudio
+        from label_studio_sdk import AsyncLabelStudio, ImportApiRequest
         
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
@@ -2143,7 +2147,11 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.projects.import_tasks(
                 id=1,
-                request=[],
+                request=[
+                    ImportApiRequest(
+                        data={"key": "value"},
+                    )
+                ],
             )
         
         

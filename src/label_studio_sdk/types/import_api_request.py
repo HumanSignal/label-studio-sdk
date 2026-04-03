@@ -36,7 +36,11 @@ class ImportApiRequest(UncheckedBaseModel):
     Number of comments in the task including all annotations
     """
 
-    data: typing.Any
+    data: typing.Dict[str, typing.Any] = pydantic.Field()
+    """
+    User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+    """
+
     file_upload: typing.Optional[int] = pydantic.Field(default=None)
     """
     Uploaded file used as data source for this task

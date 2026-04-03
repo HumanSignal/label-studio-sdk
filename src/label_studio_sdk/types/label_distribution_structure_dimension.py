@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class LabelDistributionStructureDimension(UncheckedBaseModel):
-    choice_keys: typing.Optional[str] = pydantic.Field(default=None)
+    choice_keys: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Flat keys in "<from_name>___SEP___<choice>" format for this dimension.
     """

@@ -593,7 +593,7 @@ class StatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> TotalAgreementStatsResponse:
+    ) -> typing.Optional[TotalAgreementStatsResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -617,7 +617,7 @@ class StatsClient:
 
         Returns
         -------
-        TotalAgreementStatsResponse
+        typing.Optional[TotalAgreementStatsResponse]
             Total agreement
 
         Examples
@@ -1603,7 +1603,7 @@ class AsyncStatsClient:
         *,
         per_label: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> TotalAgreementStatsResponse:
+    ) -> typing.Optional[TotalAgreementStatsResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1627,7 +1627,7 @@ class AsyncStatsClient:
 
         Returns
         -------
-        TotalAgreementStatsResponse
+        typing.Optional[TotalAgreementStatsResponse]
             Total agreement
 
         Examples
