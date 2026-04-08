@@ -124,7 +124,6 @@ def get_local_path(
           f"  project_dir: {project_dir}\n"
           f"  hostname: {hostname}\n"
           f"  image_dir: {image_dir}\n"
-          f"  access_token: {access_token}\n"
           f"  download_resources: {download_resources}\n"
           f"  task_id: {task_id}")
     
