@@ -1,17 +1,19 @@
 from __future__ import annotations
 
 import inspect
+import importlib
 import json
 import os
 import re
-import typing
-from typing import Any, get_args, get_origin
+from ast import AsyncFunctionDef, ClassDef, FunctionDef, get_docstring, parse as ast_parse, unparse as ast_unparse
+from functools import lru_cache
+from pathlib import Path
+from typing import Any
 
 import click
-import pydantic
 import typer
 
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.base_client import LabelStudioBase
 from label_studio_sdk.version import __version__ as _SDK_VERSION
 
 # Fern/OpenAPI docs embed MDX-style <Card> blocks in some SDK docstrings; plain text for terminal CLI.
@@ -86,40 +88,162 @@ app = typer.Typer(
 )
 
 
-def _discover_services(client: LabelStudio) -> list[str]:
-    # Discover SDK service groups from declared @property attributes on client classes.
-    # This captures generated clients and extension clients.
+def _discover_services() -> list[str]:
+    # Discover SDK service groups from declared @property attributes on base client class
+    # without materializing service instances (which imports all service modules).
     service_names: set[str] = set()
-    for cls in type(client).mro():
+    for cls in LabelStudioBase.mro():
         for name, attr in cls.__dict__.items():
             if name.startswith("_") or not isinstance(attr, property):
                 continue
             service_names.add(name)
-
-    services: list[str] = []
-    for name in sorted(service_names):
-        try:
-            value = getattr(client, name)
-        except Exception:
-            continue
-        if callable(value):
-            continue
-        if any(ch.isupper() for ch in name):
-            continue
-        if _discover_methods(value):
-            services.append(name)
-    return sorted(set(services))
+    return sorted(name for name in service_names if not any(ch.isupper() for ch in name))
 
 
-def _discover_methods(service_obj: Any) -> list[str]:
-    methods: list[str] = []
-    for name in dir(service_obj):
-        if name.startswith("_"):
+def _service_client_file(service_name: str) -> Path | None:
+    pkg_root = Path(__file__).resolve().parents[2]
+    candidate = pkg_root / service_name / "client.py"
+    return candidate if candidate.exists() else None
+
+
+def _service_client_ext_file(service_name: str) -> Path | None:
+    pkg_root = Path(__file__).resolve().parents[2]
+    candidate = pkg_root / service_name / "client_ext.py"
+    return candidate if candidate.exists() else None
+
+
+@lru_cache(maxsize=1)
+def _services_with_label_studio_overrides() -> set[str]:
+    pkg_root = Path(__file__).resolve().parents[2]
+    client_file = pkg_root / "client.py"
+    if not client_file.exists():
+        return set()
+    module = ast_parse(client_file.read_text(encoding="utf-8"))
+    for node in module.body:
+        if not isinstance(node, ClassDef) or node.name != "LabelStudio":
             continue
-        attr = getattr(service_obj, name)
-        if callable(attr):
-            methods.append(name)
-    return sorted(set(methods))
+        services: set[str] = set()
+        for item in node.body:
+            if not isinstance(item, FunctionDef):
+                continue
+            if any(getattr(dec, "id", None) == "property" for dec in item.decorator_list):
+                services.add(item.name)
+        return services
+    return set()
+
+
+def _client_class_name(service_name: str, *, ext: bool = False) -> str:
+    parts = "".join([part.capitalize() for part in service_name.split("_")])
+    return f"{parts}ClientExt" if ext else f"{parts}Client"
+
+
+def _find_client_class_node(module: Any, service_name: str, *, ext: bool = False) -> ClassDef | None:
+    preferred_name = _client_class_name(service_name, ext=ext)
+    fallback_suffix = "ClientExt" if ext else "Client"
+    class_node = None
+    for node in module.body:
+        if not isinstance(node, ClassDef):
+            continue
+        if node.name == preferred_name:
+            return node
+        if (
+            class_node is None
+            and node.name.endswith(fallback_suffix)
+            and not node.name.startswith(("Async", "Raw"))
+        ):
+            class_node = node
+    return class_node
+
+
+def _normalize_signature_text(signature: str) -> str:
+    # Drop generated OMIT sentinel from displayed signatures.
+    signature = re.sub(r"\s*=\s*OMIT", "", signature)
+    signature = re.sub(r"\s*=\s*Ellipsis", "", signature)
+    signature = re.sub(r"\s*=\s*", "=", signature)
+    return _format_type_text_for_help(signature, use_fullwidth_brackets=True)
+
+
+def _signature_from_class_method(method: Any) -> str:
+    signature = str(inspect.signature(method))
+    signature = re.sub(r"^\(self,\s*", "(", signature)
+    if signature == "(self)":
+        signature = "()"
+    signature = signature.replace("'typing.", "typing.")
+    signature = signature.replace("'", "")
+    return _normalize_signature_text(signature)
+
+
+def _extract_class_method_meta(class_node: ClassDef) -> dict[str, dict[str, str]]:
+    methods: dict[str, dict[str, str]] = {}
+    for node in class_node.body:
+        if not isinstance(node, (FunctionDef, AsyncFunctionDef)):
+            continue
+        method_name = node.name
+        if method_name.startswith("_") or method_name == "with_raw_response":
+            continue
+        if any(getattr(dec, "id", None) == "property" for dec in node.decorator_list):
+            continue
+
+        args_text = ast_unparse(node.args)
+        if args_text.startswith("self, "):
+            args_text = args_text[len("self, ") :]
+        elif args_text == "self":
+            args_text = ""
+        return_text = ast_unparse(node.returns) if node.returns is not None else ""
+        signature = f"({args_text})"
+        if return_text:
+            signature = f"{signature} -> {return_text}"
+
+        methods[method_name] = {
+            "signature": _normalize_signature_text(signature),
+            "doc": get_docstring(node) or "",
+        }
+    return methods
+
+
+def _resolve_runtime_base_service_class(service_name: str, class_node: ClassDef) -> Any:
+    runtime_base_class = None
+    try:
+        module_name = f"label_studio_sdk.{service_name}.client"
+        runtime_module = importlib.import_module(module_name)
+        runtime_base_class = getattr(runtime_module, class_node.name, None)
+    except Exception:
+        runtime_base_class = None
+    return runtime_base_class
+
+
+def _discover_methods(service_name: str) -> dict[str, dict[str, str]]:
+    client_file = _service_client_file(service_name)
+    if client_file is None:
+        return {}
+
+    base_module = ast_parse(client_file.read_text(encoding="utf-8"))
+    class_node = _find_client_class_node(base_module, service_name, ext=False)
+    if class_node is None:
+        return {}
+
+    methods = _extract_class_method_meta(class_node)
+    ext_method_names: set[str] = set()
+
+    client_ext_file = _service_client_ext_file(service_name)
+    if client_ext_file is not None and service_name in _services_with_label_studio_overrides():
+        ext_module = ast_parse(client_ext_file.read_text(encoding="utf-8"))
+        ext_class_node = _find_client_class_node(ext_module, service_name, ext=True)
+        if ext_class_node is not None:
+            # Extension definitions override generated method docs/signatures.
+            ext_methods = _extract_class_method_meta(ext_class_node)
+            methods.update(ext_methods)
+            ext_method_names = set(ext_methods.keys())
+
+    runtime_base_class = _resolve_runtime_base_service_class(service_name, class_node)
+    for method_name in list(methods.keys()):
+        runtime_method = None
+        # Extension signatures come from AST without importing heavy extension modules.
+        if method_name not in ext_method_names and runtime_base_class is not None:
+            runtime_method = getattr(runtime_base_class, method_name, None)
+        if runtime_method is not None and callable(runtime_method):
+            methods[method_name]["signature"] = _signature_from_class_method(runtime_method)
+    return methods
 
 
 def _parse_value(raw: str) -> Any:
@@ -155,61 +279,60 @@ def _to_jsonable(value: Any) -> Any:
     return str(value)
 
 
-def _raw_callable(method: Any) -> Any:
-    return method.__func__ if hasattr(method, "__func__") else method
+def _format_type_text_for_help(type_text: str, *, use_fullwidth_brackets: bool = True) -> str:
+    formatted = type_text.replace("typing.", "")
+    formatted = formatted.replace("NoneType", "None")
+    formatted = formatted.replace("~", "")
+    formatted = re.sub(
+        r"\blabel_studio_sdk(?:\.[A-Za-z_][A-Za-z0-9_]*)+\.(?P<name>[A-Za-z_][A-Za-z0-9_]*)\b",
+        r"\g<name>",
+        formatted,
+    )
+    if use_fullwidth_brackets:
+        formatted = formatted.replace("[", "［").replace("]", "］")
+    return formatted
 
 
-def _resolve_return_annotation(method: Any) -> Any:
-    func = _raw_callable(method)
-    mod = inspect.getmodule(func)
-    globalns = vars(mod) if mod is not None else {}
-    try:
-        hints = typing.get_type_hints(func, globalns=globalns, include_extras=True)
-    except Exception:
-        return None
-    return hints.get("return")
+def _format_request_types_for_help(doc: str) -> str:
+    lines = doc.splitlines()
+    in_parameters = False
+    out_lines: list[str] = []
+
+    for idx, line in enumerate(lines):
+        stripped = line.strip()
+
+        if stripped == "Parameters":
+            in_parameters = True
+            out_lines.append(line)
+            continue
+
+        if in_parameters and stripped in {"Returns", "Examples", "Raises", "Notes"}:
+            in_parameters = False
+
+        if in_parameters and stripped and set(stripped) == {"-"}:
+            out_lines.append(line)
+            continue
+
+        if in_parameters:
+            m = re.match(r"^(\s*[A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.+)$", line)
+            if m:
+                name = m.group(1).strip()
+                type_text = _format_type_text_for_help(m.group(2), use_fullwidth_brackets=True)
+                out_lines.append(f"{name} : {type_text}")
+                continue
+
+        out_lines.append(line)
+
+    return "\n".join(out_lines)
 
 
-def _strip_optional(tp: Any) -> Any:
-    """Unpack Optional / Union[..., None]."""
-    origin = get_origin(tp)
-    args = get_args(tp)
-    if origin is typing.Union and args:
-        non_none = [a for a in args if a is not type(None)]
-        if len(non_none) == 1:
-            return non_none[0]
-    return tp
-
-
-def _annotation_label(tp: Any) -> str:
-    if tp is None:
-        return "Any"
-    if inspect.isclass(tp):
-        return tp.__name__
-    s = str(tp).replace("typing.", "")
-    if len(s) > 120:
-        s = s[:117] + "..."
-    # Typer/Rich help parses "[" as Markdown links; use fullwidth brackets for display.
-    return s.replace("[", "［").replace("]", "］")
-
-
-def _format_model_fields(model_cls: type[pydantic.BaseModel]) -> str:
-    fields = getattr(model_cls, "model_fields", None)
-    if not fields:
-        return ""
-
-    lines: list[str] = []
-    for name in fields:
-        finfo = fields[name]
-        ann = getattr(finfo, "annotation", None)
-        desc = getattr(finfo, "description", None) or ""
-        ann_s = _annotation_label(ann) if ann is not None else ""
-        type_part = f"`{ann_s}`" if ann_s else "`Any`"
-        if desc:
-            lines.append(f"  {name}: {type_part}\n    {desc}")
-        else:
-            lines.append(f"  {name}: {type_part}")
-    return "\n".join(lines)
+def _format_signature_for_help(method: Any) -> str:
+    # Fast-path formatter: avoid expensive get_type_hints() during CLI bootstrap.
+    # SDK methods use string annotations and Ellipsis defaults for OMIT sentinels.
+    signature = str(inspect.signature(method))
+    signature = signature.replace("'typing.", "typing.")
+    signature = signature.replace("'", "")
+    return _normalize_signature_text(signature)
 
 
 def _extract_summary(doc: str | None) -> str:
@@ -228,29 +351,6 @@ def _extract_summary(doc: str | None) -> str:
     return "\n".join(parts).strip()
 
 
-def _expand_return_type_for_help(ret: Any) -> str | None:
-    if ret is None:
-        return None
-
-    origin = get_origin(ret)
-    args = get_args(ret)
-
-    if origin is list and args:
-        inner = _strip_optional(args[0])
-        if inspect.isclass(inner) and issubclass(inner, pydantic.BaseModel):
-            body = _format_model_fields(inner)
-            if body:
-                return f"Return value: list of {inner.__name__}\nEach element fields:\n{body}"
-
-    inner = _strip_optional(ret)
-    if inspect.isclass(inner) and issubclass(inner, pydantic.BaseModel):
-        body = _format_model_fields(inner)
-        if body:
-            return f"Return value fields ({inner.__name__}):\n{body}"
-
-    return None
-
-
 def _get_client(ctx: typer.Context) -> LabelStudio:
     cached = ctx.obj.get("client")
     if cached is not None:
@@ -264,6 +364,9 @@ def _get_client(ctx: typer.Context) -> LabelStudio:
     kwargs: dict[str, Any] = {"api_key": api_key}
     if base_url:
         kwargs["base_url"] = base_url
+
+    # Import lazily so help/listing commands don't pay full SDK import cost.
+    from label_studio_sdk import LabelStudio
 
     client = LabelStudio(**kwargs)
     ctx.obj["client"] = client
@@ -295,20 +398,12 @@ def callback(
     ctx.obj = {"api_key": api_key, "base_url": base_url, "pretty": pretty, "client": None}
 
 
-# Introspection-only client: use a closed port so we never hit a real LS instance (e.g. dev on :8080).
-_discovery_client = LabelStudio(api_key="POC_KEY", base_url="http://127.0.0.1:9")
-
-
-def _make_method_command(service_name: str, method_name: str):
-    service_obj = getattr(_discovery_client, service_name)
-    method = getattr(service_obj, method_name)
-    signature = str(inspect.signature(method))
-    raw_api_doc = _sanitize_sdk_docstring_for_cli(inspect.getdoc(method) or "")
+def _make_method_command(service_name: str, method_name: str, method_meta: dict[str, str]):
+    signature = method_meta.get("signature", "()")
+    raw_api_doc = _sanitize_sdk_docstring_for_cli(method_meta.get("doc", ""))
+    raw_api_doc = _format_request_types_for_help(raw_api_doc)
     summary = _extract_summary(raw_api_doc)
     api_doc = raw_api_doc
-    return_expansion = _expand_return_type_for_help(_resolve_return_annotation(method))
-    if return_expansion:
-        api_doc = api_doc.rstrip() + ("\n\n" if api_doc else "") + return_expansion
 
     help_suffix = f"\n\n---\nSDK signature: `{service_name}.{method_name}{signature}`"
     method_help = (api_doc + help_suffix).strip() if api_doc else f"SDK signature: `{service_name}.{method_name}{signature}`"
@@ -399,14 +494,16 @@ def _make_method_command(service_name: str, method_name: str):
     return _command
 
 
-for _service in _discover_services(_discovery_client):
+for _service in _discover_services():
+    _methods_meta = _discover_methods(_service)
+    if not _methods_meta:
+        continue
     service_app = typer.Typer(
         help=_service,
         context_settings={"help_option_names": ["--help"]},
     )
-    service_obj = getattr(_discovery_client, _service)
-    for _method in _discover_methods(service_obj):
-        service_app.command(name=_method.replace("_", "-"))(_make_method_command(_service, _method))
+    for _method, _meta in _methods_meta.items():
+        service_app.command(name=_method.replace("_", "-"))(_make_method_command(_service, _method, _meta))
     app.add_typer(service_app, name=_service.replace("_", "-"))
 
 

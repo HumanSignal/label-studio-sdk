@@ -32,6 +32,7 @@ tests/custom/converter
 tests/custom/label_studio_tools
 tests/custom/legacy
 tests/custom/test_interface
+tests/custom/cli
 
 # manual workflows
 .github/workflows/build_pypi.yml
