@@ -6,7 +6,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
@@ -19,6 +20,7 @@ from .types.bulk_assign_assignments_request_type import BulkAssignAssignmentsReq
 from .types.bulk_assign_assignments_response import BulkAssignAssignmentsResponse
 from .types.delete_assignments_request_type import DeleteAssignmentsRequestType
 from .types.update_assignments_request_type import UpdateAssignmentsRequestType
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -72,7 +74,7 @@ class RawAssignmentsClient:
             Success
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/assignees",
+            f"api/projects/{encode_path_param(id)}/tasks/assignees",
             method="POST",
             json={
                 "filters": convert_and_respect_annotation_metadata(
@@ -114,6 +116,10 @@ class RawAssignmentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -145,7 +151,7 @@ class RawAssignmentsClient:
             List of assignments for the task
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
+            f"api/projects/{encode_path_param(id)}/tasks/{encode_path_param(task_pk)}/assignees",
             method="GET",
             request_options=request_options,
         )
@@ -162,6 +168,10 @@ class RawAssignmentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def assign(
@@ -205,7 +215,7 @@ class RawAssignmentsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
+            f"api/projects/{encode_path_param(id)}/tasks/{encode_path_param(task_pk)}/assignees",
             method="POST",
             json={
                 "type": type,
@@ -230,6 +240,10 @@ class RawAssignmentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -272,7 +286,7 @@ class RawAssignmentsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
+            f"api/projects/{encode_path_param(id)}/tasks/{encode_path_param(task_pk)}/assignees",
             method="DELETE",
             params={
                 "type": type,
@@ -286,6 +300,10 @@ class RawAssignmentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -329,7 +347,7 @@ class RawAssignmentsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
+            f"api/projects/{encode_path_param(id)}/tasks/{encode_path_param(task_pk)}/assignees",
             method="PATCH",
             json={
                 "type": type,
@@ -354,6 +372,10 @@ class RawAssignmentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -405,7 +427,7 @@ class AsyncRawAssignmentsClient:
             Success
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/assignees",
+            f"api/projects/{encode_path_param(id)}/tasks/assignees",
             method="POST",
             json={
                 "filters": convert_and_respect_annotation_metadata(
@@ -447,6 +469,10 @@ class AsyncRawAssignmentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -478,7 +504,7 @@ class AsyncRawAssignmentsClient:
             List of assignments for the task
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
+            f"api/projects/{encode_path_param(id)}/tasks/{encode_path_param(task_pk)}/assignees",
             method="GET",
             request_options=request_options,
         )
@@ -495,6 +521,10 @@ class AsyncRawAssignmentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def assign(
@@ -538,7 +568,7 @@ class AsyncRawAssignmentsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
+            f"api/projects/{encode_path_param(id)}/tasks/{encode_path_param(task_pk)}/assignees",
             method="POST",
             json={
                 "type": type,
@@ -563,6 +593,10 @@ class AsyncRawAssignmentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -605,7 +639,7 @@ class AsyncRawAssignmentsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
+            f"api/projects/{encode_path_param(id)}/tasks/{encode_path_param(task_pk)}/assignees",
             method="DELETE",
             params={
                 "type": type,
@@ -619,6 +653,10 @@ class AsyncRawAssignmentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -662,7 +700,7 @@ class AsyncRawAssignmentsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
+            f"api/projects/{encode_path_param(id)}/tasks/{encode_path_param(task_pk)}/assignees",
             method="PATCH",
             json={
                 "type": type,
@@ -687,4 +725,8 @@ class AsyncRawAssignmentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

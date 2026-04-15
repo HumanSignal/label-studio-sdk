@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.bad_request_error import BadRequestError
@@ -20,6 +21,7 @@ from ..types.state_backfill_job_list_response import StateBackfillJobListRespons
 from ..types.state_backfill_response import StateBackfillResponse
 from ..types.state_backfill_status_response import StateBackfillStatusResponse
 from ..types.state_model import StateModel
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -108,6 +110,10 @@ class RawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def cancel_backfill(
@@ -186,6 +192,10 @@ class RawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list_backfills(
@@ -261,6 +271,10 @@ class RawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_backfill_status(
@@ -339,6 +353,10 @@ class RawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def state_history(
@@ -410,7 +428,7 @@ class RawStatesClient:
         page = page if page is not None else 1
 
         _response = self._client_wrapper.httpx_client.request(
-            f"api/fsm/entities/{jsonable_encoder(entity_name)}/{jsonable_encoder(entity_id)}/history",
+            f"api/fsm/entities/{encode_path_param(entity_name)}/{encode_path_param(entity_id)}/history",
             method="GET",
             params={
                 "created_at_from": created_at_from,
@@ -454,6 +472,10 @@ class RawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def execute_transition(
@@ -493,7 +515,7 @@ class RawStatesClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/fsm/entities/{jsonable_encoder(entity_name)}/{jsonable_encoder(entity_id)}/transition/",
+            f"api/fsm/entities/{encode_path_param(entity_name)}/{encode_path_param(entity_id)}/transition/",
             method="POST",
             json={
                 "transition_data": transition_data,
@@ -518,6 +540,10 @@ class RawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -604,6 +630,10 @@ class AsyncRawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def cancel_backfill(
@@ -682,6 +712,10 @@ class AsyncRawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list_backfills(
@@ -757,6 +791,10 @@ class AsyncRawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_backfill_status(
@@ -835,6 +873,10 @@ class AsyncRawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def state_history(
@@ -906,7 +948,7 @@ class AsyncRawStatesClient:
         page = page if page is not None else 1
 
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/fsm/entities/{jsonable_encoder(entity_name)}/{jsonable_encoder(entity_id)}/history",
+            f"api/fsm/entities/{encode_path_param(entity_name)}/{encode_path_param(entity_id)}/history",
             method="GET",
             params={
                 "created_at_from": created_at_from,
@@ -953,6 +995,10 @@ class AsyncRawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def execute_transition(
@@ -992,7 +1038,7 @@ class AsyncRawStatesClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/fsm/entities/{jsonable_encoder(entity_name)}/{jsonable_encoder(entity_id)}/transition/",
+            f"api/fsm/entities/{encode_path_param(entity_name)}/{encode_path_param(entity_id)}/transition/",
             method="POST",
             json={
                 "transition_data": transition_data,
@@ -1017,4 +1063,8 @@ class AsyncRawStatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

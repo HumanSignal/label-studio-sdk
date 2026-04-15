@@ -7,11 +7,13 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.gcswif_export_storage import GcswifExportStorage
 from ...types.status_c5a_enum import StatusC5AEnum
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -75,6 +77,10 @@ class RawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -228,6 +234,10 @@ class RawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def validate(
@@ -373,6 +383,10 @@ class RawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -400,7 +414,7 @@ class RawGcswifClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/export/gcswif/{jsonable_encoder(id)}",
+            f"api/storages/export/gcswif/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -417,6 +431,10 @@ class RawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
@@ -441,7 +459,7 @@ class RawGcswifClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/export/gcswif/{jsonable_encoder(id)}",
+            f"api/storages/export/gcswif/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -451,6 +469,10 @@ class RawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -563,7 +585,7 @@ class RawGcswifClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/export/gcswif/{jsonable_encoder(id)}",
+            f"api/storages/export/gcswif/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "bucket": bucket,
@@ -607,6 +629,10 @@ class RawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def sync(
@@ -634,7 +660,7 @@ class RawGcswifClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/export/gcswif/{jsonable_encoder(id)}/sync",
+            f"api/storages/export/gcswif/{encode_path_param(id)}/sync",
             method="POST",
             request_options=request_options,
         )
@@ -651,6 +677,10 @@ class RawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -712,6 +742,10 @@ class AsyncRawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -865,6 +899,10 @@ class AsyncRawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def validate(
@@ -1010,6 +1048,10 @@ class AsyncRawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -1037,7 +1079,7 @@ class AsyncRawGcswifClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/export/gcswif/{jsonable_encoder(id)}",
+            f"api/storages/export/gcswif/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -1054,6 +1096,10 @@ class AsyncRawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -1080,7 +1126,7 @@ class AsyncRawGcswifClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/export/gcswif/{jsonable_encoder(id)}",
+            f"api/storages/export/gcswif/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -1090,6 +1136,10 @@ class AsyncRawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -1202,7 +1252,7 @@ class AsyncRawGcswifClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/export/gcswif/{jsonable_encoder(id)}",
+            f"api/storages/export/gcswif/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "bucket": bucket,
@@ -1246,6 +1296,10 @@ class AsyncRawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def sync(
@@ -1273,7 +1327,7 @@ class AsyncRawGcswifClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/export/gcswif/{jsonable_encoder(id)}/sync",
+            f"api/storages/export/gcswif/{encode_path_param(id)}/sync",
             method="POST",
             request_options=request_options,
         )
@@ -1290,4 +1344,8 @@ class AsyncRawGcswifClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

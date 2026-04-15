@@ -7,8 +7,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.bad_request_error import BadRequestError
@@ -21,6 +22,7 @@ from ..types.project_import import ProjectImport
 from ..types.role_based_task import RoleBasedTask
 from ..types.task_event import TaskEvent
 from .types.list_tasks_request_fields import ListTasksRequestFields
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -62,7 +64,7 @@ class RawTasksClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/imports/{jsonable_encoder(import_pk)}/",
+            f"api/projects/{encode_path_param(id)}/imports/{encode_path_param(import_pk)}/",
             method="GET",
             request_options=request_options,
         )
@@ -79,6 +81,10 @@ class RawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete_all_tasks(
@@ -100,7 +106,7 @@ class RawTasksClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/",
+            f"api/projects/{encode_path_param(id)}/tasks/",
             method="DELETE",
             request_options=request_options,
         )
@@ -110,6 +116,10 @@ class RawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -266,6 +276,10 @@ class RawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -390,6 +404,10 @@ class RawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[RoleBasedTask]:
@@ -410,7 +428,7 @@ class RawTasksClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/tasks/{jsonable_encoder(id)}/",
+            f"api/tasks/{encode_path_param(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -427,6 +445,10 @@ class RawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
@@ -446,7 +468,7 @@ class RawTasksClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/tasks/{jsonable_encoder(id)}/",
+            f"api/tasks/{encode_path_param(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -456,6 +478,10 @@ class RawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -557,7 +583,7 @@ class RawTasksClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/tasks/{jsonable_encoder(id)}/",
+            f"api/tasks/{encode_path_param(id)}/",
             method="PATCH",
             json={
                 "allow_skip": allow_skip,
@@ -602,6 +628,10 @@ class RawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_event(
@@ -699,7 +729,7 @@ class RawTasksClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/tasks/{jsonable_encoder(id)}/events/",
+            f"api/tasks/{encode_path_param(id)}/events/",
             method="POST",
             json={
                 "annotation": annotation,
@@ -772,6 +802,10 @@ class RawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -811,7 +845,7 @@ class AsyncRawTasksClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/imports/{jsonable_encoder(import_pk)}/",
+            f"api/projects/{encode_path_param(id)}/imports/{encode_path_param(import_pk)}/",
             method="GET",
             request_options=request_options,
         )
@@ -828,6 +862,10 @@ class AsyncRawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete_all_tasks(
@@ -849,7 +887,7 @@ class AsyncRawTasksClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/",
+            f"api/projects/{encode_path_param(id)}/tasks/",
             method="DELETE",
             request_options=request_options,
         )
@@ -859,6 +897,10 @@ class AsyncRawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -1018,6 +1060,10 @@ class AsyncRawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -1142,6 +1188,10 @@ class AsyncRawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -1164,7 +1214,7 @@ class AsyncRawTasksClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/tasks/{jsonable_encoder(id)}/",
+            f"api/tasks/{encode_path_param(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -1181,6 +1231,10 @@ class AsyncRawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -1202,7 +1256,7 @@ class AsyncRawTasksClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/tasks/{jsonable_encoder(id)}/",
+            f"api/tasks/{encode_path_param(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -1212,6 +1266,10 @@ class AsyncRawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -1313,7 +1371,7 @@ class AsyncRawTasksClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/tasks/{jsonable_encoder(id)}/",
+            f"api/tasks/{encode_path_param(id)}/",
             method="PATCH",
             json={
                 "allow_skip": allow_skip,
@@ -1358,6 +1416,10 @@ class AsyncRawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_event(
@@ -1455,7 +1517,7 @@ class AsyncRawTasksClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/tasks/{jsonable_encoder(id)}/events/",
+            f"api/tasks/{encode_path_param(id)}/events/",
             method="POST",
             json={
                 "annotation": annotation,
@@ -1528,4 +1590,8 @@ class AsyncRawTasksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

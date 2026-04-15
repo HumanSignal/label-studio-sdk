@@ -12,12 +12,10 @@ from .serialization_option_request import SerializationOptionRequest
 
 class SerializationOptionsRequest(UncheckedBaseModel):
     annotations_completed_by: typing_extensions.Annotated[
-        typing.Optional[SerializationOptionRequest], FieldMetadata(alias="annotations__completed_by")
-    ] = pydantic.Field(alias="annotations__completed_by", default=None)
-    """
-    JSON dict with parameters
-    """
-
+        typing.Optional[SerializationOptionRequest],
+        FieldMetadata(alias="annotations__completed_by"),
+        pydantic.Field(alias="annotations__completed_by", description="JSON dict with parameters"),
+    ] = None
     drafts: typing.Optional[SerializationOptionRequest] = pydantic.Field(default=None)
     """
     JSON dict with parameters

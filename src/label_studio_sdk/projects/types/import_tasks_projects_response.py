@@ -44,13 +44,14 @@ class ImportTasksProjectsResponse(UncheckedBaseModel):
     The list of found file formats (Community edition sync import only)
     """
 
-    import_: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="import")] = pydantic.Field(
-        alias="import", default=None
-    )
-    """
-    Import ID for async operations (non-Community editions only). Use this ID to poll `/api/projects/{project_id}/imports/{import_id}` for status.
-    """
-
+    import_: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="import"),
+        pydantic.Field(
+            alias="import",
+            description="Import ID for async operations (non-Community editions only). Use this ID to poll `/api/projects/{project_id}/imports/{import_id}` for status.",
+        ),
+    ] = None
     predictions_count: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of predictions added (Community edition sync import only)

@@ -7,7 +7,8 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.bad_request_error import BadRequestError
@@ -18,6 +19,7 @@ from ..types.lse_organization import LseOrganization
 from ..types.organization_id import OrganizationId
 from ..types.organization_invite import OrganizationInvite
 from ..types.role9e7enum import Role9E7Enum
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -61,6 +63,10 @@ class RawOrganizationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -105,6 +111,10 @@ class RawOrganizationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[LseOrganization]:
@@ -124,7 +134,7 @@ class RawOrganizationsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}",
+            f"api/organizations/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -141,6 +151,10 @@ class RawOrganizationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -204,7 +218,7 @@ class RawOrganizationsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}",
+            f"api/organizations/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "contact_info": contact_info,
@@ -269,6 +283,10 @@ class RawOrganizationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update_default_role(
@@ -354,7 +372,7 @@ class RawOrganizationsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/set-default-role",
+            f"api/organizations/{encode_path_param(id)}/set-default-role",
             method="PATCH",
             json={
                 "annotator_reviewer_firewall_enabled_at": annotator_reviewer_firewall_enabled_at,
@@ -389,6 +407,10 @@ class RawOrganizationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -430,6 +452,10 @@ class AsyncRawOrganizationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -474,6 +500,10 @@ class AsyncRawOrganizationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -495,7 +525,7 @@ class AsyncRawOrganizationsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}",
+            f"api/organizations/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -512,6 +542,10 @@ class AsyncRawOrganizationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -575,7 +609,7 @@ class AsyncRawOrganizationsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}",
+            f"api/organizations/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "contact_info": contact_info,
@@ -640,6 +674,10 @@ class AsyncRawOrganizationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update_default_role(
@@ -725,7 +763,7 @@ class AsyncRawOrganizationsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/set-default-role",
+            f"api/organizations/{encode_path_param(id)}/set-default-role",
             method="PATCH",
             json={
                 "annotator_reviewer_firewall_enabled_at": annotator_reviewer_firewall_enabled_at,
@@ -760,4 +798,8 @@ class AsyncRawOrganizationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

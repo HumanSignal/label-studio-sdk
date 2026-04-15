@@ -26,50 +26,80 @@ from .info_webhooks_response_tasks_deleted import InfoWebhooksResponseTasksDelet
 
 class InfoWebhooksResponse(UncheckedBaseModel):
     annotations_created: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseAnnotationsCreated], FieldMetadata(alias="ANNOTATIONS_CREATED")
-    ] = pydantic.Field(alias="ANNOTATIONS_CREATED", default=None)
+        typing.Optional[InfoWebhooksResponseAnnotationsCreated],
+        FieldMetadata(alias="ANNOTATIONS_CREATED"),
+        pydantic.Field(alias="ANNOTATIONS_CREATED"),
+    ] = None
     annotations_deleted: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseAnnotationsDeleted], FieldMetadata(alias="ANNOTATIONS_DELETED")
-    ] = pydantic.Field(alias="ANNOTATIONS_DELETED", default=None)
+        typing.Optional[InfoWebhooksResponseAnnotationsDeleted],
+        FieldMetadata(alias="ANNOTATIONS_DELETED"),
+        pydantic.Field(alias="ANNOTATIONS_DELETED"),
+    ] = None
     annotation_created: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseAnnotationCreated], FieldMetadata(alias="ANNOTATION_CREATED")
-    ] = pydantic.Field(alias="ANNOTATION_CREATED", default=None)
+        typing.Optional[InfoWebhooksResponseAnnotationCreated],
+        FieldMetadata(alias="ANNOTATION_CREATED"),
+        pydantic.Field(alias="ANNOTATION_CREATED"),
+    ] = None
     annotation_updated: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseAnnotationUpdated], FieldMetadata(alias="ANNOTATION_UPDATED")
-    ] = pydantic.Field(alias="ANNOTATION_UPDATED", default=None)
+        typing.Optional[InfoWebhooksResponseAnnotationUpdated],
+        FieldMetadata(alias="ANNOTATION_UPDATED"),
+        pydantic.Field(alias="ANNOTATION_UPDATED"),
+    ] = None
     label_link_created: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseLabelLinkCreated], FieldMetadata(alias="LABEL_LINK_CREATED")
-    ] = pydantic.Field(alias="LABEL_LINK_CREATED", default=None)
+        typing.Optional[InfoWebhooksResponseLabelLinkCreated],
+        FieldMetadata(alias="LABEL_LINK_CREATED"),
+        pydantic.Field(alias="LABEL_LINK_CREATED"),
+    ] = None
     label_link_deleted: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseLabelLinkDeleted], FieldMetadata(alias="LABEL_LINK_DELETED")
-    ] = pydantic.Field(alias="LABEL_LINK_DELETED", default=None)
+        typing.Optional[InfoWebhooksResponseLabelLinkDeleted],
+        FieldMetadata(alias="LABEL_LINK_DELETED"),
+        pydantic.Field(alias="LABEL_LINK_DELETED"),
+    ] = None
     label_link_updated: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseLabelLinkUpdated], FieldMetadata(alias="LABEL_LINK_UPDATED")
-    ] = pydantic.Field(alias="LABEL_LINK_UPDATED", default=None)
+        typing.Optional[InfoWebhooksResponseLabelLinkUpdated],
+        FieldMetadata(alias="LABEL_LINK_UPDATED"),
+        pydantic.Field(alias="LABEL_LINK_UPDATED"),
+    ] = None
     project_created: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseProjectCreated], FieldMetadata(alias="PROJECT_CREATED")
-    ] = pydantic.Field(alias="PROJECT_CREATED", default=None)
+        typing.Optional[InfoWebhooksResponseProjectCreated],
+        FieldMetadata(alias="PROJECT_CREATED"),
+        pydantic.Field(alias="PROJECT_CREATED"),
+    ] = None
     project_deleted: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseProjectDeleted], FieldMetadata(alias="PROJECT_DELETED")
-    ] = pydantic.Field(alias="PROJECT_DELETED", default=None)
+        typing.Optional[InfoWebhooksResponseProjectDeleted],
+        FieldMetadata(alias="PROJECT_DELETED"),
+        pydantic.Field(alias="PROJECT_DELETED"),
+    ] = None
     project_updated: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseProjectUpdated], FieldMetadata(alias="PROJECT_UPDATED")
-    ] = pydantic.Field(alias="PROJECT_UPDATED", default=None)
+        typing.Optional[InfoWebhooksResponseProjectUpdated],
+        FieldMetadata(alias="PROJECT_UPDATED"),
+        pydantic.Field(alias="PROJECT_UPDATED"),
+    ] = None
     reviews_deleted: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseReviewsDeleted], FieldMetadata(alias="REVIEWS_DELETED")
-    ] = pydantic.Field(alias="REVIEWS_DELETED", default=None)
+        typing.Optional[InfoWebhooksResponseReviewsDeleted],
+        FieldMetadata(alias="REVIEWS_DELETED"),
+        pydantic.Field(alias="REVIEWS_DELETED"),
+    ] = None
     review_created: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseReviewCreated], FieldMetadata(alias="REVIEW_CREATED")
-    ] = pydantic.Field(alias="REVIEW_CREATED", default=None)
+        typing.Optional[InfoWebhooksResponseReviewCreated],
+        FieldMetadata(alias="REVIEW_CREATED"),
+        pydantic.Field(alias="REVIEW_CREATED"),
+    ] = None
     review_updated: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseReviewUpdated], FieldMetadata(alias="REVIEW_UPDATED")
-    ] = pydantic.Field(alias="REVIEW_UPDATED", default=None)
+        typing.Optional[InfoWebhooksResponseReviewUpdated],
+        FieldMetadata(alias="REVIEW_UPDATED"),
+        pydantic.Field(alias="REVIEW_UPDATED"),
+    ] = None
     tasks_created: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseTasksCreated], FieldMetadata(alias="TASKS_CREATED")
-    ] = pydantic.Field(alias="TASKS_CREATED", default=None)
+        typing.Optional[InfoWebhooksResponseTasksCreated],
+        FieldMetadata(alias="TASKS_CREATED"),
+        pydantic.Field(alias="TASKS_CREATED"),
+    ] = None
     tasks_deleted: typing_extensions.Annotated[
-        typing.Optional[InfoWebhooksResponseTasksDeleted], FieldMetadata(alias="TASKS_DELETED")
-    ] = pydantic.Field(alias="TASKS_DELETED", default=None)
+        typing.Optional[InfoWebhooksResponseTasksDeleted],
+        FieldMetadata(alias="TASKS_DELETED"),
+        pydantic.Field(alias="TASKS_DELETED"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

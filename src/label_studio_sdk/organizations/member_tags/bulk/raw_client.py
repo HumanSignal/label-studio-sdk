@@ -6,13 +6,15 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
-from ....core.jsonable_encoder import jsonable_encoder
+from ....core.jsonable_encoder import encode_path_param
+from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
 from ....errors.bad_request_error import BadRequestError
 from ....errors.forbidden_error import ForbiddenError
 from .types.delete_bulk_response import DeleteBulkResponse
 from .types.post_bulk_response import PostBulkResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -51,7 +53,7 @@ class RawBulkClient:
             Number of tags created
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/bulk",
+            f"api/organizations/{encode_path_param(id)}/member-tags/bulk",
             method="POST",
             json={
                 "labels": labels,
@@ -97,6 +99,10 @@ class RawBulkClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -128,7 +134,7 @@ class RawBulkClient:
             Number of tags deleted
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/bulk",
+            f"api/organizations/{encode_path_param(id)}/member-tags/bulk",
             method="DELETE",
             params={
                 "ids": ids,
@@ -170,6 +176,10 @@ class RawBulkClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -206,7 +216,7 @@ class AsyncRawBulkClient:
             Number of tags created
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/bulk",
+            f"api/organizations/{encode_path_param(id)}/member-tags/bulk",
             method="POST",
             json={
                 "labels": labels,
@@ -252,6 +262,10 @@ class AsyncRawBulkClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -283,7 +297,7 @@ class AsyncRawBulkClient:
             Number of tags deleted
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/bulk",
+            f"api/organizations/{encode_path_param(id)}/member-tags/bulk",
             method="DELETE",
             params={
                 "ids": ids,
@@ -325,4 +339,8 @@ class AsyncRawBulkClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

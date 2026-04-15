@@ -8,7 +8,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
@@ -21,6 +22,7 @@ from ...types.serialization_options_request import SerializationOptionsRequest
 from ...types.status7bf_enum import Status7BfEnum
 from ...types.user_simple_request import UserSimpleRequest
 from .types.convert_exports_response import ConvertExportsResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -92,7 +94,7 @@ class RawExportsClient:
             Exported data
         """
         with self._client_wrapper.httpx_client.stream(
-            f"api/projects/{jsonable_encoder(id)}/export",
+            f"api/projects/{encode_path_param(id)}/export",
             method="GET",
             params={
                 "download_all_tasks": download_all_tasks,
@@ -115,6 +117,13 @@ class RawExportsClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
@@ -146,7 +155,7 @@ class RawExportsClient:
             Export formats
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/export/formats",
+            f"api/projects/{encode_path_param(id)}/export/formats",
             method="GET",
             request_options=request_options,
         )
@@ -163,6 +172,10 @@ class RawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -188,7 +201,7 @@ class RawExportsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/exports/",
+            f"api/projects/{encode_path_param(id)}/exports/",
             method="GET",
             params={
                 "ordering": ordering,
@@ -208,6 +221,10 @@ class RawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -264,7 +281,7 @@ class RawExportsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/exports/",
+            f"api/projects/{encode_path_param(id)}/exports/",
             method="POST",
             json={
                 "annotation_filter_options": convert_and_respect_annotation_metadata(
@@ -307,6 +324,10 @@ class RawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -332,7 +353,7 @@ class RawExportsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}",
+            f"api/projects/{encode_path_param(id)}/exports/{encode_path_param(export_pk)}",
             method="GET",
             request_options=request_options,
         )
@@ -349,6 +370,10 @@ class RawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -373,7 +398,7 @@ class RawExportsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}",
+            f"api/projects/{encode_path_param(id)}/exports/{encode_path_param(export_pk)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -383,6 +408,10 @@ class RawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def convert(
@@ -420,7 +449,7 @@ class RawExportsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/convert",
+            f"api/projects/{encode_path_param(id)}/exports/{encode_path_param(export_pk)}/convert",
             method="POST",
             json={
                 "download_resources": download_resources,
@@ -445,6 +474,10 @@ class RawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.contextmanager
@@ -486,7 +519,7 @@ class RawExportsClient:
             Export file
         """
         with self._client_wrapper.httpx_client.stream(
-            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/download",
+            f"api/projects/{encode_path_param(id)}/exports/{encode_path_param(export_pk)}/download",
             method="GET",
             params={
                 "exportType": export_type,
@@ -506,6 +539,13 @@ class RawExportsClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
@@ -578,7 +618,7 @@ class AsyncRawExportsClient:
             Exported data
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"api/projects/{jsonable_encoder(id)}/export",
+            f"api/projects/{encode_path_param(id)}/export",
             method="GET",
             params={
                 "download_all_tasks": download_all_tasks,
@@ -602,6 +642,13 @@ class AsyncRawExportsClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
@@ -633,7 +680,7 @@ class AsyncRawExportsClient:
             Export formats
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/export/formats",
+            f"api/projects/{encode_path_param(id)}/export/formats",
             method="GET",
             request_options=request_options,
         )
@@ -650,6 +697,10 @@ class AsyncRawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -675,7 +726,7 @@ class AsyncRawExportsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/exports/",
+            f"api/projects/{encode_path_param(id)}/exports/",
             method="GET",
             params={
                 "ordering": ordering,
@@ -695,6 +746,10 @@ class AsyncRawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -751,7 +806,7 @@ class AsyncRawExportsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/exports/",
+            f"api/projects/{encode_path_param(id)}/exports/",
             method="POST",
             json={
                 "annotation_filter_options": convert_and_respect_annotation_metadata(
@@ -794,6 +849,10 @@ class AsyncRawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -819,7 +878,7 @@ class AsyncRawExportsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}",
+            f"api/projects/{encode_path_param(id)}/exports/{encode_path_param(export_pk)}",
             method="GET",
             request_options=request_options,
         )
@@ -836,6 +895,10 @@ class AsyncRawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -860,7 +923,7 @@ class AsyncRawExportsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}",
+            f"api/projects/{encode_path_param(id)}/exports/{encode_path_param(export_pk)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -870,6 +933,10 @@ class AsyncRawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def convert(
@@ -907,7 +974,7 @@ class AsyncRawExportsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/convert",
+            f"api/projects/{encode_path_param(id)}/exports/{encode_path_param(export_pk)}/convert",
             method="POST",
             json={
                 "download_resources": download_resources,
@@ -932,6 +999,10 @@ class AsyncRawExportsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.asynccontextmanager
@@ -973,7 +1044,7 @@ class AsyncRawExportsClient:
             Export file
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/download",
+            f"api/projects/{encode_path_param(id)}/exports/{encode_path_param(export_pk)}/download",
             method="GET",
             params={
                 "exportType": export_type,
@@ -994,6 +1065,13 @@ class AsyncRawExportsClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 

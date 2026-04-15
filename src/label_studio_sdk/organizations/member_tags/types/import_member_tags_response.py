@@ -10,12 +10,11 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 
 class ImportMemberTagsResponse(UncheckedBaseModel):
-    import_: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="import")] = pydantic.Field(
-        alias="import", default=None
-    )
-    """
-    The ID of the created import job
-    """
+    import_: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="import"),
+        pydantic.Field(alias="import", description="The ID of the created import job"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

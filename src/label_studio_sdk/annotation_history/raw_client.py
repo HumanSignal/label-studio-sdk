@@ -6,12 +6,14 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..types.annotation_history import AnnotationHistory
 from ..types.paginated_annotation_history_list import PaginatedAnnotationHistoryList
 from .types.delete_annotation_history_response import DeleteAnnotationHistoryResponse
+from pydantic import ValidationError
 
 
 class RawAnnotationHistoryClient:
@@ -72,6 +74,10 @@ class RawAnnotationHistoryClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -133,6 +139,10 @@ class RawAnnotationHistoryClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def retrieve(
@@ -160,7 +170,7 @@ class RawAnnotationHistoryClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/annotation-history/{jsonable_encoder(id)}/",
+            f"api/annotation-history/{encode_path_param(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -177,6 +187,10 @@ class RawAnnotationHistoryClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list_for_project(
@@ -215,7 +229,7 @@ class RawAnnotationHistoryClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/annotation-history/",
+            f"api/projects/{encode_path_param(id)}/annotation-history/",
             method="GET",
             params={
                 "page": page,
@@ -236,6 +250,10 @@ class RawAnnotationHistoryClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -297,6 +315,10 @@ class AsyncRawAnnotationHistoryClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -358,6 +380,10 @@ class AsyncRawAnnotationHistoryClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def retrieve(
@@ -385,7 +411,7 @@ class AsyncRawAnnotationHistoryClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/annotation-history/{jsonable_encoder(id)}/",
+            f"api/annotation-history/{encode_path_param(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -402,6 +428,10 @@ class AsyncRawAnnotationHistoryClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list_for_project(
@@ -440,7 +470,7 @@ class AsyncRawAnnotationHistoryClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/annotation-history/",
+            f"api/projects/{encode_path_param(id)}/annotation-history/",
             method="GET",
             params={
                 "page": page,
@@ -461,4 +491,8 @@ class AsyncRawAnnotationHistoryClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

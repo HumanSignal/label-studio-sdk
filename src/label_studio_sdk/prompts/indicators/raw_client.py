@@ -6,11 +6,13 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.lse_key_indicator_value import LseKeyIndicatorValue
 from .types.list_indicators_response_item import ListIndicatorsResponseItem
+from pydantic import ValidationError
 
 
 class RawIndicatorsClient:
@@ -42,7 +44,7 @@ class RawIndicatorsClient:
             Key indicators
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/inference-runs/{jsonable_encoder(id)}/indicators/",
+            f"api/inference-runs/{encode_path_param(id)}/indicators/",
             method="GET",
             request_options=request_options,
         )
@@ -59,6 +61,10 @@ class RawIndicatorsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -88,7 +94,7 @@ class RawIndicatorsClient:
             Key indicator
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/inference-runs/{jsonable_encoder(id)}/indicators/{jsonable_encoder(indicator_key)}",
+            f"api/inference-runs/{encode_path_param(id)}/indicators/{encode_path_param(indicator_key)}",
             method="GET",
             request_options=request_options,
         )
@@ -105,6 +111,10 @@ class RawIndicatorsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -137,7 +147,7 @@ class AsyncRawIndicatorsClient:
             Key indicators
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/inference-runs/{jsonable_encoder(id)}/indicators/",
+            f"api/inference-runs/{encode_path_param(id)}/indicators/",
             method="GET",
             request_options=request_options,
         )
@@ -154,6 +164,10 @@ class AsyncRawIndicatorsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -183,7 +197,7 @@ class AsyncRawIndicatorsClient:
             Key indicator
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/inference-runs/{jsonable_encoder(id)}/indicators/{jsonable_encoder(indicator_key)}",
+            f"api/inference-runs/{encode_path_param(id)}/indicators/{encode_path_param(indicator_key)}",
             method="GET",
             request_options=request_options,
         )
@@ -200,4 +214,8 @@ class AsyncRawIndicatorsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

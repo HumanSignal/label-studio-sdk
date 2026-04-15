@@ -6,7 +6,8 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.internal_server_error import InternalServerError
@@ -14,6 +15,7 @@ from ..types.ml_backend import MlBackend
 from .types.create_ml_request_auth_method import CreateMlRequestAuthMethod
 from .types.list_model_versions_ml_response import ListModelVersionsMlResponse
 from .types.update_ml_request_auth_method import UpdateMlRequestAuthMethod
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -68,6 +70,10 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -168,6 +174,10 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[MlBackend]:
@@ -192,7 +202,7 @@ class RawMlClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}",
+            f"api/ml/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -209,6 +219,10 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
@@ -232,7 +246,7 @@ class RawMlClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}",
+            f"api/ml/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -242,6 +256,10 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -311,7 +329,7 @@ class RawMlClient:
             
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}",
+            f"api/ml/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "auth_method": auth_method,
@@ -344,6 +362,10 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def predict_interactive(
@@ -380,7 +402,7 @@ class RawMlClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}/interactive-annotating",
+            f"api/ml/{encode_path_param(id)}/interactive-annotating",
             method="POST",
             json={
                 "context": context,
@@ -398,6 +420,10 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def predict_all_tasks(
@@ -438,7 +464,7 @@ class RawMlClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}/predict",
+            f"api/ml/{encode_path_param(id)}/predict",
             method="POST",
             params={
                 "batch_size": batch_size,
@@ -451,6 +477,10 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def train(
@@ -484,7 +514,7 @@ class RawMlClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}/train",
+            f"api/ml/{encode_path_param(id)}/train",
             method="POST",
             json={
                 "use_ground_truth": use_ground_truth,
@@ -512,6 +542,10 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list_model_versions(
@@ -533,7 +567,7 @@ class RawMlClient:
             List of available versions.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}/versions",
+            f"api/ml/{encode_path_param(id)}/versions",
             method="GET",
             request_options=request_options,
         )
@@ -550,6 +584,10 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -602,6 +640,10 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -702,6 +744,10 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -728,7 +774,7 @@ class AsyncRawMlClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}",
+            f"api/ml/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -745,6 +791,10 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -770,7 +820,7 @@ class AsyncRawMlClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}",
+            f"api/ml/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -780,6 +830,10 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -849,7 +903,7 @@ class AsyncRawMlClient:
             
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}",
+            f"api/ml/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "auth_method": auth_method,
@@ -882,6 +936,10 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def predict_interactive(
@@ -918,7 +976,7 @@ class AsyncRawMlClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}/interactive-annotating",
+            f"api/ml/{encode_path_param(id)}/interactive-annotating",
             method="POST",
             json={
                 "context": context,
@@ -936,6 +994,10 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def predict_all_tasks(
@@ -976,7 +1038,7 @@ class AsyncRawMlClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}/predict",
+            f"api/ml/{encode_path_param(id)}/predict",
             method="POST",
             params={
                 "batch_size": batch_size,
@@ -989,6 +1051,10 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def train(
@@ -1022,7 +1088,7 @@ class AsyncRawMlClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}/train",
+            f"api/ml/{encode_path_param(id)}/train",
             method="POST",
             json={
                 "use_ground_truth": use_ground_truth,
@@ -1050,6 +1116,10 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list_model_versions(
@@ -1071,7 +1141,7 @@ class AsyncRawMlClient:
             List of available versions.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/{jsonable_encoder(id)}/versions",
+            f"api/ml/{encode_path_param(id)}/versions",
             method="GET",
             request_options=request_options,
         )
@@ -1088,4 +1158,8 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

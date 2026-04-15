@@ -3,6 +3,7 @@ import typing
 import httpx
 
 from .http_client import AsyncHttpClient, HttpClient
+from .logging import LogConfig, Logger, create_logger
 
 import importlib.metadata
 import platform
@@ -20,10 +21,12 @@ class BaseClientWrapper:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self._base_url = base_url
         self._timeout = timeout
         self._headers = headers
+        self._logger = create_logger(logging)
 
         # even in the async case, refreshing access token (when the existing one is expired) should be sync
         from ..tokens.client_ext import TokensClientExt
@@ -68,8 +71,9 @@ class SyncClientWrapper(BaseClientWrapper):
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        super().__init__(api_key=api_key, headers=headers, base_url=base_url, timeout=timeout)
+        super().__init__(api_key=api_key, headers=headers, base_url=base_url, timeout=timeout, logging=logging)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -87,8 +91,9 @@ class AsyncClientWrapper(BaseClientWrapper):
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        super().__init__(api_key=api_key, headers=headers, base_url=base_url, timeout=timeout)
+        super().__init__(api_key=api_key, headers=headers, base_url=base_url, timeout=timeout, logging=logging)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,

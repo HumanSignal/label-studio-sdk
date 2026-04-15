@@ -7,7 +7,8 @@ from ... import core
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.bad_request_error import BadRequestError
@@ -18,6 +19,7 @@ from ...types.organization_member_tag_import_status import OrganizationMemberTag
 from ...types.paginated_organization_member_tag_list import PaginatedOrganizationMemberTagList
 from .types.assign_member_tags_response import AssignMemberTagsResponse
 from .types.import_member_tags_response import ImportMemberTagsResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -72,7 +74,7 @@ class RawMemberTagsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags",
+            f"api/organizations/{encode_path_param(id)}/member-tags",
             method="GET",
             params={
                 "ordering": ordering,
@@ -95,6 +97,10 @@ class RawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -126,7 +132,7 @@ class RawMemberTagsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags",
+            f"api/organizations/{encode_path_param(id)}/member-tags",
             method="POST",
             json={
                 "label": label,
@@ -172,6 +178,10 @@ class RawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def assign(
@@ -251,7 +261,7 @@ class RawMemberTagsClient:
             Number of tag assignments created
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/assignments",
+            f"api/organizations/{encode_path_param(id)}/member-tags/assignments",
             method="POST",
             params={
                 "exclude_project_id": exclude_project_id,
@@ -310,6 +320,10 @@ class RawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def import_(
@@ -349,7 +363,7 @@ class RawMemberTagsClient:
             Import job created successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/imports",
+            f"api/organizations/{encode_path_param(id)}/member-tags/imports",
             method="POST",
             data={
                 "bulk_tags": bulk_tags,
@@ -396,6 +410,10 @@ class RawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_import(
@@ -429,7 +447,7 @@ class RawMemberTagsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/imports/{jsonable_encoder(import_pk)}",
+            f"api/organizations/{encode_path_param(id)}/member-tags/imports/{encode_path_param(import_pk)}",
             method="GET",
             request_options=request_options,
         )
@@ -468,6 +486,10 @@ class RawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -499,7 +521,7 @@ class RawMemberTagsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/{jsonable_encoder(tag_pk)}",
+            f"api/organizations/{encode_path_param(id)}/member-tags/{encode_path_param(tag_pk)}",
             method="GET",
             request_options=request_options,
         )
@@ -527,6 +549,10 @@ class RawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -557,7 +583,7 @@ class RawMemberTagsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/{jsonable_encoder(tag_pk)}",
+            f"api/organizations/{encode_path_param(id)}/member-tags/{encode_path_param(tag_pk)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -589,6 +615,10 @@ class RawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -628,7 +658,7 @@ class RawMemberTagsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/{jsonable_encoder(tag_pk)}",
+            f"api/organizations/{encode_path_param(id)}/member-tags/{encode_path_param(tag_pk)}",
             method="PATCH",
             json={
                 "label": label,
@@ -685,6 +715,10 @@ class RawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -737,7 +771,7 @@ class AsyncRawMemberTagsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags",
+            f"api/organizations/{encode_path_param(id)}/member-tags",
             method="GET",
             params={
                 "ordering": ordering,
@@ -760,6 +794,10 @@ class AsyncRawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -791,7 +829,7 @@ class AsyncRawMemberTagsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags",
+            f"api/organizations/{encode_path_param(id)}/member-tags",
             method="POST",
             json={
                 "label": label,
@@ -837,6 +875,10 @@ class AsyncRawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def assign(
@@ -916,7 +958,7 @@ class AsyncRawMemberTagsClient:
             Number of tag assignments created
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/assignments",
+            f"api/organizations/{encode_path_param(id)}/member-tags/assignments",
             method="POST",
             params={
                 "exclude_project_id": exclude_project_id,
@@ -975,6 +1017,10 @@ class AsyncRawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def import_(
@@ -1014,7 +1060,7 @@ class AsyncRawMemberTagsClient:
             Import job created successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/imports",
+            f"api/organizations/{encode_path_param(id)}/member-tags/imports",
             method="POST",
             data={
                 "bulk_tags": bulk_tags,
@@ -1061,6 +1107,10 @@ class AsyncRawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_import(
@@ -1094,7 +1144,7 @@ class AsyncRawMemberTagsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/imports/{jsonable_encoder(import_pk)}",
+            f"api/organizations/{encode_path_param(id)}/member-tags/imports/{encode_path_param(import_pk)}",
             method="GET",
             request_options=request_options,
         )
@@ -1133,6 +1183,10 @@ class AsyncRawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -1164,7 +1218,7 @@ class AsyncRawMemberTagsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/{jsonable_encoder(tag_pk)}",
+            f"api/organizations/{encode_path_param(id)}/member-tags/{encode_path_param(tag_pk)}",
             method="GET",
             request_options=request_options,
         )
@@ -1192,6 +1246,10 @@ class AsyncRawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -1222,7 +1280,7 @@ class AsyncRawMemberTagsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/{jsonable_encoder(tag_pk)}",
+            f"api/organizations/{encode_path_param(id)}/member-tags/{encode_path_param(tag_pk)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -1254,6 +1312,10 @@ class AsyncRawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -1293,7 +1355,7 @@ class AsyncRawMemberTagsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/member-tags/{jsonable_encoder(tag_pk)}",
+            f"api/organizations/{encode_path_param(id)}/member-tags/{encode_path_param(tag_pk)}",
             method="PATCH",
             json={
                 "label": label,
@@ -1350,4 +1412,8 @@ class AsyncRawMemberTagsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

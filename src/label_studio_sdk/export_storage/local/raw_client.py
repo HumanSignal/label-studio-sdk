@@ -6,10 +6,12 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.local_files_export_storage import LocalFilesExportStorage
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -67,6 +69,10 @@ class RawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -141,6 +147,10 @@ class RawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def validate(
@@ -212,6 +222,10 @@ class RawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -233,7 +247,7 @@ class RawLocalClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/export/localfiles/{jsonable_encoder(id)}",
+            f"api/storages/export/localfiles/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -250,6 +264,10 @@ class RawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
@@ -268,7 +286,7 @@ class RawLocalClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/export/localfiles/{jsonable_encoder(id)}",
+            f"api/storages/export/localfiles/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -278,6 +296,10 @@ class RawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -326,7 +348,7 @@ class RawLocalClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/export/localfiles/{jsonable_encoder(id)}",
+            f"api/storages/export/localfiles/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "description": description,
@@ -355,6 +377,10 @@ class RawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def sync(
@@ -376,7 +402,7 @@ class RawLocalClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/export/localfiles/{jsonable_encoder(id)}/sync",
+            f"api/storages/export/localfiles/{encode_path_param(id)}/sync",
             method="POST",
             request_options=request_options,
         )
@@ -393,6 +419,10 @@ class RawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -448,6 +478,10 @@ class AsyncRawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -522,6 +556,10 @@ class AsyncRawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def validate(
@@ -593,6 +631,10 @@ class AsyncRawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -614,7 +656,7 @@ class AsyncRawLocalClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/export/localfiles/{jsonable_encoder(id)}",
+            f"api/storages/export/localfiles/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -631,6 +673,10 @@ class AsyncRawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -651,7 +697,7 @@ class AsyncRawLocalClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/export/localfiles/{jsonable_encoder(id)}",
+            f"api/storages/export/localfiles/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -661,6 +707,10 @@ class AsyncRawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -709,7 +759,7 @@ class AsyncRawLocalClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/export/localfiles/{jsonable_encoder(id)}",
+            f"api/storages/export/localfiles/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "description": description,
@@ -738,6 +788,10 @@ class AsyncRawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def sync(
@@ -759,7 +813,7 @@ class AsyncRawLocalClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/export/localfiles/{jsonable_encoder(id)}/sync",
+            f"api/storages/export/localfiles/{encode_path_param(id)}/sync",
             method="POST",
             request_options=request_options,
         )
@@ -776,4 +830,8 @@ class AsyncRawLocalClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

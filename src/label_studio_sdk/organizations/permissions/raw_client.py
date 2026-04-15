@@ -6,7 +6,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.bad_request_error import BadRequestError
@@ -15,6 +16,7 @@ from ...errors.not_found_error import NotFoundError
 from ...types.configurable_permission_option import ConfigurablePermissionOption
 from ...types.organization_permission import OrganizationPermission
 from ...types.role9e7enum import Role9E7Enum
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -52,7 +54,7 @@ class RawPermissionsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions",
+            f"api/organizations/{encode_path_param(id)}/permissions",
             method="GET",
             params={
                 "ordering": ordering,
@@ -72,6 +74,10 @@ class RawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -109,7 +115,7 @@ class RawPermissionsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions",
+            f"api/organizations/{encode_path_param(id)}/permissions",
             method="POST",
             json={
                 "permission": permission,
@@ -156,6 +162,10 @@ class RawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_options(
@@ -186,7 +196,7 @@ class RawPermissionsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/options",
+            f"api/organizations/{encode_path_param(id)}/permissions/options",
             method="GET",
             params={
                 "ordering": ordering,
@@ -206,6 +216,10 @@ class RawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -235,7 +249,7 @@ class RawPermissionsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
             method="GET",
             request_options=request_options,
         )
@@ -274,6 +288,10 @@ class RawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def replace(
@@ -316,7 +334,7 @@ class RawPermissionsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission_)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_)}",
             method="PUT",
             json={
                 "permission": permission,
@@ -374,6 +392,10 @@ class RawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -402,7 +424,7 @@ class RawPermissionsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -434,6 +456,10 @@ class RawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -474,7 +500,7 @@ class RawPermissionsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
             method="PATCH",
             json={
                 "permission": patched_organization_permission_request_permission,
@@ -532,6 +558,10 @@ class RawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -567,7 +597,7 @@ class AsyncRawPermissionsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions",
+            f"api/organizations/{encode_path_param(id)}/permissions",
             method="GET",
             params={
                 "ordering": ordering,
@@ -587,6 +617,10 @@ class AsyncRawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -624,7 +658,7 @@ class AsyncRawPermissionsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions",
+            f"api/organizations/{encode_path_param(id)}/permissions",
             method="POST",
             json={
                 "permission": permission,
@@ -671,6 +705,10 @@ class AsyncRawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_options(
@@ -701,7 +739,7 @@ class AsyncRawPermissionsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/options",
+            f"api/organizations/{encode_path_param(id)}/permissions/options",
             method="GET",
             params={
                 "ordering": ordering,
@@ -721,6 +759,10 @@ class AsyncRawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -750,7 +792,7 @@ class AsyncRawPermissionsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
             method="GET",
             request_options=request_options,
         )
@@ -789,6 +831,10 @@ class AsyncRawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def replace(
@@ -831,7 +877,7 @@ class AsyncRawPermissionsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission_)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_)}",
             method="PUT",
             json={
                 "permission": permission,
@@ -889,6 +935,10 @@ class AsyncRawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -917,7 +967,7 @@ class AsyncRawPermissionsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -949,6 +999,10 @@ class AsyncRawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -989,7 +1043,7 @@ class AsyncRawPermissionsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
             method="PATCH",
             json={
                 "permission": patched_organization_permission_request_permission,
@@ -1047,4 +1101,8 @@ class AsyncRawPermissionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

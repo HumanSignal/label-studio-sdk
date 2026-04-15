@@ -10,13 +10,11 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 
 class BulkAssignAssignmentsRequestSelectedItemsExcluded(UncheckedBaseModel):
-    all_: typing_extensions.Annotated[typing.Literal[True], FieldMetadata(alias="all")] = pydantic.Field(
-        alias="all", default=True
-    )
-    """
-    All tasks are selected
-    """
-
+    all_: typing_extensions.Annotated[
+        typing.Literal[True],
+        FieldMetadata(alias="all"),
+        pydantic.Field(alias="all", description="All tasks are selected"),
+    ] = True
     excluded: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
     """
     List of excluded task IDs

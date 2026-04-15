@@ -6,7 +6,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.label_distribution_counts_response import LabelDistributionCountsResponse
@@ -27,6 +28,7 @@ from .types.user_review_score_stats_response import UserReviewScoreStatsResponse
 from .types.users_ground_truth_agreement_stats_response import UsersGroundTruthAgreementStatsResponse
 from .types.users_prediction_agreement_stats_response import UsersPredictionAgreementStatsResponse
 from .types.users_review_score_stats_response import UsersReviewScoreStatsResponse
+from pydantic import ValidationError
 
 
 class RawStatsClient:
@@ -60,7 +62,7 @@ class RawStatsClient:
             Model-version overall agreement vs annotators
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/agreement",
+            f"api/projects/{encode_path_param(id)}/model-stats/{encode_path_param(model_version)}/agreement",
             method="GET",
             request_options=request_options,
         )
@@ -77,6 +79,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def model_version_ground_truth_agreement(
@@ -114,7 +120,7 @@ class RawStatsClient:
             Model-version ground truth agreement
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/agreement-groundtruth",
+            f"api/projects/{encode_path_param(id)}/model-stats/{encode_path_param(model_version)}/agreement-groundtruth",
             method="GET",
             params={
                 "per_label": per_label,
@@ -134,6 +140,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def model_version_prediction_agreement(
@@ -171,7 +181,7 @@ class RawStatsClient:
             Model-version prediction agreement
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/prediction",
+            f"api/projects/{encode_path_param(id)}/model-stats/{encode_path_param(model_version)}/prediction",
             method="GET",
             params={
                 "per_label": per_label,
@@ -191,6 +201,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def iaa(
@@ -237,7 +251,7 @@ class RawStatsClient:
             Inter-Annotator Agreement matrix
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/IAA",
+            f"api/projects/{encode_path_param(id)}/stats/IAA",
             method="GET",
             params={
                 "expand": expand,
@@ -260,6 +274,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def users_ground_truth_agreement(
@@ -298,7 +316,7 @@ class RawStatsClient:
             Ground truth agreement statistics for multiple users
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/agreement-groundtruth",
+            f"api/projects/{encode_path_param(id)}/stats/agreement-groundtruth",
             method="GET",
             params={
                 "ids": ids,
@@ -319,6 +337,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def agreement_annotator(
@@ -348,7 +370,7 @@ class RawStatsClient:
             Individual annotator agreement statistics
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/agreement_annotator/{jsonable_encoder(user_id)}",
+            f"api/projects/{encode_path_param(id)}/stats/agreement_annotator/{encode_path_param(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -365,6 +387,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def agreement_annotators(
@@ -395,7 +421,7 @@ class RawStatsClient:
             Multiple annotator agreement statistics
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/agreement_annotators",
+            f"api/projects/{encode_path_param(id)}/stats/agreement_annotators",
             method="GET",
             params={
                 "ids": ids,
@@ -415,6 +441,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def data_filters(
@@ -442,7 +472,7 @@ class RawStatsClient:
             User data filter statistics
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/data_filter",
+            f"api/projects/{encode_path_param(id)}/stats/data_filter",
             method="GET",
             request_options=request_options,
         )
@@ -459,6 +489,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def finished_tasks(
@@ -489,7 +523,7 @@ class RawStatsClient:
             Finished tasks statistics
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/finished",
+            f"api/projects/{encode_path_param(id)}/stats/finished",
             method="GET",
             params={
                 "user_pk": user_pk,
@@ -509,6 +543,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def label_distribution_counts(
@@ -551,7 +589,7 @@ class RawStatsClient:
             Label distribution counts
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/label-distribution/counts",
+            f"api/projects/{encode_path_param(id)}/stats/label-distribution/counts",
             method="GET",
             params={
                 "choice_keys": choice_keys,
@@ -573,6 +611,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def label_distribution_structure(
@@ -600,7 +642,7 @@ class RawStatsClient:
             Label distribution structure
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/label-distribution/structure",
+            f"api/projects/{encode_path_param(id)}/stats/label-distribution/structure",
             method="GET",
             request_options=request_options,
         )
@@ -617,6 +659,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def lead_time(
@@ -644,7 +690,7 @@ class RawStatsClient:
             Lead time statistics
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/lead_time",
+            f"api/projects/{encode_path_param(id)}/stats/lead_time",
             method="GET",
             request_options=request_options,
         )
@@ -661,6 +707,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def total_agreement(
@@ -697,7 +747,7 @@ class RawStatsClient:
             Total agreement
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/total_agreement",
+            f"api/projects/{encode_path_param(id)}/stats/total_agreement",
             method="GET",
             params={
                 "per_label": per_label,
@@ -719,6 +769,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update_stats(
@@ -753,7 +807,7 @@ class RawStatsClient:
             Successful response returns job id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/update-stats",
+            f"api/projects/{encode_path_param(id)}/update-stats",
             method="GET",
             params={
                 "stat_type": stat_type,
@@ -773,6 +827,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def users_prediction_agreement(
@@ -811,7 +869,7 @@ class RawStatsClient:
             Prediction agreement statistics for multiple annotators
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/prediction",
+            f"api/projects/{encode_path_param(id)}/user-stats/prediction",
             method="GET",
             params={
                 "ids": ids,
@@ -832,6 +890,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def users_review_score(
@@ -870,7 +932,7 @@ class RawStatsClient:
             Review scores and performance scores for multiple annotators
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/review_score",
+            f"api/projects/{encode_path_param(id)}/user-stats/review_score",
             method="GET",
             params={
                 "ids": ids,
@@ -891,6 +953,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def user_prediction_agreement(
@@ -928,7 +994,7 @@ class RawStatsClient:
             Individual user prediction agreement statistics
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/prediction",
+            f"api/projects/{encode_path_param(id)}/user-stats/{encode_path_param(user_pk)}/prediction",
             method="GET",
             params={
                 "per_label": per_label,
@@ -948,6 +1014,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def user_review_score(
@@ -985,7 +1055,7 @@ class RawStatsClient:
             Individual user review score statistics
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/review_score",
+            f"api/projects/{encode_path_param(id)}/user-stats/{encode_path_param(user_pk)}/review_score",
             method="GET",
             params={
                 "per_label": per_label,
@@ -1005,6 +1075,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def user_ground_truth_agreement(
@@ -1042,7 +1116,7 @@ class RawStatsClient:
             Individual user ground truth agreement statistics
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/users/{jsonable_encoder(user_pk)}/stats/agreement-groundtruth",
+            f"api/projects/{encode_path_param(id)}/users/{encode_path_param(user_pk)}/stats/agreement-groundtruth",
             method="GET",
             params={
                 "per_label": per_label,
@@ -1062,6 +1136,10 @@ class RawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -1096,7 +1174,7 @@ class AsyncRawStatsClient:
             Model-version overall agreement vs annotators
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/agreement",
+            f"api/projects/{encode_path_param(id)}/model-stats/{encode_path_param(model_version)}/agreement",
             method="GET",
             request_options=request_options,
         )
@@ -1113,6 +1191,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def model_version_ground_truth_agreement(
@@ -1150,7 +1232,7 @@ class AsyncRawStatsClient:
             Model-version ground truth agreement
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/agreement-groundtruth",
+            f"api/projects/{encode_path_param(id)}/model-stats/{encode_path_param(model_version)}/agreement-groundtruth",
             method="GET",
             params={
                 "per_label": per_label,
@@ -1170,6 +1252,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def model_version_prediction_agreement(
@@ -1207,7 +1293,7 @@ class AsyncRawStatsClient:
             Model-version prediction agreement
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/model-stats/{jsonable_encoder(model_version)}/prediction",
+            f"api/projects/{encode_path_param(id)}/model-stats/{encode_path_param(model_version)}/prediction",
             method="GET",
             params={
                 "per_label": per_label,
@@ -1227,6 +1313,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def iaa(
@@ -1273,7 +1363,7 @@ class AsyncRawStatsClient:
             Inter-Annotator Agreement matrix
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/IAA",
+            f"api/projects/{encode_path_param(id)}/stats/IAA",
             method="GET",
             params={
                 "expand": expand,
@@ -1296,6 +1386,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def users_ground_truth_agreement(
@@ -1334,7 +1428,7 @@ class AsyncRawStatsClient:
             Ground truth agreement statistics for multiple users
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/agreement-groundtruth",
+            f"api/projects/{encode_path_param(id)}/stats/agreement-groundtruth",
             method="GET",
             params={
                 "ids": ids,
@@ -1355,6 +1449,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def agreement_annotator(
@@ -1384,7 +1482,7 @@ class AsyncRawStatsClient:
             Individual annotator agreement statistics
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/agreement_annotator/{jsonable_encoder(user_id)}",
+            f"api/projects/{encode_path_param(id)}/stats/agreement_annotator/{encode_path_param(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -1401,6 +1499,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def agreement_annotators(
@@ -1431,7 +1533,7 @@ class AsyncRawStatsClient:
             Multiple annotator agreement statistics
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/agreement_annotators",
+            f"api/projects/{encode_path_param(id)}/stats/agreement_annotators",
             method="GET",
             params={
                 "ids": ids,
@@ -1451,6 +1553,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def data_filters(
@@ -1478,7 +1584,7 @@ class AsyncRawStatsClient:
             User data filter statistics
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/data_filter",
+            f"api/projects/{encode_path_param(id)}/stats/data_filter",
             method="GET",
             request_options=request_options,
         )
@@ -1495,6 +1601,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def finished_tasks(
@@ -1525,7 +1635,7 @@ class AsyncRawStatsClient:
             Finished tasks statistics
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/finished",
+            f"api/projects/{encode_path_param(id)}/stats/finished",
             method="GET",
             params={
                 "user_pk": user_pk,
@@ -1545,6 +1655,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def label_distribution_counts(
@@ -1587,7 +1701,7 @@ class AsyncRawStatsClient:
             Label distribution counts
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/label-distribution/counts",
+            f"api/projects/{encode_path_param(id)}/stats/label-distribution/counts",
             method="GET",
             params={
                 "choice_keys": choice_keys,
@@ -1609,6 +1723,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def label_distribution_structure(
@@ -1636,7 +1754,7 @@ class AsyncRawStatsClient:
             Label distribution structure
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/label-distribution/structure",
+            f"api/projects/{encode_path_param(id)}/stats/label-distribution/structure",
             method="GET",
             request_options=request_options,
         )
@@ -1653,6 +1771,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def lead_time(
@@ -1680,7 +1802,7 @@ class AsyncRawStatsClient:
             Lead time statistics
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/lead_time",
+            f"api/projects/{encode_path_param(id)}/stats/lead_time",
             method="GET",
             request_options=request_options,
         )
@@ -1697,6 +1819,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def total_agreement(
@@ -1733,7 +1859,7 @@ class AsyncRawStatsClient:
             Total agreement
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/stats/total_agreement",
+            f"api/projects/{encode_path_param(id)}/stats/total_agreement",
             method="GET",
             params={
                 "per_label": per_label,
@@ -1755,6 +1881,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update_stats(
@@ -1789,7 +1919,7 @@ class AsyncRawStatsClient:
             Successful response returns job id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/update-stats",
+            f"api/projects/{encode_path_param(id)}/update-stats",
             method="GET",
             params={
                 "stat_type": stat_type,
@@ -1809,6 +1939,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def users_prediction_agreement(
@@ -1847,7 +1981,7 @@ class AsyncRawStatsClient:
             Prediction agreement statistics for multiple annotators
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/prediction",
+            f"api/projects/{encode_path_param(id)}/user-stats/prediction",
             method="GET",
             params={
                 "ids": ids,
@@ -1868,6 +2002,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def users_review_score(
@@ -1906,7 +2044,7 @@ class AsyncRawStatsClient:
             Review scores and performance scores for multiple annotators
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/review_score",
+            f"api/projects/{encode_path_param(id)}/user-stats/review_score",
             method="GET",
             params={
                 "ids": ids,
@@ -1927,6 +2065,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def user_prediction_agreement(
@@ -1964,7 +2106,7 @@ class AsyncRawStatsClient:
             Individual user prediction agreement statistics
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/prediction",
+            f"api/projects/{encode_path_param(id)}/user-stats/{encode_path_param(user_pk)}/prediction",
             method="GET",
             params={
                 "per_label": per_label,
@@ -1984,6 +2126,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def user_review_score(
@@ -2021,7 +2167,7 @@ class AsyncRawStatsClient:
             Individual user review score statistics
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/review_score",
+            f"api/projects/{encode_path_param(id)}/user-stats/{encode_path_param(user_pk)}/review_score",
             method="GET",
             params={
                 "per_label": per_label,
@@ -2041,6 +2187,10 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def user_ground_truth_agreement(
@@ -2078,7 +2228,7 @@ class AsyncRawStatsClient:
             Individual user ground truth agreement statistics
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/users/{jsonable_encoder(user_pk)}/stats/agreement-groundtruth",
+            f"api/projects/{encode_path_param(id)}/users/{encode_path_param(user_pk)}/stats/agreement-groundtruth",
             method="GET",
             params={
                 "per_label": per_label,
@@ -2098,4 +2248,8 @@ class AsyncRawStatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

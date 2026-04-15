@@ -6,11 +6,13 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.pause import Pause
 from ...types.reason_enum import ReasonEnum
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -59,7 +61,7 @@ class RawPausesClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/",
+            f"api/projects/{encode_path_param(project_pk)}/members/{encode_path_param(user_pk)}/pauses/",
             method="GET",
             params={
                 "include_deleted": include_deleted,
@@ -80,6 +82,10 @@ class RawPausesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -127,7 +133,7 @@ class RawPausesClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/",
+            f"api/projects/{encode_path_param(project_pk)}/members/{encode_path_param(user_pk)}/pauses/",
             method="POST",
             json={
                 "reason": reason,
@@ -152,6 +158,10 @@ class RawPausesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -183,7 +193,7 @@ class RawPausesClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
+            f"api/projects/{encode_path_param(project_pk)}/members/{encode_path_param(user_pk)}/pauses/{encode_path_param(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -200,6 +210,10 @@ class RawPausesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -230,7 +244,7 @@ class RawPausesClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
+            f"api/projects/{encode_path_param(project_pk)}/members/{encode_path_param(user_pk)}/pauses/{encode_path_param(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -240,6 +254,10 @@ class RawPausesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -290,7 +308,7 @@ class RawPausesClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
+            f"api/projects/{encode_path_param(project_pk)}/members/{encode_path_param(user_pk)}/pauses/{encode_path_param(id)}/",
             method="PATCH",
             json={
                 "reason": reason,
@@ -315,6 +333,10 @@ class RawPausesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -361,7 +383,7 @@ class AsyncRawPausesClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/",
+            f"api/projects/{encode_path_param(project_pk)}/members/{encode_path_param(user_pk)}/pauses/",
             method="GET",
             params={
                 "include_deleted": include_deleted,
@@ -382,6 +404,10 @@ class AsyncRawPausesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -429,7 +455,7 @@ class AsyncRawPausesClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/",
+            f"api/projects/{encode_path_param(project_pk)}/members/{encode_path_param(user_pk)}/pauses/",
             method="POST",
             json={
                 "reason": reason,
@@ -454,6 +480,10 @@ class AsyncRawPausesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -485,7 +515,7 @@ class AsyncRawPausesClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
+            f"api/projects/{encode_path_param(project_pk)}/members/{encode_path_param(user_pk)}/pauses/{encode_path_param(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -502,6 +532,10 @@ class AsyncRawPausesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -532,7 +566,7 @@ class AsyncRawPausesClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
+            f"api/projects/{encode_path_param(project_pk)}/members/{encode_path_param(user_pk)}/pauses/{encode_path_param(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -542,6 +576,10 @@ class AsyncRawPausesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -592,7 +630,7 @@ class AsyncRawPausesClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
+            f"api/projects/{encode_path_param(project_pk)}/members/{encode_path_param(user_pk)}/pauses/{encode_path_param(id)}/",
             method="PATCH",
             json={
                 "reason": reason,
@@ -617,4 +655,8 @@ class AsyncRawPausesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

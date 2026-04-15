@@ -6,11 +6,13 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..types.lse_project import LseProject
 from ..types.project_template import ProjectTemplate
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -66,6 +68,10 @@ class RawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -169,6 +175,10 @@ class RawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[ProjectTemplate]:
@@ -194,7 +204,7 @@ class RawProjectTemplatesClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/project-templates/{jsonable_encoder(id)}",
+            f"api/project-templates/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -211,6 +221,10 @@ class RawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
@@ -235,7 +249,7 @@ class RawProjectTemplatesClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/project-templates/{jsonable_encoder(id)}",
+            f"api/project-templates/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -245,6 +259,10 @@ class RawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -316,7 +334,7 @@ class RawProjectTemplatesClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/project-templates/{jsonable_encoder(id)}",
+            f"api/project-templates/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "assignment_settings": assignment_settings,
@@ -351,6 +369,10 @@ class RawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_project_from_template(
@@ -393,7 +415,7 @@ class RawProjectTemplatesClient:
             Project created successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/project-templates/{jsonable_encoder(id)}/create-project",
+            f"api/project-templates/{encode_path_param(id)}/create-project",
             method="POST",
             json={
                 "description": description,
@@ -419,6 +441,10 @@ class RawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -472,6 +498,10 @@ class AsyncRawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -575,6 +605,10 @@ class AsyncRawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -602,7 +636,7 @@ class AsyncRawProjectTemplatesClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/project-templates/{jsonable_encoder(id)}",
+            f"api/project-templates/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -619,6 +653,10 @@ class AsyncRawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -645,7 +683,7 @@ class AsyncRawProjectTemplatesClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/project-templates/{jsonable_encoder(id)}",
+            f"api/project-templates/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -655,6 +693,10 @@ class AsyncRawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -726,7 +768,7 @@ class AsyncRawProjectTemplatesClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/project-templates/{jsonable_encoder(id)}",
+            f"api/project-templates/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "assignment_settings": assignment_settings,
@@ -761,6 +803,10 @@ class AsyncRawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_project_from_template(
@@ -803,7 +849,7 @@ class AsyncRawProjectTemplatesClient:
             Project created successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/project-templates/{jsonable_encoder(id)}/create-project",
+            f"api/project-templates/{encode_path_param(id)}/create-project",
             method="POST",
             json={
                 "description": description,
@@ -829,4 +875,8 @@ class AsyncRawProjectTemplatesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

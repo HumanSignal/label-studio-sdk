@@ -1,6 +1,6 @@
 # Reference
 ## ActivityLogs
-<details><summary><code>client.activity_logs.<a href="src/label_studio_sdk/activity_logs/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ActivityLogResponse]]</code></summary>
+<details><summary><code>client.activity_logs.<a href="src/label_studio_sdk/activity_logs/client.py">list</a>(...) -> typing.List[ActivityLogResponse]</code></summary>
 <dl>
 <dd>
 
@@ -34,10 +34,13 @@ Retrieve activity logs filtered by workspace, project, user, HTTP method, date r
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.activity_logs.list()
 
 ```
@@ -147,7 +150,7 @@ client.activity_logs.list()
 </details>
 
 ## AnnotationHistory
-<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[AnnotationHistory]]</code></summary>
+<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">list</a>(...) -> typing.List[AnnotationHistory]</code></summary>
 <dl>
 <dd>
 
@@ -181,10 +184,13 @@ List annotation history items for an annotation. Annotation history logs all act
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotation_history.list()
 
 ```
@@ -229,7 +235,7 @@ client.annotation_history.list()
 </dl>
 </details>
 
-<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteAnnotationHistoryResponse]</code></summary>
+<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">delete</a>(...) -> DeleteAnnotationHistoryResponse</code></summary>
 <dl>
 <dd>
 
@@ -263,10 +269,13 @@ Delete all annotation history items for a specific annotation, task or project. 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotation_history.delete()
 
 ```
@@ -319,7 +328,7 @@ client.annotation_history.delete()
 </dl>
 </details>
 
-<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">retrieve</a>(...) -&gt; AsyncHttpResponse[AnnotationHistory]</code></summary>
+<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">retrieve</a>(...) -> AnnotationHistory</code></summary>
 <dl>
 <dd>
 
@@ -353,10 +362,13 @@ Get one annotation history item by ID with full result. Used when FIT-720 lazy l
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotation_history.retrieve(
     id=1,
 )
@@ -395,7 +407,7 @@ client.annotation_history.retrieve(
 </dl>
 </details>
 
-<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">list_for_project</a>(...) -&gt; AsyncHttpResponse[PaginatedAnnotationHistoryList]</code></summary>
+<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">list_for_project</a>(...) -> PaginatedAnnotationHistoryList</code></summary>
 <dl>
 <dd>
 
@@ -429,10 +441,13 @@ List all annotation history items for the project with pagination.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotation_history.list_for_project(
     id=1,
 )
@@ -488,7 +503,7 @@ client.annotation_history.list_for_project(
 </details>
 
 ## AnnotationReviews
-<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[AnnotationReview]]</code></summary>
+<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">list</a>(...) -> typing.List[AnnotationReview]</code></summary>
 <dl>
 <dd>
 
@@ -522,10 +537,13 @@ List all reviews for a specific annotation ID. Only allowed for organizations wi
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotation_reviews.list()
 
 ```
@@ -578,7 +596,7 @@ client.annotation_reviews.list()
 </dl>
 </details>
 
-<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">create</a>(...) -&gt; AsyncHttpResponse[AnnotationReview]</code></summary>
+<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">create</a>(...) -> AnnotationReview</code></summary>
 <dl>
 <dd>
 
@@ -612,10 +630,13 @@ Create a review for a specific annotation ID. Only allowed for organizations wit
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotation_reviews.create(
     annotation=1,
 )
@@ -634,7 +655,7 @@ client.annotation_reviews.create(
 <dl>
 <dd>
 
-**annotation:** `int` — Corresponding annotation
+**request:** `AnnotationReviewRequest` 
     
 </dd>
 </dl>
@@ -643,54 +664,6 @@ client.annotation_reviews.create(
 <dd>
 
 **async_postprocess:** `typing.Optional[bool]` — Whether to postprocess the review asynchronously.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**accepted:** `typing.Optional[bool]` — Accepted or rejected (if false) flag
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**comment:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_annotation_history:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_from_queue:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**result:** `typing.Optional[typing.Any]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**started_at:** `typing.Optional[dt.datetime]` 
     
 </dd>
 </dl>
@@ -710,7 +683,7 @@ client.annotation_reviews.create(
 </dl>
 </details>
 
-<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">get</a>(...) -&gt; AsyncHttpResponse[AnnotationReview]</code></summary>
+<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">get</a>(...) -> AnnotationReview</code></summary>
 <dl>
 <dd>
 
@@ -744,10 +717,13 @@ Retrieve a specific review by ID for an annotation. Only allowed for organizatio
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotation_reviews.get(
     id=1,
 )
@@ -786,7 +762,7 @@ client.annotation_reviews.get(
 </dl>
 </details>
 
-<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -820,10 +796,13 @@ Delete a review by ID. Only allowed for organizations with reviewing features en
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotation_reviews.delete(
     id=1,
 )
@@ -862,7 +841,7 @@ client.annotation_reviews.delete(
 </dl>
 </details>
 
-<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">update</a>(...) -&gt; AsyncHttpResponse[AnnotationReview]</code></summary>
+<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">update</a>(...) -> AnnotationReview</code></summary>
 <dl>
 <dd>
 
@@ -896,10 +875,13 @@ Update a specific review by ID. Only allowed for organizations with reviewing fe
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotation_reviews.update(
     id=1,
 )
@@ -974,7 +956,7 @@ client.annotation_reviews.update(
 <dl>
 <dd>
 
-**started_at:** `typing.Optional[dt.datetime]` 
+**started_at:** `typing.Optional[datetime.datetime]` 
     
 </dd>
 </dl>
@@ -995,7 +977,7 @@ client.annotation_reviews.update(
 </details>
 
 ## Annotations
-<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">delete_bulk</a>(...) -&gt; AsyncHttpResponse[DeleteBulkAnnotationsResponse]</code></summary>
+<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">delete_bulk</a>(...) -> DeleteBulkAnnotationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1023,12 +1005,17 @@ Delete multiple annotations by their IDs. The deletion is processed synchronousl
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotations.delete_bulk(
-    ids=[1],
+    ids=[
+        1
+    ],
     project=1,
 )
 
@@ -1046,7 +1033,7 @@ client.annotations.delete_bulk(
 <dl>
 <dd>
 
-**ids:** `typing.Sequence[int]` — List of annotation IDs to delete
+**ids:** `typing.List[int]` — List of annotation IDs to delete
     
 </dd>
 </dl>
@@ -1074,7 +1061,7 @@ client.annotations.delete_bulk(
 </dl>
 </details>
 
-<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">create_bulk</a>(...) -&gt; AsyncHttpResponse[typing.List[CreateBulkAnnotationsResponseItem]]</code></summary>
+<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">create_bulk</a>(...) -> typing.List[CreateBulkAnnotationsResponseItem]</code></summary>
 <dl>
 <dd>
 
@@ -1102,10 +1089,13 @@ Create multiple annotations at once
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotations.create_bulk()
 
 ```
@@ -1138,7 +1128,7 @@ client.annotations.create_bulk()
 <dl>
 <dd>
 
-**draft_created_at:** `typing.Optional[dt.datetime]` — Draft creation time
+**draft_created_at:** `typing.Optional[datetime.datetime]` — Draft creation time
     
 </dd>
 </dl>
@@ -1223,7 +1213,7 @@ Action which was performed in the last annotation history item
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — List of annotation results for the task
+**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — List of annotation results for the task
     
 </dd>
 </dl>
@@ -1247,7 +1237,7 @@ Action which was performed in the last annotation history item
 <dl>
 <dd>
 
-**tasks:** `typing.Optional[typing.Sequence[int]]` 
+**tasks:** `typing.Optional[typing.List[int]]` 
     
 </dd>
 </dl>
@@ -1291,7 +1281,7 @@ Action which was performed in the last annotation history item
 </dl>
 </details>
 
-<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">get</a>(...) -&gt; AsyncHttpResponse[Annotation]</code></summary>
+<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">get</a>(...) -> Annotation</code></summary>
 <dl>
 <dd>
 
@@ -1319,10 +1309,13 @@ Retrieve a specific annotation for a task using the annotation result ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotations.get(
     id=1,
 )
@@ -1361,7 +1354,7 @@ client.annotations.get(
 </dl>
 </details>
 
-<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1389,10 +1382,13 @@ Delete an annotation. This action can't be undone!
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotations.delete(
     id=1,
 )
@@ -1431,7 +1427,7 @@ client.annotations.delete(
 </dl>
 </details>
 
-<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">update</a>(...) -&gt; AsyncHttpResponse[Annotation]</code></summary>
+<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">update</a>(...) -> Annotation</code></summary>
 <dl>
 <dd>
 
@@ -1459,10 +1455,13 @@ Update existing attributes on an annotation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotations.update(
     id=1,
     ground_truth=True,
@@ -1474,14 +1473,7 @@ client.annotations.update(
             "original_width": 1920,
             "to_name": "image",
             "type": "rectanglelabels",
-            "value": {
-                "height": 60,
-                "rotation": 0,
-                "values": {"rectanglelabels": ["Person"]},
-                "width": 50,
-                "x": 20,
-                "y": 30,
-            },
+            "value": {"height": 60, "rotation": 0, "values": {"rectanglelabels": ["Person"]}, "width": 50, "x": 20, "y": 30}
         }
     ],
     was_cancelled=False,
@@ -1541,7 +1533,7 @@ client.annotations.update(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
     
 </dd>
 </dl>
@@ -1585,7 +1577,7 @@ client.annotations.update(
 </dl>
 </details>
 
-<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[Annotation]]</code></summary>
+<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">list</a>(...) -> typing.List[Annotation]</code></summary>
 <dl>
 <dd>
 
@@ -1613,10 +1605,13 @@ List all annotations for a task.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotations.list(
     id=1,
 )
@@ -1663,7 +1658,7 @@ client.annotations.list(
 </dl>
 </details>
 
-<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">create</a>(...) -&gt; AsyncHttpResponse[Annotation]</code></summary>
+<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">create</a>(...) -> Annotation</code></summary>
 <dl>
 <dd>
 
@@ -1706,10 +1701,13 @@ client.annotations.list(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.annotations.create(
     id=1,
     ground_truth=True,
@@ -1721,14 +1719,7 @@ client.annotations.create(
             "original_width": 1920,
             "to_name": "image",
             "type": "rectanglelabels",
-            "value": {
-                "height": 60,
-                "rotation": 0,
-                "values": {"rectanglelabels": ["Person"]},
-                "width": 50,
-                "x": 20,
-                "y": 30,
-            },
+            "value": {"height": 60, "rotation": 0, "values": {"rectanglelabels": ["Person"]}, "width": 50, "x": 20, "y": 30}
         }
     ],
     was_cancelled=False,
@@ -1788,7 +1779,7 @@ client.annotations.create(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
     
 </dd>
 </dl>
@@ -1833,7 +1824,7 @@ client.annotations.create(
 </details>
 
 ## Billing
-<details><summary><code>client.billing.<a href="src/label_studio_sdk/billing/client.py">info</a>() -&gt; AsyncHttpResponse[BillingInfoResponse]</code></summary>
+<details><summary><code>client.billing.<a href="src/label_studio_sdk/billing/client.py">info</a>() -> BillingInfoResponse</code></summary>
 <dl>
 <dd>
 
@@ -1867,10 +1858,13 @@ Retrieve billing checks and feature flags for the active organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.billing.info()
 
 ```
@@ -1900,7 +1894,7 @@ client.billing.info()
 </details>
 
 ## Comments
-<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[MaybeExpandedComment]]</code></summary>
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">list</a>(...) -> typing.List[MaybeExpandedComment]</code></summary>
 <dl>
 <dd>
 
@@ -1934,10 +1928,13 @@ List all comments for a specific annotation ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.comments.list()
 
 ```
@@ -2014,7 +2011,7 @@ client.comments.list()
 </dl>
 </details>
 
-<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">create</a>(...) -&gt; AsyncHttpResponse[MaybeExpandedComment]</code></summary>
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">create</a>(...) -> MaybeExpandedComment</code></summary>
 <dl>
 <dd>
 
@@ -2048,10 +2045,13 @@ Create a comment for a specific annotation ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.comments.create()
 
 ```
@@ -2068,55 +2068,15 @@ client.comments.create()
 <dl>
 <dd>
 
+**request:** `CommentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **expand_created_by:** `typing.Optional[bool]` — Expand the created_by field
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**annotation:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**classifications:** `typing.Optional[typing.Any]` — Classifications applied by a reviewer or annotator
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**draft:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_resolved:** `typing.Optional[bool]` — True if the comment is resolved
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_ref:** `typing.Optional[typing.Any]` — Set if this comment is related to a specific part of the annotation. Normally contains region ID and control name.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[str]` — Reviewer or annotator comment
     
 </dd>
 </dl>
@@ -2136,7 +2096,115 @@ client.comments.create()
 </dl>
 </details>
 
-<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">get</a>(...) -&gt; AsyncHttpResponse[MaybeExpandedComment]</code></summary>
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">export</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Export comments to CSV file
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+client.comments.export(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotators:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expand_created_by:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**projects:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tz:** `typing.Optional[str]` — Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">get</a>(...) -> MaybeExpandedComment</code></summary>
 <dl>
 <dd>
 
@@ -2170,10 +2238,13 @@ Retrieve a specific comment by ID for an annotation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.comments.get(
     id="id",
 )
@@ -2220,7 +2291,7 @@ client.comments.get(
 </dl>
 </details>
 
-<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2254,10 +2325,13 @@ Delete a comment by ID
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.comments.delete(
     id="id",
 )
@@ -2304,7 +2378,7 @@ client.comments.delete(
 </dl>
 </details>
 
-<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">update</a>(...) -&gt; AsyncHttpResponse[MaybeExpandedComment]</code></summary>
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">update</a>(...) -> MaybeExpandedComment</code></summary>
 <dl>
 <dd>
 
@@ -2338,10 +2412,13 @@ Update a specific comment by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.comments.update(
     id="id",
 )
@@ -2437,7 +2514,7 @@ client.comments.update(
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">get_current_user</a>() -&gt; AsyncHttpResponse[LseUserApi]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">get_current_user</a>() -> LseUserApi</code></summary>
 <dl>
 <dd>
 
@@ -2471,10 +2548,13 @@ Get info about the currently authenticated user.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.get_current_user()
 
 ```
@@ -2503,7 +2583,7 @@ client.users.get_current_user()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">update_current_user</a>(...) -&gt; AsyncHttpResponse[LseUserApi]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">update_current_user</a>(...) -> LseUserApi</code></summary>
 <dl>
 <dd>
 
@@ -2537,10 +2617,13 @@ Update details for the currently authenticated user.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.update_current_user()
 
 ```
@@ -2581,7 +2664,7 @@ client.users.update_current_user()
 <dl>
 <dd>
 
-**date_joined:** `typing.Optional[dt.datetime]` 
+**date_joined:** `typing.Optional[datetime.datetime]` 
     
 </dd>
 </dl>
@@ -2665,7 +2748,7 @@ client.users.update_current_user()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">get_hotkeys</a>() -&gt; AsyncHttpResponse[Hotkeys]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">get_hotkeys</a>() -> Hotkeys</code></summary>
 <dl>
 <dd>
 
@@ -2693,10 +2776,13 @@ Retrieve the custom hotkeys configuration for the current user.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.get_hotkeys()
 
 ```
@@ -2725,7 +2811,7 @@ client.users.get_hotkeys()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">update_hotkeys</a>(...) -&gt; AsyncHttpResponse[Hotkeys]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">update_hotkeys</a>(...) -> Hotkeys</code></summary>
 <dl>
 <dd>
 
@@ -2753,10 +2839,13 @@ Update the custom hotkeys configuration for the current user.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.update_hotkeys()
 
 ```
@@ -2793,7 +2882,7 @@ client.users.update_hotkeys()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">reset_token</a>() -&gt; AsyncHttpResponse[ResetTokenUsersResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">reset_token</a>() -> ResetTokenUsersResponse</code></summary>
 <dl>
 <dd>
 
@@ -2821,10 +2910,13 @@ Reset the user token for the current user.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.reset_token()
 
 ```
@@ -2853,7 +2945,7 @@ client.users.reset_token()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">get_token</a>() -&gt; AsyncHttpResponse[GetTokenUsersResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">get_token</a>() -> GetTokenUsersResponse</code></summary>
 <dl>
 <dd>
 
@@ -2881,10 +2973,13 @@ Get a user token to authenticate to the API as the current user.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.get_token()
 
 ```
@@ -2913,7 +3008,7 @@ client.users.get_token()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">whoami</a>() -&gt; AsyncHttpResponse[WhoAmIUser]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">whoami</a>() -> WhoAmIUser</code></summary>
 <dl>
 <dd>
 
@@ -2941,10 +3036,13 @@ Retrieve details of the account that you are using to access the API.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.whoami()
 
 ```
@@ -2973,7 +3071,7 @@ client.users.whoami()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[LseUserApi]]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">list</a>(...) -> typing.List[LseUserApi]</code></summary>
 <dl>
 <dd>
 
@@ -3001,10 +3099,13 @@ List the users that exist on the Label Studio server.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.list()
 
 ```
@@ -3041,7 +3142,7 @@ client.users.list()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">create</a>(...) -&gt; AsyncHttpResponse[LseUser]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">create</a>(...) -> LseUser</code></summary>
 <dl>
 <dd>
 
@@ -3069,10 +3170,13 @@ Create a user in Label Studio.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.create()
 
 ```
@@ -3173,7 +3277,7 @@ client.users.create()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">get</a>(...) -&gt; AsyncHttpResponse[LseUser]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">get</a>(...) -> LseUser</code></summary>
 <dl>
 <dd>
 
@@ -3201,10 +3305,13 @@ Get info about a specific Label Studio user, based on the user ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.get(
     id=1,
 )
@@ -3243,7 +3350,7 @@ client.users.get(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3273,10 +3380,13 @@ Delete a specific Label Studio user. Only available in community edition.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.delete(
     id=1,
 )
@@ -3315,7 +3425,7 @@ client.users.delete(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">update</a>(...) -&gt; AsyncHttpResponse[LseUser]</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">update</a>(...) -> LseUser</code></summary>
 <dl>
 <dd>
 
@@ -3345,10 +3455,13 @@ client.users.delete(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.users.update(
     id=1,
 )
@@ -3460,7 +3573,7 @@ client.users.update(
 </details>
 
 ## Dimensions
-<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">trigger_backfill</a>(...) -&gt; AsyncHttpResponse[AgreementV2BackfillTriggerResponse]</code></summary>
+<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">trigger_backfill</a>(...) -> AgreementV2BackfillTriggerResponse</code></summary>
 <dl>
 <dd>
 
@@ -3500,10 +3613,13 @@ Requires administrator or owner role and the Agreement V2 feature flag.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.dimensions.trigger_backfill()
 
 ```
@@ -3556,7 +3672,7 @@ client.dimensions.trigger_backfill()
 </dl>
 </details>
 
-<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">cancel_backfill</a>(...) -&gt; AsyncHttpResponse[AgreementV2BackfillCancelResponse]</code></summary>
+<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">cancel_backfill</a>(...) -> AgreementV2BackfillCancelResponse</code></summary>
 <dl>
 <dd>
 
@@ -3590,10 +3706,13 @@ Cancel Agreement V2 backfill jobs for the authenticated user's active organizati
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.dimensions.cancel_backfill()
 
 ```
@@ -3638,7 +3757,7 @@ client.dimensions.cancel_backfill()
 </dl>
 </details>
 
-<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">list_backfills</a>(...) -&gt; AsyncHttpResponse[typing.List[AgreementV2BackfillJob]]</code></summary>
+<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">list_backfills</a>(...) -> typing.List[AgreementV2BackfillJob]</code></summary>
 <dl>
 <dd>
 
@@ -3672,10 +3791,13 @@ Retrieve Agreement V2 backfill jobs for the authenticated user's active organiza
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.dimensions.list_backfills()
 
 ```
@@ -3712,7 +3834,7 @@ client.dimensions.list_backfills()
 </dl>
 </details>
 
-<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">get_backfill_status</a>(...) -&gt; AsyncHttpResponse[AgreementV2BackfillJob]</code></summary>
+<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">get_backfill_status</a>(...) -> AgreementV2BackfillJob</code></summary>
 <dl>
 <dd>
 
@@ -3746,10 +3868,13 @@ Retrieve the status of an Agreement V2 backfill job for the authenticated user's
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.dimensions.get_backfill_status()
 
 ```
@@ -3794,7 +3919,7 @@ client.dimensions.get_backfill_status()
 </dl>
 </details>
 
-<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[DimensionList]]</code></summary>
+<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">list</a>(...) -> typing.List[DimensionList]</code></summary>
 <dl>
 <dd>
 
@@ -3828,10 +3953,13 @@ List all dimensions for a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.dimensions.list(
     project_pk=1,
 )
@@ -3894,7 +4022,7 @@ client.dimensions.list(
 </dl>
 </details>
 
-<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">get</a>(...) -&gt; AsyncHttpResponse[Dimension]</code></summary>
+<details><summary><code>client.dimensions.<a href="src/label_studio_sdk/dimensions/client.py">get</a>(...) -> Dimension</code></summary>
 <dl>
 <dd>
 
@@ -3928,10 +4056,13 @@ Retrieve a specific dimension by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.dimensions.get(
     project_pk=1,
     id=1,
@@ -3980,7 +4111,7 @@ client.dimensions.get(
 </details>
 
 ## Actions
-<details><summary><code>client.actions.<a href="src/label_studio_sdk/actions/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ListActionsResponseItem]]</code></summary>
+<details><summary><code>client.actions.<a href="src/label_studio_sdk/actions/client.py">list</a>(...) -> typing.List[ListActionsResponseItem]</code></summary>
 <dl>
 <dd>
 
@@ -4008,10 +4139,13 @@ Retrieve all the registered actions with descriptions that data manager can use.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.actions.list(
     project=1,
 )
@@ -4050,7 +4184,7 @@ client.actions.list(
 </dl>
 </details>
 
-<details><summary><code>client.actions.<a href="src/label_studio_sdk/actions/client.py">create</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.actions.<a href="src/label_studio_sdk/actions/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4078,15 +4212,14 @@ Perform a Data Manager action with the selected tasks and filters. Note: More co
 
 ```python
 from label_studio_sdk import LabelStudio
-from label_studio_sdk.actions import (
-    CreateActionsRequestFilters,
-    CreateActionsRequestFiltersItemsItem,
-    CreateActionsRequestSelectedItemsExcluded,
-)
+from label_studio_sdk.environment import LabelStudioEnvironment
+from label_studio_sdk.actions import CreateActionsRequestFilters, CreateActionsRequestFiltersItemsItem, CreateActionsRequestSelectedItemsExcluded
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.actions.create(
     id="delete_annotators",
     project=1,
@@ -4101,9 +4234,16 @@ client.actions.create(
             )
         ],
     ),
-    ordering=["tasks:total_annotations"],
+    ordering=[
+        "tasks:total_annotations"
+    ],
     selected_items=CreateActionsRequestSelectedItemsExcluded(
-        excluded=[124, 125, 126],
+        all_=True,
+        excluded=[
+            124,
+            125,
+            126
+        ],
     ),
 )
 
@@ -4153,7 +4293,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]` — List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+**ordering:** `typing.Optional[typing.List[CreateActionsRequestOrderingItem]]` — List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
     
 </dd>
 </dl>
@@ -4182,7 +4322,7 @@ client.actions.create(
 </details>
 
 ## Views
-<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[View]]</code></summary>
+<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">list</a>(...) -> typing.List[View]</code></summary>
 <dl>
 <dd>
 
@@ -4210,10 +4350,13 @@ List all views for a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.views.list()
 
 ```
@@ -4250,7 +4393,7 @@ client.views.list()
 </dl>
 </details>
 
-<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">create</a>(...) -&gt; AsyncHttpResponse[View]</code></summary>
+<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">create</a>(...) -> View</code></summary>
 <dl>
 <dd>
 
@@ -4278,10 +4421,13 @@ Create a view for a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.views.create()
 
 ```
@@ -4326,7 +4472,7 @@ client.views.create()
 </dl>
 </details>
 
-<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">update_order</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">update_order</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4354,12 +4500,17 @@ Update the order field of views based on the provided list of view IDs
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.views.update_order(
-    ids=[1],
+    ids=[
+        1
+    ],
     project=1,
 )
 
@@ -4377,7 +4528,7 @@ client.views.update_order(
 <dl>
 <dd>
 
-**ids:** `typing.Sequence[int]` — A list of view IDs in the desired order.
+**ids:** `typing.List[int]` — A list of view IDs in the desired order.
     
 </dd>
 </dl>
@@ -4405,7 +4556,7 @@ client.views.update_order(
 </dl>
 </details>
 
-<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">delete_all</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">delete_all</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4433,10 +4584,13 @@ Delete all views for a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.views.delete_all(
     project=1,
 )
@@ -4475,7 +4629,7 @@ client.views.delete_all(
 </dl>
 </details>
 
-<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">get</a>(...) -&gt; AsyncHttpResponse[View]</code></summary>
+<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">get</a>(...) -> View</code></summary>
 <dl>
 <dd>
 
@@ -4503,10 +4657,13 @@ Get the details about a specific view in the data manager
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.views.get(
     id="id",
 )
@@ -4545,7 +4702,7 @@ client.views.get(
 </dl>
 </details>
 
-<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4573,10 +4730,13 @@ Delete a specific view by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.views.delete(
     id="id",
 )
@@ -4615,7 +4775,7 @@ client.views.delete(
 </dl>
 </details>
 
-<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">update</a>(...) -&gt; AsyncHttpResponse[View]</code></summary>
+<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">update</a>(...) -> View</code></summary>
 <dl>
 <dd>
 
@@ -4643,10 +4803,13 @@ Update view data with additional filters and other information for a specific pr
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.views.update(
     id="id",
 )
@@ -4702,7 +4865,7 @@ client.views.update(
 </details>
 
 ## States
-<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">trigger_backfill</a>(...) -&gt; AsyncHttpResponse[StateBackfillResponse]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">trigger_backfill</a>(...) -> StateBackfillResponse</code></summary>
 <dl>
 <dd>
 
@@ -4736,10 +4899,13 @@ Trigger state backfill for the authenticated user's active organization. Creates
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.states.trigger_backfill()
 
 ```
@@ -4776,7 +4942,7 @@ client.states.trigger_backfill()
 </dl>
 </details>
 
-<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">cancel_backfill</a>(...) -&gt; AsyncHttpResponse[StateBackfillCancelResponse]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">cancel_backfill</a>(...) -> StateBackfillCancelResponse</code></summary>
 <dl>
 <dd>
 
@@ -4810,10 +4976,13 @@ Cancel state backfill jobs for the authenticated user's active organization. Can
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.states.cancel_backfill()
 
 ```
@@ -4858,7 +5027,7 @@ client.states.cancel_backfill()
 </dl>
 </details>
 
-<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">list_backfills</a>() -&gt; AsyncHttpResponse[StateBackfillJobListResponse]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">list_backfills</a>() -> StateBackfillJobListResponse</code></summary>
 <dl>
 <dd>
 
@@ -4892,10 +5061,13 @@ Retrieve the latest 10 state backfill jobs for the authenticated user's active o
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.states.list_backfills()
 
 ```
@@ -4924,7 +5096,7 @@ client.states.list_backfills()
 </dl>
 </details>
 
-<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">get_backfill_status</a>(...) -&gt; AsyncHttpResponse[StateBackfillStatusResponse]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">get_backfill_status</a>(...) -> StateBackfillStatusResponse</code></summary>
 <dl>
 <dd>
 
@@ -4958,10 +5130,13 @@ Retrieve the status of a state backfill job for the authenticated user's active 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.states.get_backfill_status()
 
 ```
@@ -5006,7 +5181,7 @@ client.states.get_backfill_status()
 </dl>
 </details>
 
-<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">state_history</a>(...) -&gt; AsyncPager[StateModel, PaginatedStateModelList]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">state_history</a>(...) -> PaginatedStateModelList</code></summary>
 <dl>
 <dd>
 
@@ -5040,19 +5215,17 @@ Get the state history of an entity
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
-response = client.states.state_history(
+
+client.states.state_history(
     entity_name="entity_name",
     entity_id=1,
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -5168,7 +5341,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">execute_transition</a>(...) -&gt; AsyncHttpResponse[FsmTransitionExecuteResponse]</code></summary>
+<details><summary><code>client.states.<a href="src/label_studio_sdk/states/client.py">execute_transition</a>(...) -> FsmTransitionExecuteResponse</code></summary>
 <dl>
 <dd>
 
@@ -5202,10 +5375,13 @@ Execute a registered manual transition for an entity.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.states.execute_transition(
     entity_name="entity_name",
     entity_id=1,
@@ -5271,7 +5447,7 @@ client.states.execute_transition(
 </details>
 
 ## Files
-<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">get</a>(...) -&gt; AsyncHttpResponse[FileUpload]</code></summary>
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">get</a>(...) -> FileUpload</code></summary>
 <dl>
 <dd>
 
@@ -5299,10 +5475,13 @@ Retrieve details about a specific uploaded file.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.files.get(
     id=1,
 )
@@ -5341,7 +5520,7 @@ client.files.get(
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5369,10 +5548,13 @@ Delete a specific uploaded file.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.files.delete(
     id=1,
 )
@@ -5411,7 +5593,7 @@ client.files.delete(
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">update</a>(...) -&gt; AsyncHttpResponse[FileUpload]</code></summary>
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">update</a>(...) -> FileUpload</code></summary>
 <dl>
 <dd>
 
@@ -5439,12 +5621,16 @@ Update a specific uploaded file.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.files.update(
     id=1,
+    file="example_file",
 )
 
 ```
@@ -5469,9 +5655,7 @@ client.files.update(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**file:** `typing.Optional[core.File]` 
     
 </dd>
 </dl>
@@ -5491,7 +5675,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[FileUpload]]</code></summary>
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">list</a>(...) -> typing.List[FileUpload]</code></summary>
 <dl>
 <dd>
 
@@ -5521,10 +5705,13 @@ typing.Optional[core.File]` — See core.File for more documentation
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.files.list(
     id=1,
 )
@@ -5551,7 +5738,7 @@ client.files.list(
 <dl>
 <dd>
 
-**all_:** `typing.Optional[bool]` — Set to "true" if you want to retrieve all file uploads
+**all:** `typing.Optional[bool]` — Set to "true" if you want to retrieve all file uploads
     
 </dd>
 </dl>
@@ -5587,7 +5774,7 @@ client.files.list(
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">delete_many</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">delete_many</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5617,10 +5804,13 @@ client.files.list(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.files.delete_many(
     id=1,
 )
@@ -5659,7 +5849,7 @@ client.files.delete_many(
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">download</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">download</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5687,10 +5877,13 @@ Download a specific uploaded file.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.files.download(
     filename="filename",
 )
@@ -5730,7 +5923,7 @@ client.files.download(
 </details>
 
 ## Organizations
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">reset_token</a>() -&gt; AsyncHttpResponse[OrganizationInvite]</code></summary>
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">reset_token</a>() -> OrganizationInvite</code></summary>
 <dl>
 <dd>
 
@@ -5758,10 +5951,13 @@ Reset the token used in the invitation link to invite someone to an organization
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.reset_token()
 
 ```
@@ -5790,7 +5986,7 @@ client.organizations.reset_token()
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[OrganizationId]]</code></summary>
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">list</a>(...) -> typing.List[OrganizationId]</code></summary>
 <dl>
 <dd>
 
@@ -5820,10 +6016,13 @@ client.organizations.reset_token()
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.list()
 
 ```
@@ -5860,7 +6059,7 @@ client.organizations.list()
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">get</a>(...) -&gt; AsyncHttpResponse[LseOrganization]</code></summary>
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">get</a>(...) -> LseOrganization</code></summary>
 <dl>
 <dd>
 
@@ -5888,10 +6087,13 @@ Retrieve the settings for a specific organization by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.get(
     id=1,
 )
@@ -5930,7 +6132,7 @@ client.organizations.get(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update</a>(...) -&gt; AsyncHttpResponse[LseOrganization]</code></summary>
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update</a>(...) -> LseOrganization</code></summary>
 <dl>
 <dd>
 
@@ -5964,10 +6166,13 @@ Update organization details including title, embed domains, and Plugins settings
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.update(
     id=1,
 )
@@ -6026,7 +6231,7 @@ client.organizations.update(
 <dl>
 <dd>
 
-**embed_domains:** `typing.Optional[typing.Sequence[typing.Dict[str, str]]]` — Supported domains
+**embed_domains:** `typing.Optional[typing.List[typing.Dict[str, str]]]` — Supported domains
     
 </dd>
 </dl>
@@ -6078,7 +6283,7 @@ client.organizations.update(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update_default_role</a>(...) -&gt; AsyncHttpResponse[DefaultRole]</code></summary>
+<details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">update_default_role</a>(...) -> DefaultRole</code></summary>
 <dl>
 <dd>
 
@@ -6112,10 +6317,13 @@ Update the default role for members of a specific organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.update_default_role(
     id=1,
 )
@@ -6142,7 +6350,7 @@ client.organizations.update_default_role(
 <dl>
 <dd>
 
-**annotator_reviewer_firewall_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
+**annotator_reviewer_firewall_enabled_at:** `typing.Optional[datetime.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
     
 </dd>
 </dl>
@@ -6150,7 +6358,7 @@ client.organizations.update_default_role(
 <dl>
 <dd>
 
-**custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
+**custom_scripts_enabled_at:** `typing.Optional[datetime.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
     
 </dd>
 </dl>
@@ -6216,7 +6424,7 @@ Default membership role for invited users
 <dl>
 <dd>
 
-**label_stream_navigation_disabled_at:** `typing.Optional[dt.datetime]` — Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
+**label_stream_navigation_disabled_at:** `typing.Optional[datetime.datetime]` — Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
     
 </dd>
 </dl>
@@ -6240,7 +6448,7 @@ Default membership role for invited users
 <dl>
 <dd>
 
-**read_only_quick_view_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
+**read_only_quick_view_enabled_at:** `typing.Optional[datetime.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
     
 </dd>
 </dl>
@@ -6261,7 +6469,7 @@ Default membership role for invited users
 </details>
 
 ## JwtSettings
-<details><summary><code>client.jwt_settings.<a href="src/label_studio_sdk/jwt_settings/client.py">get</a>() -&gt; AsyncHttpResponse[LsejwtSettings]</code></summary>
+<details><summary><code>client.jwt_settings.<a href="src/label_studio_sdk/jwt_settings/client.py">get</a>() -> LsejwtSettings</code></summary>
 <dl>
 <dd>
 
@@ -6289,10 +6497,13 @@ Retrieve JWT settings for the currently active organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.jwt_settings.get()
 
 ```
@@ -6321,7 +6532,7 @@ client.jwt_settings.get()
 </dl>
 </details>
 
-<details><summary><code>client.jwt_settings.<a href="src/label_studio_sdk/jwt_settings/client.py">update</a>(...) -&gt; AsyncHttpResponse[LsejwtSettings]</code></summary>
+<details><summary><code>client.jwt_settings.<a href="src/label_studio_sdk/jwt_settings/client.py">update</a>(...) -> LsejwtSettings</code></summary>
 <dl>
 <dd>
 
@@ -6349,10 +6560,13 @@ Update JWT settings for the currently active organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.jwt_settings.update(
     api_token_ttl_days=1,
 )
@@ -6408,7 +6622,7 @@ client.jwt_settings.update(
 </details>
 
 ## Ml
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[MlBackend]]</code></summary>
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">list</a>(...) -> typing.List[MlBackend]</code></summary>
 <dl>
 <dd>
 
@@ -6441,10 +6655,13 @@ client.jwt_settings.update(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.ml.list()
 
 ```
@@ -6481,7 +6698,7 @@ client.ml.list()
 </dl>
 </details>
 
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">create</a>(...) -&gt; AsyncHttpResponse[MlBackend]</code></summary>
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">create</a>(...) -> MlBackend</code></summary>
 <dl>
 <dd>
 
@@ -6515,10 +6732,13 @@ client.ml.list()
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.ml.create()
 
 ```
@@ -6627,7 +6847,7 @@ client.ml.create()
 </dl>
 </details>
 
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">get</a>(...) -&gt; AsyncHttpResponse[MlBackend]</code></summary>
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">get</a>(...) -> MlBackend</code></summary>
 <dl>
 <dd>
 
@@ -6660,10 +6880,13 @@ client.ml.create()
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.ml.get(
     id=1,
 )
@@ -6702,7 +6925,7 @@ client.ml.get(
 </dl>
 </details>
 
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6735,10 +6958,13 @@ client.ml.get(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.ml.delete(
     id=1,
 )
@@ -6777,7 +7003,7 @@ client.ml.delete(
 </dl>
 </details>
 
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">update</a>(...) -&gt; AsyncHttpResponse[MlBackend]</code></summary>
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">update</a>(...) -> MlBackend</code></summary>
 <dl>
 <dd>
 
@@ -6810,10 +7036,13 @@ client.ml.delete(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.ml.update(
     id=1,
 )
@@ -6932,7 +7161,7 @@ client.ml.update(
 </dl>
 </details>
 
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">predict_interactive</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">predict_interactive</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6964,10 +7193,13 @@ client.ml.update(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.ml.predict_interactive(
     id=1,
     task=1,
@@ -7023,7 +7255,7 @@ client.ml.predict_interactive(
 </dl>
 </details>
 
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">predict_all_tasks</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">predict_all_tasks</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -7063,10 +7295,13 @@ Reference the ML backend ID in the path of this API call. Get the ML backend ID 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.ml.predict_all_tasks(
     id=1,
 )
@@ -7113,7 +7348,7 @@ client.ml.predict_all_tasks(
 </dl>
 </details>
 
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">train</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">train</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -7146,10 +7381,13 @@ client.ml.predict_all_tasks(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.ml.train(
     id=1,
 )
@@ -7196,7 +7434,7 @@ client.ml.train(
 </dl>
 </details>
 
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">list_model_versions</a>(...) -&gt; AsyncHttpResponse[ListModelVersionsMlResponse]</code></summary>
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">list_model_versions</a>(...) -> ListModelVersionsMlResponse</code></summary>
 <dl>
 <dd>
 
@@ -7224,10 +7462,13 @@ Get available versions of the model.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.ml.list_model_versions(
     id=1,
 )
@@ -7267,7 +7508,7 @@ client.ml.list_model_versions(
 </details>
 
 ## ModelProviders
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ModelProviderConnection]]</code></summary>
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">list</a>(...) -> typing.List[ModelProviderConnection]</code></summary>
 <dl>
 <dd>
 
@@ -7301,10 +7542,13 @@ List all model provider connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.model_providers.list()
 
 ```
@@ -7341,7 +7585,7 @@ client.model_providers.list()
 </dl>
 </details>
 
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">create</a>(...) -&gt; AsyncHttpResponse[ModelProviderConnection]</code></summary>
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">create</a>(...) -> ModelProviderConnection</code></summary>
 <dl>
 <dd>
 
@@ -7375,10 +7619,13 @@ Create a new model provider connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.model_providers.create()
 
 ```
@@ -7395,95 +7642,7 @@ client.model_providers.create()
 <dl>
 <dd>
 
-**api_key:** `typing.Optional[str]` — Model provider API key
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auth_token:** `typing.Optional[str]` — Model provider Auth token
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cached_available_models:** `typing.Optional[str]` — List of available models from the provider
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**deployment_name:** `typing.Optional[str]` — Azure OpenAI deployment name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**endpoint:** `typing.Optional[str]` — Azure OpenAI endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_location:** `typing.Optional[str]` — Google project location
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider:** `typing.Optional[ProviderEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `typing.Optional[ScopeEnum]` 
+**request:** `ModelProviderConnectionRequest` 
     
 </dd>
 </dl>
@@ -7503,7 +7662,7 @@ client.model_providers.create()
 </dl>
 </details>
 
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">list_model_provider_choices</a>() -&gt; AsyncHttpResponse[ListModelProviderChoicesModelProvidersResponse]</code></summary>
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">list_model_provider_choices</a>() -> ListModelProviderChoicesModelProvidersResponse</code></summary>
 <dl>
 <dd>
 
@@ -7537,10 +7696,13 @@ List all possible model provider choices
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.model_providers.list_model_provider_choices()
 
 ```
@@ -7569,7 +7731,7 @@ client.model_providers.list_model_provider_choices()
 </dl>
 </details>
 
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">get</a>(...) -&gt; AsyncHttpResponse[ModelProviderConnection]</code></summary>
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">get</a>(...) -> ModelProviderConnection</code></summary>
 <dl>
 <dd>
 
@@ -7603,10 +7765,13 @@ Retrieve a specific model provider connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.model_providers.get(
     id="id",
 )
@@ -7645,7 +7810,7 @@ client.model_providers.get(
 </dl>
 </details>
 
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -7679,10 +7844,13 @@ Delete a model provider connection by ID
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.model_providers.delete(
     id="id",
 )
@@ -7721,7 +7889,7 @@ client.model_providers.delete(
 </dl>
 </details>
 
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">update</a>(...) -&gt; AsyncHttpResponse[ModelProviderConnection]</code></summary>
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">update</a>(...) -> ModelProviderConnection</code></summary>
 <dl>
 <dd>
 
@@ -7755,10 +7923,13 @@ Update a specific model provider connection by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.model_providers.update(
     id="id",
 )
@@ -7894,7 +8065,7 @@ client.model_providers.update(
 </details>
 
 ## Prompts
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_failed_predictions</a>(...) -&gt; AsyncHttpResponse[BatchFailedPredictions]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_failed_predictions</a>(...) -> BatchFailedPredictions</code></summary>
 <dl>
 <dd>
 
@@ -7928,10 +8099,13 @@ Create a new batch of failed predictions.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.batch_failed_predictions(
     failed_predictions=[],
     modelrun_id=1,
@@ -7951,7 +8125,7 @@ client.prompts.batch_failed_predictions(
 <dl>
 <dd>
 
-**failed_predictions:** `typing.Sequence[typing.Any]` 
+**failed_predictions:** `typing.List[typing.Any]` 
     
 </dd>
 </dl>
@@ -7995,7 +8169,7 @@ client.prompts.batch_failed_predictions(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_predictions</a>(...) -&gt; AsyncHttpResponse[BatchPredictions]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_predictions</a>(...) -> BatchPredictions</code></summary>
 <dl>
 <dd>
 
@@ -8029,10 +8203,13 @@ Create a new batch prediction.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.batch_predictions(
     modelrun_id=1,
     results=[],
@@ -8060,7 +8237,7 @@ client.prompts.batch_predictions(
 <dl>
 <dd>
 
-**results:** `typing.Sequence[typing.Any]` 
+**results:** `typing.List[typing.Any]` 
     
 </dd>
 </dl>
@@ -8096,7 +8273,7 @@ client.prompts.batch_predictions(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">subset_tasks</a>(...) -&gt; AsyncHttpResponse[PaginatedProjectSubsetTasksResponseList]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">subset_tasks</a>(...) -> PaginatedProjectSubsetTasksResponseList</code></summary>
 <dl>
 <dd>
 
@@ -8132,10 +8309,13 @@ client.prompts.batch_predictions(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.subset_tasks(
     project_pk=1,
 )
@@ -8230,7 +8410,7 @@ client.prompts.subset_tasks(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">subsets</a>(...) -&gt; AsyncHttpResponse[typing.List[ProjectSubsetItem]]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">subsets</a>(...) -> typing.List[ProjectSubsetItem]</code></summary>
 <dl>
 <dd>
 
@@ -8266,10 +8446,13 @@ client.prompts.subset_tasks(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.subsets(
     project_pk=1,
 )
@@ -8316,7 +8499,7 @@ client.prompts.subsets(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ModelInterfaceSerializerGet]]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">list</a>(...) -> typing.List[ModelInterfaceSerializerGet]</code></summary>
 <dl>
 <dd>
 
@@ -8344,10 +8527,13 @@ List all prompts.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.list()
 
 ```
@@ -8384,7 +8570,7 @@ client.prompts.list()
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">create</a>(...) -&gt; AsyncHttpResponse[ModelInterface]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">create</a>(...) -> ModelInterface</code></summary>
 <dl>
 <dd>
 
@@ -8418,10 +8604,13 @@ Create a new prompt.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.create(
     title="title",
 )
@@ -8440,63 +8629,7 @@ client.prompts.create(
 <dl>
 <dd>
 
-**title:** `str` — Model name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[UserSimpleRequest]` — User who created Dataset
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Model description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_fields:** `typing.Optional[typing.Any]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**output_classes:** `typing.Optional[typing.Any]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**skill_name:** `typing.Optional[SkillNameEnum]` 
+**request:** `ModelInterfaceRequest` 
     
 </dd>
 </dl>
@@ -8516,7 +8649,7 @@ client.prompts.create(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">compatible_projects</a>(...) -&gt; AsyncHttpResponse[PaginatedAllRolesProjectListList]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">compatible_projects</a>(...) -> PaginatedAllRolesProjectListList</code></summary>
 <dl>
 <dd>
 
@@ -8544,10 +8677,13 @@ Retrieve a list of compatible project for prompt.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.compatible_projects()
 
 ```
@@ -8608,7 +8744,7 @@ client.prompts.compatible_projects()
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">get</a>(...) -&gt; AsyncHttpResponse[ModelInterfaceSerializerGet]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">get</a>(...) -> ModelInterfaceSerializerGet</code></summary>
 <dl>
 <dd>
 
@@ -8642,10 +8778,13 @@ Retrieve a specific prompt.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.get(
     id="id",
 )
@@ -8684,7 +8823,7 @@ client.prompts.get(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -8718,10 +8857,13 @@ Delete a prompt by ID
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.delete(
     id="id",
 )
@@ -8760,7 +8902,7 @@ client.prompts.delete(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">update</a>(...) -&gt; AsyncHttpResponse[ModelInterface]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">update</a>(...) -> ModelInterface</code></summary>
 <dl>
 <dd>
 
@@ -8794,10 +8936,13 @@ Update a specific prompt by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.update(
     id="id",
 )
@@ -8824,7 +8969,7 @@ client.prompts.update(
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` 
+**associated_projects:** `typing.Optional[typing.List[int]]` 
     
 </dd>
 </dl>
@@ -8901,7 +9046,7 @@ client.prompts.update(
 </details>
 
 ## Predictions
-<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[Prediction]]</code></summary>
+<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">list</a>(...) -> typing.List[Prediction]</code></summary>
 <dl>
 <dd>
 
@@ -8929,10 +9074,13 @@ List all predictions and their IDs.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.predictions.list()
 
 ```
@@ -8977,7 +9125,7 @@ client.predictions.list()
 </dl>
 </details>
 
-<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">create</a>(...) -&gt; AsyncHttpResponse[Prediction]</code></summary>
+<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">create</a>(...) -> Prediction</code></summary>
 <dl>
 <dd>
 
@@ -9005,10 +9153,13 @@ Create a prediction for a specific task.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.predictions.create(
     model_version="yolo-v8",
     result=[
@@ -9019,14 +9170,7 @@ client.predictions.create(
             "original_width": 1920,
             "to_name": "image",
             "type": "rectanglelabels",
-            "value": {
-                "height": 60,
-                "rotation": 0,
-                "values": {"rectanglelabels": ["Person"]},
-                "width": 50,
-                "x": 20,
-                "y": 30,
-            },
+            "value": {"height": 60, "rotation": 0, "values": {"rectanglelabels": ["Person"]}, "width": 50, "x": 20, "y": 30}
         }
     ],
     score=0.95,
@@ -9054,7 +9198,7 @@ client.predictions.create(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
     
 </dd>
 </dl>
@@ -9090,7 +9234,7 @@ client.predictions.create(
 </dl>
 </details>
 
-<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">get</a>(...) -&gt; AsyncHttpResponse[Prediction]</code></summary>
+<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">get</a>(...) -> Prediction</code></summary>
 <dl>
 <dd>
 
@@ -9118,10 +9262,13 @@ Get details about a specific prediction by its ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.predictions.get(
     id=1,
 )
@@ -9160,7 +9307,7 @@ client.predictions.get(
 </dl>
 </details>
 
-<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -9188,10 +9335,13 @@ Delete a prediction by prediction ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.predictions.delete(
     id=1,
 )
@@ -9230,7 +9380,7 @@ client.predictions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">update</a>(...) -&gt; AsyncHttpResponse[Prediction]</code></summary>
+<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">update</a>(...) -> Prediction</code></summary>
 <dl>
 <dd>
 
@@ -9258,10 +9408,13 @@ Update prediction data by prediction ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.predictions.update(
     id=1,
     model_version="yolo-v8",
@@ -9273,14 +9426,7 @@ client.predictions.update(
             "original_width": 1920,
             "to_name": "image",
             "type": "rectanglelabels",
-            "value": {
-                "height": 60,
-                "rotation": 0,
-                "values": {"rectanglelabels": ["Person"]},
-                "width": 50,
-                "x": 20,
-                "y": 30,
-            },
+            "value": {"height": 60, "rotation": 0, "values": {"rectanglelabels": ["Person"]}, "width": 50, "x": 20, "y": 30}
         }
     ],
     score=0.95,
@@ -9316,7 +9462,7 @@ client.predictions.update(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
     
 </dd>
 </dl>
@@ -9353,7 +9499,7 @@ client.predictions.update(
 </details>
 
 ## ProjectTemplates
-<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ProjectTemplate]]</code></summary>
+<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">list</a>(...) -> typing.List[ProjectTemplate]</code></summary>
 <dl>
 <dd>
 
@@ -9387,10 +9533,13 @@ Get a list of all project templates for an organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.project_templates.list()
 
 ```
@@ -9427,7 +9576,7 @@ client.project_templates.list()
 </dl>
 </details>
 
-<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">create</a>(...) -&gt; AsyncHttpResponse[ProjectTemplate]</code></summary>
+<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">create</a>(...) -> ProjectTemplate</code></summary>
 <dl>
 <dd>
 
@@ -9461,10 +9610,13 @@ Create a project template for an organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.project_templates.create(
     name="name",
     project_id=1,
@@ -9484,95 +9636,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project_id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**assignment_settings:** `typing.Optional[typing.Any]` — general dict serialized assignment settings
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_script:** `typing.Optional[str]` — custom script (Plugin) for projects created from this template
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project_settings:** `typing.Optional[typing.Any]` — general dict serialized project settings
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**require_comment_on_skip:** `typing.Optional[bool]` — flag to require comment on skip
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**review_settings:** `typing.Optional[typing.Any]` — general dict serialized review settings
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_unused_data_columns_to_annotators:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tags:** `typing.Optional[typing.Any]` 
+**request:** `ProjectTemplateRequest` 
     
 </dd>
 </dl>
@@ -9592,7 +9656,7 @@ client.project_templates.create(
 </dl>
 </details>
 
-<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">get</a>(...) -&gt; AsyncHttpResponse[ProjectTemplate]</code></summary>
+<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">get</a>(...) -> ProjectTemplate</code></summary>
 <dl>
 <dd>
 
@@ -9626,10 +9690,13 @@ Get a specific project template by ID for an organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.project_templates.get(
     id=1,
 )
@@ -9668,7 +9735,7 @@ client.project_templates.get(
 </dl>
 </details>
 
-<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -9702,10 +9769,13 @@ Delete a specific project template by ID for an organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.project_templates.delete(
     id=1,
 )
@@ -9744,7 +9814,7 @@ client.project_templates.delete(
 </dl>
 </details>
 
-<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">update</a>(...) -&gt; AsyncHttpResponse[ProjectTemplate]</code></summary>
+<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">update</a>(...) -> ProjectTemplate</code></summary>
 <dl>
 <dd>
 
@@ -9778,10 +9848,13 @@ Update the details of a specific project template by ID for an organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.project_templates.update(
     id=1,
 )
@@ -9916,7 +9989,7 @@ client.project_templates.update(
 </dl>
 </details>
 
-<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">create_project_from_template</a>(...) -&gt; AsyncHttpResponse[LseProject]</code></summary>
+<details><summary><code>client.project_templates.<a href="src/label_studio_sdk/project_templates/client.py">create_project_from_template</a>(...) -> LseProject</code></summary>
 <dl>
 <dd>
 
@@ -9950,10 +10023,13 @@ Create a project from a specific project template by ID for an organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.project_templates.create_project_from_template(
     id=1,
     title="title",
@@ -10019,7 +10095,7 @@ client.project_templates.create_project_from_template(
 </details>
 
 ## Projects
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list</a>(...) -&gt; AsyncPager[AllRolesProjectList, PaginatedAllRolesProjectListList]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list</a>(...) -> PaginatedAllRolesProjectListList</code></summary>
 <dl>
 <dd>
 
@@ -10047,16 +10123,14 @@ Retrieve a list of projects.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
-response = client.projects.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.projects.list()
 
 ```
 </dd>
@@ -10180,7 +10254,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">create</a>(...) -&gt; AsyncHttpResponse[LseProjectCreate]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">create</a>(...) -> LseProjectCreate</code></summary>
 <dl>
 <dd>
 
@@ -10208,10 +10282,13 @@ Create a project for a specific organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.create()
 
 ```
@@ -10356,7 +10433,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
+**pinned_at:** `typing.Optional[datetime.datetime]` — Pinned date and time
     
 </dd>
 </dl>
@@ -10480,7 +10557,7 @@ client.projects.create()
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list_counts</a>(...) -&gt; AsyncHttpResponse[PaginatedLseProjectCountsList]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list_counts</a>(...) -> PaginatedLseProjectCountsList</code></summary>
 <dl>
 <dd>
 
@@ -10508,10 +10585,13 @@ Returns a list of projects with their counts. For example, task_number which is 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.list_counts()
 
 ```
@@ -10628,7 +10708,7 @@ client.projects.list_counts()
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">get</a>(...) -&gt; AsyncHttpResponse[LseProjectResponse]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">get</a>(...) -> LseProjectResponse</code></summary>
 <dl>
 <dd>
 
@@ -10656,10 +10736,13 @@ Retrieve information about a project by project ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.get(
     id=1,
 )
@@ -10706,7 +10789,7 @@ client.projects.get(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -10734,10 +10817,13 @@ Delete a project by specified project ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.delete(
     id=1,
 )
@@ -10776,7 +10862,7 @@ client.projects.delete(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">update</a>(...) -&gt; AsyncHttpResponse[LseProjectUpdate]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">update</a>(...) -> LseProjectUpdate</code></summary>
 <dl>
 <dd>
 
@@ -10804,10 +10890,13 @@ Update the details of a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.update(
     id=1,
 )
@@ -11087,7 +11176,7 @@ Methodology (Consensus / Pairwise Averaging)
 <dl>
 <dd>
 
-**pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
+**pinned_at:** `typing.Optional[datetime.datetime]` — Pinned date and time
     
 </dd>
 </dl>
@@ -11243,7 +11332,7 @@ Methodology (Consensus / Pairwise Averaging)
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list_unique_annotators</a>(...) -&gt; AsyncHttpResponse[typing.List[UserSimple]]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list_unique_annotators</a>(...) -> typing.List[UserSimple]</code></summary>
 <dl>
 <dd>
 
@@ -11271,10 +11360,13 @@ Return unique users who have submitted annotations in the specified project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.list_unique_annotators(
     id=1,
 )
@@ -11313,7 +11405,7 @@ client.projects.list_unique_annotators(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">duplicate</a>(...) -&gt; AsyncHttpResponse[DuplicateProjectsResponse]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">duplicate</a>(...) -> DuplicateProjectsResponse</code></summary>
 <dl>
 <dd>
 
@@ -11347,10 +11439,13 @@ Make a copy of project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.duplicate(
     id=1,
     mode="settings",
@@ -11429,7 +11524,7 @@ What to Duplicate (Project configuration only / Project configuration and tasks)
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">import_tasks</a>(...) -&gt; AsyncHttpResponse[ImportTasksProjectsResponse]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">import_tasks</a>(...) -> ImportTasksProjectsResponse</code></summary>
 <dl>
 <dd>
 
@@ -11521,16 +11616,21 @@ What to Duplicate (Project configuration only / Project configuration and tasks)
 <dd>
 
 ```python
-from label_studio_sdk import ImportApiRequest, LabelStudio
+from label_studio_sdk import LabelStudio, ImportApiRequest
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.import_tasks(
     id=1,
     request=[
         ImportApiRequest(
-            data={"key": "value"},
+            data={
+                "key": "value"
+            },
         )
     ],
 )
@@ -11557,7 +11657,7 @@ client.projects.import_tasks(
 <dl>
 <dd>
 
-**request:** `typing.Sequence[ImportApiRequest]` 
+**request:** `typing.List[ImportApiRequest]` 
     
 </dd>
 </dl>
@@ -11601,7 +11701,7 @@ client.projects.import_tasks(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">import_predictions</a>(...) -&gt; AsyncHttpResponse[ImportPredictionsProjectsResponse]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">import_predictions</a>(...) -> ImportPredictionsProjectsResponse</code></summary>
 <dl>
 <dd>
 
@@ -11629,15 +11729,22 @@ Import model predictions for tasks in the specified project.
 
 ```python
 from label_studio_sdk import LabelStudio, PredictionRequest
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.import_predictions(
     id=1,
     request=[
         PredictionRequest(
-            result=[{"key": "value"}],
+            result=[
+                {
+                    "key": "value"
+                }
+            ],
             task=1,
         )
     ],
@@ -11665,7 +11772,7 @@ client.projects.import_predictions(
 <dl>
 <dd>
 
-**request:** `typing.Sequence[PredictionRequest]` 
+**request:** `typing.List[PredictionRequest]` 
     
 </dd>
 </dl>
@@ -11685,7 +11792,7 @@ client.projects.import_predictions(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">validate_label_config</a>(...) -&gt; AsyncHttpResponse[ProjectLabelConfig]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">validate_label_config</a>(...) -> ProjectLabelConfig</code></summary>
 <dl>
 <dd>
 
@@ -11713,10 +11820,13 @@ Determine whether the label configuration for a specific project is valid.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.validate_label_config(
     id=1,
     label_config="label_config",
@@ -11744,7 +11854,7 @@ client.projects.validate_label_config(
 <dl>
 <dd>
 
-**label_config:** `str` — Label config in XML format. See more about it in documentation
+**request:** `ProjectLabelConfigRequest` 
     
 </dd>
 </dl>
@@ -11765,7 +11875,7 @@ client.projects.validate_label_config(
 </details>
 
 ## Tasks
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create_many_status</a>(...) -&gt; AsyncHttpResponse[ProjectImport]</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create_many_status</a>(...) -> ProjectImport</code></summary>
 <dl>
 <dd>
 
@@ -11803,10 +11913,13 @@ client.projects.validate_label_config(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tasks.create_many_status(
     id=1,
     import_pk=1,
@@ -11854,7 +11967,7 @@ client.tasks.create_many_status(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">delete_all_tasks</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">delete_all_tasks</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -11882,10 +11995,13 @@ Delete all tasks from a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tasks.delete_all_tasks(
     id=1,
 )
@@ -11924,7 +12040,7 @@ client.tasks.delete_all_tasks(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">list</a>(...) -&gt; AsyncPager[RoleBasedTask, PaginatedRoleBasedTaskList]</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">list</a>(...) -> PaginatedRoleBasedTaskList</code></summary>
 <dl>
 <dd>
 
@@ -11955,16 +12071,14 @@ Retrieve a paginated list of tasks. The response format varies based on the user
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
-response = client.tasks.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.tasks.list()
 
 ```
 </dd>
@@ -12089,7 +12203,7 @@ Example: ["completed_at"]
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create</a>(...) -&gt; AsyncHttpResponse[LseTask]</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create</a>(...) -> LseTask</code></summary>
 <dl>
 <dd>
 
@@ -12117,12 +12231,18 @@ Create a new task
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tasks.create(
-    data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
+    data={
+        "image": "https://example.com/image.jpg",
+        "text": "Hello, world!"
+    },
     project=1,
 )
 
@@ -12164,7 +12284,7 @@ client.tasks.create(
 <dl>
 <dd>
 
-**comment_authors:** `typing.Optional[typing.Sequence[int]]` — Users who wrote comments
+**comment_authors:** `typing.Optional[typing.List[int]]` — Users who wrote comments
     
 </dd>
 </dl>
@@ -12204,7 +12324,7 @@ client.tasks.create(
 <dl>
 <dd>
 
-**last_comment_updated_at:** `typing.Optional[dt.datetime]` — When the last comment was updated
+**last_comment_updated_at:** `typing.Optional[datetime.datetime]` — When the last comment was updated
     
 </dd>
 </dl>
@@ -12280,7 +12400,7 @@ client.tasks.create(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">get</a>(...) -&gt; AsyncHttpResponse[RoleBasedTask]</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">get</a>(...) -> RoleBasedTask</code></summary>
 <dl>
 <dd>
 
@@ -12308,10 +12428,13 @@ Get task data, metadata, annotations and other attributes for a specific labelin
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tasks.get(
     id="id",
 )
@@ -12350,7 +12473,7 @@ client.tasks.get(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -12378,10 +12501,13 @@ Delete a task in Label Studio. This action cannot be undone!
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tasks.delete(
     id="id",
 )
@@ -12420,7 +12546,7 @@ client.tasks.delete(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">update</a>(...) -&gt; AsyncHttpResponse[RoleBasedTask]</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">update</a>(...) -> RoleBasedTask</code></summary>
 <dl>
 <dd>
 
@@ -12448,10 +12574,13 @@ Update the attributes of an existing labeling task.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tasks.update(
     id="id",
 )
@@ -12510,7 +12639,7 @@ client.tasks.update(
 <dl>
 <dd>
 
-**completed_at:** `typing.Optional[dt.datetime]` 
+**completed_at:** `typing.Optional[datetime.datetime]` 
     
 </dd>
 </dl>
@@ -12558,7 +12687,7 @@ client.tasks.update(
 <dl>
 <dd>
 
-**last_comment_updated_at:** `typing.Optional[dt.datetime]` — When the last comment was updated
+**last_comment_updated_at:** `typing.Optional[datetime.datetime]` — When the last comment was updated
     
 </dd>
 </dl>
@@ -12666,7 +12795,7 @@ client.tasks.update(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create_event</a>(...) -&gt; AsyncHttpResponse[TaskEvent]</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create_event</a>(...) -> TaskEvent</code></summary>
 <dl>
 <dd>
 
@@ -12741,19 +12870,19 @@ client.tasks.update(
 <dd>
 
 ```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 import datetime
 
-from label_studio_sdk import LabelStudio
-
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tasks.create_event(
     id=1,
     event_key="event_key",
-    event_time=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
+    event_time=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
 )
 
 ```
@@ -12786,7 +12915,7 @@ client.tasks.create_event(
 <dl>
 <dd>
 
-**event_time:** `dt.datetime` — Timestamp when the event occurred (frontend time)
+**event_time:** `datetime.datetime` — Timestamp when the event occurred (frontend time)
     
 </dd>
 </dl>
@@ -12839,7 +12968,7 @@ client.tasks.create_event(
 </details>
 
 ## SessionPolicy
-<details><summary><code>client.session_policy.<a href="src/label_studio_sdk/session_policy/client.py">get</a>() -&gt; AsyncHttpResponse[SessionTimeoutPolicy]</code></summary>
+<details><summary><code>client.session_policy.<a href="src/label_studio_sdk/session_policy/client.py">get</a>() -> SessionTimeoutPolicy</code></summary>
 <dl>
 <dd>
 
@@ -12867,10 +12996,13 @@ Retrieve session timeout policy for the currently active organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.session_policy.get()
 
 ```
@@ -12899,7 +13031,7 @@ client.session_policy.get()
 </dl>
 </details>
 
-<details><summary><code>client.session_policy.<a href="src/label_studio_sdk/session_policy/client.py">update</a>(...) -&gt; AsyncHttpResponse[SessionTimeoutPolicy]</code></summary>
+<details><summary><code>client.session_policy.<a href="src/label_studio_sdk/session_policy/client.py">update</a>(...) -> SessionTimeoutPolicy</code></summary>
 <dl>
 <dd>
 
@@ -12927,10 +13059,13 @@ Update session timeout policy for the currently active organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.session_policy.update()
 
 ```
@@ -12976,7 +13111,7 @@ client.session_policy.update()
 </details>
 
 ## ImportStorage
-<details><summary><code>client.import_storage.<a href="src/label_studio_sdk/import_storage/client.py">list_types</a>() -&gt; AsyncHttpResponse[typing.List[ListTypesImportStorageResponseItem]]</code></summary>
+<details><summary><code>client.import_storage.<a href="src/label_studio_sdk/import_storage/client.py">list_types</a>() -> typing.List[ListTypesImportStorageResponseItem]</code></summary>
 <dl>
 <dd>
 
@@ -13004,10 +13139,13 @@ Retrieve a list of the import storages types.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.list_types()
 
 ```
@@ -13037,7 +13175,7 @@ client.import_storage.list_types()
 </details>
 
 ## ExportStorage
-<details><summary><code>client.export_storage.<a href="src/label_studio_sdk/export_storage/client.py">list_types</a>() -&gt; AsyncHttpResponse[typing.List[ListTypesExportStorageResponseItem]]</code></summary>
+<details><summary><code>client.export_storage.<a href="src/label_studio_sdk/export_storage/client.py">list_types</a>() -> typing.List[ListTypesExportStorageResponseItem]</code></summary>
 <dl>
 <dd>
 
@@ -13065,10 +13203,13 @@ Retrieve a list of the export storages types.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.list_types()
 
 ```
@@ -13098,7 +13239,7 @@ client.export_storage.list_types()
 </details>
 
 ## Tokens
-<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[LseapiTokenList]]</code></summary>
+<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">list</a>(...) -> typing.List[LseapiTokenList]</code></summary>
 <dl>
 <dd>
 
@@ -13126,10 +13267,13 @@ List all API tokens for the current user.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tokens.list()
 
 ```
@@ -13166,7 +13310,7 @@ client.tokens.list()
 </dl>
 </details>
 
-<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">create</a>() -&gt; AsyncHttpResponse[LseapiTokenCreate]</code></summary>
+<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">create</a>() -> LseapiTokenCreate</code></summary>
 <dl>
 <dd>
 
@@ -13194,10 +13338,13 @@ Create a new API token for the current user.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tokens.create()
 
 ```
@@ -13226,7 +13373,7 @@ client.tokens.create()
 </dl>
 </details>
 
-<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">blacklist</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, typing.Any]]</code></summary>
+<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">blacklist</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -13254,10 +13401,13 @@ Adds a JWT refresh token to the blacklist, preventing it from being used to obta
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tokens.blacklist(
     refresh="refresh",
 )
@@ -13296,7 +13446,7 @@ client.tokens.blacklist(
 </dl>
 </details>
 
-<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">refresh</a>(...) -&gt; AsyncHttpResponse[TokenRefreshResponse]</code></summary>
+<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">refresh</a>(...) -> TokenRefreshResponse</code></summary>
 <dl>
 <dd>
 
@@ -13324,10 +13474,13 @@ Get a new access token, using a refresh token.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tokens.refresh(
     refresh="refresh",
 )
@@ -13366,7 +13519,7 @@ client.tokens.refresh(
 </dl>
 </details>
 
-<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">rotate</a>(...) -&gt; AsyncHttpResponse[TokenRotateResponse]</code></summary>
+<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">rotate</a>(...) -> TokenRotateResponse</code></summary>
 <dl>
 <dd>
 
@@ -13394,10 +13547,13 @@ Creates a new JWT refresh token and blacklists the current one.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tokens.rotate(
     refresh="refresh",
 )
@@ -13437,7 +13593,7 @@ client.tokens.rotate(
 </details>
 
 ## Versions
-<details><summary><code>client.versions.<a href="src/label_studio_sdk/versions/client.py">get</a>() -&gt; AsyncHttpResponse[VersionResponse]</code></summary>
+<details><summary><code>client.versions.<a href="src/label_studio_sdk/versions/client.py">get</a>() -> VersionResponse</code></summary>
 <dl>
 <dd>
 
@@ -13465,10 +13621,13 @@ Get version information about the Label Studio instance.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.versions.get()
 
 ```
@@ -13498,7 +13657,7 @@ client.versions.get()
 </details>
 
 ## Webhooks
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[Webhook]]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">list</a>(...) -> typing.List[Webhook]</code></summary>
 <dl>
 <dd>
 
@@ -13526,10 +13685,13 @@ List all webhooks set up for your organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.webhooks.list()
 
 ```
@@ -13566,7 +13728,7 @@ client.webhooks.list()
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">create</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">create</a>(...) -> Webhook</code></summary>
 <dl>
 <dd>
 
@@ -13594,10 +13756,13 @@ Create a webhook for your organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.webhooks.create(
     url="url",
 )
@@ -13624,7 +13789,7 @@ client.webhooks.create(
 <dl>
 <dd>
 
-**actions:** `typing.Optional[typing.Sequence[ActionsEnum]]` 
+**actions:** `typing.Optional[typing.List[ActionsEnum]]` 
     
 </dd>
 </dl>
@@ -13684,7 +13849,7 @@ client.webhooks.create(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">info</a>(...) -&gt; AsyncHttpResponse[InfoWebhooksResponse]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">info</a>(...) -> InfoWebhooksResponse</code></summary>
 <dl>
 <dd>
 
@@ -13712,10 +13877,13 @@ Get descriptions of all available webhook actions to set up webhooks.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.webhooks.info()
 
 ```
@@ -13752,7 +13920,7 @@ client.webhooks.info()
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">get</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">get</a>(...) -> Webhook</code></summary>
 <dl>
 <dd>
 
@@ -13766,10 +13934,13 @@ client.webhooks.info()
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.webhooks.get(
     id=1,
 )
@@ -13808,7 +13979,7 @@ client.webhooks.get(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -13822,10 +13993,13 @@ client.webhooks.get(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.webhooks.delete(
     id=1,
 )
@@ -13864,7 +14038,7 @@ client.webhooks.delete(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">update</a>(...) -&gt; AsyncHttpResponse[WebhookSerializerForUpdate]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">update</a>(...) -> WebhookSerializerForUpdate</code></summary>
 <dl>
 <dd>
 
@@ -13878,10 +14052,13 @@ client.webhooks.delete(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.webhooks.update(
     id=1,
 )
@@ -13908,7 +14085,7 @@ client.webhooks.update(
 <dl>
 <dd>
 
-**actions:** `typing.Optional[typing.Sequence[ActionsEnum]]` 
+**actions:** `typing.Optional[typing.List[ActionsEnum]]` 
     
 </dd>
 </dl>
@@ -13969,7 +14146,7 @@ client.webhooks.update(
 </details>
 
 ## Workspaces
-<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[Workspace]]</code></summary>
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">list</a>(...) -> typing.List[Workspace]</code></summary>
 <dl>
 <dd>
 
@@ -14003,10 +14180,13 @@ List all workspaces for your organization. Workspaces in Label Studio let you or
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.list()
 
 ```
@@ -14067,7 +14247,7 @@ client.workspaces.list()
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">create</a>(...) -&gt; AsyncHttpResponse[Workspace]</code></summary>
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">create</a>(...) -> Workspace</code></summary>
 <dl>
 <dd>
 
@@ -14101,10 +14281,13 @@ Create a new workspace. Workspaces in Label Studio let you organize your project
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.create(
     title="title",
 )
@@ -14175,7 +14358,7 @@ client.workspaces.create(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">get</a>(...) -&gt; AsyncHttpResponse[Workspace]</code></summary>
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">get</a>(...) -> Workspace</code></summary>
 <dl>
 <dd>
 
@@ -14209,10 +14392,13 @@ Retrieve details for a specific workspace by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.get(
     id=1,
 )
@@ -14251,7 +14437,7 @@ client.workspaces.get(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14285,10 +14471,13 @@ Delete a specific workspace by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.delete(
     id=1,
 )
@@ -14327,7 +14516,7 @@ client.workspaces.delete(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">update</a>(...) -&gt; AsyncHttpResponse[Workspace]</code></summary>
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">update</a>(...) -> Workspace</code></summary>
 <dl>
 <dd>
 
@@ -14361,10 +14550,13 @@ Update settings for a specific workspace by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.update(
     id=1,
 )
@@ -14444,7 +14636,7 @@ client.workspaces.update(
 </details>
 
 ## ExportStorage Azure
-<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[AzureBlobExportStorage]]</code></summary>
+<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">list</a>(...) -> typing.List[AzureBlobExportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -14472,10 +14664,13 @@ Get a list of all Azure export storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure.list(
     project=1,
 )
@@ -14522,7 +14717,7 @@ client.export_storage.azure.list(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">create</a>(...) -&gt; AsyncHttpResponse[AzureBlobExportStorage]</code></summary>
+<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">create</a>(...) -> AzureBlobExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -14550,10 +14745,13 @@ Create a new Azure export storage connection to store annotations.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure.create()
 
 ```
@@ -14646,7 +14844,7 @@ client.export_storage.azure.create()
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14674,10 +14872,13 @@ Validate a specific Azure export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure.validate()
 
 ```
@@ -14778,7 +14979,7 @@ client.export_storage.azure.validate()
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">get</a>(...) -&gt; AsyncHttpResponse[AzureBlobExportStorage]</code></summary>
+<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">get</a>(...) -> AzureBlobExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -14806,10 +15007,13 @@ Get a specific Azure export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure.get(
     id=1,
 )
@@ -14848,7 +15052,7 @@ client.export_storage.azure.get(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14876,10 +15080,13 @@ Delete a specific Azure export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure.delete(
     id=1,
 )
@@ -14918,7 +15125,7 @@ client.export_storage.azure.delete(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">update</a>(...) -&gt; AsyncHttpResponse[AzureBlobExportStorage]</code></summary>
+<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">update</a>(...) -> AzureBlobExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -14946,10 +15153,13 @@ Update a specific Azure export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure.update(
     id=1,
 )
@@ -15052,7 +15262,7 @@ client.export_storage.azure.update(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">sync</a>(...) -&gt; AsyncHttpResponse[AzureBlobExportStorage]</code></summary>
+<details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">sync</a>(...) -> AzureBlobExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -15080,10 +15290,13 @@ Sync tasks from an Azure export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure.sync(
     id=1,
 )
@@ -15123,7 +15336,7 @@ client.export_storage.azure.sync(
 </details>
 
 ## ExportStorage AzureSpi
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[AzureServicePrincipalExportStorage]]</code></summary>
+<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">list</a>(...) -> typing.List[AzureServicePrincipalExportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -15157,10 +15370,13 @@ Get a list of all Azure export storage connections that were set up with Service
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure_spi.list(
     project=1,
 )
@@ -15207,7 +15423,7 @@ client.export_storage.azure_spi.list(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">create</a>(...) -&gt; AsyncHttpResponse[AzureServicePrincipalExportStorage]</code></summary>
+<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">create</a>(...) -> AzureServicePrincipalExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -15241,10 +15457,13 @@ Create an Azure export storage connection with Service Principal authentication 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure_spi.create(
     project=1,
 )
@@ -15263,159 +15482,7 @@ client.export_storage.azure_spi.create(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
+**request:** `AzureServicePrincipalExportStorageRequest` 
     
 </dd>
 </dl>
@@ -15435,7 +15502,7 @@ client.export_storage.azure_spi.create(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -15469,10 +15536,13 @@ Validate a specific Azure export storage connection that was set up with Service
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure_spi.validate(
     project=1,
 )
@@ -15491,159 +15561,7 @@ client.export_storage.azure_spi.validate(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
+**request:** `AzureServicePrincipalExportStorageRequest` 
     
 </dd>
 </dl>
@@ -15663,7 +15581,7 @@ client.export_storage.azure_spi.validate(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">get</a>(...) -&gt; AsyncHttpResponse[AzureServicePrincipalExportStorage]</code></summary>
+<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">get</a>(...) -> AzureServicePrincipalExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -15697,10 +15615,13 @@ Get a specific Azure export storage connection that was set up with Service Prin
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure_spi.get(
     id=1,
 )
@@ -15739,7 +15660,7 @@ client.export_storage.azure_spi.get(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -15773,10 +15694,13 @@ Delete a specific Azure export storage connection that was set up with Service P
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure_spi.delete(
     id=1,
 )
@@ -15815,7 +15739,7 @@ client.export_storage.azure_spi.delete(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">update</a>(...) -&gt; AsyncHttpResponse[AzureServicePrincipalExportStorage]</code></summary>
+<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">update</a>(...) -> AzureServicePrincipalExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -15849,10 +15773,13 @@ Update a specific Azure export storage connection that was set up with Service P
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure_spi.update(
     id=1,
 )
@@ -15927,7 +15854,7 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
 </dl>
@@ -16051,7 +15978,7 @@ client.export_storage.azure_spi.update(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">sync</a>(...) -&gt; AsyncHttpResponse[AzureServicePrincipalExportStorage]</code></summary>
+<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">sync</a>(...) -> AzureServicePrincipalExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -16085,10 +16012,13 @@ Sync tasks from an Azure SPI export storage.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.azure_spi.sync(
     id=1,
 )
@@ -16128,7 +16058,7 @@ client.export_storage.azure_spi.sync(
 </details>
 
 ## ExportStorage Databricks
-<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[DatabricksExportStorage]]</code></summary>
+<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">list</a>(...) -> typing.List[DatabricksExportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -16162,10 +16092,13 @@ Get a list of all Databricks Files export storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.databricks.list(
     project=1,
 )
@@ -16212,7 +16145,7 @@ client.export_storage.databricks.list(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">create</a>(...) -&gt; AsyncHttpResponse[DatabricksExportStorage]</code></summary>
+<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">create</a>(...) -> DatabricksExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -16246,10 +16179,13 @@ Create a Databricks Files export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.databricks.create(
     catalog="catalog",
     host="host",
@@ -16272,213 +16208,7 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
-**catalog:** `str` — UC catalog name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `str` — Databricks workspace base URL (https://...)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schema:** `str` — UC schema name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**volume:** `str` — UC volume name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Export path prefix under the volume
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_timeout_s:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
+**request:** `DatabricksExportStorageRequest` 
     
 </dd>
 </dl>
@@ -16498,7 +16228,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -16532,10 +16262,13 @@ Validate a specific Databricks Files export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.databricks.validate(
     catalog="catalog",
     host="host",
@@ -16558,213 +16291,7 @@ client.export_storage.databricks.validate(
 <dl>
 <dd>
 
-**catalog:** `str` — UC catalog name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `str` — Databricks workspace base URL (https://...)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schema:** `str` — UC schema name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**volume:** `str` — UC volume name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Export path prefix under the volume
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_timeout_s:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
+**request:** `DatabricksExportStorageRequest` 
     
 </dd>
 </dl>
@@ -16784,7 +16311,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">get</a>(...) -&gt; AsyncHttpResponse[DatabricksExportStorage]</code></summary>
+<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">get</a>(...) -> DatabricksExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -16818,10 +16345,13 @@ Get a specific Databricks Files export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.databricks.get(
     id=1,
 )
@@ -16860,7 +16390,7 @@ client.export_storage.databricks.get(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -16894,10 +16424,13 @@ Delete a specific Databricks Files export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.databricks.delete(
     id=1,
 )
@@ -16936,7 +16469,7 @@ client.export_storage.databricks.delete(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">update</a>(...) -&gt; AsyncHttpResponse[DatabricksExportStorage]</code></summary>
+<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">update</a>(...) -> DatabricksExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -16970,10 +16503,13 @@ Update a specific Databricks Files export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.databricks.update(
     id=1,
 )
@@ -17062,7 +16598,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
 </dl>
@@ -17226,7 +16762,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">sync</a>(...) -&gt; AsyncHttpResponse[DatabricksExportStorage]</code></summary>
+<details><summary><code>client.export_storage.databricks.<a href="src/label_studio_sdk/export_storage/databricks/client.py">sync</a>(...) -> DatabricksExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -17260,10 +16796,13 @@ Export annotations to a Databricks Files storage.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.databricks.sync(
     id=1,
 )
@@ -17303,7 +16842,7 @@ client.export_storage.databricks.sync(
 </details>
 
 ## ExportStorage Gcs
-<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[GcsExportStorage]]</code></summary>
+<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">list</a>(...) -> typing.List[GcsExportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -17331,10 +16870,13 @@ Get a list of all GCS export storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs.list(
     project=1,
 )
@@ -17381,7 +16923,7 @@ client.export_storage.gcs.list(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">create</a>(...) -&gt; AsyncHttpResponse[GcsExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">create</a>(...) -> GcsExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -17409,10 +16951,13 @@ Create a new GCS export storage connection to store annotations.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs.create()
 
 ```
@@ -17505,7 +17050,7 @@ client.export_storage.gcs.create()
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -17533,10 +17078,13 @@ Validate a specific GCS export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs.validate()
 
 ```
@@ -17637,7 +17185,7 @@ client.export_storage.gcs.validate()
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">get</a>(...) -&gt; AsyncHttpResponse[GcsExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">get</a>(...) -> GcsExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -17665,10 +17213,13 @@ Get a specific GCS export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs.get(
     id=1,
 )
@@ -17707,7 +17258,7 @@ client.export_storage.gcs.get(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -17735,10 +17286,13 @@ Delete a specific GCS export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs.delete(
     id=1,
 )
@@ -17777,7 +17331,7 @@ client.export_storage.gcs.delete(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">update</a>(...) -&gt; AsyncHttpResponse[GcsExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">update</a>(...) -> GcsExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -17805,10 +17359,13 @@ Update a specific GCS export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs.update(
     id=1,
 )
@@ -17911,7 +17468,7 @@ client.export_storage.gcs.update(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">sync</a>(...) -&gt; AsyncHttpResponse[GcsExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">sync</a>(...) -> GcsExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -17939,10 +17496,13 @@ Sync tasks from an GCS export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs.sync(
     id=1,
 )
@@ -17982,7 +17542,7 @@ client.export_storage.gcs.sync(
 </details>
 
 ## ExportStorage GcsSa
-<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[GcssaExportStorage]]</code></summary>
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">list</a>(...) -> typing.List[GcssaExportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -18016,10 +17576,13 @@ Get a list of all GCS export storage connections set up with SA Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs_sa.list(
     project=1,
 )
@@ -18066,7 +17629,7 @@ client.export_storage.gcs_sa.list(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">create</a>(...) -&gt; AsyncHttpResponse[GcssaExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">create</a>(...) -> GcssaExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -18100,10 +17663,13 @@ Create a GCS export storage connection with SA Impersonation to store annotation
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs_sa.create(
     project=1,
 )
@@ -18122,135 +17688,7 @@ client.export_storage.gcs_sa.create(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**target_service_account_email:** `typing.Optional[str]` — Service account email to impersonate for GCS access
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `GcssaExportStorageRequest` 
     
 </dd>
 </dl>
@@ -18270,7 +17708,7 @@ client.export_storage.gcs_sa.create(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -18304,10 +17742,13 @@ Validate a specific GCS export storage connection set up with SA Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs_sa.validate(
     project=1,
 )
@@ -18326,135 +17767,7 @@ client.export_storage.gcs_sa.validate(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**target_service_account_email:** `typing.Optional[str]` — Service account email to impersonate for GCS access
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `GcssaExportStorageRequest` 
     
 </dd>
 </dl>
@@ -18474,7 +17787,7 @@ client.export_storage.gcs_sa.validate(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">get</a>(...) -&gt; AsyncHttpResponse[GcssaExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">get</a>(...) -> GcssaExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -18508,10 +17821,13 @@ Get a specific GCS export storage connection set up with SA Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs_sa.get(
     id=1,
 )
@@ -18550,7 +17866,7 @@ client.export_storage.gcs_sa.get(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -18584,10 +17900,13 @@ Delete a specific GCS export storage connection set up with SA Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs_sa.delete(
     id=1,
 )
@@ -18626,7 +17945,7 @@ client.export_storage.gcs_sa.delete(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">update</a>(...) -&gt; AsyncHttpResponse[GcssaExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">update</a>(...) -> GcssaExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -18660,10 +17979,13 @@ Update a specific GCS export storage connection set up with SA Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs_sa.update(
     id=1,
 )
@@ -18722,7 +18044,7 @@ client.export_storage.gcs_sa.update(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
 </dl>
@@ -18838,7 +18160,7 @@ client.export_storage.gcs_sa.update(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">sync</a>(...) -&gt; AsyncHttpResponse[GcssaExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcs_sa.<a href="src/label_studio_sdk/export_storage/gcs_sa/client.py">sync</a>(...) -> GcssaExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -18872,10 +18194,13 @@ Sync annotations to a GCS SA export storage.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcs_sa.sync(
     id=1,
 )
@@ -18915,7 +18240,7 @@ client.export_storage.gcs_sa.sync(
 </details>
 
 ## ExportStorage Gcswif
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[GcswifExportStorage]]</code></summary>
+<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">list</a>(...) -> typing.List[GcswifExportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -18949,10 +18274,13 @@ Get a list of all GCS export storage connections that were set up with WIF authe
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcswif.list(
     project=1,
 )
@@ -18999,7 +18327,7 @@ client.export_storage.gcswif.list(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">create</a>(...) -&gt; AsyncHttpResponse[GcswifExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">create</a>(...) -> GcswifExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -19033,10 +18361,13 @@ Create an GCS export storage connection with WIF authentication to store annotat
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcswif.create(
     project=1,
 )
@@ -19055,167 +18386,7 @@ client.export_storage.gcswif.create(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `GcswifExportStorageRequest` 
     
 </dd>
 </dl>
@@ -19235,7 +18406,7 @@ client.export_storage.gcswif.create(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -19269,10 +18440,13 @@ Validate a specific GCS export storage connection that was set up with WIF authe
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcswif.validate(
     project=1,
 )
@@ -19291,167 +18465,7 @@ client.export_storage.gcswif.validate(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `GcswifExportStorageRequest` 
     
 </dd>
 </dl>
@@ -19471,7 +18485,7 @@ client.export_storage.gcswif.validate(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">get</a>(...) -&gt; AsyncHttpResponse[GcswifExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">get</a>(...) -> GcswifExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -19505,10 +18519,13 @@ Get a specific GCS export storage connection that was set up with WIF authentica
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcswif.get(
     id=1,
 )
@@ -19547,7 +18564,7 @@ client.export_storage.gcswif.get(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -19581,10 +18598,13 @@ Delete a specific GCS export storage connection that was set up with WIF authent
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcswif.delete(
     id=1,
 )
@@ -19623,7 +18643,7 @@ client.export_storage.gcswif.delete(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">update</a>(...) -&gt; AsyncHttpResponse[GcswifExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">update</a>(...) -> GcswifExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -19657,10 +18677,13 @@ Update a specific GCS export storage connection that was set up with WIF authent
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcswif.update(
     id=1,
 )
@@ -19759,7 +18782,7 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
 </dl>
@@ -19867,7 +18890,7 @@ client.export_storage.gcswif.update(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">sync</a>(...) -&gt; AsyncHttpResponse[GcswifExportStorage]</code></summary>
+<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">sync</a>(...) -> GcswifExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -19901,10 +18924,13 @@ Sync tasks from an GCS WIF export storage.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.gcswif.sync(
     id=1,
 )
@@ -19944,7 +18970,7 @@ client.export_storage.gcswif.sync(
 </details>
 
 ## ExportStorage Local
-<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[LocalFilesExportStorage]]</code></summary>
+<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">list</a>(...) -> typing.List[LocalFilesExportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -19972,10 +18998,13 @@ Get a list of all local file export storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.local.list(
     project=1,
 )
@@ -20022,7 +19051,7 @@ client.export_storage.local.list(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">create</a>(...) -&gt; AsyncHttpResponse[LocalFilesExportStorage]</code></summary>
+<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">create</a>(...) -> LocalFilesExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -20050,10 +19079,13 @@ Create a new local file export storage connection to store annotations.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.local.create()
 
 ```
@@ -20130,7 +19162,7 @@ client.export_storage.local.create()
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -20158,10 +19190,13 @@ Validate a specific local file export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.local.validate()
 
 ```
@@ -20246,7 +19281,7 @@ client.export_storage.local.validate()
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">get</a>(...) -&gt; AsyncHttpResponse[LocalFilesExportStorage]</code></summary>
+<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">get</a>(...) -> LocalFilesExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -20274,10 +19309,13 @@ Get a specific local file export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.local.get(
     id=1,
 )
@@ -20316,7 +19354,7 @@ client.export_storage.local.get(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -20344,10 +19382,13 @@ Delete a specific local file export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.local.delete(
     id=1,
 )
@@ -20386,7 +19427,7 @@ client.export_storage.local.delete(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">update</a>(...) -&gt; AsyncHttpResponse[LocalFilesExportStorage]</code></summary>
+<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">update</a>(...) -> LocalFilesExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -20414,10 +19455,13 @@ Update a specific local file export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.local.update(
     id=1,
 )
@@ -20504,7 +19548,7 @@ client.export_storage.local.update(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">sync</a>(...) -&gt; AsyncHttpResponse[LocalFilesExportStorage]</code></summary>
+<details><summary><code>client.export_storage.local.<a href="src/label_studio_sdk/export_storage/local/client.py">sync</a>(...) -> LocalFilesExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -20532,10 +19576,13 @@ Sync tasks from a local file export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.local.sync(
     id=1,
 )
@@ -20575,7 +19622,7 @@ client.export_storage.local.sync(
 </details>
 
 ## ExportStorage Redis
-<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[RedisExportStorage]]</code></summary>
+<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">list</a>(...) -> typing.List[RedisExportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -20603,10 +19650,13 @@ Get a list of all Redis export storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.redis.list(
     project=1,
 )
@@ -20653,7 +19703,7 @@ client.export_storage.redis.list(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">create</a>(...) -&gt; AsyncHttpResponse[RedisExportStorage]</code></summary>
+<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">create</a>(...) -> RedisExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -20681,10 +19731,13 @@ Create a new Redis export storage connection to store annotations.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.redis.create()
 
 ```
@@ -20785,7 +19838,7 @@ client.export_storage.redis.create()
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -20813,10 +19866,13 @@ Validate a specific Redis export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.redis.validate()
 
 ```
@@ -20925,7 +19981,7 @@ client.export_storage.redis.validate()
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">get</a>(...) -&gt; AsyncHttpResponse[RedisExportStorage]</code></summary>
+<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">get</a>(...) -> RedisExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -20953,10 +20009,13 @@ Get a specific Redis export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.redis.get(
     id=1,
 )
@@ -20995,7 +20054,7 @@ client.export_storage.redis.get(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -21023,10 +20082,13 @@ Delete a specific Redis export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.redis.delete(
     id=1,
 )
@@ -21065,7 +20127,7 @@ client.export_storage.redis.delete(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">update</a>(...) -&gt; AsyncHttpResponse[RedisExportStorage]</code></summary>
+<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">update</a>(...) -> RedisExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -21093,10 +20155,13 @@ Update a specific Redis export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.redis.update(
     id=1,
 )
@@ -21207,7 +20272,7 @@ client.export_storage.redis.update(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">sync</a>(...) -&gt; AsyncHttpResponse[RedisExportStorage]</code></summary>
+<details><summary><code>client.export_storage.redis.<a href="src/label_studio_sdk/export_storage/redis/client.py">sync</a>(...) -> RedisExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -21235,10 +20300,13 @@ Sync tasks from a Redis export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.redis.sync(
     id=1,
 )
@@ -21278,7 +20346,7 @@ client.export_storage.redis.sync(
 </details>
 
 ## ExportStorage S3
-<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[S3ExportStorage]]</code></summary>
+<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">list</a>(...) -> typing.List[S3ExportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -21306,10 +20374,13 @@ Get a list of all S3 export storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3.list(
     project=1,
 )
@@ -21356,7 +20427,7 @@ client.export_storage.s3.list(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">create</a>(...) -&gt; AsyncHttpResponse[S3ExportStorage]</code></summary>
+<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">create</a>(...) -> S3ExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -21384,10 +20455,13 @@ Create a new S3 export storage connection to store annotations.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3.create()
 
 ```
@@ -21512,7 +20586,7 @@ client.export_storage.s3.create()
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -21540,10 +20614,13 @@ Validate a specific S3 export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3.validate()
 
 ```
@@ -21676,7 +20753,7 @@ client.export_storage.s3.validate()
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">get</a>(...) -&gt; AsyncHttpResponse[S3ExportStorage]</code></summary>
+<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">get</a>(...) -> S3ExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -21704,10 +20781,13 @@ Get a specific S3 export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3.get(
     id=1,
 )
@@ -21746,7 +20826,7 @@ client.export_storage.s3.get(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -21774,10 +20854,13 @@ Delete a specific S3 export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3.delete(
     id=1,
 )
@@ -21816,7 +20899,7 @@ client.export_storage.s3.delete(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">update</a>(...) -&gt; AsyncHttpResponse[S3ExportStorage]</code></summary>
+<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">update</a>(...) -> S3ExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -21844,10 +20927,13 @@ Update a specific S3 export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3.update(
     id=1,
 )
@@ -21982,7 +21068,7 @@ client.export_storage.s3.update(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">sync</a>(...) -&gt; AsyncHttpResponse[S3ExportStorage]</code></summary>
+<details><summary><code>client.export_storage.s3.<a href="src/label_studio_sdk/export_storage/s3/client.py">sync</a>(...) -> S3ExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -22010,10 +21096,13 @@ Sync tasks from an S3 export storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3.sync(
     id=1,
 )
@@ -22053,7 +21142,7 @@ client.export_storage.s3.sync(
 </details>
 
 ## ExportStorage S3S
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[LseS3ExportStorage]]</code></summary>
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">list</a>(...) -> typing.List[LseS3ExportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -22087,10 +21176,13 @@ Get a list of all S3 export storage connections that were set up with IAM role a
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3s.list(
     project=1,
 )
@@ -22137,7 +21229,7 @@ client.export_storage.s3s.list(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">create</a>(...) -&gt; AsyncHttpResponse[LseS3ExportStorage]</code></summary>
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">create</a>(...) -> LseS3ExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -22171,10 +21263,13 @@ Create an S3 export storage connection with IAM role access to store annotations
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3s.create(
     project=1,
     role_arn="role_arn",
@@ -22194,191 +21289,7 @@ client.export_storage.s3s.create(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `str` — AWS RoleArn
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS ExternalId
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**legacy_auth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `LseS3ExportStorageRequest` 
     
 </dd>
 </dl>
@@ -22398,7 +21309,7 @@ client.export_storage.s3s.create(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -22432,10 +21343,13 @@ Validate a specific S3 export storage connection that was set up with IAM role a
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3s.validate(
     project=1,
     role_arn="role_arn",
@@ -22455,191 +21369,7 @@ client.export_storage.s3s.validate(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `str` — AWS RoleArn
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS ExternalId
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**legacy_auth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `LseS3ExportStorageRequest` 
     
 </dd>
 </dl>
@@ -22659,7 +21389,7 @@ client.export_storage.s3s.validate(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">get</a>(...) -&gt; AsyncHttpResponse[LseS3ExportStorage]</code></summary>
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">get</a>(...) -> LseS3ExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -22693,10 +21423,13 @@ Get a specific S3 export storage connection that was set up with IAM role access
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3s.get(
     id=1,
 )
@@ -22735,7 +21468,7 @@ client.export_storage.s3s.get(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -22769,10 +21502,13 @@ Delete a specific S3 export storage connection that was set up with IAM role acc
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3s.delete(
     id=1,
 )
@@ -22811,7 +21547,7 @@ client.export_storage.s3s.delete(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">update</a>(...) -&gt; AsyncHttpResponse[LseS3ExportStorage]</code></summary>
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">update</a>(...) -> LseS3ExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -22845,10 +21581,13 @@ Update a specific S3 export storage connection that was set up with IAM role acc
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3s.update(
     id=1,
 )
@@ -22939,7 +21678,7 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
 </dl>
@@ -23079,7 +21818,7 @@ client.export_storage.s3s.update(
 </dl>
 </details>
 
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">sync</a>(...) -&gt; AsyncHttpResponse[LseS3ExportStorage]</code></summary>
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">sync</a>(...) -> LseS3ExportStorage</code></summary>
 <dl>
 <dd>
 
@@ -23113,10 +21852,13 @@ Sync tasks from an S3 export storage.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.export_storage.s3s.sync(
     id=1,
 )
@@ -23156,7 +21898,7 @@ client.export_storage.s3s.sync(
 </details>
 
 ## ImportStorage Azure
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[AzureBlobImportStorage]]</code></summary>
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">list</a>(...) -> typing.List[AzureBlobImportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -23184,10 +21926,13 @@ Get list of all Azure import storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure.list(
     project=1,
 )
@@ -23234,7 +21979,7 @@ client.import_storage.azure.list(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">create</a>(...) -&gt; AsyncHttpResponse[AzureBlobImportStorage]</code></summary>
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">create</a>(...) -> AzureBlobImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -23262,10 +22007,13 @@ Create new Azure import storage
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure.create()
 
 ```
@@ -23382,7 +22130,7 @@ client.import_storage.azure.create()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -23410,10 +22158,13 @@ Validate a specific Azure import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure.validate()
 
 ```
@@ -23538,7 +22289,7 @@ client.import_storage.azure.validate()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">get</a>(...) -&gt; AsyncHttpResponse[AzureBlobImportStorage]</code></summary>
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">get</a>(...) -> AzureBlobImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -23566,10 +22317,13 @@ Get a specific Azure import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure.get(
     id=1,
 )
@@ -23608,7 +22362,7 @@ client.import_storage.azure.get(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -23636,10 +22390,13 @@ Delete a specific Azure import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure.delete(
     id=1,
 )
@@ -23678,7 +22435,7 @@ client.import_storage.azure.delete(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">update</a>(...) -&gt; AsyncHttpResponse[AzureBlobImportStorage]</code></summary>
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">update</a>(...) -> AzureBlobImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -23706,10 +22463,13 @@ Update a specific Azure import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure.update(
     id=1,
 )
@@ -23836,7 +22596,7 @@ client.import_storage.azure.update(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">sync</a>(...) -&gt; AsyncHttpResponse[AzureBlobImportStorage]</code></summary>
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">sync</a>(...) -> AzureBlobImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -23864,10 +22624,13 @@ Sync tasks from an Azure import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure.sync(
     id=1,
 )
@@ -23907,7 +22670,7 @@ client.import_storage.azure.sync(
 </details>
 
 ## ImportStorage AzureSpi
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[AzureServicePrincipalImportStorage]]</code></summary>
+<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">list</a>(...) -> typing.List[AzureServicePrincipalImportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -23941,10 +22704,13 @@ Get list of all Azure import storage connections set up with Service Principal a
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure_spi.list(
     project=1,
 )
@@ -23991,7 +22757,7 @@ client.import_storage.azure_spi.list(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">create</a>(...) -&gt; AsyncHttpResponse[AzureServicePrincipalImportStorage]</code></summary>
+<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">create</a>(...) -> AzureServicePrincipalImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -24025,10 +22791,13 @@ Create Azure import storage with Service Principal authentication.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure_spi.create(
     project=1,
 )
@@ -24047,175 +22816,7 @@ client.import_storage.azure_spi.create(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
+**request:** `AzureServicePrincipalImportStorageRequest` 
     
 </dd>
 </dl>
@@ -24235,7 +22836,7 @@ client.import_storage.azure_spi.create(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -24269,10 +22870,13 @@ Validate a specific Azure import storage connection that was set up with Service
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure_spi.validate(
     project=1,
 )
@@ -24291,175 +22895,7 @@ client.import_storage.azure_spi.validate(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
+**request:** `AzureServicePrincipalImportStorageRequest` 
     
 </dd>
 </dl>
@@ -24479,7 +22915,7 @@ client.import_storage.azure_spi.validate(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">get</a>(...) -&gt; AsyncHttpResponse[AzureServicePrincipalImportStorage]</code></summary>
+<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">get</a>(...) -> AzureServicePrincipalImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -24513,10 +22949,13 @@ Get a specific Azure import storage connection that was set up with Service Prin
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure_spi.get(
     id=1,
 )
@@ -24555,7 +22994,7 @@ client.import_storage.azure_spi.get(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -24589,10 +23028,13 @@ Delete a specific Azure import storage connection that was set up with Service P
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure_spi.delete(
     id=1,
 )
@@ -24631,7 +23073,7 @@ client.import_storage.azure_spi.delete(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">update</a>(...) -&gt; AsyncHttpResponse[AzureServicePrincipalImportStorage]</code></summary>
+<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">update</a>(...) -> AzureServicePrincipalImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -24665,10 +23107,13 @@ Update a specific Azure import storage connection that was set up with Service P
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure_spi.update(
     id=1,
 )
@@ -24735,7 +23180,7 @@ client.import_storage.azure_spi.update(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
 </dl>
@@ -24883,7 +23328,7 @@ client.import_storage.azure_spi.update(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">sync</a>(...) -&gt; AsyncHttpResponse[AzureServicePrincipalImportStorage]</code></summary>
+<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">sync</a>(...) -> AzureServicePrincipalImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -24917,10 +23362,13 @@ Sync tasks from an Azure import storage connection that was set up with Service 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.azure_spi.sync(
     id=1,
 )
@@ -24960,7 +23408,7 @@ client.import_storage.azure_spi.sync(
 </details>
 
 ## ImportStorage Databricks
-<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[DatabricksImportStorage]]</code></summary>
+<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">list</a>(...) -> typing.List[DatabricksImportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -24994,10 +23442,13 @@ Get list of all Databricks Files import storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.databricks.list(
     project=1,
 )
@@ -25044,7 +23495,7 @@ client.import_storage.databricks.list(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">create</a>(...) -&gt; AsyncHttpResponse[DatabricksImportStorage]</code></summary>
+<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">create</a>(...) -> DatabricksImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -25078,10 +23529,13 @@ Create a Databricks Files import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.databricks.create(
     catalog="catalog",
     host="host",
@@ -25104,229 +23558,7 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
-**catalog:** `str` — UC catalog name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `str` — Databricks workspace base URL (https://...)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schema:** `str` — UC schema name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**volume:** `str` — UC volume name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Path under the volume
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign not supported; always proxied
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_timeout_s:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
+**request:** `DatabricksImportStorageRequest` 
     
 </dd>
 </dl>
@@ -25346,7 +23578,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -25380,10 +23612,13 @@ Validate a specific Databricks Files import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.databricks.validate(
     catalog="catalog",
     host="host",
@@ -25406,229 +23641,7 @@ client.import_storage.databricks.validate(
 <dl>
 <dd>
 
-**catalog:** `str` — UC catalog name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `str` — Databricks workspace base URL (https://...)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schema:** `str` — UC schema name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**volume:** `str` — UC volume name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auth_type:** `typing.Optional[AuthTypeEnum]` 
-
-Authentication method: PAT, Databricks SP, or Azure AD SP
-
-* `pat` - Personal Access Token
-* `dbx_sp` - Databricks Service Principal
-* `azure_ad_sp` - Azure AD Service Principal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Path under the volume
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign not supported; always proxied
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_timeout_s:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stream_chunk_bytes:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
+**request:** `DatabricksImportStorageRequest` 
     
 </dd>
 </dl>
@@ -25648,7 +23661,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">get</a>(...) -&gt; AsyncHttpResponse[DatabricksImportStorage]</code></summary>
+<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">get</a>(...) -> DatabricksImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -25682,10 +23695,13 @@ Get a specific Databricks Files import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.databricks.get(
     id=1,
 )
@@ -25724,7 +23740,7 @@ client.import_storage.databricks.get(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -25758,10 +23774,13 @@ Delete a specific Databricks Files import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.databricks.delete(
     id=1,
 )
@@ -25800,7 +23819,7 @@ client.import_storage.databricks.delete(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">update</a>(...) -&gt; AsyncHttpResponse[DatabricksImportStorage]</code></summary>
+<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">update</a>(...) -> DatabricksImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -25834,10 +23853,13 @@ Update a specific Databricks Files import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.databricks.update(
     id=1,
 )
@@ -25918,7 +23940,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
 </dl>
@@ -26106,7 +24128,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">sync</a>(...) -&gt; AsyncHttpResponse[DatabricksImportStorage]</code></summary>
+<details><summary><code>client.import_storage.databricks.<a href="src/label_studio_sdk/import_storage/databricks/client.py">sync</a>(...) -> DatabricksImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -26140,10 +24162,13 @@ Sync tasks from a Databricks Files import storage.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.databricks.sync(
     id=1,
 )
@@ -26183,7 +24208,7 @@ client.import_storage.databricks.sync(
 </details>
 
 ## ImportStorage Gcs
-<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[GcsImportStorage]]</code></summary>
+<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">list</a>(...) -> typing.List[GcsImportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -26211,10 +24236,13 @@ Get a list of all GCS import storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs.list(
     project=1,
 )
@@ -26261,7 +24289,7 @@ client.import_storage.gcs.list(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">create</a>(...) -&gt; AsyncHttpResponse[GcsImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">create</a>(...) -> GcsImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -26289,10 +24317,13 @@ Create a new GCS import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs.create()
 
 ```
@@ -26409,7 +24440,7 @@ client.import_storage.gcs.create()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -26437,10 +24468,13 @@ Validate a specific GCS import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs.validate()
 
 ```
@@ -26565,7 +24599,7 @@ client.import_storage.gcs.validate()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">get</a>(...) -&gt; AsyncHttpResponse[GcsImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">get</a>(...) -> GcsImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -26593,10 +24627,13 @@ Get a specific GCS import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs.get(
     id=1,
 )
@@ -26635,7 +24672,7 @@ client.import_storage.gcs.get(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -26663,10 +24700,13 @@ Delete a specific GCS import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs.delete(
     id=1,
 )
@@ -26705,7 +24745,7 @@ client.import_storage.gcs.delete(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">update</a>(...) -&gt; AsyncHttpResponse[GcsImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">update</a>(...) -> GcsImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -26733,10 +24773,13 @@ Update a specific GCS import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs.update(
     id=1,
 )
@@ -26863,7 +24906,7 @@ client.import_storage.gcs.update(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">sync</a>(...) -&gt; AsyncHttpResponse[GcsImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">sync</a>(...) -> GcsImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -26891,10 +24934,13 @@ Sync tasks from a GCS import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs.sync(
     id=1,
 )
@@ -26934,7 +24980,7 @@ client.import_storage.gcs.sync(
 </details>
 
 ## ImportStorage GcsSa
-<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[GcssaImportStorage]]</code></summary>
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">list</a>(...) -> typing.List[GcssaImportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -26968,10 +25014,13 @@ Get list of all GCS import storage connections set up with Service Account Imper
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs_sa.list(
     project=1,
 )
@@ -27018,7 +25067,7 @@ client.import_storage.gcs_sa.list(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">create</a>(...) -&gt; AsyncHttpResponse[GcssaImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">create</a>(...) -> GcssaImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -27052,10 +25101,13 @@ Create GCS import storage with Service Account Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs_sa.create(
     project=1,
 )
@@ -27074,151 +25126,7 @@ client.import_storage.gcs_sa.create(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**target_service_account_email:** `typing.Optional[str]` — Service account email to impersonate for GCS access
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `GcssaImportStorageRequest` 
     
 </dd>
 </dl>
@@ -27238,7 +25146,7 @@ client.import_storage.gcs_sa.create(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -27272,10 +25180,13 @@ Validate a specific GCS import storage connection set up with SA Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs_sa.validate(
     project=1,
 )
@@ -27294,151 +25205,7 @@ client.import_storage.gcs_sa.validate(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**target_service_account_email:** `typing.Optional[str]` — Service account email to impersonate for GCS access
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `GcssaImportStorageRequest` 
     
 </dd>
 </dl>
@@ -27458,7 +25225,7 @@ client.import_storage.gcs_sa.validate(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">get</a>(...) -&gt; AsyncHttpResponse[GcssaImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">get</a>(...) -> GcssaImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -27492,10 +25259,13 @@ Get a specific GCS import storage connection set up with SA Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs_sa.get(
     id=1,
 )
@@ -27534,7 +25304,7 @@ client.import_storage.gcs_sa.get(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -27568,10 +25338,13 @@ Delete a specific GCS import storage connection set up with SA Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs_sa.delete(
     id=1,
 )
@@ -27610,7 +25383,7 @@ client.import_storage.gcs_sa.delete(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">update</a>(...) -&gt; AsyncHttpResponse[GcssaImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">update</a>(...) -> GcssaImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -27644,10 +25417,13 @@ Update a specific GCS import storage connection set up with SA Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs_sa.update(
     id=1,
 )
@@ -27698,7 +25474,7 @@ client.import_storage.gcs_sa.update(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
 </dl>
@@ -27838,7 +25614,7 @@ client.import_storage.gcs_sa.update(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">sync</a>(...) -&gt; AsyncHttpResponse[GcssaImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcs_sa.<a href="src/label_studio_sdk/import_storage/gcs_sa/client.py">sync</a>(...) -> GcssaImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -27872,10 +25648,13 @@ Sync tasks from a GCS import storage connection set up with SA Impersonation.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcs_sa.sync(
     id=1,
 )
@@ -27915,7 +25694,7 @@ client.import_storage.gcs_sa.sync(
 </details>
 
 ## ImportStorage Gcswif
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[GcswifImportStorage]]</code></summary>
+<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">list</a>(...) -> typing.List[GcswifImportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -27949,10 +25728,13 @@ Get list of all GCS import storage connections set up with WIF authentication.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcswif.list(
     project=1,
 )
@@ -27999,7 +25781,7 @@ client.import_storage.gcswif.list(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">create</a>(...) -&gt; AsyncHttpResponse[GcswifImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">create</a>(...) -> GcswifImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -28033,10 +25815,13 @@ Create GCS import storage with WIF.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcswif.create(
     project=1,
 )
@@ -28055,183 +25840,7 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `GcswifImportStorageRequest` 
     
 </dd>
 </dl>
@@ -28251,7 +25860,7 @@ client.import_storage.gcswif.create(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -28285,10 +25894,13 @@ Validate a specific GCS import storage connection that was set up with WIF authe
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcswif.validate(
     project=1,
 )
@@ -28307,183 +25919,7 @@ client.import_storage.gcswif.validate(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `GcswifImportStorageRequest` 
     
 </dd>
 </dl>
@@ -28503,7 +25939,7 @@ client.import_storage.gcswif.validate(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">get</a>(...) -&gt; AsyncHttpResponse[GcswifImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">get</a>(...) -> GcswifImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -28537,10 +25973,13 @@ Get a specific GCS import storage connection that was set up with WIF.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcswif.get(
     id=1,
 )
@@ -28579,7 +26018,7 @@ client.import_storage.gcswif.get(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -28613,10 +26052,13 @@ Delete a specific GCS import storage connection that was set up with WIF authent
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcswif.delete(
     id=1,
 )
@@ -28655,7 +26097,7 @@ client.import_storage.gcswif.delete(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">update</a>(...) -&gt; AsyncHttpResponse[GcswifImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">update</a>(...) -> GcswifImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -28689,10 +26131,13 @@ Update a specific GCS import storage connection that was set up with WIF authent
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcswif.update(
     id=1,
 )
@@ -28783,7 +26228,7 @@ client.import_storage.gcswif.update(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
 </dl>
@@ -28915,7 +26360,7 @@ client.import_storage.gcswif.update(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">sync</a>(...) -&gt; AsyncHttpResponse[GcswifImportStorage]</code></summary>
+<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">sync</a>(...) -> GcswifImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -28949,10 +26394,13 @@ Sync tasks from an GCS import storage connection that was set up with WIF authen
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.gcswif.sync(
     id=1,
 )
@@ -28992,7 +26440,7 @@ client.import_storage.gcswif.sync(
 </details>
 
 ## ImportStorage Local
-<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[LocalFilesImportStorage]]</code></summary>
+<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">list</a>(...) -> typing.List[LocalFilesImportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -29020,10 +26468,13 @@ Get a list of all local file import storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.local.list(
     project=1,
 )
@@ -29070,7 +26521,7 @@ client.import_storage.local.list(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">create</a>(...) -&gt; AsyncHttpResponse[LocalFilesImportStorage]</code></summary>
+<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">create</a>(...) -> LocalFilesImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -29098,10 +26549,13 @@ Create a new local file import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.local.create()
 
 ```
@@ -29178,7 +26632,7 @@ client.import_storage.local.create()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -29206,10 +26660,13 @@ Validate a specific local file import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.local.validate()
 
 ```
@@ -29294,7 +26751,7 @@ client.import_storage.local.validate()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">get</a>(...) -&gt; AsyncHttpResponse[LocalFilesImportStorage]</code></summary>
+<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">get</a>(...) -> LocalFilesImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -29322,10 +26779,13 @@ Get a specific local file import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.local.get(
     id=1,
 )
@@ -29364,7 +26824,7 @@ client.import_storage.local.get(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -29392,10 +26852,13 @@ Delete a specific local file import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.local.delete(
     id=1,
 )
@@ -29434,7 +26897,7 @@ client.import_storage.local.delete(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">update</a>(...) -&gt; AsyncHttpResponse[LocalFilesImportStorage]</code></summary>
+<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">update</a>(...) -> LocalFilesImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -29462,10 +26925,13 @@ Update a specific local file import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.local.update(
     id=1,
 )
@@ -29552,7 +27018,7 @@ client.import_storage.local.update(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">sync</a>(...) -&gt; AsyncHttpResponse[LocalFilesImportStorage]</code></summary>
+<details><summary><code>client.import_storage.local.<a href="src/label_studio_sdk/import_storage/local/client.py">sync</a>(...) -> LocalFilesImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -29580,10 +27046,13 @@ Sync tasks from a local file import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.local.sync(
     id=1,
 )
@@ -29623,7 +27092,7 @@ client.import_storage.local.sync(
 </details>
 
 ## ImportStorage Redis
-<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[RedisImportStorage]]</code></summary>
+<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">list</a>(...) -> typing.List[RedisImportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -29651,10 +27120,13 @@ Get a list of all Redis import storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.redis.list(
     project=1,
 )
@@ -29701,7 +27173,7 @@ client.import_storage.redis.list(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">create</a>(...) -&gt; AsyncHttpResponse[RedisImportStorage]</code></summary>
+<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">create</a>(...) -> RedisImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -29729,10 +27201,13 @@ Create a new Redis import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.redis.create()
 
 ```
@@ -29833,7 +27308,7 @@ client.import_storage.redis.create()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -29861,10 +27336,13 @@ Validate a specific Redis import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.redis.validate()
 
 ```
@@ -29973,7 +27451,7 @@ client.import_storage.redis.validate()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">get</a>(...) -&gt; AsyncHttpResponse[RedisImportStorage]</code></summary>
+<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">get</a>(...) -> RedisImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -30001,10 +27479,13 @@ Get a specific Redis import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.redis.get(
     id=1,
 )
@@ -30043,7 +27524,7 @@ client.import_storage.redis.get(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -30071,10 +27552,13 @@ Delete a specific Redis import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.redis.delete(
     id=1,
 )
@@ -30113,7 +27597,7 @@ client.import_storage.redis.delete(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">update</a>(...) -&gt; AsyncHttpResponse[RedisImportStorage]</code></summary>
+<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">update</a>(...) -> RedisImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -30141,10 +27625,13 @@ Update a specific Redis import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.redis.update(
     id=1,
 )
@@ -30255,7 +27742,7 @@ client.import_storage.redis.update(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">sync</a>(...) -&gt; AsyncHttpResponse[RedisImportStorage]</code></summary>
+<details><summary><code>client.import_storage.redis.<a href="src/label_studio_sdk/import_storage/redis/client.py">sync</a>(...) -> RedisImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -30283,10 +27770,13 @@ Sync tasks from a Redis import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.redis.sync(
     id=1,
 )
@@ -30326,7 +27816,7 @@ client.import_storage.redis.sync(
 </details>
 
 ## ImportStorage S3
-<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[S3ImportStorage]]</code></summary>
+<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">list</a>(...) -> typing.List[S3ImportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -30354,10 +27844,13 @@ Get a list of all S3 import storage connections.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3.list(
     project=1,
 )
@@ -30404,7 +27897,7 @@ client.import_storage.s3.list(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">create</a>(...) -&gt; AsyncHttpResponse[S3ImportStorage]</code></summary>
+<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">create</a>(...) -> S3ImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -30432,10 +27925,13 @@ Create new S3 import storage
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3.create()
 
 ```
@@ -30592,7 +28088,7 @@ client.import_storage.s3.create()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -30620,10 +28116,13 @@ Validate a specific S3 import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3.validate()
 
 ```
@@ -30788,7 +28287,7 @@ client.import_storage.s3.validate()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">get</a>(...) -&gt; AsyncHttpResponse[S3ImportStorage]</code></summary>
+<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">get</a>(...) -> S3ImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -30816,10 +28315,13 @@ Get a specific S3 import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3.get(
     id=1,
 )
@@ -30858,7 +28360,7 @@ client.import_storage.s3.get(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -30886,10 +28388,13 @@ Delete a specific S3 import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3.delete(
     id=1,
 )
@@ -30928,7 +28433,7 @@ client.import_storage.s3.delete(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">update</a>(...) -&gt; AsyncHttpResponse[S3ImportStorage]</code></summary>
+<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">update</a>(...) -> S3ImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -30956,10 +28461,13 @@ Update a specific S3 import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3.update(
     id=1,
 )
@@ -31126,7 +28634,7 @@ client.import_storage.s3.update(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">sync</a>(...) -&gt; AsyncHttpResponse[S3ImportStorage]</code></summary>
+<details><summary><code>client.import_storage.s3.<a href="src/label_studio_sdk/import_storage/s3/client.py">sync</a>(...) -> S3ImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -31154,10 +28662,13 @@ Sync tasks from an S3 import storage connection.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3.sync(
     id=1,
 )
@@ -31197,7 +28708,7 @@ client.import_storage.s3.sync(
 </details>
 
 ## ImportStorage S3S
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[LseS3ImportStorage]]</code></summary>
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">list</a>(...) -> typing.List[LseS3ImportStorage]</code></summary>
 <dl>
 <dd>
 
@@ -31231,10 +28742,13 @@ Get list of all S3 import storage connections set up with IAM role access.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3s.list(
     project=1,
 )
@@ -31281,7 +28795,7 @@ client.import_storage.s3s.list(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">create</a>(...) -&gt; AsyncHttpResponse[LseS3ImportStorage]</code></summary>
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">create</a>(...) -> LseS3ImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -31315,10 +28829,13 @@ Create S3 import storage with IAM role access.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3s.create(
     project=1,
     role_arn="role_arn",
@@ -31338,207 +28855,7 @@ client.import_storage.s3s.create(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `str` — AWS RoleArn
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS ExternalId
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**legacy_auth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `LseS3ImportStorageRequest` 
     
 </dd>
 </dl>
@@ -31558,7 +28875,7 @@ client.import_storage.s3s.create(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">validate</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">validate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -31592,10 +28909,13 @@ Validate a specific S3 import storage connection that was set up with IAM role a
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3s.validate(
     project=1,
     role_arn="role_arn",
@@ -31615,207 +28935,7 @@ client.import_storage.s3s.validate(
 <dl>
 <dd>
 
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `str` — AWS RoleArn
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS ExternalId
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**legacy_auth:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+**request:** `LseS3ImportStorageRequest` 
     
 </dd>
 </dl>
@@ -31835,7 +28955,7 @@ client.import_storage.s3s.validate(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">get</a>(...) -&gt; AsyncHttpResponse[LseS3ImportStorage]</code></summary>
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">get</a>(...) -> LseS3ImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -31869,10 +28989,13 @@ Get a specific S3 import storage connection that was set up with IAM role access
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3s.get(
     id=1,
 )
@@ -31911,7 +29034,7 @@ client.import_storage.s3s.get(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -31945,10 +29068,13 @@ Delete a specific S3 import storage connection that was set up with IAM role acc
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3s.delete(
     id=1,
 )
@@ -31987,7 +29113,7 @@ client.import_storage.s3s.delete(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">update</a>(...) -&gt; AsyncHttpResponse[LseS3ImportStorage]</code></summary>
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">update</a>(...) -> LseS3ImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -32021,10 +29147,13 @@ Update a specific S3 import storage connection that was set up with IAM role acc
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3s.update(
     id=1,
 )
@@ -32107,7 +29236,7 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
 </dl>
@@ -32271,7 +29400,7 @@ client.import_storage.s3s.update(
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">sync</a>(...) -&gt; AsyncHttpResponse[LseS3ImportStorage]</code></summary>
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">sync</a>(...) -> LseS3ImportStorage</code></summary>
 <dl>
 <dd>
 
@@ -32305,10 +29434,13 @@ Sync tasks from an S3 import storage connection that was set up with IAM role ac
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.import_storage.s3s.sync(
     id=1,
 )
@@ -32348,7 +29480,7 @@ client.import_storage.s3s.sync(
 </details>
 
 ## Organizations Invites
-<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py">get_invite_link</a>() -&gt; AsyncHttpResponse[OrganizationInvite]</code></summary>
+<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py">get_invite_link</a>() -> OrganizationInvite</code></summary>
 <dl>
 <dd>
 
@@ -32376,10 +29508,13 @@ Get invite link for organization
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.invites.get_invite_link()
 
 ```
@@ -32408,7 +29543,7 @@ client.organizations.invites.get_invite_link()
 </dl>
 </details>
 
-<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py">revoke_invite</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py">revoke_invite</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -32442,10 +29577,13 @@ Revoke invite to organization
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.invites.revoke_invite(
     email="email",
 )
@@ -32484,7 +29622,7 @@ client.organizations.invites.revoke_invite(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py">send_email</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py">send_email</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -32518,12 +29656,17 @@ Send email with invite to organization
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.invites.send_email(
-    emails=["emails"],
+    emails=[
+        "emails"
+    ],
     role="OW",
 )
 
@@ -32541,7 +29684,7 @@ client.organizations.invites.send_email(
 <dl>
 <dd>
 
-**emails:** `typing.Sequence[str]` — Email addresses
+**emails:** `typing.List[str]` — Email addresses
     
 </dd>
 </dl>
@@ -32567,7 +29710,7 @@ Organization role
 <dl>
 <dd>
 
-**projects:** `typing.Optional[typing.Sequence[int]]` — Project IDs to grant access to
+**projects:** `typing.Optional[typing.List[int]]` — Project IDs to grant access to
     
 </dd>
 </dl>
@@ -32575,7 +29718,7 @@ Organization role
 <dl>
 <dd>
 
-**workspaces:** `typing.Optional[typing.Sequence[int]]` — Workspace IDs to grant access to
+**workspaces:** `typing.Optional[typing.List[int]]` — Workspace IDs to grant access to
     
 </dd>
 </dl>
@@ -32596,7 +29739,7 @@ Organization role
 </details>
 
 ## Organizations MemberTags
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">list</a>(...) -&gt; AsyncHttpResponse[PaginatedOrganizationMemberTagList]</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">list</a>(...) -> PaginatedOrganizationMemberTagList</code></summary>
 <dl>
 <dd>
 
@@ -32630,10 +29773,13 @@ Retrieve a list of all member tags for a specific organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.member_tags.list(
     id=1,
 )
@@ -32704,7 +29850,7 @@ client.organizations.member_tags.list(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">create</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTag]</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">create</a>(...) -> OrganizationMemberTag</code></summary>
 <dl>
 <dd>
 
@@ -32738,10 +29884,13 @@ Create a new member tag for a specific organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.member_tags.create(
     id=1,
     label="label",
@@ -32789,7 +29938,7 @@ client.organizations.member_tags.create(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">assign</a>(...) -&gt; AsyncHttpResponse[AssignMemberTagsResponse]</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">assign</a>(...) -> AssignMemberTagsResponse</code></summary>
 <dl>
 <dd>
 
@@ -32823,10 +29972,13 @@ Assign tags to multiple organization members in bulk.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.member_tags.assign(
     id=1,
     all_=True,
@@ -32854,7 +30006,7 @@ client.organizations.member_tags.assign(
 <dl>
 <dd>
 
-**all_:** `bool` — If true, assign tags to all organization members. If false, assign tags to the provided users.
+**all:** `bool` — If true, assign tags to all organization members. If false, assign tags to the provided users.
     
 </dd>
 </dl>
@@ -32918,7 +30070,7 @@ client.organizations.member_tags.assign(
 <dl>
 <dd>
 
-**excluded:** `typing.Optional[typing.Sequence[int]]` — List of user IDs to exclude from the assignment.
+**excluded:** `typing.Optional[typing.List[int]]` — List of user IDs to exclude from the assignment.
     
 </dd>
 </dl>
@@ -32926,7 +30078,7 @@ client.organizations.member_tags.assign(
 <dl>
 <dd>
 
-**included:** `typing.Optional[typing.Sequence[int]]` — List of user IDs to include in the assignment.
+**included:** `typing.Optional[typing.List[int]]` — List of user IDs to include in the assignment.
     
 </dd>
 </dl>
@@ -32942,7 +30094,7 @@ client.organizations.member_tags.assign(
 <dl>
 <dd>
 
-**bulk_organization_member_tag_assignment_request_tags:** `typing.Optional[typing.Sequence[int]]` — List of tag IDs to assign.
+**bulk_organization_member_tag_assignment_request_tags:** `typing.Optional[typing.List[int]]` — List of tag IDs to assign.
     
 </dd>
 </dl>
@@ -32962,7 +30114,7 @@ client.organizations.member_tags.assign(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">import_</a>(...) -&gt; AsyncHttpResponse[ImportMemberTagsResponse]</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">import</a>(...) -> ImportMemberTagsResponse</code></summary>
 <dl>
 <dd>
 
@@ -33002,12 +30154,16 @@ The import runs asynchronously. Use the returned import job ID to check the stat
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.member_tags.import_(
     id=1,
+    file="example_file",
     bulk_tags="bulk_tags",
 )
 
@@ -33041,9 +30197,7 @@ client.organizations.member_tags.import_(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**file:** `core.File` 
     
 </dd>
 </dl>
@@ -33063,7 +30217,7 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">get_import</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTagImportStatus]</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">get_import</a>(...) -> OrganizationMemberTagImportStatus</code></summary>
 <dl>
 <dd>
 
@@ -33099,10 +30253,13 @@ The response includes the current status (created, in_progress, completed, faile
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.member_tags.get_import(
     id=1,
     import_pk=1,
@@ -33150,7 +30307,7 @@ client.organizations.member_tags.get_import(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">get</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTag]</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">get</a>(...) -> OrganizationMemberTag</code></summary>
 <dl>
 <dd>
 
@@ -33184,10 +30341,13 @@ Retrieve details of a specific member tag.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.member_tags.get(
     id=1,
     tag_pk=1,
@@ -33235,7 +30395,7 @@ client.organizations.member_tags.get(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -33269,10 +30429,13 @@ Delete a member tag from the organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.member_tags.delete(
     id=1,
     tag_pk=1,
@@ -33320,7 +30483,7 @@ client.organizations.member_tags.delete(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">update</a>(...) -&gt; AsyncHttpResponse[OrganizationMemberTag]</code></summary>
+<details><summary><code>client.organizations.member_tags.<a href="src/label_studio_sdk/organizations/member_tags/client.py">update</a>(...) -> OrganizationMemberTag</code></summary>
 <dl>
 <dd>
 
@@ -33354,10 +30517,13 @@ Partially update an existing member tag.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.member_tags.update(
     id=1,
     tag_pk=1,
@@ -33414,7 +30580,7 @@ client.organizations.member_tags.update(
 </details>
 
 ## Organizations Members
-<details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">list</a>(...) -&gt; AsyncHttpResponse[PaginatedLseOrganizationMemberListList]</code></summary>
+<details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">list</a>(...) -> PaginatedLseOrganizationMemberListList</code></summary>
 <dl>
 <dd>
 
@@ -33448,10 +30614,13 @@ Retrieve a list of all users and roles in a specific organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.members.list(
     id=1,
 )
@@ -33585,7 +30754,7 @@ Filter members by organization role. Accepts single role or comma-separated list
 </dl>
 </details>
 
-<details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">update</a>(...) -&gt; AsyncHttpResponse[LseOrganizationMemberList]</code></summary>
+<details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">update</a>(...) -> LseOrganizationMemberList</code></summary>
 <dl>
 <dd>
 
@@ -33632,10 +30801,13 @@ To maintain compliance with our licensing terms and ensure optimal performance o
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.members.update(
     id=1,
 )
@@ -33700,7 +30872,7 @@ Organization role
 </dl>
 </details>
 
-<details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">get</a>(...) -&gt; AsyncHttpResponse[OrganizationMember]</code></summary>
+<details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">get</a>(...) -> OrganizationMember</code></summary>
 <dl>
 <dd>
 
@@ -33728,10 +30900,13 @@ Get organization member details by user ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.members.get(
     id=1,
     user_pk=1,
@@ -33787,7 +30962,7 @@ client.organizations.members.get(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -33815,10 +30990,13 @@ Soft delete a member from the organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.members.delete(
     id=1,
     user_pk=1,
@@ -33867,7 +31045,7 @@ client.organizations.members.delete(
 </details>
 
 ## Organizations Permissions
-<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[OrganizationPermission]]</code></summary>
+<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">list</a>(...) -> typing.List[OrganizationPermission]</code></summary>
 <dl>
 <dd>
 
@@ -33901,10 +31079,13 @@ List all organization-level permission overrides for a given organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.permissions.list(
     id=1,
 )
@@ -33951,7 +31132,7 @@ client.organizations.permissions.list(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">create</a>(...) -&gt; AsyncHttpResponse[OrganizationPermission]</code></summary>
+<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">create</a>(...) -> OrganizationPermission</code></summary>
 <dl>
 <dd>
 
@@ -33985,10 +31166,13 @@ Create a new organization-level permission override for a given organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.permissions.create(
     id=1,
     permission="permission",
@@ -34016,15 +31200,7 @@ client.organizations.permissions.create(
 <dl>
 <dd>
 
-**permission:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Organization roles
+**request:** `OrganizationPermissionRequest` 
     
 </dd>
 </dl>
@@ -34044,7 +31220,7 @@ client.organizations.permissions.create(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">get_options</a>(...) -&gt; AsyncHttpResponse[typing.List[ConfigurablePermissionOption]]</code></summary>
+<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">get_options</a>(...) -> typing.List[ConfigurablePermissionOption]</code></summary>
 <dl>
 <dd>
 
@@ -34078,10 +31254,13 @@ Retrieve the list of configurable permission options (label, tooltip, default ro
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.permissions.get_options(
     id=1,
 )
@@ -34128,7 +31307,7 @@ client.organizations.permissions.get_options(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">get</a>(...) -&gt; AsyncHttpResponse[OrganizationPermission]</code></summary>
+<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">get</a>(...) -> OrganizationPermission</code></summary>
 <dl>
 <dd>
 
@@ -34162,10 +31341,13 @@ Retrieve the organization-level permission override for a given permission key.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.permissions.get(
     id=1,
     permission="permission",
@@ -34213,7 +31395,7 @@ client.organizations.permissions.get(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">replace</a>(...) -&gt; AsyncHttpResponse[OrganizationPermission]</code></summary>
+<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">replace</a>(...) -> OrganizationPermission</code></summary>
 <dl>
 <dd>
 
@@ -34247,10 +31429,13 @@ Replace the organization-level permission override for a given permission key.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.permissions.replace(
     id=1,
     permission_="permission",
@@ -34279,7 +31464,7 @@ client.organizations.permissions.replace(
 <dl>
 <dd>
 
-**permission_:** `str` — Permission key to update within the organization.
+**permission:** `str` — Permission key to update within the organization.
     
 </dd>
 </dl>
@@ -34287,15 +31472,7 @@ client.organizations.permissions.replace(
 <dl>
 <dd>
 
-**permission:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Organization roles
+**request:** `OrganizationPermissionRequest` 
     
 </dd>
 </dl>
@@ -34315,7 +31492,7 @@ client.organizations.permissions.replace(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -34349,10 +31526,13 @@ Delete the organization-level permission override for a given permission key.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.permissions.delete(
     id=1,
     permission="permission",
@@ -34400,7 +31580,7 @@ client.organizations.permissions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">update</a>(...) -&gt; AsyncHttpResponse[OrganizationPermission]</code></summary>
+<details><summary><code>client.organizations.permissions.<a href="src/label_studio_sdk/organizations/permissions/client.py">update</a>(...) -> OrganizationPermission</code></summary>
 <dl>
 <dd>
 
@@ -34434,10 +31614,13 @@ Partially update the organization-level permission override for a given permissi
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.permissions.update(
     id=1,
     permission="permission",
@@ -34481,7 +31664,7 @@ client.organizations.permissions.update(
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Organization roles
+**roles:** `typing.Optional[typing.List[Role9E7Enum]]` — Organization roles
     
 </dd>
 </dl>
@@ -34502,7 +31685,7 @@ client.organizations.permissions.update(
 </details>
 
 ## Organizations MemberTags Bulk
-<details><summary><code>client.organizations.member_tags.bulk.<a href="src/label_studio_sdk/organizations/member_tags/bulk/client.py">post</a>(...) -&gt; AsyncHttpResponse[PostBulkResponse]</code></summary>
+<details><summary><code>client.organizations.member_tags.bulk.<a href="src/label_studio_sdk/organizations/member_tags/bulk/client.py">post</a>(...) -> PostBulkResponse</code></summary>
 <dl>
 <dd>
 
@@ -34536,13 +31719,18 @@ Create multiple member tags for the organization in bulk. Duplicate labels withi
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.member_tags.bulk.post(
     id=1,
-    labels=["labels"],
+    labels=[
+        "labels"
+    ],
 )
 
 ```
@@ -34567,7 +31755,7 @@ client.organizations.member_tags.bulk.post(
 <dl>
 <dd>
 
-**labels:** `typing.Sequence[str]` — List of tag labels to create.
+**labels:** `typing.List[str]` — List of tag labels to create.
     
 </dd>
 </dl>
@@ -34587,7 +31775,7 @@ client.organizations.member_tags.bulk.post(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.member_tags.bulk.<a href="src/label_studio_sdk/organizations/member_tags/bulk/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteBulkResponse]</code></summary>
+<details><summary><code>client.organizations.member_tags.bulk.<a href="src/label_studio_sdk/organizations/member_tags/bulk/client.py">delete</a>(...) -> DeleteBulkResponse</code></summary>
 <dl>
 <dd>
 
@@ -34621,10 +31809,13 @@ Delete multiple member tags from the organization in bulk. Pass tag IDs via the 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.organizations.member_tags.bulk.delete(
     id=1,
 )
@@ -34672,7 +31863,7 @@ client.organizations.member_tags.bulk.delete(
 </details>
 
 ## Projects Roles
-<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ProjectRole]]</code></summary>
+<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">list</a>(...) -> typing.List[ProjectRole]</code></summary>
 <dl>
 <dd>
 
@@ -34708,10 +31899,13 @@ client.organizations.member_tags.bulk.delete(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.roles.list()
 
 ```
@@ -34756,7 +31950,7 @@ client.projects.roles.list()
 </dl>
 </details>
 
-<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">add</a>(...) -&gt; AsyncHttpResponse[ProjectRole]</code></summary>
+<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">add</a>(...) -> ProjectRole</code></summary>
 <dl>
 <dd>
 
@@ -34792,10 +31986,13 @@ client.projects.roles.list()
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.roles.add(
     project=1,
     role="OW",
@@ -34852,7 +32049,7 @@ client.projects.roles.add(
 </dl>
 </details>
 
-<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">remove</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">remove</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -34888,10 +32085,13 @@ client.projects.roles.add(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.roles.remove(
     id=1,
 )
@@ -34930,7 +32130,7 @@ client.projects.roles.remove(
 </dl>
 </details>
 
-<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">get</a>(...) -&gt; AsyncHttpResponse[typing.List[ProjectRole]]</code></summary>
+<details><summary><code>client.projects.roles.<a href="src/label_studio_sdk/projects/roles/client.py">get</a>(...) -> typing.List[ProjectRole]</code></summary>
 <dl>
 <dd>
 
@@ -34967,10 +32167,13 @@ client.projects.roles.remove(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.roles.get(
     id=1,
 )
@@ -35010,7 +32213,123 @@ client.projects.roles.get(
 </details>
 
 ## Projects Exports
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">list_formats</a>(...) -&gt; AsyncHttpResponse[typing.List[str]]</code></summary>
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">download_sync</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+        This endpoint is deprecated in Enterprise. Use the async export API instead:
+        POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+
+        In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+
+        <i>Note: if you have a large project it's recommended to use
+        export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
+        Export annotated tasks as a file in a specific format.
+        For example, to export JSON annotations for a project to a file called `annotations.json`,
+        run the following from the command line:
+        ```bash
+        curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+        ```bash
+        curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+        To export specific tasks with IDs of 123 and 345, run the following from the command line:
+        ```bash
+        curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+client.projects.exports.download_sync(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**download_all_tasks:** `typing.Optional[bool]` — If true, download all tasks regardless of status. If false, download only annotated tasks.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**download_resources:** `typing.Optional[bool]` — If true, download all resource files such as images, audio, and others relevant to the tasks.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**export_type:** `typing.Optional[str]` — Selected export format (JSON by default)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Specify a list of task IDs to retrieve only the details for those tasks.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">list_formats</a>(...) -> typing.List[str]</code></summary>
 <dl>
 <dd>
 
@@ -35044,10 +32363,13 @@ client.projects.roles.get(
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.exports.list_formats(
     id=1,
 )
@@ -35086,7 +32408,7 @@ client.projects.exports.list_formats(
 </dl>
 </details>
 
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[Export]]</code></summary>
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">list</a>(...) -> typing.List[Export]</code></summary>
 <dl>
 <dd>
 
@@ -35114,10 +32436,13 @@ Returns a list of exported files for a specific project by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.exports.list(
     id=1,
 )
@@ -35164,7 +32489,7 @@ client.projects.exports.list(
 </dl>
 </details>
 
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">create</a>(...) -&gt; AsyncHttpResponse[LseExportCreate]</code></summary>
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">create</a>(...) -> LseExportCreate</code></summary>
 <dl>
 <dd>
 
@@ -35192,10 +32517,13 @@ Create a new export request to start a background task and generate an export fi
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.exports.create(
     id=1,
 )
@@ -35230,7 +32558,7 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**converted_formats:** `typing.Optional[typing.Sequence[ConvertedFormatRequest]]` 
+**converted_formats:** `typing.Optional[typing.List[ConvertedFormatRequest]]` 
     
 </dd>
 </dl>
@@ -35254,7 +32582,7 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**finished_at:** `typing.Optional[dt.datetime]` — Complete or fail time
+**finished_at:** `typing.Optional[datetime.datetime]` — Complete or fail time
     
 </dd>
 </dl>
@@ -35314,7 +32642,7 @@ client.projects.exports.create(
 </dl>
 </details>
 
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">get</a>(...) -&gt; AsyncHttpResponse[Export]</code></summary>
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">get</a>(...) -> Export</code></summary>
 <dl>
 <dd>
 
@@ -35342,10 +32670,13 @@ Retrieve information about an export file by export ID for a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.exports.get(
     id=1,
     export_pk=1,
@@ -35393,7 +32724,7 @@ client.projects.exports.get(
 </dl>
 </details>
 
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -35421,10 +32752,13 @@ Delete an export file by specified export ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.exports.delete(
     id=1,
     export_pk=1,
@@ -35472,7 +32806,7 @@ client.projects.exports.delete(
 </dl>
 </details>
 
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">convert</a>(...) -&gt; AsyncHttpResponse[ConvertExportsResponse]</code></summary>
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">convert</a>(...) -> ConvertExportsResponse</code></summary>
 <dl>
 <dd>
 
@@ -35500,10 +32834,13 @@ Convert export snapshot to selected format
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.exports.convert(
     id=1,
     export_pk=1,
@@ -35568,8 +32905,93 @@ client.projects.exports.convert(
 </dl>
 </details>
 
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">download</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+        Download an export file in the specified format for a specific project. Specify the project ID with the `id`
+        parameter in the path and the ID of the export file you want to download using the `export_pk` parameter
+        in the path.
+
+        Get the `export_pk` from the response of the request to [Create new export](/api#operation/api_projects_exports_create)
+        or after [listing export files](/api#operation/api_projects_exports_list).
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+client.projects.exports.download(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**export_pk:** `int` — Primary key identifying the export file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**export_type:** `typing.Optional[str]` — Selected export format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Projects Members
-<details><summary><code>client.projects.members.<a href="src/label_studio_sdk/projects/members/client.py">add</a>(...) -&gt; AsyncHttpResponse[ProjectMember]</code></summary>
+<details><summary><code>client.projects.members.<a href="src/label_studio_sdk/projects/members/client.py">add</a>(...) -> ProjectMember</code></summary>
 <dl>
 <dd>
 
@@ -35603,10 +33025,13 @@ Add a member to a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.members.add(
     id=1,
     user=1,
@@ -35654,7 +33079,7 @@ client.projects.members.add(
 </dl>
 </details>
 
-<details><summary><code>client.projects.members.<a href="src/label_studio_sdk/projects/members/client.py">remove</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.projects.members.<a href="src/label_studio_sdk/projects/members/client.py">remove</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -35688,10 +33113,13 @@ Remove a member from a specific project. Pass the member ID via the `user` query
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.members.remove(
     id=1,
 )
@@ -35739,7 +33167,7 @@ client.projects.members.remove(
 </details>
 
 ## Projects Metrics
-<details><summary><code>client.projects.metrics.<a href="src/label_studio_sdk/projects/metrics/client.py">get</a>(...) -&gt; AsyncHttpResponse[MetricParam]</code></summary>
+<details><summary><code>client.projects.metrics.<a href="src/label_studio_sdk/projects/metrics/client.py">get</a>(...) -> MetricParam</code></summary>
 <dl>
 <dd>
 
@@ -35773,10 +33201,13 @@ Get the current metrics configuration for a project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.get(
     id=1,
 )
@@ -35815,7 +33246,7 @@ client.projects.metrics.get(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.<a href="src/label_studio_sdk/projects/metrics/client.py">update</a>(...) -&gt; AsyncHttpResponse[typing.Optional[MetricParam]]</code></summary>
+<details><summary><code>client.projects.metrics.<a href="src/label_studio_sdk/projects/metrics/client.py">update</a>(...) -> typing.Optional[MetricParam]</code></summary>
 <dl>
 <dd>
 
@@ -35849,10 +33280,13 @@ Update metrics strategy and parameters for a project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.update(
     id=1,
 )
@@ -35924,7 +33358,7 @@ client.projects.metrics.update(
 </details>
 
 ## Projects Stats
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">model_version_annotator_agreement</a>(...) -&gt; AsyncHttpResponse[ModelVersionAnnotatorAgreementStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">model_version_annotator_agreement</a>(...) -> ModelVersionAnnotatorAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -35958,10 +33392,13 @@ Get agreement between a given model version and all annotators in the project fo
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.model_version_annotator_agreement(
     id=1,
     model_version="model_version",
@@ -36009,7 +33446,7 @@ client.projects.stats.model_version_annotator_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">model_version_ground_truth_agreement</a>(...) -&gt; AsyncHttpResponse[ModelVersionGroundTruthAgreementStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">model_version_ground_truth_agreement</a>(...) -> ModelVersionGroundTruthAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36043,10 +33480,13 @@ Get agreement between a given model version and ground truth annotations in the 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.model_version_ground_truth_agreement(
     id=1,
     model_version="model_version",
@@ -36102,7 +33542,7 @@ client.projects.stats.model_version_ground_truth_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">model_version_prediction_agreement</a>(...) -&gt; AsyncHttpResponse[ModelVersionPredictionAgreementStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">model_version_prediction_agreement</a>(...) -> ModelVersionPredictionAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36136,10 +33576,13 @@ Get agreement between a given model version and all other model versions in the 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.model_version_prediction_agreement(
     id=1,
     model_version="model_version",
@@ -36195,7 +33638,7 @@ client.projects.stats.model_version_prediction_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">iaa</a>(...) -&gt; AsyncHttpResponse[IaaStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">iaa</a>(...) -> IaaStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36229,10 +33672,13 @@ Get Inter-Annotator Agreement (IAA) matrix for a project, showing agreement betw
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.iaa(
     id=1,
 )
@@ -36303,7 +33749,7 @@ client.projects.stats.iaa(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_ground_truth_agreement</a>(...) -&gt; AsyncHttpResponse[UsersGroundTruthAgreementStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_ground_truth_agreement</a>(...) -> UsersGroundTruthAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36337,10 +33783,13 @@ Get ground truth agreement statistics for multiple users within a project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.users_ground_truth_agreement(
     id=1,
     ids="ids",
@@ -36396,7 +33845,7 @@ client.projects.stats.users_ground_truth_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">agreement_annotator</a>(...) -&gt; AsyncHttpResponse[AgreementAnnotatorStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">agreement_annotator</a>(...) -> AgreementAnnotatorStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36430,10 +33879,13 @@ Get agreement statistics for a specific annotator within a project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.agreement_annotator(
     id=1,
     user_id=1,
@@ -36481,7 +33933,7 @@ client.projects.stats.agreement_annotator(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">agreement_annotators</a>(...) -&gt; AsyncHttpResponse[AgreementAnnotatorsStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">agreement_annotators</a>(...) -> AgreementAnnotatorsStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36515,10 +33967,13 @@ Get agreement statistics for multiple annotators within a project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.agreement_annotators(
     id=1,
     ids="ids",
@@ -36566,7 +34021,7 @@ client.projects.stats.agreement_annotators(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">data_filters</a>(...) -&gt; AsyncHttpResponse[DataFiltersStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">data_filters</a>(...) -> DataFiltersStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36600,10 +34055,13 @@ Get statistics about user data filters and their usage within a project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.data_filters(
     id=1,
 )
@@ -36642,7 +34100,7 @@ client.projects.stats.data_filters(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">finished_tasks</a>(...) -&gt; AsyncHttpResponse[FinishedTasksStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">finished_tasks</a>(...) -> FinishedTasksStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36676,10 +34134,13 @@ Get statistics about finished tasks for a project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.finished_tasks(
     id=1,
 )
@@ -36726,7 +34187,7 @@ client.projects.stats.finished_tasks(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">label_distribution_counts</a>(...) -&gt; AsyncHttpResponse[LabelDistributionCountsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">label_distribution_counts</a>(...) -> LabelDistributionCountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36760,10 +34221,13 @@ Returns counts and percentages for requested label choices, from both annotation
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.label_distribution_counts(
     id=1,
 )
@@ -36826,7 +34290,7 @@ client.projects.stats.label_distribution_counts(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">label_distribution_structure</a>(...) -&gt; AsyncHttpResponse[LabelDistributionStructureResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">label_distribution_structure</a>(...) -> LabelDistributionStructureResponse</code></summary>
 <dl>
 <dd>
 
@@ -36860,10 +34324,13 @@ Returns dimensions and flattened `choice_keys` for a project. Use this response 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.label_distribution_structure(
     id=1,
 )
@@ -36902,7 +34369,7 @@ client.projects.stats.label_distribution_structure(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">lead_time</a>(...) -&gt; AsyncHttpResponse[LeadTimeStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">lead_time</a>(...) -> LeadTimeStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36936,10 +34403,13 @@ Get lead time statistics across the project, including average annotation time.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.lead_time(
     id=1,
 )
@@ -36978,7 +34448,7 @@ client.projects.stats.lead_time(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">total_agreement</a>(...) -&gt; AsyncHttpResponse[typing.Optional[TotalAgreementStatsResponse]]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">total_agreement</a>(...) -> typing.Optional[TotalAgreementStatsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -37014,10 +34484,13 @@ NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handlin
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.total_agreement(
     id=1,
 )
@@ -37064,7 +34537,7 @@ client.projects.stats.total_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">update_stats</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, typing.Any]]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">update_stats</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -37098,10 +34571,13 @@ Start stats recalculation for given project
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.update_stats(
     id=1,
 )
@@ -37148,7 +34624,7 @@ client.projects.stats.update_stats(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_prediction_agreement</a>(...) -&gt; AsyncHttpResponse[UsersPredictionAgreementStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_prediction_agreement</a>(...) -> UsersPredictionAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37182,10 +34658,13 @@ Get prediction agreement statistics for multiple annotators within a project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.users_prediction_agreement(
     id=1,
     ids="ids",
@@ -37241,7 +34720,7 @@ client.projects.stats.users_prediction_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_review_score</a>(...) -&gt; AsyncHttpResponse[UsersReviewScoreStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">users_review_score</a>(...) -> UsersReviewScoreStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37275,10 +34754,13 @@ Get review score and performance score statistics for multiple annotators within
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.users_review_score(
     id=1,
     ids="ids",
@@ -37334,7 +34816,7 @@ client.projects.stats.users_review_score(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">user_prediction_agreement</a>(...) -&gt; AsyncHttpResponse[UserPredictionAgreementStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">user_prediction_agreement</a>(...) -> UserPredictionAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37368,10 +34850,13 @@ Get prediction agreement statistics for a specific user within a project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.user_prediction_agreement(
     id=1,
     user_pk=1,
@@ -37427,7 +34912,7 @@ client.projects.stats.user_prediction_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">user_review_score</a>(...) -&gt; AsyncHttpResponse[UserReviewScoreStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">user_review_score</a>(...) -> UserReviewScoreStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37461,10 +34946,13 @@ Get review score statistics for a specific user within a project. Only allowed f
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.user_review_score(
     id=1,
     user_pk=1,
@@ -37520,7 +35008,7 @@ client.projects.stats.user_review_score(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">user_ground_truth_agreement</a>(...) -&gt; AsyncHttpResponse[UserGroundTruthAgreementStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">user_ground_truth_agreement</a>(...) -> UserGroundTruthAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37554,10 +35042,13 @@ Get ground truth agreement statistics for a specific user within a project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.stats.user_ground_truth_agreement(
     id=1,
     user_pk=1,
@@ -37614,7 +35105,7 @@ client.projects.stats.user_ground_truth_agreement(
 </details>
 
 ## Projects Assignments
-<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">bulk_assign</a>(...) -&gt; AsyncHttpResponse[BulkAssignAssignmentsResponse]</code></summary>
+<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">bulk_assign</a>(...) -> BulkAssignAssignmentsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37648,18 +35139,23 @@ Assign multiple users to a collection of tasks within a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
-from label_studio_sdk.projects.assignments import (
-    BulkAssignAssignmentsRequestSelectedItemsIncluded,
-)
+from label_studio_sdk.environment import LabelStudioEnvironment
+from label_studio_sdk.projects.assignments import BulkAssignAssignmentsRequestSelectedItemsIncluded
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.assignments.bulk_assign(
     id=1,
-    selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(),
+    selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
+        all_=False,
+    ),
     type="AN",
-    users=[1],
+    users=[
+        1
+    ],
 )
 
 ```
@@ -37700,7 +35196,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**users:** `typing.Sequence[int]` — List of user IDs to assign
+**users:** `typing.List[int]` — List of user IDs to assign
     
 </dd>
 </dl>
@@ -37728,7 +35224,7 @@ client.projects.assignments.bulk_assign(
 </dl>
 </details>
 
-<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[TaskAssignment]]</code></summary>
+<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">list</a>(...) -> typing.List[TaskAssignment]</code></summary>
 <dl>
 <dd>
 
@@ -37762,10 +35258,13 @@ Retrieve a list of tasks and assignees for those tasks for a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.assignments.list(
     id=1,
     task_pk=1,
@@ -37813,7 +35312,7 @@ client.projects.assignments.list(
 </dl>
 </details>
 
-<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">assign</a>(...) -&gt; AsyncHttpResponse[TaskAssignment]</code></summary>
+<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">assign</a>(...) -> TaskAssignment</code></summary>
 <dl>
 <dd>
 
@@ -37847,15 +35346,20 @@ Assign a user to a task in a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.assignments.assign(
     id=1,
     task_pk=1,
     type="AN",
-    users=[1],
+    users=[
+        1
+    ],
 )
 
 ```
@@ -37896,7 +35400,7 @@ client.projects.assignments.assign(
 <dl>
 <dd>
 
-**users:** `typing.Sequence[int]` — List of user IDs to assign
+**users:** `typing.List[int]` — List of user IDs to assign
     
 </dd>
 </dl>
@@ -37916,7 +35420,7 @@ client.projects.assignments.assign(
 </dl>
 </details>
 
-<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -37950,10 +35454,13 @@ Remove assignees for a task within a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.assignments.delete(
     id=1,
     task_pk=1,
@@ -38017,7 +35524,7 @@ client.projects.assignments.delete(
 </dl>
 </details>
 
-<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">update</a>(...) -&gt; AsyncHttpResponse[TaskAssignment]</code></summary>
+<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">update</a>(...) -> TaskAssignment</code></summary>
 <dl>
 <dd>
 
@@ -38051,15 +35558,20 @@ Update the assignee for a task in a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.assignments.update(
     id=1,
     task_pk=1,
     type="AN",
-    users=[1],
+    users=[
+        1
+    ],
 )
 
 ```
@@ -38100,7 +35612,7 @@ client.projects.assignments.update(
 <dl>
 <dd>
 
-**users:** `typing.Sequence[int]` — List of user IDs to assign
+**users:** `typing.List[int]` — List of user IDs to assign
     
 </dd>
 </dl>
@@ -38121,7 +35633,7 @@ client.projects.assignments.update(
 </details>
 
 ## Projects Pauses
-<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[Pause]]</code></summary>
+<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">list</a>(...) -> typing.List[Pause]</code></summary>
 <dl>
 <dd>
 
@@ -38155,10 +35667,13 @@ Retrieve a list of all pauses.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.pauses.list(
     project_pk=1,
     user_pk=1,
@@ -38222,7 +35737,7 @@ client.projects.pauses.list(
 </dl>
 </details>
 
-<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">create</a>(...) -&gt; AsyncHttpResponse[Pause]</code></summary>
+<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">create</a>(...) -> Pause</code></summary>
 <dl>
 <dd>
 
@@ -38256,10 +35771,13 @@ Create a new pause entry.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.pauses.create(
     project_pk=1,
     user_pk=1,
@@ -38296,23 +35814,7 @@ client.projects.pauses.create(
 <dl>
 <dd>
 
-**reason:** `ReasonEnum` 
-
-Reason for pausing
-
-* `MANUAL` - Manual
-* `BEHAVIOR_BASED` - Behavior-based
-* `ANNOTATOR_EVALUATION` - Annotator evaluation
-* `ANNOTATION_LIMIT` - Annotation limit
-* `CUSTOM_SCRIPT` - Custom script
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verbose_reason:** `typing.Optional[str]` — Detailed description of why the project is paused, will be readable by paused annotators
+**request:** `PauseRequest` 
     
 </dd>
 </dl>
@@ -38332,7 +35834,7 @@ Reason for pausing
 </dl>
 </details>
 
-<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">get</a>(...) -&gt; AsyncHttpResponse[Pause]</code></summary>
+<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">get</a>(...) -> Pause</code></summary>
 <dl>
 <dd>
 
@@ -38366,10 +35868,13 @@ Retrieve a specific pause by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.pauses.get(
     project_pk=1,
     user_pk=1,
@@ -38426,7 +35931,7 @@ client.projects.pauses.get(
 </dl>
 </details>
 
-<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -38460,10 +35965,13 @@ Delete a specific pause by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.pauses.delete(
     project_pk=1,
     user_pk=1,
@@ -38520,7 +36028,7 @@ client.projects.pauses.delete(
 </dl>
 </details>
 
-<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">update</a>(...) -&gt; AsyncHttpResponse[Pause]</code></summary>
+<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">update</a>(...) -> Pause</code></summary>
 <dl>
 <dd>
 
@@ -38554,10 +36062,13 @@ Partially update a pause entry by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.pauses.update(
     project_pk=1,
     user_pk=1,
@@ -38639,7 +36150,7 @@ Reason for pausing
 </details>
 
 ## Projects Members Bulk
-<details><summary><code>client.projects.members.bulk.<a href="src/label_studio_sdk/projects/members/bulk/client.py">post</a>(...) -&gt; AsyncHttpResponse[PostBulkResponse]</code></summary>
+<details><summary><code>client.projects.members.bulk.<a href="src/label_studio_sdk/projects/members/bulk/client.py">post</a>(...) -> PostBulkResponse</code></summary>
 <dl>
 <dd>
 
@@ -38673,10 +36184,13 @@ Assign project members in bulk.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.members.bulk.post(
     id=1,
     all_=True,
@@ -38704,7 +36218,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**all_:** `bool` — Apply to all project members
+**all:** `bool` — Apply to all project members
     
 </dd>
 </dl>
@@ -38752,7 +36266,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**excluded:** `typing.Optional[typing.Sequence[int]]` — Excluded user IDs
+**excluded:** `typing.Optional[typing.List[int]]` — Excluded user IDs
     
 </dd>
 </dl>
@@ -38760,7 +36274,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**included:** `typing.Optional[typing.Sequence[int]]` — Included user IDs
+**included:** `typing.Optional[typing.List[int]]` — Included user IDs
     
 </dd>
 </dl>
@@ -38768,7 +36282,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]` — Member roles
+**roles:** `typing.Optional[typing.List[ProjectMemberBulkAssignRolesRequest]]` — Member roles
     
 </dd>
 </dl>
@@ -38788,7 +36302,7 @@ client.projects.members.bulk.post(
 </dl>
 </details>
 
-<details><summary><code>client.projects.members.bulk.<a href="src/label_studio_sdk/projects/members/bulk/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteBulkResponse]</code></summary>
+<details><summary><code>client.projects.members.bulk.<a href="src/label_studio_sdk/projects/members/bulk/client.py">delete</a>(...) -> DeleteBulkResponse</code></summary>
 <dl>
 <dd>
 
@@ -38822,10 +36336,13 @@ Unassign project members in bulk. Pass selector fields via query parameters (`al
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.members.bulk.delete(
     id=1,
 )
@@ -38852,7 +36369,7 @@ client.projects.members.bulk.delete(
 <dl>
 <dd>
 
-**all_:** `typing.Optional[bool]` — Apply unassignment to all currently matched project members.
+**all:** `typing.Optional[bool]` — Apply unassignment to all currently matched project members.
     
 </dd>
 </dl>
@@ -38929,7 +36446,7 @@ client.projects.members.bulk.delete(
 </details>
 
 ## Projects Members Paginated
-<details><summary><code>client.projects.members.paginated.<a href="src/label_studio_sdk/projects/members/paginated/client.py">list</a>(...) -&gt; AsyncPager[PaginatedProjectMember, PaginatedPaginatedProjectMemberList]</code></summary>
+<details><summary><code>client.projects.members.paginated.<a href="src/label_studio_sdk/projects/members/paginated/client.py">list</a>(...) -> PaginatedPaginatedProjectMemberList</code></summary>
 <dl>
 <dd>
 
@@ -38971,18 +36488,16 @@ Retrieve the members for a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
-response = client.projects.members.paginated.list(
+
+client.projects.members.paginated.list(
     id=1,
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -39022,7 +36537,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**last_activity_gte:** `typing.Optional[dt.datetime]` — Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
+**last_activity_gte:** `typing.Optional[datetime.datetime]` — Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
     
 </dd>
 </dl>
@@ -39030,7 +36545,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**last_activity_lte:** `typing.Optional[dt.datetime]` — Filter by last activity time (ISO 8601 datetime). Returns users with last activity less than or equal to this time.
+**last_activity_lte:** `typing.Optional[datetime.datetime]` — Filter by last activity time (ISO 8601 datetime). Returns users with last activity less than or equal to this time.
     
 </dd>
 </dl>
@@ -39144,7 +36659,7 @@ Returns users who have any of the specified roles either:
 </details>
 
 ## Projects Metrics Custom
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">get_lambda</a>(...) -&gt; AsyncHttpResponse[GetLambdaCustomResponse]</code></summary>
+<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">get_lambda</a>(...) -> GetLambdaCustomResponse</code></summary>
 <dl>
 <dd>
 
@@ -39178,10 +36693,13 @@ Get the AWS Lambda code for the custom metric configured for this project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.custom.get_lambda(
     id=1,
 )
@@ -39220,7 +36738,7 @@ client.projects.metrics.custom.get_lambda(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">update_lambda</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">update_lambda</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -39254,10 +36772,13 @@ Create or update the AWS Lambda function used for custom metrics in this project
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.custom.update_lambda(
     id=1,
     code="code",
@@ -39321,7 +36842,7 @@ client.projects.metrics.custom.update_lambda(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">logs</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, typing.Any]]</code></summary>
+<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">logs</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -39355,10 +36876,13 @@ Get AWS lambda logs for project, including filtering by start and end dates
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.custom.logs(
     id=1,
 )
@@ -39421,7 +36945,7 @@ client.projects.metrics.custom.logs(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">check_function</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">check_function</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -39455,10 +36979,13 @@ Validate custom matching function code for the project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.custom.check_function(
     id=1,
     code="code",
@@ -39506,7 +37033,7 @@ client.projects.metrics.custom.check_function(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">get_function</a>(...) -&gt; AsyncHttpResponse[GetFunctionCustomResponse]</code></summary>
+<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">get_function</a>(...) -> GetFunctionCustomResponse</code></summary>
 <dl>
 <dd>
 
@@ -39540,10 +37067,13 @@ Get the custom metric function code for this project. The server routes to the a
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.custom.get_function(
     id=1,
 )
@@ -39582,7 +37112,7 @@ client.projects.metrics.custom.get_function(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">deploy_function</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">deploy_function</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -39616,10 +37146,13 @@ Create or update the custom metric function for this project. The server routes 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.custom.deploy_function(
     id=1,
     code="code",
@@ -39667,7 +37200,7 @@ client.projects.metrics.custom.deploy_function(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">get_function_logs</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, typing.Any]]</code></summary>
+<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">get_function_logs</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -39701,10 +37234,13 @@ Get execution logs for the custom metric function. The server routes to the acti
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.custom.get_function_logs(
     id=1,
 )
@@ -39767,7 +37303,7 @@ client.projects.metrics.custom.get_function_logs(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">get_gcp_function</a>(...) -&gt; AsyncHttpResponse[GetGcpFunctionCustomResponse]</code></summary>
+<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">get_gcp_function</a>(...) -> GetGcpFunctionCustomResponse</code></summary>
 <dl>
 <dd>
 
@@ -39801,10 +37337,13 @@ Get the GCP Cloud Function code for the custom metric configured for this projec
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.custom.get_gcp_function(
     id=1,
 )
@@ -39843,7 +37382,7 @@ client.projects.metrics.custom.get_gcp_function(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">update_gcp_function</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">update_gcp_function</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -39877,10 +37416,13 @@ Create or update the GCP Cloud Function used for custom metrics in this project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.projects.metrics.custom.update_gcp_function(
     id=1,
     code="code",
@@ -39945,7 +37487,7 @@ client.projects.metrics.custom.update_gcp_function(
 </details>
 
 ## Prompts Indicators
-<details><summary><code>client.prompts.indicators.<a href="src/label_studio_sdk/prompts/indicators/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ListIndicatorsResponseItem]]</code></summary>
+<details><summary><code>client.prompts.indicators.<a href="src/label_studio_sdk/prompts/indicators/client.py">list</a>(...) -> typing.List[ListIndicatorsResponseItem]</code></summary>
 <dl>
 <dd>
 
@@ -39979,10 +37521,13 @@ Get key indicators for the Prompt dashboard.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.indicators.list(
     id=1,
 )
@@ -40021,7 +37566,7 @@ client.prompts.indicators.list(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.indicators.<a href="src/label_studio_sdk/prompts/indicators/client.py">get</a>(...) -&gt; AsyncHttpResponse[LseKeyIndicatorValue]</code></summary>
+<details><summary><code>client.prompts.indicators.<a href="src/label_studio_sdk/prompts/indicators/client.py">get</a>(...) -> LseKeyIndicatorValue</code></summary>
 <dl>
 <dd>
 
@@ -40055,10 +37600,13 @@ Get a specific key indicator for the Prompt dashboard.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.indicators.get(
     id=1,
     indicator_key="indicator_key",
@@ -40107,7 +37655,7 @@ client.prompts.indicators.get(
 </details>
 
 ## Prompts Versions
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get_default_version_name</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get_default_version_name</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -40141,10 +37689,13 @@ Get default prompt version name
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.versions.get_default_version_name(
     id=1,
 )
@@ -40183,7 +37734,7 @@ client.prompts.versions.get_default_version_name(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ThirdPartyModelVersion]]</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">list</a>(...) -> typing.List[ThirdPartyModelVersion]</code></summary>
 <dl>
 <dd>
 
@@ -40217,10 +37768,13 @@ List all versions of a prompt.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.versions.list(
     prompt_id=1,
 )
@@ -40267,7 +37821,7 @@ client.prompts.versions.list(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">create</a>(...) -&gt; AsyncHttpResponse[ThirdPartyModelVersion]</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">create</a>(...) -> ThirdPartyModelVersion</code></summary>
 <dl>
 <dd>
 
@@ -40301,10 +37855,13 @@ Create a new version of a prompt.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.versions.create(
     prompt_id=1,
     prompt="prompt",
@@ -40334,65 +37891,7 @@ client.prompts.versions.create(
 <dl>
 <dd>
 
-**prompt:** `str` — Prompt to execute
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider_model_id:** `str` — The model ID to use within the given provider, e.g. gpt-3.5
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `str` — Model name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_provider_connection:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**parent_model:** `typing.Optional[int]` — Parent model interface ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider:** `typing.Optional[ProviderEnum]` 
-
-The model provider to use e.g. OpenAI
-
-* `OpenAI` - OpenAI
-* `AzureOpenAI` - AzureOpenAI
-* `AzureAIFoundry` - AzureAIFoundry
-* `VertexAI` - VertexAI
-* `Gemini` - Gemini
-* `Anthropic` - Anthropic
-* `Custom` - Custom
+**request:** `ThirdPartyModelVersionRequest` 
     
 </dd>
 </dl>
@@ -40412,7 +37911,7 @@ The model provider to use e.g. OpenAI
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get</a>(...) -&gt; AsyncHttpResponse[ThirdPartyModelVersion]</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get</a>(...) -> ThirdPartyModelVersion</code></summary>
 <dl>
 <dd>
 
@@ -40446,10 +37945,13 @@ Retrieve a specific prompt of a model.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.versions.get(
     prompt_id=1,
     version_id=1,
@@ -40497,7 +37999,7 @@ client.prompts.versions.get(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -40531,10 +38033,13 @@ Delete a prompt version by ID
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.versions.delete(
     prompt_id=1,
     version_id=1,
@@ -40582,7 +38087,7 @@ client.prompts.versions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">update</a>(...) -&gt; AsyncHttpResponse[ThirdPartyModelVersion]</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">update</a>(...) -> ThirdPartyModelVersion</code></summary>
 <dl>
 <dd>
 
@@ -40616,10 +38121,13 @@ Update a specific prompt version by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.versions.update(
     prompt_id=1,
     version_id=1,
@@ -40733,7 +38241,7 @@ The model provider to use e.g. OpenAI
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">cost_estimate</a>(...) -&gt; AsyncHttpResponse[InferenceRunCostEstimate]</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">cost_estimate</a>(...) -> InferenceRunCostEstimate</code></summary>
 <dl>
 <dd>
 
@@ -40767,10 +38275,13 @@ Get an estimate of the cost for making an inference run on the selected Prompt V
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.versions.cost_estimate(
     prompt_id=1,
     version_id=1,
@@ -40818,7 +38329,7 @@ client.prompts.versions.cost_estimate(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get_refined_prompt</a>(...) -&gt; AsyncHttpResponse[RefinedPromptResponse]</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get_refined_prompt</a>(...) -> RefinedPromptResponse</code></summary>
 <dl>
 <dd>
 
@@ -40852,10 +38363,13 @@ Get the refined prompt based on the `refinement_job_id`.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.versions.get_refined_prompt(
     prompt_id=1,
     version_id=1,
@@ -40911,7 +38425,7 @@ client.prompts.versions.get_refined_prompt(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">refine_prompt</a>(...) -&gt; AsyncHttpResponse[RefinedPromptResponse]</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">refine_prompt</a>(...) -> RefinedPromptResponse</code></summary>
 <dl>
 <dd>
 
@@ -40945,10 +38459,13 @@ Refine a prompt version using a teacher model and save the refined prompt as a n
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.versions.refine_prompt(
     prompt_id=1,
     version_id=1,
@@ -41011,7 +38528,7 @@ client.prompts.versions.refine_prompt(
 <dl>
 <dd>
 
-**async_:** `typing.Optional[bool]` — Whether to run the refinement asynchronously
+**async:** `typing.Optional[bool]` — Whether to run the refinement asynchronously
     
 </dd>
 </dl>
@@ -41032,7 +38549,7 @@ client.prompts.versions.refine_prompt(
 </details>
 
 ## Prompts Runs
-<details><summary><code>client.prompts.runs.<a href="src/label_studio_sdk/prompts/runs/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[ModelRun]]</code></summary>
+<details><summary><code>client.prompts.runs.<a href="src/label_studio_sdk/prompts/runs/client.py">list</a>(...) -> typing.List[ModelRun]</code></summary>
 <dl>
 <dd>
 
@@ -41066,10 +38583,13 @@ Get information (status, metadata, etc) about an existing inference run
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.runs.list(
     prompt_id=1,
     version_id=1,
@@ -41149,7 +38669,7 @@ client.prompts.runs.list(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.runs.<a href="src/label_studio_sdk/prompts/runs/client.py">create</a>(...) -&gt; AsyncHttpResponse[ModelRun]</code></summary>
+<details><summary><code>client.prompts.runs.<a href="src/label_studio_sdk/prompts/runs/client.py">create</a>(...) -> ModelRun</code></summary>
 <dl>
 <dd>
 
@@ -41183,10 +38703,13 @@ Run a prompt inference.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.runs.create(
     prompt_id=1,
     version_id=1,
@@ -41255,7 +38778,7 @@ client.prompts.runs.create(
 <dl>
 <dd>
 
-**predictions_updated_at:** `typing.Optional[dt.datetime]` 
+**predictions_updated_at:** `typing.Optional[datetime.datetime]` 
     
 </dd>
 </dl>
@@ -41307,7 +38830,7 @@ client.prompts.runs.create(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.runs.<a href="src/label_studio_sdk/prompts/runs/client.py">cancel</a>(...) -&gt; AsyncHttpResponse[CancelModelRunResponse]</code></summary>
+<details><summary><code>client.prompts.runs.<a href="src/label_studio_sdk/prompts/runs/client.py">cancel</a>(...) -> CancelModelRunResponse</code></summary>
 <dl>
 <dd>
 
@@ -41341,10 +38864,13 @@ Cancel the inference run for the given api
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.prompts.runs.cancel(
     prompt_id=1,
     version_id=1,
@@ -41402,7 +38928,7 @@ client.prompts.runs.cancel(
 </details>
 
 ## Sso Saml
-<details><summary><code>client.sso.saml.<a href="src/label_studio_sdk/sso/saml/client.py">get</a>() -&gt; AsyncHttpResponse[SamlSettings]</code></summary>
+<details><summary><code>client.sso.saml.<a href="src/label_studio_sdk/sso/saml/client.py">get</a>() -> SamlSettings</code></summary>
 <dl>
 <dd>
 
@@ -41436,10 +38962,13 @@ Retrieve SAML2 settings for the currently active organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.sso.saml.get()
 
 ```
@@ -41468,7 +38997,7 @@ client.sso.saml.get()
 </dl>
 </details>
 
-<details><summary><code>client.sso.saml.<a href="src/label_studio_sdk/sso/saml/client.py">update</a>(...) -&gt; AsyncHttpResponse[SamlSettingsUpdate]</code></summary>
+<details><summary><code>client.sso.saml.<a href="src/label_studio_sdk/sso/saml/client.py">update</a>(...) -> SamlSettingsUpdate</code></summary>
 <dl>
 <dd>
 
@@ -41502,10 +39031,13 @@ Update SAML2 settings for the currently active organization.
 
 ```python
 from label_studio_sdk import LabelStudio, ProjectGroupRequest
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.sso.saml.update(
     projects_groups=[
         ProjectGroupRequest(
@@ -41514,8 +39046,18 @@ client.sso.saml.update(
             role="Inherit",
         )
     ],
-    roles_groups=[["Administrator", "groups_test"]],
-    workspaces_groups=[["Default workspace", "groups_test"]],
+    roles_groups=[
+        [
+            "Administrator",
+            "groups_test"
+        ]
+    ],
+    workspaces_groups=[
+        [
+            "Default workspace",
+            "groups_test"
+        ]
+    ],
 )
 
 ```
@@ -41604,7 +39146,7 @@ client.sso.saml.update(
 <dl>
 <dd>
 
-**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` — Projects to Groups Mapping. List of objects with project_id, group, role.
+**projects_groups:** `typing.Optional[typing.List[ProjectGroupRequest]]` — Projects to Groups Mapping. List of objects with project_id, group, role.
     
 </dd>
 </dl>
@@ -41612,7 +39154,7 @@ client.sso.saml.update(
 <dl>
 <dd>
 
-**roles_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` — Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+**roles_groups:** `typing.Optional[typing.List[typing.List[str]]]` — Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
     
 </dd>
 </dl>
@@ -41620,7 +39162,7 @@ client.sso.saml.update(
 <dl>
 <dd>
 
-**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` — Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
+**workspaces_groups:** `typing.Optional[typing.List[typing.List[str]]]` — Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
     
 </dd>
 </dl>
@@ -41640,7 +39182,7 @@ client.sso.saml.update(
 </dl>
 </details>
 
-<details><summary><code>client.sso.saml.<a href="src/label_studio_sdk/sso/saml/client.py">reset</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.sso.saml.<a href="src/label_studio_sdk/sso/saml/client.py">reset</a>()</code></summary>
 <dl>
 <dd>
 
@@ -41674,10 +39216,13 @@ Reset SAML2 settings for the currently active organization. This clears all conf
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.sso.saml.reset()
 
 ```
@@ -41706,7 +39251,7 @@ client.sso.saml.reset()
 </dl>
 </details>
 
-<details><summary><code>client.sso.saml.<a href="src/label_studio_sdk/sso/saml/client.py">validate_metadata_url</a>(...) -&gt; AsyncHttpResponse[ValidateSamlMetadataUrlResponse]</code></summary>
+<details><summary><code>client.sso.saml.<a href="src/label_studio_sdk/sso/saml/client.py">validate_metadata_url</a>(...) -> ValidateSamlMetadataUrlResponse</code></summary>
 <dl>
 <dd>
 
@@ -41740,10 +39285,13 @@ Validate a SAML metadata URL by fetching it and checking for valid XML, without 
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.sso.saml.validate_metadata_url(
     metadata_url="metadata_url",
 )
@@ -41783,7 +39331,7 @@ client.sso.saml.validate_metadata_url(
 </details>
 
 ## Sso Scim
-<details><summary><code>client.sso.scim.<a href="src/label_studio_sdk/sso/scim/client.py">get</a>() -&gt; AsyncHttpResponse[ScimSettings]</code></summary>
+<details><summary><code>client.sso.scim.<a href="src/label_studio_sdk/sso/scim/client.py">get</a>() -> ScimSettings</code></summary>
 <dl>
 <dd>
 
@@ -41817,10 +39365,13 @@ Retrieve SCIM settings for the currently active organization.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.sso.scim.get()
 
 ```
@@ -41849,7 +39400,7 @@ client.sso.scim.get()
 </dl>
 </details>
 
-<details><summary><code>client.sso.scim.<a href="src/label_studio_sdk/sso/scim/client.py">update</a>(...) -&gt; AsyncHttpResponse[ScimSettingsUpdate]</code></summary>
+<details><summary><code>client.sso.scim.<a href="src/label_studio_sdk/sso/scim/client.py">update</a>(...) -> ScimSettingsUpdate</code></summary>
 <dl>
 <dd>
 
@@ -41883,10 +39434,13 @@ Update SCIM settings for the currently active organization.
 
 ```python
 from label_studio_sdk import LabelStudio, ProjectGroupRequest
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.sso.scim.update(
     projects_groups=[
         ProjectGroupRequest(
@@ -41895,8 +39449,18 @@ client.sso.scim.update(
             role="Inherit",
         )
     ],
-    roles_groups=[["Administrator", "groups_test"]],
-    workspaces_groups=[["Default workspace", "groups_test"]],
+    roles_groups=[
+        [
+            "Administrator",
+            "groups_test"
+        ]
+    ],
+    workspaces_groups=[
+        [
+            "Default workspace",
+            "groups_test"
+        ]
+    ],
 )
 
 ```
@@ -41913,7 +39477,7 @@ client.sso.scim.update(
 <dl>
 <dd>
 
-**projects_groups:** `typing.Optional[typing.Sequence[ProjectGroupRequest]]` — Projects to Groups Mapping. List of objects with project_id, group, role.
+**projects_groups:** `typing.Optional[typing.List[ProjectGroupRequest]]` — Projects to Groups Mapping. List of objects with project_id, group, role.
     
 </dd>
 </dl>
@@ -41921,7 +39485,7 @@ client.sso.scim.update(
 <dl>
 <dd>
 
-**roles_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` — Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+**roles_groups:** `typing.Optional[typing.List[typing.List[str]]]` — Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
     
 </dd>
 </dl>
@@ -41929,7 +39493,7 @@ client.sso.scim.update(
 <dl>
 <dd>
 
-**workspaces_groups:** `typing.Optional[typing.Sequence[typing.Sequence[str]]]` — Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
+**workspaces_groups:** `typing.Optional[typing.List[typing.List[str]]]` — Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
     
 </dd>
 </dl>
@@ -41950,7 +39514,7 @@ client.sso.scim.update(
 </details>
 
 ## Tasks AgreementMatrix
-<details><summary><code>client.tasks.agreement_matrix.<a href="src/label_studio_sdk/tasks/agreement_matrix/client.py">get</a>(...) -&gt; AsyncHttpResponse[TaskAgreementMatrixResponse]</code></summary>
+<details><summary><code>client.tasks.agreement_matrix.<a href="src/label_studio_sdk/tasks/agreement_matrix/client.py">get</a>(...) -> TaskAgreementMatrixResponse</code></summary>
 <dl>
 <dd>
 
@@ -41983,11 +39547,14 @@ Returns a pairwise agreement matrix between selected participants for a single t
 <dd>
 
 ```python
-from label_studio_sdk import AgreementSelectionRequest, LabelStudio
+from label_studio_sdk import LabelStudio, AgreementSelectionRequest
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.tasks.agreement_matrix.get(
     project_pk=1,
     task_pk=1,
@@ -42053,7 +39620,7 @@ client.tasks.agreement_matrix.get(
 </details>
 
 ## Workspaces Members
-<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[WorkspaceMemberList]]</code></summary>
+<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">list</a>(...) -> typing.List[WorkspaceMemberList]</code></summary>
 <dl>
 <dd>
 
@@ -42087,10 +39654,13 @@ Get a list of all members in a specific workspace.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.members.list(
     id=1,
 )
@@ -42129,7 +39699,7 @@ client.workspaces.members.list(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">create</a>(...) -&gt; AsyncHttpResponse[WorkspaceMemberCreate]</code></summary>
+<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">create</a>(...) -> WorkspaceMemberCreate</code></summary>
 <dl>
 <dd>
 
@@ -42163,10 +39733,13 @@ Add a new workspace member by user ID.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.members.create(
     id=1,
     user=1,
@@ -42222,7 +39795,7 @@ client.workspaces.members.create(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -42256,10 +39829,13 @@ Remove a specific member by ID from a workspace. Pass the member ID via the `use
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.members.delete(
     id=1,
 )
@@ -42307,7 +39883,7 @@ client.workspaces.members.delete(
 </details>
 
 ## Workspaces Projects
-<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[Project]]</code></summary>
+<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">list</a>(...) -> typing.List[Project]</code></summary>
 <dl>
 <dd>
 
@@ -42341,10 +39917,13 @@ Retrieve a list of all projects in a specific workspace.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.projects.list(
     id=1,
 )
@@ -42383,7 +39962,7 @@ client.workspaces.projects.list(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">add</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">add</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -42417,10 +39996,13 @@ Add a project to a specific workspace.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.projects.add(
     id=1,
     project=1,
@@ -42468,7 +40050,7 @@ client.workspaces.projects.add(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">remove</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.workspaces.projects.<a href="src/label_studio_sdk/workspaces/projects/client.py">remove</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -42502,10 +40084,13 @@ Remove a project from a specific workspace. Pass the project ID via the `project
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.projects.remove(
     id=1,
 )
@@ -42553,7 +40138,7 @@ client.workspaces.projects.remove(
 </details>
 
 ## Workspaces Members Bulk
-<details><summary><code>client.workspaces.members.bulk.<a href="src/label_studio_sdk/workspaces/members/bulk/client.py">post</a>(...) -&gt; AsyncHttpResponse[PostBulkResponse]</code></summary>
+<details><summary><code>client.workspaces.members.bulk.<a href="src/label_studio_sdk/workspaces/members/bulk/client.py">post</a>(...) -> PostBulkResponse</code></summary>
 <dl>
 <dd>
 
@@ -42587,10 +40172,13 @@ Assign workspace members in bulk.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.members.bulk.post(
     id=1,
     all_=True,
@@ -42618,7 +40206,7 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
-**all_:** `bool` — Apply to all workspace members
+**all:** `bool` — Apply to all workspace members
     
 </dd>
 </dl>
@@ -42626,7 +40214,7 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
-**excluded:** `typing.Optional[typing.Sequence[int]]` — Excluded user IDs
+**excluded:** `typing.Optional[typing.List[int]]` — Excluded user IDs
     
 </dd>
 </dl>
@@ -42634,7 +40222,7 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
-**included:** `typing.Optional[typing.Sequence[int]]` — Included user IDs
+**included:** `typing.Optional[typing.List[int]]` — Included user IDs
     
 </dd>
 </dl>
@@ -42654,7 +40242,7 @@ client.workspaces.members.bulk.post(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.members.bulk.<a href="src/label_studio_sdk/workspaces/members/bulk/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteBulkResponse]</code></summary>
+<details><summary><code>client.workspaces.members.bulk.<a href="src/label_studio_sdk/workspaces/members/bulk/client.py">delete</a>(...) -> DeleteBulkResponse</code></summary>
 <dl>
 <dd>
 
@@ -42688,10 +40276,13 @@ Unassign workspace members in bulk. Pass selector fields via query parameters (`
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
+
 client.workspaces.members.bulk.delete(
     id=1,
 )
@@ -42718,7 +40309,7 @@ client.workspaces.members.bulk.delete(
 <dl>
 <dd>
 
-**all_:** `typing.Optional[bool]` — Apply unassignment to all currently matched workspace members.
+**all:** `typing.Optional[bool]` — Apply unassignment to all currently matched workspace members.
     
 </dd>
 </dl>
@@ -42771,7 +40362,7 @@ client.workspaces.members.bulk.delete(
 </details>
 
 ## Workspaces Members Paginated
-<details><summary><code>client.workspaces.members.paginated.<a href="src/label_studio_sdk/workspaces/members/paginated/client.py">list</a>(...) -&gt; AsyncPager[LseUser, PaginatedLseUserList]</code></summary>
+<details><summary><code>client.workspaces.members.paginated.<a href="src/label_studio_sdk/workspaces/members/paginated/client.py">list</a>(...) -> PaginatedLseUserList</code></summary>
 <dl>
 <dd>
 
@@ -42805,18 +40396,16 @@ Retrieve the members for a specific workspace.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
 
 client = LabelStudio(
-    api_key="YOUR_API_KEY",
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
 )
-response = client.workspaces.members.paginated.list(
+
+client.workspaces.members.paginated.list(
     id=1,
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>

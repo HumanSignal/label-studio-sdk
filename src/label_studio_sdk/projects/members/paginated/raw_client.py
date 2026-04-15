@@ -7,12 +7,14 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.datetime_utils import serialize_datetime
-from ....core.jsonable_encoder import jsonable_encoder
+from ....core.jsonable_encoder import encode_path_param
 from ....core.pagination import AsyncPager, SyncPager
+from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
 from ....types.paginated_paginated_project_member_list import PaginatedPaginatedProjectMemberList
 from ....types.paginated_project_member import PaginatedProjectMember
+from pydantic import ValidationError
 
 
 class RawPaginatedClient:
@@ -130,7 +132,7 @@ class RawPaginatedClient:
         page = page if page is not None else 1
 
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/paginated/",
+            f"api/projects/{encode_path_param(id)}/members/paginated/",
             method="GET",
             params={
                 "ids": ids,
@@ -179,6 +181,10 @@ class RawPaginatedClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -297,7 +303,7 @@ class AsyncRawPaginatedClient:
         page = page if page is not None else 1
 
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/paginated/",
+            f"api/projects/{encode_path_param(id)}/members/paginated/",
             method="GET",
             params={
                 "ids": ids,
@@ -349,4 +355,8 @@ class AsyncRawPaginatedClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

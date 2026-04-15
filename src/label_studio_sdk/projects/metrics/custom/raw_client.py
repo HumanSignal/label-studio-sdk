@@ -6,13 +6,15 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
-from ....core.jsonable_encoder import jsonable_encoder
+from ....core.jsonable_encoder import encode_path_param
+from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
 from ....errors.internal_server_error import InternalServerError
 from .types.get_function_custom_response import GetFunctionCustomResponse
 from .types.get_gcp_function_custom_response import GetGcpFunctionCustomResponse
 from .types.get_lambda_custom_response import GetLambdaCustomResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -47,7 +49,7 @@ class RawCustomClient:
             Lambda code and deployment status
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/aws-custom-function",
+            f"api/projects/{encode_path_param(id)}/aws-custom-function",
             method="GET",
             request_options=request_options,
         )
@@ -64,6 +66,10 @@ class RawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update_lambda(
@@ -105,7 +111,7 @@ class RawCustomClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/aws-custom-function",
+            f"api/projects/{encode_path_param(id)}/aws-custom-function",
             method="POST",
             json={
                 "code": code,
@@ -135,6 +141,10 @@ class RawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def logs(
@@ -177,7 +187,7 @@ class RawCustomClient:
             Successful response returns list of AWS lambda logs
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/aws-custom-function-logs",
+            f"api/projects/{encode_path_param(id)}/aws-custom-function-logs",
             method="GET",
             params={
                 "end_date": end_date,
@@ -199,6 +209,10 @@ class RawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def check_function(
@@ -227,7 +241,7 @@ class RawCustomClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/check-function",
+            f"api/projects/{encode_path_param(id)}/check-function",
             method="POST",
             json={
                 "code": code,
@@ -244,6 +258,10 @@ class RawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_function(
@@ -271,7 +289,7 @@ class RawCustomClient:
             Function code and deployment status
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/custom-function",
+            f"api/projects/{encode_path_param(id)}/custom-function",
             method="GET",
             request_options=request_options,
         )
@@ -288,6 +306,10 @@ class RawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def deploy_function(
@@ -316,7 +338,7 @@ class RawCustomClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/custom-function",
+            f"api/projects/{encode_path_param(id)}/custom-function",
             method="POST",
             json={
                 "code": code,
@@ -344,6 +366,10 @@ class RawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_function_logs(
@@ -386,7 +412,7 @@ class RawCustomClient:
             List of function execution logs
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/custom-function-logs",
+            f"api/projects/{encode_path_param(id)}/custom-function-logs",
             method="GET",
             params={
                 "end_date": end_date,
@@ -408,6 +434,10 @@ class RawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_gcp_function(
@@ -435,7 +465,7 @@ class RawCustomClient:
             Cloud Function code and deployment status
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/gcp-custom-function",
+            f"api/projects/{encode_path_param(id)}/gcp-custom-function",
             method="GET",
             request_options=request_options,
         )
@@ -452,6 +482,10 @@ class RawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update_gcp_function(
@@ -493,7 +527,7 @@ class RawCustomClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/gcp-custom-function",
+            f"api/projects/{encode_path_param(id)}/gcp-custom-function",
             method="POST",
             json={
                 "code": code,
@@ -523,6 +557,10 @@ class RawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -555,7 +593,7 @@ class AsyncRawCustomClient:
             Lambda code and deployment status
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/aws-custom-function",
+            f"api/projects/{encode_path_param(id)}/aws-custom-function",
             method="GET",
             request_options=request_options,
         )
@@ -572,6 +610,10 @@ class AsyncRawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update_lambda(
@@ -613,7 +655,7 @@ class AsyncRawCustomClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/aws-custom-function",
+            f"api/projects/{encode_path_param(id)}/aws-custom-function",
             method="POST",
             json={
                 "code": code,
@@ -643,6 +685,10 @@ class AsyncRawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def logs(
@@ -685,7 +731,7 @@ class AsyncRawCustomClient:
             Successful response returns list of AWS lambda logs
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/aws-custom-function-logs",
+            f"api/projects/{encode_path_param(id)}/aws-custom-function-logs",
             method="GET",
             params={
                 "end_date": end_date,
@@ -707,6 +753,10 @@ class AsyncRawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def check_function(
@@ -735,7 +785,7 @@ class AsyncRawCustomClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/check-function",
+            f"api/projects/{encode_path_param(id)}/check-function",
             method="POST",
             json={
                 "code": code,
@@ -752,6 +802,10 @@ class AsyncRawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_function(
@@ -779,7 +833,7 @@ class AsyncRawCustomClient:
             Function code and deployment status
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/custom-function",
+            f"api/projects/{encode_path_param(id)}/custom-function",
             method="GET",
             request_options=request_options,
         )
@@ -796,6 +850,10 @@ class AsyncRawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def deploy_function(
@@ -824,7 +882,7 @@ class AsyncRawCustomClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/custom-function",
+            f"api/projects/{encode_path_param(id)}/custom-function",
             method="POST",
             json={
                 "code": code,
@@ -852,6 +910,10 @@ class AsyncRawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_function_logs(
@@ -894,7 +956,7 @@ class AsyncRawCustomClient:
             List of function execution logs
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/custom-function-logs",
+            f"api/projects/{encode_path_param(id)}/custom-function-logs",
             method="GET",
             params={
                 "end_date": end_date,
@@ -916,6 +978,10 @@ class AsyncRawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_gcp_function(
@@ -943,7 +1009,7 @@ class AsyncRawCustomClient:
             Cloud Function code and deployment status
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/gcp-custom-function",
+            f"api/projects/{encode_path_param(id)}/gcp-custom-function",
             method="GET",
             request_options=request_options,
         )
@@ -960,6 +1026,10 @@ class AsyncRawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update_gcp_function(
@@ -1001,7 +1071,7 @@ class AsyncRawCustomClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/gcp-custom-function",
+            f"api/projects/{encode_path_param(id)}/gcp-custom-function",
             method="POST",
             json={
                 "code": code,
@@ -1031,4 +1101,8 @@ class AsyncRawCustomClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

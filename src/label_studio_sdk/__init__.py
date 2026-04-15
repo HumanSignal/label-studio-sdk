@@ -291,6 +291,7 @@ if typing.TYPE_CHECKING:
         webhooks,
         workspaces,
     )
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from ._legacy import Client
     from .actions import (
         CreateActionsRequestFilters,
@@ -436,6 +437,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DatabricksImportStorage": ".types",
     "DatabricksImportStorageRequest": ".types",
     "Default165Enum": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "DefaultRole": ".types",
     "DeleteAnnotationHistoryResponse": ".annotation_history",
     "DeleteBulkAnnotationsResponse": ".annotations",
@@ -808,6 +811,8 @@ __all__ = [
     "DatabricksImportStorage",
     "DatabricksImportStorageRequest",
     "Default165Enum",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "DefaultRole",
     "DeleteAnnotationHistoryResponse",
     "DeleteBulkAnnotationsResponse",

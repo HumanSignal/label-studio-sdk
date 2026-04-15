@@ -6,10 +6,12 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.project import Project
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -44,7 +46,7 @@ class RawProjectsClient:
             Projects list
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/projects/",
+            f"api/workspaces/{encode_path_param(id)}/projects/",
             method="GET",
             request_options=request_options,
         )
@@ -61,6 +63,10 @@ class RawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def add(
@@ -90,7 +96,7 @@ class RawProjectsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/projects/",
+            f"api/workspaces/{encode_path_param(id)}/projects/",
             method="POST",
             json={
                 "project": project,
@@ -107,6 +113,10 @@ class RawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def remove(
@@ -136,7 +146,7 @@ class RawProjectsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/projects/",
+            f"api/workspaces/{encode_path_param(id)}/projects/",
             method="DELETE",
             params={
                 "project": project,
@@ -149,6 +159,10 @@ class RawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -181,7 +195,7 @@ class AsyncRawProjectsClient:
             Projects list
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/projects/",
+            f"api/workspaces/{encode_path_param(id)}/projects/",
             method="GET",
             request_options=request_options,
         )
@@ -198,6 +212,10 @@ class AsyncRawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def add(
@@ -227,7 +245,7 @@ class AsyncRawProjectsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/projects/",
+            f"api/workspaces/{encode_path_param(id)}/projects/",
             method="POST",
             json={
                 "project": project,
@@ -244,6 +262,10 @@ class AsyncRawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def remove(
@@ -273,7 +295,7 @@ class AsyncRawProjectsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/projects/",
+            f"api/workspaces/{encode_path_param(id)}/projects/",
             method="DELETE",
             params={
                 "project": project,
@@ -286,4 +308,8 @@ class AsyncRawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

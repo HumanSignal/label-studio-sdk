@@ -7,13 +7,15 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.cancel_model_run_response import CancelModelRunResponse
 from ...types.model_run import ModelRun
 from ...types.project_subset_enum import ProjectSubsetEnum
 from .types.list_runs_request_project_subset import ListRunsRequestProjectSubset
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -70,7 +72,7 @@ class RawRunsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
+            f"api/prompts/{encode_path_param(prompt_id)}/versions/{encode_path_param(version_id)}/inference-runs",
             method="GET",
             params={
                 "ordering": ordering,
@@ -93,6 +95,10 @@ class RawRunsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -155,7 +161,7 @@ class RawRunsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
+            f"api/prompts/{encode_path_param(prompt_id)}/versions/{encode_path_param(version_id)}/inference-runs",
             method="POST",
             json={
                 "job_id": job_id,
@@ -187,6 +193,10 @@ class RawRunsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def cancel(
@@ -223,7 +233,7 @@ class RawRunsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs/{jsonable_encoder(inference_run_id)}/cancel",
+            f"api/prompts/{encode_path_param(prompt_id)}/versions/{encode_path_param(version_id)}/inference-runs/{encode_path_param(inference_run_id)}/cancel",
             method="POST",
             request_options=request_options,
         )
@@ -240,6 +250,10 @@ class RawRunsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -294,7 +308,7 @@ class AsyncRawRunsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
+            f"api/prompts/{encode_path_param(prompt_id)}/versions/{encode_path_param(version_id)}/inference-runs",
             method="GET",
             params={
                 "ordering": ordering,
@@ -317,6 +331,10 @@ class AsyncRawRunsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -379,7 +397,7 @@ class AsyncRawRunsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
+            f"api/prompts/{encode_path_param(prompt_id)}/versions/{encode_path_param(version_id)}/inference-runs",
             method="POST",
             json={
                 "job_id": job_id,
@@ -411,6 +429,10 @@ class AsyncRawRunsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def cancel(
@@ -447,7 +469,7 @@ class AsyncRawRunsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs/{jsonable_encoder(inference_run_id)}/cancel",
+            f"api/prompts/{encode_path_param(prompt_id)}/versions/{encode_path_param(version_id)}/inference-runs/{encode_path_param(inference_run_id)}/cancel",
             method="POST",
             request_options=request_options,
         )
@@ -464,4 +486,8 @@ class AsyncRawRunsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

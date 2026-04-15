@@ -6,11 +6,13 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.workspace_member_create import WorkspaceMemberCreate
 from ...types.workspace_member_list import WorkspaceMemberList
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -45,7 +47,7 @@ class RawMembersClient:
             A list of workspace memberships
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
+            f"api/workspaces/{encode_path_param(id)}/memberships/",
             method="GET",
             request_options=request_options,
         )
@@ -62,6 +64,10 @@ class RawMembersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -100,7 +106,7 @@ class RawMembersClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
+            f"api/workspaces/{encode_path_param(id)}/memberships/",
             method="POST",
             json={
                 "user": user,
@@ -125,6 +131,10 @@ class RawMembersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -154,7 +164,7 @@ class RawMembersClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
+            f"api/workspaces/{encode_path_param(id)}/memberships/",
             method="DELETE",
             params={
                 "user_id": user_id,
@@ -167,6 +177,10 @@ class RawMembersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -199,7 +213,7 @@ class AsyncRawMembersClient:
             A list of workspace memberships
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
+            f"api/workspaces/{encode_path_param(id)}/memberships/",
             method="GET",
             request_options=request_options,
         )
@@ -216,6 +230,10 @@ class AsyncRawMembersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -254,7 +272,7 @@ class AsyncRawMembersClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
+            f"api/workspaces/{encode_path_param(id)}/memberships/",
             method="POST",
             json={
                 "user": user,
@@ -279,6 +297,10 @@ class AsyncRawMembersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -308,7 +330,7 @@ class AsyncRawMembersClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}/memberships/",
+            f"api/workspaces/{encode_path_param(id)}/memberships/",
             method="DELETE",
             params={
                 "user_id": user_id,
@@ -321,4 +343,8 @@ class AsyncRawMembersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

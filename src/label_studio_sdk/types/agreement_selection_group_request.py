@@ -10,9 +10,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AgreementSelectionGroupRequest(UncheckedBaseModel):
-    all_: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="all")] = pydantic.Field(
-        alias="all", default=None
-    )
+    all_: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="all"), pydantic.Field(alias="all")
+    ] = None
     ids: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:

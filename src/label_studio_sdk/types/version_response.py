@@ -21,18 +21,18 @@ class VersionResponse(UncheckedBaseModel):
     * `Enterprise` - Enterprise
     """
 
-    label_studio_converter: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-converter")] = (
-        pydantic.Field(alias="label-studio-converter")
-    )
-    label_studio_frontend: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-frontend")] = (
-        pydantic.Field(alias="label-studio-frontend")
-    )
-    label_studio_os_backend: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-os-backend")] = (
-        pydantic.Field(alias="label-studio-os-backend")
-    )
-    label_studio_os_package: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="label-studio-os-package")] = (
-        pydantic.Field(alias="label-studio-os-package")
-    )
+    label_studio_converter: typing_extensions.Annotated[
+        typing.Any, FieldMetadata(alias="label-studio-converter"), pydantic.Field(alias="label-studio-converter")
+    ]
+    label_studio_frontend: typing_extensions.Annotated[
+        typing.Any, FieldMetadata(alias="label-studio-frontend"), pydantic.Field(alias="label-studio-frontend")
+    ]
+    label_studio_os_backend: typing_extensions.Annotated[
+        typing.Any, FieldMetadata(alias="label-studio-os-backend"), pydantic.Field(alias="label-studio-os-backend")
+    ]
+    label_studio_os_package: typing_extensions.Annotated[
+        typing.Any, FieldMetadata(alias="label-studio-os-package"), pydantic.Field(alias="label-studio-os-package")
+    ]
     lsf: typing.Any
     release: str = pydantic.Field()
     """
