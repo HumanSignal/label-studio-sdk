@@ -1,10 +1,9 @@
-import os
 import json  # better to use "imports ujson as json" for the best performance
 import uuid
 import logging
 from PIL import Image
 
-from label_studio_sdk.converter.utils import ExpandFullPath
+from label_studio_sdk.converter.utils import ExpandFullPath, join_input_url
 from label_studio_sdk.converter.imports.label_config import generate_label_config
 
 logger = logging.getLogger("root")
@@ -22,7 +21,7 @@ def new_task(out_type, root_url, file_name):
         dict: Label Studio task structure with image data and empty result array
     """
     return {
-        "data": {"image": os.path.join(root_url, file_name)},
+        "data": {"image": join_input_url(root_url, file_name)},
         # 'annotations' or 'predictions'
         out_type: [
             {

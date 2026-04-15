@@ -8,11 +8,12 @@ import os
 import re
 import shutil
 import urllib
+import posixpath
 import wave
 from collections import defaultdict
 from copy import deepcopy
 from operator import itemgetter
-from urllib.parse import urlparse
+from urllib.parse import parse_qsl, quote, urlencode, urlparse, urlsplit, urlunsplit
 
 import numpy as np
 import requests
@@ -132,6 +133,55 @@ def _get_upload_dir(project_dir=None, upload_dir=None):
             "Can't find upload dir: either LS_UPLOAD_DIR or project should be passed to converter"
         )
     return upload_dir
+
+
+def join_input_url(root_url: str, *file_parts: str) -> str:
+    """Join a root URL/prefix and file name in a platform-independent way.
+
+    The converter supports both regular URL prefixes (http/s3/relative paths)
+    and Label Studio local-files URLs with the ``?d=`` query parameter.
+    """
+    if not isinstance(root_url, str) or not root_url.strip():
+        raise ValueError("root_url must be a non-empty string")
+
+    normalized_parts = []
+    for part in file_parts:
+        if part is None:
+            continue
+        if not isinstance(part, str):
+            raise TypeError("All file path parts must be strings")
+
+        normalized_part = part.replace("\\", "/").strip("/")
+        if not normalized_part:
+            continue
+        normalized_parts.append(normalized_part)
+
+    if not normalized_parts:
+        raise ValueError("At least one file path part must be provided")
+
+    relative_path = posixpath.join(*normalized_parts).lstrip("/")
+    parsed = urlsplit(root_url)
+    query_items = parse_qsl(parsed.query, keep_blank_values=True)
+
+    is_local_files_url = parsed.path.rstrip("/").endswith("/data/local-files") and any(
+        key == "d" for key, _ in query_items
+    )
+    if is_local_files_url:
+        updated_query_items = []
+        for key, value in query_items:
+            if key == "d":
+                value = f"{value.rstrip('/')}/{relative_path}" if value else relative_path
+            updated_query_items.append((key, value))
+        encoded_query = urlencode(updated_query_items, doseq=True, quote_via=quote, safe="/")
+        return urlunsplit((parsed.scheme, parsed.netloc, parsed.path, encoded_query, parsed.fragment))
+
+    encoded_path = quote(relative_path, safe="/")
+    if parsed.scheme or parsed.netloc:
+        path_prefix = parsed.path.rstrip("/")
+        joined_path = posixpath.join(path_prefix, encoded_path) if path_prefix else f"/{encoded_path}"
+        return urlunsplit((parsed.scheme, parsed.netloc, joined_path, parsed.query, parsed.fragment))
+
+    return f"{root_url.rstrip('/')}/{encoded_path}"
 
 
 def download(

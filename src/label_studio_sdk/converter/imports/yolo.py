@@ -6,11 +6,8 @@ import logging
 
 from PIL import Image
 from typing import Optional, Tuple
-from urllib.request import (
-    pathname2url,
-)  # for converting "+","*", etc. in file paths to appropriate urls
 
-from label_studio_sdk.converter.utils import ExpandFullPath
+from label_studio_sdk.converter.utils import ExpandFullPath, join_input_url
 from label_studio_sdk.converter.imports.label_config import generate_label_config
 
 logger = logging.getLogger("root")
@@ -79,12 +76,9 @@ def convert_yolo_to_ls(
         if not image_file_found_flag:
             continue
 
-        image_root_url += "" if image_root_url.endswith("/") else "/"
         task = {
             "data": {
-                # eg. '../../foo+you.py' -> '../../foo%2Byou.py'
-                "image": image_root_url
-                + str(pathname2url(image_file))
+                "image": join_input_url(image_root_url, image_file)
             }
         }
 

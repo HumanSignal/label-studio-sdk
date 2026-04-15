@@ -10,6 +10,8 @@ import logging
 
 from types import SimpleNamespace
 
+from label_studio_sdk.converter.utils import join_input_url
+
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
@@ -214,15 +216,12 @@ def convert_dataset(
     logger.info("Convert dataset start: %s", root_dir)
     tasks = []
 
-    if not root_url.endswith("/"):
-        root_url += "/"
-
     for d in os.listdir(root_dir):
         shot_dir = os.path.join(root_dir, d)
         if not os.path.isdir(shot_dir):
             continue
 
-        input_url = root_url + d + "/video.mp4"
+        input_url = join_input_url(root_url, d, "video.mp4")
         label_file = os.path.join(shot_dir, "gt/gt.txt")
         info_file = os.path.join(shot_dir, "info.xml")
 
