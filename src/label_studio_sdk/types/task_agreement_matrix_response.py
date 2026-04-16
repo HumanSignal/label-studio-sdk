@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class TaskAgreementMatrixResponse(UncheckedBaseModel):
-    matrix: typing.List[typing.List[float]] = pydantic.Field()
+    matrix: typing.List[typing.List[typing.Optional[float]]] = pydantic.Field()
     """
     Pairwise agreement scores matrix where matrix[i][j] is the agreement between users[i] and users[j]
     """
