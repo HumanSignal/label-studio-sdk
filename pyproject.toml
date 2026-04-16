@@ -37,7 +37,7 @@ Repository = 'https://github.com/HumanSignal/label-studio-sdk'
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4"
-Pillow = ">=11.3.0"
+Pillow = ">=12.2.0"
 aiohttp = { version = ">=3.10.0,<4", optional = true}
 appdirs = ">=1.4.3"
 datamodel-code-generator = "0.26.1"

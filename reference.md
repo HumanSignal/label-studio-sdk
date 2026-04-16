@@ -35262,7 +35262,7 @@ client = LabelStudio(
 client.projects.assignments.bulk_assign(
     id=1,
     selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
-        all_=False,
+        all_=True,
     ),
     type="AN",
     users=[

@@ -26,7 +26,7 @@
     "extra_dependencies": {
       "pandas": ">=0.24.0",
       "requests": ">=2.33.0",
-      "Pillow": ">=11.3.0",
+      "Pillow": ">=12.2.0",
       "nltk": "^3.9.4",
       "ujson": ">=5.8.0",
       "ijson": ">=3.2.3",
@@ -48,6 +48,6 @@
     },
     "pyproject_toml": "[project.scripts]\nlabel-studio-converter = \"label_studio_sdk.converter.main:main\"\nlabel-studio-sdk = \"label_studio_sdk._extensions.cli.main:main\"\n"
   },
-  "originGitCommit": "373468614775df6d2f0096b7b15ae0285256715d",
+  "originGitCommit": "8c289c5e47632ecc5f6584cdbd4613b949582321",
   "sdkVersion": "2.0.21"
 }

@@ -132,6 +132,7 @@ class ActionsClient:
             ),
             ordering=["tasks:total_annotations"],
             selected_items=CreateActionsRequestSelectedItemsExcluded(
+                all_=True,
                 excluded=[124, 125, 126],
             ),
         )
@@ -278,6 +279,7 @@ class AsyncActionsClient:
                 ),
                 ordering=["tasks:total_annotations"],
                 selected_items=CreateActionsRequestSelectedItemsExcluded(
+                    all_=True,
                     excluded=[124, 125, 126],
                 ),
             )
