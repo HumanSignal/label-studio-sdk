@@ -880,6 +880,32 @@ class RectangleLabelsTag(ControlTag):
     _label_attr_name: str = "rectanglelabels"
     _value_class: Type[RectangleLabelsValue] = RectangleLabelsValue
 
+    @property
+    def is_multiple_choice(self):
+        return self.attr.get("choice") == "multiple"
+
+    def to_json_schema(self):
+        labels_schema = {
+            "type": "array",
+            "items": {"type": "string", "enum": self.labels},
+            "minItems": 1,
+        }
+        if not self.is_multiple_choice:
+            labels_schema["maxItems"] = 1
+
+        return {
+            "type": "object",
+            "properties": {
+                "x": {"type": "number", "minimum": 1, "maximum": 99},
+                "y": {"type": "number", "minimum": 1, "maximum": 99},
+                "width": {"type": "number", "minimum": 1, "maximum": 99},
+                "height": {"type": "number", "minimum": 1, "maximum": 99},
+                "rotation": {"type": "number", "minimum": 0, "maximum": 360},
+                "rectanglelabels": labels_schema,
+            },
+            "required": ["x", "y", "width", "height", "rectanglelabels"],
+        }
+
 
 class VideoRectangleSequenceValue(BaseModel):
     x: confloat(le=100)
