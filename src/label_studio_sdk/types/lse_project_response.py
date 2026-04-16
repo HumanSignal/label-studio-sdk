@@ -97,6 +97,9 @@ class LseProjectResponse(UncheckedBaseModel):
     Project owner
     """
 
+    custom_interface_code: typing.Optional[str] = None
+    custom_interface_compiled: typing.Optional[str] = None
+    custom_interface_params: typing.Optional[typing.Any] = None
     custom_script: typing.Optional[str] = pydantic.Field(default=None)
     """
     Plugins
@@ -141,6 +144,7 @@ class LseProjectResponse(UncheckedBaseModel):
     """
 
     id: typing.Optional[int] = None
+    input_schema: typing.Optional[typing.Any] = None
     is_dimensions_enabled: typing.Optional[str] = None
     is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """
@@ -259,6 +263,8 @@ class LseProjectResponse(UncheckedBaseModel):
 
     skip_queue: typing.Optional[SkipQueueEnum] = None
     skipped_annotations_number: typing.Optional[int] = None
+    source_interface_id: typing.Optional[int] = None
+    source_interface_version: typing.Optional[int] = None
     start_training_on_annotation_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Start model training after any annotations are submitted or updated
@@ -292,6 +298,7 @@ class LseProjectResponse(UncheckedBaseModel):
 
     total_annotations_number: typing.Optional[int] = None
     total_predictions_number: typing.Optional[int] = None
+    use_custom_interface: typing.Optional[bool] = None
     useful_annotation_number: typing.Optional[int] = None
     workspace: typing.Optional[str] = None
     workspace_title: typing.Optional[str] = None

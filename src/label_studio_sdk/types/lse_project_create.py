@@ -45,6 +45,9 @@ class LseProjectCreate(UncheckedBaseModel):
     Project owner
     """
 
+    custom_interface_code: typing.Optional[str] = None
+    custom_interface_compiled: typing.Optional[str] = None
+    custom_interface_params: typing.Optional[typing.Any] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Project Description
@@ -76,6 +79,7 @@ class LseProjectCreate(UncheckedBaseModel):
     """
 
     id: typing.Optional[int] = None
+    input_schema: typing.Optional[typing.Any] = None
     is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether or not the project is in the middle of being created
@@ -163,6 +167,8 @@ class LseProjectCreate(UncheckedBaseModel):
     Skipped by collaborators annotation number in project
     """
 
+    source_interface_id: typing.Optional[int] = None
+    source_interface_version: typing.Optional[int] = None
     start_training_on_annotation_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Start model training after any annotations are submitted or updated
@@ -199,6 +205,7 @@ class LseProjectCreate(UncheckedBaseModel):
     Total predictions number in project including skipped_annotations_number, ground_truth_number, and useful_annotation_number.
     """
 
+    use_custom_interface: typing.Optional[bool] = None
     useful_annotation_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Useful annotation number in project not including skipped_annotations_number and ground_truth_number. Total annotations = annotation_number + skipped_annotations_number + ground_truth_number

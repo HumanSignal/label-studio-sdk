@@ -136,7 +136,6 @@ if typing.TYPE_CHECKING:
     from .maybe_expanded_comment import MaybeExpandedComment
     from .metric_param import MetricParam
     from .ml_backend import MlBackend
-    from .mode_enum import ModeEnum
     from .model_interface import ModelInterface
     from .model_interface_request import ModelInterfaceRequest
     from .model_interface_serializer_get import ModelInterfaceSerializerGet
@@ -174,6 +173,7 @@ if typing.TYPE_CHECKING:
     from .prediction import Prediction
     from .prediction_request import PredictionRequest
     from .project import Project
+    from .project_duplicate_mode_enum import ProjectDuplicateModeEnum
     from .project_group import ProjectGroup
     from .project_group_request import ProjectGroupRequest
     from .project_group_role_enum import ProjectGroupRoleEnum
@@ -381,7 +381,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MaybeExpandedComment": ".maybe_expanded_comment",
     "MetricParam": ".metric_param",
     "MlBackend": ".ml_backend",
-    "ModeEnum": ".mode_enum",
     "ModelInterface": ".model_interface",
     "ModelInterfaceRequest": ".model_interface_request",
     "ModelInterfaceSerializerGet": ".model_interface_serializer_get",
@@ -419,6 +418,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Prediction": ".prediction",
     "PredictionRequest": ".prediction_request",
     "Project": ".project",
+    "ProjectDuplicateModeEnum": ".project_duplicate_mode_enum",
     "ProjectGroup": ".project_group",
     "ProjectGroupRequest": ".project_group_request",
     "ProjectGroupRoleEnum": ".project_group_role_enum",
@@ -650,7 +650,6 @@ __all__ = [
     "MaybeExpandedComment",
     "MetricParam",
     "MlBackend",
-    "ModeEnum",
     "ModelInterface",
     "ModelInterfaceRequest",
     "ModelInterfaceSerializerGet",
@@ -688,6 +687,7 @@ __all__ = [
     "Prediction",
     "PredictionRequest",
     "Project",
+    "ProjectDuplicateModeEnum",
     "ProjectGroup",
     "ProjectGroupRequest",
     "ProjectGroupRoleEnum",

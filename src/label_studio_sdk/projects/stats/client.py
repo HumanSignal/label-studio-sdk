@@ -603,7 +603,7 @@ class StatsClient:
             </Card>
         Overall or per-label total agreement across the project.
 
-        NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handling a 204 response. As a workaround, wrap call to this function in a try-except block.
+        NOTE: when this endpoint returns 204 No Content, SDK clients return None.
 
         Parameters
         ----------
@@ -1613,7 +1613,7 @@ class AsyncStatsClient:
             </Card>
         Overall or per-label total agreement across the project.
 
-        NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handling a 204 response. As a workaround, wrap call to this function in a try-except block.
+        NOTE: when this endpoint returns 204 No Content, SDK clients return None.
 
         Parameters
         ----------

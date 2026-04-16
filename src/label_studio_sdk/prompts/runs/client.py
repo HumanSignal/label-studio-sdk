@@ -105,11 +105,13 @@ class RunsClient:
         version_id: int,
         *,
         project: int,
+        filters_json: typing.Optional[typing.Any] = OMIT,
         job_id: typing.Optional[str] = OMIT,
         only_missing_predictions: typing.Optional[bool] = OMIT,
         organization: typing.Optional[int] = OMIT,
         predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
         project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
+        sample_subset_size: typing.Optional[int] = OMIT,
         total_correct_predictions: typing.Optional[int] = OMIT,
         total_predictions: typing.Optional[int] = OMIT,
         total_tasks: typing.Optional[int] = OMIT,
@@ -132,6 +134,9 @@ class RunsClient:
 
         project : int
 
+        filters_json : typing.Optional[typing.Any]
+            DM filter group for Filtered subset. Stored for display/re-run purposes.
+
         job_id : typing.Optional[str]
             Job ID for inference job for a ModelRun e.g. Adala job ID
 
@@ -143,6 +148,9 @@ class RunsClient:
         predictions_updated_at : typing.Optional[dt.datetime]
 
         project_subset : typing.Optional[ProjectSubsetEnum]
+
+        sample_subset_size : typing.Optional[int]
+            Custom sample size for Sample subset. Uses PROMPTER_SAMPLE_SUBSET_SIZE if not set.
 
         total_correct_predictions : typing.Optional[int]
 
@@ -175,11 +183,13 @@ class RunsClient:
             prompt_id,
             version_id,
             project=project,
+            filters_json=filters_json,
             job_id=job_id,
             only_missing_predictions=only_missing_predictions,
             organization=organization,
             predictions_updated_at=predictions_updated_at,
             project_subset=project_subset,
+            sample_subset_size=sample_subset_size,
             total_correct_predictions=total_correct_predictions,
             total_predictions=total_predictions,
             total_tasks=total_tasks,
@@ -335,11 +345,13 @@ class AsyncRunsClient:
         version_id: int,
         *,
         project: int,
+        filters_json: typing.Optional[typing.Any] = OMIT,
         job_id: typing.Optional[str] = OMIT,
         only_missing_predictions: typing.Optional[bool] = OMIT,
         organization: typing.Optional[int] = OMIT,
         predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
         project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
+        sample_subset_size: typing.Optional[int] = OMIT,
         total_correct_predictions: typing.Optional[int] = OMIT,
         total_predictions: typing.Optional[int] = OMIT,
         total_tasks: typing.Optional[int] = OMIT,
@@ -362,6 +374,9 @@ class AsyncRunsClient:
 
         project : int
 
+        filters_json : typing.Optional[typing.Any]
+            DM filter group for Filtered subset. Stored for display/re-run purposes.
+
         job_id : typing.Optional[str]
             Job ID for inference job for a ModelRun e.g. Adala job ID
 
@@ -373,6 +388,9 @@ class AsyncRunsClient:
         predictions_updated_at : typing.Optional[dt.datetime]
 
         project_subset : typing.Optional[ProjectSubsetEnum]
+
+        sample_subset_size : typing.Optional[int]
+            Custom sample size for Sample subset. Uses PROMPTER_SAMPLE_SUBSET_SIZE if not set.
 
         total_correct_predictions : typing.Optional[int]
 
@@ -413,11 +431,13 @@ class AsyncRunsClient:
             prompt_id,
             version_id,
             project=project,
+            filters_json=filters_json,
             job_id=job_id,
             only_missing_predictions=only_missing_predictions,
             organization=organization,
             predictions_updated_at=predictions_updated_at,
             project_subset=project_subset,
+            sample_subset_size=sample_subset_size,
             total_correct_predictions=total_correct_predictions,
             total_predictions=total_predictions,
             total_tasks=total_tasks,

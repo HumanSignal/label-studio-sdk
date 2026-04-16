@@ -8,12 +8,18 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .model_run_status_enum import ModelRunStatusEnum
 from .project_subset_enum import ProjectSubsetEnum
+from .user_simple import UserSimple
 
 
 class ModelRun(UncheckedBaseModel):
     completed_at: typing.Optional[dt.datetime] = None
     created_at: typing.Optional[dt.datetime] = None
-    created_by: typing.Optional[int] = None
+    created_by: typing.Optional[UserSimple] = None
+    filters_json: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    DM filter group for Filtered subset. Stored for display/re-run purposes.
+    """
+
     id: typing.Optional[int] = None
     job_id: typing.Optional[str] = pydantic.Field(default=None)
     """
@@ -25,7 +31,18 @@ class ModelRun(UncheckedBaseModel):
     predictions_updated_at: typing.Optional[dt.datetime] = None
     project: int
     project_subset: typing.Optional[ProjectSubsetEnum] = None
+    sample_subset_size: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Custom sample size for Sample subset. Uses PROMPTER_SAMPLE_SUBSET_SIZE if not set.
+    """
+
+    source_model_run: typing.Optional[int] = None
     status: typing.Optional[ModelRunStatusEnum] = None
+    task_ids: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    List of task IDs for Custom subset re-evaluation.
+    """
+
     total_correct_predictions: typing.Optional[int] = None
     total_predictions: typing.Optional[int] = None
     total_tasks: typing.Optional[int] = None

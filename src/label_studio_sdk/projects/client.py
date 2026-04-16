@@ -16,10 +16,10 @@ from ..types.import_api_request import ImportApiRequest
 from ..types.lse_project_create import LseProjectCreate
 from ..types.lse_project_response import LseProjectResponse
 from ..types.lse_project_update import LseProjectUpdate
-from ..types.mode_enum import ModeEnum
 from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from ..types.paginated_lse_project_counts_list import PaginatedLseProjectCountsList
 from ..types.prediction_request import PredictionRequest
+from ..types.project_duplicate_mode_enum import ProjectDuplicateModeEnum
 from ..types.project_label_config import ProjectLabelConfig
 from ..types.review_settings_request import ReviewSettingsRequest
 from ..types.sampling_de5enum import SamplingDe5Enum
@@ -169,10 +169,14 @@ class ProjectsClient:
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        custom_interface_code: typing.Optional[str] = OMIT,
+        custom_interface_compiled: typing.Optional[str] = OMIT,
+        custom_interface_params: typing.Optional[typing.Any] = OMIT,
         description: typing.Optional[str] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
+        input_schema: typing.Optional[typing.Any] = OMIT,
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
@@ -191,9 +195,12 @@ class ProjectsClient:
         show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        source_interface_id: typing.Optional[int] = OMIT,
+        source_interface_version: typing.Optional[int] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_custom_interface: typing.Optional[bool] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseProjectCreate:
@@ -213,6 +220,12 @@ class ProjectsClient:
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
 
+        custom_interface_code : typing.Optional[str]
+
+        custom_interface_compiled : typing.Optional[str]
+
+        custom_interface_params : typing.Optional[typing.Any]
+
         description : typing.Optional[str]
             Project Description
 
@@ -224,6 +237,8 @@ class ProjectsClient:
 
         expert_instruction : typing.Optional[str]
             Labeling instructions in HTML format
+
+        input_schema : typing.Optional[typing.Any]
 
         is_draft : typing.Optional[bool]
             Whether or not the project is in the middle of being created
@@ -274,6 +289,10 @@ class ProjectsClient:
 
         skip_queue : typing.Optional[SkipQueueEnum]
 
+        source_interface_id : typing.Optional[int]
+
+        source_interface_version : typing.Optional[int]
+
         task_data_login : typing.Optional[str]
             Task data credentials: login
 
@@ -282,6 +301,8 @@ class ProjectsClient:
 
         title : typing.Optional[str]
             Project Title
+
+        use_custom_interface : typing.Optional[bool]
 
         workspace : typing.Optional[int]
             In Workspace
@@ -308,10 +329,14 @@ class ProjectsClient:
             color=color,
             control_weights=control_weights,
             created_by=created_by,
+            custom_interface_code=custom_interface_code,
+            custom_interface_compiled=custom_interface_compiled,
+            custom_interface_params=custom_interface_params,
             description=description,
             enable_empty_annotation=enable_empty_annotation,
             evaluate_predictions_automatically=evaluate_predictions_automatically,
             expert_instruction=expert_instruction,
+            input_schema=input_schema,
             is_draft=is_draft,
             is_published=is_published,
             label_config=label_config,
@@ -330,9 +355,12 @@ class ProjectsClient:
             show_overlap_first=show_overlap_first,
             show_skip_button=show_skip_button,
             skip_queue=skip_queue,
+            source_interface_id=source_interface_id,
+            source_interface_version=source_interface_version,
             task_data_login=task_data_login,
             task_data_password=task_data_password,
             title=title,
+            use_custom_interface=use_custom_interface,
             workspace=workspace,
             request_options=request_options,
         )
@@ -512,12 +540,16 @@ class ProjectsClient:
         comment_classification_config: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        custom_interface_code: typing.Optional[str] = OMIT,
+        custom_interface_compiled: typing.Optional[str] = OMIT,
+        custom_interface_params: typing.Optional[typing.Any] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
+        input_schema: typing.Optional[typing.Any] = OMIT,
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
@@ -541,10 +573,13 @@ class ProjectsClient:
         show_skip_button: typing.Optional[bool] = OMIT,
         show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        source_interface_id: typing.Optional[int] = OMIT,
+        source_interface_version: typing.Optional[int] = OMIT,
         strict_task_overlap: typing.Optional[bool] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_custom_interface: typing.Optional[bool] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseProjectUpdate:
@@ -601,6 +636,12 @@ class ProjectsClient:
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
 
+        custom_interface_code : typing.Optional[str]
+
+        custom_interface_compiled : typing.Optional[str]
+
+        custom_interface_params : typing.Optional[typing.Any]
+
         custom_script : typing.Optional[str]
             Plugins
 
@@ -618,6 +659,8 @@ class ProjectsClient:
 
         expert_instruction : typing.Optional[str]
             Instructions
+
+        input_schema : typing.Optional[typing.Any]
 
         is_draft : typing.Optional[bool]
             Whether or not the project is in the middle of being created
@@ -684,6 +727,10 @@ class ProjectsClient:
 
         skip_queue : typing.Optional[SkipQueueEnum]
 
+        source_interface_id : typing.Optional[int]
+
+        source_interface_version : typing.Optional[int]
+
         strict_task_overlap : typing.Optional[bool]
             Enforce strict overlap limit
 
@@ -695,6 +742,8 @@ class ProjectsClient:
 
         title : typing.Optional[str]
             Project Name
+
+        use_custom_interface : typing.Optional[bool]
 
         workspace : typing.Optional[int]
             Workspace
@@ -735,12 +784,16 @@ class ProjectsClient:
             comment_classification_config=comment_classification_config,
             control_weights=control_weights,
             created_by=created_by,
+            custom_interface_code=custom_interface_code,
+            custom_interface_compiled=custom_interface_compiled,
+            custom_interface_params=custom_interface_params,
             custom_script=custom_script,
             custom_task_lock_ttl=custom_task_lock_ttl,
             description=description,
             enable_empty_annotation=enable_empty_annotation,
             evaluate_predictions_automatically=evaluate_predictions_automatically,
             expert_instruction=expert_instruction,
+            input_schema=input_schema,
             is_draft=is_draft,
             is_published=is_published,
             label_config=label_config,
@@ -764,10 +817,13 @@ class ProjectsClient:
             show_skip_button=show_skip_button,
             show_unused_data_columns_to_annotators=show_unused_data_columns_to_annotators,
             skip_queue=skip_queue,
+            source_interface_id=source_interface_id,
+            source_interface_version=source_interface_version,
             strict_task_overlap=strict_task_overlap,
             task_data_login=task_data_login,
             task_data_password=task_data_password,
             title=title,
+            use_custom_interface=use_custom_interface,
             workspace=workspace,
             request_options=request_options,
         )
@@ -809,7 +865,7 @@ class ProjectsClient:
         self,
         id: int,
         *,
-        mode: ModeEnum,
+        mode: ProjectDuplicateModeEnum,
         title: str,
         workspace: int,
         description: typing.Optional[str] = OMIT,
@@ -828,7 +884,7 @@ class ProjectsClient:
         ----------
         id : int
 
-        mode : ModeEnum
+        mode : ProjectDuplicateModeEnum
             What to Duplicate (Project configuration only / Project configuration and tasks)
 
             * `settings` - Only settings
@@ -1274,10 +1330,14 @@ class AsyncProjectsClient:
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        custom_interface_code: typing.Optional[str] = OMIT,
+        custom_interface_compiled: typing.Optional[str] = OMIT,
+        custom_interface_params: typing.Optional[typing.Any] = OMIT,
         description: typing.Optional[str] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
+        input_schema: typing.Optional[typing.Any] = OMIT,
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
@@ -1296,9 +1356,12 @@ class AsyncProjectsClient:
         show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        source_interface_id: typing.Optional[int] = OMIT,
+        source_interface_version: typing.Optional[int] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_custom_interface: typing.Optional[bool] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseProjectCreate:
@@ -1318,6 +1381,12 @@ class AsyncProjectsClient:
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
 
+        custom_interface_code : typing.Optional[str]
+
+        custom_interface_compiled : typing.Optional[str]
+
+        custom_interface_params : typing.Optional[typing.Any]
+
         description : typing.Optional[str]
             Project Description
 
@@ -1329,6 +1398,8 @@ class AsyncProjectsClient:
 
         expert_instruction : typing.Optional[str]
             Labeling instructions in HTML format
+
+        input_schema : typing.Optional[typing.Any]
 
         is_draft : typing.Optional[bool]
             Whether or not the project is in the middle of being created
@@ -1379,6 +1450,10 @@ class AsyncProjectsClient:
 
         skip_queue : typing.Optional[SkipQueueEnum]
 
+        source_interface_id : typing.Optional[int]
+
+        source_interface_version : typing.Optional[int]
+
         task_data_login : typing.Optional[str]
             Task data credentials: login
 
@@ -1387,6 +1462,8 @@ class AsyncProjectsClient:
 
         title : typing.Optional[str]
             Project Title
+
+        use_custom_interface : typing.Optional[bool]
 
         workspace : typing.Optional[int]
             In Workspace
@@ -1421,10 +1498,14 @@ class AsyncProjectsClient:
             color=color,
             control_weights=control_weights,
             created_by=created_by,
+            custom_interface_code=custom_interface_code,
+            custom_interface_compiled=custom_interface_compiled,
+            custom_interface_params=custom_interface_params,
             description=description,
             enable_empty_annotation=enable_empty_annotation,
             evaluate_predictions_automatically=evaluate_predictions_automatically,
             expert_instruction=expert_instruction,
+            input_schema=input_schema,
             is_draft=is_draft,
             is_published=is_published,
             label_config=label_config,
@@ -1443,9 +1524,12 @@ class AsyncProjectsClient:
             show_overlap_first=show_overlap_first,
             show_skip_button=show_skip_button,
             skip_queue=skip_queue,
+            source_interface_id=source_interface_id,
+            source_interface_version=source_interface_version,
             task_data_login=task_data_login,
             task_data_password=task_data_password,
             title=title,
+            use_custom_interface=use_custom_interface,
             workspace=workspace,
             request_options=request_options,
         )
@@ -1649,12 +1733,16 @@ class AsyncProjectsClient:
         comment_classification_config: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        custom_interface_code: typing.Optional[str] = OMIT,
+        custom_interface_compiled: typing.Optional[str] = OMIT,
+        custom_interface_params: typing.Optional[typing.Any] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
+        input_schema: typing.Optional[typing.Any] = OMIT,
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
@@ -1678,10 +1766,13 @@ class AsyncProjectsClient:
         show_skip_button: typing.Optional[bool] = OMIT,
         show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[SkipQueueEnum] = OMIT,
+        source_interface_id: typing.Optional[int] = OMIT,
+        source_interface_version: typing.Optional[int] = OMIT,
         strict_task_overlap: typing.Optional[bool] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_custom_interface: typing.Optional[bool] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseProjectUpdate:
@@ -1738,6 +1829,12 @@ class AsyncProjectsClient:
         created_by : typing.Optional[UserSimpleRequest]
             Project owner
 
+        custom_interface_code : typing.Optional[str]
+
+        custom_interface_compiled : typing.Optional[str]
+
+        custom_interface_params : typing.Optional[typing.Any]
+
         custom_script : typing.Optional[str]
             Plugins
 
@@ -1755,6 +1852,8 @@ class AsyncProjectsClient:
 
         expert_instruction : typing.Optional[str]
             Instructions
+
+        input_schema : typing.Optional[typing.Any]
 
         is_draft : typing.Optional[bool]
             Whether or not the project is in the middle of being created
@@ -1821,6 +1920,10 @@ class AsyncProjectsClient:
 
         skip_queue : typing.Optional[SkipQueueEnum]
 
+        source_interface_id : typing.Optional[int]
+
+        source_interface_version : typing.Optional[int]
+
         strict_task_overlap : typing.Optional[bool]
             Enforce strict overlap limit
 
@@ -1832,6 +1935,8 @@ class AsyncProjectsClient:
 
         title : typing.Optional[str]
             Project Name
+
+        use_custom_interface : typing.Optional[bool]
 
         workspace : typing.Optional[int]
             Workspace
@@ -1880,12 +1985,16 @@ class AsyncProjectsClient:
             comment_classification_config=comment_classification_config,
             control_weights=control_weights,
             created_by=created_by,
+            custom_interface_code=custom_interface_code,
+            custom_interface_compiled=custom_interface_compiled,
+            custom_interface_params=custom_interface_params,
             custom_script=custom_script,
             custom_task_lock_ttl=custom_task_lock_ttl,
             description=description,
             enable_empty_annotation=enable_empty_annotation,
             evaluate_predictions_automatically=evaluate_predictions_automatically,
             expert_instruction=expert_instruction,
+            input_schema=input_schema,
             is_draft=is_draft,
             is_published=is_published,
             label_config=label_config,
@@ -1909,10 +2018,13 @@ class AsyncProjectsClient:
             show_skip_button=show_skip_button,
             show_unused_data_columns_to_annotators=show_unused_data_columns_to_annotators,
             skip_queue=skip_queue,
+            source_interface_id=source_interface_id,
+            source_interface_version=source_interface_version,
             strict_task_overlap=strict_task_overlap,
             task_data_login=task_data_login,
             task_data_password=task_data_password,
             title=title,
+            use_custom_interface=use_custom_interface,
             workspace=workspace,
             request_options=request_options,
         )
@@ -1962,7 +2074,7 @@ class AsyncProjectsClient:
         self,
         id: int,
         *,
-        mode: ModeEnum,
+        mode: ProjectDuplicateModeEnum,
         title: str,
         workspace: int,
         description: typing.Optional[str] = OMIT,
@@ -1981,7 +2093,7 @@ class AsyncProjectsClient:
         ----------
         id : int
 
-        mode : ModeEnum
+        mode : ProjectDuplicateModeEnum
             What to Duplicate (Project configuration only / Project configuration and tasks)
 
             * `settings` - Only settings

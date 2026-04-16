@@ -129,11 +129,11 @@ class LabelStudioBase:
         self._views: typing.Optional[ViewsClient] = None
         self._states: typing.Optional[StatesClient] = None
         self._files: typing.Optional[FilesClient] = None
+        self._prompts: typing.Optional[PromptsClient] = None
         self._organizations: typing.Optional[OrganizationsClient] = None
         self._jwt_settings: typing.Optional[JwtSettingsClient] = None
         self._ml: typing.Optional[MlClient] = None
         self._model_providers: typing.Optional[ModelProvidersClient] = None
-        self._prompts: typing.Optional[PromptsClient] = None
         self._predictions: typing.Optional[PredictionsClient] = None
         self._project_templates: typing.Optional[ProjectTemplatesClient] = None
         self._projects: typing.Optional[ProjectsClient] = None
@@ -244,6 +244,14 @@ class LabelStudioBase:
         return self._files
 
     @property
+    def prompts(self):
+        if self._prompts is None:
+            from .prompts.client import PromptsClient  # noqa: E402
+
+            self._prompts = PromptsClient(client_wrapper=self._client_wrapper)
+        return self._prompts
+
+    @property
     def organizations(self):
         if self._organizations is None:
             from .organizations.client import OrganizationsClient  # noqa: E402
@@ -274,14 +282,6 @@ class LabelStudioBase:
 
             self._model_providers = ModelProvidersClient(client_wrapper=self._client_wrapper)
         return self._model_providers
-
-    @property
-    def prompts(self):
-        if self._prompts is None:
-            from .prompts.client import PromptsClient  # noqa: E402
-
-            self._prompts = PromptsClient(client_wrapper=self._client_wrapper)
-        return self._prompts
 
     @property
     def predictions(self):
@@ -482,11 +482,11 @@ class AsyncLabelStudioBase:
         self._views: typing.Optional[AsyncViewsClient] = None
         self._states: typing.Optional[AsyncStatesClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
+        self._prompts: typing.Optional[AsyncPromptsClient] = None
         self._organizations: typing.Optional[AsyncOrganizationsClient] = None
         self._jwt_settings: typing.Optional[AsyncJwtSettingsClient] = None
         self._ml: typing.Optional[AsyncMlClient] = None
         self._model_providers: typing.Optional[AsyncModelProvidersClient] = None
-        self._prompts: typing.Optional[AsyncPromptsClient] = None
         self._predictions: typing.Optional[AsyncPredictionsClient] = None
         self._project_templates: typing.Optional[AsyncProjectTemplatesClient] = None
         self._projects: typing.Optional[AsyncProjectsClient] = None
@@ -597,6 +597,14 @@ class AsyncLabelStudioBase:
         return self._files
 
     @property
+    def prompts(self):
+        if self._prompts is None:
+            from .prompts.client import AsyncPromptsClient  # noqa: E402
+
+            self._prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
+        return self._prompts
+
+    @property
     def organizations(self):
         if self._organizations is None:
             from .organizations.client import AsyncOrganizationsClient  # noqa: E402
@@ -627,14 +635,6 @@ class AsyncLabelStudioBase:
 
             self._model_providers = AsyncModelProvidersClient(client_wrapper=self._client_wrapper)
         return self._model_providers
-
-    @property
-    def prompts(self):
-        if self._prompts is None:
-            from .prompts.client import AsyncPromptsClient  # noqa: E402
-
-            self._prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
-        return self._prompts
 
     @property
     def predictions(self):

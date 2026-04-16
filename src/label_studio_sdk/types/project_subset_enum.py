@@ -2,4 +2,4 @@
 
 import typing
 
-ProjectSubsetEnum = typing.Union[typing.Literal["All", "HasGT", "Sample"], typing.Any]
+ProjectSubsetEnum = typing.Union[typing.Literal["All", "HasGT", "Sample", "Custom"], typing.Any]

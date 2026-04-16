@@ -129,6 +129,7 @@ class RawVersionsClient:
         prompt: str,
         provider_model_id: str,
         title: str,
+        max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
@@ -156,6 +157,9 @@ class RawVersionsClient:
 
         title : str
             Model name
+
+        max_few_shot_examples : typing.Optional[int]
+            Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
 
@@ -187,6 +191,7 @@ class RawVersionsClient:
             f"api/prompts/{encode_path_param(prompt_id)}/versions",
             method="POST",
             json={
+                "max_few_shot_examples": max_few_shot_examples,
                 "model_provider_connection": model_provider_connection,
                 "organization": organization,
                 "parent_model": parent_model,
@@ -317,6 +322,7 @@ class RawVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
+        max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
@@ -340,6 +346,9 @@ class RawVersionsClient:
         prompt_id : int
 
         version_id : int
+
+        max_few_shot_examples : typing.Optional[int]
+            Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
 
@@ -380,6 +389,7 @@ class RawVersionsClient:
             f"api/prompts/{encode_path_param(prompt_id)}/versions/{encode_path_param(version_id)}",
             method="PATCH",
             json={
+                "max_few_shot_examples": max_few_shot_examples,
                 "model_provider_connection": model_provider_connection,
                 "organization": organization,
                 "parent_model": parent_model,
@@ -716,6 +726,7 @@ class AsyncRawVersionsClient:
         prompt: str,
         provider_model_id: str,
         title: str,
+        max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
@@ -743,6 +754,9 @@ class AsyncRawVersionsClient:
 
         title : str
             Model name
+
+        max_few_shot_examples : typing.Optional[int]
+            Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
 
@@ -774,6 +788,7 @@ class AsyncRawVersionsClient:
             f"api/prompts/{encode_path_param(prompt_id)}/versions",
             method="POST",
             json={
+                "max_few_shot_examples": max_few_shot_examples,
                 "model_provider_connection": model_provider_connection,
                 "organization": organization,
                 "parent_model": parent_model,
@@ -904,6 +919,7 @@ class AsyncRawVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
+        max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
@@ -927,6 +943,9 @@ class AsyncRawVersionsClient:
         prompt_id : int
 
         version_id : int
+
+        max_few_shot_examples : typing.Optional[int]
+            Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
 
@@ -967,6 +986,7 @@ class AsyncRawVersionsClient:
             f"api/prompts/{encode_path_param(prompt_id)}/versions/{encode_path_param(version_id)}",
             method="PATCH",
             json={
+                "max_few_shot_examples": max_few_shot_examples,
                 "model_provider_connection": model_provider_connection,
                 "organization": organization,
                 "parent_model": parent_model,

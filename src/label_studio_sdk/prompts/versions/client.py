@@ -116,6 +116,7 @@ class VersionsClient:
         prompt: str,
         provider_model_id: str,
         title: str,
+        max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
@@ -143,6 +144,9 @@ class VersionsClient:
 
         title : str
             Model name
+
+        max_few_shot_examples : typing.Optional[int]
+            Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
 
@@ -189,6 +193,7 @@ class VersionsClient:
             prompt=prompt,
             provider_model_id=provider_model_id,
             title=title,
+            max_few_shot_examples=max_few_shot_examples,
             model_provider_connection=model_provider_connection,
             organization=organization,
             parent_model=parent_model,
@@ -283,6 +288,7 @@ class VersionsClient:
         prompt_id: int,
         version_id: int,
         *,
+        max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
@@ -306,6 +312,9 @@ class VersionsClient:
         prompt_id : int
 
         version_id : int
+
+        max_few_shot_examples : typing.Optional[int]
+            Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
 
@@ -357,6 +366,7 @@ class VersionsClient:
         _response = self._raw_client.update(
             prompt_id,
             version_id,
+            max_few_shot_examples=max_few_shot_examples,
             model_provider_connection=model_provider_connection,
             organization=organization,
             parent_model=parent_model,
@@ -653,6 +663,7 @@ class AsyncVersionsClient:
         prompt: str,
         provider_model_id: str,
         title: str,
+        max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
@@ -680,6 +691,9 @@ class AsyncVersionsClient:
 
         title : str
             Model name
+
+        max_few_shot_examples : typing.Optional[int]
+            Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
 
@@ -734,6 +748,7 @@ class AsyncVersionsClient:
             prompt=prompt,
             provider_model_id=provider_model_id,
             title=title,
+            max_few_shot_examples=max_few_shot_examples,
             model_provider_connection=model_provider_connection,
             organization=organization,
             parent_model=parent_model,
@@ -844,6 +859,7 @@ class AsyncVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
+        max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
@@ -867,6 +883,9 @@ class AsyncVersionsClient:
         prompt_id : int
 
         version_id : int
+
+        max_few_shot_examples : typing.Optional[int]
+            Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
 
@@ -926,6 +945,7 @@ class AsyncVersionsClient:
         _response = await self._raw_client.update(
             prompt_id,
             version_id,
+            max_few_shot_examples=max_few_shot_examples,
             model_provider_connection=model_provider_connection,
             organization=organization,
             parent_model=parent_model,

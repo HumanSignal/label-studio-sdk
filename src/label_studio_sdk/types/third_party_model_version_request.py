@@ -9,6 +9,11 @@ from .provider_enum import ProviderEnum
 
 
 class ThirdPartyModelVersionRequest(UncheckedBaseModel):
+    max_few_shot_examples: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Max number of few-shot examples to include in prompts. 0 = disabled.
+    """
+
     model_provider_connection: typing.Optional[int] = None
     organization: typing.Optional[int] = None
     parent_model: typing.Optional[int] = pydantic.Field(default=None)
