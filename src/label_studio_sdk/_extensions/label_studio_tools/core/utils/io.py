@@ -1,14 +1,14 @@
+import base64
 import hashlib
 import io
 import logging
 import os
 import shutil
-import base64
 from contextlib import contextmanager
 from tempfile import mkdtemp
 from urllib.parse import parse_qs, urlparse
-import jwt
 
+import jwt
 import requests
 from appdirs import user_cache_dir, user_data_dir
 
@@ -69,6 +69,10 @@ def _build_headers(target_url, hostname, access_token):
             else:
                 headers["Authorization"] = "Token " + access_token
     return headers
+
+
+def _build_cache_path(cache_dir, target_url, filename):
+    return os.path.join(cache_dir, hashlib.md5(target_url.encode(), usedforsecurity=False).hexdigest()[:8] + "__" + filename)
 
 
 def get_local_path(
@@ -178,6 +182,12 @@ def get_local_path(
             logger.debug(
                 f"Local Storage file path exists locally, use it as a local file: {filepath}"
             )
+            if cache_dir and download_resources:
+                os.makedirs(cache_dir, exist_ok=True)
+                cache_path = _build_cache_path(cache_dir, url, os.path.basename(filepath))
+                if not os.path.exists(cache_path):
+                    shutil.copy(filepath, cache_path)
+                return cache_path
             return filepath
 
     # try to get local directories
@@ -310,7 +320,7 @@ def download_and_cache(
         return os.path.basename(parsed.path)
 
     def _cache_path(target_url, fname):
-        return os.path.join(cache_dir, hashlib.md5(target_url.encode(), usedforsecurity=False).hexdigest()[:8] + "__" + fname)
+        return _build_cache_path(cache_dir, target_url, fname)
 
     cache_dir = cache_dir or get_cache_dir()
     current_filename = _filename_for(url, storage_filepath)

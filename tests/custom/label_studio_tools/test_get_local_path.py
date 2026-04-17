@@ -1,17 +1,15 @@
 import base64
 import hashlib
-import os
-import tempfile
-import requests
 from types import SimpleNamespace
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
+import requests
 
 from label_studio_sdk._extensions.label_studio_tools.core.utils.io import (
-    get_local_path,
-    get_base64_content,
     _DIR_APP_NAME,
+    get_base64_content,
+    get_local_path,
 )
 
 
@@ -103,6 +101,40 @@ def test_get_local_path_safe_build(mock_data_dir, mock_cache_dir, url, raises_er
         else:
             local_path = get_local_path(url, access_token="secret", hostname="http://app.heartex.com")
             assert "my_dir/1.jpg" in local_path
+
+
+@patch("label_studio_sdk._extensions.label_studio_tools.core.utils.io.LOCAL_FILES_DOCUMENT_ROOT", "")
+def test_get_local_path_local_storage_downloads_to_cache(tmp_path):
+    """Ensure local storage files are copied into cache when download_resources is enabled."""
+    local_root = tmp_path / "local-storage-root"
+    image_dir = local_root / "my_dir"
+    image_dir.mkdir(parents=True)
+    source_file = image_dir / "1.jpg"
+    source_content = b"local-image-bytes"
+    source_file.write_bytes(source_content)
+
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir()
+    local_url = "/data/local-files?d=my_dir/1.jpg"
+
+    with patch(
+        "label_studio_sdk._extensions.label_studio_tools.core.utils.io.LOCAL_FILES_DOCUMENT_ROOT", str(local_root)
+    ):
+        cached_path = get_local_path(
+            url=local_url,
+            cache_dir=str(cache_dir),
+            hostname="http://app.heartex.com",
+            access_token="secret",
+            download_resources=True,
+            task_id=1,
+        )
+
+    expected_hash = hashlib.md5(local_url.encode(), usedforsecurity=False).hexdigest()[:8]
+    expected_path = cache_dir / f"{expected_hash}__1.jpg"
+
+    assert cached_path == str(expected_path)
+    assert expected_path.exists()
+    assert expected_path.read_bytes() == source_content
 
 
 def test_get_local_path_storage_proxy_filename_and_auth(monkeypatch, tmp_path):
