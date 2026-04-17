@@ -31,9 +31,9 @@ class LseTask(UncheckedBaseModel):
     annotations: typing.Optional[str] = None
     annotations_ids: typing.Optional[str] = None
     annotations_results: typing.Optional[str] = None
-    annotators: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
+    annotators: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
     """
-    Annotators IDs who annotated this task
+    Who annotated this task; each item includes user_id plus minimal profile fields for Data Manager display.
     """
 
     annotators_count: typing.Optional[int] = pydantic.Field(default=None)
