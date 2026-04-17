@@ -21,29 +21,30 @@ def update_categories_for_keypoints(categories, category_name_to_id, label_confi
             keypoint_labels.extend(cfg.get("labels", []))
     keypoint_labels = list(dict.fromkeys(keypoint_labels))
 
+    if not keypoint_labels:
+        return categories, category_name_to_id
+
     non_kp = [cat.copy() for cat in categories if cat["name"] not in keypoint_labels]
 
     new_categories = []
     new_mapping = {}
-    next_id = 0
     for cat in non_kp:
-        cat["id"] = next_id
+        category_id = cat["id"]
         new_categories.append(cat)
-        new_mapping[cat["name"]] = next_id
-        next_id += 1
+        new_mapping[cat["name"]] = category_id
 
-    if keypoint_labels:
-        merged_id = next_id
-        merged_category = {
-            "id": merged_id,
-            "name": "default",
-            "supercategory": "default",
-            "keypoints": keypoint_labels,
-            "skeleton": []
-        }
-        new_categories.append(merged_category)
-        for kp_name in keypoint_labels:
-            new_mapping[kp_name] = merged_id
+    numeric_ids = [cat["id"] for cat in new_categories if isinstance(cat["id"], int)]
+    merged_id = (max(numeric_ids) + 1) if numeric_ids else 0
+    merged_category = {
+        "id": merged_id,
+        "name": "default",
+        "supercategory": "default",
+        "keypoints": keypoint_labels,
+        "skeleton": []
+    }
+    new_categories.append(merged_category)
+    for kp_name in keypoint_labels:
+        new_mapping[kp_name] = merged_id
 
     return new_categories, new_mapping
 

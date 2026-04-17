@@ -1,4 +1,5 @@
 import io
+import itertools
 import logging
 import math
 import os
@@ -1250,20 +1251,25 @@ class Converter(object):
             labels |= set(info["labels"])
             attrs = info["labels_attrs"]
             for label in attrs:
-                if attrs[label].get("category"):
-                    categories.append(
-                        {"id": attrs[label].get("category"), "name": label}
+                raw_category_id = attrs[label].get("category")
+                if raw_category_id is None:
+                    continue
+                try:
+                    category_id = int(raw_category_id)
+                except (TypeError, ValueError):
+                    logger.warning(
+                        "Invalid category id %r for label %r in tag %r, skipping explicit category mapping",
+                        raw_category_id,
+                        label,
+                        name,
                     )
-                    category_name_to_id[label] = attrs[label].get("category")
+                    continue
+                categories.append({"id": category_id, "name": label})
+                category_name_to_id[label] = category_id
         labels_to_add = set(labels) - set(list(category_name_to_id.keys()))
-        labels_to_add = sorted(list(labels_to_add))
-        idx = 0
-        while idx in list(category_name_to_id.values()):
-            idx += 1
-        for label in labels_to_add:
+        used_category_ids = set(category_name_to_id.values())
+        idxs = (c for c in itertools.count() if c not in used_category_ids)
+        for label, idx in zip(sorted(labels_to_add), idxs):
             categories.append({"id": idx, "name": label})
             category_name_to_id[label] = idx
-            idx += 1
-            while idx in list(category_name_to_id.values()):
-                idx += 1
         return categories, category_name_to_id

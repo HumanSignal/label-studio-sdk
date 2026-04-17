@@ -159,3 +159,79 @@ def test_convert_to_coco_keypoints(temp_out_dir: Path):
     cat = kp_cats[0]
 
     assert cat["name"] == "default"
+
+
+def test_convert_to_coco_preserves_explicit_category_ids(temp_out_dir: Path):
+    """COCO export should keep explicit `category` ids from the labeling config."""
+    config = """
+    <View>
+      <Image name="image" value="$image"/>
+      <RectangleLabels name="label" toName="image">
+        <Label value="car" category="10"/>
+        <Label value="person" category="2"/>
+        <Label value="truck" category="7"/>
+      </RectangleLabels>
+    </View>
+    """.strip()
+    input_payload = [
+        {
+            "id": 1,
+            "data": {"image": "not-downloaded.jpg"},
+            "annotations": [
+                {
+                    "id": 1,
+                    "result": [
+                        {
+                            "id": "r1",
+                            "type": "rectanglelabels",
+                            "value": {
+                                "x": 10,
+                                "y": 10,
+                                "width": 20,
+                                "height": 20,
+                                "rotation": 0,
+                                "rectanglelabels": ["car"],
+                            },
+                            "to_name": "image",
+                            "from_name": "label",
+                            "original_width": 1000,
+                            "original_height": 500,
+                        },
+                        {
+                            "id": "r2",
+                            "type": "rectanglelabels",
+                            "value": {
+                                "x": 30,
+                                "y": 30,
+                                "width": 10,
+                                "height": 10,
+                                "rotation": 0,
+                                "rectanglelabels": ["truck"],
+                            },
+                            "to_name": "image",
+                            "from_name": "label",
+                            "original_width": 1000,
+                            "original_height": 500,
+                        },
+                    ],
+                }
+            ],
+        }
+    ]
+    input_path = temp_out_dir / "input.json"
+    input_path.write_text(json.dumps(input_payload))
+
+    converter = Converter(config=config, project_dir=PROJECT_DIR, download_resources=False)
+    converter.convert_to_coco(str(input_path), str(temp_out_dir), output_image_dir=str(temp_out_dir / "images"), is_dir=False)
+
+    coco_path = next(temp_out_dir.glob("*.json"))
+    coco = json.loads(coco_path.read_text())
+
+    category_id_by_name = {cat["name"]: cat["id"] for cat in coco["categories"]}
+    assert category_id_by_name["car"] == 10
+    assert category_id_by_name["person"] == 2
+    assert category_id_by_name["truck"] == 7
+    assert all(isinstance(cat["id"], int) for cat in coco["categories"])
+
+    annotation_category_ids = {ann["category_id"] for ann in coco["annotations"]}
+    assert annotation_category_ids == {10, 7}
