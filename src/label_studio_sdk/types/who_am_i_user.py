@@ -44,6 +44,7 @@ class WhoAmIUser(UncheckedBaseModel):
     pause: typing.Optional[str] = None
     permissions: typing.Optional[typing.List[str]] = None
     phone: typing.Optional[str] = None
+    social_accounts: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
     username: str
 
     if IS_PYDANTIC_V2:
