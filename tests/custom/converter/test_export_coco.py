@@ -224,7 +224,7 @@ def test_convert_to_coco_preserves_explicit_category_ids(temp_out_dir: Path):
     converter = Converter(config=config, project_dir=PROJECT_DIR, download_resources=False)
     converter.convert_to_coco(str(input_path), str(temp_out_dir), output_image_dir=str(temp_out_dir / "images"), is_dir=False)
 
-    coco_path = next(temp_out_dir.glob("*.json"))
+    coco_path = temp_out_dir / "result.json"
     coco = json.loads(coco_path.read_text())
 
     category_id_by_name = {cat["name"]: cat["id"] for cat in coco["categories"]}
