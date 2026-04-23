@@ -1,10 +1,8 @@
-import pytest
-import json
 from datetime import datetime, timezone
-from label_studio_sdk.label_interface.interface import LabelInterface
-from label_studio_sdk.label_interface.control_tags import ControlTag
-from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema import json_schema_to_pydantic
 
+import pytest
+from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema import json_schema_to_pydantic
+from label_studio_sdk.label_interface.interface import LabelInterface
 
 
 @pytest.mark.parametrize("config, expected_json_schema, input_arg, expected_result", [
@@ -321,6 +319,32 @@ def process_json_schema(json_schema, input_arg, queue):
     with json_schema_to_pydantic(json_schema) as ResponseModel:
         instance = ResponseModel(**input_arg)
         queue.put(instance.model_dump())
+
+def test_polygonlabels_to_json_schema_is_object_with_enum():
+    """Explicit schema assertion for PolygonLabelsTag (hp-wgxy)."""
+    config = """
+    <View>
+      <Image name="image" value="$image"/>
+      <PolygonLabels name="label" toName="image">
+        <Label value="Airplane"/>
+        <Label value="Car"/>
+      </PolygonLabels>
+    </View>
+    """
+    interface = LabelInterface(config)
+    tag = interface.get_control('label')
+    schema = tag.to_json_schema()
+
+    assert schema != {"type": "string"}
+    assert schema["type"] == "object"
+    assert "properties" in schema
+    assert "polygonlabels" in schema["properties"]
+    assert schema["properties"]["polygonlabels"]["type"] == "array"
+    assert schema["properties"]["polygonlabels"]["items"]["type"] == "string"
+    assert set(schema["properties"]["polygonlabels"]["items"]["enum"]) == {"Airplane", "Car"}
+    assert "points" in schema["properties"]
+    assert schema["required"] == ["points", "polygonlabels"]
+
 
 def test_concurrent_json_schema_to_pydantic():
     import multiprocessing

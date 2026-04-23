@@ -108,6 +108,22 @@ class ControlTag(LabelStudioTag):
         required_in_attr = str(self.attr.get("required", "false")).lower() == "true"
         return required_in_attr or False
 
+    def _labels_json_schema(self):
+        """Return a JSON Schema fragment for the label array used by label-array control tags.
+
+        Rules:
+        - if ``self.attr.get("choice") == "multiple"``, omit ``maxItems``
+        - otherwise keep ``maxItems: 1``
+        """
+        schema = {
+            "type": "array",
+            "items": {"type": "string", "enum": self.labels},
+            "minItems": 1,
+        }
+        if self.attr.get("choice") != "multiple":
+            schema["maxItems"] = 1
+        return schema
+
     def to_json_schema(self):
         """
         Converts the current ControlTag instance into a JSON Schema.
@@ -770,6 +786,20 @@ class EllipseLabelsTag(ControlTag):
     _label_attr_name: str = "ellipselabels"
     _value_class: Type[EllipseLabelsValue] = EllipseLabelsValue
 
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "x": {"type": "number", "minimum": 0, "maximum": 100},
+                "y": {"type": "number", "minimum": 0, "maximum": 100},
+                "radiusX": {"type": "number", "minimum": 0, "maximum": 50},
+                "radiusY": {"type": "number", "minimum": 0, "maximum": 50},
+                "rotation": {"type": "number", "minimum": 0, "maximum": 360},
+                "ellipselabels": self._labels_json_schema(),
+            },
+            "required": ["x", "y", "radiusX", "radiusY", "ellipselabels"],
+        }
+
 
 class KeyPointValue(BaseModel):
     x: confloat(le=100)
@@ -791,6 +821,17 @@ class KeyPointLabelsTag(ControlTag):
     tag: str = "KeyPointLabels"
     _label_attr_name: str = "keypointlabels"
     _value_class: Type[KeyPointLabelsValue] = KeyPointLabelsValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "x": {"type": "number", "minimum": 0, "maximum": 100},
+                "y": {"type": "number", "minimum": 0, "maximum": 100},
+                "keypointlabels": self._labels_json_schema(),
+            },
+            "required": ["x", "y", "keypointlabels"],
+        }
 
 
 class VectorVertex(BaseModel):
@@ -815,6 +856,30 @@ class VectorLabelsTag(ControlTag):
     _label_attr_name: str = "vectorlabels"
     _value_class: Type[VectorLabelsValue] = VectorLabelsValue
 
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "closed": {"type": "boolean"},
+                "vertices": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "x": {"type": "number"},
+                            "y": {"type": "number"},
+                            "id": {"type": "string"},
+                            "isBezier": {"type": "boolean"},
+                            "prevPointId": {"type": "string"},
+                        },
+                        "required": ["x", "y"],
+                    },
+                },
+                "vectorlabels": self._labels_json_schema(),
+            },
+            "required": ["vertices", "vectorlabels"],
+        }
+
 
 class OcrLabelsValue(BaseModel):
     """Value for OcrLabels control tag (OCR region on PDF/images)."""
@@ -833,6 +898,22 @@ class OcrLabelsTag(ControlTag):
     tag: str = "OcrLabels"
     _label_attr_name: str = "ocrlabels"
     _value_class: Type[OcrLabelsValue] = OcrLabelsValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "x": {"type": "number"},
+                "y": {"type": "number"},
+                "width": {"type": "number"},
+                "height": {"type": "number"},
+                "rotation": {"type": "number"},
+                "ocrtext": {"type": "string"},
+                "pageIndex": {"type": "integer"},
+                "ocrlabels": self._labels_json_schema(),
+            },
+            "required": ["x", "y", "width", "height", "ocrlabels"],
+        }
 
 
 class PolygonValue(BaseModel):
@@ -854,6 +935,24 @@ class PolygonLabelsTag(ControlTag):
     tag: str = "PolygonLabels"
     _label_attr_name: str = "polygonlabels"
     _value_class: Type[PolygonLabelsValue] = PolygonLabelsValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "points": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {"type": "number", "minimum": 0, "maximum": 100},
+                        "minItems": 2,
+                        "maxItems": 2,
+                    },
+                },
+                "polygonlabels": self._labels_json_schema(),
+            },
+            "required": ["points", "polygonlabels"],
+        }
 
 
 class RectangleValue(BaseModel):
@@ -885,14 +984,6 @@ class RectangleLabelsTag(ControlTag):
         return self.attr.get("choice") == "multiple"
 
     def to_json_schema(self):
-        labels_schema = {
-            "type": "array",
-            "items": {"type": "string", "enum": self.labels},
-            "minItems": 1,
-        }
-        if not self.is_multiple_choice:
-            labels_schema["maxItems"] = 1
-
         return {
             "type": "object",
             "properties": {
@@ -901,7 +992,7 @@ class RectangleLabelsTag(ControlTag):
                 "width": {"type": "number", "minimum": 1, "maximum": 99},
                 "height": {"type": "number", "minimum": 1, "maximum": 99},
                 "rotation": {"type": "number", "minimum": 0, "maximum": 360},
-                "rectanglelabels": labels_schema,
+                "rectanglelabels": self._labels_json_schema(),
             },
             "required": ["x", "y", "width", "height", "rectanglelabels"],
         }
@@ -929,6 +1020,33 @@ class VideoRectangleTag(ControlTag):
     tag: str = "VideoRectangle"
     _label_attr_name: str = "labels"
     _value_class: Type[VideoRectangleValue] = VideoRectangleValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "framesCount": {"type": "integer"},
+                "duration": {"type": "number"},
+                "sequence": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "x": {"type": "number", "minimum": 0, "maximum": 100},
+                            "y": {"type": "number", "minimum": 0, "maximum": 100},
+                            "time": {"type": "number"},
+                            "frame": {"type": "integer"},
+                            "width": {"type": "number", "minimum": 0, "maximum": 100},
+                            "height": {"type": "number", "minimum": 0, "maximum": 100},
+                            "rotation": {"type": "number"},
+                        },
+                        "required": ["x", "y", "time", "frame", "width", "height"],
+                    },
+                },
+                "labels": self._labels_json_schema(),
+            },
+            "required": ["framesCount", "duration", "sequence", "labels"],
+        }
 
 
 class VideoVectorSequenceValue(BaseModel):
@@ -960,6 +1078,44 @@ class VideoVectorLabelsTag(ControlTag):
     tag: str = "VideoVectorLabels"
     _label_attr_name: str = "labels"
     _value_class: Type[VideoVectorLabelsValue] = VideoVectorLabelsValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "framesCount": {"type": "integer"},
+                "duration": {"type": "number"},
+                "sequence": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "time": {"type": "number"},
+                            "frame": {"type": "integer"},
+                            "closed": {"type": "boolean"},
+                            "enabled": {"type": "boolean"},
+                            "vertices": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "x": {"type": "number"},
+                                        "y": {"type": "number"},
+                                        "id": {"type": "string"},
+                                        "isBezier": {"type": "boolean"},
+                                        "prevPointId": {"type": "string"},
+                                    },
+                                    "required": ["x", "y"],
+                                },
+                            },
+                        },
+                        "required": ["frame", "vertices"],
+                    },
+                },
+                "labels": self._labels_json_schema(),
+            },
+            "required": ["sequence", "labels"],
+        }
 
 
 class NumberValue(BaseModel):
@@ -1031,6 +1187,19 @@ class HyperTextLabelsTag(ControlTag):
     _label_attr_name: str = "hypertextlabels"
     _value_class: Type[HyperTextLabelsValue] = HyperTextLabelsValue
 
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "start": {"oneOf": [{"type": "integer", "minimum": 0}, {"type": "number", "minimum": 0}]},
+                "end": {"oneOf": [{"type": "integer", "minimum": 0}, {"type": "number", "minimum": 0}]},
+                "startOffset": {"type": "integer", "minimum": 0},
+                "endOffset": {"type": "integer", "minimum": 0},
+                "hypertextlabels": self._labels_json_schema(),
+            },
+            "required": ["start", "end", "hypertextlabels"],
+        }
+
 
 class PairwiseValue(BaseModel):
     selected: str
@@ -1079,6 +1248,19 @@ class ParagraphLabelsTag(ControlTag):
             kwargs["end"] = utterance
 
         return super().label(*args, **kwargs)
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "start": {"oneOf": [{"type": "integer", "minimum": 0}, {"type": "number", "minimum": 0}]},
+                "end": {"oneOf": [{"type": "integer", "minimum": 0}, {"type": "number", "minimum": 0}]},
+                "startOffset": {"type": "integer", "minimum": 0},
+                "endOffset": {"type": "integer", "minimum": 0},
+                "paragraphlabels": self._labels_json_schema(),
+            },
+            "required": ["start", "end", "paragraphlabels"],
+        }
         
 
 class RankerValue(BaseModel):
