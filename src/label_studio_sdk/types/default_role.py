@@ -15,6 +15,11 @@ class DefaultRole(UncheckedBaseModel):
     Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
     """
 
+    custom_interfaces_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Enable custom interfaces for this organization. When disabled, projects with use_custom_interface=True will not render custom interfaces anywhere in the product (label stream, embed, data manager, interfaces dashboard).
+    """
+
     custom_scripts_enabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
@@ -43,6 +48,11 @@ class DefaultRole(UncheckedBaseModel):
     List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
     """
 
+    embed_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Enable embed functionality for this organization
+    """
+
     embed_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Embed settings for this organization
@@ -54,6 +64,11 @@ class DefaultRole(UncheckedBaseModel):
     """
 
     extra_data_on_activity_logs: typing.Optional[bool] = None
+    interface_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions.
+    """
+
     label_stream_navigation_disabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
