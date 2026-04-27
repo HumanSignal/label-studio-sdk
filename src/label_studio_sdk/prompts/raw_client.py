@@ -17,6 +17,7 @@ from ..types.batch_predictions import BatchPredictions
 from ..types.model_interface import ModelInterface
 from ..types.model_interface_serializer_get import ModelInterfaceSerializerGet
 from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
+from ..types.paginated_model_interface_serializer_get_list import PaginatedModelInterfaceSerializerGetList
 from ..types.paginated_project_subset_tasks_response_list import PaginatedProjectSubsetTasksResponseList
 from ..types.project_subset_item import ProjectSubsetItem
 from ..types.skill_name_enum import SkillNameEnum
@@ -340,8 +341,13 @@ class RawPromptsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
-        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.List[ModelInterfaceSerializerGet]]:
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PaginatedModelInterfaceSerializerGetList]:
         """
         List all prompts.
 
@@ -350,12 +356,18 @@ class RawPromptsClient:
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        search : typing.Optional[str]
+            A search term.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.List[ModelInterfaceSerializerGet]]
+        HttpResponse[PaginatedModelInterfaceSerializerGetList]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -363,15 +375,17 @@ class RawPromptsClient:
             method="GET",
             params={
                 "ordering": ordering,
+                "page": page,
+                "search": search,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[ModelInterfaceSerializerGet],
+                    PaginatedModelInterfaceSerializerGetList,
                     construct_type(
-                        type_=typing.List[ModelInterfaceSerializerGet],  # type: ignore
+                        type_=PaginatedModelInterfaceSerializerGetList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1033,8 +1047,13 @@ class AsyncRawPromptsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
-        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.List[ModelInterfaceSerializerGet]]:
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PaginatedModelInterfaceSerializerGetList]:
         """
         List all prompts.
 
@@ -1043,12 +1062,18 @@ class AsyncRawPromptsClient:
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        search : typing.Optional[str]
+            A search term.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[ModelInterfaceSerializerGet]]
+        AsyncHttpResponse[PaginatedModelInterfaceSerializerGetList]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1056,15 +1081,17 @@ class AsyncRawPromptsClient:
             method="GET",
             params={
                 "ordering": ordering,
+                "page": page,
+                "search": search,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[ModelInterfaceSerializerGet],
+                    PaginatedModelInterfaceSerializerGetList,
                     construct_type(
-                        type_=typing.List[ModelInterfaceSerializerGet],  # type: ignore
+                        type_=PaginatedModelInterfaceSerializerGetList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

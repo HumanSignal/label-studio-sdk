@@ -13,6 +13,7 @@ from .user_simple import UserSimple
 
 class ModelInterfaceSerializerGet(UncheckedBaseModel):
     associated_projects: typing.Optional[typing.List[AssociatedProject]] = None
+    best_score: typing.Optional[float] = None
     created_at: typing.Optional[dt.datetime] = None
     created_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
     """
@@ -28,6 +29,7 @@ class ModelInterfaceSerializerGet(UncheckedBaseModel):
     input_fields: typing.Optional[typing.Any] = None
     organization: typing.Optional[int] = None
     output_classes: typing.Optional[typing.Any] = None
+    runs_count: typing.Optional[int] = None
     skill_name: typing.Optional[SkillNameEnum] = None
     title: str = pydantic.Field()
     """
@@ -35,6 +37,7 @@ class ModelInterfaceSerializerGet(UncheckedBaseModel):
     """
 
     updated_at: typing.Optional[dt.datetime] = None
+    versions_count: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

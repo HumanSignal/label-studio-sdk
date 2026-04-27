@@ -6357,7 +6357,7 @@ client.prompts.subsets(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">list</a>(...) -> typing.List[ModelInterfaceSerializerGet]</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">list</a>(...) -> PaginatedModelInterfaceSerializerGetList</code></summary>
 <dl>
 <dd>
 
@@ -6409,6 +6409,22 @@ client.prompts.list()
 <dd>
 
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — A page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — A search term.
     
 </dd>
 </dl>
