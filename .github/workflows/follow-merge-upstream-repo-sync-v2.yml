@@ -246,7 +246,7 @@ jobs:
 
       - name: Send Slack Notification on failure
         if: failure()
-        uses: slackapi/slack-github-action@v3.0.1
+        uses: slackapi/slack-github-action@v3.0.2
         env:
           MENTION: "<@${{ steps.team_details.outputs.slack-user-id }}>"
           UPSTREAM_PR: "<${{ steps.upstream-prs.outputs.first_upstream_pr_url }}|upstream pr>, "
