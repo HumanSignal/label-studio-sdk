@@ -346,6 +346,54 @@ def test_polygonlabels_to_json_schema_is_object_with_enum():
     assert schema["required"] == ["points", "polygonlabels"]
 
 
+def test_brushlabels_to_json_schema_is_object_with_enum():
+    config = """
+    <View>
+      <Image name="image" value="$image"/>
+      <BrushLabels name="label" toName="image">
+        <Label value="Airplane"/>
+        <Label value="Car"/>
+      </BrushLabels>
+    </View>
+    """
+    interface = LabelInterface(config)
+    tag = interface.get_control('label')
+    schema = tag.to_json_schema()
+
+    assert schema != {"type": "string"}
+    assert schema["type"] == "object"
+    assert "brushlabels" in schema["properties"]
+    assert schema["properties"]["brushlabels"]["items"]["type"] == "string"
+    assert set(schema["properties"]["brushlabels"]["items"]["enum"]) == {"Airplane", "Car"}
+    assert schema["properties"]["format"]["enum"] == ["rle"]
+    assert schema["properties"]["rle"]["items"]["maximum"] == 255
+    assert schema["required"] == ["format", "rle", "brushlabels"]
+
+
+def test_timeserieslabels_to_json_schema_is_object_with_enum():
+    config = """
+    <View>
+      <TimeSeries name="ts" value="$ts" valueType="json">
+        <Channel column="series"/>
+      </TimeSeries>
+      <TimeSeriesLabels name="label" toName="ts">
+        <Label value="Spike"/>
+        <Label value="Drop"/>
+      </TimeSeriesLabels>
+    </View>
+    """
+    interface = LabelInterface(config)
+    tag = interface.get_control('label')
+    schema = tag.to_json_schema()
+
+    assert schema != {"type": "string"}
+    assert schema["type"] == "object"
+    assert "timeserieslabels" in schema["properties"]
+    assert set(schema["properties"]["timeserieslabels"]["items"]["enum"]) == {"Spike", "Drop"}
+    assert schema["properties"]["instant"] == {"type": "boolean"}
+    assert schema["required"] == ["start", "end", "instant", "timeserieslabels"]
+
+
 def test_concurrent_json_schema_to_pydantic():
     import multiprocessing
     json_schema = {

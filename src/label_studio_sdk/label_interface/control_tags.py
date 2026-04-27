@@ -761,6 +761,21 @@ class BrushLabelsTag(BrushTag):
     _label_attr_name: str = "brushlabels"
     _value_class: Type[BrushLabelsValue] = BrushLabelsValue
 
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "format": {"type": "string", "enum": ["rle"]},
+                "rle": {
+                    "type": "array",
+                    "items": {"type": "integer", "minimum": 0, "maximum": 255},
+                    "minItems": 1,
+                },
+                "brushlabels": self._labels_json_schema(),
+            },
+            "required": ["format", "rle", "brushlabels"],
+        }
+
 
 class EllipseValue(BaseModel):
     x: confloat(le=100)
@@ -1484,6 +1499,19 @@ class TimeSeriesLabelsTag(ControlTag):
     tag: str = "TimeSeriesLabels"
     _label_attr_name: str = "timeserieslabels"
     _value_class: Type[TimeSeriesValue] = TimeSeriesValue
+
+    def to_json_schema(self):
+        number_or_int = {"oneOf": [{"type": "integer"}, {"type": "number"}]}
+        return {
+            "type": "object",
+            "properties": {
+                "start": number_or_int,
+                "end": number_or_int,
+                "instant": {"type": "boolean"},
+                "timeserieslabels": self._labels_json_schema(),
+            },
+            "required": ["start", "end", "instant", "timeserieslabels"],
+        }
 
 
 class ReactCodeValue(BaseModel):
