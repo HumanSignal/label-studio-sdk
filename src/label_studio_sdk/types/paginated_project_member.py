@@ -47,6 +47,7 @@ class PaginatedProjectMember(UncheckedBaseModel):
     phone: typing.Optional[str] = None
     project_role: typing.Optional[str] = None
     tags: typing.Optional[typing.List[SimpleOrganizationMemberTag]] = None
+    user_type: typing.Optional[str] = None
     username: str
 
     if IS_PYDANTIC_V2:

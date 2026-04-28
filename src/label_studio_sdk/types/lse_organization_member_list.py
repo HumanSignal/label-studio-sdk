@@ -32,6 +32,7 @@ class LseOrganizationMemberList(UncheckedBaseModel):
     role_source: typing.Optional[str] = None
     tags: typing.Optional[typing.List[SimpleOrganizationMemberTag]] = None
     user: LseUserOrganizationMemberList
+    user_type: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

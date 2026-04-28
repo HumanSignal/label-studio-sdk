@@ -38,6 +38,7 @@ class BulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
@@ -72,6 +73,9 @@ class BulkClient:
             Search term for filtering members by name, email, or username. Only when all=True.
 
         tags : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        user_type : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
         excluded : typing.Optional[typing.Sequence[int]]
@@ -111,6 +115,7 @@ class BulkClient:
             role=role,
             search=search,
             tags=tags,
+            user_type=user_type,
             excluded=excluded,
             included=included,
             roles=roles,
@@ -130,6 +135,7 @@ class BulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteBulkResponse:
         """
@@ -169,6 +175,9 @@ class BulkClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -198,6 +207,7 @@ class BulkClient:
             role=role,
             search=search,
             tags=tags,
+            user_type=user_type,
             request_options=request_options,
         )
         return _response.data
@@ -228,6 +238,7 @@ class AsyncBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
@@ -262,6 +273,9 @@ class AsyncBulkClient:
             Search term for filtering members by name, email, or username. Only when all=True.
 
         tags : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        user_type : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
         excluded : typing.Optional[typing.Sequence[int]]
@@ -309,6 +323,7 @@ class AsyncBulkClient:
             role=role,
             search=search,
             tags=tags,
+            user_type=user_type,
             excluded=excluded,
             included=included,
             roles=roles,
@@ -328,6 +343,7 @@ class AsyncBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteBulkResponse:
         """
@@ -367,6 +383,9 @@ class AsyncBulkClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -404,6 +423,7 @@ class AsyncBulkClient:
             role=role,
             search=search,
             tags=tags,
+            user_type=user_type,
             request_options=request_options,
         )
         return _response.data

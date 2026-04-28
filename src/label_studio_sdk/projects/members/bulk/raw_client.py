@@ -34,6 +34,7 @@ class RawBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
@@ -70,6 +71,9 @@ class RawBulkClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
         excluded : typing.Optional[typing.Sequence[int]]
             Excluded user IDs
 
@@ -96,6 +100,7 @@ class RawBulkClient:
                 "role": role,
                 "search": search,
                 "tags": tags,
+                "user_type": user_type,
             },
             json={
                 "all": all_,
@@ -142,6 +147,7 @@ class RawBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeleteBulkResponse]:
         """
@@ -181,6 +187,9 @@ class RawBulkClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -201,6 +210,7 @@ class RawBulkClient:
                 "role": role,
                 "search": search,
                 "tags": tags,
+                "user_type": user_type,
             },
             request_options=request_options,
         )
@@ -238,6 +248,7 @@ class AsyncRawBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
@@ -274,6 +285,9 @@ class AsyncRawBulkClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
         excluded : typing.Optional[typing.Sequence[int]]
             Excluded user IDs
 
@@ -300,6 +314,7 @@ class AsyncRawBulkClient:
                 "role": role,
                 "search": search,
                 "tags": tags,
+                "user_type": user_type,
             },
             json={
                 "all": all_,
@@ -346,6 +361,7 @@ class AsyncRawBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeleteBulkResponse]:
         """
@@ -385,6 +401,9 @@ class AsyncRawBulkClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -405,6 +424,7 @@ class AsyncRawBulkClient:
                 "role": role,
                 "search": search,
                 "tags": tags,
+                "user_type": user_type,
             },
             request_options=request_options,
         )

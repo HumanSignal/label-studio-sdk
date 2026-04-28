@@ -152,6 +152,7 @@ class MemberTagsClient:
         tags: typing.Optional[str] = None,
         user_last_activity_gte: typing.Optional[str] = None,
         user_last_activity_lte: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         overwrite: typing.Optional[bool] = OMIT,
@@ -196,6 +197,9 @@ class MemberTagsClient:
         user_last_activity_lte : typing.Optional[str]
             Filter user__last_activity by less than or equal to
 
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
         excluded : typing.Optional[typing.Sequence[int]]
             List of user IDs to exclude from the assignment.
 
@@ -238,6 +242,7 @@ class MemberTagsClient:
             tags=tags,
             user_last_activity_gte=user_last_activity_gte,
             user_last_activity_lte=user_last_activity_lte,
+            user_type=user_type,
             excluded=excluded,
             included=included,
             overwrite=overwrite,
@@ -633,6 +638,7 @@ class AsyncMemberTagsClient:
         tags: typing.Optional[str] = None,
         user_last_activity_gte: typing.Optional[str] = None,
         user_last_activity_lte: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         overwrite: typing.Optional[bool] = OMIT,
@@ -676,6 +682,9 @@ class AsyncMemberTagsClient:
 
         user_last_activity_lte : typing.Optional[str]
             Filter user__last_activity by less than or equal to
+
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
 
         excluded : typing.Optional[typing.Sequence[int]]
             List of user IDs to exclude from the assignment.
@@ -727,6 +736,7 @@ class AsyncMemberTagsClient:
             tags=tags,
             user_last_activity_gte=user_last_activity_gte,
             user_last_activity_lte=user_last_activity_lte,
+            user_type=user_type,
             excluded=excluded,
             included=included,
             overwrite=overwrite,

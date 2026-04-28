@@ -196,6 +196,7 @@ class RawMemberTagsClient:
         tags: typing.Optional[str] = None,
         user_last_activity_gte: typing.Optional[str] = None,
         user_last_activity_lte: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         overwrite: typing.Optional[bool] = OMIT,
@@ -240,6 +241,9 @@ class RawMemberTagsClient:
         user_last_activity_lte : typing.Optional[str]
             Filter user__last_activity by less than or equal to
 
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
         excluded : typing.Optional[typing.Sequence[int]]
             List of user IDs to exclude from the assignment.
 
@@ -271,6 +275,7 @@ class RawMemberTagsClient:
                 "tags": tags,
                 "user__last_activity__gte": user_last_activity_gte,
                 "user__last_activity__lte": user_last_activity_lte,
+                "user_type": user_type,
             },
             json={
                 "all": all_,
@@ -893,6 +898,7 @@ class AsyncRawMemberTagsClient:
         tags: typing.Optional[str] = None,
         user_last_activity_gte: typing.Optional[str] = None,
         user_last_activity_lte: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         overwrite: typing.Optional[bool] = OMIT,
@@ -937,6 +943,9 @@ class AsyncRawMemberTagsClient:
         user_last_activity_lte : typing.Optional[str]
             Filter user__last_activity by less than or equal to
 
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
         excluded : typing.Optional[typing.Sequence[int]]
             List of user IDs to exclude from the assignment.
 
@@ -968,6 +977,7 @@ class AsyncRawMemberTagsClient:
                 "tags": tags,
                 "user__last_activity__gte": user_last_activity_gte,
                 "user__last_activity__lte": user_last_activity_lte,
+                "user_type": user_type,
             },
             json={
                 "all": all_,

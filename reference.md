@@ -30230,6 +30230,14 @@ client.organizations.member_tags.assign(
 <dl>
 <dd>
 
+**user_type:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **excluded:** `typing.Optional[typing.List[int]]` — List of user IDs to exclude from the assignment.
     
 </dd>
@@ -36426,6 +36434,14 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
+**user_type:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **excluded:** `typing.Optional[typing.List[int]]` — Excluded user IDs
     
 </dd>
@@ -36586,6 +36602,14 @@ client.projects.members.bulk.delete(
 <dd>
 
 **tags:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_type:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
 </dl>
