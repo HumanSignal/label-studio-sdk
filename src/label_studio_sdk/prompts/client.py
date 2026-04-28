@@ -295,6 +295,7 @@ class PromptsClient:
         *,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedModelInterfaceSerializerGetList:
@@ -308,6 +309,9 @@ class PromptsClient:
 
         page : typing.Optional[int]
             A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
 
         search : typing.Optional[str]
             A search term.
@@ -329,7 +333,9 @@ class PromptsClient:
         )
         client.prompts.list()
         """
-        _response = self._raw_client.list(ordering=ordering, page=page, search=search, request_options=request_options)
+        _response = self._raw_client.list(
+            ordering=ordering, page=page, page_size=page_size, search=search, request_options=request_options
+        )
         return _response.data
 
     def create(
@@ -934,6 +940,7 @@ class AsyncPromptsClient:
         *,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedModelInterfaceSerializerGetList:
@@ -947,6 +954,9 @@ class AsyncPromptsClient:
 
         page : typing.Optional[int]
             A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
 
         search : typing.Optional[str]
             A search term.
@@ -977,7 +987,7 @@ class AsyncPromptsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            ordering=ordering, page=page, search=search, request_options=request_options
+            ordering=ordering, page=page, page_size=page_size, search=search, request_options=request_options
         )
         return _response.data
 

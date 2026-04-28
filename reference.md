@@ -6424,6 +6424,14 @@ client.prompts.list()
 <dl>
 <dd>
 
+**page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **search:** `typing.Optional[str]` — A search term.
     
 </dd>

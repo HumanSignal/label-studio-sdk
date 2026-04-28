@@ -345,6 +345,7 @@ class RawPromptsClient:
         *,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PaginatedModelInterfaceSerializerGetList]:
@@ -358,6 +359,9 @@ class RawPromptsClient:
 
         page : typing.Optional[int]
             A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
 
         search : typing.Optional[str]
             A search term.
@@ -376,6 +380,7 @@ class RawPromptsClient:
             params={
                 "ordering": ordering,
                 "page": page,
+                "page_size": page_size,
                 "search": search,
             },
             request_options=request_options,
@@ -1051,6 +1056,7 @@ class AsyncRawPromptsClient:
         *,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PaginatedModelInterfaceSerializerGetList]:
@@ -1064,6 +1070,9 @@ class AsyncRawPromptsClient:
 
         page : typing.Optional[int]
             A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
 
         search : typing.Optional[str]
             A search term.
@@ -1082,6 +1091,7 @@ class AsyncRawPromptsClient:
             params={
                 "ordering": ordering,
                 "page": page,
+                "page_size": page_size,
                 "search": search,
             },
             request_options=request_options,
