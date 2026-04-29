@@ -6,7 +6,6 @@ on:
 env:
   pull_request_commands_list: |
     jira
-    fm
     git
 
   issue_commands_list: |
