@@ -1,0 +1,272 @@
+name: 'Follow Merge: Upstream repo sync v2'
+
+on:
+  workflow_call:
+    inputs:
+      branch_name:
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'Branch name'
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.branch_name }}
+  cancel-in-progress: true
+
+env:
+  SLACK_CHANNEL_ID: "C02LMULF4NA"
+
+jobs:
+  merge:
+    name: Merge
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hmarr/debug-action@v3.0.0
+
+      - name: Checkout SDK
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          fetch-depth: 0
+
+      - name: Checkout Actions Hub
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: HumanSignal/actions-hub
+          path: ./.github/actions-hub
+
+      - name: Git Configure
+        uses: ./.github/actions-hub/actions/git-configure
+        with:
+          username: "${{ github.actor }}"
+
+      - name: Checkout branch
+        run: git checkout "${{ inputs.branch_name }}" || git checkout -b "${{ inputs.branch_name }}"
+
+      - name: Merge
+        run: git merge -X ours origin/${{ github.event.repository.default_branch }} --no-edit || git merge --abort
+
+      - name: Git Push
+        id: push
+        uses: ./.github/actions-hub/actions/git-push
+
+  sync:
+    if: always()
+    needs:
+      - merge
+    name: Sync PR
+    runs-on: ubuntu-latest
+    outputs:
+      label-studio-client-generator: "${{ fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator }}"
+    steps:
+      - uses: hmarr/debug-action@v3.0.0
+
+      - name: Add Workflow link to chat ops command comment
+        if: github.event.client_payload.github.payload.comment.id && github.event.client_payload.github.payload.repository.full_name
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
+          body: |
+            > [Workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+      - name: Checkout Actions Hub
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: HumanSignal/actions-hub
+          path: ./.github/actions-hub
+
+      - name: Get Upstream PRs
+        uses: ./.github/actions-hub/actions/follow-merge-upstream-prs
+        id: upstream-prs
+        with:
+          branch_name: "${{ inputs.branch_name }}"
+          poetry_repositories: ""
+          infra_repositories: "label-studio-client-generator"
+          github_token: "${{ secrets.GIT_PAT }}"
+
+      - name: Team details
+        id: team_details
+        uses: ./.github/actions-hub/actions/team-details
+        with:
+          jira-server: "${{ vars.JIRA_SERVER }}"
+          jira-username: "${{ secrets.JIRA_USERNAME }}"
+          jira-token: "${{ secrets.JIRA_TOKEN }}"
+          github_token: "${{ secrets.GIT_PAT }}"
+          github-username: "${{ steps.upstream-prs.outputs.author_username }}"
+        continue-on-error: true
+
+      - name: Git Configure
+        uses: ./.github/actions-hub/actions/git-configure
+        with:
+          username: "${{ steps.team_details.outputs.github-username }}"
+
+      - name: Find or Create branch
+        uses: ./.github/actions-hub/actions/github-find-or-create-branch
+        id: get-branch
+        with:
+          github_token: ${{ secrets.GIT_PAT }}
+          base_branch_name: "${{ steps.upstream-prs.outputs.base_branch_name }}"
+          branch_name: "${{ steps.upstream-prs.outputs.branch_name }}"
+
+      - name: Checkout label-studio-client-generator
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: HumanSignal/label-studio-client-generator
+          ref: "${{ fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator }}"
+          fetch-depth: 0
+
+      - name: Checkout Actions Hub
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: HumanSignal/actions-hub
+          path: ./.github/actions-hub
+
+      - name: Setup node
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
+        uses: actions/setup-node@v6
+
+      - name: Install Fern
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
+        run: npm install -g fern-api@latest
+
+      - name: Set Fern Generator Branch and Mode
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
+        env:
+          BRANCH_NAME: "${{ steps.get-branch.outputs.branch_name }}"
+          FERN_GENERATOR_PATH: "fern/generators.yml"
+        run: |
+          yq e --inplace ".groups.python-sdk-staging.generators[0].github.branch |= \"${BRANCH_NAME}\"" "${FERN_GENERATOR_PATH}"
+          yq e --inplace ".groups.python-sdk-staging.generators[0].github.mode |= \"push\"" "${FERN_GENERATOR_PATH}"
+          cat "${FERN_GENERATOR_PATH}"
+
+      - name: Check Fern API is valid
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
+        run: fern check
+
+      - name: Generate Python SDK
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: fern generate --group python-sdk-staging --log-level debug
+
+      - name: Find or Create PR
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
+        uses: ./.github/actions-hub/actions/follow-merge-find-or-create-pull-request
+        id: get-pr
+        with:
+          github_token: ${{ secrets.GIT_PAT }}
+          branch_name: "${{ steps.get-branch.outputs.branch_name }}"
+          base_branch_name: "${{ steps.upstream-prs.outputs.base_branch_name }}"
+          title: "${{ steps.upstream-prs.outputs.title }}"
+          upstream_prs_urls: "${{ steps.upstream-prs.outputs.upstream_prs_urls }}"
+
+      - name: Add PR Assignees
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
+        uses: ./.github/actions-hub/actions/github-add-pull-request-assignees
+        continue-on-error: true
+        with:
+          github_token: ${{ secrets.GIT_PAT }}
+          pullrequest_number: "${{ steps.get-pr.outputs.number }}"
+          assignees: "${{ steps.upstream-prs.outputs.assignees }},${{ github.event.client_payload.github.actor }}"
+
+      - name: Add PR state Labels
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator && steps.upstream-prs.outputs.status == 'stale'
+        uses: ./.github/actions-hub/actions/github-add-pull-request-labels
+        continue-on-error: true
+        with:
+          github_token: ${{ secrets.GIT_PAT }}
+          pullrequest_number: "${{ steps.get-pr.outputs.number }}"
+          labels: "FM Stale"
+
+      - name: Convert to ready for review
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator && steps.upstream-prs.outputs.status == 'merged'
+        id: ready-for-review-pr
+        shell: bash
+        env:
+          GIT_PAT: ${{ secrets.GIT_PAT }}
+        run: |
+          echo "$GIT_PAT" | gh auth login --with-token
+          gh api graphql -F id='${{ steps.get-pr.outputs.node_id }}' -f query='
+            mutation($id: ID!) {
+              markPullRequestReadyForReview(input: { pullRequestId: $id }) {
+                pullRequest {
+                  id
+                }
+              }
+            }
+          '
+
+      - name: Enable AutoMerge
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator && steps.upstream-prs.outputs.status == 'merged'
+        continue-on-error: true
+        shell: bash
+        env:
+          GIT_PAT: ${{ secrets.GIT_PAT }}
+        run: |
+          echo "$GIT_PAT" | gh auth login --with-token
+          gh api graphql -f pull='${{ steps.get-pr.outputs.node_id }}' -f query='
+            mutation($pull: ID!) {
+              enablePullRequestAutoMerge(input: {pullRequestId: $pull, mergeMethod: SQUASH}) {
+                pullRequest {
+                  id
+                  number
+                }
+              }
+            }'
+
+      - name: Close PR
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator && steps.upstream-prs.outputs.status == 'closed'
+        continue-on-error: true
+        shell: bash
+        env:
+          GIT_PAT: ${{ secrets.GIT_PAT }}
+        run: |
+          echo "$GIT_PAT" | gh auth login --with-token
+          gh api graphql -f pull='${{ steps.get-pr.outputs.node_id }}' -f query='
+            mutation($pull: ID!) {
+              closePullRequest(input: {pullRequestId: $pull }) {
+                pullRequest {
+                  id
+                  state
+                }
+              }
+            }'
+
+      - name: Send Slack Notification on failure
+        if: failure()
+        uses: slackapi/slack-github-action@v3.0.1
+        env:
+          MENTION: "<@${{ steps.team_details.outputs.slack-user-id }}>"
+          UPSTREAM_PR: "<${{ steps.upstream-prs.outputs.first_upstream_pr_url }}|upstream pr>, "
+          DOWNSTREAM_PR: "<${{ steps.get-pr.outputs.html_url }}|downstream pr>, "
+          WORKFLOW: "<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|workflow>"
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_LSE_BOT_TOKEN }}
+          payload: |
+            channel: "${{ env.SLACK_CHANNEL_ID }}"
+            text: >+
+              :x: Follow Merge downstream workflow has been failed in <https://github.com/${{ github.repository }}|${{ github.repository }}>.
+              [ ${{ steps.upstream-prs.outputs.first_upstream_pr_url && env.UPSTREAM_PR || '' }}${{ steps.get-pr.outputs.html_url && env.DOWNSTREAM_PR || '' }}${{ env.WORKFLOW }} ]
+              ${{ steps.team_details.outputs.slack-user-id && env.MENTION || '' }}
+
+      - name: Add reaction to chat ops command comment
+        if: always() && github.event.client_payload.github.payload.comment.id && github.event.client_payload.github.payload.repository.full_name
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
+          reactions: ${{ job.status == 'success' && '+1' || '-1' }}

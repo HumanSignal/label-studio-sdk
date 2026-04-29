@@ -1,0 +1,58 @@
+name: pytests
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - '.github/workflows/tests.yml'
+      - '**/requirements**'
+      - 'codecov.yml'
+    tags-ignore:
+      - '**'
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+    branches:
+      - master
+      - 'release/**'
+  workflow_dispatch:
+
+env:
+  POETRY_VERSION: 2.1.4
+
+jobs:
+  run_pytest:
+    name: "pytest ${{ matrix.os }} | ${{ matrix.python-version }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - 3.13
+        os:
+          - ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: "Install poetry"
+        run: pipx install "poetry==${{ env.POETRY_VERSION }}"
+
+      - name: "Set up Python"
+        id: setup_python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'poetry'
+
+      - name: "Install dependencies"
+        run: poetry install
+
+      - name: Test
+        run: poetry run pytest -rP .

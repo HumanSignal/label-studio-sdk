@@ -1,0 +1,116 @@
+name: "Build PYPI"
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version'
+        type: string
+        required: true
+      ref:
+        description: 'Ref'
+        type: string
+        required: true
+      upload_to_pypi:
+        description: "Upload to PyPi"
+        type: boolean
+        required: false
+      release-id:
+        description: "Attach Artifact to Release"
+        type: string
+        required: false
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        type: string
+        required: true
+      ref:
+        description: 'Ref'
+        type: string
+        required: true
+      upload_to_pypi:
+        description: "Upload to PyPi"
+        type: boolean
+        default: false
+        required: false
+      release-id:
+        description: "Attach Artifact to Release"
+        type: string
+        required: false
+
+env:
+  PYTHON_VERSION_FILE: "pyproject.toml"
+  POETRY_VERSION: 2.1.4
+
+jobs:
+  ReleaseNotification:
+    name: "PyPI"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hmarr/debug-action@v3.0.0
+
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Manage version
+        env:
+          PROVIDED_VERSION: ${{ inputs.version }}
+        run: |
+          set -x
+          version=$(sed "s/^v//g" <<< ${PROVIDED_VERSION})
+          sed -i "s/^version[ ]*=.*/version = \"${version}\"/g" ${{ env.PYTHON_VERSION_FILE }}
+
+      - name: "Install poetry"
+        run: pipx install "poetry==${{ env.POETRY_VERSION }}"
+
+      - name: "Set up Python"
+        id: setup_python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: 'poetry'
+
+      - name: Install dependencies
+        run: |
+          poetry install --without dev
+
+      - name: Package
+        run: poetry build
+
+      - name: Upload to PYPI
+        if: inputs.upload_to_pypi
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_APIKEY }}
+        run: |
+          poetry config pypi-token.pypi "${POETRY_PYPI_TOKEN_PYPI}"
+          poetry publish --no-interaction
+
+      - name: Attach artifacts to release
+        if: inputs.release-id
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GIT_PAT }}
+          script: |
+            const { repo, owner } = context.repo;
+            const fs = require('fs');
+            const release_id = '${{ inputs.release-id }}';
+            for (let file of await fs.readdirSync('./dist/')) {
+               console.log('uploadReleaseAsset', file);
+               await github.rest.repos.uploadReleaseAsset({
+                  owner,
+                  repo,
+                  release_id: release_id,
+                  name: file,
+                  data: await fs.readFileSync(`./dist/${file}`)
+               });
+            }
+
+      - name: Upload to artifact
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: Dist
+          path: dist/
