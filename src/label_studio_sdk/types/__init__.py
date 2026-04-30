@@ -144,6 +144,7 @@ if typing.TYPE_CHECKING:
     from .model_run import ModelRun
     from .model_run_status_enum import ModelRunStatusEnum
     from .onboarding_state_enum import OnboardingStateEnum
+    from .operator_enum import OperatorEnum
     from .options165enum import Options165Enum
     from .organization_billing import OrganizationBilling
     from .organization_id import OrganizationId
@@ -198,6 +199,8 @@ if typing.TYPE_CHECKING:
     from .refined_prompt_response import RefinedPromptResponse
     from .requeue_rejected_tasks_mode_enum import RequeueRejectedTasksModeEnum
     from .review_criteria_enum import ReviewCriteriaEnum
+    from .review_routing_rule import ReviewRoutingRule
+    from .review_routing_rule_request_request import ReviewRoutingRuleRequestRequest
     from .review_settings import ReviewSettings
     from .review_settings_request import ReviewSettingsRequest
     from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
@@ -390,6 +393,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModelRun": ".model_run",
     "ModelRunStatusEnum": ".model_run_status_enum",
     "OnboardingStateEnum": ".onboarding_state_enum",
+    "OperatorEnum": ".operator_enum",
     "Options165Enum": ".options165enum",
     "OrganizationBilling": ".organization_billing",
     "OrganizationId": ".organization_id",
@@ -444,6 +448,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RefinedPromptResponse": ".refined_prompt_response",
     "RequeueRejectedTasksModeEnum": ".requeue_rejected_tasks_mode_enum",
     "ReviewCriteriaEnum": ".review_criteria_enum",
+    "ReviewRoutingRule": ".review_routing_rule",
+    "ReviewRoutingRuleRequestRequest": ".review_routing_rule_request_request",
     "ReviewSettings": ".review_settings",
     "ReviewSettingsRequest": ".review_settings_request",
     "ReviewSettingsSamplingEnum": ".review_settings_sampling_enum",
@@ -660,6 +666,7 @@ __all__ = [
     "ModelRun",
     "ModelRunStatusEnum",
     "OnboardingStateEnum",
+    "OperatorEnum",
     "Options165Enum",
     "OrganizationBilling",
     "OrganizationId",
@@ -714,6 +721,8 @@ __all__ = [
     "RefinedPromptResponse",
     "RequeueRejectedTasksModeEnum",
     "ReviewCriteriaEnum",
+    "ReviewRoutingRule",
+    "ReviewRoutingRuleRequestRequest",
     "ReviewSettings",
     "ReviewSettingsRequest",
     "ReviewSettingsSamplingEnum",

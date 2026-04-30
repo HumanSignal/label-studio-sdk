@@ -37,6 +37,7 @@ if typing.TYPE_CHECKING:
     from .members.client import AsyncMembersClient, MembersClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
     from .pauses.client import AsyncPausesClient, PausesClient
+    from .review_routing_rules.client import AsyncReviewRoutingRulesClient, ReviewRoutingRulesClient
     from .roles.client import AsyncRolesClient, RolesClient
     from .stats.client import AsyncStatsClient, StatsClient
 # this is used as the default value for optional parameters
@@ -52,6 +53,7 @@ class ProjectsClient:
         self._members: typing.Optional[MembersClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
         self._stats: typing.Optional[StatsClient] = None
+        self._review_routing_rules: typing.Optional[ReviewRoutingRulesClient] = None
         self._assignments: typing.Optional[AssignmentsClient] = None
         self._pauses: typing.Optional[PausesClient] = None
 
@@ -1179,6 +1181,14 @@ class ProjectsClient:
         return self._stats
 
     @property
+    def review_routing_rules(self):
+        if self._review_routing_rules is None:
+            from .review_routing_rules.client import ReviewRoutingRulesClient  # noqa: E402
+
+            self._review_routing_rules = ReviewRoutingRulesClient(client_wrapper=self._client_wrapper)
+        return self._review_routing_rules
+
+    @property
     def assignments(self):
         if self._assignments is None:
             from .assignments.client import AssignmentsClient  # noqa: E402
@@ -1204,6 +1214,7 @@ class AsyncProjectsClient:
         self._members: typing.Optional[AsyncMembersClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
         self._stats: typing.Optional[AsyncStatsClient] = None
+        self._review_routing_rules: typing.Optional[AsyncReviewRoutingRulesClient] = None
         self._assignments: typing.Optional[AsyncAssignmentsClient] = None
         self._pauses: typing.Optional[AsyncPausesClient] = None
 
@@ -2418,6 +2429,14 @@ class AsyncProjectsClient:
 
             self._stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
         return self._stats
+
+    @property
+    def review_routing_rules(self):
+        if self._review_routing_rules is None:
+            from .review_routing_rules.client import AsyncReviewRoutingRulesClient  # noqa: E402
+
+            self._review_routing_rules = AsyncReviewRoutingRulesClient(client_wrapper=self._client_wrapper)
+        return self._review_routing_rules
 
     @property
     def assignments(self):
