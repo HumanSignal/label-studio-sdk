@@ -1,7 +1,7 @@
-from typing import Type, Dict, Optional, List, Tuple, Any, Union
-from pydantic import BaseModel, Field, confloat, field_serializer
+from typing import Any, Dict, List, Optional, Union
 
 from .region import Region
+from pydantic import BaseModel, ConfigDict, Field, field_serializer
 
 
 def serialize_regions(result):
@@ -24,9 +24,7 @@ class PredictionValue(BaseModel):
     score: Optional[float] = 0.00
     result: Optional[List[Union[Dict[str, Any], Region]]]
 
-    class Config:
-        populate_by_name = True
-        protected_namespaces = ()
+    model_config = ConfigDict(populate_by_name=True, protected_namespaces=())
 
     @field_serializer('result')
     def serialize_result(self, result):
@@ -44,8 +42,7 @@ class AnnotationValue(BaseModel):
 
     result: Optional[List[Union[Dict[str, Any], Region]]]
     
-    class Config:
-        populate_by_name = True
+    model_config = ConfigDict(populate_by_name=True)
 
     @field_serializer('result')
     def serialize_result(self, result):

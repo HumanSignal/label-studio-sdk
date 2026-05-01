@@ -4,11 +4,10 @@
 import json
 import logging
 import os
+from typing import Optional
 
 import requests
-
-from typing import Optional
-from pydantic import BaseModel, constr, root_validator
+from pydantic import BaseModel, constr, model_validator
 from requests.adapters import HTTPAdapter
 
 logger = logging.getLogger(__name__)
@@ -24,7 +23,7 @@ class ClientCredentials(BaseModel):
     password: Optional[str] = None
     api_key: Optional[constr()] = None
 
-    @root_validator(pre=True, allow_reuse=True)
+    @model_validator(mode="before")
     def either_key_or_email_password(cls, values):
         assert (
             "email" in values or "api_key" in values

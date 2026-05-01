@@ -1,15 +1,14 @@
 """
 """
 
-import xml.etree.ElementTree
 import json
-from typing import Type, Dict, Optional, List, Tuple, Any, Union
-from pydantic import BaseModel, confloat, Field, validator
+import xml.etree.ElementTree
+from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
 from .base import LabelStudioTag, get_tag_class
-from .region import Region
 from .object_tags import ObjectTag
-
+from .region import Region
+from pydantic import BaseModel, Field, confloat, field_validator
 
 _NOT_CONTROL_TAGS = {
     "Filter",
@@ -731,7 +730,8 @@ class BrushValue(BaseModel):
     format: str = "rle"
     rle: List[int]
 
-    @validator('rle')
+    @field_validator("rle")
+    @classmethod
     def validate_rle(cls, rle_data):
         if not validate_rle(rle_data):
             raise ValueError('Invalid RLE format')
@@ -1400,12 +1400,12 @@ class RelationsTag(ControlTag):
     tag: str = "Relations"
     def validate_value(self, **kwargs) -> bool:
         """ """
-        raise NotImplemented("""Should not be called directly, instead
+        raise NotImplementedError("""Should not be called directly, instead
         use validate_relation() method found in LabelInterface class""")
 
     def label(self, *args, **kwargs):
         """ """
-        raise NotImplemented("""
+        raise NotImplementedError("""
         Relations work on regions instead of Object tags
         use Regions add_relation() method""")
         
@@ -1605,7 +1605,6 @@ class ReactCodeTag(ControlTag):
         Returns:
             list: List of parsed output field names/definitions.
         """
-        import re
         # Split on common delimiters: comma, semicolon, pipe, or whitespace
         # But preserve content inside parentheses for type aliases
         parts = []
