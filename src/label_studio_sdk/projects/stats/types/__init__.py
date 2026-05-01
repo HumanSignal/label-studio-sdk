@@ -18,6 +18,8 @@ if typing.TYPE_CHECKING:
     from .iaa_stats_response_std import IaaStatsResponseStd
     from .lead_time_stats_response import LeadTimeStatsResponse
     from .lead_time_stats_response_lead_time_stats_item import LeadTimeStatsResponseLeadTimeStatsItem
+    from .member_performance_rows_stats_request_table import MemberPerformanceRowsStatsRequestTable
+    from .member_performance_rows_stats_response import MemberPerformanceRowsStatsResponse
     from .model_version_annotator_agreement_stats_response import ModelVersionAnnotatorAgreementStatsResponse
     from .model_version_ground_truth_agreement_stats_response import ModelVersionGroundTruthAgreementStatsResponse
     from .model_version_prediction_agreement_stats_response import ModelVersionPredictionAgreementStatsResponse
@@ -59,6 +61,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "IaaStatsResponseStd": ".iaa_stats_response_std",
     "LeadTimeStatsResponse": ".lead_time_stats_response",
     "LeadTimeStatsResponseLeadTimeStatsItem": ".lead_time_stats_response_lead_time_stats_item",
+    "MemberPerformanceRowsStatsRequestTable": ".member_performance_rows_stats_request_table",
+    "MemberPerformanceRowsStatsResponse": ".member_performance_rows_stats_response",
     "ModelVersionAnnotatorAgreementStatsResponse": ".model_version_annotator_agreement_stats_response",
     "ModelVersionGroundTruthAgreementStatsResponse": ".model_version_ground_truth_agreement_stats_response",
     "ModelVersionPredictionAgreementStatsResponse": ".model_version_prediction_agreement_stats_response",
@@ -116,6 +120,8 @@ __all__ = [
     "IaaStatsResponseStd",
     "LeadTimeStatsResponse",
     "LeadTimeStatsResponseLeadTimeStatsItem",
+    "MemberPerformanceRowsStatsRequestTable",
+    "MemberPerformanceRowsStatsResponse",
     "ModelVersionAnnotatorAgreementStatsResponse",
     "ModelVersionGroundTruthAgreementStatsResponse",
     "ModelVersionPredictionAgreementStatsResponse",

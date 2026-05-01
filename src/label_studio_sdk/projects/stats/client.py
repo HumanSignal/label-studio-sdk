@@ -13,6 +13,8 @@ from .types.data_filters_stats_response import DataFiltersStatsResponse
 from .types.finished_tasks_stats_response import FinishedTasksStatsResponse
 from .types.iaa_stats_response import IaaStatsResponse
 from .types.lead_time_stats_response import LeadTimeStatsResponse
+from .types.member_performance_rows_stats_request_table import MemberPerformanceRowsStatsRequestTable
+from .types.member_performance_rows_stats_response import MemberPerformanceRowsStatsResponse
 from .types.model_version_annotator_agreement_stats_response import ModelVersionAnnotatorAgreementStatsResponse
 from .types.model_version_ground_truth_agreement_stats_response import ModelVersionGroundTruthAgreementStatsResponse
 from .types.model_version_prediction_agreement_stats_response import ModelVersionPredictionAgreementStatsResponse
@@ -585,6 +587,69 @@ class StatsClient:
         )
         """
         _response = self._raw_client.lead_time(id, request_options=request_options)
+        return _response.data
+
+    def member_performance_rows(
+        self,
+        id: int,
+        *,
+        ids: typing.Optional[str] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        table: typing.Optional[MemberPerformanceRowsStatsRequestTable] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MemberPerformanceRowsStatsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : typing.Optional[str]
+            Comma-separated user IDs to include. When omitted, members are derived from the project.
+
+        ordering : typing.Optional[str]
+            Sort field; prefix with "-" for descending (e.g. "-finished").
+
+        page : typing.Optional[int]
+            1-based page index.
+
+        page_size : typing.Optional[int]
+            Page size (1–100).
+
+        table : typing.Optional[MemberPerformanceRowsStatsRequestTable]
+            Which table to load: "annotations" or "reviews".
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MemberPerformanceRowsStatsResponse
+            Member performance rows for one page plus summary aggregates.
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.member_performance_rows(
+            id=1,
+        )
+        """
+        _response = self._raw_client.member_performance_rows(
+            id, ids=ids, ordering=ordering, page=page, page_size=page_size, table=table, request_options=request_options
+        )
         return _response.data
 
     def total_agreement(
@@ -1595,6 +1660,77 @@ class AsyncStatsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.lead_time(id, request_options=request_options)
+        return _response.data
+
+    async def member_performance_rows(
+        self,
+        id: int,
+        *,
+        ids: typing.Optional[str] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        table: typing.Optional[MemberPerformanceRowsStatsRequestTable] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MemberPerformanceRowsStatsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : typing.Optional[str]
+            Comma-separated user IDs to include. When omitted, members are derived from the project.
+
+        ordering : typing.Optional[str]
+            Sort field; prefix with "-" for descending (e.g. "-finished").
+
+        page : typing.Optional[int]
+            1-based page index.
+
+        page_size : typing.Optional[int]
+            Page size (1–100).
+
+        table : typing.Optional[MemberPerformanceRowsStatsRequestTable]
+            Which table to load: "annotations" or "reviews".
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MemberPerformanceRowsStatsResponse
+            Member performance rows for one page plus summary aggregates.
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.member_performance_rows(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.member_performance_rows(
+            id, ids=ids, ordering=ordering, page=page, page_size=page_size, table=table, request_options=request_options
+        )
         return _response.data
 
     async def total_agreement(
