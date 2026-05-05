@@ -15,6 +15,8 @@ from .types.iaa_stats_response import IaaStatsResponse
 from .types.lead_time_stats_response import LeadTimeStatsResponse
 from .types.member_performance_rows_stats_request_table import MemberPerformanceRowsStatsRequestTable
 from .types.member_performance_rows_stats_response import MemberPerformanceRowsStatsResponse
+from .types.member_performance_summary_stats_request_table import MemberPerformanceSummaryStatsRequestTable
+from .types.member_performance_summary_stats_response import MemberPerformanceSummaryStatsResponse
 from .types.model_version_annotator_agreement_stats_response import ModelVersionAnnotatorAgreementStatsResponse
 from .types.model_version_ground_truth_agreement_stats_response import ModelVersionGroundTruthAgreementStatsResponse
 from .types.model_version_prediction_agreement_stats_response import ModelVersionPredictionAgreementStatsResponse
@@ -607,7 +609,7 @@ class StatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+        Paginated, sortable member performance rows for annotation/review tables. Footer totals are returned by <code>member_performance_summary</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
 
         Parameters
         ----------
@@ -634,7 +636,7 @@ class StatsClient:
         Returns
         -------
         MemberPerformanceRowsStatsResponse
-            Member performance rows for one page plus summary aggregates.
+            Member performance rows for one page (summary aggregates via member_performance_summary).
 
         Examples
         --------
@@ -649,6 +651,57 @@ class StatsClient:
         """
         _response = self._raw_client.member_performance_rows(
             id, ids=ids, ordering=ordering, page=page, page_size=page_size, table=table, request_options=request_options
+        )
+        return _response.data
+
+    def member_performance_summary(
+        self,
+        id: int,
+        *,
+        ids: typing.Optional[str] = None,
+        table: typing.Optional[MemberPerformanceSummaryStatsRequestTable] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MemberPerformanceSummaryStatsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Footer / Total aggregates for member performance tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : typing.Optional[str]
+            Comma-separated user IDs. When omitted, members are derived from the project.
+
+        table : typing.Optional[MemberPerformanceSummaryStatsRequestTable]
+            Which table: "annotations" or "reviews".
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MemberPerformanceSummaryStatsResponse
+            Summary aggregates (avg_*, sum_*, count_paused).
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.member_performance_summary(
+            id=1,
+        )
+        """
+        _response = self._raw_client.member_performance_summary(
+            id, ids=ids, table=table, request_options=request_options
         )
         return _response.data
 
@@ -1680,7 +1733,7 @@ class AsyncStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+        Paginated, sortable member performance rows for annotation/review tables. Footer totals are returned by <code>member_performance_summary</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
 
         Parameters
         ----------
@@ -1707,7 +1760,7 @@ class AsyncStatsClient:
         Returns
         -------
         MemberPerformanceRowsStatsResponse
-            Member performance rows for one page plus summary aggregates.
+            Member performance rows for one page (summary aggregates via member_performance_summary).
 
         Examples
         --------
@@ -1730,6 +1783,65 @@ class AsyncStatsClient:
         """
         _response = await self._raw_client.member_performance_rows(
             id, ids=ids, ordering=ordering, page=page, page_size=page_size, table=table, request_options=request_options
+        )
+        return _response.data
+
+    async def member_performance_summary(
+        self,
+        id: int,
+        *,
+        ids: typing.Optional[str] = None,
+        table: typing.Optional[MemberPerformanceSummaryStatsRequestTable] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MemberPerformanceSummaryStatsResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Footer / Total aggregates for member performance tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : typing.Optional[str]
+            Comma-separated user IDs. When omitted, members are derived from the project.
+
+        table : typing.Optional[MemberPerformanceSummaryStatsRequestTable]
+            Which table: "annotations" or "reviews".
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MemberPerformanceSummaryStatsResponse
+            Summary aggregates (avg_*, sum_*, count_paused).
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.member_performance_summary(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.member_performance_summary(
+            id, ids=ids, table=table, request_options=request_options
         )
         return _response.data
 

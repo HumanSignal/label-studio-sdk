@@ -21,6 +21,8 @@ from .types.iaa_stats_response import IaaStatsResponse
 from .types.lead_time_stats_response import LeadTimeStatsResponse
 from .types.member_performance_rows_stats_request_table import MemberPerformanceRowsStatsRequestTable
 from .types.member_performance_rows_stats_response import MemberPerformanceRowsStatsResponse
+from .types.member_performance_summary_stats_request_table import MemberPerformanceSummaryStatsRequestTable
+from .types.member_performance_summary_stats_response import MemberPerformanceSummaryStatsResponse
 from .types.model_version_annotator_agreement_stats_response import ModelVersionAnnotatorAgreementStatsResponse
 from .types.model_version_ground_truth_agreement_stats_response import ModelVersionGroundTruthAgreementStatsResponse
 from .types.model_version_prediction_agreement_stats_response import ModelVersionPredictionAgreementStatsResponse
@@ -734,7 +736,7 @@ class RawStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+        Paginated, sortable member performance rows for annotation/review tables. Footer totals are returned by <code>member_performance_summary</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
 
         Parameters
         ----------
@@ -761,7 +763,7 @@ class RawStatsClient:
         Returns
         -------
         HttpResponse[MemberPerformanceRowsStatsResponse]
-            Member performance rows for one page plus summary aggregates.
+            Member performance rows for one page (summary aggregates via member_performance_summary).
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{encode_path_param(id)}/stats/member_performance_rows/",
@@ -781,6 +783,80 @@ class RawStatsClient:
                     MemberPerformanceRowsStatsResponse,
                     construct_type(
                         type_=MemberPerformanceRowsStatsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def member_performance_summary(
+        self,
+        id: int,
+        *,
+        ids: typing.Optional[str] = None,
+        table: typing.Optional[MemberPerformanceSummaryStatsRequestTable] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[MemberPerformanceSummaryStatsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Footer / Total aggregates for member performance tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : typing.Optional[str]
+            Comma-separated user IDs. When omitted, members are derived from the project.
+
+        table : typing.Optional[MemberPerformanceSummaryStatsRequestTable]
+            Which table: "annotations" or "reviews".
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[MemberPerformanceSummaryStatsResponse]
+            Summary aggregates (avg_*, sum_*, count_paused).
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/stats/member_performance_summary/",
+            method="GET",
+            params={
+                "ids": ids,
+                "table": table,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    MemberPerformanceSummaryStatsResponse,
+                    construct_type(
+                        type_=MemberPerformanceSummaryStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1935,7 +2011,7 @@ class AsyncRawStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+        Paginated, sortable member performance rows for annotation/review tables. Footer totals are returned by <code>member_performance_summary</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
 
         Parameters
         ----------
@@ -1962,7 +2038,7 @@ class AsyncRawStatsClient:
         Returns
         -------
         AsyncHttpResponse[MemberPerformanceRowsStatsResponse]
-            Member performance rows for one page plus summary aggregates.
+            Member performance rows for one page (summary aggregates via member_performance_summary).
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{encode_path_param(id)}/stats/member_performance_rows/",
@@ -1982,6 +2058,80 @@ class AsyncRawStatsClient:
                     MemberPerformanceRowsStatsResponse,
                     construct_type(
                         type_=MemberPerformanceRowsStatsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def member_performance_summary(
+        self,
+        id: int,
+        *,
+        ids: typing.Optional[str] = None,
+        table: typing.Optional[MemberPerformanceSummaryStatsRequestTable] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[MemberPerformanceSummaryStatsResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Footer / Total aggregates for member performance tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : typing.Optional[str]
+            Comma-separated user IDs. When omitted, members are derived from the project.
+
+        table : typing.Optional[MemberPerformanceSummaryStatsRequestTable]
+            Which table: "annotations" or "reviews".
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[MemberPerformanceSummaryStatsResponse]
+            Summary aggregates (avg_*, sum_*, count_paused).
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/stats/member_performance_summary/",
+            method="GET",
+            params={
+                "ids": ids,
+                "table": table,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    MemberPerformanceSummaryStatsResponse,
+                    construct_type(
+                        type_=MemberPerformanceSummaryStatsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

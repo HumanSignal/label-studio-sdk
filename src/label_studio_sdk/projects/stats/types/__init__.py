@@ -20,6 +20,8 @@ if typing.TYPE_CHECKING:
     from .lead_time_stats_response_lead_time_stats_item import LeadTimeStatsResponseLeadTimeStatsItem
     from .member_performance_rows_stats_request_table import MemberPerformanceRowsStatsRequestTable
     from .member_performance_rows_stats_response import MemberPerformanceRowsStatsResponse
+    from .member_performance_summary_stats_request_table import MemberPerformanceSummaryStatsRequestTable
+    from .member_performance_summary_stats_response import MemberPerformanceSummaryStatsResponse
     from .model_version_annotator_agreement_stats_response import ModelVersionAnnotatorAgreementStatsResponse
     from .model_version_ground_truth_agreement_stats_response import ModelVersionGroundTruthAgreementStatsResponse
     from .model_version_prediction_agreement_stats_response import ModelVersionPredictionAgreementStatsResponse
@@ -63,6 +65,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LeadTimeStatsResponseLeadTimeStatsItem": ".lead_time_stats_response_lead_time_stats_item",
     "MemberPerformanceRowsStatsRequestTable": ".member_performance_rows_stats_request_table",
     "MemberPerformanceRowsStatsResponse": ".member_performance_rows_stats_response",
+    "MemberPerformanceSummaryStatsRequestTable": ".member_performance_summary_stats_request_table",
+    "MemberPerformanceSummaryStatsResponse": ".member_performance_summary_stats_response",
     "ModelVersionAnnotatorAgreementStatsResponse": ".model_version_annotator_agreement_stats_response",
     "ModelVersionGroundTruthAgreementStatsResponse": ".model_version_ground_truth_agreement_stats_response",
     "ModelVersionPredictionAgreementStatsResponse": ".model_version_prediction_agreement_stats_response",
@@ -122,6 +126,8 @@ __all__ = [
     "LeadTimeStatsResponseLeadTimeStatsItem",
     "MemberPerformanceRowsStatsRequestTable",
     "MemberPerformanceRowsStatsResponse",
+    "MemberPerformanceSummaryStatsRequestTable",
+    "MemberPerformanceSummaryStatsResponse",
     "ModelVersionAnnotatorAgreementStatsResponse",
     "ModelVersionGroundTruthAgreementStatsResponse",
     "ModelVersionPredictionAgreementStatsResponse",
