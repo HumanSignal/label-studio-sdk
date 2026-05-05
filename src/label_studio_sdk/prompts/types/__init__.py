@@ -7,8 +7,10 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .compatible_projects_prompts_request_project_type import CompatibleProjectsPromptsRequestProjectType
+    from .subset_tasks_prompts_request_alignment_outcome import SubsetTasksPromptsRequestAlignmentOutcome
 _dynamic_imports: typing.Dict[str, str] = {
-    "CompatibleProjectsPromptsRequestProjectType": ".compatible_projects_prompts_request_project_type"
+    "CompatibleProjectsPromptsRequestProjectType": ".compatible_projects_prompts_request_project_type",
+    "SubsetTasksPromptsRequestAlignmentOutcome": ".subset_tasks_prompts_request_alignment_outcome",
 }
 
 
@@ -33,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CompatibleProjectsPromptsRequestProjectType"]
+__all__ = ["CompatibleProjectsPromptsRequestProjectType", "SubsetTasksPromptsRequestAlignmentOutcome"]

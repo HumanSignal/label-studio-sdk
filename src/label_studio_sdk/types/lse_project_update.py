@@ -183,6 +183,7 @@ class LseProjectUpdate(UncheckedBaseModel):
     """
 
     organization: typing.Optional[int] = None
+    output_schema: typing.Optional[typing.Any] = None
     overlap_cohort_percentage: typing.Optional[int] = pydantic.Field(default=None)
     """
     Annotations per task coverage

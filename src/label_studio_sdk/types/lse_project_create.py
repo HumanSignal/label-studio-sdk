@@ -116,6 +116,7 @@ class LseProjectCreate(UncheckedBaseModel):
     """
 
     organization: typing.Optional[int] = None
+    output_schema: typing.Optional[typing.Any] = None
     overlap_cohort_percentage: typing.Optional[int] = None
     parsed_label_config: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """

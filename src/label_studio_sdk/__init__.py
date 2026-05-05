@@ -323,7 +323,7 @@ if typing.TYPE_CHECKING:
     from .ml import CreateMlRequestAuthMethod, ListModelVersionsMlResponse, UpdateMlRequestAuthMethod
     from .model_providers import ListModelProviderChoicesModelProvidersResponse
     from .projects import DuplicateProjectsResponse, ImportPredictionsProjectsResponse, ImportTasksProjectsResponse
-    from .prompts import CompatibleProjectsPromptsRequestProjectType
+    from .prompts import CompatibleProjectsPromptsRequestProjectType, SubsetTasksPromptsRequestAlignmentOutcome
     from .tasks import ListTasksRequestFields
     from .users import GetTokenUsersResponse, ResetTokenUsersResponse
     from .version import __version__
@@ -655,6 +655,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StateTriggeredBy": ".types",
     "Status7BfEnum": ".types",
     "StatusC5AEnum": ".types",
+    "SubsetTasksPromptsRequestAlignmentOutcome": ".prompts",
     "TaskAgreementMatrixResponse": ".types",
     "TaskAssignment": ".types",
     "TaskEvent": ".types",
@@ -1033,6 +1034,7 @@ __all__ = [
     "StateTriggeredBy",
     "Status7BfEnum",
     "StatusC5AEnum",
+    "SubsetTasksPromptsRequestAlignmentOutcome",
     "TaskAgreementMatrixResponse",
     "TaskAssignment",
     "TaskEvent",

@@ -134,12 +134,12 @@ class RawExportsClient:
     ) -> HttpResponse[typing.List[str]]:
         """
 
-                This endpoint is deprecated in Enterprise. Use the async export API instead:
-                POST /api/projects/{{id}}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+        This endpoint is deprecated in Enterprise. Use the async export API instead:
+        POST /api/projects/{{id}}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
 
-                In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+        In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
 
-                Retrieve the available export formats for the current project by ID.
+        Retrieve the available export formats for the current project by ID.
 
         Parameters
         ----------
@@ -659,12 +659,12 @@ class AsyncRawExportsClient:
     ) -> AsyncHttpResponse[typing.List[str]]:
         """
 
-                This endpoint is deprecated in Enterprise. Use the async export API instead:
-                POST /api/projects/{{id}}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+        This endpoint is deprecated in Enterprise. Use the async export API instead:
+        POST /api/projects/{{id}}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
 
-                In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+        In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
 
-                Retrieve the available export formats for the current project by ID.
+        Retrieve the available export formats for the current project by ID.
 
         Parameters
         ----------

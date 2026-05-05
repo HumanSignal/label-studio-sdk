@@ -6200,6 +6200,30 @@ client.prompts.subset_tasks(
 <dl>
 <dd>
 
+**alignment_class:** `typing.Optional[str]` — Only include tasks whose prediction/reference alignment includes this class.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alignment_from_name:** `typing.Optional[str]` — When alignment_class is set, limit matching to this output control tag.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alignment_outcome:** `typing.Optional[SubsetTasksPromptsRequestAlignmentOutcome]` — Alignment outcome to drill into. Defaults to all TP, FP, and FN outcomes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **include_total:** `typing.Optional[bool]` — If true (default), includes task_count in response; if false, omits it.
     
 </dd>
@@ -6224,6 +6248,22 @@ client.prompts.subset_tasks(
 <dl>
 <dd>
 
+**output_class:** `typing.Optional[str]` — Only include tasks whose prediction contains this output class.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_from_name:** `typing.Optional[str]` — When output_class is set, limit matching to this output control tag.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
     
 </dd>
@@ -6241,6 +6281,14 @@ client.prompts.subset_tasks(
 <dd>
 
 **parent_model:** `typing.Optional[int]` — The ID of the parent model (ModelInterface) for this Inference Run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prediction_version_ids:** `typing.Optional[str]` — Comma-separated model version IDs. Only include tasks that have predictions for every listed version.
     
 </dd>
 </dl>
@@ -7220,6 +7268,14 @@ client.organizations.update(
 <dl>
 <dd>
 
+**custom_interfaces_enabled:** `typing.Optional[bool]` — Enable or disable custom interfaces for this organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **custom_scripts_enabled:** `typing.Optional[bool]` — Plugins
     
 </dd>
@@ -7244,7 +7300,23 @@ client.organizations.update(
 <dl>
 <dd>
 
+**embed_enabled:** `typing.Optional[bool]` — Enable or disable embed functionality for this organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **embed_settings:** `typing.Optional[typing.Any]` — Public Verification Key and Public Verification Algorithms configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**interface_settings:** `typing.Optional[typing.Any]` — Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions
     
 </dd>
 </dl>
@@ -10505,6 +10577,14 @@ client.projects.create()
 <dl>
 <dd>
 
+**output_schema:** `typing.Optional[typing.Any]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **overlap_cohort_percentage:** `typing.Optional[int]` 
     
 </dd>
@@ -11289,6 +11369,14 @@ Methodology (Consensus / Pairwise Averaging)
 <dd>
 
 **organization:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_schema:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>
@@ -32510,12 +32598,12 @@ client.projects.exports.download_sync(...)
 <dd>
 
 
-        This endpoint is deprecated in Enterprise. Use the async export API instead:
-        POST /api/projects/{{id}}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+This endpoint is deprecated in Enterprise. Use the async export API instead:
+POST /api/projects/{{id}}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
 
-        In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
 
-        Retrieve the available export formats for the current project by ID.
+Retrieve the available export formats for the current project by ID.
 </dd>
 </dl>
 </dd>

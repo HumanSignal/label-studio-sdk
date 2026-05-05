@@ -13,6 +13,11 @@ from .role9e7enum import Role9E7Enum
 class LseOrganization(UncheckedBaseModel):
     billing: OrganizationBilling
     created_at: typing.Optional[dt.datetime] = None
+    custom_interfaces_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Enable custom interfaces for this organization. When disabled, projects with use_custom_interface=True will not render custom interfaces anywhere in the product (label stream, embed, data manager, interfaces dashboard).
+    """
+
     custom_scripts_enabled: typing.Optional[str] = None
     default_role: typing.Optional[Role9E7Enum] = pydantic.Field(default=None)
     """
@@ -33,6 +38,11 @@ class LseOrganization(UncheckedBaseModel):
     List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
     """
 
+    embed_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Enable embed functionality for this organization
+    """
+
     embed_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Embed settings for this organization
@@ -44,6 +54,11 @@ class LseOrganization(UncheckedBaseModel):
     """
 
     id: typing.Optional[int] = None
+    interface_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions.
+    """
+
     react_code_settings: typing.Optional[str] = None
     title: typing.Optional[str] = None
     token: typing.Optional[str] = None

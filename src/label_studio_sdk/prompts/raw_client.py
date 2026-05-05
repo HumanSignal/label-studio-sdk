@@ -23,6 +23,7 @@ from ..types.project_subset_item import ProjectSubsetItem
 from ..types.skill_name_enum import SkillNameEnum
 from ..types.user_simple_request import UserSimpleRequest
 from .types.compatible_projects_prompts_request_project_type import CompatibleProjectsPromptsRequestProjectType
+from .types.subset_tasks_prompts_request_alignment_outcome import SubsetTasksPromptsRequestAlignmentOutcome
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -183,12 +184,18 @@ class RawPromptsClient:
         self,
         project_pk: int,
         *,
+        alignment_class: typing.Optional[str] = None,
+        alignment_from_name: typing.Optional[str] = None,
+        alignment_outcome: typing.Optional[SubsetTasksPromptsRequestAlignmentOutcome] = None,
         include_total: typing.Optional[bool] = None,
         model_run: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
+        output_class: typing.Optional[str] = None,
+        output_from_name: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         parent_model: typing.Optional[int] = None,
+        prediction_version_ids: typing.Optional[str] = None,
         project_subset: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PaginatedProjectSubsetTasksResponseList]:
@@ -207,6 +214,15 @@ class RawPromptsClient:
         ----------
         project_pk : int
 
+        alignment_class : typing.Optional[str]
+            Only include tasks whose prediction/reference alignment includes this class.
+
+        alignment_from_name : typing.Optional[str]
+            When alignment_class is set, limit matching to this output control tag.
+
+        alignment_outcome : typing.Optional[SubsetTasksPromptsRequestAlignmentOutcome]
+            Alignment outcome to drill into. Defaults to all TP, FP, and FN outcomes.
+
         include_total : typing.Optional[bool]
             If true (default), includes task_count in response; if false, omits it.
 
@@ -216,6 +232,12 @@ class RawPromptsClient:
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
+        output_class : typing.Optional[str]
+            Only include tasks whose prediction contains this output class.
+
+        output_from_name : typing.Optional[str]
+            When output_class is set, limit matching to this output control tag.
+
         page : typing.Optional[int]
             A page number within the paginated result set.
 
@@ -224,6 +246,9 @@ class RawPromptsClient:
 
         parent_model : typing.Optional[int]
             The ID of the parent model (ModelInterface) for this Inference Run
+
+        prediction_version_ids : typing.Optional[str]
+            Comma-separated model version IDs. Only include tasks that have predictions for every listed version.
 
         project_subset : typing.Optional[str]
             The project subset to retrieve tasks for
@@ -240,12 +265,18 @@ class RawPromptsClient:
             f"api/projects/{encode_path_param(project_pk)}/subset-tasks",
             method="GET",
             params={
+                "alignment_class": alignment_class,
+                "alignment_from_name": alignment_from_name,
+                "alignment_outcome": alignment_outcome,
                 "include_total": include_total,
                 "model_run": model_run,
                 "ordering": ordering,
+                "output_class": output_class,
+                "output_from_name": output_from_name,
                 "page": page,
                 "page_size": page_size,
                 "parent_model": parent_model,
+                "prediction_version_ids": prediction_version_ids,
                 "project_subset": project_subset,
             },
             request_options=request_options,
@@ -894,12 +925,18 @@ class AsyncRawPromptsClient:
         self,
         project_pk: int,
         *,
+        alignment_class: typing.Optional[str] = None,
+        alignment_from_name: typing.Optional[str] = None,
+        alignment_outcome: typing.Optional[SubsetTasksPromptsRequestAlignmentOutcome] = None,
         include_total: typing.Optional[bool] = None,
         model_run: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
+        output_class: typing.Optional[str] = None,
+        output_from_name: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         parent_model: typing.Optional[int] = None,
+        prediction_version_ids: typing.Optional[str] = None,
         project_subset: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PaginatedProjectSubsetTasksResponseList]:
@@ -918,6 +955,15 @@ class AsyncRawPromptsClient:
         ----------
         project_pk : int
 
+        alignment_class : typing.Optional[str]
+            Only include tasks whose prediction/reference alignment includes this class.
+
+        alignment_from_name : typing.Optional[str]
+            When alignment_class is set, limit matching to this output control tag.
+
+        alignment_outcome : typing.Optional[SubsetTasksPromptsRequestAlignmentOutcome]
+            Alignment outcome to drill into. Defaults to all TP, FP, and FN outcomes.
+
         include_total : typing.Optional[bool]
             If true (default), includes task_count in response; if false, omits it.
 
@@ -927,6 +973,12 @@ class AsyncRawPromptsClient:
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
+        output_class : typing.Optional[str]
+            Only include tasks whose prediction contains this output class.
+
+        output_from_name : typing.Optional[str]
+            When output_class is set, limit matching to this output control tag.
+
         page : typing.Optional[int]
             A page number within the paginated result set.
 
@@ -935,6 +987,9 @@ class AsyncRawPromptsClient:
 
         parent_model : typing.Optional[int]
             The ID of the parent model (ModelInterface) for this Inference Run
+
+        prediction_version_ids : typing.Optional[str]
+            Comma-separated model version IDs. Only include tasks that have predictions for every listed version.
 
         project_subset : typing.Optional[str]
             The project subset to retrieve tasks for
@@ -951,12 +1006,18 @@ class AsyncRawPromptsClient:
             f"api/projects/{encode_path_param(project_pk)}/subset-tasks",
             method="GET",
             params={
+                "alignment_class": alignment_class,
+                "alignment_from_name": alignment_from_name,
+                "alignment_outcome": alignment_outcome,
                 "include_total": include_total,
                 "model_run": model_run,
                 "ordering": ordering,
+                "output_class": output_class,
+                "output_from_name": output_from_name,
                 "page": page,
                 "page_size": page_size,
                 "parent_model": parent_model,
+                "prediction_version_ids": prediction_version_ids,
                 "project_subset": project_subset,
             },
             request_options=request_options,
