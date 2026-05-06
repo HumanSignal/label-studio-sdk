@@ -25,7 +25,7 @@ class RawRolesClient:
     def list(
         self,
         *,
-        ids: typing.Optional[int] = None,
+        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.List[ProjectRole]]:
@@ -42,7 +42,8 @@ class RawRolesClient:
 
         Parameters
         ----------
-        ids : typing.Optional[int]
+        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -59,7 +60,7 @@ class RawRolesClient:
             "api/projects/roles/",
             method="GET",
             params={
-                "ids": ids,
+                "ids": ",".join(map(str, ids)) if isinstance(ids, (list, tuple, set)) else ids,
                 "ordering": ordering,
             },
             request_options=request_options,
@@ -246,7 +247,7 @@ class AsyncRawRolesClient:
     async def list(
         self,
         *,
-        ids: typing.Optional[int] = None,
+        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.List[ProjectRole]]:
@@ -263,7 +264,8 @@ class AsyncRawRolesClient:
 
         Parameters
         ----------
-        ids : typing.Optional[int]
+        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -280,7 +282,7 @@ class AsyncRawRolesClient:
             "api/projects/roles/",
             method="GET",
             params={
-                "ids": ids,
+                "ids": ",".join(map(str, ids)) if isinstance(ids, (list, tuple, set)) else ids,
                 "ordering": ordering,
             },
             request_options=request_options,

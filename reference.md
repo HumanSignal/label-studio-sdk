@@ -32178,7 +32178,7 @@ client.projects.roles.list()
 <dl>
 <dd>
 
-**ids:** `typing.Optional[int]` 
+**ids:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` — Multiple values may be separated by commas.
     
 </dd>
 </dl>
