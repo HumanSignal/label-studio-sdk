@@ -49,10 +49,10 @@ class ProjectsClient:
         self._raw_client = RawProjectsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._roles: typing.Optional[RolesClient] = None
+        self._stats: typing.Optional[StatsClient] = None
         self._exports: typing.Optional[ExportsClient] = None
         self._members: typing.Optional[MembersClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
-        self._stats: typing.Optional[StatsClient] = None
         self._review_routing_rules: typing.Optional[ReviewRoutingRulesClient] = None
         self._assignments: typing.Optional[AssignmentsClient] = None
         self._pauses: typing.Optional[PausesClient] = None
@@ -97,7 +97,7 @@ class ProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -400,7 +400,7 @@ class ProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -1157,6 +1157,14 @@ class ProjectsClient:
         return self._roles
 
     @property
+    def stats(self):
+        if self._stats is None:
+            from .stats.client import StatsClient  # noqa: E402
+
+            self._stats = StatsClient(client_wrapper=self._client_wrapper)
+        return self._stats
+
+    @property
     def exports(self):
         if self._exports is None:
             from .exports.client import ExportsClient  # noqa: E402
@@ -1179,14 +1187,6 @@ class ProjectsClient:
 
             self._metrics = MetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
-
-    @property
-    def stats(self):
-        if self._stats is None:
-            from .stats.client import StatsClient  # noqa: E402
-
-            self._stats = StatsClient(client_wrapper=self._client_wrapper)
-        return self._stats
 
     @property
     def review_routing_rules(self):
@@ -1218,10 +1218,10 @@ class AsyncProjectsClient:
         self._raw_client = AsyncRawProjectsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._roles: typing.Optional[AsyncRolesClient] = None
+        self._stats: typing.Optional[AsyncStatsClient] = None
         self._exports: typing.Optional[AsyncExportsClient] = None
         self._members: typing.Optional[AsyncMembersClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
-        self._stats: typing.Optional[AsyncStatsClient] = None
         self._review_routing_rules: typing.Optional[AsyncReviewRoutingRulesClient] = None
         self._assignments: typing.Optional[AsyncAssignmentsClient] = None
         self._pauses: typing.Optional[AsyncPausesClient] = None
@@ -1266,7 +1266,7 @@ class AsyncProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -1586,7 +1586,7 @@ class AsyncProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -2415,6 +2415,14 @@ class AsyncProjectsClient:
         return self._roles
 
     @property
+    def stats(self):
+        if self._stats is None:
+            from .stats.client import AsyncStatsClient  # noqa: E402
+
+            self._stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
+        return self._stats
+
+    @property
     def exports(self):
         if self._exports is None:
             from .exports.client import AsyncExportsClient  # noqa: E402
@@ -2437,14 +2445,6 @@ class AsyncProjectsClient:
 
             self._metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
-
-    @property
-    def stats(self):
-        if self._stats is None:
-            from .stats.client import AsyncStatsClient  # noqa: E402
-
-            self._stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
-        return self._stats
 
     @property
     def review_routing_rules(self):

@@ -11,11 +11,17 @@ from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.not_found_error import NotFoundError
+from ...types.data_quality_agreement_confusion_matrix import DataQualityAgreementConfusionMatrix
+from ...types.data_quality_agreement_dimensions import DataQualityAgreementDimensions
+from ...types.data_quality_agreement_distribution import DataQualityAgreementDistribution
 from ...types.label_distribution_counts_response import LabelDistributionCountsResponse
 from ...types.label_distribution_structure_response import LabelDistributionStructureResponse
 from .types.agreement_annotator_stats_response import AgreementAnnotatorStatsResponse
 from .types.agreement_annotators_stats_response import AgreementAnnotatorsStatsResponse
 from .types.data_filters_stats_response import DataFiltersStatsResponse
+from .types.data_quality_agreement_confusion_matrix_stats_request_mode import (
+    DataQualityAgreementConfusionMatrixStatsRequestMode,
+)
 from .types.finished_tasks_stats_response import FinishedTasksStatsResponse
 from .types.iaa_stats_response import IaaStatsResponse
 from .types.lead_time_stats_response import LeadTimeStatsResponse
@@ -39,6 +45,165 @@ from pydantic import ValidationError
 class RawStatsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def data_quality_agreement_confusion_matrix(
+        self,
+        id: int,
+        *,
+        from_name: typing.Optional[str] = None,
+        mode: typing.Optional[DataQualityAgreementConfusionMatrixStatsRequestMode] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[DataQualityAgreementConfusionMatrix]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns label confusion matrix with precision, recall, and top confusion pairs.
+
+        Parameters
+        ----------
+        id : int
+
+        from_name : typing.Optional[str]
+            From name
+
+        mode : typing.Optional[DataQualityAgreementConfusionMatrixStatsRequestMode]
+            Mode
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DataQualityAgreementConfusionMatrix]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/analytics/data-quality/agreement-analysis/confusion-matrix",
+            method="GET",
+            params={
+                "from_name": from_name,
+                "mode": mode,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DataQualityAgreementConfusionMatrix,
+                    construct_type(
+                        type_=DataQualityAgreementConfusionMatrix,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def data_quality_agreement_dimensions(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.List[DataQualityAgreementDimensions]]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns per-dimension agreement scores for active dimensions.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.List[DataQualityAgreementDimensions]]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/analytics/data-quality/agreement-analysis/dimensions",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[DataQualityAgreementDimensions],
+                    construct_type(
+                        type_=typing.List[DataQualityAgreementDimensions],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def data_quality_agreement_distribution(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[DataQualityAgreementDistribution]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns average agreement, histogram buckets, low-agreement count, and total tasks.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DataQualityAgreementDistribution]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/analytics/data-quality/agreement-analysis/distribution",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DataQualityAgreementDistribution,
+                    construct_type(
+                        type_=DataQualityAgreementDistribution,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def model_version_annotator_agreement(
         self, id: int, model_version: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -736,7 +901,7 @@ class RawStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Paginated, sortable member performance rows for annotation/review tables. Footer totals are returned by <code>member_performance_summary</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+        Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
 
         Parameters
         ----------
@@ -763,7 +928,7 @@ class RawStatsClient:
         Returns
         -------
         HttpResponse[MemberPerformanceRowsStatsResponse]
-            Member performance rows for one page (summary aggregates via member_performance_summary).
+            Member performance rows for one page (footer totals: member_performance_summary).
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{encode_path_param(id)}/stats/member_performance_rows/",
@@ -822,7 +987,7 @@ class RawStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Footer / Total aggregates for member performance tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+        Footer / Total aggregates for annotation or review member tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
 
         Parameters
         ----------
@@ -1314,6 +1479,165 @@ class RawStatsClient:
 class AsyncRawStatsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def data_quality_agreement_confusion_matrix(
+        self,
+        id: int,
+        *,
+        from_name: typing.Optional[str] = None,
+        mode: typing.Optional[DataQualityAgreementConfusionMatrixStatsRequestMode] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[DataQualityAgreementConfusionMatrix]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns label confusion matrix with precision, recall, and top confusion pairs.
+
+        Parameters
+        ----------
+        id : int
+
+        from_name : typing.Optional[str]
+            From name
+
+        mode : typing.Optional[DataQualityAgreementConfusionMatrixStatsRequestMode]
+            Mode
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DataQualityAgreementConfusionMatrix]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/analytics/data-quality/agreement-analysis/confusion-matrix",
+            method="GET",
+            params={
+                "from_name": from_name,
+                "mode": mode,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DataQualityAgreementConfusionMatrix,
+                    construct_type(
+                        type_=DataQualityAgreementConfusionMatrix,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def data_quality_agreement_dimensions(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.List[DataQualityAgreementDimensions]]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns per-dimension agreement scores for active dimensions.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.List[DataQualityAgreementDimensions]]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/analytics/data-quality/agreement-analysis/dimensions",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[DataQualityAgreementDimensions],
+                    construct_type(
+                        type_=typing.List[DataQualityAgreementDimensions],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def data_quality_agreement_distribution(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[DataQualityAgreementDistribution]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns average agreement, histogram buckets, low-agreement count, and total tasks.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DataQualityAgreementDistribution]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/analytics/data-quality/agreement-analysis/distribution",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DataQualityAgreementDistribution,
+                    construct_type(
+                        type_=DataQualityAgreementDistribution,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def model_version_annotator_agreement(
         self, id: int, model_version: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -2011,7 +2335,7 @@ class AsyncRawStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Paginated, sortable member performance rows for annotation/review tables. Footer totals are returned by <code>member_performance_summary</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+        Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
 
         Parameters
         ----------
@@ -2038,7 +2362,7 @@ class AsyncRawStatsClient:
         Returns
         -------
         AsyncHttpResponse[MemberPerformanceRowsStatsResponse]
-            Member performance rows for one page (summary aggregates via member_performance_summary).
+            Member performance rows for one page (footer totals: member_performance_summary).
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{encode_path_param(id)}/stats/member_performance_rows/",
@@ -2097,7 +2421,7 @@ class AsyncRawStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Footer / Total aggregates for member performance tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+        Footer / Total aggregates for annotation or review member tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
 
         Parameters
         ----------

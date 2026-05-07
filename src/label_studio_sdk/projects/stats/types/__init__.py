@@ -11,6 +11,9 @@ if typing.TYPE_CHECKING:
     from .data_filters_stats_response import DataFiltersStatsResponse
     from .data_filters_stats_response_user_filters import DataFiltersStatsResponseUserFilters
     from .data_filters_stats_response_user_filters_stats_item import DataFiltersStatsResponseUserFiltersStatsItem
+    from .data_quality_agreement_confusion_matrix_stats_request_mode import (
+        DataQualityAgreementConfusionMatrixStatsRequestMode,
+    )
     from .finished_tasks_stats_response import FinishedTasksStatsResponse
     from .iaa_stats_response import IaaStatsResponse
     from .iaa_stats_response_common_tasks import IaaStatsResponseCommonTasks
@@ -56,6 +59,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DataFiltersStatsResponse": ".data_filters_stats_response",
     "DataFiltersStatsResponseUserFilters": ".data_filters_stats_response_user_filters",
     "DataFiltersStatsResponseUserFiltersStatsItem": ".data_filters_stats_response_user_filters_stats_item",
+    "DataQualityAgreementConfusionMatrixStatsRequestMode": ".data_quality_agreement_confusion_matrix_stats_request_mode",
     "FinishedTasksStatsResponse": ".finished_tasks_stats_response",
     "IaaStatsResponse": ".iaa_stats_response",
     "IaaStatsResponseCommonTasks": ".iaa_stats_response_common_tasks",
@@ -117,6 +121,7 @@ __all__ = [
     "DataFiltersStatsResponse",
     "DataFiltersStatsResponseUserFilters",
     "DataFiltersStatsResponseUserFiltersStatsItem",
+    "DataQualityAgreementConfusionMatrixStatsRequestMode",
     "FinishedTasksStatsResponse",
     "IaaStatsResponse",
     "IaaStatsResponseCommonTasks",

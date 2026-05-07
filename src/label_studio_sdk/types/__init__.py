@@ -53,6 +53,10 @@ if typing.TYPE_CHECKING:
     from .converted_format import ConvertedFormat
     from .converted_format_request import ConvertedFormatRequest
     from .count_limit import CountLimit
+    from .data_quality_agreement_confusion_matrix import DataQualityAgreementConfusionMatrix
+    from .data_quality_agreement_dimensions import DataQualityAgreementDimensions
+    from .data_quality_agreement_distribution import DataQualityAgreementDistribution
+    from .data_quality_confusion_pair import DataQualityConfusionPair
     from .databricks_export_storage import DatabricksExportStorage
     from .databricks_export_storage_request import DatabricksExportStorageRequest
     from .databricks_import_storage import DatabricksImportStorage
@@ -308,6 +312,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvertedFormat": ".converted_format",
     "ConvertedFormatRequest": ".converted_format_request",
     "CountLimit": ".count_limit",
+    "DataQualityAgreementConfusionMatrix": ".data_quality_agreement_confusion_matrix",
+    "DataQualityAgreementDimensions": ".data_quality_agreement_dimensions",
+    "DataQualityAgreementDistribution": ".data_quality_agreement_distribution",
+    "DataQualityConfusionPair": ".data_quality_confusion_pair",
     "DatabricksExportStorage": ".databricks_export_storage",
     "DatabricksExportStorageRequest": ".databricks_export_storage_request",
     "DatabricksImportStorage": ".databricks_import_storage",
@@ -581,6 +589,10 @@ __all__ = [
     "ConvertedFormat",
     "ConvertedFormatRequest",
     "CountLimit",
+    "DataQualityAgreementConfusionMatrix",
+    "DataQualityAgreementDimensions",
+    "DataQualityAgreementDistribution",
+    "DataQualityConfusionPair",
     "DatabricksExportStorage",
     "DatabricksExportStorageRequest",
     "DatabricksImportStorage",
