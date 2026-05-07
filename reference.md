@@ -10681,7 +10681,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**source_interface_version:** `typing.Optional[int]` 
+**source_interface_version:** `typing.Optional[int]` — Stable version ID of the saved interface used to create this project.
     
 </dd>
 </dl>
@@ -11512,7 +11512,7 @@ Methodology (Consensus / Pairwise Averaging)
 <dl>
 <dd>
 
-**source_interface_version:** `typing.Optional[int]` 
+**source_interface_version:** `typing.Optional[int]` — Stable version ID of the saved interface snapshot used by this project.
     
 </dd>
 </dl>

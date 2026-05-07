@@ -301,6 +301,7 @@ class RawProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface used to create this project.
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -793,6 +794,7 @@ class RawProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface snapshot used by this project.
 
         strict_task_overlap : typing.Optional[bool]
             Enforce strict overlap limit
@@ -1573,6 +1575,7 @@ class AsyncRawProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface used to create this project.
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -2067,6 +2070,7 @@ class AsyncRawProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface snapshot used by this project.
 
         strict_task_overlap : typing.Optional[bool]
             Enforce strict overlap limit
