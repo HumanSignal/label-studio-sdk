@@ -9,6 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class DataQualityAgreementDimensions(UncheckedBaseModel):
     agreement: typing.Optional[float] = None
+    from_name: str
     name: str
 
     if IS_PYDANTIC_V2:
