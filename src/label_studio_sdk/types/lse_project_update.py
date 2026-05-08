@@ -183,6 +183,7 @@ class LseProjectUpdate(UncheckedBaseModel):
     """
 
     organization: typing.Optional[int] = None
+    output_schema: typing.Optional[typing.Any] = None
     overlap_cohort_percentage: typing.Optional[int] = pydantic.Field(default=None)
     """
     Annotations per task coverage
@@ -260,7 +261,11 @@ class LseProjectUpdate(UncheckedBaseModel):
     """
 
     source_interface_id: typing.Optional[int] = None
-    source_interface_version: typing.Optional[int] = None
+    source_interface_version: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Stable version ID of the saved interface snapshot used by this project.
+    """
+
     start_training_on_annotation_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Start model training after any annotations are submitted or updated

@@ -30,7 +30,7 @@ class RolesClient:
     def list(
         self,
         *,
-        ids: typing.Optional[int] = None,
+        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ProjectRole]:
@@ -47,7 +47,8 @@ class RolesClient:
 
         Parameters
         ----------
-        ids : typing.Optional[int]
+        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -214,7 +215,7 @@ class AsyncRolesClient:
     async def list(
         self,
         *,
-        ids: typing.Optional[int] = None,
+        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ProjectRole]:
@@ -231,7 +232,8 @@ class AsyncRolesClient:
 
         Parameters
         ----------
-        ids : typing.Optional[int]
+        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.

@@ -163,10 +163,13 @@ class RawOrganizationsClient:
         *,
         contact_info: typing.Optional[str] = OMIT,
         created_by: typing.Optional[int] = OMIT,
+        custom_interfaces_enabled: typing.Optional[bool] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
         embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
+        embed_enabled: typing.Optional[bool] = OMIT,
         embed_settings: typing.Optional[typing.Any] = OMIT,
+        interface_settings: typing.Optional[typing.Any] = OMIT,
         react_code_settings: typing.Optional[typing.Any] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
@@ -189,6 +192,9 @@ class RawOrganizationsClient:
 
         created_by : typing.Optional[int]
 
+        custom_interfaces_enabled : typing.Optional[bool]
+            Enable or disable custom interfaces for this organization
+
         custom_scripts_enabled : typing.Optional[bool]
             Plugins
 
@@ -198,8 +204,14 @@ class RawOrganizationsClient:
         embed_domains : typing.Optional[typing.Sequence[typing.Dict[str, str]]]
             Supported domains
 
+        embed_enabled : typing.Optional[bool]
+            Enable or disable embed functionality for this organization
+
         embed_settings : typing.Optional[typing.Any]
             Public Verification Key and Public Verification Algorithms configuration
+
+        interface_settings : typing.Optional[typing.Any]
+            Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions
 
         react_code_settings : typing.Optional[typing.Any]
             ReactCode settings
@@ -223,10 +235,13 @@ class RawOrganizationsClient:
             json={
                 "contact_info": contact_info,
                 "created_by": created_by,
+                "custom_interfaces_enabled": custom_interfaces_enabled,
                 "custom_scripts_enabled": custom_scripts_enabled,
                 "email_notification_settings": email_notification_settings,
                 "embed_domains": embed_domains,
+                "embed_enabled": embed_enabled,
                 "embed_settings": embed_settings,
+                "interface_settings": interface_settings,
                 "react_code_settings": react_code_settings,
                 "title": title,
                 "token": token,
@@ -569,10 +584,13 @@ class AsyncRawOrganizationsClient:
         *,
         contact_info: typing.Optional[str] = OMIT,
         created_by: typing.Optional[int] = OMIT,
+        custom_interfaces_enabled: typing.Optional[bool] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
         embed_domains: typing.Optional[typing.Sequence[typing.Dict[str, str]]] = OMIT,
+        embed_enabled: typing.Optional[bool] = OMIT,
         embed_settings: typing.Optional[typing.Any] = OMIT,
+        interface_settings: typing.Optional[typing.Any] = OMIT,
         react_code_settings: typing.Optional[typing.Any] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
@@ -595,6 +613,9 @@ class AsyncRawOrganizationsClient:
 
         created_by : typing.Optional[int]
 
+        custom_interfaces_enabled : typing.Optional[bool]
+            Enable or disable custom interfaces for this organization
+
         custom_scripts_enabled : typing.Optional[bool]
             Plugins
 
@@ -604,8 +625,14 @@ class AsyncRawOrganizationsClient:
         embed_domains : typing.Optional[typing.Sequence[typing.Dict[str, str]]]
             Supported domains
 
+        embed_enabled : typing.Optional[bool]
+            Enable or disable embed functionality for this organization
+
         embed_settings : typing.Optional[typing.Any]
             Public Verification Key and Public Verification Algorithms configuration
+
+        interface_settings : typing.Optional[typing.Any]
+            Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions
 
         react_code_settings : typing.Optional[typing.Any]
             ReactCode settings
@@ -629,10 +656,13 @@ class AsyncRawOrganizationsClient:
             json={
                 "contact_info": contact_info,
                 "created_by": created_by,
+                "custom_interfaces_enabled": custom_interfaces_enabled,
                 "custom_scripts_enabled": custom_scripts_enabled,
                 "email_notification_settings": email_notification_settings,
                 "embed_domains": embed_domains,
+                "embed_enabled": embed_enabled,
                 "embed_settings": embed_settings,
+                "interface_settings": interface_settings,
                 "react_code_settings": react_code_settings,
                 "title": title,
                 "token": token,

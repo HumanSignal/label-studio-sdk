@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import CompatibleProjectsPromptsRequestProjectType
+    from .types import CompatibleProjectsPromptsRequestProjectType, SubsetTasksPromptsRequestAlignmentOutcome
     from . import indicators, runs, versions
     from .indicators import ListIndicatorsResponseItem
     from .runs import ListRunsRequestProjectSubset
@@ -14,6 +14,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CompatibleProjectsPromptsRequestProjectType": ".types",
     "ListIndicatorsResponseItem": ".indicators",
     "ListRunsRequestProjectSubset": ".runs",
+    "SubsetTasksPromptsRequestAlignmentOutcome": ".types",
     "indicators": ".indicators",
     "runs": ".runs",
     "versions": ".versions",
@@ -45,6 +46,7 @@ __all__ = [
     "CompatibleProjectsPromptsRequestProjectType",
     "ListIndicatorsResponseItem",
     "ListRunsRequestProjectSubset",
+    "SubsetTasksPromptsRequestAlignmentOutcome",
     "indicators",
     "runs",
     "versions",

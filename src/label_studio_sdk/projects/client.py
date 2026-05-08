@@ -49,10 +49,10 @@ class ProjectsClient:
         self._raw_client = RawProjectsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._roles: typing.Optional[RolesClient] = None
+        self._stats: typing.Optional[StatsClient] = None
         self._exports: typing.Optional[ExportsClient] = None
         self._members: typing.Optional[MembersClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
-        self._stats: typing.Optional[StatsClient] = None
         self._review_routing_rules: typing.Optional[ReviewRoutingRulesClient] = None
         self._assignments: typing.Optional[AssignmentsClient] = None
         self._pauses: typing.Optional[PausesClient] = None
@@ -97,7 +97,7 @@ class ProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -186,6 +186,7 @@ class ProjectsClient:
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
@@ -262,6 +263,8 @@ class ProjectsClient:
 
         organization : typing.Optional[int]
 
+        output_schema : typing.Optional[typing.Any]
+
         overlap_cohort_percentage : typing.Optional[int]
 
         pinned_at : typing.Optional[dt.datetime]
@@ -294,6 +297,7 @@ class ProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface used to create this project.
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -346,6 +350,7 @@ class ProjectsClient:
             min_annotations_to_start_training=min_annotations_to_start_training,
             model_version=model_version,
             organization=organization,
+            output_schema=output_schema,
             overlap_cohort_percentage=overlap_cohort_percentage,
             pinned_at=pinned_at,
             reveal_preannotations_interactively=reveal_preannotations_interactively,
@@ -396,7 +401,7 @@ class ProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -560,6 +565,7 @@ class ProjectsClient:
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
@@ -687,6 +693,8 @@ class ProjectsClient:
 
         organization : typing.Optional[int]
 
+        output_schema : typing.Optional[typing.Any]
+
         overlap_cohort_percentage : typing.Optional[int]
             Annotations per task coverage
 
@@ -732,6 +740,7 @@ class ProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface snapshot used by this project.
 
         strict_task_overlap : typing.Optional[bool]
             Enforce strict overlap limit
@@ -804,6 +813,7 @@ class ProjectsClient:
             min_annotations_to_start_training=min_annotations_to_start_training,
             model_version=model_version,
             organization=organization,
+            output_schema=output_schema,
             overlap_cohort_percentage=overlap_cohort_percentage,
             pause_on_failed_annotator_evaluation=pause_on_failed_annotator_evaluation,
             pinned_at=pinned_at,
@@ -1149,6 +1159,14 @@ class ProjectsClient:
         return self._roles
 
     @property
+    def stats(self):
+        if self._stats is None:
+            from .stats.client import StatsClient  # noqa: E402
+
+            self._stats = StatsClient(client_wrapper=self._client_wrapper)
+        return self._stats
+
+    @property
     def exports(self):
         if self._exports is None:
             from .exports.client import ExportsClient  # noqa: E402
@@ -1171,14 +1189,6 @@ class ProjectsClient:
 
             self._metrics = MetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
-
-    @property
-    def stats(self):
-        if self._stats is None:
-            from .stats.client import StatsClient  # noqa: E402
-
-            self._stats = StatsClient(client_wrapper=self._client_wrapper)
-        return self._stats
 
     @property
     def review_routing_rules(self):
@@ -1210,10 +1220,10 @@ class AsyncProjectsClient:
         self._raw_client = AsyncRawProjectsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._roles: typing.Optional[AsyncRolesClient] = None
+        self._stats: typing.Optional[AsyncStatsClient] = None
         self._exports: typing.Optional[AsyncExportsClient] = None
         self._members: typing.Optional[AsyncMembersClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
-        self._stats: typing.Optional[AsyncStatsClient] = None
         self._review_routing_rules: typing.Optional[AsyncReviewRoutingRulesClient] = None
         self._assignments: typing.Optional[AsyncAssignmentsClient] = None
         self._pauses: typing.Optional[AsyncPausesClient] = None
@@ -1258,7 +1268,7 @@ class AsyncProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -1356,6 +1366,7 @@ class AsyncProjectsClient:
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
@@ -1432,6 +1443,8 @@ class AsyncProjectsClient:
 
         organization : typing.Optional[int]
 
+        output_schema : typing.Optional[typing.Any]
+
         overlap_cohort_percentage : typing.Optional[int]
 
         pinned_at : typing.Optional[dt.datetime]
@@ -1464,6 +1477,7 @@ class AsyncProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface used to create this project.
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -1524,6 +1538,7 @@ class AsyncProjectsClient:
             min_annotations_to_start_training=min_annotations_to_start_training,
             model_version=model_version,
             organization=organization,
+            output_schema=output_schema,
             overlap_cohort_percentage=overlap_cohort_percentage,
             pinned_at=pinned_at,
             reveal_preannotations_interactively=reveal_preannotations_interactively,
@@ -1574,7 +1589,7 @@ class AsyncProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -1762,6 +1777,7 @@ class AsyncProjectsClient:
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
@@ -1889,6 +1905,8 @@ class AsyncProjectsClient:
 
         organization : typing.Optional[int]
 
+        output_schema : typing.Optional[typing.Any]
+
         overlap_cohort_percentage : typing.Optional[int]
             Annotations per task coverage
 
@@ -1934,6 +1952,7 @@ class AsyncProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface snapshot used by this project.
 
         strict_task_overlap : typing.Optional[bool]
             Enforce strict overlap limit
@@ -2014,6 +2033,7 @@ class AsyncProjectsClient:
             min_annotations_to_start_training=min_annotations_to_start_training,
             model_version=model_version,
             organization=organization,
+            output_schema=output_schema,
             overlap_cohort_percentage=overlap_cohort_percentage,
             pause_on_failed_annotator_evaluation=pause_on_failed_annotator_evaluation,
             pinned_at=pinned_at,
@@ -2399,6 +2419,14 @@ class AsyncProjectsClient:
         return self._roles
 
     @property
+    def stats(self):
+        if self._stats is None:
+            from .stats.client import AsyncStatsClient  # noqa: E402
+
+            self._stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
+        return self._stats
+
+    @property
     def exports(self):
         if self._exports is None:
             from .exports.client import AsyncExportsClient  # noqa: E402
@@ -2421,14 +2449,6 @@ class AsyncProjectsClient:
 
             self._metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
-
-    @property
-    def stats(self):
-        if self._stats is None:
-            from .stats.client import AsyncStatsClient  # noqa: E402
-
-            self._stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
-        return self._stats
 
     @property
     def review_routing_rules(self):

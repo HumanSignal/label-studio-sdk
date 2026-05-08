@@ -74,7 +74,7 @@ class RawProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -190,6 +190,7 @@ class RawProjectsClient:
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
@@ -266,6 +267,8 @@ class RawProjectsClient:
 
         organization : typing.Optional[int]
 
+        output_schema : typing.Optional[typing.Any]
+
         overlap_cohort_percentage : typing.Optional[int]
 
         pinned_at : typing.Optional[dt.datetime]
@@ -298,6 +301,7 @@ class RawProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface used to create this project.
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -350,6 +354,7 @@ class RawProjectsClient:
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "model_version": model_version,
                 "organization": organization,
+                "output_schema": output_schema,
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pinned_at": pinned_at,
                 "reveal_preannotations_interactively": reveal_preannotations_interactively,
@@ -422,7 +427,7 @@ class RawProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -614,6 +619,7 @@ class RawProjectsClient:
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
@@ -741,6 +747,8 @@ class RawProjectsClient:
 
         organization : typing.Optional[int]
 
+        output_schema : typing.Optional[typing.Any]
+
         overlap_cohort_percentage : typing.Optional[int]
             Annotations per task coverage
 
@@ -786,6 +794,7 @@ class RawProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface snapshot used by this project.
 
         strict_task_overlap : typing.Optional[bool]
             Enforce strict overlap limit
@@ -859,6 +868,7 @@ class RawProjectsClient:
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "model_version": model_version,
                 "organization": organization,
+                "output_schema": output_schema,
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
                 "pinned_at": pinned_at,
@@ -1335,7 +1345,7 @@ class AsyncRawProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -1454,6 +1464,7 @@ class AsyncRawProjectsClient:
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
@@ -1530,6 +1541,8 @@ class AsyncRawProjectsClient:
 
         organization : typing.Optional[int]
 
+        output_schema : typing.Optional[typing.Any]
+
         overlap_cohort_percentage : typing.Optional[int]
 
         pinned_at : typing.Optional[dt.datetime]
@@ -1562,6 +1575,7 @@ class AsyncRawProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface used to create this project.
 
         task_data_login : typing.Optional[str]
             Task data credentials: login
@@ -1614,6 +1628,7 @@ class AsyncRawProjectsClient:
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "model_version": model_version,
                 "organization": organization,
+                "output_schema": output_schema,
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pinned_at": pinned_at,
                 "reveal_preannotations_interactively": reveal_preannotations_interactively,
@@ -1686,7 +1701,7 @@ class AsyncRawProjectsClient:
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            Filter id by in list
+            Multiple values may be separated by commas. (comma-separated values)
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
@@ -1880,6 +1895,7 @@ class AsyncRawProjectsClient:
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
@@ -2007,6 +2023,8 @@ class AsyncRawProjectsClient:
 
         organization : typing.Optional[int]
 
+        output_schema : typing.Optional[typing.Any]
+
         overlap_cohort_percentage : typing.Optional[int]
             Annotations per task coverage
 
@@ -2052,6 +2070,7 @@ class AsyncRawProjectsClient:
         source_interface_id : typing.Optional[int]
 
         source_interface_version : typing.Optional[int]
+            Stable version ID of the saved interface snapshot used by this project.
 
         strict_task_overlap : typing.Optional[bool]
             Enforce strict overlap limit
@@ -2125,6 +2144,7 @@ class AsyncRawProjectsClient:
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "model_version": model_version,
                 "organization": organization,
+                "output_schema": output_schema,
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
                 "pinned_at": pinned_at,
