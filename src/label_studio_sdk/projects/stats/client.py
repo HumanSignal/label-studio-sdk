@@ -749,7 +749,7 @@ class StatsClient:
         id : int
 
         ids : typing.Optional[str]
-            Comma-separated user IDs to include. When omitted, members are derived from the project.
+            Comma-separated participant IDs: numeric user IDs and/or synthetic members as <code>model:&lt;version&gt;</code> (annotations table only). When omitted, members and distinct model versions are derived from the project.
 
         ordering : typing.Optional[str]
             Sort field; prefix with "-" for descending (e.g. "-finished").
@@ -809,7 +809,7 @@ class StatsClient:
         id : int
 
         ids : typing.Optional[str]
-            Comma-separated user IDs. When omitted, members are derived from the project.
+            Comma-separated participant IDs: numeric user IDs and/or <code>model:&lt;version&gt;</code> for annotations. When omitted, derived from the project.
 
         table : typing.Optional[MemberPerformanceSummaryStatsRequestTable]
             Which table: "annotations" or "reviews".
@@ -2024,7 +2024,7 @@ class AsyncStatsClient:
         id : int
 
         ids : typing.Optional[str]
-            Comma-separated user IDs to include. When omitted, members are derived from the project.
+            Comma-separated participant IDs: numeric user IDs and/or synthetic members as <code>model:&lt;version&gt;</code> (annotations table only). When omitted, members and distinct model versions are derived from the project.
 
         ordering : typing.Optional[str]
             Sort field; prefix with "-" for descending (e.g. "-finished").
@@ -2092,7 +2092,7 @@ class AsyncStatsClient:
         id : int
 
         ids : typing.Optional[str]
-            Comma-separated user IDs. When omitted, members are derived from the project.
+            Comma-separated participant IDs: numeric user IDs and/or <code>model:&lt;version&gt;</code> for annotations. When omitted, derived from the project.
 
         table : typing.Optional[MemberPerformanceSummaryStatsRequestTable]
             Which table: "annotations" or "reviews".
