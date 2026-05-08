@@ -33887,7 +33887,7 @@ client.projects.stats.member_performance_rows(
 <dl>
 <dd>
 
-**ids:** `typing.Optional[str]` — Comma-separated user IDs to include. When omitted, members are derived from the project.
+**ids:** `typing.Optional[str]` — Comma-separated participant IDs: numeric user IDs and/or synthetic members as <code>model:&lt;version&gt;</code> (annotations table only). When omitted, members and distinct model versions are derived from the project.
     
 </dd>
 </dl>
@@ -34006,7 +34006,7 @@ client.projects.stats.member_performance_summary(
 <dl>
 <dd>
 
-**ids:** `typing.Optional[str]` — Comma-separated user IDs. When omitted, members are derived from the project.
+**ids:** `typing.Optional[str]` — Comma-separated participant IDs: numeric user IDs and/or <code>model:&lt;version&gt;</code> for annotations. When omitted, derived from the project.
     
 </dd>
 </dl>
