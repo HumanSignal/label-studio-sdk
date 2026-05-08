@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-import inspect
 import importlib
+import inspect
 import json
 import os
 import re
-from ast import AsyncFunctionDef, ClassDef, FunctionDef, get_docstring, parse as ast_parse, unparse as ast_unparse
+from ast import AsyncFunctionDef, ClassDef, FunctionDef, get_docstring
+from ast import parse as ast_parse
+from ast import unparse as ast_unparse
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -13,6 +15,7 @@ from typing import Any
 import click
 import typer
 
+from label_studio_sdk._extensions.interface.cli import app as interface_app
 from label_studio_sdk.base_client import LabelStudioBase
 from label_studio_sdk.version import __version__ as _SDK_VERSION
 
@@ -86,6 +89,7 @@ app = typer.Typer(
     # Leave -h free for per-command minimal help; full docs use --help only.
     context_settings={"help_option_names": ["--help"]},
 )
+app.add_typer(interface_app, name="interface")
 
 
 def _discover_services() -> list[str]:
@@ -290,6 +294,7 @@ def _format_type_text_for_help(type_text: str, *, use_fullwidth_brackets: bool =
     )
     if use_fullwidth_brackets:
         formatted = formatted.replace("[", "［").replace("]", "］")
+        formatted = re.sub(r"\bOptional［([^［］]+)］", r"\1 | None", formatted)
     return formatted
 
 
@@ -513,4 +518,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -73,6 +73,10 @@ uv run --with git+https://github.com/HumanSignal/label-studio-sdk.git label-stud
 uv run --with-editable . label-studio-sdk --help
 ```
 
+### Interface CLI
+
+Use `label-studio-sdk interface` to scaffold, validate, preview, sync, and start projects from local interface JSX files. See [the interface CLI guide](interface-cli.md).
+
 # Versions
 
 ## SDK 2.0.0
@@ -208,4 +212,3 @@ an issue first to discuss with us!
 
 On the other hand, contributions to the README are always very welcome!
 <!-- End Contributing  -->
-
