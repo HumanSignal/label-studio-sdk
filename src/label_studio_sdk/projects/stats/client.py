@@ -65,7 +65,7 @@ class StatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Returns label confusion matrix with precision, recall, and top confusion pairs.
+        Returns label confusion matrix with precision, recall, and top confusion pairs. In `ground_truth` mode the matrix is directional: rows are GT labels (actual), columns are annotator labels (predicted). In `all` and `accepted` modes — where no canonical "actual vs predicted" axis exists — the matrix is symmetric. When a task has multiple GT annotations the most recently updated one is used. `top_confusion_pairs.rate` is the share of off-diagonal mass.
 
         Parameters
         ----------
@@ -149,7 +149,7 @@ class StatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Returns average agreement, histogram buckets, low-agreement count, and total tasks.
+        Returns average agreement, a 10-bucket histogram of `Task.precomputed_agreement` (filled on-the-fly from V2 dimension matrices when null), `low_agreement_count`, and `total_tasks`. The low-agreement threshold is `LseProject.agreement_threshold` (the same project setting Data Manager filters and review-routing rules consume); changing that setting moves the count for this endpoint as well.
 
         Parameters
         ----------
@@ -1218,7 +1218,7 @@ class AsyncStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Returns label confusion matrix with precision, recall, and top confusion pairs.
+        Returns label confusion matrix with precision, recall, and top confusion pairs. In `ground_truth` mode the matrix is directional: rows are GT labels (actual), columns are annotator labels (predicted). In `all` and `accepted` modes — where no canonical "actual vs predicted" axis exists — the matrix is symmetric. When a task has multiple GT annotations the most recently updated one is used. `top_confusion_pairs.rate` is the share of off-diagonal mass.
 
         Parameters
         ----------
@@ -1318,7 +1318,7 @@ class AsyncStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Returns average agreement, histogram buckets, low-agreement count, and total tasks.
+        Returns average agreement, a 10-bucket histogram of `Task.precomputed_agreement` (filled on-the-fly from V2 dimension matrices when null), `low_agreement_count`, and `total_tasks`. The low-agreement threshold is `LseProject.agreement_threshold` (the same project setting Data Manager filters and review-routing rules consume); changing that setting moves the count for this endpoint as well.
 
         Parameters
         ----------

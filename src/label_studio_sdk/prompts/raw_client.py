@@ -189,6 +189,7 @@ class RawPromptsClient:
         alignment_outcome: typing.Optional[SubsetTasksPromptsRequestAlignmentOutcome] = None,
         include_total: typing.Optional[bool] = None,
         model_run: typing.Optional[int] = None,
+        model_version: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         output_class: typing.Optional[str] = None,
         output_from_name: typing.Optional[str] = None,
@@ -228,6 +229,9 @@ class RawPromptsClient:
 
         model_run : typing.Optional[int]
             A unique ID of a ModelRun
+
+        model_version : typing.Optional[int]
+            Restrict prefetched predictions to this specific prompt version. Used with parent_model when no model_run is selected so a newly created version does not inherit predictions from prior versions.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -270,6 +274,7 @@ class RawPromptsClient:
                 "alignment_outcome": alignment_outcome,
                 "include_total": include_total,
                 "model_run": model_run,
+                "model_version": model_version,
                 "ordering": ordering,
                 "output_class": output_class,
                 "output_from_name": output_from_name,
@@ -930,6 +935,7 @@ class AsyncRawPromptsClient:
         alignment_outcome: typing.Optional[SubsetTasksPromptsRequestAlignmentOutcome] = None,
         include_total: typing.Optional[bool] = None,
         model_run: typing.Optional[int] = None,
+        model_version: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         output_class: typing.Optional[str] = None,
         output_from_name: typing.Optional[str] = None,
@@ -969,6 +975,9 @@ class AsyncRawPromptsClient:
 
         model_run : typing.Optional[int]
             A unique ID of a ModelRun
+
+        model_version : typing.Optional[int]
+            Restrict prefetched predictions to this specific prompt version. Used with parent_model when no model_run is selected so a newly created version does not inherit predictions from prior versions.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -1011,6 +1020,7 @@ class AsyncRawPromptsClient:
                 "alignment_outcome": alignment_outcome,
                 "include_total": include_total,
                 "model_run": model_run,
+                "model_version": model_version,
                 "ordering": ordering,
                 "output_class": output_class,
                 "output_from_name": output_from_name,
