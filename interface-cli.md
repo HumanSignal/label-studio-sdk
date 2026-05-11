@@ -39,23 +39,16 @@ cd sentiment-interface
 Validate the interface statically and run its browser scenario:
 
 ```bash
-label-studio-sdk interface validate .
+label-studio-sdk interface validate Screen.jsx --scenario scenarios.js
 ```
 
 Open the live playground and sync local file changes as you edit:
 
 ```bash
-label-studio-sdk interface preview .
+label-studio-sdk interface preview Screen.jsx --task task.json
 ```
 
-Pull an existing interface and continue locally:
-
-```bash
-label-studio-sdk interface pull --id 73 ./existing-interface
-cd existing-interface
-```
-
-Create or update a saved interface in Label Studio. By default, this creates a local draft version:
+Create or update a saved interface in Label Studio:
 
 ```bash
 label-studio-sdk interface sync Screen.jsx \
@@ -66,7 +59,7 @@ label-studio-sdk interface sync Screen.jsx \
 Create a project that uses the synced interface:
 
 ```bash
-label-studio-sdk interface start . \
+label-studio-sdk interface start Screen.jsx \
   --project-title "Sentiment Review Project" \
   --workspace 3
 ```
@@ -144,7 +137,6 @@ Without `--force`, the command refuses to overwrite existing scaffold files.
 Run offline validation.
 
 ```bash
-label-studio-sdk interface validate ./my-interface
 label-studio-sdk interface validate Screen.jsx
 label-studio-sdk interface validate Screen.jsx --scenario scenarios.js
 label-studio-sdk interface validate Screen.jsx --json
@@ -198,22 +190,20 @@ The scenario context includes:
 Open the Label Studio interface playground and live-sync source changes.
 
 ```bash
-label-studio-sdk interface preview ./my-interface
 label-studio-sdk interface preview Screen.jsx --task task.json
 label-studio-sdk interface preview Screen.jsx --task task.json --no-open
 label-studio-sdk interface preview Screen.jsx --lse-url http://localhost:8080
 ```
 
-`preview` starts a local file watcher. Pass a directory to use the scaffolded bundle defaults: `Screen.jsx` for the interface and `task.json` or `sample.json` for example task data. On each save, it pushes the current source to the playground session. The initial push can include task data from `--task` or the bundle's task-data file; later source saves update the code, and task-data saves update the task.
+`preview` starts a local file watcher. On each save, it pushes the current source to the playground session. The initial push can include task data from `--task`; later pushes update only the code.
 
 ### `sync`
 
-Create or update a saved interface. `sync` creates an unpublished local draft by default so you can review it in Label Studio before publishing.
+Create or update a saved interface.
 
 ```bash
 label-studio-sdk interface sync Screen.jsx --title "Review UI"
 label-studio-sdk interface sync Screen.jsx --id 12 --message "Tighten parser"
-label-studio-sdk interface sync Screen.jsx --id 12 --publish
 label-studio-sdk interface sync Screen.jsx --workspace-title "Data Science"
 label-studio-sdk interface sync Screen.jsx --dry-run
 ```
@@ -223,7 +213,6 @@ By default, `sync`:
 - validates and compiles the file
 - creates a new interface when no id or sidecar entry exists
 - updates the existing interface when `--id` or a sidecar entry is available
-- appends a new draft version without replacing existing versions
 - skips upload when the local source hash has not changed
 - writes a sidecar file next to the JSX source
 
@@ -233,23 +222,10 @@ Useful options:
 - `--title`: set the interface title.
 - `--workspace`: use a workspace id for newly created interfaces.
 - `--workspace-title`: resolve a workspace by exact title.
-- `--publish`: create a published version instead of a local draft.
 - `--no-validate`: skip the validation gate, while still requiring successful compilation.
 - `--force`: upload even when hashes match.
 - `--dry-run`: print the planned action without writing to the server.
 - `--message`: store a history message for the synced version.
-
-### `pull`
-
-Pull a saved interface into a local bundle.
-
-```bash
-label-studio-sdk interface pull --id 12 ./review-ui
-label-studio-sdk interface pull --id 12 --version 4 ./review-ui
-label-studio-sdk interface pull --id 12 ./review-ui --force
-```
-
-`pull` writes `Screen.jsx`, `task.json`, optional `params.json` defaults from `paramsSchema`, and a sidecar file. Without `--version`, it pulls the latest version, including local drafts.
 
 ### `start`
 
@@ -261,8 +237,7 @@ label-studio-sdk interface start Screen.jsx \
   --params params.json
 ```
 
-`start` syncs a published version so the new project can safely reference it. `--params` must point to a JSON file. The JSON is saved as the project interface params and is passed into the component as `params`.
-When you pass a directory, `start` uses `Screen.jsx` for the interface and `params.json` for project params when present.
+`--params` must point to a JSON file. The JSON is saved as the project interface params and is passed into the component as `params`.
 
 Useful options:
 
@@ -299,7 +274,7 @@ The command checks Node.js, npm, the API token, validator dependency installatio
 
 ## Sidecar Files
 
-After a successful `sync` or `pull`, the CLI writes a sidecar next to the source file:
+After a successful `sync`, the CLI writes a sidecar next to the source file:
 
 ```text
 Screen.jsx.ls-interface.json
@@ -314,7 +289,7 @@ The sidecar is keyed by Label Studio base URL and stores:
 - last pushed source hash
 - last pushed timestamp
 
-This lets future `sync`, `start`, and `open` commands find the saved interface without requiring `--id`. A sidecar source version can point at a draft version until you publish it.
+This lets future `sync`, `start`, and `open` commands find the saved interface without requiring `--id`.
 
 ## Auth and URL Resolution
 

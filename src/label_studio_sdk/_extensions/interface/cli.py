@@ -19,17 +19,12 @@ from typing import Any
 
 import appdirs
 import httpx
-import jwt
 import typer
 
 SIDECAR_SUFFIX = ".ls-interface.json"
 DEFAULT_BASE_URL = "https://app.humansignal.com"
 VALIDATOR_PACKAGE = "label_studio_sdk._extensions.interface.validator"
 VALIDATOR_ASSETS = ("package.json", "package-lock.json", "validate.mjs", "scenario-runner.mjs")
-INTERFACE_FILE_CANDIDATES = ("Screen.jsx", "Interface.jsx", "interface.jsx", "index.jsx")
-TASK_FILE_CANDIDATES = ("task.json", "sample.json", "example-task.json", "example_task.json")
-SCENARIO_FILE_CANDIDATES = ("scenarios.js", "scenario.js")
-PARAMS_FILE_CANDIDATES = ("params.json", "parameters.json")
 
 app = typer.Typer(
     help="Develop Label Studio custom interfaces.",
@@ -52,10 +47,6 @@ class SyncResult:
         return f"{self.base_url}/interfaces/{self.interface_id}/overview"
 
 
-def _is_record(value: Any) -> bool:
-    return isinstance(value, dict)
-
-
 def _context_obj(ctx: typer.Context | None) -> dict[str, Any]:
     current = ctx
     while current is not None:
@@ -68,7 +59,11 @@ def _context_obj(ctx: typer.Context | None) -> dict[str, Any]:
 def _resolve_base_url(ctx: typer.Context | None, explicit: str | None = None) -> str:
     ctx_obj = _context_obj(ctx)
     return (
-        explicit or ctx_obj.get("base_url") or os.getenv("LABEL_STUDIO_URL") or os.getenv("LS_URL") or DEFAULT_BASE_URL
+        explicit
+        or ctx_obj.get("base_url")
+        or os.getenv("LABEL_STUDIO_URL")
+        or os.getenv("LS_URL")
+        or DEFAULT_BASE_URL
     ).rstrip("/")
 
 
@@ -77,46 +72,8 @@ def _resolve_token(ctx: typer.Context | None, explicit: str | None = None) -> st
     return explicit or ctx_obj.get("api_key") or os.getenv("LABEL_STUDIO_API_KEY")
 
 
-def _jwt_claims(token: str) -> dict[str, Any] | None:
-    if token.count(".") != 2:
-        return None
-    try:
-        claims = jwt.decode(token, options={"verify_signature": False, "verify_exp": False})
-    except jwt.InvalidTokenError:
-        return None
-    return claims if isinstance(claims, dict) else None
-
-
-def _refresh_access_token(base_url: str, refresh_token: str) -> str:
-    with httpx.Client(timeout=30.0) as client:
-        try:
-            response = client.post(
-                f"{base_url}/api/token/refresh/",
-                json={"refresh": refresh_token},
-                headers={"Content-Type": "application/json"},
-            )
-            response.raise_for_status()
-        except httpx.HTTPStatusError as exc:
-            _surface_http_error(exc)
-            raise typer.Exit(code=1) from None
-        except httpx.HTTPError as exc:
-            typer.echo(f"error: failed to refresh API token: {exc}", err=True)
-            raise typer.Exit(code=1) from None
-
-    data = response.json()
-    access_token = data.get("access") if isinstance(data, dict) else None
-    if not isinstance(access_token, str) or not access_token:
-        typer.echo("error: token refresh response did not include an access token", err=True)
-        raise typer.Exit(code=1)
-    return access_token
-
-
-def _auth_headers(token: str, *, base_url: str | None = None) -> dict[str, str]:
-    claims = _jwt_claims(token)
-    if base_url is not None and claims and claims.get("token_type") == "refresh":
-        token = _refresh_access_token(base_url, token)
-        claims = _jwt_claims(token)
-    scheme = "Bearer" if claims else "Token"
+def _auth_headers(token: str) -> dict[str, str]:
+    scheme = "Bearer" if token.count(".") == 2 else "Token"
     return {"Authorization": f"{scheme} {token}"}
 
 
@@ -139,49 +96,6 @@ def _load_task(task_path: Path | None) -> dict[str, Any] | None:
         typer.echo("error: --task must decode to a JSON object", err=True)
         raise typer.Exit(code=2)
     return task
-
-
-def _resolve_bundle_file(
-    bundle: Path,
-    explicit: Path | None,
-    candidates: tuple[str, ...],
-) -> Path | None:
-    if explicit is not None or not bundle.is_dir():
-        return explicit
-    for name in candidates:
-        candidate = bundle / name
-        if candidate.is_file():
-            return candidate
-    return None
-
-
-def _resolve_interface_file(path: Path) -> Path:
-    if path.is_file():
-        return path
-    if not path.is_dir():
-        typer.echo(f"error: interface path does not exist: {path}", err=True)
-        raise typer.Exit(code=2)
-
-    for name in INTERFACE_FILE_CANDIDATES:
-        candidate = path / name
-        if candidate.is_file():
-            return candidate
-
-    jsx_files = sorted(candidate for candidate in path.glob("*.jsx") if candidate.is_file())
-    if len(jsx_files) == 1:
-        return jsx_files[0]
-    if jsx_files:
-        names = ", ".join(candidate.name for candidate in jsx_files)
-        expected = ", ".join(INTERFACE_FILE_CANDIDATES)
-        typer.echo(
-            f"error: multiple JSX files in {path}: {names}. Rename one to one of: {expected}",
-            err=True,
-        )
-        raise typer.Exit(code=2)
-
-    expected = ", ".join(INTERFACE_FILE_CANDIDATES)
-    typer.echo(f"error: no interface file found in {path}. Expected one of: {expected}", err=True)
-    raise typer.Exit(code=2)
 
 
 def _post_preview(client: httpx.Client, push_url: str, *, code: str, task: dict[str, Any] | None) -> bool:
@@ -384,9 +298,7 @@ def _resolve_workspace(
         raise typer.Exit(code=2)
     if len(matches) > 1:
         ids = ", ".join(str(workspace.get("id")) for workspace in matches)
-        typer.echo(
-            f'error: multiple workspaces titled "{workspace_title}" (ids: {ids}). Pass --workspace ID.', err=True
-        )
+        typer.echo(f'error: multiple workspaces titled "{workspace_title}" (ids: {ids}). Pass --workspace ID.', err=True)
         raise typer.Exit(code=2)
     return matches[0].get("id")
 
@@ -403,9 +315,7 @@ def _surface_http_error(exc: httpx.HTTPStatusError) -> None:
 def _prepare_source(file: Path, *, no_validate: bool) -> tuple[str, str, str, dict[str, Any]]:
     report = _run_validator(file)
     if not no_validate and not report.get("ok"):
-        typer.echo(
-            typer.style(f"FAIL {file.name} invalid; refusing to sync.", fg=typer.colors.RED, bold=True), err=True
-        )
+        typer.echo(typer.style(f"FAIL {file.name} invalid; refusing to sync.", fg=typer.colors.RED, bold=True), err=True)
         for entry in report.get("errors") or []:
             typer.echo(f"  error [{entry.get('stage', '?')}]: {entry.get('message', '')}", err=True)
         raise typer.Exit(code=1)
@@ -418,20 +328,17 @@ def _prepare_source(file: Path, *, no_validate: bool) -> tuple[str, str, str, di
         raise typer.Exit(code=1)
 
     source = file.read_text(encoding="utf-8").rstrip()
-    source_hash = _source_hash(source)
+    source_hash = hashlib.sha256(source.encode("utf-8")).hexdigest()
     return source, compiled, source_hash, report
 
 
-def _new_version(source: str, compiled: str, report: dict[str, Any], *, publish: bool) -> dict[str, Any]:
+def _new_version(source: str, compiled: str, report: dict[str, Any]) -> dict[str, Any]:
     metadata = report.get("metadata") or {}
     version = {
         "code": source,
         "compiled": compiled,
         "createdAt": datetime.now(timezone.utc).isoformat(),
-        "op": "api_push",
     }
-    if not publish:
-        version["unpublished"] = True
     for report_key, version_key in (
         ("inputSchema", "inputSchema"),
         ("outputSchema", "outputSchema"),
@@ -443,53 +350,7 @@ def _new_version(source: str, compiled: str, report: dict[str, Any], *, publish:
     return version
 
 
-def _append_version_payload(version: dict[str, Any]) -> dict[str, Any]:
-    return {key: value for key, value in version.items() if key not in {"id", "createdAt", "createdBy"}}
-
-
-def _source_hash(source: str) -> str:
-    return hashlib.sha256(source.rstrip().encode("utf-8")).hexdigest()
-
-
-def _version_id(version: dict[str, Any], index: int) -> int:
-    value = version.get("id")
-    if isinstance(value, int) and value >= 0 and not isinstance(value, bool):
-        return value
-    return index
-
-
-def _find_version(versions: list[dict[str, Any]], version_id: int | None) -> tuple[int, dict[str, Any]] | None:
-    if not versions:
-        return None
-    if version_id is None:
-        index = len(versions) - 1
-        return _version_id(versions[index], index), versions[index]
-    for index, version in enumerate(versions):
-        if _version_id(version, index) == version_id:
-            return version_id, version
-    return None
-
-
-def _latest_version_id(versions: list[dict[str, Any]]) -> int | None:
-    if not versions:
-        return None
-    return _version_id(versions[-1], len(versions) - 1)
-
-
-def _latest_published_version_id_for_source(versions: list[dict[str, Any]], source_hash: str) -> int | None:
-    for index in range(len(versions) - 1, -1, -1):
-        version = versions[index]
-        if not _is_record(version) or version.get("unpublished"):
-            continue
-        code = version.get("code")
-        if isinstance(code, str) and _source_hash(code) == source_hash:
-            return _version_id(version, index)
-    return None
-
-
-def _build_history_entry(
-    file: Path, source: str, compiled: str, message: str | None
-) -> tuple[dict[str, Any], dict[str, Any]]:
+def _build_history_entry(file: Path, source: str, compiled: str, message: str | None) -> tuple[dict[str, Any], dict[str, Any]]:
     now_iso = datetime.now(timezone.utc).isoformat()
     message_id = str(uuid.uuid4())
     content = message or "Synced via label-studio-sdk interface CLI"
@@ -527,28 +388,6 @@ def _interface_schema_payload(report: dict[str, Any]) -> dict[str, Any]:
     return payload
 
 
-def _schema_defaults(schema: Any) -> dict[str, Any]:
-    if not _is_record(schema) or not _is_record(schema.get("properties")):
-        return {}
-    defaults: dict[str, Any] = {}
-    for key, value in schema["properties"].items():
-        if _is_record(value) and "default" in value:
-            defaults[key] = value["default"]
-    return defaults
-
-
-def _write_bundle_file(path: Path, contents: str, *, force: bool) -> None:
-    if path.exists() and not force:
-        typer.echo(f"error: refusing to overwrite {path}. Use --force to overwrite.", err=True)
-        raise typer.Exit(code=2)
-    path.write_text(contents, encoding="utf-8")
-    typer.echo(f"wrote {path}")
-
-
-def _json_file_contents(value: Any) -> str:
-    return json.dumps(value, indent=2, sort_keys=True) + "\n"
-
-
 def _sync_interface(
     *,
     ctx: typer.Context | None,
@@ -563,7 +402,6 @@ def _sync_interface(
     force: bool,
     dry_run: bool,
     message: str | None,
-    publish: bool,
 ) -> SyncResult | None:
     resolved_token = _resolve_token(ctx, token)
     if not resolved_token:
@@ -585,13 +423,7 @@ def _sync_interface(
 
     chosen_title = title or (sidecar_entry or {}).get("title") or _default_title(file)
     action = "create" if target_id is None else "update"
-    if (
-        not publish
-        and not force
-        and target_id is not None
-        and sidecar_entry
-        and sidecar_entry.get("last_pushed_hash") == source_hash
-    ):
+    if not force and target_id is not None and sidecar_entry and sidecar_entry.get("last_pushed_hash") == source_hash:
         action = "skip"
 
     if dry_run:
@@ -606,7 +438,6 @@ def _sync_interface(
                     "workspace": workspace_id,
                     "workspace_title": workspace_title,
                     "source_hash": source_hash,
-                    "publish": publish,
                 },
                 indent=2,
             )
@@ -625,8 +456,8 @@ def _sync_interface(
             workspace_id=(sidecar_entry or {}).get("workspace"),
         )
 
-    headers = _auth_headers(resolved_token, base_url=base)
-    new_version = _new_version(source, compiled, report, publish=publish)
+    headers = _auth_headers(resolved_token)
+    new_version = _new_version(source, compiled, report)
     history_message, artifact = _build_history_entry(file, source, compiled, message)
     schema_payload = _interface_schema_payload(report)
 
@@ -636,44 +467,26 @@ def _sync_interface(
                 existing_resp = client.get(f"{base}/api/interfaces/{target_id}/")
                 existing_resp.raise_for_status()
                 existing = existing_resp.json()
-                prev_versions = existing.get("versions") or []
                 if not force:
-                    existing_hash = _source_hash(existing.get("code") or "")
+                    existing_hash = hashlib.sha256((existing.get("code") or "").encode("utf-8")).hexdigest()
                     if existing_hash == source_hash:
-                        if publish:
-                            published_source_version = _latest_published_version_id_for_source(
-                                prev_versions, source_hash
-                            )
-                            if published_source_version is not None:
-                                typer.echo(
-                                    f"no changes vs published interface #{target_id}, skipping. "
-                                    "Use --force to sync anyway."
-                                )
-                                return SyncResult(
-                                    interface_id=target_id,
-                                    title=existing.get("title") or chosen_title,
-                                    status="skipped",
-                                    base_url=base,
-                                    source_hash=source_hash,
-                                    source_version=published_source_version,
-                                    workspace_id=existing.get("workspace"),
-                                )
-                        else:
-                            typer.echo(f"no changes vs interface #{target_id}, skipping. Use --force to sync anyway.")
-                            return SyncResult(
-                                interface_id=target_id,
-                                title=existing.get("title") or chosen_title,
-                                status="skipped",
-                                base_url=base,
-                                source_hash=source_hash,
-                                source_version=(sidecar_entry or {}).get("source_version"),
-                                workspace_id=existing.get("workspace"),
-                            )
+                        typer.echo(f"no changes vs interface #{target_id}, skipping. Use --force to sync anyway.")
+                        return SyncResult(
+                            interface_id=target_id,
+                            title=existing.get("title") or chosen_title,
+                            status="skipped",
+                            base_url=base,
+                            source_hash=source_hash,
+                            source_version=(sidecar_entry or {}).get("source_version"),
+                            workspace_id=existing.get("workspace"),
+                        )
 
+                prev_versions = existing.get("versions") or []
+                source_version = len(prev_versions)
                 payload: dict[str, Any] = {
                     "code": source,
                     "compiled": compiled,
-                    "versions": [_append_version_payload(new_version)],
+                    "versions": [*prev_versions, new_version],
                     "messages": [*(existing.get("messages") or []), history_message],
                     "artifacts": [*(existing.get("artifacts") or []), artifact],
                 }
@@ -682,14 +495,11 @@ def _sync_interface(
                 payload.update({key: value for key, value in schema_payload.items() if key != "metadata"})
                 if schema_payload.get("metadata"):
                     payload["metadata"] = {**(existing.get("metadata") or {}), **schema_payload["metadata"]}
-                resp = client.post(f"{base}/api/interfaces/{target_id}/append_versions/", json=payload)
+                resp = client.patch(f"{base}/api/interfaces/{target_id}/", json=payload)
                 resp.raise_for_status()
                 data = resp.json()
-                source_version = _latest_version_id(data.get("versions") or prev_versions)
                 status = "updated"
-                typer.echo(
-                    typer.style(f"updated interface #{data['id']} ({data.get('title', '')})", fg=typer.colors.GREEN)
-                )
+                typer.echo(typer.style(f"updated interface #{data['id']} ({data.get('title', '')})", fg=typer.colors.GREEN))
             else:
                 resolved_workspace_id = _resolve_workspace(client, base, workspace_id, workspace_title)
                 payload = {
@@ -740,17 +550,8 @@ def _sync_interface(
 @app.command()
 def preview(
     ctx: typer.Context,
-    file: Path = typer.Argument(
-        ...,
-        exists=True,
-        file_okay=True,
-        dir_okay=True,
-        readable=True,
-        help="Path to the .jsx module or interface directory.",
-    ),
-    task: Path | None = typer.Option(
-        None, "--task", exists=True, dir_okay=False, readable=True, help="Task data JSON."
-    ),
+    file: Path = typer.Argument(..., exists=True, dir_okay=False, readable=True, help="Path to the .jsx module."),
+    task: Path | None = typer.Option(None, "--task", exists=True, dir_okay=False, readable=True, help="Task data JSON."),
     lse_url: str | None = typer.Option(
         None,
         "--lse-url",
@@ -767,11 +568,8 @@ def preview(
         typer.echo("error: `watchfiles` is required for preview. Reinstall label-studio-sdk dependencies.", err=True)
         raise typer.Exit(code=2) from None
 
-    source_path = file
-    task = _resolve_bundle_file(source_path, task, TASK_FILE_CANDIDATES)
     task_data = _load_task(task)
-    file = _resolve_interface_file(source_path).resolve()
-    task = task.resolve() if task is not None else None
+    file = file.resolve()
     base = _resolve_base_url(ctx, lse_url)
     token = secrets.token_urlsafe(16)
     push_url = f"{base}/api/interfaces/playground/{token}/push/"
@@ -794,13 +592,8 @@ def preview(
             webbrowser.open(playground_url)
 
         try:
-            watch_paths = [file]
-            if task is not None:
-                watch_paths.append(task)
-            for changes in watch(*watch_paths, step=200, recursive=False):
-                changed_paths = {Path(path).resolve() for _, path in changes}
-                task_changed = task is not None and task in changed_paths
-                if file not in changed_paths and not task_changed:
+            for changes in watch(file, step=200, recursive=False):
+                if not any(Path(path) == file for _, path in changes):
                     continue
                 try:
                     code = file.read_text(encoding="utf-8")
@@ -808,28 +601,19 @@ def preview(
                     typer.echo(f"  read failed: {exc}", err=True)
                     continue
                 source_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
-                if source_hash == last_pushed_hash and not task_changed:
+                if source_hash == last_pushed_hash:
                     continue
-                task_update = _load_task(task) if task_changed else None
                 stamp = time.strftime("%H:%M:%S")
-                if _post_preview(client, push_url, code=code, task=task_update):
+                if _post_preview(client, push_url, code=code, task=None):
                     last_pushed_hash = source_hash
-                    suffix = " and task data" if task_changed else ""
-                    typer.echo(f"  [{stamp}] pushed {len(code)} bytes{suffix}")
+                    typer.echo(f"  [{stamp}] pushed {len(code)} bytes")
         except KeyboardInterrupt:
             typer.echo("\nbye")
 
 
 @app.command()
 def validate(
-    file: Path = typer.Argument(
-        ...,
-        exists=True,
-        file_okay=True,
-        dir_okay=True,
-        readable=True,
-        help="Path to the .jsx module or interface directory.",
-    ),
+    file: Path = typer.Argument(..., exists=True, dir_okay=False, readable=True, help="Path to the .jsx module."),
     scenario: Path | None = typer.Option(
         None,
         "--scenario",
@@ -841,9 +625,6 @@ def validate(
     as_json: bool = typer.Option(False, "--json", help="Print the raw JSON report."),
 ) -> None:
     """Validate an interface offline."""
-    source_path = file
-    scenario = _resolve_bundle_file(source_path, scenario, SCENARIO_FILE_CANDIDATES)
-    file = _resolve_interface_file(source_path)
     report = _run_validator(file)
     scenario_report = None
     if scenario is not None:
@@ -872,20 +653,11 @@ def validate(
 @app.command()
 def sync(
     ctx: typer.Context,
-    file: Path = typer.Argument(
-        ...,
-        exists=True,
-        file_okay=True,
-        dir_okay=True,
-        readable=True,
-        help="Path to the .jsx module or interface directory.",
-    ),
+    file: Path = typer.Argument(..., exists=True, dir_okay=False, readable=True, help="Path to the .jsx module."),
     interface_id: int | None = typer.Option(None, "--id", help="Existing interface id. Defaults to sidecar lookup."),
     title: str | None = typer.Option(None, "--title", help="Interface title. Defaults to the filename."),
     workspace_id: int | None = typer.Option(None, "--workspace", help="Workspace id for a newly created interface."),
-    workspace_title: str | None = typer.Option(
-        None, "--workspace-title", help="Workspace title for a newly created interface."
-    ),
+    workspace_title: str | None = typer.Option(None, "--workspace-title", help="Workspace title for a newly created interface."),
     token: str | None = typer.Option(None, "--token", envvar="LABEL_STUDIO_API_KEY", help="Label Studio API token."),
     lse_url: str | None = typer.Option(
         None,
@@ -894,16 +666,12 @@ def sync(
         envvar="LABEL_STUDIO_URL",
         help="Base URL of the Label Studio instance.",
     ),
-    no_validate: bool = typer.Option(
-        False, "--no-validate", help="Skip validation gate; compilation is still required."
-    ),
+    no_validate: bool = typer.Option(False, "--no-validate", help="Skip validation gate; compilation is still required."),
     force: bool = typer.Option(False, "--force", help="Sync even when the source hash is unchanged."),
     dry_run: bool = typer.Option(False, "--dry-run", help="Show what would happen without writing to the server."),
     message: str | None = typer.Option(None, "--message", help="History message for this synced version."),
-    publish: bool = typer.Option(False, "--publish", help="Create a published version instead of a local draft."),
 ) -> None:
     """Create or update a saved interface from a local file."""
-    file = _resolve_interface_file(file)
     _sync_interface(
         ctx=ctx,
         file=file,
@@ -917,115 +685,7 @@ def sync(
         force=force,
         dry_run=dry_run,
         message=message,
-        publish=publish,
     )
-
-
-@app.command()
-def pull(
-    ctx: typer.Context,
-    directory: Path = typer.Argument(Path("."), file_okay=False, help="Directory to write the interface bundle into."),
-    interface_id: int = typer.Option(..., "--id", help="Saved interface id."),
-    version_id: int | None = typer.Option(
-        None, "--version", min=0, help="Stable version id to pull. Defaults to the latest version."
-    ),
-    token: str | None = typer.Option(None, "--token", envvar="LABEL_STUDIO_API_KEY", help="Label Studio API token."),
-    lse_url: str | None = typer.Option(
-        None,
-        "--lse-url",
-        "--base-url",
-        envvar="LABEL_STUDIO_URL",
-        help="Base URL of the Label Studio instance.",
-    ),
-    force: bool = typer.Option(False, "--force", help="Overwrite existing local bundle files."),
-) -> None:
-    """Pull a saved interface into a local bundle."""
-    resolved_token = _resolve_token(ctx, token)
-    if not resolved_token:
-        typer.echo("error: --token or LABEL_STUDIO_API_KEY is required", err=True)
-        raise typer.Exit(code=2)
-
-    base = _resolve_base_url(ctx, lse_url)
-    headers = _auth_headers(resolved_token, base_url=base)
-    with httpx.Client(headers=headers, timeout=30.0) as client:
-        try:
-            resp = client.get(f"{base}/api/interfaces/{interface_id}/")
-            resp.raise_for_status()
-            data = resp.json()
-        except httpx.HTTPStatusError as exc:
-            _surface_http_error(exc)
-            raise typer.Exit(code=1) from None
-
-    if not _is_record(data):
-        typer.echo("error: interface API response was not a JSON object", err=True)
-        raise typer.Exit(code=1)
-
-    versions = [version for version in data.get("versions") or [] if _is_record(version)]
-    selected = _find_version(versions, version_id)
-    if selected is None and version_id is not None:
-        typer.echo(f"error: interface #{interface_id} has no version {version_id}", err=True)
-        raise typer.Exit(code=2)
-
-    source_version: int | None
-    selected_version: dict[str, Any] | None
-    if selected is None:
-        source_version = None
-        selected_version = None
-    else:
-        source_version, selected_version = selected
-
-    source = selected_version.get("code") if selected_version is not None else None
-    if not isinstance(source, str) or not source:
-        source = data.get("code")
-    if not isinstance(source, str) or not source:
-        typer.echo("error: interface response did not include source code", err=True)
-        raise typer.Exit(code=1)
-
-    params_schema = selected_version.get("paramsSchema") if selected_version is not None else None
-    if not _is_record(params_schema):
-        metadata = data.get("metadata")
-        params_schema = metadata.get("paramsSchema") if _is_record(metadata) else None
-    params_defaults = _schema_defaults(params_schema)
-
-    task_data = data.get("data_sample")
-    if not _is_record(task_data):
-        task_data = {}
-
-    directory = directory.resolve()
-    screen_path = directory / "Screen.jsx"
-    task_path = directory / "task.json"
-    params_path = directory / "params.json"
-    planned_files = [screen_path, task_path, _sidecar_path(screen_path)]
-    if params_defaults:
-        planned_files.append(params_path)
-
-    existing = [path for path in planned_files if path.exists()]
-    if existing and not force:
-        names = ", ".join(path.name for path in existing)
-        typer.echo(f"error: refusing to overwrite existing files: {names}. Use --force to overwrite.", err=True)
-        raise typer.Exit(code=2)
-
-    directory.mkdir(parents=True, exist_ok=True)
-    source_to_write = source.rstrip() + "\n"
-    _write_bundle_file(screen_path, source_to_write, force=force)
-    _write_bundle_file(task_path, _json_file_contents(task_data), force=force)
-    if params_defaults:
-        _write_bundle_file(params_path, _json_file_contents(params_defaults), force=force)
-
-    source_hash = _source_hash(source)
-    sidecar = {
-        base: {
-            "interface_id": interface_id,
-            "title": data.get("title"),
-            "workspace": data.get("workspace"),
-            "source_version": source_version,
-            "last_pushed_hash": source_hash,
-            "last_pushed_at": datetime.now(timezone.utc).isoformat(),
-        }
-    }
-    sidecar_path = _write_sidecar(screen_path, sidecar)
-    typer.echo(f"wrote {sidecar_path}")
-    typer.echo(typer.style(f"pulled interface #{interface_id} ({data.get('title', '')})", fg=typer.colors.GREEN))
 
 
 def _create_project(
@@ -1064,17 +724,8 @@ def _project_id(project: Any) -> int | None:
 @app.command()
 def start(
     ctx: typer.Context,
-    file: Path = typer.Argument(
-        ...,
-        exists=True,
-        file_okay=True,
-        dir_okay=True,
-        readable=True,
-        help="Path to the .jsx module or interface directory.",
-    ),
-    project_title: str | None = typer.Option(
-        None, "--project-title", help="Project title. Defaults to interface title."
-    ),
+    file: Path = typer.Argument(..., exists=True, dir_okay=False, readable=True, help="Path to the .jsx module."),
+    project_title: str | None = typer.Option(None, "--project-title", help="Project title. Defaults to interface title."),
     description: str = typer.Option("", "--description", help="Project description."),
     params: Path | None = typer.Option(
         None,
@@ -1096,9 +747,7 @@ def start(
         envvar="LABEL_STUDIO_URL",
         help="Base URL of the Label Studio instance.",
     ),
-    no_validate: bool = typer.Option(
-        False, "--no-validate", help="Skip validation gate; compilation is still required."
-    ),
+    no_validate: bool = typer.Option(False, "--no-validate", help="Skip validation gate; compilation is still required."),
     force: bool = typer.Option(False, "--force", help="Sync even when the source hash is unchanged."),
     no_open: bool = typer.Option(False, "--no-open", help="Do not open the created project."),
 ) -> None:
@@ -1108,9 +757,6 @@ def start(
         typer.echo("error: --token or LABEL_STUDIO_API_KEY is required", err=True)
         raise typer.Exit(code=2)
 
-    source_path = file
-    params = _resolve_bundle_file(source_path, params, PARAMS_FILE_CANDIDATES)
-    file = _resolve_interface_file(source_path)
     sync_result = _sync_interface(
         ctx=ctx,
         file=file,
@@ -1124,7 +770,6 @@ def start(
         force=force,
         dry_run=False,
         message=None,
-        publish=True,
     )
     if sync_result is None:
         raise typer.Exit(code=2)
@@ -1212,7 +857,9 @@ function parseResults(results) {
 """
 
 TASK_TEMPLATE = """{
-  "text": "The interface CLI is ready to use."
+  "data": {
+    "text": "The interface CLI is ready to use."
+  }
 }
 """
 
@@ -1269,14 +916,7 @@ def init(
 @app.command()
 def open(
     ctx: typer.Context,
-    file: Path = typer.Argument(
-        ...,
-        exists=True,
-        file_okay=True,
-        dir_okay=True,
-        readable=True,
-        help="Path to the .jsx module or interface directory.",
-    ),
+    file: Path = typer.Argument(..., exists=True, dir_okay=False, readable=True, help="Path to the .jsx module."),
     lse_url: str | None = typer.Option(
         None,
         "--lse-url",
@@ -1287,7 +927,6 @@ def open(
     no_open: bool = typer.Option(False, "--no-open", help="Only print the URL."),
 ) -> None:
     """Open the saved interface from this file's sidecar."""
-    file = _resolve_interface_file(file)
     base = _resolve_base_url(ctx, lse_url)
     sidecar_entry = _read_sidecar(file.resolve()).get(base)
     if not sidecar_entry or not sidecar_entry.get("interface_id"):

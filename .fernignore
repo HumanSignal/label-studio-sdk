@@ -29,6 +29,7 @@ src/label_studio_sdk/data_manager.py
 # tutorials and examples
 tutorials
 examples
+interface-cli.md
 
 # tests
 tests/custom/converter
