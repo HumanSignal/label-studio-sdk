@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class DataQualityConfusionPair(UncheckedBaseModel):
     actual: str
     count: int
+    from_name: typing.Optional[str] = None
     label: str
     rate: float
 
