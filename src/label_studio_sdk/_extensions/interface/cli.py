@@ -1160,7 +1160,7 @@ function Screen({ task, regions, setRegions }) {
 
   const choose = (label) => {
     const region = {
-      id: crypto.randomUUID(),
+      id: globalThis.crypto?.randomUUID?.() ?? `region-${Date.now()}`,
       type: "choices",
       from_name: "sentiment",
       to_name: "text",

@@ -505,11 +505,150 @@ function compile(source) {
     jsxRuntime: "classic",
     production: true,
   });
-  const lastParenIdx = code.lastIndexOf("\n(");
-  if (lastParenIdx !== -1) {
-    return `${code.slice(0, lastParenIdx)}\nreturn ${code.slice(lastParenIdx + 1)}`;
+  const finalExpressionStart = findFinalParenthesizedModuleExpressionStart(code);
+  if (finalExpressionStart !== undefined) {
+    return `${code.slice(0, finalExpressionStart)}\nreturn ${code.slice(finalExpressionStart)}`;
   }
   return `return (function() { ${code} })()`;
+}
+
+function findFinalParenthesizedModuleExpressionStart(jsCode) {
+  let expressionEnd = jsCode.length - 1;
+  while (expressionEnd >= 0 && (/\s/.test(jsCode[expressionEnd]) || jsCode[expressionEnd] === ";")) {
+    expressionEnd -= 1;
+  }
+  if (expressionEnd < 0 || jsCode[expressionEnd] !== ")") return undefined;
+
+  const expressionStart = findMatchingOpenParen(jsCode, expressionEnd);
+  if (expressionStart === undefined) return undefined;
+
+  const innerExpression = jsCode.slice(expressionStart + 1, expressionEnd).trim();
+  if (!innerExpression.startsWith("{") || !innerExpression.endsWith("}")) return undefined;
+
+  const prefix = trimTrailingWhitespaceAndComments(jsCode.slice(0, expressionStart));
+  if (/\breturn$/.test(prefix)) return undefined;
+  if (prefix && !";})]".includes(prefix[prefix.length - 1])) return undefined;
+
+  return expressionStart;
+}
+
+function findMatchingOpenParen(jsCode, closeParenIndex) {
+  const delimiters = [];
+  for (let i = 0; i <= closeParenIndex; i += 1) {
+    const ch = jsCode[i];
+    const next = jsCode[i + 1];
+    if (ch === '"' || ch === "'" || ch === "`") {
+      i = skipQuotedToken(jsCode, i, ch);
+      continue;
+    }
+    if (ch === "/" && next === "/") {
+      i = skipLineComment(jsCode, i);
+      continue;
+    }
+    if (ch === "/" && next === "*") {
+      i = skipBlockComment(jsCode, i);
+      continue;
+    }
+    if (ch === "/" && shouldStartRegex(jsCode, i)) {
+      i = skipRegexLiteral(jsCode, i);
+      continue;
+    }
+    if (ch === "(" || ch === "{" || ch === "[") {
+      delimiters.push({ char: ch, index: i });
+      continue;
+    }
+    if (ch === ")" || ch === "}" || ch === "]") {
+      const opening = delimiters.pop();
+      if (!opening || !isMatchingDelimiter(opening.char, ch)) return undefined;
+      if (i === closeParenIndex) return opening.char === "(" ? opening.index : undefined;
+    }
+  }
+  return undefined;
+}
+
+function skipQuotedToken(jsCode, quoteStartIndex, quote) {
+  for (let i = quoteStartIndex + 1; i < jsCode.length; i += 1) {
+    if (jsCode[i] === "\\") {
+      i += 1;
+      continue;
+    }
+    if (jsCode[i] === quote) return i;
+  }
+  return jsCode.length - 1;
+}
+
+function skipLineComment(jsCode, commentStartIndex) {
+  const lineEnd = jsCode.indexOf("\n", commentStartIndex + 2);
+  return lineEnd === -1 ? jsCode.length - 1 : lineEnd;
+}
+
+function skipBlockComment(jsCode, commentStartIndex) {
+  const commentEnd = jsCode.indexOf("*/", commentStartIndex + 2);
+  return commentEnd === -1 ? jsCode.length - 1 : commentEnd + 1;
+}
+
+function skipRegexLiteral(jsCode, regexStartIndex) {
+  let inCharacterClass = false;
+  for (let i = regexStartIndex + 1; i < jsCode.length; i += 1) {
+    if (jsCode[i] === "\\") {
+      i += 1;
+      continue;
+    }
+    if (jsCode[i] === "[") {
+      inCharacterClass = true;
+      continue;
+    }
+    if (jsCode[i] === "]") {
+      inCharacterClass = false;
+      continue;
+    }
+    if (jsCode[i] === "/" && !inCharacterClass) return i;
+  }
+  return jsCode.length - 1;
+}
+
+function shouldStartRegex(jsCode, slashIndex) {
+  for (let i = slashIndex - 1; i >= 0; i -= 1) {
+    const ch = jsCode[i];
+    if (/\s/.test(ch)) continue;
+    const prefixKeyword = jsCode.slice(0, i + 1).match(/[A-Za-z_$][\w$]*$/)?.[0];
+    if (
+      prefixKeyword &&
+      ["return", "case", "throw", "delete", "void", "typeof", "yield", "await"].includes(prefixKeyword)
+    ) {
+      return true;
+    }
+    return "([{=,:;!&|?+-*~^<>".includes(ch);
+  }
+  return true;
+}
+
+function trimTrailingWhitespaceAndComments(value) {
+  let trimmed = value.trimEnd();
+  while (trimmed) {
+    if (trimmed.endsWith("*/")) {
+      const commentStart = trimmed.lastIndexOf("/*");
+      if (commentStart === -1) return trimmed;
+      trimmed = trimmed.slice(0, commentStart).trimEnd();
+      continue;
+    }
+    const lastLineStart = trimmed.lastIndexOf("\n") + 1;
+    const lineCommentStart = trimmed.indexOf("//", lastLineStart);
+    if (lineCommentStart !== -1) {
+      trimmed = trimmed.slice(0, lineCommentStart).trimEnd();
+      continue;
+    }
+    return trimmed;
+  }
+  return trimmed;
+}
+
+function isMatchingDelimiter(opening, closing) {
+  return (
+    (opening === "(" && closing === ")") ||
+    (opening === "{" && closing === "}") ||
+    (opening === "[" && closing === "]")
+  );
 }
 
 function getScriptPaths() {
@@ -594,6 +733,21 @@ function getBrowserHarnessSource() {
       settings: clone(scenario.settings) || {},
       interfaces: new Set(scenario.interfaces || []),
       initialResults: clone(scenario.initialResults) || [],
+      setRegions(nextRegions) {
+        const resolved = typeof nextRegions === "function" ? nextRegions(clone(regions)) : nextRegions;
+        regions = Array.isArray(resolved) ? clone(resolved) : [];
+        selectedRegionIds = new Set(
+          regions
+            .filter((region) => region && region.selected && typeof region.id === "string")
+            .map((region) => region.id),
+        );
+        render();
+      },
+      setRelations(nextRelations) {
+        const resolved = typeof nextRelations === "function" ? nextRelations(clone(relations)) : nextRelations;
+        relations = Array.isArray(resolved) ? clone(resolved) : [];
+        render();
+      },
       addRegion(region) {
         const nextRegion = { ...clone(region), id: region?.id || `region-${Date.now()}` };
         regions = [...regions, nextRegion];
