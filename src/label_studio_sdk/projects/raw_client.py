@@ -970,6 +970,7 @@ class RawProjectsClient:
         title: str,
         workspace: int,
         description: typing.Optional[str] = OMIT,
+        include_members: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DuplicateProjectsResponse]:
         """
@@ -1000,6 +1001,9 @@ class RawProjectsClient:
         description : typing.Optional[str]
             Project Description
 
+        include_members : typing.Optional[bool]
+            Whether to include explicit project members and project role overrides in the duplicated project.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1013,6 +1017,7 @@ class RawProjectsClient:
             method="POST",
             json={
                 "description": description,
+                "include_members": include_members,
                 "mode": mode,
                 "title": title,
                 "workspace": workspace,
@@ -2246,6 +2251,7 @@ class AsyncRawProjectsClient:
         title: str,
         workspace: int,
         description: typing.Optional[str] = OMIT,
+        include_members: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DuplicateProjectsResponse]:
         """
@@ -2276,6 +2282,9 @@ class AsyncRawProjectsClient:
         description : typing.Optional[str]
             Project Description
 
+        include_members : typing.Optional[bool]
+            Whether to include explicit project members and project role overrides in the duplicated project.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -2289,6 +2298,7 @@ class AsyncRawProjectsClient:
             method="POST",
             json={
                 "description": description,
+                "include_members": include_members,
                 "mode": mode,
                 "title": title,
                 "workspace": workspace,

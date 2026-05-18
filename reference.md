@@ -11768,6 +11768,14 @@ What to Duplicate (Project configuration only / Project configuration and tasks)
 <dl>
 <dd>
 
+**include_members:** `typing.Optional[bool]` — Whether to include explicit project members and project role overrides in the duplicated project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>

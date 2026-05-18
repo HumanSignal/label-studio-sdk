@@ -881,6 +881,7 @@ class ProjectsClient:
         title: str,
         workspace: int,
         description: typing.Optional[str] = OMIT,
+        include_members: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DuplicateProjectsResponse:
         """
@@ -911,6 +912,9 @@ class ProjectsClient:
         description : typing.Optional[str]
             Project Description
 
+        include_members : typing.Optional[bool]
+            Whether to include explicit project members and project role overrides in the duplicated project.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -934,7 +938,13 @@ class ProjectsClient:
         )
         """
         _response = self._raw_client.duplicate(
-            id, mode=mode, title=title, workspace=workspace, description=description, request_options=request_options
+            id,
+            mode=mode,
+            title=title,
+            workspace=workspace,
+            description=description,
+            include_members=include_members,
+            request_options=request_options,
         )
         return _response.data
 
@@ -2109,6 +2119,7 @@ class AsyncProjectsClient:
         title: str,
         workspace: int,
         description: typing.Optional[str] = OMIT,
+        include_members: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DuplicateProjectsResponse:
         """
@@ -2138,6 +2149,9 @@ class AsyncProjectsClient:
 
         description : typing.Optional[str]
             Project Description
+
+        include_members : typing.Optional[bool]
+            Whether to include explicit project members and project role overrides in the duplicated project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2170,7 +2184,13 @@ class AsyncProjectsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.duplicate(
-            id, mode=mode, title=title, workspace=workspace, description=description, request_options=request_options
+            id,
+            mode=mode,
+            title=title,
+            workspace=workspace,
+            description=description,
+            include_members=include_members,
+            request_options=request_options,
         )
         return _response.data
 
