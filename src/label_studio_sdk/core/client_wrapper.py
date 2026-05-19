@@ -1,17 +1,16 @@
+import importlib.metadata
+import platform
 import typing
 
 import httpx
-
 from .http_client import AsyncHttpClient, HttpClient
 from .logging import LogConfig, Logger, create_logger
-
-import importlib.metadata
-import platform
 
 try:
     VERSION = importlib.metadata.version("label-studio-sdk")
 except importlib.metadata.PackageNotFoundError:
     VERSION = "unknown"
+
 
 class BaseClientWrapper:
     def __init__(
@@ -30,20 +29,26 @@ class BaseClientWrapper:
 
         # even in the async case, refreshing access token (when the existing one is expired) should be sync
         from ..tokens.client_ext import TokensClientExt
-        self._tokens_client = TokensClientExt(base_url=base_url, api_key=api_key, client_wrapper=self)
 
+        self._tokens_client = TokensClientExt(base_url=base_url, api_key=api_key, client_wrapper=self)
 
     def get_timeout(self) -> typing.Optional[float]:
         return self._timeout
 
-
     def get_base_url(self) -> str:
         return self._base_url
-
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
         return self._headers
 
+    def _uses_x_api_key(self) -> bool:
+        return any(header.lower() == "x-api-key" for header in (self.get_custom_headers() or {}))
+
+    def _normalize_x_api_key_headers(self, headers: typing.Dict[str, str]) -> None:
+        """Upgrade JWT refresh tokens in X-API-Key to access tokens via TokensClientExt."""
+        for key in list(headers):
+            if key.lower() == "x-api-key":
+                headers[key] = self._tokens_client.resolve_x_api_key_header_value(headers[key])
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
@@ -55,6 +60,9 @@ class BaseClientWrapper:
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             **(self.get_custom_headers() or {}),
         }
+        if self._uses_x_api_key():
+            self._normalize_x_api_key_headers(headers)
+            return headers
         if self._tokens_client._use_legacy_token:
             headers["Authorization"] = f"Token {self._tokens_client.api_key}"
         else:

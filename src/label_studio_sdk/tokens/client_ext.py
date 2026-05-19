@@ -27,12 +27,17 @@ class TokensClientExt:
         self._token_refresh_lock = threading.Lock()
 
 
+    def _decode_jwt_payload(self, token: str) -> typing.Optional[typing.Dict[str, typing.Any]]:
+        """Decode JWT claims without verification, or None if not a JWT."""
+        try:
+            return jwt.decode(token, options={"verify_signature": False})
+        except jwt.InvalidTokenError:
+            return None
+
     def _is_valid_jwt_token(self, token: str, raise_if_expired: bool = False) -> bool:
         """Check if a token is a valid JWT token by attempting to decode its header and check expiration."""
-        try:
-            decoded = jwt.decode(token, options={"verify_signature": False})
-        except jwt.InvalidTokenError:
-            # presumably a lagacy token
+        decoded = self._decode_jwt_payload(token)
+        if decoded is None:
             return False
         expiration = decoded.get("exp")
         if expiration is None:
@@ -51,15 +56,32 @@ class TokensClientExt:
                 return False
         return True
 
+    def jwt_token_type(self, token: str) -> typing.Optional[str]:
+        """Return the JWT token_type claim, or None for legacy (non-JWT) tokens."""
+        if not self._is_valid_jwt_token(token, raise_if_expired=False):
+            return None
+        decoded = self._decode_jwt_payload(token)
+        return decoded.get("token_type") if decoded is not None else None
+
+    def resolve_x_api_key_header_value(self, value: str) -> str:
+        """Return the X-API-Key header value to send on the wire.
+
+        Legacy API keys are returned unchanged. JWT refresh tokens are exchanged for
+        access tokens via :meth:`refresh`. JWT access tokens are returned unchanged.
+        """
+        if self.jwt_token_type(value) != "refresh":
+            return value
+        if value == self._api_key:
+            return self.api_key
+        return self.refresh(refresh_token=value).access
+
     def _set_access_token(self, token: str) -> None:
         """Set the access token and cache its expiration time."""
-        try:
-            decoded = jwt.decode(token, options={"verify_signature": False})
+        decoded = self._decode_jwt_payload(token)
+        if decoded is not None:
             expiration = decoded.get("exp")
             if expiration is not None:
                 self._access_token_expiration = datetime.fromtimestamp(expiration, timezone.utc)
-        except jwt.InvalidTokenError:
-            pass
         self._access_token = token
 
     @property
@@ -110,8 +132,9 @@ class TokensClientExt:
             )
         }
 
-    def refresh(self) -> TokenRefreshResponse:
+    def refresh(self, refresh_token: typing.Optional[str] = None) -> TokenRefreshResponse:
         """Refresh the access token and return the token response."""
+        token = self._api_key if refresh_token is None else refresh_token
         existing_client = self._client_wrapper.httpx_client.httpx_client
 
         # For sync client, use it directly
@@ -119,7 +142,7 @@ class TokensClientExt:
             response = existing_client.request(
                 method="POST",
                 url=urllib.parse.urljoin(f"{self._base_url}", "api/token/refresh/"),
-                json={"refresh": self._api_key},
+                json={"refresh": token},
                 headers={"Content-Type": "application/json"},
             )
         else:
@@ -130,10 +153,10 @@ class TokensClientExt:
                 response = sync_client.request(
                     method="POST",
                     url=urllib.parse.urljoin(f"{self._base_url}/", "api/token/refresh/"),
-                    json={"refresh": self._api_key},
+                    json={"refresh": token},
                     headers={"Content-Type": "application/json"},
                 )
-            
+
         if response.status_code == 200:
             return TokenRefreshResponse.parse_obj(response.json())
         else:

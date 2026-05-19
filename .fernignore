@@ -37,6 +37,8 @@ tests/custom/label_studio_tools
 tests/custom/legacy
 tests/custom/test_interface
 tests/custom/cli
+tests/custom/test_client_wrapper.py
+tests/custom/test_tokens_client_ext.py
 
 # manual workflows
 .github/workflows/build_pypi.yml
