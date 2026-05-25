@@ -32598,7 +32598,7 @@ client.projects.stats.data_quality_agreement_confusion_matrix(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Returns per-dimension agreement scores for active dimensions.
+Returns per-dimension agreement scores for active dimensions across tasks with at least two annotations.
 </dd>
 </dl>
 </dd>
@@ -32677,7 +32677,7 @@ client.projects.stats.data_quality_agreement_dimensions(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Returns average agreement, a 10-bucket histogram of `Task.precomputed_agreement` (filled on-the-fly from V2 dimension matrices when null), `low_agreement_count`, and `total_tasks`. The low-agreement threshold is `LseProject.agreement_threshold` (the same project setting Data Manager filters and review-routing rules consume); changing that setting moves the count for this endpoint as well.
+Returns average agreement, a 10-bucket histogram of `Task.precomputed_agreement` (filled on-the-fly from V2 dimension matrices when null), `low_agreement_count`, and `total_tasks`. Agreement score aggregates only include tasks with at least two non-cancelled annotations. The low-agreement threshold is `LseProject.agreement_threshold` (the same project setting Data Manager filters and review-routing rules consume); changing that setting moves the count for this endpoint as well.
 </dd>
 </dl>
 </dd>
