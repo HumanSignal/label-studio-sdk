@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 
 import pytest
+
 from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema import json_schema_to_pydantic
 from label_studio_sdk.label_interface.interface import LabelInterface
 
@@ -196,9 +197,11 @@ from label_studio_sdk.label_interface.interface import LabelInterface
                 },
                 "taxonomy": {
                     "type": "array",
+                    "minItems": 1,
                     "description": "Taxonomy for txt. Each item is a path from root to selected node.",
                     "items": {
                         "type": "array",
+                        "minItems": 1,
                         "items": {
                             "type": "string",
                             "enum": ["class A", "class A1", "class A2", "class B"]

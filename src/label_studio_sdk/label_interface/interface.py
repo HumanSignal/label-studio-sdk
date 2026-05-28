@@ -1,42 +1,40 @@
 """
 """
 
-import os
 import copy
-import logging
-import re
 import json
-import jsonschema
-
-from functools import cached_property
-from typing import Dict, Optional, List, Tuple, Any, Callable, Union
-from pydantic import BaseModel
-
+import logging
+import os
+import re
 
 # from typing import Dict, Optional, List, Tuple, Any
-from collections import defaultdict, OrderedDict
-from lxml import etree
+from collections import OrderedDict, defaultdict
+from functools import cached_property
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+
+import jsonschema
 import xmljson
-from jsf import JSF
-
-from label_studio_sdk._legacy.exceptions import (
-    LSConfigParseException,
-    LabelStudioXMLSyntaxErrorSentryIgnored,
-    LabelStudioValidationErrorSentryIgnored,
-)
-
+from . import create as CE
 from .base import LabelStudioTag
 from .control_tags import (
     ChatMessageTag,
-    ReactCodeTag,
-    ControlTag,
     ChoicesTag,
+    ControlTag,
     LabelsTag,
+    ReactCodeTag,
 )
-from .object_tags import ObjectTag
 from .label_tags import LabelTag
-from .objects import AnnotationValue, TaskValue, PredictionValue, Region
-from . import create as CE
+from .object_tags import ObjectTag
+from .objects import AnnotationValue, PredictionValue, Region, TaskValue
+from jsf import JSF
+from lxml import etree
+from pydantic import BaseModel
+
+from label_studio_sdk._legacy.exceptions import (
+    LabelStudioValidationErrorSentryIgnored,
+    LabelStudioXMLSyntaxErrorSentryIgnored,
+    LSConfigParseException,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -341,6 +339,8 @@ class LabelInterface:
                 if len(payload) > 0:
                     if isinstance(payload[0], str):
                         payload = {'label': payload}
+                    elif isinstance(payload[0], list) and hasattr(control, "_label_attr_name"):
+                        payload = {control._label_attr_name: payload}
                     else:
                         pass
 
@@ -1138,12 +1138,38 @@ class LabelInterface:
 
         return task
 
+    @staticmethod
+    def _schema_has_empty_enum(schema: Any) -> bool:
+        """Detect JSON Schema fragments that JSF cannot generate from."""
+        if isinstance(schema, dict):
+            if schema.get("enum") == []:
+                return True
+            return any(LabelInterface._schema_has_empty_enum(value) for value in schema.values())
+        if isinstance(schema, list):
+            return any(LabelInterface._schema_has_empty_enum(value) for value in schema)
+        return False
+
+    @staticmethod
+    def _can_generate_sample_region(control: ControlTag, schema: dict) -> bool:
+        """Return whether a control is safe to use for generated sample regions."""
+        if not hasattr(control, "_value_class"):
+            return False
+        if not control.objects:
+            return False
+        if LabelInterface._schema_has_empty_enum(schema):
+            return False
+        return True
+
     def _generate_sample_regions(self):
         """ Generate an example of each control tag's JSON schema and validate it as a region"""
-        return self.create_regions({
-            control.name: JSF(control.to_json_schema()).generate()
-            for control in self.controls
-        })
+        generated_data = {}
+        for control in self.controls:
+            schema = control.to_json_schema()
+            if not self._can_generate_sample_region(control, schema):
+                logger.debug("Skipping sample region generation for control tag %s", control.name)
+                continue
+            generated_data[control.name] = JSF(schema).generate()
+        return self.create_regions(generated_data)
 
     def generate_sample_prediction(self) -> Optional[dict]:
         """Generates a sample prediction that is valid for this label config.

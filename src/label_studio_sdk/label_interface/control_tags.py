@@ -748,6 +748,20 @@ class BrushTag(ControlTag):
     tag: str = "Brush"
     _value_class: Type[BrushValue] = BrushValue
 
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "format": {"type": "string", "enum": ["rle"]},
+                "rle": {
+                    "type": "array",
+                    "items": {"type": "integer", "minimum": 0, "maximum": 255},
+                    "minItems": 1,
+                },
+            },
+            "required": ["format", "rle"],
+        }
+
     # def validate_value(self, value) -> bool:
     #     res = super().validate_value(value)
     #     if res is True and value.get("format") == "rle":
@@ -794,6 +808,19 @@ class EllipseTag(ControlTag):
     tag: str = "Ellipse"
     _value_class: Type[EllipseValue] = EllipseValue
 
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "x": {"type": "number", "minimum": 0, "maximum": 100},
+                "y": {"type": "number", "minimum": 0, "maximum": 100},
+                "radiusX": {"type": "number", "minimum": 0, "maximum": 50},
+                "radiusY": {"type": "number", "minimum": 0, "maximum": 50},
+                "rotation": {"type": "number", "minimum": 0, "maximum": 360},
+            },
+            "required": ["x", "y", "radiusX", "radiusY"],
+        }
+
 
 class EllipseLabelsTag(ControlTag):
     """ """
@@ -829,6 +856,16 @@ class KeyPointTag(ControlTag):
     """ """
     tag: str = "KeyPoint"
     _value_class: Type[KeyPointValue] = KeyPointValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "x": {"type": "number", "minimum": 0, "maximum": 100},
+                "y": {"type": "number", "minimum": 0, "maximum": 100},
+            },
+            "required": ["x", "y"],
+        }
 
 
 class KeyPointLabelsTag(ControlTag):
@@ -944,6 +981,24 @@ class PolygonTag(ControlTag):
     tag: str = "Polygon"
     _value_class: Type[PolygonValue] = PolygonValue
 
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "points": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {"type": "number", "minimum": 0, "maximum": 100},
+                        "minItems": 2,
+                        "maxItems": 2,
+                    },
+                    "minItems": 3,
+                },
+            },
+            "required": ["points"],
+        }
+
 
 class PolygonLabelsTag(ControlTag):
     """ """
@@ -987,6 +1042,19 @@ class RectangleTag(ControlTag):
     tag: str = "Rectangle"
     _value_class: Type[RectangleValue] = RectangleValue
 
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "x": {"type": "number", "minimum": 1, "maximum": 99},
+                "y": {"type": "number", "minimum": 1, "maximum": 99},
+                "width": {"type": "number", "minimum": 1, "maximum": 99},
+                "height": {"type": "number", "minimum": 1, "maximum": 99},
+                "rotation": {"type": "number", "minimum": 0, "maximum": 360},
+            },
+            "required": ["x", "y", "width", "height"],
+        }
+
 
 class RectangleLabelsTag(ControlTag):
     """ """
@@ -1027,7 +1095,7 @@ class VideoRectangleValue(BaseModel):
     framesCount: int
     duration: float
     sequence: List[VideoRectangleSequenceValue]
-    labels: Optional[List[str]]
+    labels: Optional[List[str]] = None
     
     
 class VideoRectangleTag(ControlTag):
@@ -1036,31 +1104,46 @@ class VideoRectangleTag(ControlTag):
     _label_attr_name: str = "labels"
     _value_class: Type[VideoRectangleValue] = VideoRectangleValue
 
+    def validate_value(self, value: dict, context: Optional[dict] = None) -> bool:
+        if not self.labels and isinstance(value, dict) and "labels" not in value:
+            try:
+                self._value_class(**value)
+                return True
+            except Exception:
+                return False
+        return super().validate_value(value, context=context)
+
     def to_json_schema(self):
+        properties = {
+            "framesCount": {"type": "integer", "minimum": 1},
+            "duration": {"type": "number", "minimum": 0},
+            "sequence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "x": {"type": "number", "minimum": 0, "maximum": 100},
+                        "y": {"type": "number", "minimum": 0, "maximum": 100},
+                        "time": {"type": "number", "minimum": 0},
+                        "frame": {"type": "integer", "minimum": 0},
+                        "width": {"type": "number", "minimum": 0, "maximum": 100},
+                        "height": {"type": "number", "minimum": 0, "maximum": 100},
+                        "rotation": {"type": "number"},
+                    },
+                    "required": ["x", "y", "time", "frame", "width", "height"],
+                },
+            },
+        }
+        required = ["framesCount", "duration", "sequence"]
+        if self.labels:
+            properties["labels"] = self._labels_json_schema()
+            required.append("labels")
+
         return {
             "type": "object",
-            "properties": {
-                "framesCount": {"type": "integer"},
-                "duration": {"type": "number"},
-                "sequence": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "x": {"type": "number", "minimum": 0, "maximum": 100},
-                            "y": {"type": "number", "minimum": 0, "maximum": 100},
-                            "time": {"type": "number"},
-                            "frame": {"type": "integer"},
-                            "width": {"type": "number", "minimum": 0, "maximum": 100},
-                            "height": {"type": "number", "minimum": 0, "maximum": 100},
-                            "rotation": {"type": "number"},
-                        },
-                        "required": ["x", "y", "time", "frame", "width", "height"],
-                    },
-                },
-                "labels": self._labels_json_schema(),
-            },
-            "required": ["framesCount", "duration", "sequence", "labels"],
+            "properties": properties,
+            "required": required,
         }
 
 
@@ -1086,6 +1169,45 @@ class VideoVectorTag(ControlTag):
     """ """
     tag: str = "VideoVector"
     _value_class: Type[VideoVectorValue] = VideoVectorValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "framesCount": {"type": "integer", "minimum": 1},
+                "duration": {"type": "number", "minimum": 0},
+                "sequence": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "time": {"type": "number", "minimum": 0},
+                            "frame": {"type": "integer", "minimum": 0},
+                            "closed": {"type": "boolean"},
+                            "enabled": {"type": "boolean"},
+                            "vertices": {
+                                "type": "array",
+                                "minItems": 2,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "x": {"type": "number"},
+                                        "y": {"type": "number"},
+                                        "id": {"type": "string"},
+                                        "isBezier": {"type": "boolean"},
+                                        "prevPointId": {"type": "string"},
+                                    },
+                                    "required": ["x", "y"],
+                                },
+                            },
+                        },
+                        "required": ["frame", "vertices"],
+                    },
+                },
+            },
+            "required": ["sequence"],
+        }
 
 
 class VideoVectorLabelsTag(ControlTag):
@@ -1143,6 +1265,13 @@ class NumberTag(ControlTag):
     _value_class: Type[NumberValue] = NumberValue
     _label_attr_name: str = "number"
 
+    @staticmethod
+    def _parse_numeric_bound(value):
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return None
+
     def to_json_schema(self):
         """
         Converts the current NumberTag instance into a JSON Schema.
@@ -1155,10 +1284,12 @@ class NumberTag(ControlTag):
             "description": f"Number for {self.to_name[0]}"
         }
         
-        if 'min' in self.attr:
-            schema["minimum"] = float(self.attr['min'])
-        if 'max' in self.attr:
-            schema["maximum"] = float(self.attr['max'])
+        minimum = self._parse_numeric_bound(self.attr.get('min'))
+        maximum = self._parse_numeric_bound(self.attr.get('max'))
+        if minimum is not None:
+            schema["minimum"] = minimum
+        if maximum is not None:
+            schema["maximum"] = maximum
         
         return schema
     
@@ -1289,6 +1420,25 @@ class RankerTag(ControlTag):
     """ """
     tag: str = "Ranker"
     _value_class: Type[RankerValue] = RankerValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "ranker": {
+                    "type": "object",
+                    "properties": {
+                        self.name: {
+                            "type": "array",
+                            "items": {"type": "string"},
+                            "minItems": 1,
+                        },
+                    },
+                    "required": [self.name],
+                },
+            },
+            "required": ["ranker"],
+        }
 
     def validate_value(self, value: dict, **kwargs) -> bool:
         """
@@ -1447,8 +1597,10 @@ class TaxonomyTag(ControlTag):
         """
         return {
             "type": "array",
+            "minItems": 1,
             "items": {
                 "type": "array",
+                "minItems": 1,
                 "items": {
                     "type": "string",
                     # TODO: enforce the order of the enums according to the taxonomy tree

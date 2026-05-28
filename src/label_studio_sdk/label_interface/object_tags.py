@@ -5,8 +5,8 @@ import json
 import os
 import re
 import xml.etree.ElementTree
+from typing import Any, List, Optional
 from urllib.parse import urlencode
-from typing import List, Optional
 
 from .base import LabelStudioTag, get_tag_class
 
@@ -92,6 +92,7 @@ class ObjectTag(LabelStudioTag):
 
     name: Optional[str] = None
     value: Optional[str] = None
+    children: Optional[List[Any]] = None
     # value_type: Optional[str] = None,
 
     # TODO needs to set during parsing
@@ -121,6 +122,7 @@ class ObjectTag(LabelStudioTag):
             attr=dict(tag.attrib),
             name=tag.attrib.get("name"),
             value=tag.attrib.get('valueList', tag.attrib.get('value')),
+            children=list(tag),
         )
 
     @classmethod
@@ -290,7 +292,7 @@ class HyperTextTag(ObjectTag):
         if self.value == "video":
             return examples.get("$videoHack")
         else:
-            return examples["HyperTextUrl" if only_urls else "HyperText"]
+            return examples.get("HyperTextUrl" if only_urls else "HyperText") or examples["HyperText"]
 
 
 class ListTag(ObjectTag):
@@ -335,7 +337,7 @@ class TimeSeriesTag(ObjectTag):
 
         time_column = p.get("timeColumn", "time")
         value_columns = []
-        for ts_child in p:
+        for ts_child in self.children or []:
             if ts_child.tag != "Channel":
                 continue
             value_columns.append(ts_child.get("column"))
