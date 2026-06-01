@@ -53,6 +53,11 @@ class Dimension(UncheckedBaseModel):
     Whether this dimension is used in agreement calculations.
     """
 
+    is_categorical: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether this dimension produces categorical (primitive/scalar) values.
+    """
+
     is_user_defined: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether this dimension was manually created by a user. System-generated dimensions have this set to False.
