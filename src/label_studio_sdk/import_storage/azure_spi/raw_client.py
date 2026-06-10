@@ -219,9 +219,6 @@ class RawAzureSpiClient:
                 "use_blob_urls": use_blob_urls,
                 "user_delegation_key": user_delegation_key,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -378,9 +375,6 @@ class RawAzureSpiClient:
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
                 "user_delegation_key": user_delegation_key,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -896,9 +890,6 @@ class AsyncRawAzureSpiClient:
                 "use_blob_urls": use_blob_urls,
                 "user_delegation_key": user_delegation_key,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1055,9 +1046,6 @@ class AsyncRawAzureSpiClient:
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
                 "user_delegation_key": user_delegation_key,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

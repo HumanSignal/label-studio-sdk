@@ -163,9 +163,6 @@ class RawModelProvidersClient:
                 "provider": provider,
                 "scope": scope,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -578,9 +575,6 @@ class AsyncRawModelProvidersClient:
                 "is_internal": is_internal,
                 "provider": provider,
                 "scope": scope,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

@@ -195,9 +195,6 @@ class RawGcsSaClient:
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -330,9 +327,6 @@ class RawGcsSaClient:
                 "title": title,
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -800,9 +794,6 @@ class AsyncRawGcsSaClient:
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -935,9 +926,6 @@ class AsyncRawGcsSaClient:
                 "title": title,
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

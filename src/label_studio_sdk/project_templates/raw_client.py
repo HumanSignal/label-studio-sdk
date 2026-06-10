@@ -156,9 +156,6 @@ class RawProjectTemplatesClient:
                 "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "tags": tags,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -585,9 +582,6 @@ class AsyncRawProjectTemplatesClient:
                 "review_settings": review_settings,
                 "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "tags": tags,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

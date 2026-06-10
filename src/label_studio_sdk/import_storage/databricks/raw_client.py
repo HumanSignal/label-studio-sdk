@@ -253,9 +253,6 @@ class RawDatabricksClient:
                 "verify_tls": verify_tls,
                 "volume": volume,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -445,9 +442,6 @@ class RawDatabricksClient:
                 "use_blob_urls": use_blob_urls,
                 "verify_tls": verify_tls,
                 "volume": volume,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1029,9 +1023,6 @@ class AsyncRawDatabricksClient:
                 "verify_tls": verify_tls,
                 "volume": volume,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1221,9 +1212,6 @@ class AsyncRawDatabricksClient:
                 "use_blob_urls": use_blob_urls,
                 "verify_tls": verify_tls,
                 "volume": volume,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

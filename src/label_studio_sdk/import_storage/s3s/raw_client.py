@@ -238,9 +238,6 @@ class RawS3SClient:
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -416,9 +413,6 @@ class RawS3SClient:
                 "title": title,
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -972,9 +966,6 @@ class AsyncRawS3SClient:
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1150,9 +1141,6 @@ class AsyncRawS3SClient:
                 "title": title,
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

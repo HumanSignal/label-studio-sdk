@@ -453,7 +453,7 @@ class RawStatesClient:
                     ),
                 )
                 _items = _parsed_response.results
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.state_history(
                     entity_name,
                     entity_id,
@@ -973,7 +973,7 @@ class AsyncRawStatesClient:
                     ),
                 )
                 _items = _parsed_response.results
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.state_history(

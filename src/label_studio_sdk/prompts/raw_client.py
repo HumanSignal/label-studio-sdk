@@ -506,9 +506,6 @@ class RawPromptsClient:
                 "skill_name": skill_name,
                 "title": title,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1251,9 +1248,6 @@ class AsyncRawPromptsClient:
                 "output_classes": output_classes,
                 "skill_name": skill_name,
                 "title": title,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

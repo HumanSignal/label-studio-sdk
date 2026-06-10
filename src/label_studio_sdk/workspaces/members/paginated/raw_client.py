@@ -85,7 +85,7 @@ class RawPaginatedClient:
                     ),
                 )
                 _items = _parsed_response.results
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list(
                     id,
                     ids=ids,
@@ -175,7 +175,7 @@ class AsyncRawPaginatedClient:
                     ),
                 )
                 _items = _parsed_response.results
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list(

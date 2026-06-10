@@ -4,6 +4,7 @@
 # libs/label-studio-sdk/README.md via the workspace symlink).
 README.md
 LICENSE
+CONTRIBUTING.md
 
 # manual extensions, use generators.yml to include specific top-level imports from here
 # this directory also includes legacy label_studio_tools/ package and the Typer CLI
