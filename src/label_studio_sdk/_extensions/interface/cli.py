@@ -133,11 +133,52 @@ def _load_json_file(path: Path | None, *, label: str) -> Any:
         raise typer.Exit(code=2) from None
 
 
+def _resolve_local_paths(data: Any, base_dirs: list[Path]) -> Any:
+    if isinstance(data, dict):
+        return {k: _resolve_local_paths(v, base_dirs) for k, v in data.items()}
+    if isinstance(data, list):
+        return [_resolve_local_paths(x, base_dirs) for x in data]
+    if isinstance(data, str):
+        if data.startswith(("http://", "https://", "data:")):
+            return data
+        if not data or "\x00" in data:
+            return data
+        try:
+            p = Path(data)
+            for base_dir in base_dirs:
+                resolved_p = p if p.is_absolute() else base_dir / p
+                if resolved_p.is_file():
+                    import base64
+                    import mimetypes
+
+                    mime, _ = mimetypes.guess_type(str(resolved_p))
+                    if not mime:
+                        mime = "application/octet-stream"
+                    content = resolved_p.read_bytes()
+                    if len(content) > 50 * 1024 * 1024:
+                        typer.echo(
+                            f"warning: file {resolved_p} is too large to embed (>50MB), skipping base64 encoding",
+                            err=True,
+                        )
+                        return data
+                    encoded = base64.b64encode(content).decode("utf-8")
+                    typer.echo(f"  embedded local file: {resolved_p} ({mime})")
+                    return f"data:{mime};base64,{encoded}"
+        except Exception:
+            pass
+    return data
+
+
 def _load_task(task_path: Path | None) -> dict[str, Any] | None:
     task = _load_json_file(task_path, label="task file")
     if task is not None and not isinstance(task, dict):
         typer.echo("error: --task must decode to a JSON object", err=True)
         raise typer.Exit(code=2)
+    if task is not None:
+        base_dirs = [Path.cwd()]
+        if task_path is not None:
+            base_dirs.insert(0, task_path.parent)
+        task = _resolve_local_paths(task, base_dirs)
     return task
 
 
@@ -636,6 +677,8 @@ def _sync_interface(
     new_version = _new_version(source, compiled, report, publish=publish)
     history_message, artifact = _build_history_entry(file, source, compiled, message)
     schema_payload = _interface_schema_payload(report)
+    task_file = _resolve_bundle_file(file.parent, None, TASK_FILE_CANDIDATES)
+    task_data = _load_task(task_file)
 
     with httpx.Client(headers=headers, timeout=30.0) as client:
         try:
@@ -684,6 +727,8 @@ def _sync_interface(
                     "messages": [*(existing.get("messages") or []), history_message],
                     "artifacts": [*(existing.get("artifacts") or []), artifact],
                 }
+                if task_data is not None:
+                    payload["data_sample"] = task_data
                 if title:
                     payload["title"] = title
                 payload.update({key: value for key, value in schema_payload.items() if key != "metadata"})
@@ -708,6 +753,8 @@ def _sync_interface(
                     "artifacts": [artifact],
                     **schema_payload,
                 }
+                if task_data is not None:
+                    payload["data_sample"] = task_data
                 if resolved_workspace_id is not None:
                     payload["workspace"] = resolved_workspace_id
                 resp = client.post(f"{base}/api/interfaces/", json=payload)
@@ -790,7 +837,9 @@ def preview(
     headers = _auth_headers(resolved_token, base_url=base) if resolved_token else {}
     playground_token = secrets.token_urlsafe(16)
     push_url = f"{base}/api/interfaces/playground/{playground_token}/push/"
-    playground_url = f"{base}/interfaces/playground?s={urllib.parse.quote(playground_token)}&file={urllib.parse.quote(file.name)}"
+    playground_url = (
+        f"{base}/interfaces/playground?s={urllib.parse.quote(playground_token)}&file={urllib.parse.quote(file.name)}"
+    )
 
     typer.echo(f"playground: {playground_url}")
     typer.echo(f"watching:   {file}")

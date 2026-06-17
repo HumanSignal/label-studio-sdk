@@ -178,6 +178,8 @@ def _reset_fake_http() -> None:
 def test_sync_creates_interface_and_writes_sidecar(monkeypatch: Any, tmp_path: Path) -> None:
     file = tmp_path / "Screen.jsx"
     file.write_text("({ default: function Screen() { return null; } })\n", encoding="utf-8")
+    task = tmp_path / "task.json"
+    task.write_text('{"text": "Sample Task Content"}', encoding="utf-8")
     _reset_fake_http()
     monkeypatch.setattr(interface_cli, "_run_validator", lambda _file: _validator_report())
     monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
@@ -207,6 +209,7 @@ def test_sync_creates_interface_and_writes_sidecar(monkeypatch: Any, tmp_path: P
     assert payload["title"] == "Demo"
     assert payload["workspace"] == 3
     assert payload["compiled"] == "compiled-body"
+    assert payload["data_sample"] == {"text": "Sample Task Content"}
     assert payload["input_schema"] == {"type": "object"}
     assert payload["metadata"]["paramsSchema"] == {"type": "object"}
     assert payload["versions"][0]["op"] == "api_push"
@@ -458,6 +461,60 @@ def test_preview_accepts_interface_directory(monkeypatch: Any, tmp_path: Path) -
         "task": {"text": "Example"},
     }
     assert calls["watch_paths"] == (file.resolve(), task.resolve())
+
+
+def test_preview_resolves_local_paths(monkeypatch: Any, tmp_path: Path) -> None:
+    file = tmp_path / "Screen.jsx"
+    file.write_text("({ default: function Screen() { return null; } })", encoding="utf-8")
+
+    # Create mock files to be referenced in task data
+    image_relative = tmp_path / "posum.jpg"
+    image_relative.write_bytes(b"mock image relative content")
+
+    image_absolute = tmp_path / "another.png"
+    image_absolute.write_bytes(b"mock image absolute content")
+
+    task = tmp_path / "sample.json"
+    task.write_text(
+        json.dumps(
+            {
+                "image_rel": "posum.jpg",
+                "image_abs": str(image_absolute),
+                "some_text": "hello world",
+                "web_url": "https://example.com/posum.jpg",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    calls: dict[str, Any] = {}
+
+    def fake_watch(*paths: Path, **kwargs: Any) -> Any:
+        calls["watch_paths"] = paths
+        calls["watch_kwargs"] = kwargs
+        raise KeyboardInterrupt
+        yield set()
+
+    _reset_fake_http()
+    monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=fake_watch))
+    monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
+
+    result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
+
+    assert result.exit_code == 0, result.output
+    assert "embedded local file:" in result.output
+
+    client = FakeHttpClient.instances[-1]
+    assert client.calls[0][0] == "POST"
+    payload = client.calls[0][2]
+
+    expected_rel = f"data:image/jpeg;base64,{base64.b64encode(b'mock image relative content').decode('utf-8')}"
+    expected_abs = f"data:image/png;base64,{base64.b64encode(b'mock image absolute content').decode('utf-8')}"
+
+    assert payload["task"]["image_rel"] == expected_rel
+    assert payload["task"]["image_abs"] == expected_abs
+    assert payload["task"]["some_text"] == "hello world"
+    assert payload["task"]["web_url"] == "https://example.com/posum.jpg"
 
 
 def test_start_syncs_then_creates_project(monkeypatch: Any, tmp_path: Path) -> None:
