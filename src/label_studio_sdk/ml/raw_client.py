@@ -446,7 +446,7 @@ class RawMlClient:
 
         See [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend.
 
-        Reference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).
+        Reference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](api:GET/api/ml/).
 
         Parameters
         ----------
@@ -495,7 +495,7 @@ class RawMlClient:
                 After you add an ML backend, call this API with the ML backend ID to start training with
                 already-labeled tasks.
 
-                Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).
+                Get the ML backend ID by [listing the ML backends for a project](api:GET/api/ml/).
 
 
         Parameters
@@ -1020,7 +1020,7 @@ class AsyncRawMlClient:
 
         See [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend.
 
-        Reference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).
+        Reference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](api:GET/api/ml/).
 
         Parameters
         ----------
@@ -1069,7 +1069,7 @@ class AsyncRawMlClient:
                 After you add an ML backend, call this API with the ML backend ID to start training with
                 already-labeled tasks.
 
-                Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).
+                Get the ML backend ID by [listing the ML backends for a project](api:GET/api/ml/).
 
 
         Parameters

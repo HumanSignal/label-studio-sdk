@@ -98,6 +98,11 @@ if typing.TYPE_CHECKING:
     from .lse_annotation_filter_options_request import LseAnnotationFilterOptionsRequest
     from .lse_export_create import LseExportCreate
     from .lse_fields import LseFields
+    from .lse_interface import LseInterface
+    from .lse_interface_append_version_request import LseInterfaceAppendVersionRequest
+    from .lse_interface_list import LseInterfaceList
+    from .lse_interface_request import LseInterfaceRequest
+    from .lse_interface_version_id_request import LseInterfaceVersionIdRequest
     from .lse_key_indicator_value import LseKeyIndicatorValue
     from .lse_organization import LseOrganization
     from .lse_organization_member_list import LseOrganizationMemberList
@@ -164,6 +169,7 @@ if typing.TYPE_CHECKING:
     from .organization_permission_request import OrganizationPermissionRequest
     from .paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
     from .paginated_annotation_history_list import PaginatedAnnotationHistoryList
+    from .paginated_lse_interface_list_list import PaginatedLseInterfaceListList
     from .paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
     from .paginated_lse_project_counts_list import PaginatedLseProjectCountsList
     from .paginated_lse_user_list import PaginatedLseUserList
@@ -357,6 +363,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LseAnnotationFilterOptionsRequest": ".lse_annotation_filter_options_request",
     "LseExportCreate": ".lse_export_create",
     "LseFields": ".lse_fields",
+    "LseInterface": ".lse_interface",
+    "LseInterfaceAppendVersionRequest": ".lse_interface_append_version_request",
+    "LseInterfaceList": ".lse_interface_list",
+    "LseInterfaceRequest": ".lse_interface_request",
+    "LseInterfaceVersionIdRequest": ".lse_interface_version_id_request",
     "LseKeyIndicatorValue": ".lse_key_indicator_value",
     "LseOrganization": ".lse_organization",
     "LseOrganizationMemberList": ".lse_organization_member_list",
@@ -417,6 +428,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrganizationPermissionRequest": ".organization_permission_request",
     "PaginatedAllRolesProjectListList": ".paginated_all_roles_project_list_list",
     "PaginatedAnnotationHistoryList": ".paginated_annotation_history_list",
+    "PaginatedLseInterfaceListList": ".paginated_lse_interface_list_list",
     "PaginatedLseOrganizationMemberListList": ".paginated_lse_organization_member_list_list",
     "PaginatedLseProjectCountsList": ".paginated_lse_project_counts_list",
     "PaginatedLseUserList": ".paginated_lse_user_list",
@@ -634,6 +646,11 @@ __all__ = [
     "LseAnnotationFilterOptionsRequest",
     "LseExportCreate",
     "LseFields",
+    "LseInterface",
+    "LseInterfaceAppendVersionRequest",
+    "LseInterfaceList",
+    "LseInterfaceRequest",
+    "LseInterfaceVersionIdRequest",
     "LseKeyIndicatorValue",
     "LseOrganization",
     "LseOrganizationMemberList",
@@ -694,6 +711,7 @@ __all__ = [
     "OrganizationPermissionRequest",
     "PaginatedAllRolesProjectListList",
     "PaginatedAnnotationHistoryList",
+    "PaginatedLseInterfaceListList",
     "PaginatedLseOrganizationMemberListList",
     "PaginatedLseProjectCountsList",
     "PaginatedLseUserList",

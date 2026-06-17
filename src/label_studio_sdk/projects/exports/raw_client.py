@@ -46,7 +46,7 @@ class RawExportsClient:
         """
 
                 This endpoint is deprecated in Enterprise. Use the async export API instead:
-                POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+                POST /api/projects/{id}/exports/ (see [Create new export](api:POST/api/projects/{id}/exports/)).
 
                 In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
 
@@ -135,7 +135,7 @@ class RawExportsClient:
         """
 
         This endpoint is deprecated in Enterprise. Use the async export API instead:
-        POST /api/projects/{{id}}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+        POST /api/projects/{{id}}/exports/ (see [Create new export](api:POST/api/projects/{id}/exports/)).
 
         In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
 
@@ -495,8 +495,8 @@ class RawExportsClient:
                 parameter in the path and the ID of the export file you want to download using the `export_pk` parameter
                 in the path.
 
-                Get the `export_pk` from the response of the request to [Create new export](/api#operation/api_projects_exports_create)
-                or after [listing export files](/api#operation/api_projects_exports_list).
+                Get the `export_pk` from the response of the request to [Create new export](api:POST/api/projects/{id}/exports/)
+                or after [listing export files](api:GET/api/projects/{id}/exports/).
 
 
         Parameters
@@ -570,7 +570,7 @@ class AsyncRawExportsClient:
         """
 
                 This endpoint is deprecated in Enterprise. Use the async export API instead:
-                POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+                POST /api/projects/{id}/exports/ (see [Create new export](api:POST/api/projects/{id}/exports/)).
 
                 In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
 
@@ -660,7 +660,7 @@ class AsyncRawExportsClient:
         """
 
         This endpoint is deprecated in Enterprise. Use the async export API instead:
-        POST /api/projects/{{id}}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+        POST /api/projects/{{id}}/exports/ (see [Create new export](api:POST/api/projects/{id}/exports/)).
 
         In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
 
@@ -1020,8 +1020,8 @@ class AsyncRawExportsClient:
                 parameter in the path and the ID of the export file you want to download using the `export_pk` parameter
                 in the path.
 
-                Get the `export_pk` from the response of the request to [Create new export](/api#operation/api_projects_exports_create)
-                or after [listing export files](/api#operation/api_projects_exports_list).
+                Get the `export_pk` from the response of the request to [Create new export](api:POST/api/projects/{id}/exports/)
+                or after [listing export files](api:GET/api/projects/{id}/exports/).
 
 
         Parameters

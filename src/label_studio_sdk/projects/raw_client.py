@@ -57,6 +57,7 @@ class RawProjectsClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        source_interface_id: typing.Optional[float] = None,
         state: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
         workspaces: typing.Optional[float] = None,
@@ -94,6 +95,9 @@ class RawProjectsClient:
         search : typing.Optional[str]
             Search term for project title and description
 
+        source_interface_id : typing.Optional[float]
+            Filter lse_project__source_interface_id by exact match
+
         state : typing.Optional[str]
             Filter current_state by exact match
 
@@ -126,6 +130,7 @@ class RawProjectsClient:
                 "page": page,
                 "page_size": page_size,
                 "search": search,
+                "source_interface_id": source_interface_id,
                 "state": state,
                 "title": title,
                 "workspaces": workspaces,
@@ -153,6 +158,7 @@ class RawProjectsClient:
                     page=page + 1,
                     page_size=page_size,
                     search=search,
+                    source_interface_id=source_interface_id,
                     state=state,
                     title=title,
                     workspaces=workspaces,
@@ -410,6 +416,7 @@ class RawProjectsClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        source_interface_id: typing.Optional[float] = None,
         state: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
         workspaces: typing.Optional[float] = None,
@@ -444,6 +451,9 @@ class RawProjectsClient:
         search : typing.Optional[str]
             Search term for project title and description
 
+        source_interface_id : typing.Optional[float]
+            Filter lse_project__source_interface_id by exact match
+
         state : typing.Optional[str]
             Filter current_state by exact match
 
@@ -473,6 +483,7 @@ class RawProjectsClient:
                 "page": page,
                 "page_size": page_size,
                 "search": search,
+                "source_interface_id": source_interface_id,
                 "state": state,
                 "title": title,
                 "workspaces": workspaces,
@@ -1333,6 +1344,7 @@ class AsyncRawProjectsClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        source_interface_id: typing.Optional[float] = None,
         state: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
         workspaces: typing.Optional[float] = None,
@@ -1370,6 +1382,9 @@ class AsyncRawProjectsClient:
         search : typing.Optional[str]
             Search term for project title and description
 
+        source_interface_id : typing.Optional[float]
+            Filter lse_project__source_interface_id by exact match
+
         state : typing.Optional[str]
             Filter current_state by exact match
 
@@ -1402,6 +1417,7 @@ class AsyncRawProjectsClient:
                 "page": page,
                 "page_size": page_size,
                 "search": search,
+                "source_interface_id": source_interface_id,
                 "state": state,
                 "title": title,
                 "workspaces": workspaces,
@@ -1431,6 +1447,7 @@ class AsyncRawProjectsClient:
                         page=page + 1,
                         page_size=page_size,
                         search=search,
+                        source_interface_id=source_interface_id,
                         state=state,
                         title=title,
                         workspaces=workspaces,
@@ -1689,6 +1706,7 @@ class AsyncRawProjectsClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        source_interface_id: typing.Optional[float] = None,
         state: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
         workspaces: typing.Optional[float] = None,
@@ -1723,6 +1741,9 @@ class AsyncRawProjectsClient:
         search : typing.Optional[str]
             Search term for project title and description
 
+        source_interface_id : typing.Optional[float]
+            Filter lse_project__source_interface_id by exact match
+
         state : typing.Optional[str]
             Filter current_state by exact match
 
@@ -1752,6 +1773,7 @@ class AsyncRawProjectsClient:
                 "page": page,
                 "page_size": page_size,
                 "search": search,
+                "source_interface_id": source_interface_id,
                 "state": state,
                 "title": title,
                 "workspaces": workspaces,

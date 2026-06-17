@@ -23,6 +23,7 @@ if typing.TYPE_CHECKING:
     from .export_storage.client import AsyncExportStorageClient, ExportStorageClient
     from .files.client import AsyncFilesClient, FilesClient
     from .import_storage.client import AsyncImportStorageClient, ImportStorageClient
+    from .interfaces.client import AsyncInterfacesClient, InterfacesClient
     from .jwt_settings.client import AsyncJwtSettingsClient, JwtSettingsClient
     from .ml.client import AsyncMlClient, MlClient
     from .model_providers.client import AsyncModelProvidersClient, ModelProvidersClient
@@ -136,6 +137,7 @@ class LabelStudioBase:
         self._states: typing.Optional[StatesClient] = None
         self._files: typing.Optional[FilesClient] = None
         self._prompts: typing.Optional[PromptsClient] = None
+        self._interfaces: typing.Optional[InterfacesClient] = None
         self._organizations: typing.Optional[OrganizationsClient] = None
         self._jwt_settings: typing.Optional[JwtSettingsClient] = None
         self._ml: typing.Optional[MlClient] = None
@@ -256,6 +258,14 @@ class LabelStudioBase:
 
             self._prompts = PromptsClient(client_wrapper=self._client_wrapper)
         return self._prompts
+
+    @property
+    def interfaces(self):
+        if self._interfaces is None:
+            from .interfaces.client import InterfacesClient  # noqa: E402
+
+            self._interfaces = InterfacesClient(client_wrapper=self._client_wrapper)
+        return self._interfaces
 
     @property
     def organizations(self):
@@ -495,6 +505,7 @@ class AsyncLabelStudioBase:
         self._states: typing.Optional[AsyncStatesClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
         self._prompts: typing.Optional[AsyncPromptsClient] = None
+        self._interfaces: typing.Optional[AsyncInterfacesClient] = None
         self._organizations: typing.Optional[AsyncOrganizationsClient] = None
         self._jwt_settings: typing.Optional[AsyncJwtSettingsClient] = None
         self._ml: typing.Optional[AsyncMlClient] = None
@@ -615,6 +626,14 @@ class AsyncLabelStudioBase:
 
             self._prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
         return self._prompts
+
+    @property
+    def interfaces(self):
+        if self._interfaces is None:
+            from .interfaces.client import AsyncInterfacesClient  # noqa: E402
+
+            self._interfaces = AsyncInterfacesClient(client_wrapper=self._client_wrapper)
+        return self._interfaces
 
     @property
     def organizations(self):
