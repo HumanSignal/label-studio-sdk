@@ -184,12 +184,19 @@ def _resolve_interface_file(path: Path) -> Path:
     raise typer.Exit(code=2)
 
 
-def _post_preview(client: httpx.Client, push_url: str, *, code: str, task: dict[str, Any] | None) -> bool:
+def _post_preview(
+    client: httpx.Client,
+    push_url: str,
+    *,
+    code: str,
+    task: dict[str, Any] | None,
+    headers: dict[str, str] | None = None,
+) -> bool:
     payload: dict[str, Any] = {"code": code}
     if task is not None:
         payload["task"] = task
     try:
-        resp = client.post(push_url, json=payload, timeout=10.0)
+        resp = client.post(push_url, json=payload, headers=headers, timeout=10.0)
     except httpx.HTTPError as exc:
         typer.echo(f"  preview sync failed: {exc}", err=True)
         return False
@@ -751,6 +758,12 @@ def preview(
     task: Path | None = typer.Option(
         None, "--task", exists=True, dir_okay=False, readable=True, help="Task data JSON."
     ),
+    token: str | None = typer.Option(
+        None,
+        "--token",
+        envvar="LABEL_STUDIO_API_KEY",
+        help="Label Studio API token.",
+    ),
     lse_url: str | None = typer.Option(
         None,
         "--lse-url",
@@ -773,9 +786,11 @@ def preview(
     file = _resolve_interface_file(source_path).resolve()
     task = task.resolve() if task is not None else None
     base = _resolve_base_url(ctx, lse_url)
-    token = secrets.token_urlsafe(16)
-    push_url = f"{base}/api/interfaces/playground/{token}/push/"
-    playground_url = f"{base}/interfaces/playground?s={urllib.parse.quote(token)}&file={urllib.parse.quote(file.name)}"
+    resolved_token = _resolve_token(ctx, token)
+    headers = _auth_headers(resolved_token, base_url=base) if resolved_token else {}
+    playground_token = secrets.token_urlsafe(16)
+    push_url = f"{base}/api/interfaces/playground/{playground_token}/push/"
+    playground_url = f"{base}/interfaces/playground?s={urllib.parse.quote(playground_token)}&file={urllib.parse.quote(file.name)}"
 
     typer.echo(f"playground: {playground_url}")
     typer.echo(f"watching:   {file}")
@@ -785,7 +800,7 @@ def preview(
     with httpx.Client() as client:
         code = file.read_text(encoding="utf-8")
         last_pushed_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
-        if _post_preview(client, push_url, code=code, task=task_data):
+        if _post_preview(client, push_url, code=code, task=task_data, headers=headers):
             typer.echo("  pushed initial code")
         else:
             last_pushed_hash = ""
@@ -812,7 +827,7 @@ def preview(
                     continue
                 task_update = _load_task(task) if task_changed else None
                 stamp = time.strftime("%H:%M:%S")
-                if _post_preview(client, push_url, code=code, task=task_update):
+                if _post_preview(client, push_url, code=code, task=task_update, headers=headers):
                     last_pushed_hash = source_hash
                     suffix = " and task data" if task_changed else ""
                     typer.echo(f"  [{stamp}] pushed {len(code)} bytes{suffix}")
