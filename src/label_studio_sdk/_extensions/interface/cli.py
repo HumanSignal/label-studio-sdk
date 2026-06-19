@@ -861,6 +861,7 @@ def preview(
             watch_paths = [file]
             if task is not None:
                 watch_paths.append(task)
+            current_task_data = task_data
             for changes in watch(*watch_paths, step=200, recursive=False):
                 changed_paths = {Path(path).resolve() for _, path in changes}
                 task_changed = task is not None and task in changed_paths
@@ -874,9 +875,10 @@ def preview(
                 source_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
                 if source_hash == last_pushed_hash and not task_changed:
                     continue
-                task_update = _load_task(task) if task_changed else None
+                if task_changed:
+                    current_task_data = _load_task(task)
                 stamp = time.strftime("%H:%M:%S")
-                if _post_preview(client, push_url, code=code, task=task_update, headers=headers):
+                if _post_preview(client, push_url, code=code, task=current_task_data, headers=headers):
                     last_pushed_hash = source_hash
                     suffix = " and task data" if task_changed else ""
                     typer.echo(f"  [{stamp}] pushed {len(code)} bytes{suffix}")

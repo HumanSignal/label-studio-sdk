@@ -623,3 +623,36 @@ def test_start_accepts_interface_directory_and_params_default(monkeypatch: Any, 
     assert calls["sync"]["file"] == file
     assert calls["sync"]["publish"] is True
     assert calls["project"]["params"] == {"mode": "review"}
+
+
+def test_preview_sends_last_task_data_on_code_change(monkeypatch: Any, tmp_path: Path) -> None:
+    file = tmp_path / "Screen.jsx"
+    file.write_text("({ default: function Screen() { return null; } })", encoding="utf-8")
+    task = tmp_path / "sample.json"
+    task.write_text('{"text": "Example"}', encoding="utf-8")
+    calls: dict[str, Any] = {}
+
+    def fake_watch(*paths: Path, **kwargs: Any) -> Any:
+        file.write_text("({ default: function Screen() { return 'changed'; } })", encoding="utf-8")
+        yield [("modified", str(file))]
+        raise KeyboardInterrupt
+
+    _reset_fake_http()
+    monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=fake_watch))
+    monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
+
+    result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
+
+    assert result.exit_code == 0, result.output
+    client = FakeHttpClient.instances[-1]
+    assert len(client.calls) >= 2
+    assert client.calls[0][0] == "POST"
+    assert client.calls[0][2] == {
+        "code": "({ default: function Screen() { return null; } })",
+        "task": {"text": "Example"},
+    }
+    assert client.calls[1][0] == "POST"
+    assert client.calls[1][2] == {
+        "code": "({ default: function Screen() { return 'changed'; } })",
+        "task": {"text": "Example"},
+    }
