@@ -9,6 +9,7 @@ from ..types.agreement_v2backfill_job import AgreementV2BackfillJob
 from ..types.agreement_v2backfill_trigger_response import AgreementV2BackfillTriggerResponse
 from ..types.dimension import Dimension
 from ..types.dimension_list import DimensionList
+from ..types.value_counts_backfill_job import ValueCountsBackfillJob
 from .raw_client import AsyncRawDimensionsClient, RawDimensionsClient
 
 # this is used as the default value for optional parameters
@@ -211,6 +212,191 @@ class DimensionsClient:
         client.dimensions.get_backfill_status()
         """
         _response = self._raw_client.get_backfill_status(
+            job_id=job_id, project_id=project_id, request_options=request_options
+        )
+        return _response.data
+
+    def trigger_value_counts_backfill(
+        self,
+        *,
+        all_projects: typing.Optional[bool] = OMIT,
+        num_projects: typing.Optional[int] = OMIT,
+        project_id: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgreementV2BackfillTriggerResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Trigger a Dimension label-distribution value-counts backfill for the authenticated user's active organization. Populates MatrixAnnotatorEntry.value_counts and rebuilds the ProjectSummary.dimension_value_counts cache for all tasks, without recomputing agreement scores. Exactly one of three body fields must be provided:
+
+        - **project_id**: backfill a single specific project.
+        - **num_projects**: batched org backfill — queue the next N not-yet-started projects (in ascending project ID order), leaving any currently in-flight jobs untouched. Repeat calls until `projects_remaining` in the response reaches 0.
+        - **all_projects**: full org backfill — cancel all in-flight jobs and queue every remaining non-completed project at once.
+
+        Requires administrator or owner role, the Agreement V2 feature flag, and the value-counts write feature flag.
+
+        Parameters
+        ----------
+        all_projects : typing.Optional[bool]
+            Set to true to trigger a full org backfill (cancels in-flight jobs and queues all remaining projects).
+
+        num_projects : typing.Optional[int]
+            Queue at most this many projects per call (batched mode).
+
+        project_id : typing.Optional[int]
+            Backfill a single specific project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgreementV2BackfillTriggerResponse
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.dimensions.trigger_value_counts_backfill()
+        """
+        _response = self._raw_client.trigger_value_counts_backfill(
+            all_projects=all_projects, num_projects=num_projects, project_id=project_id, request_options=request_options
+        )
+        return _response.data
+
+    def cancel_value_counts_backfill(
+        self,
+        *,
+        job_id: typing.Optional[int] = None,
+        project_id: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgreementV2BackfillCancelResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel Dimension value-counts backfill jobs for the authenticated user's active organization. Cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
+
+        Parameters
+        ----------
+        job_id : typing.Optional[int]
+            Optional specific job ID to cancel
+
+        project_id : typing.Optional[int]
+            Optional project ID to cancel its active backfill jobs
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgreementV2BackfillCancelResponse
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.dimensions.cancel_value_counts_backfill()
+        """
+        _response = self._raw_client.cancel_value_counts_backfill(
+            job_id=job_id, project_id=project_id, request_options=request_options
+        )
+        return _response.data
+
+    def list_value_counts_backfills(
+        self, *, status: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ValueCountsBackfillJob]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve Dimension value-counts backfill jobs for the authenticated user's active organization, ordered by most-recently created first. Supports page / page_size query params (default 50 per page, max 500). Requires administrator or owner role and the Agreement V2 feature flag.
+
+        Parameters
+        ----------
+        status : typing.Optional[str]
+            Filter by job status: PENDING, QUEUED, RUNNING, COMPLETED, or FAILED.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ValueCountsBackfillJob]
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.dimensions.list_value_counts_backfills()
+        """
+        _response = self._raw_client.list_value_counts_backfills(status=status, request_options=request_options)
+        return _response.data
+
+    def get_value_counts_backfill_status(
+        self,
+        *,
+        job_id: typing.Optional[int] = None,
+        project_id: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ValueCountsBackfillJob:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the status of a Dimension value-counts backfill job for the authenticated user's active organization. By default returns the aggregated organization status. Specify job_id or project_id to get a specific job status. Requires administrator or owner role and the Agreement V2 feature flag.
+
+        Parameters
+        ----------
+        job_id : typing.Optional[int]
+            Optional job ID to retrieve specific job status
+
+        project_id : typing.Optional[int]
+            Optional project ID to retrieve the latest backfill status for that project. If omitted, returns aggregated organization status.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ValueCountsBackfillJob
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.dimensions.get_value_counts_backfill_status()
+        """
+        _response = self._raw_client.get_value_counts_backfill_status(
             job_id=job_id, project_id=project_id, request_options=request_options
         )
         return _response.data
@@ -545,6 +731,223 @@ class AsyncDimensionsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_backfill_status(
+            job_id=job_id, project_id=project_id, request_options=request_options
+        )
+        return _response.data
+
+    async def trigger_value_counts_backfill(
+        self,
+        *,
+        all_projects: typing.Optional[bool] = OMIT,
+        num_projects: typing.Optional[int] = OMIT,
+        project_id: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgreementV2BackfillTriggerResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Trigger a Dimension label-distribution value-counts backfill for the authenticated user's active organization. Populates MatrixAnnotatorEntry.value_counts and rebuilds the ProjectSummary.dimension_value_counts cache for all tasks, without recomputing agreement scores. Exactly one of three body fields must be provided:
+
+        - **project_id**: backfill a single specific project.
+        - **num_projects**: batched org backfill — queue the next N not-yet-started projects (in ascending project ID order), leaving any currently in-flight jobs untouched. Repeat calls until `projects_remaining` in the response reaches 0.
+        - **all_projects**: full org backfill — cancel all in-flight jobs and queue every remaining non-completed project at once.
+
+        Requires administrator or owner role, the Agreement V2 feature flag, and the value-counts write feature flag.
+
+        Parameters
+        ----------
+        all_projects : typing.Optional[bool]
+            Set to true to trigger a full org backfill (cancels in-flight jobs and queues all remaining projects).
+
+        num_projects : typing.Optional[int]
+            Queue at most this many projects per call (batched mode).
+
+        project_id : typing.Optional[int]
+            Backfill a single specific project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgreementV2BackfillTriggerResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dimensions.trigger_value_counts_backfill()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.trigger_value_counts_backfill(
+            all_projects=all_projects, num_projects=num_projects, project_id=project_id, request_options=request_options
+        )
+        return _response.data
+
+    async def cancel_value_counts_backfill(
+        self,
+        *,
+        job_id: typing.Optional[int] = None,
+        project_id: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgreementV2BackfillCancelResponse:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel Dimension value-counts backfill jobs for the authenticated user's active organization. Cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
+
+        Parameters
+        ----------
+        job_id : typing.Optional[int]
+            Optional specific job ID to cancel
+
+        project_id : typing.Optional[int]
+            Optional project ID to cancel its active backfill jobs
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgreementV2BackfillCancelResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dimensions.cancel_value_counts_backfill()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.cancel_value_counts_backfill(
+            job_id=job_id, project_id=project_id, request_options=request_options
+        )
+        return _response.data
+
+    async def list_value_counts_backfills(
+        self, *, status: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ValueCountsBackfillJob]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve Dimension value-counts backfill jobs for the authenticated user's active organization, ordered by most-recently created first. Supports page / page_size query params (default 50 per page, max 500). Requires administrator or owner role and the Agreement V2 feature flag.
+
+        Parameters
+        ----------
+        status : typing.Optional[str]
+            Filter by job status: PENDING, QUEUED, RUNNING, COMPLETED, or FAILED.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ValueCountsBackfillJob]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dimensions.list_value_counts_backfills()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_value_counts_backfills(status=status, request_options=request_options)
+        return _response.data
+
+    async def get_value_counts_backfill_status(
+        self,
+        *,
+        job_id: typing.Optional[int] = None,
+        project_id: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ValueCountsBackfillJob:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the status of a Dimension value-counts backfill job for the authenticated user's active organization. By default returns the aggregated organization status. Specify job_id or project_id to get a specific job status. Requires administrator or owner role and the Agreement V2 feature flag.
+
+        Parameters
+        ----------
+        job_id : typing.Optional[int]
+            Optional job ID to retrieve specific job status
+
+        project_id : typing.Optional[int]
+            Optional project ID to retrieve the latest backfill status for that project. If omitted, returns aggregated organization status.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ValueCountsBackfillJob
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dimensions.get_value_counts_backfill_status()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_value_counts_backfill_status(
             job_id=job_id, project_id=project_id, request_options=request_options
         )
         return _response.data

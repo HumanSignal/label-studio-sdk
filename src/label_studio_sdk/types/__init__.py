@@ -15,7 +15,7 @@ if typing.TYPE_CHECKING:
     from .agreement_selection_request import AgreementSelectionRequest
     from .agreement_v2backfill_cancel_response import AgreementV2BackfillCancelResponse
     from .agreement_v2backfill_job import AgreementV2BackfillJob
-    from .agreement_v2backfill_job_status_enum import AgreementV2BackfillJobStatusEnum
+    from .agreement_v2backfill_trigger_request_request import AgreementV2BackfillTriggerRequestRequest
     from .agreement_v2backfill_trigger_response import AgreementV2BackfillTriggerResponse
     from .all_roles_project_list import AllRolesProjectList
     from .annotated_enum import AnnotatedEnum
@@ -247,6 +247,7 @@ if typing.TYPE_CHECKING:
     from .state_model import StateModel
     from .state_triggered_by import StateTriggeredBy
     from .status7bf_enum import Status7BfEnum
+    from .status_a47enum import StatusA47Enum
     from .status_c5a_enum import StatusC5AEnum
     from .task_agreement_matrix_response import TaskAgreementMatrixResponse
     from .task_assignment import TaskAssignment
@@ -261,6 +262,7 @@ if typing.TYPE_CHECKING:
     from .user_simple import UserSimple
     from .user_simple_request import UserSimpleRequest
     from .validate_saml_metadata_url_response import ValidateSamlMetadataUrlResponse
+    from .value_counts_backfill_job import ValueCountsBackfillJob
     from .version_response import VersionResponse
     from .view import View
     from .webhook import Webhook
@@ -280,7 +282,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgreementSelectionRequest": ".agreement_selection_request",
     "AgreementV2BackfillCancelResponse": ".agreement_v2backfill_cancel_response",
     "AgreementV2BackfillJob": ".agreement_v2backfill_job",
-    "AgreementV2BackfillJobStatusEnum": ".agreement_v2backfill_job_status_enum",
+    "AgreementV2BackfillTriggerRequestRequest": ".agreement_v2backfill_trigger_request_request",
     "AgreementV2BackfillTriggerResponse": ".agreement_v2backfill_trigger_response",
     "AllRolesProjectList": ".all_roles_project_list",
     "AnnotatedEnum": ".annotated_enum",
@@ -506,6 +508,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StateModel": ".state_model",
     "StateTriggeredBy": ".state_triggered_by",
     "Status7BfEnum": ".status7bf_enum",
+    "StatusA47Enum": ".status_a47enum",
     "StatusC5AEnum": ".status_c5a_enum",
     "TaskAgreementMatrixResponse": ".task_agreement_matrix_response",
     "TaskAssignment": ".task_assignment",
@@ -520,6 +523,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserSimple": ".user_simple",
     "UserSimpleRequest": ".user_simple_request",
     "ValidateSamlMetadataUrlResponse": ".validate_saml_metadata_url_response",
+    "ValueCountsBackfillJob": ".value_counts_backfill_job",
     "VersionResponse": ".version_response",
     "View": ".view",
     "Webhook": ".webhook",
@@ -563,7 +567,7 @@ __all__ = [
     "AgreementSelectionRequest",
     "AgreementV2BackfillCancelResponse",
     "AgreementV2BackfillJob",
-    "AgreementV2BackfillJobStatusEnum",
+    "AgreementV2BackfillTriggerRequestRequest",
     "AgreementV2BackfillTriggerResponse",
     "AllRolesProjectList",
     "AnnotatedEnum",
@@ -789,6 +793,7 @@ __all__ = [
     "StateModel",
     "StateTriggeredBy",
     "Status7BfEnum",
+    "StatusA47Enum",
     "StatusC5AEnum",
     "TaskAgreementMatrixResponse",
     "TaskAssignment",
@@ -803,6 +808,7 @@ __all__ = [
     "UserSimple",
     "UserSimpleRequest",
     "ValidateSamlMetadataUrlResponse",
+    "ValueCountsBackfillJob",
     "VersionResponse",
     "View",
     "Webhook",

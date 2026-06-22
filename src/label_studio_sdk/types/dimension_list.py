@@ -83,6 +83,10 @@ class DimensionList(UncheckedBaseModel):
     """
 
     updated_at: typing.Optional[dt.datetime] = None
+    values_enum: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Schema-defined enum values for indexed value_counts. Refreshed only with label config changes.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

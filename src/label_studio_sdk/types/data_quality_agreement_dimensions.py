@@ -9,6 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class DataQualityAgreementDimensions(UncheckedBaseModel):
     agreement: typing.Optional[float] = None
+    control_tag: typing.Optional[str] = None
     from_name: str
     name: str
 

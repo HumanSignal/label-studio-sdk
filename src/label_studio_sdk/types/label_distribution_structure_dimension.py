@@ -28,6 +28,11 @@ class LabelDistributionStructureDimension(UncheckedBaseModel):
     Result item type for this dimension when available.
     """
 
+    unsupported_reason: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Reason this dimension cannot render label distribution rows, when unavailable.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

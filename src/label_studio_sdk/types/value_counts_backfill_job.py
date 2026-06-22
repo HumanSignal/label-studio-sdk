@@ -9,10 +9,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .status_a47enum import StatusA47Enum
 
 
-class AgreementV2BackfillJob(UncheckedBaseModel):
+class ValueCountsBackfillJob(UncheckedBaseModel):
     """
-    Serializes a DimensionsBackfillJob model instance.
-    Used by the list endpoint and as the base for the status endpoint.
+    Serializes a DimensionValueCountsBackfillJob model instance.
+    Used by the value-counts backfill list endpoint and as the base for the status endpoint.
     """
 
     completed_at: typing.Optional[dt.datetime] = None
@@ -29,7 +29,7 @@ class AgreementV2BackfillJob(UncheckedBaseModel):
 
     progress_data: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
-    JSON data tracking job progress (matrices_created, errors, etc.)
+    JSON data tracking job progress (rows_written, etc.)
     """
 
     project_id: typing.Optional[int] = pydantic.Field(default=None)
