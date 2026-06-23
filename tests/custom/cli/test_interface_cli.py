@@ -460,7 +460,7 @@ def test_preview_accepts_interface_directory(monkeypatch: Any, tmp_path: Path) -
         "code": "({ default: function Screen() { return null; } })",
         "task": {"text": "Example"},
     }
-    assert calls["watch_paths"] == (file.resolve(), task.resolve())
+    assert calls["watch_paths"] == (file.parent.resolve(),)
 
 
 def test_preview_resolves_local_paths(monkeypatch: Any, tmp_path: Path) -> None:
@@ -656,3 +656,39 @@ def test_preview_sends_last_task_data_on_code_change(monkeypatch: Any, tmp_path:
         "code": "({ default: function Screen() { return 'changed'; } })",
         "task": {"text": "Example"},
     }
+
+
+def test_preview_watches_and_discovers_task_file_later(monkeypatch: Any, tmp_path: Path) -> None:
+    file = tmp_path / "Screen.jsx"
+    file.write_text("({ default: function Screen() { return null; } })", encoding="utf-8")
+
+    # Task file does not exist initially
+    task = tmp_path / "task.json"
+
+    calls: dict[str, Any] = {}
+
+    def fake_watch(*paths: Path, **kwargs: Any) -> Any:
+        calls["watch_paths"] = paths
+        # Create task file during watch loop execution
+        task.write_text('{"text": "Discovered Task"}', encoding="utf-8")
+        yield [("modified", str(file))]
+        raise KeyboardInterrupt
+
+    _reset_fake_http()
+    monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=fake_watch))
+    monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
+
+    result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
+
+    assert result.exit_code == 0, result.output
+    assert calls["watch_paths"] == (file.parent.resolve(),)
+
+    client = FakeHttpClient.instances[-1]
+    # First call had no task data (pushed initial code)
+    assert client.calls[0][0] == "POST"
+    assert client.calls[0][2].get("task") is None
+
+    # Second call (after watcher triggered and discovered task.json)
+    assert len(client.calls) >= 2
+    assert client.calls[1][0] == "POST"
+    assert client.calls[1][2]["task"] == {"text": "Discovered Task"}

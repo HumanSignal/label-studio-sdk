@@ -858,14 +858,21 @@ def preview(
             webbrowser.open(playground_url)
 
         try:
-            watch_paths = [file]
-            if task is not None:
-                watch_paths.append(task)
             current_task_data = task_data
-            for changes in watch(*watch_paths, step=200, recursive=False):
+            watch_dir = file.parent
+            for changes in watch(watch_dir, step=200, recursive=False):
                 changed_paths = {Path(path).resolve() for _, path in changes}
-                task_changed = task is not None and task in changed_paths
-                if file not in changed_paths and not task_changed:
+                file_changed = file in changed_paths
+                task_changed = False
+                if task is None:
+                    resolved_task = _resolve_bundle_file(source_path, None, TASK_FILE_CANDIDATES)
+                    if resolved_task is not None:
+                        task = resolved_task.resolve()
+                        task_changed = True
+                else:
+                    task_changed = task in changed_paths
+
+                if not file_changed and not task_changed:
                     continue
                 try:
                     code = file.read_text(encoding="utf-8")
@@ -875,7 +882,7 @@ def preview(
                 source_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
                 if source_hash == last_pushed_hash and not task_changed:
                     continue
-                if task_changed:
+                if task_changed and task is not None:
                     current_task_data = _load_task(task)
                 stamp = time.strftime("%H:%M:%S")
                 if _post_preview(client, push_url, code=code, task=current_task_data, headers=headers):
