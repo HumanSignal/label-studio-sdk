@@ -17,6 +17,7 @@ from .configs import (
     PREDICTION_RECTANGLE_LABELS_CONFIG,
     PREDICTION_VIDEO_RECTANGLE_CONFIG,
     PREDICTION_VIDEO_VECTOR_LABELS_CONFIG,
+    PREDICTION_VIDEO_VECTOR_SEPARATE_LABELS_CONFIG,
     PREDICTION_NUMBER_CONFIG,
     PREDICTION_DATETIME_CONFIG,
     PREDICTION_HYPERTEXT_LABELS_CONFIG,
@@ -599,6 +600,70 @@ class TestPredictionValidation:
             }]
         }
         assert li.validate_prediction(minimal_pred) is True
+
+    def test_video_vector_separate_labels_validation(self):
+        """Separate <Labels> + <VideoVector> produce a single merged region of
+        type 'videovectorlabels' whose from_name is the Labels control and whose
+        chosen labels are stored under the 'videovectorlabels' value key.
+
+        Regression for BROS-1144: importing such predictions previously failed
+        with a spurious type-mismatch and an invalid-value error.
+        """
+        li = LabelInterface(PREDICTION_VIDEO_VECTOR_SEPARATE_LABELS_CONFIG)
+
+        valid_pred = {
+            "result": [{
+                "id": "abc123",
+                "from_name": "labels",
+                "to_name": "video",
+                "type": "videovectorlabels",
+                "value": {
+                    "duration": 42.008633,
+                    "framesCount": 1050,
+                    "sequence": [{
+                        "time": 0.04,
+                        "frame": 1,
+                        "closed": True,
+                        "enabled": True,
+                        "vertices": [
+                            {"x": 24.35, "y": 12.16, "id": "v1", "isBezier": False},
+                            {"x": 10.20, "y": 33.83, "id": "v2", "isBezier": False, "prevPointId": "v1"},
+                        ],
+                    }],
+                    "videovectorlabels": ["Area51"],
+                },
+            }],
+            "score": 0.9,
+        }
+        # No errors and no spurious type-mismatch
+        errors = li.validate_prediction(valid_pred, return_errors=True)
+        assert errors == [], errors
+        assert li.validate_prediction(valid_pred) is True
+
+        # Invalid - label not in the Labels control
+        invalid_label = copy.deepcopy(valid_pred)
+        invalid_label["result"][0]["value"]["videovectorlabels"] = ["NonExistentLabel"]
+        assert li.validate_prediction(invalid_label) is False
+        errors = li.validate_prediction(invalid_label, return_errors=True)
+        assert any("Invalid value for control 'labels'" in error for error in errors)
+        assert not any("does not match expected type" in error for error in errors)
+
+        # Invalid - broken geometry (vertices missing required coordinates)
+        invalid_geom = copy.deepcopy(valid_pred)
+        invalid_geom["result"][0]["value"]["sequence"][0]["vertices"] = [{"id": "v1"}]
+        assert li.validate_prediction(invalid_geom) is False
+
+        # Invalid - label key omitted entirely (valid geometry, no labels). The
+        # merged path must stay as strict as the regular <Labels> path and not
+        # accept a region without a chosen label.
+        missing_label = copy.deepcopy(valid_pred)
+        del missing_label["result"][0]["value"]["videovectorlabels"]
+        assert li.validate_prediction(missing_label) is False
+
+        # Invalid - label key present but empty
+        empty_label = copy.deepcopy(valid_pred)
+        empty_label["result"][0]["value"]["videovectorlabels"] = []
+        assert li.validate_prediction(empty_label) is False
 
     def test_number_validation(self):
         """Test Number tag validation"""

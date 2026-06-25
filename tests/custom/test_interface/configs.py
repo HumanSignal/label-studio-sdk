@@ -271,6 +271,18 @@ PREDICTION_VIDEO_VECTOR_LABELS_CONFIG = """
 </View>
 """
 
+PREDICTION_VIDEO_VECTOR_SEPARATE_LABELS_CONFIG = """
+<View>
+  <Labels name="labels" toName="video">
+    <Label value="Road"/>
+    <Label value="Boundary" background="gold"/>
+    <Label value="Area51" background="cyan"/>
+  </Labels>
+  <Video name="video" value="$video" framerate="25.0"/>
+  <VideoVector name="box" toName="video" />
+</View>
+"""
+
 PREDICTION_NUMBER_CONFIG = """
 <View>
   <Text name="text" value="$text"/>

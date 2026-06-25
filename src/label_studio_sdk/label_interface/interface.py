@@ -941,7 +941,13 @@ class LabelInterface:
         # Validate type matches control tag
         expected_type = control.tag.lower()
         actual_type = region["type"].lower()
-        if actual_type != expected_type:
+        # A generic <Labels> control attached to a geometry tool (for example
+        # <VideoVector>) produces a single merged region whose type is the
+        # geometry's labeled variant (e.g. "videovectorlabels") rather than the
+        # control tag ("labels"). Detect the companion geometry control so the
+        # merged region validates against the right geometry/labels rules.
+        merged_geometry_control = self._merged_labels_geometry_control(control, actual_type)
+        if actual_type != expected_type and merged_geometry_control is None:
             errors.append(f"Region {region_index}: Type '{actual_type}' does not match expected type '{expected_type}' for control '{region['from_name']}'")
 
         # Validate to_name is in control's to_name list
@@ -950,7 +956,13 @@ class LabelInterface:
 
         # Validate the value using control's validate_value method
         try:
-            if not control.validate_value(region["value"], context=context):
+            if merged_geometry_control is not None:
+                value_is_valid = self._validate_merged_labels_value(
+                    control, merged_geometry_control, actual_type, region["value"]
+                )
+            else:
+                value_is_valid = control.validate_value(region["value"], context=context)
+            if not value_is_valid:
                 # Prefer a clearer message for rectangle geometry bounds
                 tag_lower = getattr(control, 'tag', '').lower()
                 if tag_lower in ('rectangle', 'rectanglelabels'):
@@ -986,6 +998,77 @@ class LabelInterface:
             errors.append(f"Region {region_index}: Error validating value for control '{region['from_name']}': {str(e)}")
 
         return len(errors) == 0, errors
+
+    def _merged_labels_geometry_control(self, control, region_type):
+        """Resolve the geometry control for a merged labels-on-geometry region.
+
+        When a generic ``<Labels>`` control is connected to a geometry tool such
+        as ``<VideoVector>`` (sharing the same object), the editor serializes a
+        labeled region as a single result whose ``from_name`` is the labels
+        control but whose ``type`` is the geometry's labeled variant (for
+        example ``videovectorlabels``). The chosen labels live in the region
+        ``value`` under a key equal to that type.
+
+        Returns the sibling geometry control when ``region_type`` describes such
+        a merged region, otherwise ``None`` so normal validation applies.
+        """
+        if not region_type:
+            return None
+        # Only the generic Labels control drives these merged regions; dedicated
+        # labeled controls (RectangleLabels, VideoVectorLabels, …) already match
+        # their own type and must not be re-routed here.
+        if getattr(control, "tag", "").lower() != "labels":
+            return None
+        suffix = "labels"
+        if region_type == suffix or not region_type.endswith(suffix):
+            return None
+        geometry_type = region_type[: -len(suffix)]
+        labels_objects = set(control.to_name or [])
+        for sibling in self.controls:
+            if sibling is control:
+                continue
+            if getattr(sibling, "tag", "").lower() != geometry_type:
+                continue
+            # The geometry tool must target the same object as the labels control.
+            if labels_objects & set(sibling.to_name or []):
+                return sibling
+        return None
+
+    def _validate_merged_labels_value(self, labels_control, geometry_control, region_type, value):
+        """Validate the value of a merged labels-on-geometry region.
+
+        The geometry fields are validated against the companion control's value
+        class, while the chosen labels (stored under a key equal to
+        ``region_type``, falling back to the labels control's label attribute)
+        must be present and a subset of the labels control's labels. The label
+        key is required: a merged region with valid geometry but no labels is
+        rejected, mirroring the strictness of the regular ``<Labels>`` path.
+        """
+        if not isinstance(value, dict):
+            return False
+
+        # Chosen labels are keyed by the merged region type (e.g.
+        # "videovectorlabels"), with a fallback to the plain label key.
+        label_key = region_type if region_type in value else getattr(labels_control, "_label_attr_name", "labels")
+        chosen_labels = value.get(label_key)
+        if not isinstance(chosen_labels, list) or not chosen_labels:
+            return False
+        valid_labels = set(labels_control.labels or [])
+        if any(label not in valid_labels for label in chosen_labels):
+            return False
+
+        # Validate the geometry payload against the companion control's value
+        # class. The labels key is dropped so it is not mistaken for a geometry
+        # field (extra keys are otherwise ignored by the pydantic models).
+        value_class = getattr(geometry_control, "_value_class", None)
+        if value_class is None:
+            return True
+        geometry_value = {k: v for k, v in value.items() if k != label_key}
+        try:
+            value_class(**geometry_value)
+        except Exception:
+            return False
+        return True
 
     def _get_valid_values_for_control(self, control):
         """Get valid values for a control tag to provide better error messages."""
