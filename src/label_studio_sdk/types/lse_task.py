@@ -23,7 +23,7 @@ class LseTask(UncheckedBaseModel):
     """
 
     annotation_time: typing.Optional[int] = None
-    annotations: typing.Optional[str] = None
+    annotations: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
     annotations_ids: typing.Optional[str] = None
     annotations_results: typing.Optional[str] = None
     annotators: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
