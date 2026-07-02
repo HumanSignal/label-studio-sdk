@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .iaa_stats_response_std import IaaStatsResponseStd
     from .lead_time_stats_response import LeadTimeStatsResponse
     from .lead_time_stats_response_lead_time_stats_item import LeadTimeStatsResponseLeadTimeStatsItem
+    from .member_performance_participants_stats_request_table import MemberPerformanceParticipantsStatsRequestTable
     from .member_performance_rows_stats_request_table import MemberPerformanceRowsStatsRequestTable
     from .member_performance_rows_stats_response import MemberPerformanceRowsStatsResponse
     from .member_performance_summary_stats_request_table import MemberPerformanceSummaryStatsRequestTable
@@ -67,6 +68,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "IaaStatsResponseStd": ".iaa_stats_response_std",
     "LeadTimeStatsResponse": ".lead_time_stats_response",
     "LeadTimeStatsResponseLeadTimeStatsItem": ".lead_time_stats_response_lead_time_stats_item",
+    "MemberPerformanceParticipantsStatsRequestTable": ".member_performance_participants_stats_request_table",
     "MemberPerformanceRowsStatsRequestTable": ".member_performance_rows_stats_request_table",
     "MemberPerformanceRowsStatsResponse": ".member_performance_rows_stats_response",
     "MemberPerformanceSummaryStatsRequestTable": ".member_performance_summary_stats_request_table",
@@ -129,6 +131,7 @@ __all__ = [
     "IaaStatsResponseStd",
     "LeadTimeStatsResponse",
     "LeadTimeStatsResponseLeadTimeStatsItem",
+    "MemberPerformanceParticipantsStatsRequestTable",
     "MemberPerformanceRowsStatsRequestTable",
     "MemberPerformanceRowsStatsResponse",
     "MemberPerformanceSummaryStatsRequestTable",

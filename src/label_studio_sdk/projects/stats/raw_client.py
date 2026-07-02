@@ -16,6 +16,7 @@ from ...types.data_quality_agreement_dimensions import DataQualityAgreementDimen
 from ...types.data_quality_agreement_distribution import DataQualityAgreementDistribution
 from ...types.label_distribution_counts_response import LabelDistributionCountsResponse
 from ...types.label_distribution_structure_response import LabelDistributionStructureResponse
+from ...types.user_simple import UserSimple
 from .types.agreement_annotator_stats_response import AgreementAnnotatorStatsResponse
 from .types.agreement_annotators_stats_response import AgreementAnnotatorsStatsResponse
 from .types.data_filters_stats_response import DataFiltersStatsResponse
@@ -25,6 +26,7 @@ from .types.data_quality_agreement_confusion_matrix_stats_request_mode import (
 from .types.finished_tasks_stats_response import FinishedTasksStatsResponse
 from .types.iaa_stats_response import IaaStatsResponse
 from .types.lead_time_stats_response import LeadTimeStatsResponse
+from .types.member_performance_participants_stats_request_table import MemberPerformanceParticipantsStatsRequestTable
 from .types.member_performance_rows_stats_request_table import MemberPerformanceRowsStatsRequestTable
 from .types.member_performance_rows_stats_response import MemberPerformanceRowsStatsResponse
 from .types.member_performance_summary_stats_request_table import MemberPerformanceSummaryStatsRequestTable
@@ -870,6 +872,64 @@ class RawStatsClient:
                     LeadTimeStatsResponse,
                     construct_type(
                         type_=LeadTimeStatsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def member_performance_participants(
+        self,
+        id: int,
+        *,
+        table: typing.Optional[MemberPerformanceParticipantsStatsRequestTable] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.List[UserSimple]]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Human participants for the Member Performance dropdown.
+
+        Parameters
+        ----------
+        id : int
+
+        table : typing.Optional[MemberPerformanceParticipantsStatsRequestTable]
+            Which participant scope to load: "annotations" or "reviews".
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.List[UserSimple]]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/stats/member_performance_participants/",
+            method="GET",
+            params={
+                "table": table,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[UserSimple],
+                    construct_type(
+                        type_=typing.List[UserSimple],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2304,6 +2364,64 @@ class AsyncRawStatsClient:
                     LeadTimeStatsResponse,
                     construct_type(
                         type_=LeadTimeStatsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def member_performance_participants(
+        self,
+        id: int,
+        *,
+        table: typing.Optional[MemberPerformanceParticipantsStatsRequestTable] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.List[UserSimple]]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Human participants for the Member Performance dropdown.
+
+        Parameters
+        ----------
+        id : int
+
+        table : typing.Optional[MemberPerformanceParticipantsStatsRequestTable]
+            Which participant scope to load: "annotations" or "reviews".
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.List[UserSimple]]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/stats/member_performance_participants/",
+            method="GET",
+            params={
+                "table": table,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[UserSimple],
+                    construct_type(
+                        type_=typing.List[UserSimple],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -9,6 +9,7 @@ from ...types.data_quality_agreement_dimensions import DataQualityAgreementDimen
 from ...types.data_quality_agreement_distribution import DataQualityAgreementDistribution
 from ...types.label_distribution_counts_response import LabelDistributionCountsResponse
 from ...types.label_distribution_structure_response import LabelDistributionStructureResponse
+from ...types.user_simple import UserSimple
 from .raw_client import AsyncRawStatsClient, RawStatsClient
 from .types.agreement_annotator_stats_response import AgreementAnnotatorStatsResponse
 from .types.agreement_annotators_stats_response import AgreementAnnotatorsStatsResponse
@@ -19,6 +20,7 @@ from .types.data_quality_agreement_confusion_matrix_stats_request_mode import (
 from .types.finished_tasks_stats_response import FinishedTasksStatsResponse
 from .types.iaa_stats_response import IaaStatsResponse
 from .types.lead_time_stats_response import LeadTimeStatsResponse
+from .types.member_performance_participants_stats_request_table import MemberPerformanceParticipantsStatsRequestTable
 from .types.member_performance_rows_stats_request_table import MemberPerformanceRowsStatsRequestTable
 from .types.member_performance_rows_stats_response import MemberPerformanceRowsStatsResponse
 from .types.member_performance_summary_stats_request_table import MemberPerformanceSummaryStatsRequestTable
@@ -722,6 +724,51 @@ class StatsClient:
         )
         """
         _response = self._raw_client.lead_time(id, request_options=request_options)
+        return _response.data
+
+    def member_performance_participants(
+        self,
+        id: int,
+        *,
+        table: typing.Optional[MemberPerformanceParticipantsStatsRequestTable] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[UserSimple]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Human participants for the Member Performance dropdown.
+
+        Parameters
+        ----------
+        id : int
+
+        table : typing.Optional[MemberPerformanceParticipantsStatsRequestTable]
+            Which participant scope to load: "annotations" or "reviews".
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[UserSimple]
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stats.member_performance_participants(
+            id=1,
+        )
+        """
+        _response = self._raw_client.member_performance_participants(id, table=table, request_options=request_options)
         return _response.data
 
     def member_performance_rows(
@@ -1997,6 +2044,61 @@ class AsyncStatsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.lead_time(id, request_options=request_options)
+        return _response.data
+
+    async def member_performance_participants(
+        self,
+        id: int,
+        *,
+        table: typing.Optional[MemberPerformanceParticipantsStatsRequestTable] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[UserSimple]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Human participants for the Member Performance dropdown.
+
+        Parameters
+        ----------
+        id : int
+
+        table : typing.Optional[MemberPerformanceParticipantsStatsRequestTable]
+            Which participant scope to load: "annotations" or "reviews".
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[UserSimple]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stats.member_performance_participants(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.member_performance_participants(
+            id, table=table, request_options=request_options
+        )
         return _response.data
 
     async def member_performance_rows(
