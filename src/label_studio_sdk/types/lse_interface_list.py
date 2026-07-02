@@ -10,20 +10,10 @@ from .user_simple import UserSimple
 
 
 class LseInterfaceList(UncheckedBaseModel):
-    code: str = pydantic.Field()
-    """
-    JSX source code for the interface screen module
-    """
-
     created_at: typing.Optional[dt.datetime] = None
     created_by: typing.Optional[UserSimple] = None
     description: typing.Optional[str] = None
     id: typing.Optional[int] = None
-    input_schema: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    JSON Schema declaring expected task data field types for import validation
-    """
-
     is_system: typing.Optional[bool] = pydantic.Field(default=None)
     """
     HumanSignal-provided system template visible to all organizations
@@ -34,13 +24,18 @@ class LseInterfaceList(UncheckedBaseModel):
     Arbitrary metadata for this interface
     """
 
-    output_schema: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    projects_count: typing.Optional[int] = None
+    published_versions_count: typing.Optional[int] = pydantic.Field(default=None)
     """
-    JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
+    Number of published versions for list cards (derived from versions JSON)
     """
 
-    projects_count: typing.Optional[int] = None
     title: str
+    type_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    CamelCase screen component name for list cards (derived from code)
+    """
+
     updated_at: typing.Optional[dt.datetime] = None
     versions: typing.Optional[str] = None
     workspace: typing.Optional[int] = None
