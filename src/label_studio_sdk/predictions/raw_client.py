@@ -26,6 +26,7 @@ class RawPredictionsClient:
         *,
         project: typing.Optional[int] = None,
         task: typing.Optional[int] = None,
+        task_project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.List[Prediction]]:
         """
@@ -38,6 +39,8 @@ class RawPredictionsClient:
 
         task : typing.Optional[int]
             Filter predictions by task ID
+
+        task_project : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -53,6 +56,7 @@ class RawPredictionsClient:
             params={
                 "project": project,
                 "task": task,
+                "task__project": task_project,
             },
             request_options=request_options,
         )
@@ -299,6 +303,7 @@ class AsyncRawPredictionsClient:
         *,
         project: typing.Optional[int] = None,
         task: typing.Optional[int] = None,
+        task_project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.List[Prediction]]:
         """
@@ -311,6 +316,8 @@ class AsyncRawPredictionsClient:
 
         task : typing.Optional[int]
             Filter predictions by task ID
+
+        task_project : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -326,6 +333,7 @@ class AsyncRawPredictionsClient:
             params={
                 "project": project,
                 "task": task,
+                "task__project": task_project,
             },
             request_options=request_options,
         )

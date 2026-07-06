@@ -41,6 +41,7 @@ class PaginatedClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PaginatedProjectMember, PaginatedPaginatedProjectMemberList]:
@@ -123,6 +124,9 @@ class PaginatedClient:
         tags : typing.Optional[str]
             Filter members by tags. Use a comma-separated list of tag IDs.
 
+        user_type : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
         with_deleted : typing.Optional[bool]
             Include deleted members in the results
 
@@ -163,6 +167,7 @@ class PaginatedClient:
             role=role,
             search=search,
             tags=tags,
+            user_type=user_type,
             with_deleted=with_deleted,
             request_options=request_options,
         )
@@ -198,6 +203,7 @@ class AsyncPaginatedClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PaginatedProjectMember, PaginatedPaginatedProjectMemberList]:
@@ -280,6 +286,9 @@ class AsyncPaginatedClient:
         tags : typing.Optional[str]
             Filter members by tags. Use a comma-separated list of tag IDs.
 
+        user_type : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
         with_deleted : typing.Optional[bool]
             Include deleted members in the results
 
@@ -329,6 +338,7 @@ class AsyncPaginatedClient:
             role=role,
             search=search,
             tags=tags,
+            user_type=user_type,
             with_deleted=with_deleted,
             request_options=request_options,
         )

@@ -270,7 +270,7 @@ class RawCommentsClient:
 
     def get(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -286,7 +286,8 @@ class RawCommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -328,7 +329,7 @@ class RawCommentsClient:
 
     def delete(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -344,7 +345,8 @@ class RawCommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -378,7 +380,7 @@ class RawCommentsClient:
 
     def update(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         annotation: typing.Optional[int] = OMIT,
@@ -400,7 +402,8 @@ class RawCommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -722,7 +725,7 @@ class AsyncRawCommentsClient:
 
     async def get(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -738,7 +741,8 @@ class AsyncRawCommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -780,7 +784,7 @@ class AsyncRawCommentsClient:
 
     async def delete(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -796,7 +800,8 @@ class AsyncRawCommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -830,7 +835,7 @@ class AsyncRawCommentsClient:
 
     async def update(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         annotation: typing.Optional[int] = OMIT,
@@ -852,7 +857,8 @@ class AsyncRawCommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field

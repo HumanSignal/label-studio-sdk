@@ -196,7 +196,7 @@ class ModelProvidersClient:
         _response = self._raw_client.list_model_provider_choices(request_options=request_options)
         return _response.data
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -208,7 +208,8 @@ class ModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -226,13 +227,13 @@ class ModelProvidersClient:
             api_key="YOUR_API_KEY",
         )
         client.model_providers.get(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -244,7 +245,8 @@ class ModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -261,7 +263,7 @@ class ModelProvidersClient:
             api_key="YOUR_API_KEY",
         )
         client.model_providers.delete(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
@@ -269,7 +271,7 @@ class ModelProvidersClient:
 
     def update(
         self,
-        id: str,
+        id: int,
         *,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
@@ -296,7 +298,8 @@ class ModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         api_key : typing.Optional[str]
             Model provider API key
@@ -348,7 +351,7 @@ class ModelProvidersClient:
             api_key="YOUR_API_KEY",
         )
         client.model_providers.update(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.update(
@@ -576,7 +579,7 @@ class AsyncModelProvidersClient:
         _response = await self._raw_client.list_model_provider_choices(request_options=request_options)
         return _response.data
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -588,7 +591,8 @@ class AsyncModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -611,7 +615,7 @@ class AsyncModelProvidersClient:
 
         async def main() -> None:
             await client.model_providers.get(
-                id="id",
+                id=1,
             )
 
 
@@ -620,7 +624,7 @@ class AsyncModelProvidersClient:
         _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -632,7 +636,8 @@ class AsyncModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -654,7 +659,7 @@ class AsyncModelProvidersClient:
 
         async def main() -> None:
             await client.model_providers.delete(
-                id="id",
+                id=1,
             )
 
 
@@ -665,7 +670,7 @@ class AsyncModelProvidersClient:
 
     async def update(
         self,
-        id: str,
+        id: int,
         *,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
@@ -692,7 +697,8 @@ class AsyncModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         api_key : typing.Optional[str]
             Model provider API key
@@ -749,7 +755,7 @@ class AsyncModelProvidersClient:
 
         async def main() -> None:
             await client.model_providers.update(
-                id="id",
+                id=1,
             )
 
 

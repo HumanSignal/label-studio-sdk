@@ -34,7 +34,9 @@ class InterfacesClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        scope: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        workspace: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedLseInterfaceListList:
         """
@@ -57,8 +59,12 @@ class InterfacesClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
+        scope : typing.Optional[str]
+
         search : typing.Optional[str]
             A search term.
+
+        workspace : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -78,7 +84,13 @@ class InterfacesClient:
         client.interfaces.list()
         """
         _response = self._raw_client.list(
-            ordering=ordering, page=page, page_size=page_size, search=search, request_options=request_options
+            ordering=ordering,
+            page=page,
+            page_size=page_size,
+            scope=scope,
+            search=search,
+            workspace=workspace,
+            request_options=request_options,
         )
         return _response.data
 
@@ -180,7 +192,7 @@ class InterfacesClient:
         )
         return _response.data
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> LseInterface:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseInterface:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -192,7 +204,8 @@ class InterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -210,7 +223,7 @@ class InterfacesClient:
             api_key="YOUR_API_KEY",
         )
         client.interfaces.get(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
@@ -218,7 +231,7 @@ class InterfacesClient:
 
     def update(
         self,
-        id: str,
+        id: int,
         *,
         code: str,
         compiled: str,
@@ -245,7 +258,8 @@ class InterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         code : str
             JSX source code for the interface screen module
@@ -295,7 +309,7 @@ class InterfacesClient:
             api_key="YOUR_API_KEY",
         )
         client.interfaces.update(
-            id="id",
+            id=1,
             code="code",
             compiled="compiled",
             title="title",
@@ -319,7 +333,7 @@ class InterfacesClient:
         )
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -331,7 +345,8 @@ class InterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -348,7 +363,7 @@ class InterfacesClient:
             api_key="YOUR_API_KEY",
         )
         client.interfaces.delete(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
@@ -356,7 +371,7 @@ class InterfacesClient:
 
     def partial_update(
         self,
-        id: str,
+        id: int,
         *,
         artifacts: typing.Optional[typing.Any] = OMIT,
         code: typing.Optional[str] = OMIT,
@@ -383,7 +398,8 @@ class InterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         artifacts : typing.Optional[typing.Any]
             AI-produced code snapshots for session continuity
@@ -433,7 +449,7 @@ class InterfacesClient:
             api_key="YOUR_API_KEY",
         )
         client.interfaces.partial_update(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.partial_update(
@@ -456,7 +472,7 @@ class InterfacesClient:
 
     def append_versions(
         self,
-        id: str,
+        id: int,
         *,
         versions: typing.Sequence[LseInterfaceAppendVersionRequest],
         artifacts: typing.Optional[typing.Any] = OMIT,
@@ -481,7 +497,8 @@ class InterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         versions : typing.Sequence[LseInterfaceAppendVersionRequest]
 
@@ -519,7 +536,7 @@ class InterfacesClient:
             api_key="YOUR_API_KEY",
         )
         client.interfaces.append_versions(
-            id="id",
+            id=1,
             versions=[
                 LseInterfaceAppendVersionRequest(
                     code="code",
@@ -546,7 +563,7 @@ class InterfacesClient:
 
     def duplicate(
         self,
-        id: str,
+        id: int,
         *,
         code: str,
         compiled: str,
@@ -573,7 +590,8 @@ class InterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         code : str
             JSX source code for the interface screen module
@@ -623,7 +641,7 @@ class InterfacesClient:
             api_key="YOUR_API_KEY",
         )
         client.interfaces.duplicate(
-            id="id",
+            id=1,
             code="code",
             compiled="compiled",
             title="title",
@@ -648,7 +666,7 @@ class InterfacesClient:
         return _response.data
 
     def publish_version(
-        self, id: str, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> LseInterface:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -661,7 +679,8 @@ class InterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         version_id : int
             Stable interface version ID.
@@ -682,7 +701,7 @@ class InterfacesClient:
             api_key="YOUR_API_KEY",
         )
         client.interfaces.publish_version(
-            id="id",
+            id=1,
             version_id=1,
         )
         """
@@ -690,7 +709,7 @@ class InterfacesClient:
         return _response.data
 
     def unpublish_version(
-        self, id: str, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> LseInterface:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -703,7 +722,8 @@ class InterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         version_id : int
             Stable interface version ID.
@@ -724,7 +744,7 @@ class InterfacesClient:
             api_key="YOUR_API_KEY",
         )
         client.interfaces.unpublish_version(
-            id="id",
+            id=1,
             version_id=1,
         )
         """
@@ -732,7 +752,7 @@ class InterfacesClient:
         return _response.data
 
     def update_version_description(
-        self, id: str, *, description: str, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, description: str, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> LseInterface:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -745,7 +765,8 @@ class InterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         description : str
             Description to store on the saved interface version.
@@ -769,7 +790,7 @@ class InterfacesClient:
             api_key="YOUR_API_KEY",
         )
         client.interfaces.update_version_description(
-            id="id",
+            id=1,
             description="description",
             version_id=1,
         )
@@ -801,7 +822,9 @@ class AsyncInterfacesClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        scope: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        workspace: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedLseInterfaceListList:
         """
@@ -824,8 +847,12 @@ class AsyncInterfacesClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
+        scope : typing.Optional[str]
+
         search : typing.Optional[str]
             A search term.
+
+        workspace : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -853,7 +880,13 @@ class AsyncInterfacesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            ordering=ordering, page=page, page_size=page_size, search=search, request_options=request_options
+            ordering=ordering,
+            page=page,
+            page_size=page_size,
+            scope=scope,
+            search=search,
+            workspace=workspace,
+            request_options=request_options,
         )
         return _response.data
 
@@ -963,7 +996,7 @@ class AsyncInterfacesClient:
         )
         return _response.data
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> LseInterface:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseInterface:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -975,7 +1008,8 @@ class AsyncInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -998,7 +1032,7 @@ class AsyncInterfacesClient:
 
         async def main() -> None:
             await client.interfaces.get(
-                id="id",
+                id=1,
             )
 
 
@@ -1009,7 +1043,7 @@ class AsyncInterfacesClient:
 
     async def update(
         self,
-        id: str,
+        id: int,
         *,
         code: str,
         compiled: str,
@@ -1036,7 +1070,8 @@ class AsyncInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         code : str
             JSX source code for the interface screen module
@@ -1091,7 +1126,7 @@ class AsyncInterfacesClient:
 
         async def main() -> None:
             await client.interfaces.update(
-                id="id",
+                id=1,
                 code="code",
                 compiled="compiled",
                 title="title",
@@ -1118,7 +1153,7 @@ class AsyncInterfacesClient:
         )
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1130,7 +1165,8 @@ class AsyncInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1152,7 +1188,7 @@ class AsyncInterfacesClient:
 
         async def main() -> None:
             await client.interfaces.delete(
-                id="id",
+                id=1,
             )
 
 
@@ -1163,7 +1199,7 @@ class AsyncInterfacesClient:
 
     async def partial_update(
         self,
-        id: str,
+        id: int,
         *,
         artifacts: typing.Optional[typing.Any] = OMIT,
         code: typing.Optional[str] = OMIT,
@@ -1190,7 +1226,8 @@ class AsyncInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         artifacts : typing.Optional[typing.Any]
             AI-produced code snapshots for session continuity
@@ -1245,7 +1282,7 @@ class AsyncInterfacesClient:
 
         async def main() -> None:
             await client.interfaces.partial_update(
-                id="id",
+                id=1,
             )
 
 
@@ -1271,7 +1308,7 @@ class AsyncInterfacesClient:
 
     async def append_versions(
         self,
-        id: str,
+        id: int,
         *,
         versions: typing.Sequence[LseInterfaceAppendVersionRequest],
         artifacts: typing.Optional[typing.Any] = OMIT,
@@ -1296,7 +1333,8 @@ class AsyncInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         versions : typing.Sequence[LseInterfaceAppendVersionRequest]
 
@@ -1339,7 +1377,7 @@ class AsyncInterfacesClient:
 
         async def main() -> None:
             await client.interfaces.append_versions(
-                id="id",
+                id=1,
                 versions=[
                     LseInterfaceAppendVersionRequest(
                         code="code",
@@ -1369,7 +1407,7 @@ class AsyncInterfacesClient:
 
     async def duplicate(
         self,
-        id: str,
+        id: int,
         *,
         code: str,
         compiled: str,
@@ -1396,7 +1434,8 @@ class AsyncInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         code : str
             JSX source code for the interface screen module
@@ -1451,7 +1490,7 @@ class AsyncInterfacesClient:
 
         async def main() -> None:
             await client.interfaces.duplicate(
-                id="id",
+                id=1,
                 code="code",
                 compiled="compiled",
                 title="title",
@@ -1479,7 +1518,7 @@ class AsyncInterfacesClient:
         return _response.data
 
     async def publish_version(
-        self, id: str, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> LseInterface:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1492,7 +1531,8 @@ class AsyncInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         version_id : int
             Stable interface version ID.
@@ -1518,7 +1558,7 @@ class AsyncInterfacesClient:
 
         async def main() -> None:
             await client.interfaces.publish_version(
-                id="id",
+                id=1,
                 version_id=1,
             )
 
@@ -1529,7 +1569,7 @@ class AsyncInterfacesClient:
         return _response.data
 
     async def unpublish_version(
-        self, id: str, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> LseInterface:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1542,7 +1582,8 @@ class AsyncInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         version_id : int
             Stable interface version ID.
@@ -1568,7 +1609,7 @@ class AsyncInterfacesClient:
 
         async def main() -> None:
             await client.interfaces.unpublish_version(
-                id="id",
+                id=1,
                 version_id=1,
             )
 
@@ -1579,7 +1620,7 @@ class AsyncInterfacesClient:
         return _response.data
 
     async def update_version_description(
-        self, id: str, *, description: str, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, description: str, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> LseInterface:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1592,7 +1633,8 @@ class AsyncInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         description : str
             Description to store on the saved interface version.
@@ -1621,7 +1663,7 @@ class AsyncInterfacesClient:
 
         async def main() -> None:
             await client.interfaces.update_version_description(
-                id="id",
+                id=1,
                 description="description",
                 version_id=1,
             )

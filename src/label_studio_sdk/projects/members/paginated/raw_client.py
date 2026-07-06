@@ -36,6 +36,7 @@ class RawPaginatedClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PaginatedProjectMember, PaginatedPaginatedProjectMemberList]:
@@ -118,6 +119,9 @@ class RawPaginatedClient:
         tags : typing.Optional[str]
             Filter members by tags. Use a comma-separated list of tag IDs.
 
+        user_type : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
         with_deleted : typing.Optional[bool]
             Include deleted members in the results
 
@@ -146,6 +150,7 @@ class RawPaginatedClient:
                 "role": role,
                 "search": search,
                 "tags": tags,
+                "user_type": ",".join(map(str, user_type)) if isinstance(user_type, (list, tuple, set)) else user_type,
                 "with_deleted": with_deleted,
             },
             request_options=request_options,
@@ -174,6 +179,7 @@ class RawPaginatedClient:
                     role=role,
                     search=search,
                     tags=tags,
+                    user_type=user_type,
                     with_deleted=with_deleted,
                     request_options=request_options,
                 )
@@ -207,6 +213,7 @@ class AsyncRawPaginatedClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PaginatedProjectMember, PaginatedPaginatedProjectMemberList]:
@@ -289,6 +296,9 @@ class AsyncRawPaginatedClient:
         tags : typing.Optional[str]
             Filter members by tags. Use a comma-separated list of tag IDs.
 
+        user_type : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
         with_deleted : typing.Optional[bool]
             Include deleted members in the results
 
@@ -317,6 +327,7 @@ class AsyncRawPaginatedClient:
                 "role": role,
                 "search": search,
                 "tags": tags,
+                "user_type": ",".join(map(str, user_type)) if isinstance(user_type, (list, tuple, set)) else user_type,
                 "with_deleted": with_deleted,
             },
             request_options=request_options,
@@ -347,6 +358,7 @@ class AsyncRawPaginatedClient:
                         role=role,
                         search=search,
                         tags=tags,
+                        user_type=user_type,
                         with_deleted=with_deleted,
                         request_options=request_options,
                     )

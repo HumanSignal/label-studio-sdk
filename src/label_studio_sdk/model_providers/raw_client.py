@@ -232,7 +232,7 @@ class RawModelProvidersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ModelProviderConnection]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -245,7 +245,8 @@ class RawModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -279,7 +280,7 @@ class RawModelProvidersClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -291,7 +292,8 @@ class RawModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -319,7 +321,7 @@ class RawModelProvidersClient:
 
     def update(
         self,
-        id: str,
+        id: int,
         *,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
@@ -346,7 +348,8 @@ class RawModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         api_key : typing.Optional[str]
             Model provider API key
@@ -645,7 +648,7 @@ class AsyncRawModelProvidersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ModelProviderConnection]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -658,7 +661,8 @@ class AsyncRawModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -693,7 +697,7 @@ class AsyncRawModelProvidersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -706,7 +710,8 @@ class AsyncRawModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -734,7 +739,7 @@ class AsyncRawModelProvidersClient:
 
     async def update(
         self,
-        id: str,
+        id: int,
         *,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
@@ -761,7 +766,8 @@ class AsyncRawModelProvidersClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model provider connection.
 
         api_key : typing.Optional[str]
             Model provider API key

@@ -452,10 +452,16 @@ class PromptsClient:
     def compatible_projects(
         self,
         *,
+        archived: typing.Optional[bool] = None,
+        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
+        source_interface_id: typing.Optional[float] = None,
+        state: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        workspaces: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedAllRolesProjectListList:
         """
@@ -463,6 +469,12 @@ class PromptsClient:
 
         Parameters
         ----------
+        archived : typing.Optional[bool]
+            Filter by projects that belong to archived workspaces
+
+        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
@@ -474,6 +486,14 @@ class PromptsClient:
 
         project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
             Skill to filter by
+
+        source_interface_id : typing.Optional[float]
+
+        state : typing.Optional[str]
+
+        title : typing.Optional[str]
+
+        workspaces : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -493,10 +513,16 @@ class PromptsClient:
         client.prompts.compatible_projects()
         """
         _response = self._raw_client.compatible_projects(
+            archived=archived,
+            ids=ids,
             ordering=ordering,
             page=page,
             page_size=page_size,
             project_type=project_type,
+            source_interface_id=source_interface_id,
+            state=state,
+            title=title,
+            workspaces=workspaces,
             request_options=request_options,
         )
         return _response.data
@@ -1148,10 +1174,16 @@ class AsyncPromptsClient:
     async def compatible_projects(
         self,
         *,
+        archived: typing.Optional[bool] = None,
+        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         project_type: typing.Optional[CompatibleProjectsPromptsRequestProjectType] = None,
+        source_interface_id: typing.Optional[float] = None,
+        state: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        workspaces: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedAllRolesProjectListList:
         """
@@ -1159,6 +1191,12 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
+        archived : typing.Optional[bool]
+            Filter by projects that belong to archived workspaces
+
+        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
@@ -1170,6 +1208,14 @@ class AsyncPromptsClient:
 
         project_type : typing.Optional[CompatibleProjectsPromptsRequestProjectType]
             Skill to filter by
+
+        source_interface_id : typing.Optional[float]
+
+        state : typing.Optional[str]
+
+        title : typing.Optional[str]
+
+        workspaces : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1197,10 +1243,16 @@ class AsyncPromptsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.compatible_projects(
+            archived=archived,
+            ids=ids,
             ordering=ordering,
             page=page,
             page_size=page_size,
             project_type=project_type,
+            source_interface_id=source_interface_id,
+            state=state,
+            title=title,
+            workspaces=workspaces,
             request_options=request_options,
         )
         return _response.data

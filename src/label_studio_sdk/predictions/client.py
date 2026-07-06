@@ -31,6 +31,7 @@ class PredictionsClient:
         *,
         project: typing.Optional[int] = None,
         task: typing.Optional[int] = None,
+        task_project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Prediction]:
         """
@@ -43,6 +44,8 @@ class PredictionsClient:
 
         task : typing.Optional[int]
             Filter predictions by task ID
+
+        task_project : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -61,7 +64,9 @@ class PredictionsClient:
         )
         client.predictions.list()
         """
-        _response = self._raw_client.list(project=project, task=task, request_options=request_options)
+        _response = self._raw_client.list(
+            project=project, task=task, task_project=task_project, request_options=request_options
+        )
         return _response.data
 
     def create(
@@ -289,6 +294,7 @@ class AsyncPredictionsClient:
         *,
         project: typing.Optional[int] = None,
         task: typing.Optional[int] = None,
+        task_project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Prediction]:
         """
@@ -301,6 +307,8 @@ class AsyncPredictionsClient:
 
         task : typing.Optional[int]
             Filter predictions by task ID
+
+        task_project : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -327,7 +335,9 @@ class AsyncPredictionsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(project=project, task=task, request_options=request_options)
+        _response = await self._raw_client.list(
+            project=project, task=task, task_project=task_project, request_options=request_options
+        )
         return _response.data
 
     async def create(

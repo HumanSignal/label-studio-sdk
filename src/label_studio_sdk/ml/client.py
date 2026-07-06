@@ -30,7 +30,11 @@ class MlClient:
         return self._raw_client
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        is_interactive: typing.Optional[bool] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[MlBackend]:
         """
 
@@ -42,6 +46,8 @@ class MlClient:
 
         Parameters
         ----------
+        is_interactive : typing.Optional[bool]
+
         project : typing.Optional[int]
             Project ID
 
@@ -62,7 +68,9 @@ class MlClient:
         )
         client.ml.list()
         """
-        _response = self._raw_client.list(project=project, request_options=request_options)
+        _response = self._raw_client.list(
+            is_interactive=is_interactive, project=project, request_options=request_options
+        )
         return _response.data
 
     def create(
@@ -509,7 +517,11 @@ class AsyncMlClient:
         return self._raw_client
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        is_interactive: typing.Optional[bool] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[MlBackend]:
         """
 
@@ -521,6 +533,8 @@ class AsyncMlClient:
 
         Parameters
         ----------
+        is_interactive : typing.Optional[bool]
+
         project : typing.Optional[int]
             Project ID
 
@@ -549,7 +563,9 @@ class AsyncMlClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(project=project, request_options=request_options)
+        _response = await self._raw_client.list(
+            is_interactive=is_interactive, project=project, request_options=request_options
+        )
         return _response.data
 
     async def create(

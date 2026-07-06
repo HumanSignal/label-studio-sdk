@@ -145,7 +145,7 @@ class PausesClient:
         return _response.data
 
     def get(
-        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Pause:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -162,7 +162,8 @@ class PausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -182,14 +183,14 @@ class PausesClient:
         client.projects.pauses.get(
             project_pk=1,
             user_pk=1,
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.get(project_pk, user_pk, id, request_options=request_options)
         return _response.data
 
     def delete(
-        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -206,7 +207,8 @@ class PausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -225,7 +227,7 @@ class PausesClient:
         client.projects.pauses.delete(
             project_pk=1,
             user_pk=1,
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.delete(project_pk, user_pk, id, request_options=request_options)
@@ -235,7 +237,7 @@ class PausesClient:
         self,
         project_pk: int,
         user_pk: int,
-        id: str,
+        id: int,
         *,
         reason: typing.Optional[ReasonEnum] = OMIT,
         verbose_reason: typing.Optional[str] = OMIT,
@@ -256,7 +258,8 @@ class PausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         reason : typing.Optional[ReasonEnum]
             Reason for pausing
@@ -288,7 +291,7 @@ class PausesClient:
         client.projects.pauses.update(
             project_pk=1,
             user_pk=1,
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.update(
@@ -446,7 +449,7 @@ class AsyncPausesClient:
         return _response.data
 
     async def get(
-        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Pause:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -463,7 +466,8 @@ class AsyncPausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -488,7 +492,7 @@ class AsyncPausesClient:
             await client.projects.pauses.get(
                 project_pk=1,
                 user_pk=1,
-                id="id",
+                id=1,
             )
 
 
@@ -498,7 +502,7 @@ class AsyncPausesClient:
         return _response.data
 
     async def delete(
-        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -515,7 +519,8 @@ class AsyncPausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -539,7 +544,7 @@ class AsyncPausesClient:
             await client.projects.pauses.delete(
                 project_pk=1,
                 user_pk=1,
-                id="id",
+                id=1,
             )
 
 
@@ -552,7 +557,7 @@ class AsyncPausesClient:
         self,
         project_pk: int,
         user_pk: int,
-        id: str,
+        id: int,
         *,
         reason: typing.Optional[ReasonEnum] = OMIT,
         verbose_reason: typing.Optional[str] = OMIT,
@@ -573,7 +578,8 @@ class AsyncPausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         reason : typing.Optional[ReasonEnum]
             Reason for pausing
@@ -610,7 +616,7 @@ class AsyncPausesClient:
             await client.projects.pauses.update(
                 project_pk=1,
                 user_pk=1,
-                id="id",
+                id=1,
             )
 
 

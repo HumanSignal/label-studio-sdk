@@ -216,7 +216,7 @@ class CommentsClient:
 
     def get(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -232,7 +232,8 @@ class CommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -253,7 +254,7 @@ class CommentsClient:
             api_key="YOUR_API_KEY",
         )
         client.comments.get(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.get(id, expand_created_by=expand_created_by, request_options=request_options)
@@ -261,7 +262,7 @@ class CommentsClient:
 
     def delete(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -277,7 +278,8 @@ class CommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -297,7 +299,7 @@ class CommentsClient:
             api_key="YOUR_API_KEY",
         )
         client.comments.delete(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.delete(id, expand_created_by=expand_created_by, request_options=request_options)
@@ -305,7 +307,7 @@ class CommentsClient:
 
     def update(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         annotation: typing.Optional[int] = OMIT,
@@ -327,7 +329,8 @@ class CommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -364,7 +367,7 @@ class CommentsClient:
             api_key="YOUR_API_KEY",
         )
         client.comments.update(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.update(
@@ -603,7 +606,7 @@ class AsyncCommentsClient:
 
     async def get(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -619,7 +622,8 @@ class AsyncCommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -645,7 +649,7 @@ class AsyncCommentsClient:
 
         async def main() -> None:
             await client.comments.get(
-                id="id",
+                id=1,
             )
 
 
@@ -656,7 +660,7 @@ class AsyncCommentsClient:
 
     async def delete(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -672,7 +676,8 @@ class AsyncCommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -697,7 +702,7 @@ class AsyncCommentsClient:
 
         async def main() -> None:
             await client.comments.delete(
-                id="id",
+                id=1,
             )
 
 
@@ -710,7 +715,7 @@ class AsyncCommentsClient:
 
     async def update(
         self,
-        id: str,
+        id: int,
         *,
         expand_created_by: typing.Optional[bool] = None,
         annotation: typing.Optional[int] = OMIT,
@@ -732,7 +737,8 @@ class AsyncCommentsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this comment.
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
@@ -774,7 +780,7 @@ class AsyncCommentsClient:
 
         async def main() -> None:
             await client.comments.update(
-                id="id",
+                id=1,
             )
 
 

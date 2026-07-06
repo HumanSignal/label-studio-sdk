@@ -30,7 +30,9 @@ class RawInterfacesClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        scope: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        workspace: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PaginatedLseInterfaceListList]:
         """
@@ -53,8 +55,12 @@ class RawInterfacesClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
+        scope : typing.Optional[str]
+
         search : typing.Optional[str]
             A search term.
+
+        workspace : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -71,7 +77,9 @@ class RawInterfacesClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "scope": scope,
                 "search": search,
+                "workspace": workspace,
             },
             request_options=request_options,
         )
@@ -201,7 +209,7 @@ class RawInterfacesClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[LseInterface]:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[LseInterface]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -213,7 +221,8 @@ class RawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -249,7 +258,7 @@ class RawInterfacesClient:
 
     def update(
         self,
-        id: str,
+        id: int,
         *,
         code: str,
         compiled: str,
@@ -276,7 +285,8 @@ class RawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         code : str
             JSX source code for the interface screen module
@@ -360,7 +370,7 @@ class RawInterfacesClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -372,7 +382,8 @@ class RawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -400,7 +411,7 @@ class RawInterfacesClient:
 
     def partial_update(
         self,
-        id: str,
+        id: int,
         *,
         artifacts: typing.Optional[typing.Any] = OMIT,
         code: typing.Optional[str] = OMIT,
@@ -427,7 +438,8 @@ class RawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         artifacts : typing.Optional[typing.Any]
             AI-produced code snapshots for session continuity
@@ -513,7 +525,7 @@ class RawInterfacesClient:
 
     def append_versions(
         self,
-        id: str,
+        id: int,
         *,
         versions: typing.Sequence[LseInterfaceAppendVersionRequest],
         artifacts: typing.Optional[typing.Any] = OMIT,
@@ -538,7 +550,8 @@ class RawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         versions : typing.Sequence[LseInterfaceAppendVersionRequest]
 
@@ -612,7 +625,7 @@ class RawInterfacesClient:
 
     def duplicate(
         self,
-        id: str,
+        id: int,
         *,
         code: str,
         compiled: str,
@@ -639,7 +652,8 @@ class RawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         code : str
             JSX source code for the interface screen module
@@ -724,7 +738,7 @@ class RawInterfacesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def publish_version(
-        self, id: str, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[LseInterface]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -737,7 +751,8 @@ class RawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         version_id : int
             Stable interface version ID.
@@ -782,7 +797,7 @@ class RawInterfacesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def unpublish_version(
-        self, id: str, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[LseInterface]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -795,7 +810,8 @@ class RawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         version_id : int
             Stable interface version ID.
@@ -840,7 +856,7 @@ class RawInterfacesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update_version_description(
-        self, id: str, *, description: str, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, description: str, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[LseInterface]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -853,7 +869,8 @@ class RawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         description : str
             Description to store on the saved interface version.
@@ -912,7 +929,9 @@ class AsyncRawInterfacesClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        scope: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        workspace: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PaginatedLseInterfaceListList]:
         """
@@ -935,8 +954,12 @@ class AsyncRawInterfacesClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
+        scope : typing.Optional[str]
+
         search : typing.Optional[str]
             A search term.
+
+        workspace : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -953,7 +976,9 @@ class AsyncRawInterfacesClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "scope": scope,
                 "search": search,
+                "workspace": workspace,
             },
             request_options=request_options,
         )
@@ -1084,7 +1109,7 @@ class AsyncRawInterfacesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[LseInterface]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1097,7 +1122,8 @@ class AsyncRawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1133,7 +1159,7 @@ class AsyncRawInterfacesClient:
 
     async def update(
         self,
-        id: str,
+        id: int,
         *,
         code: str,
         compiled: str,
@@ -1160,7 +1186,8 @@ class AsyncRawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         code : str
             JSX source code for the interface screen module
@@ -1245,7 +1272,7 @@ class AsyncRawInterfacesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1258,7 +1285,8 @@ class AsyncRawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1286,7 +1314,7 @@ class AsyncRawInterfacesClient:
 
     async def partial_update(
         self,
-        id: str,
+        id: int,
         *,
         artifacts: typing.Optional[typing.Any] = OMIT,
         code: typing.Optional[str] = OMIT,
@@ -1313,7 +1341,8 @@ class AsyncRawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         artifacts : typing.Optional[typing.Any]
             AI-produced code snapshots for session continuity
@@ -1399,7 +1428,7 @@ class AsyncRawInterfacesClient:
 
     async def append_versions(
         self,
-        id: str,
+        id: int,
         *,
         versions: typing.Sequence[LseInterfaceAppendVersionRequest],
         artifacts: typing.Optional[typing.Any] = OMIT,
@@ -1424,7 +1453,8 @@ class AsyncRawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         versions : typing.Sequence[LseInterfaceAppendVersionRequest]
 
@@ -1498,7 +1528,7 @@ class AsyncRawInterfacesClient:
 
     async def duplicate(
         self,
-        id: str,
+        id: int,
         *,
         code: str,
         compiled: str,
@@ -1525,7 +1555,8 @@ class AsyncRawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         code : str
             JSX source code for the interface screen module
@@ -1610,7 +1641,7 @@ class AsyncRawInterfacesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def publish_version(
-        self, id: str, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[LseInterface]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1623,7 +1654,8 @@ class AsyncRawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         version_id : int
             Stable interface version ID.
@@ -1668,7 +1700,7 @@ class AsyncRawInterfacesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def unpublish_version(
-        self, id: str, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[LseInterface]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1681,7 +1713,8 @@ class AsyncRawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         version_id : int
             Stable interface version ID.
@@ -1726,7 +1759,7 @@ class AsyncRawInterfacesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update_version_description(
-        self, id: str, *, description: str, version_id: int, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, description: str, version_id: int, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[LseInterface]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1739,7 +1772,8 @@ class AsyncRawInterfacesClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this interface.
 
         description : str
             Description to store on the saved interface version.

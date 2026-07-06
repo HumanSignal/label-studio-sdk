@@ -165,7 +165,7 @@ class RawPausesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Pause]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -182,7 +182,8 @@ class RawPausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -217,7 +218,7 @@ class RawPausesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -234,7 +235,8 @@ class RawPausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -264,7 +266,7 @@ class RawPausesClient:
         self,
         project_pk: int,
         user_pk: int,
-        id: str,
+        id: int,
         *,
         reason: typing.Optional[ReasonEnum] = OMIT,
         verbose_reason: typing.Optional[str] = OMIT,
@@ -285,7 +287,8 @@ class RawPausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         reason : typing.Optional[ReasonEnum]
             Reason for pausing
@@ -487,7 +490,7 @@ class AsyncRawPausesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Pause]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -504,7 +507,8 @@ class AsyncRawPausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -539,7 +543,7 @@ class AsyncRawPausesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, project_pk: int, user_pk: int, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -556,7 +560,8 @@ class AsyncRawPausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -586,7 +591,7 @@ class AsyncRawPausesClient:
         self,
         project_pk: int,
         user_pk: int,
-        id: str,
+        id: int,
         *,
         reason: typing.Optional[ReasonEnum] = OMIT,
         verbose_reason: typing.Optional[str] = OMIT,
@@ -607,7 +612,8 @@ class AsyncRawPausesClient:
 
         user_pk : int
 
-        id : str
+        id : int
+            A unique integer value identifying this pause.
 
         reason : typing.Optional[ReasonEnum]
             Reason for pausing

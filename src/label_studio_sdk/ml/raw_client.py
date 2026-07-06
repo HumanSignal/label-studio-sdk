@@ -26,7 +26,11 @@ class RawMlClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        is_interactive: typing.Optional[bool] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.List[MlBackend]]:
         """
 
@@ -38,6 +42,8 @@ class RawMlClient:
 
         Parameters
         ----------
+        is_interactive : typing.Optional[bool]
+
         project : typing.Optional[int]
             Project ID
 
@@ -53,6 +59,7 @@ class RawMlClient:
             "api/ml/",
             method="GET",
             params={
+                "is_interactive": is_interactive,
                 "project": project,
             },
             request_options=request_options,
@@ -596,7 +603,11 @@ class AsyncRawMlClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        is_interactive: typing.Optional[bool] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.List[MlBackend]]:
         """
 
@@ -608,6 +619,8 @@ class AsyncRawMlClient:
 
         Parameters
         ----------
+        is_interactive : typing.Optional[bool]
+
         project : typing.Optional[int]
             Project ID
 
@@ -623,6 +636,7 @@ class AsyncRawMlClient:
             "api/ml/",
             method="GET",
             params={
+                "is_interactive": is_interactive,
                 "project": project,
             },
             request_options=request_options,

@@ -474,6 +474,22 @@ client.annotation_history.list_for_project(
 <dl>
 <dd>
 
+**created_at_from:** `typing.Optional[datetime.datetime]` — Filter for annotation history items created at or after the ISO 8601 formatted date (YYYY-MM-DDTHH:MM:SS)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_to:** `typing.Optional[datetime.datetime]` — Filter for annotation history items created at or before the ISO 8601 formatted date (YYYY-MM-DDTHH:MM:SS)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
     
 </dd>
@@ -2246,7 +2262,7 @@ client = LabelStudio(
 )
 
 client.comments.get(
-    id="id",
+    id=1,
 )
 
 ```
@@ -2263,7 +2279,7 @@ client.comments.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this comment.
     
 </dd>
 </dl>
@@ -2333,7 +2349,7 @@ client = LabelStudio(
 )
 
 client.comments.delete(
-    id="id",
+    id=1,
 )
 
 ```
@@ -2350,7 +2366,7 @@ client.comments.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this comment.
     
 </dd>
 </dl>
@@ -2420,7 +2436,7 @@ client = LabelStudio(
 )
 
 client.comments.update(
-    id="id",
+    id=1,
 )
 
 ```
@@ -2437,7 +2453,7 @@ client.comments.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this comment.
     
 </dd>
 </dl>
@@ -6952,6 +6968,22 @@ client.prompts.compatible_projects()
 <dl>
 <dd>
 
+**archived:** `typing.Optional[bool]` — Filter by projects that belong to archived workspaces
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` — Multiple values may be separated by commas.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
@@ -6977,6 +7009,38 @@ client.prompts.compatible_projects()
 <dd>
 
 **project_type:** `typing.Optional[CompatibleProjectsPromptsRequestProjectType]` — Skill to filter by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_interface_id:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**state:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspaces:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -7379,7 +7443,23 @@ client.interfaces.list()
 <dl>
 <dd>
 
+**scope:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **search:** `typing.Optional[str]` — A search term.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -7522,7 +7602,7 @@ client = LabelStudio(
 )
 
 client.interfaces.get(
-    id="id",
+    id=1,
 )
 
 ```
@@ -7539,7 +7619,7 @@ client.interfaces.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this interface.
     
 </dd>
 </dl>
@@ -7601,7 +7681,7 @@ client = LabelStudio(
 )
 
 client.interfaces.update(
-    id="id",
+    id=1,
     code="code",
     compiled="compiled",
     title="title",
@@ -7621,7 +7701,7 @@ client.interfaces.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this interface.
     
 </dd>
 </dl>
@@ -7691,7 +7771,7 @@ client = LabelStudio(
 )
 
 client.interfaces.delete(
-    id="id",
+    id=1,
 )
 
 ```
@@ -7708,7 +7788,7 @@ client.interfaces.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this interface.
     
 </dd>
 </dl>
@@ -7770,7 +7850,7 @@ client = LabelStudio(
 )
 
 client.interfaces.partial_update(
-    id="id",
+    id=1,
 )
 
 ```
@@ -7787,7 +7867,7 @@ client.interfaces.partial_update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this interface.
     
 </dd>
 </dl>
@@ -7945,7 +8025,7 @@ client = LabelStudio(
 )
 
 client.interfaces.append_versions(
-    id="id",
+    id=1,
     versions=[
         LseInterfaceAppendVersionRequest(
             code="code",
@@ -7968,7 +8048,7 @@ client.interfaces.append_versions(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this interface.
     
 </dd>
 </dl>
@@ -8110,7 +8190,7 @@ client = LabelStudio(
 )
 
 client.interfaces.duplicate(
-    id="id",
+    id=1,
     code="code",
     compiled="compiled",
     title="title",
@@ -8130,7 +8210,7 @@ client.interfaces.duplicate(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this interface.
     
 </dd>
 </dl>
@@ -8200,7 +8280,7 @@ client = LabelStudio(
 )
 
 client.interfaces.publish_version(
-    id="id",
+    id=1,
     version_id=1,
 )
 
@@ -8218,7 +8298,7 @@ client.interfaces.publish_version(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this interface.
     
 </dd>
 </dl>
@@ -8288,7 +8368,7 @@ client = LabelStudio(
 )
 
 client.interfaces.unpublish_version(
-    id="id",
+    id=1,
     version_id=1,
 )
 
@@ -8306,7 +8386,7 @@ client.interfaces.unpublish_version(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this interface.
     
 </dd>
 </dl>
@@ -8376,7 +8456,7 @@ client = LabelStudio(
 )
 
 client.interfaces.update_version_description(
-    id="id",
+    id=1,
     description="description",
     version_id=1,
 )
@@ -8395,7 +8475,7 @@ client.interfaces.update_version_description(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this interface.
     
 </dd>
 </dl>
@@ -9231,6 +9311,14 @@ client.ml.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**is_interactive:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -10330,7 +10418,7 @@ client = LabelStudio(
 )
 
 client.model_providers.get(
-    id="id",
+    id=1,
 )
 
 ```
@@ -10347,7 +10435,7 @@ client.model_providers.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this model provider connection.
     
 </dd>
 </dl>
@@ -10409,7 +10497,7 @@ client = LabelStudio(
 )
 
 client.model_providers.delete(
-    id="id",
+    id=1,
 )
 
 ```
@@ -10426,7 +10514,7 @@ client.model_providers.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this model provider connection.
     
 </dd>
 </dl>
@@ -10488,7 +10576,7 @@ client = LabelStudio(
 )
 
 client.model_providers.update(
-    id="id",
+    id=1,
 )
 
 ```
@@ -10505,7 +10593,7 @@ client.model_providers.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this model provider connection.
     
 </dd>
 </dl>
@@ -10682,6 +10770,14 @@ client.predictions.list()
 <dd>
 
 **task:** `typing.Optional[int]` — Filter predictions by task ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_project:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -32407,6 +32503,14 @@ client.organizations.members.list(
 <dl>
 <dd>
 
+**is_deleted:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
@@ -32471,6 +32575,30 @@ Filter members by organization role. Accepts single role or comma-separated list
 <dd>
 
 **tags:** `typing.Optional[str]` — Filter members by tags. Use a comma-separated list of tag IDs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_last_activity_gte:** `typing.Optional[datetime.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_last_activity_lte:** `typing.Optional[datetime.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_type:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Multiple values may be separated by commas.
     
 </dd>
 </dl>
@@ -38348,7 +38476,7 @@ client = LabelStudio(
 client.projects.pauses.get(
     project_pk=1,
     user_pk=1,
-    id="id",
+    id=1,
 )
 
 ```
@@ -38381,7 +38509,7 @@ client.projects.pauses.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this pause.
     
 </dd>
 </dl>
@@ -38445,7 +38573,7 @@ client = LabelStudio(
 client.projects.pauses.delete(
     project_pk=1,
     user_pk=1,
-    id="id",
+    id=1,
 )
 
 ```
@@ -38478,7 +38606,7 @@ client.projects.pauses.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this pause.
     
 </dd>
 </dl>
@@ -38542,7 +38670,7 @@ client = LabelStudio(
 client.projects.pauses.update(
     project_pk=1,
     user_pk=1,
-    id="id",
+    id=1,
 )
 
 ```
@@ -38575,7 +38703,7 @@ client.projects.pauses.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this pause.
     
 </dd>
 </dl>
@@ -39117,6 +39245,14 @@ Returns users who have any of the specified roles either:
 <dd>
 
 **tags:** `typing.Optional[str]` — Filter members by tags. Use a comma-separated list of tag IDs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_type:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Multiple values may be separated by commas.
     
 </dd>
 </dl>
