@@ -86,9 +86,7 @@ class TokensClient:
         _response = self._raw_client.create(request_options=request_options)
         return _response.data
 
-    def blacklist(
-        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, typing.Any]:
+    def blacklist(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Adds a JWT refresh token to the blacklist, preventing it from being used to obtain new access tokens.
 
@@ -101,8 +99,7 @@ class TokensClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Any]
-
+        None
 
         Examples
         --------
@@ -267,9 +264,7 @@ class AsyncTokensClient:
         _response = await self._raw_client.create(request_options=request_options)
         return _response.data
 
-    async def blacklist(
-        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, typing.Any]:
+    async def blacklist(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Adds a JWT refresh token to the blacklist, preventing it from being used to obtain new access tokens.
 
@@ -282,8 +277,7 @@ class AsyncTokensClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Any]
-
+        None
 
         Examples
         --------

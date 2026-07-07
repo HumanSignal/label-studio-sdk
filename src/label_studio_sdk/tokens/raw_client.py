@@ -109,9 +109,7 @@ class RawTokensClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def blacklist(
-        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.Dict[str, typing.Any]]:
+    def blacklist(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
         Adds a JWT refresh token to the blacklist, preventing it from being used to obtain new access tokens.
 
@@ -124,8 +122,7 @@ class RawTokensClient:
 
         Returns
         -------
-        HttpResponse[typing.Dict[str, typing.Any]]
-
+        HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/token/blacklist/",
@@ -141,14 +138,7 @@ class RawTokensClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.Dict[str, typing.Any],
-                    construct_type(
-                        type_=typing.Dict[str, typing.Any],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
+                return HttpResponse(response=_response, data=None)
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),
@@ -371,7 +361,7 @@ class AsyncRawTokensClient:
 
     async def blacklist(
         self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.Dict[str, typing.Any]]:
+    ) -> AsyncHttpResponse[None]:
         """
         Adds a JWT refresh token to the blacklist, preventing it from being used to obtain new access tokens.
 
@@ -384,8 +374,7 @@ class AsyncRawTokensClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.Dict[str, typing.Any]]
-
+        AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/token/blacklist/",
@@ -401,14 +390,7 @@ class AsyncRawTokensClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.Dict[str, typing.Any],
-                    construct_type(
-                        type_=typing.Dict[str, typing.Any],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
+                return AsyncHttpResponse(response=_response, data=None)
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),

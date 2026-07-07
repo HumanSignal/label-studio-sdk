@@ -15197,7 +15197,7 @@ client.tokens.create()
 </dl>
 </details>
 
-<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">blacklist</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
+<details><summary><code>client.tokens.<a href="src/label_studio_sdk/tokens/client.py">blacklist</a>(...)</code></summary>
 <dl>
 <dd>
 
