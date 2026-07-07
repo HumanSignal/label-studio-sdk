@@ -527,7 +527,7 @@ class PromptsClient:
         )
         return _response.data
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelInterfaceSerializerGet:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> ModelInterfaceSerializerGet:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -539,7 +539,8 @@ class PromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -557,13 +558,13 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.get(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -575,7 +576,8 @@ class PromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -592,7 +594,7 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.delete(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
@@ -600,7 +602,7 @@ class PromptsClient:
 
     def update(
         self,
-        id: str,
+        id: int,
         *,
         associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
@@ -623,7 +625,8 @@ class PromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         associated_projects : typing.Optional[typing.Sequence[int]]
 
@@ -660,7 +663,7 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.update(
-            id="id",
+            id=1,
         )
         """
         _response = self._raw_client.update(
@@ -1258,7 +1261,7 @@ class AsyncPromptsClient:
         return _response.data
 
     async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ModelInterfaceSerializerGet:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1271,7 +1274,8 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1294,7 +1298,7 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.get(
-                id="id",
+                id=1,
             )
 
 
@@ -1303,7 +1307,7 @@ class AsyncPromptsClient:
         _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -1315,7 +1319,8 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1337,7 +1342,7 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.delete(
-                id="id",
+                id=1,
             )
 
 
@@ -1348,7 +1353,7 @@ class AsyncPromptsClient:
 
     async def update(
         self,
-        id: str,
+        id: int,
         *,
         associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
@@ -1371,7 +1376,8 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         associated_projects : typing.Optional[typing.Sequence[int]]
 
@@ -1413,7 +1419,7 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.update(
-                id="id",
+                id=1,
             )
 
 

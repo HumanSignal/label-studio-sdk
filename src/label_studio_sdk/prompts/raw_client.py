@@ -619,7 +619,7 @@ class RawPromptsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ModelInterfaceSerializerGet]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -632,7 +632,8 @@ class RawPromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -666,7 +667,7 @@ class RawPromptsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -678,7 +679,8 @@ class RawPromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -706,7 +708,7 @@ class RawPromptsClient:
 
     def update(
         self,
-        id: str,
+        id: int,
         *,
         associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
@@ -729,7 +731,8 @@ class RawPromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         associated_projects : typing.Optional[typing.Sequence[int]]
 
@@ -1388,7 +1391,7 @@ class AsyncRawPromptsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ModelInterfaceSerializerGet]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1401,7 +1404,8 @@ class AsyncRawPromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1436,7 +1440,7 @@ class AsyncRawPromptsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -1449,7 +1453,8 @@ class AsyncRawPromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1477,7 +1482,7 @@ class AsyncRawPromptsClient:
 
     async def update(
         self,
-        id: str,
+        id: int,
         *,
         associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
@@ -1500,7 +1505,8 @@ class AsyncRawPromptsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
+            A unique integer value identifying this model interface.
 
         associated_projects : typing.Optional[typing.Sequence[int]]
 

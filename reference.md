@@ -7102,7 +7102,7 @@ client = LabelStudio(
 )
 
 client.prompts.get(
-    id="id",
+    id=1,
 )
 
 ```
@@ -7119,7 +7119,7 @@ client.prompts.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this model interface.
     
 </dd>
 </dl>
@@ -7181,7 +7181,7 @@ client = LabelStudio(
 )
 
 client.prompts.delete(
-    id="id",
+    id=1,
 )
 
 ```
@@ -7198,7 +7198,7 @@ client.prompts.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this model interface.
     
 </dd>
 </dl>
@@ -7260,7 +7260,7 @@ client = LabelStudio(
 )
 
 client.prompts.update(
-    id="id",
+    id=1,
 )
 
 ```
@@ -7277,7 +7277,7 @@ client.prompts.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` — A unique integer value identifying this model interface.
     
 </dd>
 </dl>
