@@ -686,8 +686,30 @@ function getBrowserHarnessSource() {
     "useMemo",
     "getField",
     "EditorUI",
+    "EditorDeps",
     compiledBody,
   );
+
+  const mockEditorDeps = {
+    audioDecoder: {
+      WasmStreamingDecoder: class MockWasmStreamingDecoder {
+        constructor(src) {
+          this.src = src;
+          this.sampleRate = 44100;
+          this.channelCount = 2; // Multi-channel support
+          this.duration = 100;
+          this.chunks = Array.from({ length: 2 }).map(() => new Proxy([], { get: () => new Float32Array() }));
+        }
+        init() { return Promise.resolve(); }
+        decode() { return Promise.resolve(); }
+        setVisibleRange() {}
+        on() {}
+        off() {}
+        dispose() {}
+      }
+    }
+  };
+
   const mod = factory(
     window.React,
     window.React.useState,
@@ -697,6 +719,7 @@ function getBrowserHarnessSource() {
     window.React.useMemo,
     getField,
     {},
+    mockEditorDeps,
   );
 
   if (!mod || typeof mod !== "object") {
