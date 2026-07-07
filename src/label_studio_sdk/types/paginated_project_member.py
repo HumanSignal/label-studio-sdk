@@ -46,6 +46,7 @@ class PaginatedProjectMember(UncheckedBaseModel):
     pause: typing.Optional[str] = None
     phone: typing.Optional[str] = None
     project_role: typing.Optional[str] = None
+    project_role_source: typing.Optional[str] = None
     tags: typing.Optional[typing.List[SimpleOrganizationMemberTag]] = None
     user_type: typing.Optional[str] = None
     username: str

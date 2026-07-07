@@ -12,6 +12,7 @@ class ProjectRole(UncheckedBaseModel):
     id: typing.Optional[int] = None
     project: int
     role: Role9E7Enum
+    role_source: typing.Optional[str] = None
     user: int
 
     if IS_PYDANTIC_V2:
