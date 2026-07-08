@@ -21,7 +21,11 @@ class Workspace(UncheckedBaseModel):
     """
 
     created_by: typing.Optional[int] = None
-    created_by_user: typing.Optional[str] = None
+    created_by_user: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Return created_by user details when include_all_workspaces is enabled.
+    """
+
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Workspace description
@@ -38,7 +42,7 @@ class Workspace(UncheckedBaseModel):
     Workspace is a personal user workspace
     """
 
-    membership: typing.Optional[str] = None
+    membership: typing.Optional[typing.Dict[str, typing.Any]] = None
     projects_count: typing.Optional[int] = None
     title: str = pydantic.Field()
     """

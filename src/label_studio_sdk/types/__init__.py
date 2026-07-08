@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .agreement_selection_request import AgreementSelectionRequest
     from .agreement_v2backfill_cancel_response import AgreementV2BackfillCancelResponse
     from .agreement_v2backfill_job import AgreementV2BackfillJob
+    from .agreement_v2backfill_job_triggered_by_value import AgreementV2BackfillJobTriggeredByValue
     from .agreement_v2backfill_trigger_request_request import AgreementV2BackfillTriggerRequestRequest
     from .agreement_v2backfill_trigger_response import AgreementV2BackfillTriggerResponse
     from .all_roles_project_list import AllRolesProjectList
@@ -258,6 +259,7 @@ if typing.TYPE_CHECKING:
     from .user_simple_request import UserSimpleRequest
     from .validate_saml_metadata_url_response import ValidateSamlMetadataUrlResponse
     from .value_counts_backfill_job import ValueCountsBackfillJob
+    from .value_counts_backfill_job_triggered_by_value import ValueCountsBackfillJobTriggeredByValue
     from .version_response import VersionResponse
     from .view import View
     from .webhook import Webhook
@@ -276,6 +278,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgreementSelectionRequest": ".agreement_selection_request",
     "AgreementV2BackfillCancelResponse": ".agreement_v2backfill_cancel_response",
     "AgreementV2BackfillJob": ".agreement_v2backfill_job",
+    "AgreementV2BackfillJobTriggeredByValue": ".agreement_v2backfill_job_triggered_by_value",
     "AgreementV2BackfillTriggerRequestRequest": ".agreement_v2backfill_trigger_request_request",
     "AgreementV2BackfillTriggerResponse": ".agreement_v2backfill_trigger_response",
     "AllRolesProjectList": ".all_roles_project_list",
@@ -514,6 +517,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserSimpleRequest": ".user_simple_request",
     "ValidateSamlMetadataUrlResponse": ".validate_saml_metadata_url_response",
     "ValueCountsBackfillJob": ".value_counts_backfill_job",
+    "ValueCountsBackfillJobTriggeredByValue": ".value_counts_backfill_job_triggered_by_value",
     "VersionResponse": ".version_response",
     "View": ".view",
     "Webhook": ".webhook",
@@ -556,6 +560,7 @@ __all__ = [
     "AgreementSelectionRequest",
     "AgreementV2BackfillCancelResponse",
     "AgreementV2BackfillJob",
+    "AgreementV2BackfillJobTriggeredByValue",
     "AgreementV2BackfillTriggerRequestRequest",
     "AgreementV2BackfillTriggerResponse",
     "AllRolesProjectList",
@@ -794,6 +799,7 @@ __all__ = [
     "UserSimpleRequest",
     "ValidateSamlMetadataUrlResponse",
     "ValueCountsBackfillJob",
+    "ValueCountsBackfillJobTriggeredByValue",
     "VersionResponse",
     "View",
     "Webhook",

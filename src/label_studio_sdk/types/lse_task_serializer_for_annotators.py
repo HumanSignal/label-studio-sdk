@@ -15,7 +15,15 @@ class LseTaskSerializerForAnnotators(UncheckedBaseModel):
     Data Manager Task Serializer with FSM state support.
     """
 
-    annotations: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
+    annotations: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
+    """
+    Return annotations for the task.
+    
+    If annotations_stub=True is in context (via feature flag
+    fflag_fix_all_fit_720_lazy_load_annotations), returns lightweight
+    annotation stubs without result data for improved performance.
+    """
+
     annotations_results: typing.Optional[str] = None
     cancelled_annotations: typing.Optional[int] = None
     comment_count: typing.Optional[int] = None

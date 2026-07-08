@@ -19,7 +19,7 @@ class WhoAmIUser(UncheckedBaseModel):
     """
 
     active_organization: typing.Optional[int] = None
-    active_organization_meta: typing.Optional[str] = None
+    active_organization_meta: typing.Optional[typing.Dict[str, str]] = None
     allow_newsletters: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Allow sending newsletters to user
@@ -41,7 +41,7 @@ class WhoAmIUser(UncheckedBaseModel):
     lse_fields: typing.Optional[WhoAmILseFields] = None
     org_membership: typing.Optional[typing.List[OrganizationMembership]] = None
     organization_membership: typing.Optional[OrganizationMembership] = None
-    pause: typing.Optional[str] = None
+    pause: typing.Optional[typing.Dict[str, typing.Any]] = None
     permissions: typing.Optional[typing.List[str]] = None
     phone: typing.Optional[str] = None
     social_accounts: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None

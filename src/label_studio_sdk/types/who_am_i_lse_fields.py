@@ -12,10 +12,24 @@ from .trial_role_enum import TrialRoleEnum
 
 class WhoAmILseFields(UncheckedBaseModel):
     active_organization_external_id: typing.Optional[str] = None
-    email_notification_settings: typing.Optional[str] = None
+    email_notification_settings: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Get email notification settings with organization-level filtering.
+    
+    Use the model's getter method to ensure all notification types are included
+    with proper defaults for any missing types. Transform the output to include
+    both value and label for each notification type.
+    
+    Filter notifications based on organization's allowed notifications if user
+    belongs to exactly one organization.
+    
+    Role-based filtering: not_activated_user_login is only available to users
+    who are admins or owners in at least one organization.
+    """
+
     invite_activated: typing.Optional[bool] = None
-    invite_expired: typing.Optional[str] = None
-    invite_expired_at: typing.Optional[str] = None
+    invite_expired: typing.Optional[bool] = None
+    invite_expired_at: typing.Optional[dt.datetime] = None
     invited_at: typing.Optional[dt.datetime] = None
     invited_by: typing.Optional[int] = None
     onboarding_state: typing.Optional[OnboardingStateEnum] = pydantic.Field(default=None)

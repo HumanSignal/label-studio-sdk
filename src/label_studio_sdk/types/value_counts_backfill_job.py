@@ -7,6 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fsm_backfill_job_status_enum import FsmBackfillJobStatusEnum
+from .value_counts_backfill_job_triggered_by_value import ValueCountsBackfillJobTriggeredByValue
 
 
 class ValueCountsBackfillJob(UncheckedBaseModel):
@@ -54,7 +55,9 @@ class ValueCountsBackfillJob(UncheckedBaseModel):
     * `FAILED` - Failed
     """
 
-    triggered_by: typing.Optional[str] = pydantic.Field(default=None)
+    triggered_by: typing.Optional[typing.Dict[str, typing.Optional[ValueCountsBackfillJobTriggeredByValue]]] = (
+        pydantic.Field(default=None)
+    )
     """
     User who triggered the backfill
     """

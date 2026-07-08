@@ -145,7 +145,7 @@ class LseProjectResponse(UncheckedBaseModel):
 
     id: typing.Optional[int] = None
     input_schema: typing.Optional[typing.Any] = None
-    is_dimensions_enabled: typing.Optional[str] = None
+    is_dimensions_enabled: typing.Optional[bool] = None
     is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether or not the project is in the middle of being created
@@ -171,7 +171,7 @@ class LseProjectResponse(UncheckedBaseModel):
     Annotations per task
     """
 
-    members: typing.Optional[str] = None
+    members: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
     members_count: typing.Optional[int] = None
     min_annotations_to_start_training: typing.Optional[int] = pydantic.Field(default=None)
     """
@@ -206,7 +206,7 @@ class LseProjectResponse(UncheckedBaseModel):
     Pinned date and time
     """
 
-    prompts: typing.Optional[str] = None
+    prompts: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
     queue_done: typing.Optional[int] = None
     queue_left: typing.Optional[int] = None
     queue_total: typing.Optional[int] = None
@@ -305,7 +305,7 @@ class LseProjectResponse(UncheckedBaseModel):
     total_predictions_number: typing.Optional[int] = None
     use_custom_interface: typing.Optional[bool] = None
     useful_annotation_number: typing.Optional[int] = None
-    workspace: typing.Optional[str] = None
+    workspace: typing.Optional[int] = None
     workspace_title: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

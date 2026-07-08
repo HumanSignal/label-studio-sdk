@@ -43,7 +43,7 @@ class LseUserOrganizationMemberList(UncheckedBaseModel):
     last_activity: typing.Optional[dt.datetime] = None
     last_name: typing.Optional[str] = None
     lse_fields: typing.Optional[LseFields] = None
-    pause: typing.Optional[str] = None
+    pause: typing.Optional[typing.Dict[str, typing.Any]] = None
     phone: typing.Optional[str] = None
     username: str
 

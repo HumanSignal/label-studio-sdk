@@ -37,7 +37,7 @@ class LseInterfaceList(UncheckedBaseModel):
     """
 
     updated_at: typing.Optional[dt.datetime] = None
-    versions: typing.Optional[str] = None
+    versions: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
     workspace: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:

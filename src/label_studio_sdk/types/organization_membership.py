@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class OrganizationMembership(UncheckedBaseModel):
-    active: typing.Optional[str] = None
+    active: typing.Optional[bool] = None
     organization_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Organization ID

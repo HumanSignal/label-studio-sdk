@@ -204,7 +204,7 @@ class LseProjectUpdate(UncheckedBaseModel):
     Pinned date and time
     """
 
-    prompts: typing.Optional[str] = None
+    prompts: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
     queue_done: typing.Optional[int] = None
     queue_total: typing.Optional[int] = None
     require_comment_on_skip: typing.Optional[bool] = pydantic.Field(default=None)

@@ -18,7 +18,7 @@ class LseUserApi(UncheckedBaseModel):
     """
 
     active_organization: typing.Optional[int] = None
-    active_organization_meta: typing.Optional[str] = None
+    active_organization_meta: typing.Optional[typing.Dict[str, str]] = None
     allow_newsletters: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Allow sending newsletters to user

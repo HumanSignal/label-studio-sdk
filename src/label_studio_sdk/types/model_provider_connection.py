@@ -74,7 +74,7 @@ class ModelProviderConnection(UncheckedBaseModel):
     Whether the model provider connection is internal, not visible to the user
     """
 
-    model_params: typing.Optional[str] = pydantic.Field(default=None)
+    model_params: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     JSON schema for the model parameters available for the provider
     """

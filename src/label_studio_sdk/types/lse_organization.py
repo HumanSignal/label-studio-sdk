@@ -18,7 +18,7 @@ class LseOrganization(UncheckedBaseModel):
     Enable custom interfaces for this organization. When disabled, projects with use_custom_interface=True will not render custom interfaces anywhere in the product (label stream, embed, data manager, interfaces dashboard).
     """
 
-    custom_scripts_enabled: typing.Optional[str] = None
+    custom_scripts_enabled: typing.Optional[bool] = None
     default_role: typing.Optional[OrganizationRoleEnum] = pydantic.Field(default=None)
     """
     Default membership role for invited users
@@ -32,7 +32,28 @@ class LseOrganization(UncheckedBaseModel):
     * `NO` - Not Activated
     """
 
-    email_notification_settings: typing.Optional[str] = None
+    email_notification_settings: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Get email notification settings with default values for all notification types.
+    
+    Returns a dictionary with the following structure:
+    {
+        'notifications_allowed': {
+            'notification_type': bool
+        },
+        'notification_types': [
+            {'value': str, 'label': str}
+        ]
+    }
+    
+    Excludes blocklisted notification types and ensures all valid types are included
+    with proper defaults for any missing types.
+    
+    When organization's email_notification_settings is null or empty, all notifications
+    are shown as enabled (True) by default. When organization has some settings,
+    unconfigured notifications default to False.
+    """
+
     embed_domains: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
@@ -59,7 +80,7 @@ class LseOrganization(UncheckedBaseModel):
     Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions.
     """
 
-    react_code_settings: typing.Optional[str] = None
+    react_code_settings: typing.Optional[typing.Dict[str, typing.Any]] = None
     title: typing.Optional[str] = None
     token: typing.Optional[str] = None
 

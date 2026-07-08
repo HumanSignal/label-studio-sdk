@@ -23,17 +23,17 @@ class LseProjectCounts(UncheckedBaseModel):
     num_tasks_with_annotations: typing.Optional[int] = None
     queue_done: typing.Optional[int] = None
     queue_left: typing.Optional[int] = None
-    queue_total: typing.Optional[str] = None
+    queue_total: typing.Optional[int] = None
     rejected: typing.Optional[int] = None
     review_total_tasks: typing.Optional[int] = None
     reviewed_number: typing.Optional[int] = None
-    skipped_annotations_number: typing.Optional[str] = None
+    skipped_annotations_number: typing.Optional[int] = None
     task_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Total task number in project
     """
 
-    total_annotations_number: typing.Optional[str] = None
+    total_annotations_number: typing.Optional[int] = None
     total_predictions_number: typing.Optional[int] = None
     useful_annotation_number: typing.Optional[int] = None
 

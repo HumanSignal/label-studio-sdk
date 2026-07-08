@@ -19,7 +19,7 @@ class LseOrganizationMemberList(UncheckedBaseModel):
     which fields should be displayed.
     """
 
-    concurrency: typing.Optional[str] = None
+    concurrency: typing.Optional[typing.Dict[str, typing.Any]] = None
     contributed_to_projects: typing.Optional[typing.List[LseOrganizationMemberListContributedToProjectsItem]] = None
     created_projects: typing.Optional[typing.List[LseOrganizationMemberListCreatedProjectsItem]] = None
     id: typing.Optional[int] = None

@@ -145,7 +145,7 @@ class AllRolesProjectList(UncheckedBaseModel):
 
     id: typing.Optional[int] = None
     input_schema: typing.Optional[typing.Any] = None
-    is_dimensions_enabled: typing.Optional[str] = None
+    is_dimensions_enabled: typing.Optional[bool] = None
     is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether or not the project is in the middle of being created
@@ -171,7 +171,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     Annotations per task
     """
 
-    members: typing.Optional[str] = None
+    members: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
     members_count: typing.Optional[int] = None
     min_annotations_to_start_training: typing.Optional[int] = pydantic.Field(default=None)
     """
@@ -206,10 +206,10 @@ class AllRolesProjectList(UncheckedBaseModel):
     Pinned date and time
     """
 
-    prompts: typing.Optional[str] = None
+    prompts: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
     queue_done: typing.Optional[int] = None
     queue_left: typing.Optional[int] = None
-    queue_total: typing.Optional[str] = None
+    queue_total: typing.Optional[int] = None
     ready: typing.Optional[bool] = None
     rejected: typing.Optional[int] = None
     require_comment_on_skip: typing.Optional[bool] = pydantic.Field(default=None)
@@ -263,7 +263,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     """
 
     skip_queue: typing.Optional[SkipQueueEnum] = None
-    skipped_annotations_number: typing.Optional[str] = None
+    skipped_annotations_number: typing.Optional[int] = None
     source_interface_id: typing.Optional[int] = None
     source_interface_version: typing.Optional[int] = pydantic.Field(default=None)
     """
@@ -291,11 +291,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     Project Name
     """
 
-    total_annotations_number: typing.Optional[str] = None
+    total_annotations_number: typing.Optional[int] = None
     total_predictions_number: typing.Optional[int] = None
     use_custom_interface: typing.Optional[bool] = None
     useful_annotation_number: typing.Optional[int] = None
-    workspace: typing.Optional[str] = None
+    workspace: typing.Optional[int] = None
     workspace_title: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

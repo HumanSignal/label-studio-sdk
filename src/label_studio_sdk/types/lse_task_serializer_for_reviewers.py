@@ -15,15 +15,23 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     Data Manager Task Serializer with FSM state support.
     """
 
-    agreement: typing.Optional[str] = None
-    agreement_selected: typing.Optional[str] = None
+    agreement: typing.Optional[float] = None
+    agreement_selected: typing.Optional[float] = None
     allow_skip: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether this task can be skipped. Set to False to make task unskippable.
     """
 
     annotation_time: typing.Optional[int] = None
-    annotations: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
+    annotations: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
+    """
+    Return annotations for the task.
+    
+    If annotations_stub=True is in context (via feature flag
+    fflag_fix_all_fit_720_lazy_load_annotations), returns lightweight
+    annotation stubs without result data for improved performance.
+    """
+
     annotations_ids: typing.Optional[str] = None
     annotations_results: typing.Optional[str] = None
     annotators: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)

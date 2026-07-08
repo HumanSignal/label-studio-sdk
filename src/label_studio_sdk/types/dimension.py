@@ -16,7 +16,7 @@ class Dimension(UncheckedBaseModel):
     The project and created_by fields are set automatically from the request context.
     """
 
-    allowed_metrics_with_params: typing.Optional[str] = pydantic.Field(default=None)
+    allowed_metrics_with_params: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Dictionary mapping metric type names to their parameter schemas.
     """

@@ -23,7 +23,11 @@ class ThirdPartyModelVersion(UncheckedBaseModel):
     Max number of few-shot examples to include in prompts. 0 = disabled.
     """
 
-    model_display_name: typing.Optional[str] = None
+    model_display_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Human-readable model name derived from provider_model_id.
+    """
+
     model_provider_connection: typing.Optional[int] = None
     organization: typing.Optional[int] = None
     parent_model: typing.Optional[int] = pydantic.Field(default=None)
@@ -54,7 +58,7 @@ class ThirdPartyModelVersion(UncheckedBaseModel):
     The model ID to use within the given provider, e.g. gpt-3.5
     """
 
-    score: typing.Optional[str] = None
+    score: typing.Optional[float] = None
     title: str = pydantic.Field()
     """
     Model name
