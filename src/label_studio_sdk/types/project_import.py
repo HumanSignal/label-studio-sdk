@@ -6,7 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .status7bf_enum import Status7BfEnum
+from .project_import_status_enum import ProjectImportStatusEnum
 
 
 class ProjectImport(UncheckedBaseModel):
@@ -33,7 +33,7 @@ class ProjectImport(UncheckedBaseModel):
     prediction_count: typing.Optional[int] = None
     project: typing.Optional[int] = None
     return_task_ids: typing.Optional[bool] = None
-    status: typing.Optional[Status7BfEnum] = None
+    status: typing.Optional[ProjectImportStatusEnum] = None
     task_count: typing.Optional[int] = None
     task_ids: typing.Optional[typing.Any] = None
     tasks: typing.Optional[typing.Any] = None

@@ -5,11 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .role9e7enum import Role9E7Enum
+from .organization_role_enum import OrganizationRoleEnum
 
 
 class ProjectMemberBulkAssignRolesRequest(UncheckedBaseModel):
-    role: Role9E7Enum = pydantic.Field()
+    role: OrganizationRoleEnum = pydantic.Field()
     """
     Role
     

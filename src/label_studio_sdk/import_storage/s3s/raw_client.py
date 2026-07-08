@@ -12,7 +12,7 @@ from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.lse_s3import_storage import LseS3ImportStorage
-from ...types.status_c5a_enum import StatusC5AEnum
+from ...types.storage_status_enum import StorageStatusEnum
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -107,7 +107,7 @@ class RawS3SClient:
         regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -186,7 +186,7 @@ class RawS3SClient:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 
@@ -284,7 +284,7 @@ class RawS3SClient:
         regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -363,7 +363,7 @@ class RawS3SClient:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 
@@ -540,7 +540,7 @@ class RawS3SClient:
         region_name: typing.Optional[str] = OMIT,
         role_arn: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -621,7 +621,7 @@ class RawS3SClient:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 
@@ -835,7 +835,7 @@ class AsyncRawS3SClient:
         regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -914,7 +914,7 @@ class AsyncRawS3SClient:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 
@@ -1012,7 +1012,7 @@ class AsyncRawS3SClient:
         regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -1091,7 +1091,7 @@ class AsyncRawS3SClient:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 
@@ -1270,7 +1270,7 @@ class AsyncRawS3SClient:
         region_name: typing.Optional[str] = OMIT,
         role_arn: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -1351,7 +1351,7 @@ class AsyncRawS3SClient:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 

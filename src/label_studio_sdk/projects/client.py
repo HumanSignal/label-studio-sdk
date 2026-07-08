@@ -21,8 +21,8 @@ from ..types.paginated_lse_project_counts_list import PaginatedLseProjectCountsL
 from ..types.prediction_request import PredictionRequest
 from ..types.project_duplicate_mode_enum import ProjectDuplicateModeEnum
 from ..types.project_label_config import ProjectLabelConfig
+from ..types.project_sampling_enum import ProjectSamplingEnum
 from ..types.review_settings_request import ReviewSettingsRequest
-from ..types.sampling_de5enum import SamplingDe5Enum
 from ..types.skip_queue_enum import SkipQueueEnum
 from ..types.user_simple import UserSimple
 from ..types.user_simple_request import UserSimpleRequest
@@ -195,7 +195,7 @@ class ProjectsClient:
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
+        sampling: typing.Optional[ProjectSamplingEnum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
@@ -278,7 +278,7 @@ class ProjectsClient:
         reveal_preannotations_interactively : typing.Optional[bool]
             Reveal pre-annotations interactively
 
-        sampling : typing.Optional[SamplingDe5Enum]
+        sampling : typing.Optional[ProjectSamplingEnum]
 
         show_annotation_history : typing.Optional[bool]
             Show annotation history to annotator
@@ -582,7 +582,7 @@ class ProjectsClient:
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
         review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
-        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
+        sampling: typing.Optional[ProjectSamplingEnum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
@@ -722,7 +722,7 @@ class ProjectsClient:
 
         review_settings : typing.Optional[ReviewSettingsRequest]
 
-        sampling : typing.Optional[SamplingDe5Enum]
+        sampling : typing.Optional[ProjectSamplingEnum]
 
         show_annotation_history : typing.Optional[bool]
             Show Data Manager to Annotators
@@ -1395,7 +1395,7 @@ class AsyncProjectsClient:
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
+        sampling: typing.Optional[ProjectSamplingEnum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
@@ -1478,7 +1478,7 @@ class AsyncProjectsClient:
         reveal_preannotations_interactively : typing.Optional[bool]
             Reveal pre-annotations interactively
 
-        sampling : typing.Optional[SamplingDe5Enum]
+        sampling : typing.Optional[ProjectSamplingEnum]
 
         show_annotation_history : typing.Optional[bool]
             Show annotation history to annotator
@@ -1814,7 +1814,7 @@ class AsyncProjectsClient:
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
         review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
-        sampling: typing.Optional[SamplingDe5Enum] = OMIT,
+        sampling: typing.Optional[ProjectSamplingEnum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
@@ -1954,7 +1954,7 @@ class AsyncProjectsClient:
 
         review_settings : typing.Optional[ReviewSettingsRequest]
 
-        sampling : typing.Optional[SamplingDe5Enum]
+        sampling : typing.Optional[ProjectSamplingEnum]
 
         show_annotation_history : typing.Optional[bool]
             Show Data Manager to Annotators

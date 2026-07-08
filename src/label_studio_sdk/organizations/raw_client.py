@@ -18,7 +18,7 @@ from ..types.default_role import DefaultRole
 from ..types.lse_organization import LseOrganization
 from ..types.organization_id import OrganizationId
 from ..types.organization_invite import OrganizationInvite
-from ..types.role9e7enum import Role9E7Enum
+from ..types.organization_role_enum import OrganizationRoleEnum
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -311,7 +311,7 @@ class RawOrganizationsClient:
         annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
         custom_interfaces_enabled: typing.Optional[bool] = OMIT,
         custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        default_role: typing.Optional[Role9E7Enum] = OMIT,
+        default_role: typing.Optional[OrganizationRoleEnum] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
         embed_domains: typing.Optional[typing.Any] = OMIT,
         embed_enabled: typing.Optional[bool] = OMIT,
@@ -347,7 +347,7 @@ class RawOrganizationsClient:
         custom_scripts_enabled_at : typing.Optional[dt.datetime]
             Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
 
-        default_role : typing.Optional[Role9E7Enum]
+        default_role : typing.Optional[OrganizationRoleEnum]
             Default membership role for invited users
 
             * `OW` - Owner
@@ -732,7 +732,7 @@ class AsyncRawOrganizationsClient:
         annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
         custom_interfaces_enabled: typing.Optional[bool] = OMIT,
         custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        default_role: typing.Optional[Role9E7Enum] = OMIT,
+        default_role: typing.Optional[OrganizationRoleEnum] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
         embed_domains: typing.Optional[typing.Any] = OMIT,
         embed_enabled: typing.Optional[bool] = OMIT,
@@ -768,7 +768,7 @@ class AsyncRawOrganizationsClient:
         custom_scripts_enabled_at : typing.Optional[dt.datetime]
             Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
 
-        default_role : typing.Optional[Role9E7Enum]
+        default_role : typing.Optional[OrganizationRoleEnum]
             Default membership role for invited users
 
             * `OW` - Owner

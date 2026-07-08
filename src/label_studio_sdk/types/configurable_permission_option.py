@@ -5,14 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .role9e7enum import Role9E7Enum
+from .organization_role_enum import OrganizationRoleEnum
 
 
 class ConfigurablePermissionOption(UncheckedBaseModel):
-    default: typing.List[Role9E7Enum]
+    default: typing.List[OrganizationRoleEnum]
     group: typing.Optional[str] = None
     label: typing.Optional[str] = None
-    options: typing.List[Role9E7Enum]
+    options: typing.List[OrganizationRoleEnum]
     permission: str
     tooltip: typing.Optional[str] = None
 

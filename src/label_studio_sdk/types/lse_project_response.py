@@ -9,8 +9,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .agreement_methodology_enum import AgreementMethodologyEnum
 from .assignment_settings import AssignmentSettings
 from .control_tag_weight import ControlTagWeight
+from .project_sampling_enum import ProjectSamplingEnum
 from .review_settings import ReviewSettings
-from .sampling_de5enum import SamplingDe5Enum
 from .skip_queue_enum import SkipQueueEnum
 from .user_simple import UserSimple
 
@@ -226,7 +226,7 @@ class LseProjectResponse(UncheckedBaseModel):
     review_total_tasks: typing.Optional[int] = None
     reviewed_number: typing.Optional[int] = None
     reviewer_queue_total: typing.Optional[int] = None
-    sampling: typing.Optional[SamplingDe5Enum] = None
+    sampling: typing.Optional[ProjectSamplingEnum] = None
     show_annotation_history: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Show Data Manager to Annotators

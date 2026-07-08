@@ -5,13 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .role9e7enum import Role9E7Enum
+from .organization_role_enum import OrganizationRoleEnum
 
 
 class ProjectRole(UncheckedBaseModel):
     id: typing.Optional[int] = None
     project: int
-    role: Role9E7Enum
+    role: OrganizationRoleEnum
     role_source: typing.Optional[str] = None
     user: int
 

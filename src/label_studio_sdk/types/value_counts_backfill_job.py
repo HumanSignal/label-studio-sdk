@@ -6,7 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .status_a47enum import StatusA47Enum
+from .fsm_backfill_job_status_enum import FsmBackfillJobStatusEnum
 
 
 class ValueCountsBackfillJob(UncheckedBaseModel):
@@ -43,7 +43,7 @@ class ValueCountsBackfillJob(UncheckedBaseModel):
     """
 
     started_at: typing.Optional[dt.datetime] = None
-    status: typing.Optional[StatusA47Enum] = pydantic.Field(default=None)
+    status: typing.Optional[FsmBackfillJobStatusEnum] = pydantic.Field(default=None)
     """
     Current status of the backfill job
     

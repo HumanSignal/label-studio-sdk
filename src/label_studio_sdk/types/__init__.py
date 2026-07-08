@@ -6,7 +6,6 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .action_enum import ActionEnum
     from .actions_enum import ActionsEnum
     from .activity_log import ActivityLog
     from .activity_log_response import ActivityLogResponse
@@ -18,9 +17,9 @@ if typing.TYPE_CHECKING:
     from .agreement_v2backfill_trigger_request_request import AgreementV2BackfillTriggerRequestRequest
     from .agreement_v2backfill_trigger_response import AgreementV2BackfillTriggerResponse
     from .all_roles_project_list import AllRolesProjectList
-    from .annotated_enum import AnnotatedEnum
     from .annotation import Annotation
     from .annotation_history import AnnotationHistory
+    from .annotation_history_action_enum import AnnotationHistoryActionEnum
     from .annotation_request import AnnotationRequest
     from .annotation_review import AnnotationReview
     from .annotation_review_request import AnnotationReviewRequest
@@ -53,6 +52,7 @@ if typing.TYPE_CHECKING:
     from .converted_format import ConvertedFormat
     from .converted_format_request import ConvertedFormatRequest
     from .count_limit import CountLimit
+    from .data_manager_filter_mode_enum import DataManagerFilterModeEnum
     from .data_quality_agreement_confusion_matrix import DataQualityAgreementConfusionMatrix
     from .data_quality_agreement_dimensions import DataQualityAgreementDimensions
     from .data_quality_agreement_distribution import DataQualityAgreementDistribution
@@ -61,7 +61,6 @@ if typing.TYPE_CHECKING:
     from .databricks_export_storage_request import DatabricksExportStorageRequest
     from .databricks_import_storage import DatabricksImportStorage
     from .databricks_import_storage_request import DatabricksImportStorageRequest
-    from .default165enum import Default165Enum
     from .default_role import DefaultRole
     from .dimension import Dimension
     from .dimension_list import DimensionList
@@ -70,7 +69,7 @@ if typing.TYPE_CHECKING:
     from .file_upload import FileUpload
     from .filter import Filter
     from .filter_group import FilterGroup
-    from .finished_enum import FinishedEnum
+    from .fsm_backfill_job_status_enum import FsmBackfillJobStatusEnum
     from .fsm_transition_execute_response import FsmTransitionExecuteResponse
     from .gcs_export_storage import GcsExportStorage
     from .gcs_import_storage import GcsImportStorage
@@ -91,7 +90,6 @@ if typing.TYPE_CHECKING:
     from .label_distribution_structure_dimension import LabelDistributionStructureDimension
     from .label_distribution_structure_response import LabelDistributionStructureResponse
     from .label_stream_task_distribution_enum import LabelStreamTaskDistributionEnum
-    from .last_action_enum import LastActionEnum
     from .local_files_export_storage import LocalFilesExportStorage
     from .local_files_import_storage import LocalFilesImportStorage
     from .lse_annotation_filter_options import LseAnnotationFilterOptions
@@ -154,7 +152,6 @@ if typing.TYPE_CHECKING:
     from .model_run_status_enum import ModelRunStatusEnum
     from .onboarding_state_enum import OnboardingStateEnum
     from .operator_enum import OperatorEnum
-    from .options165enum import Options165Enum
     from .organization_billing import OrganizationBilling
     from .organization_id import OrganizationId
     from .organization_invite import OrganizationInvite
@@ -167,6 +164,8 @@ if typing.TYPE_CHECKING:
     from .organization_membership import OrganizationMembership
     from .organization_permission import OrganizationPermission
     from .organization_permission_request import OrganizationPermissionRequest
+    from .organization_permission_role_enum import OrganizationPermissionRoleEnum
+    from .organization_role_enum import OrganizationRoleEnum
     from .paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
     from .paginated_annotation_history_list import PaginatedAnnotationHistoryList
     from .paginated_lse_interface_list_list import PaginatedLseInterfaceListList
@@ -190,11 +189,13 @@ if typing.TYPE_CHECKING:
     from .project_group_request import ProjectGroupRequest
     from .project_group_role_enum import ProjectGroupRoleEnum
     from .project_import import ProjectImport
+    from .project_import_status_enum import ProjectImportStatusEnum
     from .project_label_config import ProjectLabelConfig
     from .project_label_config_request import ProjectLabelConfigRequest
     from .project_member import ProjectMember
     from .project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
     from .project_role import ProjectRole
+    from .project_sampling_enum import ProjectSamplingEnum
     from .project_subset_enum import ProjectSubsetEnum
     from .project_subset_item import ProjectSubsetItem
     from .project_subset_task_item import ProjectSubsetTaskItem
@@ -214,14 +215,11 @@ if typing.TYPE_CHECKING:
     from .review_settings import ReviewSettings
     from .review_settings_request import ReviewSettingsRequest
     from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
-    from .reviewed_enum import ReviewedEnum
-    from .role9e7enum import Role9E7Enum
     from .role_based_task import RoleBasedTask
     from .s3export_storage import S3ExportStorage
     from .s3import_storage import S3ImportStorage
     from .saml_settings import SamlSettings
     from .saml_settings_update import SamlSettingsUpdate
-    from .sampling_de5enum import SamplingDe5Enum
     from .scim_settings import ScimSettings
     from .scim_settings_update import ScimSettingsUpdate
     from .scope_enum import ScopeEnum
@@ -234,7 +232,6 @@ if typing.TYPE_CHECKING:
     from .simple_organization_member_tag import SimpleOrganizationMemberTag
     from .skill_name_enum import SkillNameEnum
     from .skip_queue_enum import SkipQueueEnum
-    from .skipped_enum import SkippedEnum
     from .state_backfill_cancel_response import StateBackfillCancelResponse
     from .state_backfill_job_item import StateBackfillJobItem
     from .state_backfill_job_item_response import StateBackfillJobItemResponse
@@ -246,9 +243,7 @@ if typing.TYPE_CHECKING:
     from .state_enum import StateEnum
     from .state_model import StateModel
     from .state_triggered_by import StateTriggeredBy
-    from .status7bf_enum import Status7BfEnum
-    from .status_a47enum import StatusA47Enum
-    from .status_c5a_enum import StatusC5AEnum
+    from .storage_status_enum import StorageStatusEnum
     from .task_agreement_matrix_response import TaskAgreementMatrixResponse
     from .task_assignment import TaskAssignment
     from .task_event import TaskEvent
@@ -273,7 +268,6 @@ if typing.TYPE_CHECKING:
     from .workspace_member_create import WorkspaceMemberCreate
     from .workspace_member_list import WorkspaceMemberList
 _dynamic_imports: typing.Dict[str, str] = {
-    "ActionEnum": ".action_enum",
     "ActionsEnum": ".actions_enum",
     "ActivityLog": ".activity_log",
     "ActivityLogResponse": ".activity_log_response",
@@ -285,9 +279,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgreementV2BackfillTriggerRequestRequest": ".agreement_v2backfill_trigger_request_request",
     "AgreementV2BackfillTriggerResponse": ".agreement_v2backfill_trigger_response",
     "AllRolesProjectList": ".all_roles_project_list",
-    "AnnotatedEnum": ".annotated_enum",
     "Annotation": ".annotation",
     "AnnotationHistory": ".annotation_history",
+    "AnnotationHistoryActionEnum": ".annotation_history_action_enum",
     "AnnotationRequest": ".annotation_request",
     "AnnotationReview": ".annotation_review",
     "AnnotationReviewRequest": ".annotation_review_request",
@@ -320,6 +314,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvertedFormat": ".converted_format",
     "ConvertedFormatRequest": ".converted_format_request",
     "CountLimit": ".count_limit",
+    "DataManagerFilterModeEnum": ".data_manager_filter_mode_enum",
     "DataQualityAgreementConfusionMatrix": ".data_quality_agreement_confusion_matrix",
     "DataQualityAgreementDimensions": ".data_quality_agreement_dimensions",
     "DataQualityAgreementDistribution": ".data_quality_agreement_distribution",
@@ -328,7 +323,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DatabricksExportStorageRequest": ".databricks_export_storage_request",
     "DatabricksImportStorage": ".databricks_import_storage",
     "DatabricksImportStorageRequest": ".databricks_import_storage_request",
-    "Default165Enum": ".default165enum",
     "DefaultRole": ".default_role",
     "Dimension": ".dimension",
     "DimensionList": ".dimension_list",
@@ -337,7 +331,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FileUpload": ".file_upload",
     "Filter": ".filter",
     "FilterGroup": ".filter_group",
-    "FinishedEnum": ".finished_enum",
+    "FsmBackfillJobStatusEnum": ".fsm_backfill_job_status_enum",
     "FsmTransitionExecuteResponse": ".fsm_transition_execute_response",
     "GcsExportStorage": ".gcs_export_storage",
     "GcsImportStorage": ".gcs_import_storage",
@@ -358,7 +352,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LabelDistributionStructureDimension": ".label_distribution_structure_dimension",
     "LabelDistributionStructureResponse": ".label_distribution_structure_response",
     "LabelStreamTaskDistributionEnum": ".label_stream_task_distribution_enum",
-    "LastActionEnum": ".last_action_enum",
     "LocalFilesExportStorage": ".local_files_export_storage",
     "LocalFilesImportStorage": ".local_files_import_storage",
     "LseAnnotationFilterOptions": ".lse_annotation_filter_options",
@@ -415,7 +408,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModelRunStatusEnum": ".model_run_status_enum",
     "OnboardingStateEnum": ".onboarding_state_enum",
     "OperatorEnum": ".operator_enum",
-    "Options165Enum": ".options165enum",
     "OrganizationBilling": ".organization_billing",
     "OrganizationId": ".organization_id",
     "OrganizationInvite": ".organization_invite",
@@ -428,6 +420,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrganizationMembership": ".organization_membership",
     "OrganizationPermission": ".organization_permission",
     "OrganizationPermissionRequest": ".organization_permission_request",
+    "OrganizationPermissionRoleEnum": ".organization_permission_role_enum",
+    "OrganizationRoleEnum": ".organization_role_enum",
     "PaginatedAllRolesProjectListList": ".paginated_all_roles_project_list_list",
     "PaginatedAnnotationHistoryList": ".paginated_annotation_history_list",
     "PaginatedLseInterfaceListList": ".paginated_lse_interface_list_list",
@@ -451,11 +445,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProjectGroupRequest": ".project_group_request",
     "ProjectGroupRoleEnum": ".project_group_role_enum",
     "ProjectImport": ".project_import",
+    "ProjectImportStatusEnum": ".project_import_status_enum",
     "ProjectLabelConfig": ".project_label_config",
     "ProjectLabelConfigRequest": ".project_label_config_request",
     "ProjectMember": ".project_member",
     "ProjectMemberBulkAssignRolesRequest": ".project_member_bulk_assign_roles_request",
     "ProjectRole": ".project_role",
+    "ProjectSamplingEnum": ".project_sampling_enum",
     "ProjectSubsetEnum": ".project_subset_enum",
     "ProjectSubsetItem": ".project_subset_item",
     "ProjectSubsetTaskItem": ".project_subset_task_item",
@@ -475,14 +471,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReviewSettings": ".review_settings",
     "ReviewSettingsRequest": ".review_settings_request",
     "ReviewSettingsSamplingEnum": ".review_settings_sampling_enum",
-    "ReviewedEnum": ".reviewed_enum",
-    "Role9E7Enum": ".role9e7enum",
     "RoleBasedTask": ".role_based_task",
     "S3ExportStorage": ".s3export_storage",
     "S3ImportStorage": ".s3import_storage",
     "SamlSettings": ".saml_settings",
     "SamlSettingsUpdate": ".saml_settings_update",
-    "SamplingDe5Enum": ".sampling_de5enum",
     "ScimSettings": ".scim_settings",
     "ScimSettingsUpdate": ".scim_settings_update",
     "ScopeEnum": ".scope_enum",
@@ -495,7 +488,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SimpleOrganizationMemberTag": ".simple_organization_member_tag",
     "SkillNameEnum": ".skill_name_enum",
     "SkipQueueEnum": ".skip_queue_enum",
-    "SkippedEnum": ".skipped_enum",
     "StateBackfillCancelResponse": ".state_backfill_cancel_response",
     "StateBackfillJobItem": ".state_backfill_job_item",
     "StateBackfillJobItemResponse": ".state_backfill_job_item_response",
@@ -507,9 +499,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StateEnum": ".state_enum",
     "StateModel": ".state_model",
     "StateTriggeredBy": ".state_triggered_by",
-    "Status7BfEnum": ".status7bf_enum",
-    "StatusA47Enum": ".status_a47enum",
-    "StatusC5AEnum": ".status_c5a_enum",
+    "StorageStatusEnum": ".storage_status_enum",
     "TaskAgreementMatrixResponse": ".task_agreement_matrix_response",
     "TaskAssignment": ".task_assignment",
     "TaskEvent": ".task_event",
@@ -558,7 +548,6 @@ def __dir__():
 
 
 __all__ = [
-    "ActionEnum",
     "ActionsEnum",
     "ActivityLog",
     "ActivityLogResponse",
@@ -570,9 +559,9 @@ __all__ = [
     "AgreementV2BackfillTriggerRequestRequest",
     "AgreementV2BackfillTriggerResponse",
     "AllRolesProjectList",
-    "AnnotatedEnum",
     "Annotation",
     "AnnotationHistory",
+    "AnnotationHistoryActionEnum",
     "AnnotationRequest",
     "AnnotationReview",
     "AnnotationReviewRequest",
@@ -605,6 +594,7 @@ __all__ = [
     "ConvertedFormat",
     "ConvertedFormatRequest",
     "CountLimit",
+    "DataManagerFilterModeEnum",
     "DataQualityAgreementConfusionMatrix",
     "DataQualityAgreementDimensions",
     "DataQualityAgreementDistribution",
@@ -613,7 +603,6 @@ __all__ = [
     "DatabricksExportStorageRequest",
     "DatabricksImportStorage",
     "DatabricksImportStorageRequest",
-    "Default165Enum",
     "DefaultRole",
     "Dimension",
     "DimensionList",
@@ -622,7 +611,7 @@ __all__ = [
     "FileUpload",
     "Filter",
     "FilterGroup",
-    "FinishedEnum",
+    "FsmBackfillJobStatusEnum",
     "FsmTransitionExecuteResponse",
     "GcsExportStorage",
     "GcsImportStorage",
@@ -643,7 +632,6 @@ __all__ = [
     "LabelDistributionStructureDimension",
     "LabelDistributionStructureResponse",
     "LabelStreamTaskDistributionEnum",
-    "LastActionEnum",
     "LocalFilesExportStorage",
     "LocalFilesImportStorage",
     "LseAnnotationFilterOptions",
@@ -700,7 +688,6 @@ __all__ = [
     "ModelRunStatusEnum",
     "OnboardingStateEnum",
     "OperatorEnum",
-    "Options165Enum",
     "OrganizationBilling",
     "OrganizationId",
     "OrganizationInvite",
@@ -713,6 +700,8 @@ __all__ = [
     "OrganizationMembership",
     "OrganizationPermission",
     "OrganizationPermissionRequest",
+    "OrganizationPermissionRoleEnum",
+    "OrganizationRoleEnum",
     "PaginatedAllRolesProjectListList",
     "PaginatedAnnotationHistoryList",
     "PaginatedLseInterfaceListList",
@@ -736,11 +725,13 @@ __all__ = [
     "ProjectGroupRequest",
     "ProjectGroupRoleEnum",
     "ProjectImport",
+    "ProjectImportStatusEnum",
     "ProjectLabelConfig",
     "ProjectLabelConfigRequest",
     "ProjectMember",
     "ProjectMemberBulkAssignRolesRequest",
     "ProjectRole",
+    "ProjectSamplingEnum",
     "ProjectSubsetEnum",
     "ProjectSubsetItem",
     "ProjectSubsetTaskItem",
@@ -760,14 +751,11 @@ __all__ = [
     "ReviewSettings",
     "ReviewSettingsRequest",
     "ReviewSettingsSamplingEnum",
-    "ReviewedEnum",
-    "Role9E7Enum",
     "RoleBasedTask",
     "S3ExportStorage",
     "S3ImportStorage",
     "SamlSettings",
     "SamlSettingsUpdate",
-    "SamplingDe5Enum",
     "ScimSettings",
     "ScimSettingsUpdate",
     "ScopeEnum",
@@ -780,7 +768,6 @@ __all__ = [
     "SimpleOrganizationMemberTag",
     "SkillNameEnum",
     "SkipQueueEnum",
-    "SkippedEnum",
     "StateBackfillCancelResponse",
     "StateBackfillJobItem",
     "StateBackfillJobItemResponse",
@@ -792,9 +779,7 @@ __all__ = [
     "StateEnum",
     "StateModel",
     "StateTriggeredBy",
-    "Status7BfEnum",
-    "StatusA47Enum",
-    "StatusC5AEnum",
+    "StorageStatusEnum",
     "TaskAgreementMatrixResponse",
     "TaskAssignment",
     "TaskEvent",

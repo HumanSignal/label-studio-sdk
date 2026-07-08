@@ -5,14 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .annotated_enum import AnnotatedEnum
-from .finished_enum import FinishedEnum
-from .reviewed_enum import ReviewedEnum
-from .skipped_enum import SkippedEnum
+from .data_manager_filter_mode_enum import DataManagerFilterModeEnum
 
 
 class LseTaskFilterOptionsRequest(UncheckedBaseModel):
-    annotated: typing.Optional[AnnotatedEnum] = pydantic.Field(default=None)
+    annotated: typing.Optional[DataManagerFilterModeEnum] = pydantic.Field(default=None)
     """
     `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
     
@@ -21,7 +18,7 @@ class LseTaskFilterOptionsRequest(UncheckedBaseModel):
     * `None` - None
     """
 
-    finished: typing.Optional[FinishedEnum] = pydantic.Field(default=None)
+    finished: typing.Optional[DataManagerFilterModeEnum] = pydantic.Field(default=None)
     """
     `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
     
@@ -31,7 +28,7 @@ class LseTaskFilterOptionsRequest(UncheckedBaseModel):
     """
 
     only_with_annotations: typing.Optional[bool] = None
-    reviewed: typing.Optional[ReviewedEnum] = pydantic.Field(default=None)
+    reviewed: typing.Optional[DataManagerFilterModeEnum] = pydantic.Field(default=None)
     """
     `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
     
@@ -40,7 +37,7 @@ class LseTaskFilterOptionsRequest(UncheckedBaseModel):
     * `None` - None
     """
 
-    skipped: typing.Optional[SkippedEnum] = pydantic.Field(default=None)
+    skipped: typing.Optional[DataManagerFilterModeEnum] = pydantic.Field(default=None)
     """
     `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
     

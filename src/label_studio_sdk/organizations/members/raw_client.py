@@ -17,8 +17,8 @@ from ...errors.method_not_allowed_error import MethodNotAllowedError
 from ...errors.not_found_error import NotFoundError
 from ...types.lse_organization_member_list import LseOrganizationMemberList
 from ...types.organization_member import OrganizationMember
+from ...types.organization_role_enum import OrganizationRoleEnum
 from ...types.paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
-from ...types.role9e7enum import Role9E7Enum
 from .types.list_members_request_scope import ListMembersRequestScope
 from pydantic import ValidationError
 
@@ -172,7 +172,7 @@ class RawMembersClient:
         self,
         id: int,
         *,
-        role: typing.Optional[Role9E7Enum] = OMIT,
+        role: typing.Optional[OrganizationRoleEnum] = OMIT,
         user_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseOrganizationMemberList]:
@@ -202,7 +202,7 @@ class RawMembersClient:
         id : int
             A unique integer value identifying this organization.
 
-        role : typing.Optional[Role9E7Enum]
+        role : typing.Optional[OrganizationRoleEnum]
             Organization role
 
             * `OW` - Owner
@@ -529,7 +529,7 @@ class AsyncRawMembersClient:
         self,
         id: int,
         *,
-        role: typing.Optional[Role9E7Enum] = OMIT,
+        role: typing.Optional[OrganizationRoleEnum] = OMIT,
         user_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseOrganizationMemberList]:
@@ -559,7 +559,7 @@ class AsyncRawMembersClient:
         id : int
             A unique integer value identifying this organization.
 
-        role : typing.Optional[Role9E7Enum]
+        role : typing.Optional[OrganizationRoleEnum]
             Organization role
 
             * `OW` - Owner

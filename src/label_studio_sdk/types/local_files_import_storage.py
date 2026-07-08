@@ -6,7 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .status_c5a_enum import StatusC5AEnum
+from .storage_status_enum import StorageStatusEnum
 
 
 class LocalFilesImportStorage(UncheckedBaseModel):
@@ -61,7 +61,7 @@ class LocalFilesImportStorage(UncheckedBaseModel):
     Regex for filtering objects
     """
 
-    status: typing.Optional[StatusC5AEnum] = None
+    status: typing.Optional[StorageStatusEnum] = None
     synchronizable: typing.Optional[bool] = None
     title: typing.Optional[str] = pydantic.Field(default=None)
     """

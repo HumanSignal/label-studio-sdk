@@ -7,7 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .converted_format import ConvertedFormat
-from .status7bf_enum import Status7BfEnum
+from .project_import_status_enum import ProjectImportStatusEnum
 from .user_simple import UserSimple
 
 
@@ -27,7 +27,7 @@ class Export(UncheckedBaseModel):
 
     id: typing.Optional[int] = None
     md5: typing.Optional[str] = None
-    status: typing.Optional[Status7BfEnum] = None
+    status: typing.Optional[ProjectImportStatusEnum] = None
     title: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

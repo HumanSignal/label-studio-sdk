@@ -5,7 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.organization_invite import OrganizationInvite
-from ...types.role9e7enum import Role9E7Enum
+from ...types.organization_role_enum import OrganizationRoleEnum
 from .raw_client import AsyncRawInvitesClient, RawInvitesClient
 
 # this is used as the default value for optional parameters
@@ -93,7 +93,7 @@ class InvitesClient:
         self,
         *,
         emails: typing.Sequence[str],
-        role: Role9E7Enum,
+        role: OrganizationRoleEnum,
         projects: typing.Optional[typing.Sequence[int]] = OMIT,
         workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -112,7 +112,7 @@ class InvitesClient:
         emails : typing.Sequence[str]
             Email addresses
 
-        role : Role9E7Enum
+        role : OrganizationRoleEnum
             Organization role
 
             * `OW` - Owner
@@ -251,7 +251,7 @@ class AsyncInvitesClient:
         self,
         *,
         emails: typing.Sequence[str],
-        role: Role9E7Enum,
+        role: OrganizationRoleEnum,
         projects: typing.Optional[typing.Sequence[int]] = OMIT,
         workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -270,7 +270,7 @@ class AsyncInvitesClient:
         emails : typing.Sequence[str]
             Email addresses
 
-        role : Role9E7Enum
+        role : OrganizationRoleEnum
             Organization role
 
             * `OW` - Owner

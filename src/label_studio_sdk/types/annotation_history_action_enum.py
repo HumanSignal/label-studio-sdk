@@ -2,7 +2,7 @@
 
 import typing
 
-LastActionEnum = typing.Union[
+AnnotationHistoryActionEnum = typing.Union[
     typing.Literal[
         "prediction",
         "propagated_annotation",

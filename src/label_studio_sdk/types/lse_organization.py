@@ -7,7 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .organization_billing import OrganizationBilling
-from .role9e7enum import Role9E7Enum
+from .organization_role_enum import OrganizationRoleEnum
 
 
 class LseOrganization(UncheckedBaseModel):
@@ -19,7 +19,7 @@ class LseOrganization(UncheckedBaseModel):
     """
 
     custom_scripts_enabled: typing.Optional[str] = None
-    default_role: typing.Optional[Role9E7Enum] = pydantic.Field(default=None)
+    default_role: typing.Optional[OrganizationRoleEnum] = pydantic.Field(default=None)
     """
     Default membership role for invited users
     

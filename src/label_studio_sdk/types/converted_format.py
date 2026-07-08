@@ -5,13 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .status7bf_enum import Status7BfEnum
+from .project_import_status_enum import ProjectImportStatusEnum
 
 
 class ConvertedFormat(UncheckedBaseModel):
     export_type: str
     id: typing.Optional[int] = None
-    status: typing.Optional[Status7BfEnum] = None
+    status: typing.Optional[ProjectImportStatusEnum] = None
     traceback: typing.Optional[str] = pydantic.Field(default=None)
     """
     Traceback report in case of errors

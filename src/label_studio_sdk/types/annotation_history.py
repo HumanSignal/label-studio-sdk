@@ -6,7 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .action_enum import ActionEnum
+from .annotation_history_action_enum import AnnotationHistoryActionEnum
 
 
 class AnnotationHistory(UncheckedBaseModel):
@@ -17,7 +17,7 @@ class AnnotationHistory(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
-    action: typing.Optional[ActionEnum] = None
+    action: typing.Optional[AnnotationHistoryActionEnum] = None
     annotation_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Corresponding annotation for this historical annotation

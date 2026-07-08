@@ -7,7 +7,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.auth_type_enum import AuthTypeEnum
 from ...types.databricks_export_storage import DatabricksExportStorage
-from ...types.status_c5a_enum import StatusC5AEnum
+from ...types.storage_status_enum import StorageStatusEnum
 from .raw_client import AsyncRawDatabricksClient, RawDatabricksClient
 
 # this is used as the default value for optional parameters
@@ -95,7 +95,7 @@ class DatabricksClient:
         prefix: typing.Optional[str] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         request_timeout_s: typing.Optional[int] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         tenant_id: typing.Optional[str] = OMIT,
@@ -171,7 +171,7 @@ class DatabricksClient:
 
         request_timeout_s : typing.Optional[int]
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         stream_chunk_bytes : typing.Optional[int]
 
@@ -269,7 +269,7 @@ class DatabricksClient:
         prefix: typing.Optional[str] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         request_timeout_s: typing.Optional[int] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         tenant_id: typing.Optional[str] = OMIT,
@@ -345,7 +345,7 @@ class DatabricksClient:
 
         request_timeout_s : typing.Optional[int]
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         stream_chunk_bytes : typing.Optional[int]
 
@@ -513,7 +513,7 @@ class DatabricksClient:
         regex_filter: typing.Optional[str] = OMIT,
         request_timeout_s: typing.Optional[int] = OMIT,
         schema: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         tenant_id: typing.Optional[str] = OMIT,
@@ -589,7 +589,7 @@ class DatabricksClient:
         schema : typing.Optional[str]
             UC schema name
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         stream_chunk_bytes : typing.Optional[int]
 
@@ -793,7 +793,7 @@ class AsyncDatabricksClient:
         prefix: typing.Optional[str] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         request_timeout_s: typing.Optional[int] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         tenant_id: typing.Optional[str] = OMIT,
@@ -869,7 +869,7 @@ class AsyncDatabricksClient:
 
         request_timeout_s : typing.Optional[int]
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         stream_chunk_bytes : typing.Optional[int]
 
@@ -975,7 +975,7 @@ class AsyncDatabricksClient:
         prefix: typing.Optional[str] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         request_timeout_s: typing.Optional[int] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         tenant_id: typing.Optional[str] = OMIT,
@@ -1051,7 +1051,7 @@ class AsyncDatabricksClient:
 
         request_timeout_s : typing.Optional[int]
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         stream_chunk_bytes : typing.Optional[int]
 
@@ -1243,7 +1243,7 @@ class AsyncDatabricksClient:
         regex_filter: typing.Optional[str] = OMIT,
         request_timeout_s: typing.Optional[int] = OMIT,
         schema: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         tenant_id: typing.Optional[str] = OMIT,
@@ -1319,7 +1319,7 @@ class AsyncDatabricksClient:
         schema : typing.Optional[str]
             UC schema name
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         stream_chunk_bytes : typing.Optional[int]
 

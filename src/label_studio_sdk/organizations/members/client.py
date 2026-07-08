@@ -7,8 +7,8 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.lse_organization_member_list import LseOrganizationMemberList
 from ...types.organization_member import OrganizationMember
+from ...types.organization_role_enum import OrganizationRoleEnum
 from ...types.paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
-from ...types.role9e7enum import Role9E7Enum
 from .raw_client import AsyncRawMembersClient, RawMembersClient
 from .types.list_members_request_scope import ListMembersRequestScope
 
@@ -160,7 +160,7 @@ class MembersClient:
         self,
         id: int,
         *,
-        role: typing.Optional[Role9E7Enum] = OMIT,
+        role: typing.Optional[OrganizationRoleEnum] = OMIT,
         user_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
@@ -190,7 +190,7 @@ class MembersClient:
         id : int
             A unique integer value identifying this organization.
 
-        role : typing.Optional[Role9E7Enum]
+        role : typing.Optional[OrganizationRoleEnum]
             Organization role
 
             * `OW` - Owner
@@ -458,7 +458,7 @@ class AsyncMembersClient:
         self,
         id: int,
         *,
-        role: typing.Optional[Role9E7Enum] = OMIT,
+        role: typing.Optional[OrganizationRoleEnum] = OMIT,
         user_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
@@ -488,7 +488,7 @@ class AsyncMembersClient:
         id : int
             A unique integer value identifying this organization.
 
-        role : typing.Optional[Role9E7Enum]
+        role : typing.Optional[OrganizationRoleEnum]
             Organization role
 
             * `OW` - Owner

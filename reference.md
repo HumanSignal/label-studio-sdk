@@ -1168,7 +1168,7 @@ client.annotations.create_bulk()
 <dl>
 <dd>
 
-**last_action:** `typing.Optional[LastActionEnum]` 
+**last_action:** `typing.Optional[AnnotationHistoryActionEnum]` 
 
 Action which was performed in the last annotation history item
 
@@ -8987,7 +8987,7 @@ client.organizations.update_default_role(
 <dl>
 <dd>
 
-**default_role:** `typing.Optional[Role9E7Enum]` 
+**default_role:** `typing.Optional[OrganizationRoleEnum]` 
 
 Default membership role for invited users
 
@@ -12169,7 +12169,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**sampling:** `typing.Optional[SamplingDe5Enum]` 
+**sampling:** `typing.Optional[ProjectSamplingEnum]` 
     
 </dd>
 </dl>
@@ -13000,7 +13000,7 @@ Methodology (Consensus / Pairwise Averaging)
 <dl>
 <dd>
 
-**sampling:** `typing.Optional[SamplingDe5Enum]` 
+**sampling:** `typing.Optional[ProjectSamplingEnum]` 
     
 </dd>
 </dl>
@@ -17734,7 +17734,7 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**status:** `typing.Optional[StorageStatusEnum]` 
     
 </dd>
 </dl>
@@ -18494,7 +18494,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**status:** `typing.Optional[StorageStatusEnum]` 
     
 </dd>
 </dl>
@@ -19924,7 +19924,7 @@ client.export_storage.gcs_sa.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**status:** `typing.Optional[StorageStatusEnum]` 
     
 </dd>
 </dl>
@@ -20662,7 +20662,7 @@ client.export_storage.gcswif.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**status:** `typing.Optional[StorageStatusEnum]` 
     
 </dd>
 </dl>
@@ -23590,7 +23590,7 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**status:** `typing.Optional[StorageStatusEnum]` 
     
 </dd>
 </dl>
@@ -25084,7 +25084,7 @@ client.import_storage.azure_spi.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**status:** `typing.Optional[StorageStatusEnum]` 
     
 </dd>
 </dl>
@@ -25860,7 +25860,7 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**status:** `typing.Optional[StorageStatusEnum]` 
     
 </dd>
 </dl>
@@ -27378,7 +27378,7 @@ client.import_storage.gcs_sa.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**status:** `typing.Optional[StorageStatusEnum]` 
     
 </dd>
 </dl>
@@ -28132,7 +28132,7 @@ client.import_storage.gcswif.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**status:** `typing.Optional[StorageStatusEnum]` 
     
 </dd>
 </dl>
@@ -31172,7 +31172,7 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusC5AEnum]` 
+**status:** `typing.Optional[StorageStatusEnum]` 
     
 </dd>
 </dl>
@@ -31516,7 +31516,7 @@ client.organizations.invites.send_email(
 <dl>
 <dd>
 
-**role:** `Role9E7Enum` 
+**role:** `OrganizationRoleEnum` 
 
 Organization role
 
@@ -32698,7 +32698,7 @@ client.organizations.members.update(
 <dl>
 <dd>
 
-**role:** `typing.Optional[Role9E7Enum]` 
+**role:** `typing.Optional[OrganizationRoleEnum]` 
 
 Organization role
 
@@ -33528,7 +33528,7 @@ client.organizations.permissions.update(
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.List[Role9E7Enum]]` — Organization roles
+**roles:** `typing.Optional[typing.List[OrganizationRoleEnum]]` — Organization roles
     
 </dd>
 </dl>
@@ -33885,7 +33885,7 @@ client.projects.roles.add(
 <dl>
 <dd>
 
-**role:** `Role9E7Enum` 
+**role:** `OrganizationRoleEnum` 
     
 </dd>
 </dl>
@@ -36771,7 +36771,7 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**status:** `typing.Optional[Status7BfEnum]` 
+**status:** `typing.Optional[ProjectImportStatusEnum]` 
     
 </dd>
 </dl>

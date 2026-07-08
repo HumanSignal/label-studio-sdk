@@ -11,7 +11,7 @@ from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.forbidden_error import ForbiddenError
 from ...types.organization_invite import OrganizationInvite
-from ...types.role9e7enum import Role9E7Enum
+from ...types.organization_role_enum import OrganizationRoleEnum
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -125,7 +125,7 @@ class RawInvitesClient:
         self,
         *,
         emails: typing.Sequence[str],
-        role: Role9E7Enum,
+        role: OrganizationRoleEnum,
         projects: typing.Optional[typing.Sequence[int]] = OMIT,
         workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -144,7 +144,7 @@ class RawInvitesClient:
         emails : typing.Sequence[str]
             Email addresses
 
-        role : Role9E7Enum
+        role : OrganizationRoleEnum
             Organization role
 
             * `OW` - Owner
@@ -314,7 +314,7 @@ class AsyncRawInvitesClient:
         self,
         *,
         emails: typing.Sequence[str],
-        role: Role9E7Enum,
+        role: OrganizationRoleEnum,
         projects: typing.Optional[typing.Sequence[int]] = OMIT,
         workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -333,7 +333,7 @@ class AsyncRawInvitesClient:
         emails : typing.Sequence[str]
             Email addresses
 
-        role : Role9E7Enum
+        role : OrganizationRoleEnum
             Organization role
 
             * `OW` - Owner

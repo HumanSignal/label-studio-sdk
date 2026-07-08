@@ -9,8 +9,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .converted_format import ConvertedFormat
 from .lse_annotation_filter_options import LseAnnotationFilterOptions
 from .lse_task_filter_options import LseTaskFilterOptions
+from .project_import_status_enum import ProjectImportStatusEnum
 from .serialization_options import SerializationOptions
-from .status7bf_enum import Status7BfEnum
 from .user_simple import UserSimple
 
 
@@ -32,7 +32,7 @@ class LseExportCreate(UncheckedBaseModel):
     id: typing.Optional[int] = None
     md5: typing.Optional[str] = None
     serialization_options: typing.Optional[SerializationOptions] = None
-    status: typing.Optional[Status7BfEnum] = None
+    status: typing.Optional[ProjectImportStatusEnum] = None
     task_filter_options: typing.Optional[LseTaskFilterOptions] = None
     title: typing.Optional[str] = None
 

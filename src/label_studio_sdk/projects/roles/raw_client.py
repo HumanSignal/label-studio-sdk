@@ -10,8 +10,8 @@ from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
+from ...types.organization_role_enum import OrganizationRoleEnum
 from ...types.project_role import ProjectRole
-from ...types.role9e7enum import Role9E7Enum
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -85,7 +85,12 @@ class RawRolesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def add(
-        self, *, project: int, role: Role9E7Enum, user: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: int,
+        role: OrganizationRoleEnum,
+        user: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProjectRole]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -102,7 +107,7 @@ class RawRolesClient:
         ----------
         project : int
 
-        role : Role9E7Enum
+        role : OrganizationRoleEnum
 
         user : int
 
@@ -307,7 +312,12 @@ class AsyncRawRolesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def add(
-        self, *, project: int, role: Role9E7Enum, user: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: int,
+        role: OrganizationRoleEnum,
+        user: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProjectRole]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -324,7 +334,7 @@ class AsyncRawRolesClient:
         ----------
         project : int
 
-        role : Role9E7Enum
+        role : OrganizationRoleEnum
 
         user : int
 

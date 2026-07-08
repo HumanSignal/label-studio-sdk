@@ -12,7 +12,7 @@ from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.gcswif_import_storage import GcswifImportStorage
-from ...types.status_c5a_enum import StatusC5AEnum
+from ...types.storage_status_enum import StorageStatusEnum
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -104,7 +104,7 @@ class RawGcswifClient:
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -175,7 +175,7 @@ class RawGcswifClient:
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 
@@ -267,7 +267,7 @@ class RawGcswifClient:
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -338,7 +338,7 @@ class RawGcswifClient:
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 
@@ -509,7 +509,7 @@ class RawGcswifClient:
         project: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -582,7 +582,7 @@ class RawGcswifClient:
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 
@@ -790,7 +790,7 @@ class AsyncRawGcswifClient:
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -861,7 +861,7 @@ class AsyncRawGcswifClient:
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 
@@ -953,7 +953,7 @@ class AsyncRawGcswifClient:
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -1024,7 +1024,7 @@ class AsyncRawGcswifClient:
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 
@@ -1197,7 +1197,7 @@ class AsyncRawGcswifClient:
         project: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusC5AEnum] = OMIT,
+        status: typing.Optional[StorageStatusEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
@@ -1270,7 +1270,7 @@ class AsyncRawGcswifClient:
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
 
-        status : typing.Optional[StatusC5AEnum]
+        status : typing.Optional[StorageStatusEnum]
 
         synchronizable : typing.Optional[bool]
 

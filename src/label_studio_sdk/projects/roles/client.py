@@ -4,8 +4,8 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.organization_role_enum import OrganizationRoleEnum
 from ...types.project_role import ProjectRole
-from ...types.role9e7enum import Role9E7Enum
 from .raw_client import AsyncRawRolesClient, RawRolesClient
 
 # this is used as the default value for optional parameters
@@ -74,7 +74,12 @@ class RolesClient:
         return _response.data
 
     def add(
-        self, *, project: int, role: Role9E7Enum, user: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: int,
+        role: OrganizationRoleEnum,
+        user: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectRole:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -91,7 +96,7 @@ class RolesClient:
         ----------
         project : int
 
-        role : Role9E7Enum
+        role : OrganizationRoleEnum
 
         user : int
 
@@ -267,7 +272,12 @@ class AsyncRolesClient:
         return _response.data
 
     async def add(
-        self, *, project: int, role: Role9E7Enum, user: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: int,
+        role: OrganizationRoleEnum,
+        user: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectRole:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -284,7 +294,7 @@ class AsyncRolesClient:
         ----------
         project : int
 
-        role : Role9E7Enum
+        role : OrganizationRoleEnum
 
         user : int
 

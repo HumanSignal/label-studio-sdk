@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .auth_type_enum import AuthTypeEnum
-from .status_c5a_enum import StatusC5AEnum
+from .storage_status_enum import StorageStatusEnum
 
 
 class DatabricksExportStorage(UncheckedBaseModel):
@@ -96,7 +96,7 @@ class DatabricksExportStorage(UncheckedBaseModel):
     schema_: typing_extensions.Annotated[
         str, FieldMetadata(alias="schema"), pydantic.Field(alias="schema", description="UC schema name")
     ]
-    status: typing.Optional[StatusC5AEnum] = None
+    status: typing.Optional[StorageStatusEnum] = None
     stream_chunk_bytes: typing.Optional[int] = None
     synchronizable: typing.Optional[bool] = None
     tenant_id: typing.Optional[str] = pydantic.Field(default=None)

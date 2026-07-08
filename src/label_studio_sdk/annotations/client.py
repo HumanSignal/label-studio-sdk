@@ -6,7 +6,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.annotation import Annotation
-from ..types.last_action_enum import LastActionEnum
+from ..types.annotation_history_action_enum import AnnotationHistoryActionEnum
 from ..types.selected_items_request import SelectedItemsRequest
 from .raw_client import AsyncRawAnnotationsClient, RawAnnotationsClient
 from .types.create_bulk_annotations_response_item import CreateBulkAnnotationsResponseItem
@@ -75,7 +75,7 @@ class AnnotationsClient:
         draft_created_at: typing.Optional[dt.datetime] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
         import_id: typing.Optional[int] = OMIT,
-        last_action: typing.Optional[LastActionEnum] = OMIT,
+        last_action: typing.Optional[AnnotationHistoryActionEnum] = OMIT,
         last_created_by: typing.Optional[int] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
         parent_annotation: typing.Optional[int] = OMIT,
@@ -109,7 +109,7 @@ class AnnotationsClient:
         import_id : typing.Optional[int]
             Original annotation ID that was at the import step or NULL if this annotation wasn't imported
 
-        last_action : typing.Optional[LastActionEnum]
+        last_action : typing.Optional[AnnotationHistoryActionEnum]
             Action which was performed in the last annotation history item
 
             * `prediction` - Created from prediction
@@ -571,7 +571,7 @@ class AsyncAnnotationsClient:
         draft_created_at: typing.Optional[dt.datetime] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
         import_id: typing.Optional[int] = OMIT,
-        last_action: typing.Optional[LastActionEnum] = OMIT,
+        last_action: typing.Optional[AnnotationHistoryActionEnum] = OMIT,
         last_created_by: typing.Optional[int] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
         parent_annotation: typing.Optional[int] = OMIT,
@@ -605,7 +605,7 @@ class AsyncAnnotationsClient:
         import_id : typing.Optional[int]
             Original annotation ID that was at the import step or NULL if this annotation wasn't imported
 
-        last_action : typing.Optional[LastActionEnum]
+        last_action : typing.Optional[AnnotationHistoryActionEnum]
             Action which was performed in the last annotation history item
 
             * `prediction` - Created from prediction

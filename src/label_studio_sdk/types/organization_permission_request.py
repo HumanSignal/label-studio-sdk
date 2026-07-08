@@ -5,12 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .role9e7enum import Role9E7Enum
+from .organization_role_enum import OrganizationRoleEnum
 
 
 class OrganizationPermissionRequest(UncheckedBaseModel):
     permission: str
-    roles: typing.Optional[typing.List[Role9E7Enum]] = pydantic.Field(default=None)
+    roles: typing.Optional[typing.List[OrganizationRoleEnum]] = pydantic.Field(default=None)
     """
     Organization roles
     """

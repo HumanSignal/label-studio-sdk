@@ -6,7 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.configurable_permission_option import ConfigurablePermissionOption
 from ...types.organization_permission import OrganizationPermission
-from ...types.role9e7enum import Role9E7Enum
+from ...types.organization_role_enum import OrganizationRoleEnum
 from .raw_client import AsyncRawPermissionsClient, RawPermissionsClient
 
 # this is used as the default value for optional parameters
@@ -74,7 +74,7 @@ class PermissionsClient:
         id: int,
         *,
         permission: str,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -92,7 +92,7 @@ class PermissionsClient:
 
         permission : str
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[OrganizationRoleEnum]]
             Organization roles
 
         request_options : typing.Optional[RequestOptions]
@@ -206,7 +206,7 @@ class PermissionsClient:
         permission_: str,
         *,
         permission: str,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -228,7 +228,7 @@ class PermissionsClient:
 
         permission : str
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[OrganizationRoleEnum]]
             Organization roles
 
         request_options : typing.Optional[RequestOptions]
@@ -301,7 +301,7 @@ class PermissionsClient:
         permission: str,
         *,
         patched_organization_permission_request_permission: typing.Optional[str] = OMIT,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -321,7 +321,7 @@ class PermissionsClient:
 
         patched_organization_permission_request_permission : typing.Optional[str]
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[OrganizationRoleEnum]]
             Organization roles
 
         request_options : typing.Optional[RequestOptions]
@@ -423,7 +423,7 @@ class AsyncPermissionsClient:
         id: int,
         *,
         permission: str,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -441,7 +441,7 @@ class AsyncPermissionsClient:
 
         permission : str
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[OrganizationRoleEnum]]
             Organization roles
 
         request_options : typing.Optional[RequestOptions]
@@ -581,7 +581,7 @@ class AsyncPermissionsClient:
         permission_: str,
         *,
         permission: str,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -603,7 +603,7 @@ class AsyncPermissionsClient:
 
         permission : str
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[OrganizationRoleEnum]]
             Organization roles
 
         request_options : typing.Optional[RequestOptions]
@@ -694,7 +694,7 @@ class AsyncPermissionsClient:
         permission: str,
         *,
         patched_organization_permission_request_permission: typing.Optional[str] = OMIT,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -714,7 +714,7 @@ class AsyncPermissionsClient:
 
         patched_organization_permission_request_permission : typing.Optional[str]
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[OrganizationRoleEnum]]
             Organization roles
 
         request_options : typing.Optional[RequestOptions]

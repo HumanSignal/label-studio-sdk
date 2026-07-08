@@ -7,7 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .control_tag_weight import ControlTagWeight
-from .sampling_de5enum import SamplingDe5Enum
+from .project_sampling_enum import ProjectSamplingEnum
 from .skip_queue_enum import SkipQueueEnum
 from .user_simple import UserSimple
 
@@ -130,7 +130,7 @@ class Project(UncheckedBaseModel):
     Reveal pre-annotations interactively
     """
 
-    sampling: typing.Optional[SamplingDe5Enum] = None
+    sampling: typing.Optional[ProjectSamplingEnum] = None
     show_annotation_history: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Show annotation history to annotator

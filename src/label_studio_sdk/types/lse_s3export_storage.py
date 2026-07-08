@@ -8,7 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .status_c5a_enum import StatusC5AEnum
+from .storage_status_enum import StorageStatusEnum
 
 
 class LseS3ExportStorage(UncheckedBaseModel):
@@ -109,7 +109,7 @@ class LseS3ExportStorage(UncheckedBaseModel):
         FieldMetadata(alias="s3_endpoint"),
         pydantic.Field(alias="s3_endpoint", description="S3 Endpoint"),
     ] = None
-    status: typing.Optional[StatusC5AEnum] = None
+    status: typing.Optional[StorageStatusEnum] = None
     synchronizable: typing.Optional[bool] = None
     title: typing.Optional[str] = pydantic.Field(default=None)
     """
