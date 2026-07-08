@@ -62,6 +62,7 @@ if typing.TYPE_CHECKING:
     from .databricks_export_storage_request import DatabricksExportStorageRequest
     from .databricks_import_storage import DatabricksImportStorage
     from .databricks_import_storage_request import DatabricksImportStorageRequest
+    from .default_model_version_name_response import DefaultModelVersionNameResponse
     from .default_role import DefaultRole
     from .dimension import Dimension
     from .dimension_list import DimensionList
@@ -113,7 +114,6 @@ if typing.TYPE_CHECKING:
     from .lse_project_counts import LseProjectCounts
     from .lse_project_create import LseProjectCreate
     from .lse_project_response import LseProjectResponse
-    from .lse_project_update import LseProjectUpdate
     from .lse_s3export_storage import LseS3ExportStorage
     from .lse_s3export_storage_request import LseS3ExportStorageRequest
     from .lse_s3import_storage import LseS3ImportStorage
@@ -326,6 +326,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DatabricksExportStorageRequest": ".databricks_export_storage_request",
     "DatabricksImportStorage": ".databricks_import_storage",
     "DatabricksImportStorageRequest": ".databricks_import_storage_request",
+    "DefaultModelVersionNameResponse": ".default_model_version_name_response",
     "DefaultRole": ".default_role",
     "Dimension": ".dimension",
     "DimensionList": ".dimension_list",
@@ -375,7 +376,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LseProjectCounts": ".lse_project_counts",
     "LseProjectCreate": ".lse_project_create",
     "LseProjectResponse": ".lse_project_response",
-    "LseProjectUpdate": ".lse_project_update",
     "LseS3ExportStorage": ".lse_s3export_storage",
     "LseS3ExportStorageRequest": ".lse_s3export_storage_request",
     "LseS3ImportStorage": ".lse_s3import_storage",
@@ -608,6 +608,7 @@ __all__ = [
     "DatabricksExportStorageRequest",
     "DatabricksImportStorage",
     "DatabricksImportStorageRequest",
+    "DefaultModelVersionNameResponse",
     "DefaultRole",
     "Dimension",
     "DimensionList",
@@ -657,7 +658,6 @@ __all__ = [
     "LseProjectCounts",
     "LseProjectCreate",
     "LseProjectResponse",
-    "LseProjectUpdate",
     "LseS3ExportStorage",
     "LseS3ExportStorageRequest",
     "LseS3ImportStorage",

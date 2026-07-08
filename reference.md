@@ -12614,7 +12614,7 @@ client.projects.delete(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">update</a>(...) -> LseProjectUpdate</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">update</a>(...) -> LseProjectResponse</code></summary>
 <dl>
 <dd>
 
@@ -40277,7 +40277,7 @@ client.prompts.indicators.get(
 </details>
 
 ## Prompts Versions
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get_default_version_name</a>(...)</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get_default_version_name</a>(...) -> DefaultModelVersionNameResponse</code></summary>
 <dl>
 <dd>
 

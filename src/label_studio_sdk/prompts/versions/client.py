@@ -4,6 +4,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.default_model_version_name_response import DefaultModelVersionNameResponse
 from ...types.inference_run_cost_estimate import InferenceRunCostEstimate
 from ...types.provider_enum import ProviderEnum
 from ...types.refined_prompt_response import RefinedPromptResponse
@@ -29,7 +30,9 @@ class VersionsClient:
         """
         return self._raw_client
 
-    def get_default_version_name(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def get_default_version_name(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DefaultModelVersionNameResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -48,7 +51,8 @@ class VersionsClient:
 
         Returns
         -------
-        None
+        DefaultModelVersionNameResponse
+
 
         Examples
         --------
@@ -560,7 +564,7 @@ class AsyncVersionsClient:
 
     async def get_default_version_name(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> DefaultModelVersionNameResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -579,7 +583,8 @@ class AsyncVersionsClient:
 
         Returns
         -------
-        None
+        DefaultModelVersionNameResponse
+
 
         Examples
         --------

@@ -21,7 +21,6 @@ from ..types.control_tag_weight_request import ControlTagWeightRequest
 from ..types.import_api_request import ImportApiRequest
 from ..types.lse_project_create import LseProjectCreate
 from ..types.lse_project_response import LseProjectResponse
-from ..types.lse_project_update import LseProjectUpdate
 from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from ..types.paginated_lse_project_counts_list import PaginatedLseProjectCountsList
 from ..types.prediction_request import PredictionRequest
@@ -655,7 +654,7 @@ class RawProjectsClient:
         use_custom_interface: typing.Optional[bool] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[LseProjectUpdate]:
+    ) -> HttpResponse[LseProjectResponse]:
         """
         Update the details of a specific project.
 
@@ -829,7 +828,7 @@ class RawProjectsClient:
 
         Returns
         -------
-        HttpResponse[LseProjectUpdate]
+        HttpResponse[LseProjectResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -915,9 +914,9 @@ class RawProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    LseProjectUpdate,
+                    LseProjectResponse,
                     construct_type(
-                        type_=LseProjectUpdate,  # type: ignore
+                        type_=LseProjectResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1947,7 +1946,7 @@ class AsyncRawProjectsClient:
         use_custom_interface: typing.Optional[bool] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[LseProjectUpdate]:
+    ) -> AsyncHttpResponse[LseProjectResponse]:
         """
         Update the details of a specific project.
 
@@ -2121,7 +2120,7 @@ class AsyncRawProjectsClient:
 
         Returns
         -------
-        AsyncHttpResponse[LseProjectUpdate]
+        AsyncHttpResponse[LseProjectResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -2207,9 +2206,9 @@ class AsyncRawProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    LseProjectUpdate,
+                    LseProjectResponse,
                     construct_type(
-                        type_=LseProjectUpdate,  # type: ignore
+                        type_=LseProjectResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

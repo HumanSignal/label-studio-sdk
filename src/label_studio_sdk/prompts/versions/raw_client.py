@@ -10,6 +10,7 @@ from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
+from ...types.default_model_version_name_response import DefaultModelVersionNameResponse
 from ...types.inference_run_cost_estimate import InferenceRunCostEstimate
 from ...types.provider_enum import ProviderEnum
 from ...types.refined_prompt_response import RefinedPromptResponse
@@ -26,7 +27,7 @@ class RawVersionsClient:
 
     def get_default_version_name(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[None]:
+    ) -> HttpResponse[DefaultModelVersionNameResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -45,7 +46,8 @@ class RawVersionsClient:
 
         Returns
         -------
-        HttpResponse[None]
+        HttpResponse[DefaultModelVersionNameResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/prompts/{encode_path_param(id)}/get-default-version-name",
@@ -54,7 +56,14 @@ class RawVersionsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
+                _data = typing.cast(
+                    DefaultModelVersionNameResponse,
+                    construct_type(
+                        type_=DefaultModelVersionNameResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -623,7 +632,7 @@ class AsyncRawVersionsClient:
 
     async def get_default_version_name(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[None]:
+    ) -> AsyncHttpResponse[DefaultModelVersionNameResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -642,7 +651,8 @@ class AsyncRawVersionsClient:
 
         Returns
         -------
-        AsyncHttpResponse[None]
+        AsyncHttpResponse[DefaultModelVersionNameResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/prompts/{encode_path_param(id)}/get-default-version-name",
@@ -651,7 +661,14 @@ class AsyncRawVersionsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
+                _data = typing.cast(
+                    DefaultModelVersionNameResponse,
+                    construct_type(
+                        type_=DefaultModelVersionNameResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

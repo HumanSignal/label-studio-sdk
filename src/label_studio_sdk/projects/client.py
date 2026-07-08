@@ -15,7 +15,6 @@ from ..types.control_tag_weight_request import ControlTagWeightRequest
 from ..types.import_api_request import ImportApiRequest
 from ..types.lse_project_create import LseProjectCreate
 from ..types.lse_project_response import LseProjectResponse
-from ..types.lse_project_update import LseProjectUpdate
 from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from ..types.paginated_lse_project_counts_list import PaginatedLseProjectCountsList
 from ..types.prediction_request import PredictionRequest
@@ -600,7 +599,7 @@ class ProjectsClient:
         use_custom_interface: typing.Optional[bool] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LseProjectUpdate:
+    ) -> LseProjectResponse:
         """
         Update the details of a specific project.
 
@@ -774,7 +773,7 @@ class ProjectsClient:
 
         Returns
         -------
-        LseProjectUpdate
+        LseProjectResponse
 
 
         Examples
@@ -1832,7 +1831,7 @@ class AsyncProjectsClient:
         use_custom_interface: typing.Optional[bool] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LseProjectUpdate:
+    ) -> LseProjectResponse:
         """
         Update the details of a specific project.
 
@@ -2006,7 +2005,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        LseProjectUpdate
+        LseProjectResponse
 
 
         Examples
