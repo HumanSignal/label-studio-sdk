@@ -133,6 +133,41 @@ def _load_json_file(path: Path | None, *, label: str) -> Any:
         raise typer.Exit(code=2) from None
 
 
+_LOCAL_MEDIA_SUFFIXES = (
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+    ".webp",
+    ".bmp",
+    ".svg",
+    ".mp4",
+    ".webm",
+    ".mov",
+    ".mp3",
+    ".wav",
+    ".pdf",
+)
+
+
+def _looks_like_unresolved_local_media(value: str) -> bool:
+    if not value or value.startswith(("http://", "https://", "data:")):
+        return False
+    lower = value.lower()
+    return any(lower.endswith(suffix) for suffix in _LOCAL_MEDIA_SUFFIXES)
+
+
+def _warn_unresolved_local_media_in_task(task: dict[str, Any]) -> None:
+    for key, value in task.items():
+        if isinstance(value, str) and _looks_like_unresolved_local_media(value):
+            typer.echo(
+                f"warning: task field {key!r} references local media {value!r} but the file was not found "
+                f"next to task.json or the interface bundle. Copy the file into the bundle folder or use an "
+                f"https:// /static/interface-agent-assets/... URL so preview can load it.",
+                err=True,
+            )
+
+
 def _resolve_local_paths(data: Any, base_dirs: list[Path]) -> Any:
     if isinstance(data, dict):
         return {k: _resolve_local_paths(v, base_dirs) for k, v in data.items()}
@@ -179,6 +214,7 @@ def _load_task(task_path: Path | None) -> dict[str, Any] | None:
         if task_path is not None:
             base_dirs.insert(0, task_path.parent)
         task = _resolve_local_paths(task, base_dirs)
+        _warn_unresolved_local_media_in_task(task)
     return task
 
 

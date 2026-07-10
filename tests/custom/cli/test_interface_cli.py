@@ -658,6 +658,37 @@ def test_preview_sends_last_task_data_on_code_change(monkeypatch: Any, tmp_path:
     }
 
 
+def test_load_task_warns_when_local_media_file_is_missing(tmp_path: Path, capsys: Any) -> None:
+    task_path = tmp_path / "task.json"
+    task_path.write_text('{"image": "posum.jpg", "title": "Wildlife sample"}', encoding="utf-8")
+
+    result = interface_cli._load_task(task_path)
+
+    assert result == {"image": "posum.jpg", "title": "Wildlife sample"}
+    err = capsys.readouterr().err
+    assert "warning: task field 'image' references local media 'posum.jpg'" in err
+
+
+def test_preview_warns_when_task_references_missing_local_media(monkeypatch: Any, tmp_path: Path) -> None:
+    file = tmp_path / "Screen.jsx"
+    file.write_text("({ default: function Screen() { return null; } })", encoding="utf-8")
+    task = tmp_path / "task.json"
+    task.write_text('{"image": "posum.jpg", "title": "Wildlife sample"}', encoding="utf-8")
+
+    _reset_fake_http()
+    monkeypatch.setitem(
+        sys.modules,
+        "watchfiles",
+        SimpleNamespace(watch=lambda *paths, **kwargs: (_ for _ in ()).throw(KeyboardInterrupt)),
+    )
+    monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
+
+    result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
+
+    assert result.exit_code == 0, result.output
+    assert "warning: task field 'image' references local media 'posum.jpg'" in result.output
+
+
 def test_preview_watches_and_discovers_task_file_later(monkeypatch: Any, tmp_path: Path) -> None:
     file = tmp_path / "Screen.jsx"
     file.write_text("({ default: function Screen() { return null; } })", encoding="utf-8")
