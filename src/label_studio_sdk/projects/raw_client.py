@@ -188,6 +188,7 @@ class RawProjectsClient:
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
         input_schema: typing.Optional[typing.Any] = OMIT,
+        internal_description: typing.Optional[typing.Any] = OMIT,
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
@@ -239,7 +240,7 @@ class RawProjectsClient:
         custom_interface_params : typing.Optional[typing.Any]
 
         description : typing.Optional[str]
-            Project Description
+            Description (Public)
 
         enable_empty_annotation : typing.Optional[bool]
             Allow annotators to submit empty annotations
@@ -251,6 +252,9 @@ class RawProjectsClient:
             Labeling instructions in HTML format
 
         input_schema : typing.Optional[typing.Any]
+
+        internal_description : typing.Optional[typing.Any]
+            Description (Internal)
 
         is_draft : typing.Optional[bool]
             Whether or not the project is in the middle of being created
@@ -352,6 +356,7 @@ class RawProjectsClient:
                 "evaluate_predictions_automatically": evaluate_predictions_automatically,
                 "expert_instruction": expert_instruction,
                 "input_schema": input_schema,
+                "internal_description": internal_description,
                 "is_draft": is_draft,
                 "is_published": is_published,
                 "label_config": label_config,
@@ -621,6 +626,7 @@ class RawProjectsClient:
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
         input_schema: typing.Optional[typing.Any] = OMIT,
+        internal_description: typing.Optional[typing.Any] = OMIT,
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
@@ -721,7 +727,7 @@ class RawProjectsClient:
             Task reservation time. TTL in seconds (UI displays and edits this value in minutes).
 
         description : typing.Optional[str]
-            Description
+            Description (Public)
 
         enable_empty_annotation : typing.Optional[bool]
             Allow empty annotations
@@ -733,6 +739,9 @@ class RawProjectsClient:
             Instructions
 
         input_schema : typing.Optional[typing.Any]
+
+        internal_description : typing.Optional[typing.Any]
+            Description (Internal)
 
         is_draft : typing.Optional[bool]
             Whether or not the project is in the middle of being created
@@ -870,6 +879,7 @@ class RawProjectsClient:
                 "evaluate_predictions_automatically": evaluate_predictions_automatically,
                 "expert_instruction": expert_instruction,
                 "input_schema": input_schema,
+                "internal_description": internal_description,
                 "is_draft": is_draft,
                 "is_published": is_published,
                 "label_config": label_config,
@@ -1478,6 +1488,7 @@ class AsyncRawProjectsClient:
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
         input_schema: typing.Optional[typing.Any] = OMIT,
+        internal_description: typing.Optional[typing.Any] = OMIT,
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
@@ -1529,7 +1540,7 @@ class AsyncRawProjectsClient:
         custom_interface_params : typing.Optional[typing.Any]
 
         description : typing.Optional[str]
-            Project Description
+            Description (Public)
 
         enable_empty_annotation : typing.Optional[bool]
             Allow annotators to submit empty annotations
@@ -1541,6 +1552,9 @@ class AsyncRawProjectsClient:
             Labeling instructions in HTML format
 
         input_schema : typing.Optional[typing.Any]
+
+        internal_description : typing.Optional[typing.Any]
+            Description (Internal)
 
         is_draft : typing.Optional[bool]
             Whether or not the project is in the middle of being created
@@ -1642,6 +1656,7 @@ class AsyncRawProjectsClient:
                 "evaluate_predictions_automatically": evaluate_predictions_automatically,
                 "expert_instruction": expert_instruction,
                 "input_schema": input_schema,
+                "internal_description": internal_description,
                 "is_draft": is_draft,
                 "is_published": is_published,
                 "label_config": label_config,
@@ -1913,6 +1928,7 @@ class AsyncRawProjectsClient:
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
         input_schema: typing.Optional[typing.Any] = OMIT,
+        internal_description: typing.Optional[typing.Any] = OMIT,
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
@@ -2013,7 +2029,7 @@ class AsyncRawProjectsClient:
             Task reservation time. TTL in seconds (UI displays and edits this value in minutes).
 
         description : typing.Optional[str]
-            Description
+            Description (Public)
 
         enable_empty_annotation : typing.Optional[bool]
             Allow empty annotations
@@ -2025,6 +2041,9 @@ class AsyncRawProjectsClient:
             Instructions
 
         input_schema : typing.Optional[typing.Any]
+
+        internal_description : typing.Optional[typing.Any]
+            Description (Internal)
 
         is_draft : typing.Optional[bool]
             Whether or not the project is in the middle of being created
@@ -2162,6 +2181,7 @@ class AsyncRawProjectsClient:
                 "evaluate_predictions_automatically": evaluate_predictions_automatically,
                 "expert_instruction": expert_instruction,
                 "input_schema": input_schema,
+                "internal_description": internal_description,
                 "is_draft": is_draft,
                 "is_published": is_published,
                 "label_config": label_config,

@@ -12041,7 +12041,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Project Description
+**description:** `typing.Optional[str]` — Description (Public)
     
 </dd>
 </dl>
@@ -12074,6 +12074,14 @@ client.projects.create()
 <dd>
 
 **input_schema:** `typing.Optional[typing.Any]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**internal_description:** `typing.Optional[typing.Any]` — Description (Internal)
     
 </dd>
 </dl>
@@ -12840,7 +12848,7 @@ Methodology (Consensus / Pairwise Averaging)
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Description
+**description:** `typing.Optional[str]` — Description (Public)
     
 </dd>
 </dl>
@@ -12873,6 +12881,14 @@ Methodology (Consensus / Pairwise Averaging)
 <dd>
 
 **input_schema:** `typing.Optional[typing.Any]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**internal_description:** `typing.Optional[typing.Any]` — Description (Internal)
     
 </dd>
 </dl>

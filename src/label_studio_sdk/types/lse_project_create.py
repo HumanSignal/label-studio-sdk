@@ -50,7 +50,7 @@ class LseProjectCreate(UncheckedBaseModel):
     custom_interface_params: typing.Optional[typing.Any] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Project Description
+    Description (Public)
     """
 
     enable_empty_annotation: typing.Optional[bool] = pydantic.Field(default=None)
@@ -80,6 +80,11 @@ class LseProjectCreate(UncheckedBaseModel):
 
     id: typing.Optional[int] = None
     input_schema: typing.Optional[typing.Any] = None
+    internal_description: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Description (Internal)
+    """
+
     is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether or not the project is in the middle of being created

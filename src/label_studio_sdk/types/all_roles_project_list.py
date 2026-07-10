@@ -116,7 +116,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     data_types: typing.Optional[typing.Dict[str, typing.Any]] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Description
+    Description (Public)
     """
 
     description_short: typing.Optional[str] = None
@@ -145,6 +145,12 @@ class AllRolesProjectList(UncheckedBaseModel):
 
     id: typing.Optional[int] = None
     input_schema: typing.Optional[typing.Any] = None
+    internal_description: typing.Optional[typing.List[typing.Any]] = pydantic.Field(default=None)
+    """
+    Description (Internal)
+    """
+
+    internal_description_short: typing.Optional[str] = None
     is_dimensions_enabled: typing.Optional[bool] = None
     is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """
