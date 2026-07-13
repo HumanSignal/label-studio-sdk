@@ -1,7 +1,7 @@
 {
-  "cliVersion": "5.45.3",
+  "cliVersion": "5.68.0",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "5.14.12",
+  "generatorVersion": "5.18.2",
   "generatorConfig": {
     "pydantic_config": {
       "skip_validation": true
@@ -27,7 +27,7 @@
       "pandas": ">=0.24.0",
       "requests": ">=2.33.0",
       "Pillow": ">=12.2.0",
-      "nltk": "^3.9.4",
+      "nltk": "^3.10.0",
       "ujson": ">=5.8.0",
       "ijson": ">=3.2.3",
       "appdirs": ">=1.4.3",
@@ -49,8 +49,8 @@
     },
     "pyproject_toml": "[project.scripts]\nlabel-studio-converter = \"label_studio_sdk.converter.main:main\"\nlabel-studio-sdk = \"label_studio_sdk._extensions.cli.main:main\"\n"
   },
-  "originGitCommit": "89117e7b9ea19c8ebcaa7e39bec0e23fb0cbb6b8",
-  "originGitCommitIsDirty": false,
+  "originGitCommit": "cf9077980e2a3bde8d00ad7f46a9e8347ba112e4",
+  "originGitCommitIsDirty": true,
   "invokedBy": "manual",
-  "sdkVersion": "2.0.24"
+  "sdkVersion": "2.0.25"
 }
