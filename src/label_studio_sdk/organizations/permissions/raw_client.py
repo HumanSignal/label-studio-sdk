@@ -223,7 +223,7 @@ class RawPermissionsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, permission_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[OrganizationPermission]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -238,7 +238,7 @@ class RawPermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -249,7 +249,7 @@ class RawPermissionsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_key)}",
             method="GET",
             request_options=request_options,
         )
@@ -297,7 +297,7 @@ class RawPermissionsClient:
     def replace(
         self,
         id: int,
-        permission_: str,
+        permission_key: str,
         *,
         permission: str,
         roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
@@ -317,7 +317,7 @@ class RawPermissionsClient:
         id : int
             A unique integer value identifying this organization.
 
-        permission_ : str
+        permission_key : str
             Permission key to update within the organization.
 
         permission : str
@@ -334,7 +334,7 @@ class RawPermissionsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_key)}",
             method="PUT",
             json={
                 "permission": permission,
@@ -399,7 +399,7 @@ class RawPermissionsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, permission_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -414,7 +414,7 @@ class RawPermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -424,7 +424,7 @@ class RawPermissionsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_key)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -465,9 +465,9 @@ class RawPermissionsClient:
     def update(
         self,
         id: int,
-        permission: str,
+        permission_key: str,
         *,
-        patched_organization_permission_request_permission: typing.Optional[str] = OMIT,
+        permission: typing.Optional[str] = OMIT,
         roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[OrganizationPermission]:
@@ -484,9 +484,10 @@ class RawPermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
+            Permission key to update within the organization.
 
-        patched_organization_permission_request_permission : typing.Optional[str]
+        permission : typing.Optional[str]
 
         roles : typing.Optional[typing.Sequence[OrganizationRoleEnum]]
             Organization roles
@@ -500,10 +501,10 @@ class RawPermissionsClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_key)}",
             method="PATCH",
             json={
-                "permission": patched_organization_permission_request_permission,
+                "permission": permission,
                 "roles": roles,
             },
             headers={
@@ -766,7 +767,7 @@ class AsyncRawPermissionsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, permission_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[OrganizationPermission]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -781,7 +782,7 @@ class AsyncRawPermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -792,7 +793,7 @@ class AsyncRawPermissionsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_key)}",
             method="GET",
             request_options=request_options,
         )
@@ -840,7 +841,7 @@ class AsyncRawPermissionsClient:
     async def replace(
         self,
         id: int,
-        permission_: str,
+        permission_key: str,
         *,
         permission: str,
         roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
@@ -860,7 +861,7 @@ class AsyncRawPermissionsClient:
         id : int
             A unique integer value identifying this organization.
 
-        permission_ : str
+        permission_key : str
             Permission key to update within the organization.
 
         permission : str
@@ -877,7 +878,7 @@ class AsyncRawPermissionsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_key)}",
             method="PUT",
             json={
                 "permission": permission,
@@ -942,7 +943,7 @@ class AsyncRawPermissionsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, permission_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -957,7 +958,7 @@ class AsyncRawPermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -967,7 +968,7 @@ class AsyncRawPermissionsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_key)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -1008,9 +1009,9 @@ class AsyncRawPermissionsClient:
     async def update(
         self,
         id: int,
-        permission: str,
+        permission_key: str,
         *,
-        patched_organization_permission_request_permission: typing.Optional[str] = OMIT,
+        permission: typing.Optional[str] = OMIT,
         roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[OrganizationPermission]:
@@ -1027,9 +1028,10 @@ class AsyncRawPermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
+            Permission key to update within the organization.
 
-        patched_organization_permission_request_permission : typing.Optional[str]
+        permission : typing.Optional[str]
 
         roles : typing.Optional[typing.Sequence[OrganizationRoleEnum]]
             Organization roles
@@ -1043,10 +1045,10 @@ class AsyncRawPermissionsClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission)}",
+            f"api/organizations/{encode_path_param(id)}/permissions/{encode_path_param(permission_key)}",
             method="PATCH",
             json={
-                "permission": patched_organization_permission_request_permission,
+                "permission": permission,
                 "roles": roles,
             },
             headers={

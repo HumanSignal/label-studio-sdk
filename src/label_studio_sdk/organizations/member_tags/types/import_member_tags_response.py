@@ -15,6 +15,9 @@ class ImportMemberTagsResponse(UncheckedBaseModel):
         FieldMetadata(alias="import"),
         pydantic.Field(alias="import", description="The ID of the created import job"),
     ] = None
+    """
+    The ID of the created import job
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

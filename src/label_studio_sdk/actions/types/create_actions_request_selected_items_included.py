@@ -13,6 +13,10 @@ class CreateActionsRequestSelectedItemsIncluded(UncheckedBaseModel):
     all_: typing_extensions.Annotated[
         bool, FieldMetadata(alias="all"), pydantic.Field(alias="all", description="No tasks are selected")
     ]
+    """
+    No tasks are selected
+    """
+
     included: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
     """
     List of included task IDs

@@ -468,7 +468,7 @@ class UsersClient:
         avatar: typing.Optional[str] = OMIT,
         email: typing.Optional[str] = OMIT,
         first_name: typing.Optional[str] = OMIT,
-        update_users_request_id: typing.Optional[int] = OMIT,
+        request_user_id: typing.Optional[int] = OMIT,
         initials: typing.Optional[str] = OMIT,
         last_name: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
@@ -497,7 +497,7 @@ class UsersClient:
         first_name : typing.Optional[str]
             First name of the user
 
-        update_users_request_id : typing.Optional[int]
+        request_user_id : typing.Optional[int]
             User ID
 
         initials : typing.Optional[str]
@@ -537,7 +537,7 @@ class UsersClient:
             avatar=avatar,
             email=email,
             first_name=first_name,
-            update_users_request_id=update_users_request_id,
+            request_user_id=request_user_id,
             initials=initials,
             last_name=last_name,
             phone=phone,
@@ -1088,7 +1088,7 @@ class AsyncUsersClient:
         avatar: typing.Optional[str] = OMIT,
         email: typing.Optional[str] = OMIT,
         first_name: typing.Optional[str] = OMIT,
-        update_users_request_id: typing.Optional[int] = OMIT,
+        request_user_id: typing.Optional[int] = OMIT,
         initials: typing.Optional[str] = OMIT,
         last_name: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
@@ -1117,7 +1117,7 @@ class AsyncUsersClient:
         first_name : typing.Optional[str]
             First name of the user
 
-        update_users_request_id : typing.Optional[int]
+        request_user_id : typing.Optional[int]
             User ID
 
         initials : typing.Optional[str]
@@ -1165,7 +1165,7 @@ class AsyncUsersClient:
             avatar=avatar,
             email=email,
             first_name=first_name,
-            update_users_request_id=update_users_request_id,
+            request_user_id=request_user_id,
             initials=initials,
             last_name=last_name,
             phone=phone,

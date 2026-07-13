@@ -21,6 +21,10 @@ class IaaStatsResponse(UncheckedBaseModel):
             description="Inter-Annotator Agreement matrix - 2D array when per_label=false, object with label keys when per_label=true",
         ),
     ] = None
+    """
+    Inter-Annotator Agreement matrix - 2D array when per_label=false, object with label keys when per_label=true
+    """
+
     common_tasks: typing.Optional[IaaStatsResponseCommonTasks] = pydantic.Field(default=None)
     """
     Common tasks matrix - 2D array when per_label=false, object with label keys when per_label=true

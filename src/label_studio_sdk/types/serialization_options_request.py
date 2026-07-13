@@ -16,6 +16,10 @@ class SerializationOptionsRequest(UncheckedBaseModel):
         FieldMetadata(alias="annotations__completed_by"),
         pydantic.Field(alias="annotations__completed_by", description="JSON dict with parameters"),
     ] = None
+    """
+    JSON dict with parameters
+    """
+
     drafts: typing.Optional[SerializationOptionRequest] = pydantic.Field(default=None)
     """
     JSON dict with parameters

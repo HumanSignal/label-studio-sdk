@@ -52,6 +52,10 @@ class ImportTasksProjectsResponse(UncheckedBaseModel):
             description="Import ID for async operations (non-Community editions only). Use this ID to poll `/api/projects/{project_id}/imports/{import_id}` for status.",
         ),
     ] = None
+    """
+    Import ID for async operations (non-Community editions only). Use this ID to poll `/api/projects/{project_id}/imports/{import_id}` for status.
+    """
+
     predictions_count: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of predictions added (Community edition sync import only)

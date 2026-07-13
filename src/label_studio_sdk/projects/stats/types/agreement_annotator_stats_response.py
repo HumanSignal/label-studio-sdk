@@ -15,6 +15,9 @@ class AgreementAnnotatorStatsResponse(UncheckedBaseModel):
         FieldMetadata(alias="Agreement_per_annotator"),
         pydantic.Field(alias="Agreement_per_annotator", description="Agreement score for the annotator (0-1)"),
     ] = None
+    """
+    Agreement score for the annotator (0-1)
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

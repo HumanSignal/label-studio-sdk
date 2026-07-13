@@ -106,6 +106,10 @@ class DatabricksImportStorage(UncheckedBaseModel):
     schema_: typing_extensions.Annotated[
         str, FieldMetadata(alias="schema"), pydantic.Field(alias="schema", description="UC schema name")
     ]
+    """
+    UC schema name
+    """
+
     status: typing.Optional[StorageStatusEnum] = None
     stream_chunk_bytes: typing.Optional[int] = None
     synchronizable: typing.Optional[bool] = None

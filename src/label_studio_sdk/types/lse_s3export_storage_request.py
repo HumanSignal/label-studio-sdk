@@ -103,6 +103,10 @@ class LseS3ExportStorageRequest(UncheckedBaseModel):
         FieldMetadata(alias="s3_endpoint"),
         pydantic.Field(alias="s3_endpoint", description="S3 Endpoint"),
     ] = None
+    """
+    S3 Endpoint
+    """
+
     status: typing.Optional[StorageStatusEnum] = None
     synchronizable: typing.Optional[bool] = None
     title: typing.Optional[str] = pydantic.Field(default=None)

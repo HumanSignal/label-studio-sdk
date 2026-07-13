@@ -3536,7 +3536,7 @@ client.users.update(
 <dl>
 <dd>
 
-**update_users_request_id:** `typing.Optional[int]` — User ID
+**request_user_id:** `typing.Optional[int]` — User ID
     
 </dd>
 </dl>
@@ -33230,7 +33230,7 @@ client = LabelStudio(
 
 client.organizations.permissions.get(
     id=1,
-    permission="permission",
+    permission_key="permission_key",
 )
 
 ```
@@ -33255,7 +33255,7 @@ client.organizations.permissions.get(
 <dl>
 <dd>
 
-**permission:** `str` 
+**permission_key:** `str` 
     
 </dd>
 </dl>
@@ -33318,7 +33318,7 @@ client = LabelStudio(
 
 client.organizations.permissions.replace(
     id=1,
-    permission_="permission",
+    permission_key="permission_key",
     permission="permission",
 )
 
@@ -33344,7 +33344,7 @@ client.organizations.permissions.replace(
 <dl>
 <dd>
 
-**permission:** `str` — Permission key to update within the organization.
+**permission_key:** `str` — Permission key to update within the organization.
     
 </dd>
 </dl>
@@ -33415,7 +33415,7 @@ client = LabelStudio(
 
 client.organizations.permissions.delete(
     id=1,
-    permission="permission",
+    permission_key="permission_key",
 )
 
 ```
@@ -33440,7 +33440,7 @@ client.organizations.permissions.delete(
 <dl>
 <dd>
 
-**permission:** `str` 
+**permission_key:** `str` 
     
 </dd>
 </dl>
@@ -33503,7 +33503,7 @@ client = LabelStudio(
 
 client.organizations.permissions.update(
     id=1,
-    permission="permission",
+    permission_key="permission_key",
 )
 
 ```
@@ -33528,7 +33528,7 @@ client.organizations.permissions.update(
 <dl>
 <dd>
 
-**permission:** `str` 
+**permission_key:** `str` — Permission key to update within the organization.
     
 </dd>
 </dl>
@@ -33536,7 +33536,7 @@ client.organizations.permissions.update(
 <dl>
 <dd>
 
-**patched_organization_permission_request_permission:** `typing.Optional[str]` 
+**permission:** `typing.Optional[str]` 
     
 </dd>
 </dl>

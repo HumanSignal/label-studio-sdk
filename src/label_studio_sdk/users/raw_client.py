@@ -606,7 +606,7 @@ class RawUsersClient:
         avatar: typing.Optional[str] = OMIT,
         email: typing.Optional[str] = OMIT,
         first_name: typing.Optional[str] = OMIT,
-        update_users_request_id: typing.Optional[int] = OMIT,
+        request_user_id: typing.Optional[int] = OMIT,
         initials: typing.Optional[str] = OMIT,
         last_name: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
@@ -635,7 +635,7 @@ class RawUsersClient:
         first_name : typing.Optional[str]
             First name of the user
 
-        update_users_request_id : typing.Optional[int]
+        request_user_id : typing.Optional[int]
             User ID
 
         initials : typing.Optional[str]
@@ -666,7 +666,7 @@ class RawUsersClient:
                 "avatar": avatar,
                 "email": email,
                 "first_name": first_name,
-                "id": update_users_request_id,
+                "id": request_user_id,
                 "initials": initials,
                 "last_name": last_name,
                 "phone": phone,
@@ -1289,7 +1289,7 @@ class AsyncRawUsersClient:
         avatar: typing.Optional[str] = OMIT,
         email: typing.Optional[str] = OMIT,
         first_name: typing.Optional[str] = OMIT,
-        update_users_request_id: typing.Optional[int] = OMIT,
+        request_user_id: typing.Optional[int] = OMIT,
         initials: typing.Optional[str] = OMIT,
         last_name: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
@@ -1318,7 +1318,7 @@ class AsyncRawUsersClient:
         first_name : typing.Optional[str]
             First name of the user
 
-        update_users_request_id : typing.Optional[int]
+        request_user_id : typing.Optional[int]
             User ID
 
         initials : typing.Optional[str]
@@ -1349,7 +1349,7 @@ class AsyncRawUsersClient:
                 "avatar": avatar,
                 "email": email,
                 "first_name": first_name,
-                "id": update_users_request_id,
+                "id": request_user_id,
                 "initials": initials,
                 "last_name": last_name,
                 "phone": phone,

@@ -160,7 +160,7 @@ class PermissionsClient:
         return _response.data
 
     def get(
-        self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, permission_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> OrganizationPermission:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -175,7 +175,7 @@ class PermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -194,16 +194,16 @@ class PermissionsClient:
         )
         client.organizations.permissions.get(
             id=1,
-            permission="permission",
+            permission_key="permission_key",
         )
         """
-        _response = self._raw_client.get(id, permission, request_options=request_options)
+        _response = self._raw_client.get(id, permission_key, request_options=request_options)
         return _response.data
 
     def replace(
         self,
         id: int,
-        permission_: str,
+        permission_key: str,
         *,
         permission: str,
         roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
@@ -223,7 +223,7 @@ class PermissionsClient:
         id : int
             A unique integer value identifying this organization.
 
-        permission_ : str
+        permission_key : str
             Permission key to update within the organization.
 
         permission : str
@@ -248,16 +248,16 @@ class PermissionsClient:
         )
         client.organizations.permissions.replace(
             id=1,
-            permission_="permission",
+            permission_key="permission_key",
             permission="permission",
         )
         """
         _response = self._raw_client.replace(
-            id, permission_, permission=permission, roles=roles, request_options=request_options
+            id, permission_key, permission=permission, roles=roles, request_options=request_options
         )
         return _response.data
 
-    def delete(self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: int, permission_key: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -271,7 +271,7 @@ class PermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -289,18 +289,18 @@ class PermissionsClient:
         )
         client.organizations.permissions.delete(
             id=1,
-            permission="permission",
+            permission_key="permission_key",
         )
         """
-        _response = self._raw_client.delete(id, permission, request_options=request_options)
+        _response = self._raw_client.delete(id, permission_key, request_options=request_options)
         return _response.data
 
     def update(
         self,
         id: int,
-        permission: str,
+        permission_key: str,
         *,
-        patched_organization_permission_request_permission: typing.Optional[str] = OMIT,
+        permission: typing.Optional[str] = OMIT,
         roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
@@ -317,9 +317,10 @@ class PermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
+            Permission key to update within the organization.
 
-        patched_organization_permission_request_permission : typing.Optional[str]
+        permission : typing.Optional[str]
 
         roles : typing.Optional[typing.Sequence[OrganizationRoleEnum]]
             Organization roles
@@ -341,15 +342,11 @@ class PermissionsClient:
         )
         client.organizations.permissions.update(
             id=1,
-            permission="permission",
+            permission_key="permission_key",
         )
         """
         _response = self._raw_client.update(
-            id,
-            permission,
-            patched_organization_permission_request_permission=patched_organization_permission_request_permission,
-            roles=roles,
-            request_options=request_options,
+            id, permission_key, permission=permission, roles=roles, request_options=request_options
         )
         return _response.data
 
@@ -527,7 +524,7 @@ class AsyncPermissionsClient:
         return _response.data
 
     async def get(
-        self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, permission_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> OrganizationPermission:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -542,7 +539,7 @@ class AsyncPermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -566,19 +563,19 @@ class AsyncPermissionsClient:
         async def main() -> None:
             await client.organizations.permissions.get(
                 id=1,
-                permission="permission",
+                permission_key="permission_key",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(id, permission, request_options=request_options)
+        _response = await self._raw_client.get(id, permission_key, request_options=request_options)
         return _response.data
 
     async def replace(
         self,
         id: int,
-        permission_: str,
+        permission_key: str,
         *,
         permission: str,
         roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
@@ -598,7 +595,7 @@ class AsyncPermissionsClient:
         id : int
             A unique integer value identifying this organization.
 
-        permission_ : str
+        permission_key : str
             Permission key to update within the organization.
 
         permission : str
@@ -628,7 +625,7 @@ class AsyncPermissionsClient:
         async def main() -> None:
             await client.organizations.permissions.replace(
                 id=1,
-                permission_="permission",
+                permission_key="permission_key",
                 permission="permission",
             )
 
@@ -636,12 +633,12 @@ class AsyncPermissionsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.replace(
-            id, permission_, permission=permission, roles=roles, request_options=request_options
+            id, permission_key, permission=permission, roles=roles, request_options=request_options
         )
         return _response.data
 
     async def delete(
-        self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, permission_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         <Card href="https://humansignal.com/goenterprise">
@@ -656,7 +653,7 @@ class AsyncPermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -679,21 +676,21 @@ class AsyncPermissionsClient:
         async def main() -> None:
             await client.organizations.permissions.delete(
                 id=1,
-                permission="permission",
+                permission_key="permission_key",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(id, permission, request_options=request_options)
+        _response = await self._raw_client.delete(id, permission_key, request_options=request_options)
         return _response.data
 
     async def update(
         self,
         id: int,
-        permission: str,
+        permission_key: str,
         *,
-        patched_organization_permission_request_permission: typing.Optional[str] = OMIT,
+        permission: typing.Optional[str] = OMIT,
         roles: typing.Optional[typing.Sequence[OrganizationRoleEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
@@ -710,9 +707,10 @@ class AsyncPermissionsClient:
         ----------
         id : int
 
-        permission : str
+        permission_key : str
+            Permission key to update within the organization.
 
-        patched_organization_permission_request_permission : typing.Optional[str]
+        permission : typing.Optional[str]
 
         roles : typing.Optional[typing.Sequence[OrganizationRoleEnum]]
             Organization roles
@@ -739,17 +737,13 @@ class AsyncPermissionsClient:
         async def main() -> None:
             await client.organizations.permissions.update(
                 id=1,
-                permission="permission",
+                permission_key="permission_key",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            id,
-            permission,
-            patched_organization_permission_request_permission=patched_organization_permission_request_permission,
-            roles=roles,
-            request_options=request_options,
+            id, permission_key, permission=permission, roles=roles, request_options=request_options
         )
         return _response.data
