@@ -18,6 +18,11 @@ class LabelDistributionStructureDimension(UncheckedBaseModel):
     Sorted list of choices observed from config and/or created labels.
     """
 
+    dimension_id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Dimension primary key used by Dimension-backed Data Manager result filters.
+    """
+
     name: str = pydantic.Field()
     """
     Original from_name from labeling config or observed annotation results.
