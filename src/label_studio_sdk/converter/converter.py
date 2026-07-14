@@ -62,7 +62,8 @@ class Format(Enum):
     YOLO_WITH_IMAGES = 14
     COCO_WITH_IMAGES = 15
     YOLO_OBB_WITH_IMAGES = 16
-    BRUSH_TO_COCO = 17 
+    BRUSH_TO_COCO = 17
+    DOCLANG = 18
 
     def __str__(self):
         return self.name
@@ -178,6 +179,12 @@ class Converter(object):
             "description": "Export your brush labels as COCO format for segmentation tasks. Converts RLE encoded masks to COCO polygons.",
             "link": "https://labelstud.io/guide/export.html#COCO",
             "tags": ["image segmentation", "brush annotations"],
+        },
+        Format.DOCLANG: {
+            "title": "DocLang (.dclx)",
+            "description": "Package annotations from the Docling Interface as DocLang OPC archives (document.xml + page image) for downstream Docling model training.",
+            "link": "https://github.com/doclang-project/doclang/blob/main/spec.md#doclang-archive-format",
+            "tags": ["document", "docling"],
         },
     }
 
@@ -314,9 +321,20 @@ class Converter(object):
             from label_studio_sdk.converter.exports.brush_to_coco import convert_to_coco
             image_dir = kwargs.get("image_dir")
             convert_to_coco(
-                items, 
-                output_data, 
+                items,
+                output_data,
                 output_image_dir=image_dir
+            )
+        elif format == Format.DOCLANG:
+            from label_studio_sdk.converter.exports.doclang import convert_to_doclang
+            convert_to_doclang(
+                input_data,
+                output_data,
+                is_dir=is_dir,
+                image_key=kwargs.get("image_key", "image"),
+                download_resources=self.download_resources,
+                project_dir=self.project_dir,
+                upload_dir=self.upload_dir,
             )
 
     def _get_data_keys_and_output_tags(self, output_tags=None):
@@ -344,13 +362,19 @@ class Converter(object):
 
     def _get_supported_formats(self):
         is_mig = False
+        supports_doclang = any(
+            info.get("type") in {"TextArea", "ReactCode", "CustomInterface"} for info in self._schema.values()
+        )
         if len(self._data_keys) > 1:
-            return [
+            formats = [
                 Format.JSON.name,
                 Format.JSON_MIN.name,
                 Format.CSV.name,
                 Format.TSV.name,
             ]
+            if supports_doclang:
+                formats.append(Format.DOCLANG.name)
+            return formats
         output_tag_types = set()
         input_tag_types = set()
         for info in self._schema.values():
@@ -364,6 +388,8 @@ class Converter(object):
                 input_tag_types.add(input_tag["type"])
 
         all_formats = [f.name for f in Format]
+        if not supports_doclang:
+            all_formats.remove(Format.DOCLANG.name)
 
         # Check if KeyPointLabels exists without RectangleLabels
         has_keypoint_labels = "KeyPointLabels" in output_tag_types

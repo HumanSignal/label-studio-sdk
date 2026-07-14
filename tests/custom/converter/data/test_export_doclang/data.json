@@ -1,0 +1,76 @@
+[
+  {
+    "id": 1,
+    "data": {
+      "image": "https://example.com/pages/page-1.png"
+    },
+    "annotations": [
+      {
+        "id": 11,
+        "result": [
+          {
+            "id": "sec-1",
+            "from_name": "docling",
+            "to_name": "docling",
+            "type": "rectanglelabels",
+            "value": {
+              "x": 5.0,
+              "y": 10.0,
+              "width": 40.0,
+              "height": 15.0,
+              "rectanglelabels": ["Section-header"]
+            }
+          },
+          {
+            "id": "doclang_abc123",
+            "from_name": "doclang",
+            "to_name": "docling",
+            "type": "textarea",
+            "value": {
+              "text": ["<doclang><section>Intro</section><page_break/><section>Body</section></doclang>"]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "data": {
+      "image": "https://example.com/pages/page-2.png"
+    },
+    "annotations": [
+      {
+        "id": 22,
+        "result": [
+          {
+            "from_name": "docling",
+            "to_name": "docling",
+            "type": "rectanglelabels",
+            "value": {"x": 1, "y": 2, "width": 3, "height": 4, "rectanglelabels": ["Text"]}
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "data": {
+      "image": "https://example.com/pages/page-3.png"
+    },
+    "annotations": [
+      {
+        "id": 33,
+        "was_cancelled": true,
+        "result": [
+          {
+            "from_name": "doclang",
+            "to_name": "docling",
+            "type": "textarea",
+            "value": {"text": ["<doclang>skipped</doclang>"]}
+          }
+        ]
+      }
+    ]
+  }
+]

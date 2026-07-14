@@ -547,6 +547,25 @@ trio = ["trio (>=0.30)"]
 wmi = ["wmi (>=1.5.1) ; platform_system == \"Windows\""]
 
 [[package]]
+name = "doclang"
+version = "0.7.2"
+description = "DocLang reference toolkit"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "doclang-0.7.2-py3-none-any.whl", hash = "sha256:fa4414931122c6b9d18a8b1fd6cec3d0dd22dad4efec495ab4461240a8cdf7ed"},
+    {file = "doclang-0.7.2.tar.gz", hash = "sha256:89c17a168ef9443c2f814284bae3ea3dbf2f1910e79d4fd6cbdde04aa7c06d40"},
+]
+
+[package.dependencies]
+lxml = ">=4.8.0"
+typer = ">=0.15.1"
+
+[package.extras]
+schematron-saxon = ["saxonche (>=12.9.0)"]
+
+[[package]]
 name = "email-validator"
 version = "2.3.0"
 description = "A robust email address syntax and deliverability validation library."
@@ -3824,4 +3843,4 @@ aiohttp = ["aiohttp", "httpx-aiohttp"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<4"
-content-hash = "40f77dd293e84461f44ea1fc270ab5de6f25aabd361bdd3f18e44a0755baf978"
+content-hash = "3a36d6e8d5133b3c5d32679086b5bc6bc7a1e3d4f9bed780245e270757bbd308"

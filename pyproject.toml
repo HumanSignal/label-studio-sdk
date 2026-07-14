@@ -41,6 +41,7 @@ Pillow = ">=12.2.0"
 aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
 appdirs = ">=1.4.3"
 datamodel-code-generator = "0.26.1"
+doclang = ">=0.7.1"
 httpx = ">=0.21.2"
 httpx-aiohttp = { version = "0.1.8", optional = true, python = ">=3.10"}
 ijson = ">=3.2.3"
