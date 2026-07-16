@@ -262,6 +262,7 @@ if typing.TYPE_CHECKING:
     from .value_counts_backfill_job_triggered_by_value import ValueCountsBackfillJobTriggeredByValue
     from .version_response import VersionResponse
     from .view import View
+    from .view_locked_by import ViewLockedBy
     from .webhook import Webhook
     from .webhook_serializer_for_update import WebhookSerializerForUpdate
     from .who_am_i_lse_fields import WhoAmILseFields
@@ -520,6 +521,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ValueCountsBackfillJobTriggeredByValue": ".value_counts_backfill_job_triggered_by_value",
     "VersionResponse": ".version_response",
     "View": ".view",
+    "ViewLockedBy": ".view_locked_by",
     "Webhook": ".webhook",
     "WebhookSerializerForUpdate": ".webhook_serializer_for_update",
     "WhoAmILseFields": ".who_am_i_lse_fields",
@@ -802,6 +804,7 @@ __all__ = [
     "ValueCountsBackfillJobTriggeredByValue",
     "VersionResponse",
     "View",
+    "ViewLockedBy",
     "Webhook",
     "WebhookSerializerForUpdate",
     "WhoAmILseFields",

@@ -7,6 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .filter_group import FilterGroup
+from .view_locked_by import ViewLockedBy
 
 
 class View(UncheckedBaseModel):
@@ -27,11 +28,7 @@ class View(UncheckedBaseModel):
     Time when this view was locked
     """
 
-    locked_by: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    User who locked this view
-    """
-
+    locked_by: typing.Optional[ViewLockedBy] = None
     order: typing.Optional[int] = pydantic.Field(default=None)
     """
     Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
