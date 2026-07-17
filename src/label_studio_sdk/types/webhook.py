@@ -11,6 +11,7 @@ from .actions_enum import ActionsEnum
 
 class Webhook(UncheckedBaseModel):
     actions: typing.Optional[typing.List[ActionsEnum]] = None
+    consecutive_failures: typing.Optional[int] = None
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
