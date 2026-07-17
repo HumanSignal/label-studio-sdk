@@ -113,6 +113,89 @@ class MembersClient:
         _response = self._raw_client.remove(id, user=user, request_options=request_options)
         return _response.data
 
+    def export_csv(
+        self,
+        id: int,
+        *,
+        ids: typing.Optional[str] = None,
+        implicit: typing.Optional[bool] = None,
+        last_activity_gte: typing.Optional[str] = None,
+        last_activity_lte: typing.Optional[str] = None,
+        ordering: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
+        with_deleted: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Download every member of a project matching the supplied member-list filters as a CSV file. This endpoint is restricted to users who can manage project settings.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : typing.Optional[str]
+            Filter id by in list
+
+        implicit : typing.Optional[bool]
+            Set to false to export direct project members only.
+
+        last_activity_gte : typing.Optional[str]
+            Filter last_activity by greater than or equal to
+
+        last_activity_lte : typing.Optional[str]
+            Filter last_activity by less than or equal to
+
+        ordering : typing.Optional[str]
+            Member ordering; prefix a field with "-" for descending order.
+
+        role : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        search : typing.Optional[str]
+            Search members by name, email, or username.
+
+        tags : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        with_deleted : typing.Optional[bool]
+            Include deleted or disabled members.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+
+        """
+        with self._raw_client.export_csv(
+            id,
+            ids=ids,
+            implicit=implicit,
+            last_activity_gte=last_activity_gte,
+            last_activity_lte=last_activity_lte,
+            ordering=ordering,
+            role=role,
+            search=search,
+            tags=tags,
+            user_type=user_type,
+            with_deleted=with_deleted,
+            request_options=request_options,
+        ) as r:
+            yield from r.data
+
     @property
     def bulk(self):
         if self._bulk is None:
@@ -244,6 +327,90 @@ class AsyncMembersClient:
         """
         _response = await self._raw_client.remove(id, user=user, request_options=request_options)
         return _response.data
+
+    async def export_csv(
+        self,
+        id: int,
+        *,
+        ids: typing.Optional[str] = None,
+        implicit: typing.Optional[bool] = None,
+        last_activity_gte: typing.Optional[str] = None,
+        last_activity_lte: typing.Optional[str] = None,
+        ordering: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
+        with_deleted: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Download every member of a project matching the supplied member-list filters as a CSV file. This endpoint is restricted to users who can manage project settings.
+
+        Parameters
+        ----------
+        id : int
+
+        ids : typing.Optional[str]
+            Filter id by in list
+
+        implicit : typing.Optional[bool]
+            Set to false to export direct project members only.
+
+        last_activity_gte : typing.Optional[str]
+            Filter last_activity by greater than or equal to
+
+        last_activity_lte : typing.Optional[str]
+            Filter last_activity by less than or equal to
+
+        ordering : typing.Optional[str]
+            Member ordering; prefix a field with "-" for descending order.
+
+        role : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        search : typing.Optional[str]
+            Search members by name, email, or username.
+
+        tags : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        with_deleted : typing.Optional[bool]
+            Include deleted or disabled members.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+
+        """
+        async with self._raw_client.export_csv(
+            id,
+            ids=ids,
+            implicit=implicit,
+            last_activity_gte=last_activity_gte,
+            last_activity_lte=last_activity_lte,
+            ordering=ordering,
+            role=role,
+            search=search,
+            tags=tags,
+            user_type=user_type,
+            with_deleted=with_deleted,
+            request_options=request_options,
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
 
     @property
     def bulk(self):
