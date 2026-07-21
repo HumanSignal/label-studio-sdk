@@ -4,7 +4,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.organization_role_enum import OrganizationRoleEnum
+from ...types.assignable_organization_role_enum import AssignableOrganizationRoleEnum
 from ...types.project_role import ProjectRole
 from .raw_client import AsyncRawRolesClient, RawRolesClient
 
@@ -77,7 +77,7 @@ class RolesClient:
         self,
         *,
         project: int,
-        role: OrganizationRoleEnum,
+        role: AssignableOrganizationRoleEnum,
         user: int,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectRole:
@@ -96,7 +96,7 @@ class RolesClient:
         ----------
         project : int
 
-        role : OrganizationRoleEnum
+        role : AssignableOrganizationRoleEnum
 
         user : int
 
@@ -275,7 +275,7 @@ class AsyncRolesClient:
         self,
         *,
         project: int,
-        role: OrganizationRoleEnum,
+        role: AssignableOrganizationRoleEnum,
         user: int,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectRole:
@@ -294,7 +294,7 @@ class AsyncRolesClient:
         ----------
         project : int
 
-        role : OrganizationRoleEnum
+        role : AssignableOrganizationRoleEnum
 
         user : int
 

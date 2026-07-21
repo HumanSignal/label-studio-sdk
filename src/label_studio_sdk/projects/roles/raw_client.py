@@ -10,7 +10,7 @@ from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
-from ...types.organization_role_enum import OrganizationRoleEnum
+from ...types.assignable_organization_role_enum import AssignableOrganizationRoleEnum
 from ...types.project_role import ProjectRole
 from pydantic import ValidationError
 
@@ -88,7 +88,7 @@ class RawRolesClient:
         self,
         *,
         project: int,
-        role: OrganizationRoleEnum,
+        role: AssignableOrganizationRoleEnum,
         user: int,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProjectRole]:
@@ -107,7 +107,7 @@ class RawRolesClient:
         ----------
         project : int
 
-        role : OrganizationRoleEnum
+        role : AssignableOrganizationRoleEnum
 
         user : int
 
@@ -315,7 +315,7 @@ class AsyncRawRolesClient:
         self,
         *,
         project: int,
-        role: OrganizationRoleEnum,
+        role: AssignableOrganizationRoleEnum,
         user: int,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProjectRole]:
@@ -334,7 +334,7 @@ class AsyncRawRolesClient:
         ----------
         project : int
 
-        role : OrganizationRoleEnum
+        role : AssignableOrganizationRoleEnum
 
         user : int
 

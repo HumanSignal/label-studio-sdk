@@ -30,6 +30,7 @@ class LseOrganization(UncheckedBaseModel):
     * `AN` - Annotator
     * `DI` - Deactivated
     * `NO` - Not Activated
+    * `VO` - View Only
     """
 
     email_notification_settings: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)

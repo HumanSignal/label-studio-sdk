@@ -357,6 +357,7 @@ class RawOrganizationsClient:
             * `AN` - Annotator
             * `DI` - Deactivated
             * `NO` - Not Activated
+            * `VO` - View Only
 
         email_notification_settings : typing.Optional[typing.Any]
             Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
@@ -778,6 +779,7 @@ class AsyncRawOrganizationsClient:
             * `AN` - Annotator
             * `DI` - Deactivated
             * `NO` - Not Activated
+            * `VO` - View Only
 
         email_notification_settings : typing.Optional[typing.Any]
             Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}

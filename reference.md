@@ -8998,6 +8998,7 @@ Default membership role for invited users
 * `AN` - Annotator
 * `DI` - Deactivated
 * `NO` - Not Activated
+* `VO` - View Only
     
 </dd>
 </dl>
@@ -31532,7 +31533,7 @@ client.organizations.invites.send_email(
 <dl>
 <dd>
 
-**role:** `OrganizationRoleEnum` 
+**role:** `AssignableOrganizationRoleEnum` 
 
 Organization role
 
@@ -32714,7 +32715,7 @@ client.organizations.members.update(
 <dl>
 <dd>
 
-**role:** `typing.Optional[OrganizationRoleEnum]` 
+**role:** `typing.Optional[AssignableOrganizationRoleEnum]` 
 
 Organization role
 
@@ -33901,7 +33902,7 @@ client.projects.roles.add(
 <dl>
 <dd>
 
-**role:** `OrganizationRoleEnum` 
+**role:** `AssignableOrganizationRoleEnum` 
     
 </dd>
 </dl>

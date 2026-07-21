@@ -36,6 +36,7 @@ class DefaultRole(UncheckedBaseModel):
     * `AN` - Annotator
     * `DI` - Deactivated
     * `NO` - Not Activated
+    * `VO` - View Only
     """
 
     email_notification_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
