@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
-from .....core.pydantic_utilities import IS_PYDANTIC_V2
-from .....core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class PostBulkResponse(UncheckedBaseModel):
-    assignments: typing.Optional[int] = None
+class ProjectMemberBulkAssignResponse(UncheckedBaseModel):
+    assignments: int
+    skipped_user_ids: typing.List[int]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

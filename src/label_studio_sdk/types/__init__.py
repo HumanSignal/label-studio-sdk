@@ -194,6 +194,7 @@ if typing.TYPE_CHECKING:
     from .project_label_config import ProjectLabelConfig
     from .project_label_config_request import ProjectLabelConfigRequest
     from .project_member import ProjectMember
+    from .project_member_bulk_assign_response import ProjectMemberBulkAssignResponse
     from .project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
     from .project_role import ProjectRole
     from .project_sampling_enum import ProjectSamplingEnum
@@ -453,6 +454,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProjectLabelConfig": ".project_label_config",
     "ProjectLabelConfigRequest": ".project_label_config_request",
     "ProjectMember": ".project_member",
+    "ProjectMemberBulkAssignResponse": ".project_member_bulk_assign_response",
     "ProjectMemberBulkAssignRolesRequest": ".project_member_bulk_assign_roles_request",
     "ProjectRole": ".project_role",
     "ProjectSamplingEnum": ".project_sampling_enum",
@@ -736,6 +738,7 @@ __all__ = [
     "ProjectLabelConfig",
     "ProjectLabelConfigRequest",
     "ProjectMember",
+    "ProjectMemberBulkAssignResponse",
     "ProjectMemberBulkAssignRolesRequest",
     "ProjectRole",
     "ProjectSamplingEnum",

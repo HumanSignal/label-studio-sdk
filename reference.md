@@ -38912,7 +38912,7 @@ Reason for pausing
 </details>
 
 ## Projects Members Bulk
-<details><summary><code>client.projects.members.bulk.<a href="src/label_studio_sdk/projects/members/bulk/client.py">post</a>(...) -> PostBulkResponse</code></summary>
+<details><summary><code>client.projects.members.bulk.<a href="src/label_studio_sdk/projects/members/bulk/client.py">post</a>(...) -> ProjectMemberBulkAssignResponse</code></summary>
 <dl>
 <dd>
 

@@ -4,10 +4,10 @@ import typing
 
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
+from ....types.project_member_bulk_assign_response import ProjectMemberBulkAssignResponse
 from ....types.project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
 from .raw_client import AsyncRawBulkClient, RawBulkClient
 from .types.delete_bulk_response import DeleteBulkResponse
-from .types.post_bulk_response import PostBulkResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -43,7 +43,7 @@ class BulkClient:
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PostBulkResponse:
+    ) -> ProjectMemberBulkAssignResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -92,7 +92,7 @@ class BulkClient:
 
         Returns
         -------
-        PostBulkResponse
+        ProjectMemberBulkAssignResponse
 
 
         Examples
@@ -243,7 +243,7 @@ class AsyncBulkClient:
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PostBulkResponse:
+    ) -> ProjectMemberBulkAssignResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -292,7 +292,7 @@ class AsyncBulkClient:
 
         Returns
         -------
-        PostBulkResponse
+        ProjectMemberBulkAssignResponse
 
 
         Examples

@@ -11,9 +11,9 @@ from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.serialization import convert_and_respect_annotation_metadata
 from ....core.unchecked_base_model import construct_type
+from ....types.project_member_bulk_assign_response import ProjectMemberBulkAssignResponse
 from ....types.project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
 from .types.delete_bulk_response import DeleteBulkResponse
-from .types.post_bulk_response import PostBulkResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -39,7 +39,7 @@ class RawBulkClient:
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[PostBulkResponse]:
+    ) -> HttpResponse[ProjectMemberBulkAssignResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -88,7 +88,7 @@ class RawBulkClient:
 
         Returns
         -------
-        HttpResponse[PostBulkResponse]
+        HttpResponse[ProjectMemberBulkAssignResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -119,9 +119,9 @@ class RawBulkClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PostBulkResponse,
+                    ProjectMemberBulkAssignResponse,
                     construct_type(
-                        type_=PostBulkResponse,  # type: ignore
+                        type_=ProjectMemberBulkAssignResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -253,7 +253,7 @@ class AsyncRawBulkClient:
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[PostBulkResponse]:
+    ) -> AsyncHttpResponse[ProjectMemberBulkAssignResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -302,7 +302,7 @@ class AsyncRawBulkClient:
 
         Returns
         -------
-        AsyncHttpResponse[PostBulkResponse]
+        AsyncHttpResponse[ProjectMemberBulkAssignResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -333,9 +333,9 @@ class AsyncRawBulkClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PostBulkResponse,
+                    ProjectMemberBulkAssignResponse,
                     construct_type(
-                        type_=PostBulkResponse,  # type: ignore
+                        type_=ProjectMemberBulkAssignResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

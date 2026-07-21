@@ -7,11 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .delete_bulk_response import DeleteBulkResponse
-    from .post_bulk_response import PostBulkResponse
-_dynamic_imports: typing.Dict[str, str] = {
-    "DeleteBulkResponse": ".delete_bulk_response",
-    "PostBulkResponse": ".post_bulk_response",
-}
+_dynamic_imports: typing.Dict[str, str] = {"DeleteBulkResponse": ".delete_bulk_response"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -35,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["DeleteBulkResponse", "PostBulkResponse"]
+__all__ = ["DeleteBulkResponse"]
