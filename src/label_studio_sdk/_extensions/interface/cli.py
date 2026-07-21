@@ -375,7 +375,7 @@ def _run_scenarios(file: Path, scenario: Path) -> dict[str, Any]:
     cache_dir = _ensure_validator_ready(require_scenario=True)
     return _run_node_json(
         ["node", str(cache_dir / "scenario-runner.mjs"), str(file.resolve()), str(scenario.resolve())],
-        timeout=45,
+        timeout=120,
         timeout_label="scenario runner",
     )
 
