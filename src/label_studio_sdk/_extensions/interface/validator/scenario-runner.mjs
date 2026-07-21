@@ -12,6 +12,7 @@ import { transform } from "sucrase";
 
 const filePath = process.argv[2];
 const scenarioPath = process.argv[3];
+const scenarioNameFilter = process.env.LS_INTERFACE_SCENARIO_FILTER || "";
 
 if (!filePath || !scenarioPath || !existsSync(filePath) || !existsSync(scenarioPath)) {
   process.stderr.write("usage: node scenario-runner.mjs <file.jsx> <scenarios.js>\n");
@@ -36,6 +37,17 @@ async function run() {
   let scenarios = [];
   try {
     scenarios = await loadScenarioModule(scenarioPath);
+    if (scenarioNameFilter) {
+      scenarios = scenarios.filter(
+        (scenario) => typeof scenario?.name === "string" && scenario.name.includes(scenarioNameFilter),
+      );
+      if (scenarios.length === 0) {
+        errors.push({
+          stage: "scenario-file",
+          message: `No scenarios matched LS_INTERFACE_SCENARIO_FILTER=${JSON.stringify(scenarioNameFilter)}.`,
+        });
+      }
+    }
   } catch (error) {
     errors.push({ stage: "scenario-file", message: errorMessage(error) });
   }
@@ -265,6 +277,9 @@ function makeScenarioContext(page) {
     async getOutputSchema() {
       return page.evaluate(() => window.__hsScenario.getOutputSchema());
     },
+    async getExport(name) {
+      return page.evaluate((exportName) => window.__hsScenario.getExport(exportName), name);
+    },
   };
 }
 
@@ -453,6 +468,14 @@ function validateResultAgainstOutputField(result, fieldDef, prefix, stage) {
       errors.push({ stage, message: `${prefix}.value.choices must be an array.` });
     }
   } else if (fieldType === "array" && (itemEnums || usesParamOptions)) {
+    // Labeled geometry regions (PDF OCR / bbox screens) serialize as rectanglelabels/labels,
+    // while choice-only arrays still use type "choices".
+    if (result.type === "rectanglelabels" || result.type === "labels") {
+      if (!isPlainObject(result.value) && !Array.isArray(result.value)) {
+        errors.push({ stage, message: `${prefix}.value must be an object or array for labeled region results.` });
+      }
+      return errors;
+    }
     if (result.type !== "choices") {
       errors.push({ stage, message: `${prefix}.type must be "choices" for enum array output fields.` });
     }
@@ -741,14 +764,54 @@ function getBrowserHarnessSource() {
   const rootElement = document.getElementById("root");
   const root = window.ReactDOM.createRoot(rootElement);
 
+  // Minimal PDF.js stub so PDF OCR screens can mount canvas overlays in the harness.
+  if (!window.pdfjsLib) {
+    window.pdfjsLib = {
+      getDocument() {
+        const page = {
+          getViewport({ scale = 1, rotation = 0 } = {}) {
+            const swapped = rotation === 90 || rotation === 270;
+            const width = (swapped ? 600 : 800) * scale;
+            const height = (swapped ? 800 : 1000) * scale;
+            return { width, height };
+          },
+          getTextContent() {
+            return Promise.resolve({ items: [] });
+          },
+          render({ canvasContext, viewport }) {
+            if (canvasContext && viewport) {
+              canvasContext.fillStyle = "#ffffff";
+              canvasContext.fillRect(0, 0, viewport.width, viewport.height);
+            }
+            return { promise: Promise.resolve(), cancel() {} };
+          },
+        };
+        return {
+          promise: Promise.resolve({
+            numPages: 1,
+            getPage() {
+              return Promise.resolve(page);
+            },
+          }),
+        };
+      },
+    };
+  }
+
   function replaceRegion(id, patch) {
     regions = regions.map((region) => (region.id === id ? { ...region, ...patch } : region));
   }
 
+  function visibleRegionsFrom(allRegions) {
+    return (allRegions || []).filter((region) => region && region.hidden !== true);
+  }
+
   function render() {
+    const visibleRegions = visibleRegionsFrom(regions);
     const props = {
       task: clone(scenario.task) || { id: "scenario-task", data: {} },
       regions,
+      visibleRegions,
       relations,
       selectedRegionIds,
       readOnly: Boolean(scenario.readOnly),
@@ -845,12 +908,22 @@ function getBrowserHarnessSource() {
       const nextParsed = clone(parsed) || {};
       regions = Array.isArray(nextParsed.regions) ? nextParsed.regions : [];
       relations = Array.isArray(nextParsed.relations) ? nextParsed.relations : [];
-      selectedRegionIds = new Set();
+      // Preserve selection across hide/show transitions unless the caller overrides it.
+      if (Array.isArray(nextParsed.selectedRegionIds)) {
+        selectedRegionIds = new Set(nextParsed.selectedRegionIds.filter((id) => typeof id === "string"));
+      } else {
+        selectedRegionIds = new Set(
+          Array.from(selectedRegionIds).filter((id) => regions.some((region) => region && region.id === id)),
+        );
+      }
       render();
       return this.getState();
     },
     getOutputSchema() {
       return clone(mod.outputSchema || null);
+    },
+    getExport(name) {
+      return clone(mod[name]);
     },
     getExports() {
       return Object.keys(mod);
