@@ -1,4 +1,4 @@
-Pillow>=12.2.0
+Pillow>=12.3.0
 appdirs>=1.4.3
 datamodel-code-generator==0.26.1
 doclang>=0.7.1
