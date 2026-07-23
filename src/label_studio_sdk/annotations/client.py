@@ -35,12 +35,12 @@ class AnnotationsClient:
         self, *, ids: typing.Sequence[int], project: int, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteBulkAnnotationsResponse:
         """
-        Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
+        Delete multiple annotations by their IDs. At most 100 annotation IDs can be submitted in one request. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
 
         Parameters
         ----------
         ids : typing.Sequence[int]
-            List of annotation IDs to delete
+            List of annotation IDs to delete. Maximum 100 IDs per request.
 
         project : int
 
@@ -523,12 +523,12 @@ class AsyncAnnotationsClient:
         self, *, ids: typing.Sequence[int], project: int, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteBulkAnnotationsResponse:
         """
-        Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
+        Delete multiple annotations by their IDs. At most 100 annotation IDs can be submitted in one request. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
 
         Parameters
         ----------
         ids : typing.Sequence[int]
-            List of annotation IDs to delete
+            List of annotation IDs to delete. Maximum 100 IDs per request.
 
         project : int
 
