@@ -11,6 +11,7 @@ from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.forbidden_error import ForbiddenError
 from ...types.assignable_organization_role_enum import AssignableOrganizationRoleEnum
+from ...types.assignable_user_type_enum import AssignableUserTypeEnum
 from ...types.organization_invite import OrganizationInvite
 from pydantic import ValidationError
 
@@ -125,8 +126,9 @@ class RawInvitesClient:
         self,
         *,
         emails: typing.Sequence[str],
-        role: AssignableOrganizationRoleEnum,
         projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        role: typing.Optional[AssignableOrganizationRoleEnum] = OMIT,
+        user_type: typing.Optional[AssignableUserTypeEnum] = OMIT,
         workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
@@ -144,8 +146,11 @@ class RawInvitesClient:
         emails : typing.Sequence[str]
             Email addresses
 
-        role : AssignableOrganizationRoleEnum
-            Organization role
+        projects : typing.Optional[typing.Sequence[int]]
+            Project IDs to grant access to
+
+        role : typing.Optional[AssignableOrganizationRoleEnum]
+            Organization role. Required unless user_type is viewonly.
 
             * `OW` - Owner
             * `AD` - Administrator
@@ -155,8 +160,11 @@ class RawInvitesClient:
             * `DI` - Deactivated
             * `NO` - Not Activated
 
-        projects : typing.Optional[typing.Sequence[int]]
-            Project IDs to grant access to
+        user_type : typing.Optional[AssignableUserTypeEnum]
+            Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role.
+
+            * `standard` - Standard
+            * `viewonly` - View Only
 
         workspaces : typing.Optional[typing.Sequence[int]]
             Workspace IDs to grant access to
@@ -175,6 +183,7 @@ class RawInvitesClient:
                 "emails": emails,
                 "projects": projects,
                 "role": role,
+                "user_type": user_type,
                 "workspaces": workspaces,
             },
             headers={
@@ -314,8 +323,9 @@ class AsyncRawInvitesClient:
         self,
         *,
         emails: typing.Sequence[str],
-        role: AssignableOrganizationRoleEnum,
         projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        role: typing.Optional[AssignableOrganizationRoleEnum] = OMIT,
+        user_type: typing.Optional[AssignableUserTypeEnum] = OMIT,
         workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
@@ -333,8 +343,11 @@ class AsyncRawInvitesClient:
         emails : typing.Sequence[str]
             Email addresses
 
-        role : AssignableOrganizationRoleEnum
-            Organization role
+        projects : typing.Optional[typing.Sequence[int]]
+            Project IDs to grant access to
+
+        role : typing.Optional[AssignableOrganizationRoleEnum]
+            Organization role. Required unless user_type is viewonly.
 
             * `OW` - Owner
             * `AD` - Administrator
@@ -344,8 +357,11 @@ class AsyncRawInvitesClient:
             * `DI` - Deactivated
             * `NO` - Not Activated
 
-        projects : typing.Optional[typing.Sequence[int]]
-            Project IDs to grant access to
+        user_type : typing.Optional[AssignableUserTypeEnum]
+            Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role.
+
+            * `standard` - Standard
+            * `viewonly` - View Only
 
         workspaces : typing.Optional[typing.Sequence[int]]
             Workspace IDs to grant access to
@@ -364,6 +380,7 @@ class AsyncRawInvitesClient:
                 "emails": emails,
                 "projects": projects,
                 "role": role,
+                "user_type": user_type,
                 "workspaces": workspaces,
             },
             headers={

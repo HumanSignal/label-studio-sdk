@@ -31508,7 +31508,6 @@ client.organizations.invites.send_email(
     emails=[
         "emails"
     ],
-    role="OW",
 )
 
 ```
@@ -31533,9 +31532,17 @@ client.organizations.invites.send_email(
 <dl>
 <dd>
 
-**role:** `AssignableOrganizationRoleEnum` 
+**projects:** `typing.Optional[typing.List[int]]` — Project IDs to grant access to
+    
+</dd>
+</dl>
 
-Organization role
+<dl>
+<dd>
+
+**role:** `typing.Optional[AssignableOrganizationRoleEnum]` 
+
+Organization role. Required unless user_type is viewonly.
 
 * `OW` - Owner
 * `AD` - Administrator
@@ -31551,7 +31558,12 @@ Organization role
 <dl>
 <dd>
 
-**projects:** `typing.Optional[typing.List[int]]` — Project IDs to grant access to
+**user_type:** `typing.Optional[AssignableUserTypeEnum]` 
+
+Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role.
+
+* `standard` - Standard
+* `viewonly` - View Only
     
 </dd>
 </dl>
@@ -32734,6 +32746,18 @@ Organization role
 <dd>
 
 **user_id:** `typing.Optional[int]` — Member
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_type:** `typing.Optional[StandardUserTypeEnum]` 
+
+Membership seat type. Assigning a working role to a View-Only member upgrades them to a paid Standard seat. View-Only is not accepted because paid-to-View-Only downgrade is not supported.
+
+* `standard` - Standard
     
 </dd>
 </dl>

@@ -19,6 +19,7 @@ from ...types.assignable_organization_role_enum import AssignableOrganizationRol
 from ...types.lse_organization_member_list import LseOrganizationMemberList
 from ...types.organization_member import OrganizationMember
 from ...types.paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
+from ...types.standard_user_type_enum import StandardUserTypeEnum
 from .types.list_members_request_scope import ListMembersRequestScope
 from pydantic import ValidationError
 
@@ -174,6 +175,7 @@ class RawMembersClient:
         *,
         role: typing.Optional[AssignableOrganizationRoleEnum] = OMIT,
         user_id: typing.Optional[int] = OMIT,
+        user_type: typing.Optional[StandardUserTypeEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseOrganizationMemberList]:
         """
@@ -216,6 +218,11 @@ class RawMembersClient:
         user_id : typing.Optional[int]
             Member
 
+        user_type : typing.Optional[StandardUserTypeEnum]
+            Membership seat type. Assigning a working role to a View-Only member upgrades them to a paid Standard seat. View-Only is not accepted because paid-to-View-Only downgrade is not supported.
+
+            * `standard` - Standard
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -230,6 +237,7 @@ class RawMembersClient:
             json={
                 "role": role,
                 "user_id": user_id,
+                "user_type": user_type,
             },
             headers={
                 "content-type": "application/json",
@@ -531,6 +539,7 @@ class AsyncRawMembersClient:
         *,
         role: typing.Optional[AssignableOrganizationRoleEnum] = OMIT,
         user_id: typing.Optional[int] = OMIT,
+        user_type: typing.Optional[StandardUserTypeEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseOrganizationMemberList]:
         """
@@ -573,6 +582,11 @@ class AsyncRawMembersClient:
         user_id : typing.Optional[int]
             Member
 
+        user_type : typing.Optional[StandardUserTypeEnum]
+            Membership seat type. Assigning a working role to a View-Only member upgrades them to a paid Standard seat. View-Only is not accepted because paid-to-View-Only downgrade is not supported.
+
+            * `standard` - Standard
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -587,6 +601,7 @@ class AsyncRawMembersClient:
             json={
                 "role": role,
                 "user_id": user_id,
+                "user_type": user_type,
             },
             headers={
                 "content-type": "application/json",
