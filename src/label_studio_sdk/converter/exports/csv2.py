@@ -18,6 +18,9 @@ def convert(item_iterator, input_data, output_dir, **kwargs):
     logger.debug("Convert CSV started")
     if str(output_dir).endswith(".csv"):
         output_file = output_dir
+        parent_dir = os.path.dirname(str(output_file))
+        if parent_dir:
+            ensure_dir(parent_dir)
     else:
         ensure_dir(output_dir)
         output_file = os.path.join(output_dir, "result.csv")
@@ -25,13 +28,22 @@ def convert(item_iterator, input_data, output_dir, **kwargs):
     # these keys are always presented
     keys = {"annotator", "annotation_id", "created_at", "updated_at", "lead_time"}
 
-    # make 2 passes: the first pass is to get keys, otherwise we can't write csv without headers
+    # Discover colliding keys across the whole export so every row uses the same columns.
+    input_keys = set()
+    output_keys = set()
+    logger.debug("Discover global input/output keys for CSV ...")
+    for item in item_iterator(input_data):
+        input_keys.update(item["input"].keys())
+        output_keys.update(item["output"].keys())
+    colliding_keys = input_keys & output_keys
+
+    # First pass: column names (requires headers before writing rows).
     logger.debug("Prepare column names for CSV ...")
     for item in item_iterator(input_data):
-        record = prepare_annotation_keys(item)
+        record = prepare_annotation_keys(item, colliding_keys)
         keys.update(record)
 
-    # the second pass is to write records to csv
+    # Second pass: write records to csv.
     logger.debug(
         f"Prepare done in {time.time()-start_time:0.2f} sec. Write CSV rows now ..."
     )
@@ -45,7 +57,7 @@ def convert(item_iterator, input_data, output_dir, **kwargs):
         writer.writeheader()
 
         for item in item_iterator(input_data):
-            record = prepare_annotation(item)
+            record = prepare_annotation(item, colliding_keys)
             writer.writerow(record)
 
     logger.debug(f"CSV conversion finished in {time.time()-start_time:0.2f} sec")
@@ -76,12 +88,27 @@ def generate_chat_transcript(pretty_value):
     return "\n".join(transcript_lines)
 
 
-def prepare_annotation(item):
+def _colliding_keys(item):
+    return set(item["input"].keys()) & set(item["output"].keys())
+
+
+def _input_column_name(name, colliding_keys):
+    # Keep annotation columns as the bare control-tag name for backward
+    # compatibility; only rename colliding task.data keys.
+    if name in colliding_keys:
+        return f"_data_{name}"
+    return name
+
+
+def prepare_annotation(item, colliding_keys=None):
     record = {}
+    if colliding_keys is None:
+        colliding_keys = _colliding_keys(item)
     if item.get("id") is not None:
         record["id"] = item["id"]
 
     for name, value in item["output"].items():
+        # Annotation output keeps the original key (e.g. "text") for BC.
         pretty_value = prettify_result(value)
         record[name] = (
             pretty_value
@@ -97,11 +124,12 @@ def prepare_annotation(item):
             record[f"{name}_transcript"] = generate_chat_transcript(pretty_value)
 
     for name, value in item["input"].items():
+        column_name = _input_column_name(name, colliding_keys)
         if isinstance(value, dict) or isinstance(value, list):
             # flat dicts and arrays from task.data to json strings
-            record[name] = json.dumps(value, ensure_ascii=False)
+            record[column_name] = json.dumps(value, ensure_ascii=False)
         else:
-            record[name] = value
+            record[column_name] = value
 
     record["annotator"] = get_annotator(item)
     record["annotation_id"] = item["annotation_id"]
@@ -118,8 +146,10 @@ def prepare_annotation(item):
     return record
 
 
-def prepare_annotation_keys(item):
-    record = set(item["input"].keys())  # we don't need deepcopy for keys
+def prepare_annotation_keys(item, colliding_keys=None):
+    if colliding_keys is None:
+        colliding_keys = _colliding_keys(item)
+    record = {_input_column_name(name, colliding_keys) for name in item["input"].keys()}
     if item.get("id") is not None:
         record.add("id")
 
