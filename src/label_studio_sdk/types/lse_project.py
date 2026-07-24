@@ -206,6 +206,7 @@ class LseProject(UncheckedBaseModel):
     Pause annotator on failed evaluation
     """
 
+    permissions: typing.Optional[typing.List[str]] = None
     pinned_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Pinned date and time
