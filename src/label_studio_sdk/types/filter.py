@@ -9,7 +9,7 @@ from .child_filter import ChildFilter
 
 
 class Filter(UncheckedBaseModel):
-    child_filter: typing.Optional[ChildFilter] = None
+    child_filters: typing.Optional[typing.List[ChildFilter]] = None
     column: str = pydantic.Field()
     """
     Field name

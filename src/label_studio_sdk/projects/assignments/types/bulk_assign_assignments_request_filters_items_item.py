@@ -5,6 +5,9 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .bulk_assign_assignments_request_filters_items_item_child_filters_item import (
+    BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItem,
+)
 from .bulk_assign_assignments_request_filters_items_item_filter import (
     BulkAssignAssignmentsRequestFiltersItemsItemFilter,
 )
@@ -33,6 +36,13 @@ class BulkAssignAssignmentsRequestFiltersItemsItem(UncheckedBaseModel):
     value: BulkAssignAssignmentsRequestFiltersItemsItemValue = pydantic.Field()
     """
     Value to filter by
+    """
+
+    child_filters: typing.Optional[typing.List[BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItem]] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Ordered child filters AND-merged with their parent. Child filters cannot be nested.
     """
 
     if IS_PYDANTIC_V2:

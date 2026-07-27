@@ -10,6 +10,18 @@ if typing.TYPE_CHECKING:
     from .bulk_assign_assignments_request_filters import BulkAssignAssignmentsRequestFilters
     from .bulk_assign_assignments_request_filters_conjunction import BulkAssignAssignmentsRequestFiltersConjunction
     from .bulk_assign_assignments_request_filters_items_item import BulkAssignAssignmentsRequestFiltersItemsItem
+    from .bulk_assign_assignments_request_filters_items_item_child_filters_item import (
+        BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItem,
+    )
+    from .bulk_assign_assignments_request_filters_items_item_child_filters_item_filter import (
+        BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemFilter,
+    )
+    from .bulk_assign_assignments_request_filters_items_item_child_filters_item_operator import (
+        BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemOperator,
+    )
+    from .bulk_assign_assignments_request_filters_items_item_child_filters_item_value import (
+        BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemValue,
+    )
     from .bulk_assign_assignments_request_filters_items_item_filter import (
         BulkAssignAssignmentsRequestFiltersItemsItemFilter,
     )
@@ -35,6 +47,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BulkAssignAssignmentsRequestFilters": ".bulk_assign_assignments_request_filters",
     "BulkAssignAssignmentsRequestFiltersConjunction": ".bulk_assign_assignments_request_filters_conjunction",
     "BulkAssignAssignmentsRequestFiltersItemsItem": ".bulk_assign_assignments_request_filters_items_item",
+    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItem": ".bulk_assign_assignments_request_filters_items_item_child_filters_item",
+    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemFilter": ".bulk_assign_assignments_request_filters_items_item_child_filters_item_filter",
+    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemOperator": ".bulk_assign_assignments_request_filters_items_item_child_filters_item_operator",
+    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemValue": ".bulk_assign_assignments_request_filters_items_item_child_filters_item_value",
     "BulkAssignAssignmentsRequestFiltersItemsItemFilter": ".bulk_assign_assignments_request_filters_items_item_filter",
     "BulkAssignAssignmentsRequestFiltersItemsItemOperator": ".bulk_assign_assignments_request_filters_items_item_operator",
     "BulkAssignAssignmentsRequestFiltersItemsItemValue": ".bulk_assign_assignments_request_filters_items_item_value",
@@ -74,6 +90,10 @@ __all__ = [
     "BulkAssignAssignmentsRequestFilters",
     "BulkAssignAssignmentsRequestFiltersConjunction",
     "BulkAssignAssignmentsRequestFiltersItemsItem",
+    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItem",
+    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemFilter",
+    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemOperator",
+    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemValue",
     "BulkAssignAssignmentsRequestFiltersItemsItemFilter",
     "BulkAssignAssignmentsRequestFiltersItemsItemOperator",
     "BulkAssignAssignmentsRequestFiltersItemsItemValue",

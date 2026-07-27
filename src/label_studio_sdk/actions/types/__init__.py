@@ -9,6 +9,18 @@ if typing.TYPE_CHECKING:
     from .create_actions_request_filters import CreateActionsRequestFilters
     from .create_actions_request_filters_conjunction import CreateActionsRequestFiltersConjunction
     from .create_actions_request_filters_items_item import CreateActionsRequestFiltersItemsItem
+    from .create_actions_request_filters_items_item_child_filters_item import (
+        CreateActionsRequestFiltersItemsItemChildFiltersItem,
+    )
+    from .create_actions_request_filters_items_item_child_filters_item_filter import (
+        CreateActionsRequestFiltersItemsItemChildFiltersItemFilter,
+    )
+    from .create_actions_request_filters_items_item_child_filters_item_operator import (
+        CreateActionsRequestFiltersItemsItemChildFiltersItemOperator,
+    )
+    from .create_actions_request_filters_items_item_child_filters_item_value import (
+        CreateActionsRequestFiltersItemsItemChildFiltersItemValue,
+    )
     from .create_actions_request_filters_items_item_filter import CreateActionsRequestFiltersItemsItemFilter
     from .create_actions_request_filters_items_item_operator import CreateActionsRequestFiltersItemsItemOperator
     from .create_actions_request_filters_items_item_value import CreateActionsRequestFiltersItemsItemValue
@@ -24,6 +36,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateActionsRequestFilters": ".create_actions_request_filters",
     "CreateActionsRequestFiltersConjunction": ".create_actions_request_filters_conjunction",
     "CreateActionsRequestFiltersItemsItem": ".create_actions_request_filters_items_item",
+    "CreateActionsRequestFiltersItemsItemChildFiltersItem": ".create_actions_request_filters_items_item_child_filters_item",
+    "CreateActionsRequestFiltersItemsItemChildFiltersItemFilter": ".create_actions_request_filters_items_item_child_filters_item_filter",
+    "CreateActionsRequestFiltersItemsItemChildFiltersItemOperator": ".create_actions_request_filters_items_item_child_filters_item_operator",
+    "CreateActionsRequestFiltersItemsItemChildFiltersItemValue": ".create_actions_request_filters_items_item_child_filters_item_value",
     "CreateActionsRequestFiltersItemsItemFilter": ".create_actions_request_filters_items_item_filter",
     "CreateActionsRequestFiltersItemsItemOperator": ".create_actions_request_filters_items_item_operator",
     "CreateActionsRequestFiltersItemsItemValue": ".create_actions_request_filters_items_item_value",
@@ -63,6 +79,10 @@ __all__ = [
     "CreateActionsRequestFilters",
     "CreateActionsRequestFiltersConjunction",
     "CreateActionsRequestFiltersItemsItem",
+    "CreateActionsRequestFiltersItemsItemChildFiltersItem",
+    "CreateActionsRequestFiltersItemsItemChildFiltersItemFilter",
+    "CreateActionsRequestFiltersItemsItemChildFiltersItemOperator",
+    "CreateActionsRequestFiltersItemsItemChildFiltersItemValue",
     "CreateActionsRequestFiltersItemsItemFilter",
     "CreateActionsRequestFiltersItemsItemOperator",
     "CreateActionsRequestFiltersItemsItemValue",

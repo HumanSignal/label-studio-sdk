@@ -10,6 +10,18 @@ if typing.TYPE_CHECKING:
     from .create_views_request_data_filters import CreateViewsRequestDataFilters
     from .create_views_request_data_filters_conjunction import CreateViewsRequestDataFiltersConjunction
     from .create_views_request_data_filters_items_item import CreateViewsRequestDataFiltersItemsItem
+    from .create_views_request_data_filters_items_item_child_filters_item import (
+        CreateViewsRequestDataFiltersItemsItemChildFiltersItem,
+    )
+    from .create_views_request_data_filters_items_item_child_filters_item_filter import (
+        CreateViewsRequestDataFiltersItemsItemChildFiltersItemFilter,
+    )
+    from .create_views_request_data_filters_items_item_child_filters_item_operator import (
+        CreateViewsRequestDataFiltersItemsItemChildFiltersItemOperator,
+    )
+    from .create_views_request_data_filters_items_item_child_filters_item_value import (
+        CreateViewsRequestDataFiltersItemsItemChildFiltersItemValue,
+    )
     from .create_views_request_data_filters_items_item_filter import CreateViewsRequestDataFiltersItemsItemFilter
     from .create_views_request_data_filters_items_item_operator import CreateViewsRequestDataFiltersItemsItemOperator
     from .create_views_request_data_filters_items_item_value import CreateViewsRequestDataFiltersItemsItemValue
@@ -18,6 +30,18 @@ if typing.TYPE_CHECKING:
     from .update_views_request_data_filters import UpdateViewsRequestDataFilters
     from .update_views_request_data_filters_conjunction import UpdateViewsRequestDataFiltersConjunction
     from .update_views_request_data_filters_items_item import UpdateViewsRequestDataFiltersItemsItem
+    from .update_views_request_data_filters_items_item_child_filters_item import (
+        UpdateViewsRequestDataFiltersItemsItemChildFiltersItem,
+    )
+    from .update_views_request_data_filters_items_item_child_filters_item_filter import (
+        UpdateViewsRequestDataFiltersItemsItemChildFiltersItemFilter,
+    )
+    from .update_views_request_data_filters_items_item_child_filters_item_operator import (
+        UpdateViewsRequestDataFiltersItemsItemChildFiltersItemOperator,
+    )
+    from .update_views_request_data_filters_items_item_child_filters_item_value import (
+        UpdateViewsRequestDataFiltersItemsItemChildFiltersItemValue,
+    )
     from .update_views_request_data_filters_items_item_filter import UpdateViewsRequestDataFiltersItemsItemFilter
     from .update_views_request_data_filters_items_item_operator import UpdateViewsRequestDataFiltersItemsItemOperator
     from .update_views_request_data_filters_items_item_value import UpdateViewsRequestDataFiltersItemsItemValue
@@ -27,6 +51,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateViewsRequestDataFilters": ".create_views_request_data_filters",
     "CreateViewsRequestDataFiltersConjunction": ".create_views_request_data_filters_conjunction",
     "CreateViewsRequestDataFiltersItemsItem": ".create_views_request_data_filters_items_item",
+    "CreateViewsRequestDataFiltersItemsItemChildFiltersItem": ".create_views_request_data_filters_items_item_child_filters_item",
+    "CreateViewsRequestDataFiltersItemsItemChildFiltersItemFilter": ".create_views_request_data_filters_items_item_child_filters_item_filter",
+    "CreateViewsRequestDataFiltersItemsItemChildFiltersItemOperator": ".create_views_request_data_filters_items_item_child_filters_item_operator",
+    "CreateViewsRequestDataFiltersItemsItemChildFiltersItemValue": ".create_views_request_data_filters_items_item_child_filters_item_value",
     "CreateViewsRequestDataFiltersItemsItemFilter": ".create_views_request_data_filters_items_item_filter",
     "CreateViewsRequestDataFiltersItemsItemOperator": ".create_views_request_data_filters_items_item_operator",
     "CreateViewsRequestDataFiltersItemsItemValue": ".create_views_request_data_filters_items_item_value",
@@ -35,6 +63,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateViewsRequestDataFilters": ".update_views_request_data_filters",
     "UpdateViewsRequestDataFiltersConjunction": ".update_views_request_data_filters_conjunction",
     "UpdateViewsRequestDataFiltersItemsItem": ".update_views_request_data_filters_items_item",
+    "UpdateViewsRequestDataFiltersItemsItemChildFiltersItem": ".update_views_request_data_filters_items_item_child_filters_item",
+    "UpdateViewsRequestDataFiltersItemsItemChildFiltersItemFilter": ".update_views_request_data_filters_items_item_child_filters_item_filter",
+    "UpdateViewsRequestDataFiltersItemsItemChildFiltersItemOperator": ".update_views_request_data_filters_items_item_child_filters_item_operator",
+    "UpdateViewsRequestDataFiltersItemsItemChildFiltersItemValue": ".update_views_request_data_filters_items_item_child_filters_item_value",
     "UpdateViewsRequestDataFiltersItemsItemFilter": ".update_views_request_data_filters_items_item_filter",
     "UpdateViewsRequestDataFiltersItemsItemOperator": ".update_views_request_data_filters_items_item_operator",
     "UpdateViewsRequestDataFiltersItemsItemValue": ".update_views_request_data_filters_items_item_value",
@@ -68,6 +100,10 @@ __all__ = [
     "CreateViewsRequestDataFilters",
     "CreateViewsRequestDataFiltersConjunction",
     "CreateViewsRequestDataFiltersItemsItem",
+    "CreateViewsRequestDataFiltersItemsItemChildFiltersItem",
+    "CreateViewsRequestDataFiltersItemsItemChildFiltersItemFilter",
+    "CreateViewsRequestDataFiltersItemsItemChildFiltersItemOperator",
+    "CreateViewsRequestDataFiltersItemsItemChildFiltersItemValue",
     "CreateViewsRequestDataFiltersItemsItemFilter",
     "CreateViewsRequestDataFiltersItemsItemOperator",
     "CreateViewsRequestDataFiltersItemsItemValue",
@@ -76,6 +112,10 @@ __all__ = [
     "UpdateViewsRequestDataFilters",
     "UpdateViewsRequestDataFiltersConjunction",
     "UpdateViewsRequestDataFiltersItemsItem",
+    "UpdateViewsRequestDataFiltersItemsItemChildFiltersItem",
+    "UpdateViewsRequestDataFiltersItemsItemChildFiltersItemFilter",
+    "UpdateViewsRequestDataFiltersItemsItemChildFiltersItemOperator",
+    "UpdateViewsRequestDataFiltersItemsItemChildFiltersItemValue",
     "UpdateViewsRequestDataFiltersItemsItemFilter",
     "UpdateViewsRequestDataFiltersItemsItemOperator",
     "UpdateViewsRequestDataFiltersItemsItemValue",

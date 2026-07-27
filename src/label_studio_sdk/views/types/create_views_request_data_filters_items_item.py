@@ -5,6 +5,9 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from .create_views_request_data_filters_items_item_child_filters_item import (
+    CreateViewsRequestDataFiltersItemsItemChildFiltersItem,
+)
 from .create_views_request_data_filters_items_item_filter import CreateViewsRequestDataFiltersItemsItemFilter
 from .create_views_request_data_filters_items_item_operator import CreateViewsRequestDataFiltersItemsItemOperator
 from .create_views_request_data_filters_items_item_value import CreateViewsRequestDataFiltersItemsItemValue
@@ -29,6 +32,13 @@ class CreateViewsRequestDataFiltersItemsItem(UncheckedBaseModel):
     value: CreateViewsRequestDataFiltersItemsItemValue = pydantic.Field()
     """
     Value to filter by
+    """
+
+    child_filters: typing.Optional[typing.List[CreateViewsRequestDataFiltersItemsItemChildFiltersItem]] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Ordered child filters AND-merged with their parent. Child filters cannot be nested.
     """
 
     if IS_PYDANTIC_V2:
