@@ -290,6 +290,7 @@ description = "The uncompromising code formatter."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
+markers = "sys_platform != \"emscripten\""
 files = [
     {file = "black-26.5.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:9942db8888e06943c5dde66ca0037dcff82a2a4ec1ad0ada9e0d2ee9d9823893"},
     {file = "black-26.5.1-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:89c93167a74d3a75dfaa38a5c7cca015537d5820dd7f17d63267d674a61cae90"},
@@ -481,37 +482,40 @@ markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win
 
 [[package]]
 name = "datamodel-code-generator"
-version = "0.26.1"
+version = "0.71.0"
 description = "Datamodel Code Generator"
 optional = false
-python-versions = "<4.0,>=3.8"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "datamodel_code_generator-0.26.1-py3-none-any.whl", hash = "sha256:bbe8a6cc0b9cfdbfd294e336e02b4c50b481ffc3b3c608b5578b6d7aa02cc8ae"},
-    {file = "datamodel_code_generator-0.26.1.tar.gz", hash = "sha256:3b7b49c4230fa197ca28847e1e8996cd664638a7e91796c826a61c60d4ccd8a2"},
+    {file = "datamodel_code_generator-0.71.0-py3-none-any.whl", hash = "sha256:680b68338d59e98a0559eeb54d8e5ca33c35b3ec0bef922ec2cc783f2cb28e9a"},
+    {file = "datamodel_code_generator-0.71.0.tar.gz", hash = "sha256:d27cd7a0d10f9b2db74a41db7f3e050c226da9cf0afb4916a7ab56275ebacbf2"},
 ]
 
 [package.dependencies]
-argcomplete = ">=1.10,<4.0"
-black = ">=19.10b0"
-genson = ">=1.2.1,<2.0"
-inflect = ">=4.1.0,<6.0"
-isort = ">=4.3.21,<6.0"
-jinja2 = ">=2.10.1,<4.0"
-packaging = "*"
+argcomplete = ">=2.10.1,<4"
+black = {version = ">=19.10b0", markers = "sys_platform != \"emscripten\""}
+genson = ">=1.2.1,<2"
+inflect = ">=4.1,<8"
+isort = {version = ">=4.3.21,<9", markers = "sys_platform != \"emscripten\""}
+jinja2 = ">=2.10.1,<4"
 pydantic = [
-    {version = ">=1.9.0,<2.4.0 || >2.4.0,<3.0", extras = ["email"], markers = "python_version == \"3.10\""},
-    {version = ">=1.10.0,<2.4.0 || >2.4.0,<3.0", extras = ["email"], markers = "python_version == \"3.11\""},
-    {version = ">=1.10.0,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.4.0 || >2.4.0,<3.0", extras = ["email"], markers = "python_version >= \"3.12\" and python_version < \"4.0\""},
+    {version = ">=2,<3", markers = "python_version < \"3.14\""},
+    {version = ">=2.12,<3", markers = "python_version >= \"3.14\""},
 ]
 pyyaml = ">=6.0.1"
-toml = {version = ">=0.10.0,<1.0.0", markers = "python_version < \"3.11\""}
+tomli = {version = ">=2.2.1,<3", markers = "python_version < \"3.11\""}
 
 [package.extras]
-debug = ["PySnooper (>=0.4.1,<2.0.0)"]
-graphql = ["graphql-core (>=3.2.3,<4.0.0)"]
-http = ["httpx"]
-validation = ["openapi-spec-validator (>=0.2.8,<0.7.0)", "prance (>=0.18.2)"]
+all = ["graphql-core (>=3.2.3)", "grpcio-tools (>=1.62,<2)", "httpx (>=0.24.1)", "openapi-spec-validator (>=0.2.8,<0.8)", "prance (>=0.18.2)", "pysnooper (>=0.4.1,<2)", "ruff (>=0.9.10)", "watchfiles (>=1.1)"]
+debug = ["pysnooper (>=0.4.1,<2)"]
+graphql = ["graphql-core (>=3.2.3)"]
+http = ["httpx (>=0.24.1)"]
+protobuf = ["grpcio-tools (>=1.62,<2)"]
+ruff = ["ruff (>=0.9.10)"]
+ryaml = ["ryaml (>=0.5.1)"]
+validation = ["openapi-spec-validator (>=0.2.8,<0.8)", "prance (>=0.18.2)"]
+watch = ["watchfiles (>=1.1)"]
 
 [[package]]
 name = "defusedxml"
@@ -524,27 +528,6 @@ files = [
     {file = "defusedxml-0.7.1-py2.py3-none-any.whl", hash = "sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61"},
     {file = "defusedxml-0.7.1.tar.gz", hash = "sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69"},
 ]
-
-[[package]]
-name = "dnspython"
-version = "2.8.0"
-description = "DNS toolkit"
-optional = false
-python-versions = ">=3.10"
-groups = ["main"]
-files = [
-    {file = "dnspython-2.8.0-py3-none-any.whl", hash = "sha256:01d9bbc4a2d76bf0db7c1f729812ded6d912bd318d3b1cf81d30c0f845dbf3af"},
-    {file = "dnspython-2.8.0.tar.gz", hash = "sha256:181d3c6996452cb1189c4046c61599b84a5a86e099562ffde77d26984ff26d0f"},
-]
-
-[package.extras]
-dev = ["black (>=25.1.0)", "coverage (>=7.0)", "flake8 (>=7)", "hypercorn (>=0.17.0)", "mypy (>=1.17)", "pylint (>=3)", "pytest (>=8.4)", "pytest-cov (>=6.2.0)", "quart-trio (>=0.12.0)", "sphinx (>=8.2.0)", "sphinx-rtd-theme (>=3.0.0)", "twine (>=6.1.0)", "wheel (>=0.45.0)"]
-dnssec = ["cryptography (>=45)"]
-doh = ["h2 (>=4.2.0)", "httpcore (>=1.0.0)", "httpx (>=0.28.0)"]
-doq = ["aioquic (>=1.2.0)"]
-idna = ["idna (>=3.10)"]
-trio = ["trio (>=0.30)"]
-wmi = ["wmi (>=1.5.1) ; platform_system == \"Windows\""]
 
 [[package]]
 name = "doclang"
@@ -564,22 +547,6 @@ typer = ">=0.15.1"
 
 [package.extras]
 schematron-saxon = ["saxonche (>=12.9.0)"]
-
-[[package]]
-name = "email-validator"
-version = "2.3.0"
-description = "A robust email address syntax and deliverability validation library."
-optional = false
-python-versions = ">=3.8"
-groups = ["main"]
-files = [
-    {file = "email_validator-2.3.0-py3-none-any.whl", hash = "sha256:80f13f623413e6b197ae73bb10bf4eb0908faf509ad8362c5edeb0be7fd450b4"},
-    {file = "email_validator-2.3.0.tar.gz", hash = "sha256:9fc05c37f2f6cf439ff414f8fc46d917929974a82244c20eb10231ba60c54426"},
-]
-
-[package.dependencies]
-dnspython = ">=2.0.0"
-idna = ">=2.0.0"
 
 [[package]]
 name = "exceptiongroup"
@@ -980,19 +947,27 @@ files = [
 
 [[package]]
 name = "inflect"
-version = "5.6.2"
-description = "Correctly generate plurals, singular nouns, ordinals, indefinite articles; convert numbers to words"
+version = "7.5.0"
+description = "Correctly generate plurals, singular nouns, ordinals, indefinite articles"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "inflect-5.6.2-py3-none-any.whl", hash = "sha256:b45d91a4a28a4e617ff1821117439b06eaa86e2a4573154af0149e9be6687238"},
-    {file = "inflect-5.6.2.tar.gz", hash = "sha256:aadc7ed73928f5e014129794bbac03058cca35d0a973a5fc4eb45c7fa26005f9"},
+    {file = "inflect-7.5.0-py3-none-any.whl", hash = "sha256:2aea70e5e70c35d8350b8097396ec155ffd68def678c7ff97f51aa69c1d92344"},
+    {file = "inflect-7.5.0.tar.gz", hash = "sha256:faf19801c3742ed5a05a8ce388e0d8fe1a07f8d095c82201eb904f5d27ad571f"},
 ]
 
+[package.dependencies]
+more_itertools = ">=8.5.0"
+typeguard = ">=4.0.1"
+
 [package.extras]
-docs = ["jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx"]
-testing = ["pygments", "pytest (>=6)", "pytest-black (>=0.3.7) ; platform_python_implementation != \"PyPy\"", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1) ; platform_python_implementation != \"PyPy\""]
+check = ["pytest-checkdocs (>=2.4)", "pytest-ruff (>=0.2.1) ; sys_platform != \"cygwin\""]
+cover = ["pytest-cov"]
+doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+enabler = ["pytest-enabler (>=2.2)"]
+test = ["pygments", "pytest (>=6,!=8.1.*)"]
+type = ["pytest-mypy"]
 
 [[package]]
 name = "iniconfig"
@@ -1008,18 +983,19 @@ files = [
 
 [[package]]
 name = "isort"
-version = "5.13.2"
+version = "8.0.1"
 description = "A Python utility / library to sort Python imports."
 optional = false
-python-versions = ">=3.8.0"
+python-versions = ">=3.10.0"
 groups = ["main"]
+markers = "sys_platform != \"emscripten\""
 files = [
-    {file = "isort-5.13.2-py3-none-any.whl", hash = "sha256:8ca5e72a8d85860d5a3fa69b8745237f2939afe12dbf656afbcb47fe72d947a6"},
-    {file = "isort-5.13.2.tar.gz", hash = "sha256:48fdfcb9face5d58a4f6dde2e72a1fb8dcaf8ab26f95ab49fab84c2ddefb0109"},
+    {file = "isort-8.0.1-py3-none-any.whl", hash = "sha256:28b89bc70f751b559aeca209e6120393d43fbe2490de0559662be7a9787e3d75"},
+    {file = "isort-8.0.1.tar.gz", hash = "sha256:171ac4ff559cdc060bcfff550bc8404a486fee0caab245679c2abe7cb253c78d"},
 ]
 
 [package.extras]
-colors = ["colorama (>=0.4.6)"]
+colors = ["colorama"]
 
 [[package]]
 name = "jinja2"
@@ -1397,6 +1373,18 @@ files = [
 ]
 
 [[package]]
+name = "more-itertools"
+version = "11.1.0"
+description = "More routines for operating on iterables, beyond itertools"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "more_itertools-11.1.0-py3-none-any.whl", hash = "sha256:4b65538ae22f6fed0ce4874efd317463a7489796a0939fa66824dd542125a192"},
+    {file = "more_itertools-11.1.0.tar.gz", hash = "sha256:48e8f4d9e7e5878571ecf6f2b4e57634f93cd474cc8cfbd2376f2d11b396e30d"},
+]
+
+[[package]]
 name = "multidict"
 version = "6.7.1"
 description = "multidict implementation"
@@ -1621,6 +1609,7 @@ files = [
     {file = "mypy_extensions-1.1.0-py3-none-any.whl", hash = "sha256:1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505"},
     {file = "mypy_extensions-1.1.0.tar.gz", hash = "sha256:52e68efc3284861e772bbcd66823fde5ae21fd2fdb51c62a211403730b916558"},
 ]
+markers = {main = "sys_platform != \"emscripten\""}
 
 [[package]]
 name = "nltk"
@@ -1745,6 +1734,7 @@ files = [
     {file = "packaging-26.2-py3-none-any.whl", hash = "sha256:5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e"},
     {file = "packaging-26.2.tar.gz", hash = "sha256:ff452ff5a3e828ce110190feff1178bb1f2ea2281fa2075aadb987c2fb221661"},
 ]
+markers = {main = "sys_platform != \"emscripten\""}
 
 [[package]]
 name = "pandas"
@@ -1853,7 +1843,7 @@ description = "Powerful data structures for data analysis, time series, and stat
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
-markers = "python_version >= \"3.11\" and python_version < \"3.14\""
+markers = "python_version < \"3.14\" and python_version >= \"3.11\""
 files = [
     {file = "pandas-3.0.5-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:2946e77e4a53cd248cbde631a12f0e51c8324ce354c3eba4d20147c1ad6f4282"},
     {file = "pandas-3.0.5-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:71ecc8fb7ed1a7aa4392316b5309a6347e8e7f832f38fd897846b3a1457a9298"},
@@ -1937,6 +1927,7 @@ description = "Utility library for gitignore style pattern matching of file path
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
+markers = "sys_platform != \"emscripten\""
 files = [
     {file = "pathspec-1.1.1-py3-none-any.whl", hash = "sha256:a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189"},
     {file = "pathspec-1.1.1.tar.gz", hash = "sha256:17db5ecd524104a120e173814c90367a96a98d07c45b2e10c2f3919fff91bf5a"},
@@ -2059,6 +2050,7 @@ description = "A small Python package for determining appropriate platform-speci
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
+markers = "sys_platform != \"emscripten\""
 files = [
     {file = "platformdirs-4.11.0-py3-none-any.whl", hash = "sha256:360ccded2b7fce0af0ff80cc8f5942a1c5d99b0e856033acb030bfc634709e74"},
     {file = "platformdirs-4.11.0.tar.gz", hash = "sha256:0555d18370482847566ffabcaa53ad7c6c1c29f195989ae1ed634a05f76ea1e0"},
@@ -2226,7 +2218,6 @@ files = [
 
 [package.dependencies]
 annotated-types = ">=0.6.0"
-email-validator = {version = ">=2.0.0", optional = true, markers = "extra == \"email\""}
 pydantic-core = "2.46.4"
 typing-extensions = ">=4.14.1"
 typing-inspection = ">=0.4.2"
@@ -2489,6 +2480,7 @@ description = "A Fast, spec compliant Python 3.14+ tokenizer that runs on older 
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
+markers = "sys_platform != \"emscripten\""
 files = [
     {file = "pytokens-0.4.1-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:2a44ed93ea23415c54f3face3b65ef2b844d96aeb3455b8a69b3df6beab6acc5"},
     {file = "pytokens-0.4.1-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:add8bf86b71a5d9fb5b89f023a80b791e04fba57960aa790cc6125f7f1d39dfe"},
@@ -3194,19 +3186,6 @@ webhdfs = ["requests"]
 zst = ["backports.zstd (>=1.0.0) ; python_version < \"3.14\""]
 
 [[package]]
-name = "toml"
-version = "0.10.2"
-description = "Python Library for Tom's Obvious, Minimal Language"
-optional = false
-python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-groups = ["main"]
-markers = "python_version == \"3.10\""
-files = [
-    {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
-    {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
-]
-
-[[package]]
 name = "tomli"
 version = "2.4.1"
 description = "A lil' TOML parser"
@@ -3266,14 +3245,14 @@ files = [
 
 [[package]]
 name = "tqdm"
-version = "4.69.1"
+version = "4.70.0"
 description = "Fast, Extensible Progress Meter"
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "tqdm-4.69.1-py3-none-any.whl", hash = "sha256:0a654b96f7a2660cceb615b56f307ec2bef96c515409014a429a561981ab52b4"},
-    {file = "tqdm-4.69.1.tar.gz", hash = "sha256:2be21080a0ce17e902c2f1baeb6a74bf551b67bbdfa4bc0109fad471d0b4cb0d"},
+    {file = "tqdm-4.70.0-py3-none-any.whl", hash = "sha256:7f585706bfddbdebf89daac705b2dfcc16890130727d3197ca62c732b4310953"},
+    {file = "tqdm-4.70.0.tar.gz", hash = "sha256:55b0b0dbd97462d06ebee91e4dac24ed4d4702be82b24f07e6c1d27e08cea220"},
 ]
 
 [package.dependencies]
@@ -3284,6 +3263,21 @@ discord = ["envwrap", "requests"]
 notebook = ["ipywidgets (>=6)"]
 slack = ["envwrap", "slack-sdk"]
 telegram = ["envwrap", "requests"]
+
+[[package]]
+name = "typeguard"
+version = "4.6.0"
+description = "Run-time type checker for Python"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "typeguard-4.6.0-py3-none-any.whl", hash = "sha256:79878165bb86f2cf5d41d159a0ff1792a796cf496882d2fe1b1c6c7049b9cdd7"},
+    {file = "typeguard-4.6.0.tar.gz", hash = "sha256:e7414f09111317de3e335de92cd397c5c0ca00b1cc1676de12e1d444a79b3f21"},
+]
+
+[package.dependencies]
+typing_extensions = ">=4.14.0"
 
 [[package]]
 name = "typer"
@@ -3349,7 +3343,7 @@ description = "Provider of IANA time zone data"
 optional = false
 python-versions = ">=2"
 groups = ["main"]
-markers = "sys_platform == \"win32\" or sys_platform == \"emscripten\" or platform_system == \"Windows\" or python_version >= \"3.14\" or python_version == \"3.10\""
+markers = "sys_platform == \"win32\" or sys_platform == \"emscripten\" or platform_system == \"Windows\" or python_version == \"3.10\" or python_version >= \"3.14\""
 files = [
     {file = "tzdata-2026.3-py2.py3-none-any.whl", hash = "sha256:dc096730c87af6cab1b171c9d532be840741ff5d459015e7f6947bd7d7e54931"},
     {file = "tzdata-2026.3.tar.gz", hash = "sha256:4a1518b8993086a7982523e071643f3c0e5f213e75b21318e78bcabfff9d1415"},
@@ -3837,4 +3831,4 @@ aiohttp = ["aiohttp", "httpx-aiohttp"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<4"
-content-hash = "157e2910dbece2d4ad69d4d3d621ba0185a51f629ec0890a0587142169070345"
+content-hash = "a2b4635b62c369a10bc128c16df31c21bf06c225ebbb29c4c3be22b8d974f04d"
