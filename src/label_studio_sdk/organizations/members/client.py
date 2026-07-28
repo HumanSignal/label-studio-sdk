@@ -4,6 +4,7 @@ import datetime as dt
 import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.pagination import AsyncPager, SyncPager
 from ...core.request_options import RequestOptions
 from ...types.assignable_organization_role_enum import AssignableOrganizationRoleEnum
 from ...types.lse_organization_member_list import LseOrganizationMemberList
@@ -11,7 +12,6 @@ from ...types.organization_member import OrganizationMember
 from ...types.paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
 from ...types.standard_user_type_enum import StandardUserTypeEnum
 from .raw_client import AsyncRawMembersClient, RawMembersClient
-from .types.list_members_request_scope import ListMembersRequestScope
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -37,43 +37,33 @@ class MembersClient:
         id: int,
         *,
         contributed_to_projects: typing.Optional[bool] = None,
-        exclude_project_id: typing.Optional[int] = None,
-        exclude_workspace_id: typing.Optional[int] = None,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
         is_deleted: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        role: typing.Optional[str] = None,
-        scope: typing.Optional[ListMembersRequestScope] = None,
+        role: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         search: typing.Optional[str] = None,
-        tags: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         user_last_activity_gte: typing.Optional[dt.datetime] = None,
         user_last_activity_lte: typing.Optional[dt.datetime] = None,
         user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PaginatedLseOrganizationMemberListList:
+    ) -> SyncPager[LseOrganizationMemberList, PaginatedLseOrganizationMemberListList]:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve a list of all users and roles in a specific organization.
+        Retrieve a list of the organization members and their IDs.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this organization.
 
         contributed_to_projects : typing.Optional[bool]
             Whether to include projects created and contributed to by the members.
 
-        exclude_project_id : typing.Optional[int]
-            Project ID to exclude users who are already associated with this project (direct members, workspace members, or implicit admin/owner access).
+        exclude_project_id : typing.Optional[float]
 
-        exclude_workspace_id : typing.Optional[int]
-            Workspace ID to exclude users who are already associated with this workspace (direct workspace members or implicit admin/owner access).
+        exclude_workspace_id : typing.Optional[float]
 
         is_deleted : typing.Optional[bool]
 
@@ -86,30 +76,14 @@ class MembersClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        role : typing.Optional[str]
-            Filter members by organization role. Accepts single role or comma-separated list of roles.
-
-            **Format:**
-            - Single role: `?role=RE`
-            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
-
-            **Role Codes:**
-            - `OW` = Owner
-            - `AD` = Administrator
-            - `MA` = Manager
-            - `RE` = Reviewer
-            - `AN` = Annotator
-            - `NO` = Not Activated
-            - `DI` = Disabled
-
-        scope : typing.Optional[ListMembersRequestScope]
-            Member visibility scope. `accessible` (default) limits Managers to members in their projects/workspaces. `all` returns all organization members. Only affects Manager role.
+        role : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
 
         search : typing.Optional[str]
             A search term.
 
-        tags : typing.Optional[str]
-            Filter members by tags. Use a comma-separated list of tag IDs.
+        tags : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
 
         user_last_activity_gte : typing.Optional[dt.datetime]
 
@@ -123,7 +97,7 @@ class MembersClient:
 
         Returns
         -------
-        PaginatedLseOrganizationMemberListList
+        SyncPager[LseOrganizationMemberList, PaginatedLseOrganizationMemberListList]
 
 
         Examples
@@ -133,11 +107,16 @@ class MembersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.organizations.members.list(
+        response = client.organizations.members.list(
             id=1,
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
-        _response = self._raw_client.list(
+        return self._raw_client.list(
             id,
             contributed_to_projects=contributed_to_projects,
             exclude_project_id=exclude_project_id,
@@ -147,7 +126,6 @@ class MembersClient:
             page=page,
             page_size=page_size,
             role=role,
-            scope=scope,
             search=search,
             tags=tags,
             user_last_activity_gte=user_last_activity_gte,
@@ -155,7 +133,6 @@ class MembersClient:
             user_type=user_type,
             request_options=request_options,
         )
-        return _response.data
 
     def update(
         self,
@@ -335,43 +312,33 @@ class AsyncMembersClient:
         id: int,
         *,
         contributed_to_projects: typing.Optional[bool] = None,
-        exclude_project_id: typing.Optional[int] = None,
-        exclude_workspace_id: typing.Optional[int] = None,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
         is_deleted: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        role: typing.Optional[str] = None,
-        scope: typing.Optional[ListMembersRequestScope] = None,
+        role: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         search: typing.Optional[str] = None,
-        tags: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         user_last_activity_gte: typing.Optional[dt.datetime] = None,
         user_last_activity_lte: typing.Optional[dt.datetime] = None,
         user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PaginatedLseOrganizationMemberListList:
+    ) -> AsyncPager[LseOrganizationMemberList, PaginatedLseOrganizationMemberListList]:
         """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve a list of all users and roles in a specific organization.
+        Retrieve a list of the organization members and their IDs.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this organization.
 
         contributed_to_projects : typing.Optional[bool]
             Whether to include projects created and contributed to by the members.
 
-        exclude_project_id : typing.Optional[int]
-            Project ID to exclude users who are already associated with this project (direct members, workspace members, or implicit admin/owner access).
+        exclude_project_id : typing.Optional[float]
 
-        exclude_workspace_id : typing.Optional[int]
-            Workspace ID to exclude users who are already associated with this workspace (direct workspace members or implicit admin/owner access).
+        exclude_workspace_id : typing.Optional[float]
 
         is_deleted : typing.Optional[bool]
 
@@ -384,30 +351,14 @@ class AsyncMembersClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        role : typing.Optional[str]
-            Filter members by organization role. Accepts single role or comma-separated list of roles.
-
-            **Format:**
-            - Single role: `?role=RE`
-            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
-
-            **Role Codes:**
-            - `OW` = Owner
-            - `AD` = Administrator
-            - `MA` = Manager
-            - `RE` = Reviewer
-            - `AN` = Annotator
-            - `NO` = Not Activated
-            - `DI` = Disabled
-
-        scope : typing.Optional[ListMembersRequestScope]
-            Member visibility scope. `accessible` (default) limits Managers to members in their projects/workspaces. `all` returns all organization members. Only affects Manager role.
+        role : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
 
         search : typing.Optional[str]
             A search term.
 
-        tags : typing.Optional[str]
-            Filter members by tags. Use a comma-separated list of tag IDs.
+        tags : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
 
         user_last_activity_gte : typing.Optional[dt.datetime]
 
@@ -421,7 +372,7 @@ class AsyncMembersClient:
 
         Returns
         -------
-        PaginatedLseOrganizationMemberListList
+        AsyncPager[LseOrganizationMemberList, PaginatedLseOrganizationMemberListList]
 
 
         Examples
@@ -436,14 +387,20 @@ class AsyncMembersClient:
 
 
         async def main() -> None:
-            await client.organizations.members.list(
+            response = await client.organizations.members.list(
                 id=1,
             )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(
+        return await self._raw_client.list(
             id,
             contributed_to_projects=contributed_to_projects,
             exclude_project_id=exclude_project_id,
@@ -453,7 +410,6 @@ class AsyncMembersClient:
             page=page,
             page_size=page_size,
             role=role,
-            scope=scope,
             search=search,
             tags=tags,
             user_last_activity_gte=user_last_activity_gte,
@@ -461,7 +417,6 @@ class AsyncMembersClient:
             user_type=user_type,
             request_options=request_options,
         )
-        return _response.data
 
     async def update(
         self,

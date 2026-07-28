@@ -32453,13 +32453,7 @@ client.organizations.member_tags.update(
 <dl>
 <dd>
 
-<Card href="https://humansignal.com/goenterprise">
-        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-        <p style="margin-top: 10px; font-size: 14px;">
-            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-        </p>
-    </Card>
-Retrieve a list of all users and roles in a specific organization.
+Retrieve a list of the organization members and their IDs.
 </dd>
 </dl>
 </dd>
@@ -32500,7 +32494,7 @@ client.organizations.members.list(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this organization.
+**id:** `int` 
     
 </dd>
 </dl>
@@ -32516,7 +32510,7 @@ client.organizations.members.list(
 <dl>
 <dd>
 
-**exclude_project_id:** `typing.Optional[int]` — Project ID to exclude users who are already associated with this project (direct members, workspace members, or implicit admin/owner access).
+**exclude_project_id:** `typing.Optional[float]` 
     
 </dd>
 </dl>
@@ -32524,7 +32518,7 @@ client.organizations.members.list(
 <dl>
 <dd>
 
-**exclude_workspace_id:** `typing.Optional[int]` — Workspace ID to exclude users who are already associated with this workspace (direct workspace members or implicit admin/owner access).
+**exclude_workspace_id:** `typing.Optional[float]` 
     
 </dd>
 </dl>
@@ -32564,30 +32558,7 @@ client.organizations.members.list(
 <dl>
 <dd>
 
-**role:** `typing.Optional[str]` 
-
-Filter members by organization role. Accepts single role or comma-separated list of roles.
-
-**Format:**
-- Single role: `?role=RE`
-- Multiple roles: `?role=AN,RE` (users with ANY of these roles)
-
-**Role Codes:**
-- `OW` = Owner
-- `AD` = Administrator
-- `MA` = Manager
-- `RE` = Reviewer
-- `AN` = Annotator
-- `NO` = Not Activated
-- `DI` = Disabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `typing.Optional[ListMembersRequestScope]` — Member visibility scope. `accessible` (default) limits Managers to members in their projects/workspaces. `all` returns all organization members. Only affects Manager role.
+**role:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Multiple values may be separated by commas.
     
 </dd>
 </dl>
@@ -32603,7 +32574,7 @@ Filter members by organization role. Accepts single role or comma-separated list
 <dl>
 <dd>
 
-**tags:** `typing.Optional[str]` — Filter members by tags. Use a comma-separated list of tag IDs.
+**tags:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` — Multiple values may be separated by commas.
     
 </dd>
 </dl>
