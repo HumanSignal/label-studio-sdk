@@ -1,6 +1,6 @@
 
-from label_studio_sdk.label_interface import LabelInterface
 import label_studio_sdk.label_interface.create as CE
+from label_studio_sdk.label_interface import LabelInterface
 from label_studio_sdk.label_interface.control_tags import ChoicesTag
 from label_studio_sdk.label_interface.object_tags import TextTag
 
@@ -125,3 +125,18 @@ def test_using_lpi_tags():
     assert ftag[1]["toName"] == "input"
     assert stag[1]["name"] == "input"
     assert stag[1]["value"] == "$input"
+
+
+def test_create_instance_omits_missing_reactcode_value():
+    """Rebuilding a ReactCode tag without ``value`` must preserve its data binding."""
+    label_config = """
+    <View>
+      <ReactCode name="doc" toName="doc" data="$document" outputs='{"result":{"type":"string"}}'/>
+    </View>
+    """
+
+    interface = LabelInterface(label_config)
+    rebuilt_config = LabelInterface.create(tags={"doc": interface._objects["doc"]}, pretty=False)
+
+    assert 'data="$document"' in rebuilt_config
+    assert "value=" not in rebuilt_config

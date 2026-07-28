@@ -150,11 +150,13 @@ class ObjectTag(LabelStudioTag):
 
     def collect_attrs(self):
         """Return tag attrs as a single dict"""
-        return {
+        attrs = {
             **self.attr,
             "name": self.name,
-            "value": '$' + self.value if self.value is not None else None
         }
+        if self.value is not None:
+            attrs["value"] = '$' + self.value
+        return attrs
 
     def validate_config(self) -> List[str]:
         """Validate tag-specific attribute values. Override in subclasses. Returns list of error messages."""
