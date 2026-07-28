@@ -1858,7 +1858,7 @@ client.annotations.create(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve billing checks and feature flags for the active organization.
+Retrieve billing checks and feature availability for the active organization.
 </dd>
 </dl>
 </dd>
@@ -3613,7 +3613,7 @@ Trigger an Agreement V2 backfill for the authenticated user's active organizatio
 - **num_projects**: batched org backfill — queue the next N not-yet-started projects (in ascending project ID order), leaving any currently in-flight jobs untouched. Repeat calls until `projects_remaining` in the response reaches 0.
 - **all_projects**: full org backfill — cancel all in-flight jobs and queue every remaining non-completed project at once.
 
-Requires administrator or owner role and the Agreement V2 feature flag.
+Requires administrator or owner role and Agreement V2 access.
 </dd>
 </dl>
 </dd>
@@ -3775,7 +3775,7 @@ client.dimensions.cancel_backfill()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve Agreement V2 backfill jobs for the authenticated user's active organization, ordered by most-recently created first. Supports page / page_size query params (default 50 per page, max 500). Requires administrator or owner role and the Agreement V2 feature flag.
+Retrieve Agreement V2 backfill jobs for the authenticated user's active organization, ordered by most-recently created first. Supports page / page_size query params (default 50 per page, max 500). Requires administrator or owner role and Agreement V2 access.
 </dd>
 </dl>
 </dd>
@@ -3852,7 +3852,7 @@ client.dimensions.list_backfills()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve the status of an Agreement V2 backfill job for the authenticated user's active organization. By default returns the aggregated organization status. Specify job_id or project_id to get a specific job status. Requires administrator or owner role and the Agreement V2 feature flag.
+Retrieve the status of an Agreement V2 backfill job for the authenticated user's active organization. By default returns the aggregated organization status. Specify job_id or project_id to get a specific job status. Requires administrator or owner role and Agreement V2 access.
 </dd>
 </dl>
 </dd>
@@ -3943,7 +3943,7 @@ Trigger a Dimension label-distribution value-counts backfill for the authenticat
 - **num_projects**: batched org backfill — queue the next N not-yet-started projects (in ascending project ID order), leaving any currently in-flight jobs untouched. Repeat calls until `projects_remaining` in the response reaches 0.
 - **all_projects**: full org backfill — cancel all in-flight jobs and queue every remaining non-completed project at once.
 
-Requires administrator or owner role, the Agreement V2 feature flag, and the value-counts write feature flag.
+Requires administrator or owner role and access to Agreement V2 value counts.
 </dd>
 </dl>
 </dd>
@@ -4105,7 +4105,7 @@ client.dimensions.cancel_value_counts_backfill()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve Dimension value-counts backfill jobs for the authenticated user's active organization, ordered by most-recently created first. Supports page / page_size query params (default 50 per page, max 500). Requires administrator or owner role and the Agreement V2 feature flag.
+Retrieve Dimension value-counts backfill jobs for the authenticated user's active organization, ordered by most-recently created first. Supports page / page_size query params (default 50 per page, max 500). Requires administrator or owner role and Agreement V2 access.
 </dd>
 </dl>
 </dd>
@@ -4182,7 +4182,7 @@ client.dimensions.list_value_counts_backfills()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve the status of a Dimension value-counts backfill job for the authenticated user's active organization. By default returns the aggregated organization status. Specify job_id or project_id to get a specific job status. Requires administrator or owner role and the Agreement V2 feature flag.
+Retrieve the status of a Dimension value-counts backfill job for the authenticated user's active organization. By default returns the aggregated organization status. Specify job_id or project_id to get a specific job status. Requires administrator or owner role and Agreement V2 access.
 </dd>
 </dl>
 </dd>
@@ -5213,7 +5213,7 @@ client.views.update(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Trigger state backfill for the authenticated user's active organization. Creates initial state records for entities without states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+Trigger state backfill for the authenticated user's active organization. Creates initial state records for entities without states. Requires administrator or owner role and state management access.
 </dd>
 </dl>
 </dd>
@@ -5375,7 +5375,7 @@ client.states.cancel_backfill()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve the latest 10 state backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+Retrieve the latest 10 state backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and state management access.
 </dd>
 </dl>
 </dd>
@@ -5444,7 +5444,7 @@ client.states.list_backfills()
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Retrieve the status of a state backfill job for the authenticated user's active organization. By default returns the aggregated org status, or specify job_id or project_id to get explicit job statuses. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+Retrieve the status of a state backfill job for the authenticated user's active organization. By default returns the aggregated org status, or specify job_id or project_id to get explicit job statuses. Shows progress, completion time, and any errors. Requires administrator or owner role and state management access.
 </dd>
 </dl>
 </dd>
@@ -35551,7 +35551,7 @@ client.projects.stats.member_performance_participants(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+Paginated, sortable member performance rows for annotation/review tables.
 </dd>
 </dl>
 </dd>
@@ -35670,7 +35670,7 @@ client.projects.stats.member_performance_rows(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Footer / Total aggregates for annotation or review member tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+Footer / Total aggregates for annotation or review member tables. Use with paginated <code>member_performance_rows</code>.
 </dd>
 </dl>
 </dd>

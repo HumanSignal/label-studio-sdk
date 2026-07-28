@@ -31,7 +31,7 @@ class BillingClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve billing checks and feature flags for the active organization.
+        Retrieve billing checks and feature availability for the active organization.
 
         Parameters
         ----------
@@ -79,7 +79,7 @@ class AsyncBillingClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve billing checks and feature flags for the active organization.
+        Retrieve billing checks and feature availability for the active organization.
 
         Parameters
         ----------
