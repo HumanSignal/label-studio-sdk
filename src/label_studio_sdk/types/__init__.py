@@ -24,6 +24,7 @@ if typing.TYPE_CHECKING:
     from .annotation_request import AnnotationRequest
     from .annotation_review import AnnotationReview
     from .annotation_review_request import AnnotationReviewRequest
+    from .annotator_evaluation_metric_enum import AnnotatorEvaluationMetricEnum
     from .assignable_organization_role_enum import AssignableOrganizationRoleEnum
     from .assignable_user_type_enum import AssignableUserTypeEnum
     from .assignment_settings import AssignmentSettings
@@ -293,6 +294,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnnotationRequest": ".annotation_request",
     "AnnotationReview": ".annotation_review",
     "AnnotationReviewRequest": ".annotation_review_request",
+    "AnnotatorEvaluationMetricEnum": ".annotator_evaluation_metric_enum",
     "AssignableOrganizationRoleEnum": ".assignable_organization_role_enum",
     "AssignableUserTypeEnum": ".assignable_user_type_enum",
     "AssignmentSettings": ".assignment_settings",
@@ -580,6 +582,7 @@ __all__ = [
     "AnnotationRequest",
     "AnnotationReview",
     "AnnotationReviewRequest",
+    "AnnotatorEvaluationMetricEnum",
     "AssignableOrganizationRoleEnum",
     "AssignableUserTypeEnum",
     "AssignmentSettings",

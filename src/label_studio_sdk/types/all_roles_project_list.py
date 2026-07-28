@@ -7,6 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agreement_methodology_enum import AgreementMethodologyEnum
+from .annotator_evaluation_metric_enum import AnnotatorEvaluationMetricEnum
 from .assignment_settings import AssignmentSettings
 from .blueprint_list import BlueprintList
 from .control_tag_weight import ControlTagWeight
@@ -54,6 +55,15 @@ class AllRolesProjectList(UncheckedBaseModel):
     annotator_evaluation_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Evaluate all annotators against ground truth
+    """
+
+    annotator_evaluation_metric: typing.Optional[AnnotatorEvaluationMetricEnum] = pydantic.Field(default=None)
+    """
+    Metric used to evaluate annotators. Defaults to gt_agreement.
+    
+    * `gt_agreement` - Ground truth agreement
+    * `acceptance_score` - Acceptance score
+    * `rejection_rate` - Rejection rate
     """
 
     annotator_evaluation_minimum_score: typing.Optional[str] = pydantic.Field(default=None)

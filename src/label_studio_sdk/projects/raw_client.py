@@ -16,6 +16,7 @@ from ..core.unchecked_base_model import construct_type
 from ..errors.bad_request_error import BadRequestError
 from ..types.agreement_methodology_enum import AgreementMethodologyEnum
 from ..types.all_roles_project_list import AllRolesProjectList
+from ..types.annotator_evaluation_metric_enum import AnnotatorEvaluationMetricEnum
 from ..types.assignment_settings_request import AssignmentSettingsRequest
 from ..types.control_tag_weight_request import ControlTagWeightRequest
 from ..types.import_api_request import ImportApiRequest
@@ -608,6 +609,7 @@ class RawProjectsClient:
         annotation_limit_percent: typing.Optional[str] = OMIT,
         annotator_evaluation_continuous_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
+        annotator_evaluation_metric: typing.Optional[AnnotatorEvaluationMetricEnum] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_onboarding_tasks: typing.Optional[int] = OMIT,
@@ -691,6 +693,13 @@ class RawProjectsClient:
 
         annotator_evaluation_enabled : typing.Optional[bool]
             Evaluate all annotators against ground truth
+
+        annotator_evaluation_metric : typing.Optional[AnnotatorEvaluationMetricEnum]
+            Metric used to evaluate annotators. Defaults to gt_agreement.
+
+            * `gt_agreement` - Ground truth agreement
+            * `acceptance_score` - Acceptance score
+            * `rejection_rate` - Rejection rate
 
         annotator_evaluation_minimum_score : typing.Optional[str]
             Score required to pass evaluation
@@ -853,6 +862,7 @@ class RawProjectsClient:
                 "annotation_limit_percent": annotation_limit_percent,
                 "annotator_evaluation_continuous_tasks": annotator_evaluation_continuous_tasks,
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
+                "annotator_evaluation_metric": annotator_evaluation_metric,
                 "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
                 "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
                 "annotator_evaluation_onboarding_tasks": annotator_evaluation_onboarding_tasks,
@@ -1910,6 +1920,7 @@ class AsyncRawProjectsClient:
         annotation_limit_percent: typing.Optional[str] = OMIT,
         annotator_evaluation_continuous_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
+        annotator_evaluation_metric: typing.Optional[AnnotatorEvaluationMetricEnum] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_onboarding_tasks: typing.Optional[int] = OMIT,
@@ -1993,6 +2004,13 @@ class AsyncRawProjectsClient:
 
         annotator_evaluation_enabled : typing.Optional[bool]
             Evaluate all annotators against ground truth
+
+        annotator_evaluation_metric : typing.Optional[AnnotatorEvaluationMetricEnum]
+            Metric used to evaluate annotators. Defaults to gt_agreement.
+
+            * `gt_agreement` - Ground truth agreement
+            * `acceptance_score` - Acceptance score
+            * `rejection_rate` - Rejection rate
 
         annotator_evaluation_minimum_score : typing.Optional[str]
             Score required to pass evaluation
@@ -2155,6 +2173,7 @@ class AsyncRawProjectsClient:
                 "annotation_limit_percent": annotation_limit_percent,
                 "annotator_evaluation_continuous_tasks": annotator_evaluation_continuous_tasks,
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
+                "annotator_evaluation_metric": annotator_evaluation_metric,
                 "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
                 "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
                 "annotator_evaluation_onboarding_tasks": annotator_evaluation_onboarding_tasks,

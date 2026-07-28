@@ -12745,6 +12745,20 @@ Methodology (Consensus / Pairwise Averaging)
 <dl>
 <dd>
 
+**annotator_evaluation_metric:** `typing.Optional[AnnotatorEvaluationMetricEnum]` 
+
+Metric used to evaluate annotators. Defaults to gt_agreement.
+
+* `gt_agreement` - Ground truth agreement
+* `acceptance_score` - Acceptance score
+* `rejection_rate` - Rejection rate
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **annotator_evaluation_minimum_score:** `typing.Optional[str]` — Score required to pass evaluation
     
 </dd>
