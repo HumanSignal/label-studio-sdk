@@ -93,6 +93,173 @@ def test_image_field_override(tmp_output_dir, mock_page_image):
         assert "pages/1.jpeg" in z.namelist()
 
 
+def test_extensionless_page_image_url_defaults_to_png(tmp_output_dir, mock_page_image):
+    task = {
+        "id": 98,
+        "data": {"image": "https://example.com/render?id=page"},
+        "annotations": [
+            {
+                "id": 980,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang/>"]},
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False)
+
+    archive = os.path.join(tmp_output_dir, "task-98-annotation-980.dclx")
+    with zipfile.ZipFile(archive) as z:
+        assert "pages/1.png" in z.namelist()
+
+
+def test_picture_src_images_are_packaged_as_assets(tmp_output_dir):
+    chart_bytes = b"chart-image"
+    diagram_bytes = b"diagram-image"
+    task = {
+        "id": 77,
+        "data": {},
+        "annotations": [
+            {
+                "id": 770,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {
+                            "text": [
+                                "<doclang>"
+                                '<picture><src uri="https://example.com/figures/chart.png"/></picture>'
+                                '<picture><src uri="https://example.com/figures/diagram.jpg"/></picture>'
+                                '<picture><src uri="data:image/png;base64,AAAA"/></picture>'
+                                "</doclang>"
+                            ]
+                        },
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    def download_asset(url, output_dir, **kwargs):
+        filename = os.path.basename(url)
+        path = os.path.join(output_dir, filename)
+        with open(path, "wb") as f:
+            f.write(chart_bytes if filename == "chart.png" else diagram_bytes)
+        return path
+
+    with patch.object(doclang_export, "download", side_effect=download_asset) as download:
+        doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False)
+
+    archive = os.path.join(tmp_output_dir, "task-77-annotation-770.dclx")
+    with zipfile.ZipFile(archive) as z:
+        assert "assets/chart.png" in z.namelist()
+        assert "assets/diagram.jpg" in z.namelist()
+        assert z.read("assets/chart.png") == chart_bytes
+        assert z.read("assets/diagram.jpg") == diagram_bytes
+        document_xml = z.read("document.xml").decode()
+        assert 'uri="assets/chart.png"' in document_xml
+        assert 'uri="assets/diagram.jpg"' in document_xml
+        assert "https://example.com/figures" not in document_xml
+        assert 'uri="data:image/png;base64,AAAA"' in document_xml
+    assert download.call_count == 2
+
+
+def test_picture_src_images_are_not_downloaded_when_resources_disabled(tmp_output_dir):
+    task = {
+        "id": 78,
+        "data": {},
+        "annotations": [
+            {
+                "id": 780,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {
+                            "text": [
+                                "<doclang>"
+                                '<picture><src uri="https://example.com/figures/chart.png"/></picture>'
+                                "</doclang>"
+                            ]
+                        },
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    with patch.object(doclang_export, "download") as download:
+        doclang_export.convert_to_doclang(
+            tasks_path,
+            tmp_output_dir,
+            is_dir=False,
+            download_resources=False,
+        )
+
+    archive = os.path.join(tmp_output_dir, "task-78-annotation-780.dclx")
+    with zipfile.ZipFile(archive) as z:
+        assert not any(name.startswith("assets/") for name in z.namelist())
+        assert 'uri="https://example.com/figures/chart.png"' in z.read("document.xml").decode()
+    download.assert_not_called()
+
+
+def test_picture_src_extensionless_images_default_to_png_assets(tmp_output_dir):
+    image_bytes = b"extensionless-image"
+    task = {
+        "id": 79,
+        "data": {},
+        "annotations": [
+            {
+                "id": 790,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {
+                            "text": [
+                                '<doclang><picture><src uri="https://example.com/render?id=chart"/></picture></doclang>'
+                            ]
+                        },
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    def download_asset(url, output_dir, **kwargs):
+        path = os.path.join(output_dir, "render")
+        with open(path, "wb") as f:
+            f.write(image_bytes)
+        return path
+
+    with patch.object(doclang_export, "download", side_effect=download_asset):
+        doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False)
+
+    archive = os.path.join(tmp_output_dir, "task-79-annotation-790.dclx")
+    with zipfile.ZipFile(archive) as z:
+        assert "assets/render.png" in z.namelist()
+        assert z.read("assets/render.png") == image_bytes
+        assert 'uri="assets/render.png"' in z.read("document.xml").decode()
+
+
 @pytest.mark.parametrize(
     ("result", "expected_xml"),
     [

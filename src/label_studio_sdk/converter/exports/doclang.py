@@ -16,7 +16,7 @@ import tempfile
 from glob import glob
 from pathlib import Path
 from typing import Iterable, Iterator, Optional
-from urllib.parse import urlparse
+from urllib.parse import parse_qsl, urlparse
 
 import ijson
 from doclang import pack
@@ -27,6 +27,7 @@ from label_studio_sdk.converter.utils import download, ensure_dir, get_json_root
 logger = logging.getLogger(__name__)
 
 _IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp"}
+_ASSET_EXTS = _IMAGE_EXTS | {".svg"}
 _DOCLANG_NAMESPACE_PREFIX = "https://www.doclang.ai/ns/"
 _MAX_VALUE_DEPTH = 32
 _MAX_VALUE_NODES = 10_000
@@ -223,6 +224,122 @@ def _fetch_page_image(
         return None
 
 
+def _asset_uri_path(uri: str) -> str:
+    parsed = urlparse(uri)
+    candidate_paths = [parsed.path]
+    candidate_paths.extend(value for key, value in parse_qsl(parsed.query) if key == "d")
+    return next((path for path in candidate_paths if posixpath.splitext(path)[1]), parsed.path)
+
+
+def _asset_extension(uri: str) -> str:
+    path = _asset_uri_path(uri)
+    _, ext = posixpath.splitext(path)
+    ext = ext.lower()
+    if ext == ".jpe":
+        ext = ".jpg"
+    if ext in _ASSET_EXTS:
+        return ext
+    if ext:
+        return ""
+    guess = mimetypes.guess_extension(mimetypes.guess_type(path)[0] or "") or ""
+    return guess.lower() if guess.lower() in _ASSET_EXTS else ".png"
+
+
+def _archive_asset_path(uri: str, used_paths: set[str]) -> Optional[str]:
+    ext = _asset_extension(uri)
+    if not ext:
+        return None
+
+    stem = Path(posixpath.basename(_asset_uri_path(uri))).stem or "image"
+    candidate = f"assets/{stem}{ext}"
+    index = 2
+    while candidate in used_paths:
+        candidate = f"assets/{stem}-{index}{ext}"
+        index += 1
+    used_paths.add(candidate)
+    return candidate
+
+
+def _download_document_asset(
+    uri: str,
+    destination_dir: str,
+    project_dir: Optional[str],
+    upload_dir: Optional[str],
+) -> Optional[str]:
+    try:
+        local_path = download(
+            uri,
+            destination_dir,
+            project_dir=project_dir,
+            upload_dir=upload_dir,
+            download_resources=True,
+        )
+        if not local_path or not os.path.exists(local_path):
+            logger.warning("Downloaded document asset not found on disk for %s", uri)
+            return None
+
+        staged_path = os.path.join(destination_dir, os.path.basename(local_path))
+        if not os.path.exists(staged_path):
+            shutil.copy2(local_path, staged_path)
+        return staged_path
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Failed to fetch document asset %s: %s", uri, exc)
+        return None
+
+
+def _is_downloadable_asset_uri(uri: str) -> bool:
+    parsed = urlparse(uri)
+    if parsed.scheme == "data":
+        return False
+    if parsed.scheme:
+        is_downloadable = parsed.scheme in {"http", "https"}
+    else:
+        is_downloadable = uri.startswith("/data/")
+    if not is_downloadable:
+        return False
+    return bool(_asset_extension(uri))
+
+
+def _stage_document_assets(
+    document: bytes,
+    destination_dir: str,
+    project_dir: Optional[str],
+    upload_dir: Optional[str],
+) -> tuple[bytes, dict[str, str]]:
+    parser = etree.XMLParser(resolve_entities=False, no_network=True, load_dtd=False, recover=False, huge_tree=True)
+    root = etree.fromstring(document, parser=parser)
+    assets = {}
+    used_paths = set()
+    rewritten = False
+
+    for element in root.iter():
+        if not isinstance(element.tag, str):
+            continue
+        if etree.QName(element).localname != "src":
+            continue
+
+        uri = element.get("uri")
+        if not uri or not _is_downloadable_asset_uri(uri):
+            continue
+
+        archive_path = _archive_asset_path(uri, used_paths)
+        if not archive_path:
+            continue
+
+        local_path = _download_document_asset(uri, destination_dir, project_dir, upload_dir)
+        if not local_path:
+            continue
+
+        assets[archive_path.removeprefix("assets/")] = local_path
+        element.set("uri", archive_path)
+        rewritten = True
+
+    if not rewritten:
+        return document, {}
+
+    return etree.tostring(root, encoding="utf-8"), assets
+
+
 def _valid_annotations(task: dict) -> Iterable[dict]:
     annotations = task.get("annotations") or task.get("completions") or []
     for ann in annotations:
@@ -262,6 +379,11 @@ def convert_to_doclang(
             filename = f"task-{task_id}-annotation-{ann.get('id')}.dclx"
             output_path = os.path.join(output_dir, filename)
             with tempfile.TemporaryDirectory() as tmp:
+                assets = {}
+                if download_resources:
+                    asset_dir = os.path.join(tmp, "assets")
+                    ensure_dir(asset_dir)
+                    document, assets = _stage_document_assets(document, asset_dir, project_dir, upload_dir)
                 document_path = Path(tmp) / "document.dclg"
                 document_path.write_bytes(document)
                 page_path = (
@@ -273,6 +395,7 @@ def convert_to_doclang(
                     document_path,
                     output=output_path,
                     pages={1: page_path} if page_path else None,
+                    assets=assets or None,
                     # DocLang 0.x minor releases are intentionally breaking, so full
                     # schema validation is deferred until the format stabilizes:
                     # validate=True,
