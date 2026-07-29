@@ -14,15 +14,18 @@ import logging
 import os
 import time
 
-import os
+import requests
 from label_studio_sdk import Client
+from label_studio_sdk._legacy import client as legacy_client
 from label_studio_sdk._legacy.users import User
 from label_studio_sdk.data_manager import Filters, Operator, Type, Column
 
 logger = logging.getLogger("migration-ls-to-ls")
 logger.setLevel(logging.DEBUG)
 
-CHUNK_SIZE = int(os.getenv('CHUNK_SIZE', 1000))
+CHUNK_SIZE = int(os.getenv('CHUNK_SIZE', 50))
+CONNECT_TIMEOUT = float(os.getenv('CONNECT_TIMEOUT', 10.0))
+REQUEST_TIMEOUT = float(os.getenv('REQUEST_TIMEOUT', os.getenv('TIMEOUT', 600)))
 DEFAULT_STORAGE = os.getenv('DEFAULT_STORAGE', '')  # 's3', 'gcs' or 'azure'
 DEFAULT_STORAGE_REGEX = os.getenv(
     'DEFAULT_STORAGE_REGEX', '.*'
@@ -46,7 +49,16 @@ DEFAULT_STORAGE_PRESIGN = (
 
 
 class Migration:
-    def __init__(self, src_url, src_key, dst_url, dst_key, dest_workspace):
+    def __init__(
+        self,
+        src_url,
+        src_key,
+        dst_url,
+        dst_key,
+        dest_workspace,
+        connect_timeout=CONNECT_TIMEOUT,
+        request_timeout=REQUEST_TIMEOUT,
+    ):
         """Initialize migration that copy projects from one LS instance to another
 
         :param src_url: source Label Studio instance
@@ -54,12 +66,37 @@ class Migration:
         :param dst_url: destination Label Studio instance
         :param dst_key: destination Label Studio token
         :param dest_workspace: destination workspace id
+        :param connect_timeout: timeout for opening a connection, in seconds
+        :param request_timeout: timeout for reading a response, in seconds
         """
+        self.timeout = (connect_timeout, request_timeout)
+        legacy_client.TIMEOUT = self.timeout
+
         # Connect to the Label Studio API and check the connection
         self.src_ls = Client(url=src_url, api_key=src_key)
         self.dst_ls = Client(url=dst_url, api_key=dst_key)
+        self._set_default_session_timeout(self.src_ls)
+        self._set_default_session_timeout(self.dst_ls)
         self.users = self.projects = self.project_ids = None
         self.dest_workspace = dest_workspace
+
+    def _set_default_session_timeout(self, client):
+        """Apply the migration timeout to direct session calls that bypass make_request."""
+        if not hasattr(client, "session"):
+            return
+
+        session = client.session
+        if getattr(session, "_migration_timeout_wrapped", False):
+            return
+
+        original_request = session.request
+
+        def request_with_timeout(*args, **kwargs):
+            kwargs.setdefault("timeout", self.timeout)
+            return original_request(*args, **kwargs)
+
+        session.request = request_with_timeout
+        session._migration_timeout_wrapped = True
 
     def set_project_ids(self, project_ids=None):
         """Set projects you need to migrate
@@ -148,7 +185,15 @@ class Migration:
         # start exporting projects
         success = 0
         for project in projects:
-            success += self.migrate_project(project)
+            try:
+                success += self.migrate_project(project)
+            except requests.exceptions.Timeout:
+                logger.exception(
+                    "Timed out while migrating project %s after %s seconds; "
+                    "try lowering CHUNK_SIZE or increasing REQUEST_TIMEOUT",
+                    project.id,
+                    self.timeout[1],
+                )
 
         logger.info(
             f"Projects are processed, finishing with {success} successful and {len(projects)} total projects"
@@ -440,6 +485,20 @@ def run():
         default=None,
         help="Workspace where to store projects, e.g.: 42",
     )
+    parser.add_argument(
+        "--connect-timeout",
+        dest="connect_timeout",
+        type=float,
+        default=CONNECT_TIMEOUT,
+        help="Seconds to wait while opening API connections (default from CONNECT_TIMEOUT or 10)",
+    )
+    parser.add_argument(
+        "--request-timeout",
+        dest="request_timeout",
+        type=float,
+        default=REQUEST_TIMEOUT,
+        help="Seconds to wait while reading API responses (default from REQUEST_TIMEOUT, TIMEOUT, or 600)",
+    )
     args = parser.parse_args(sys.argv[1:])
 
     migration = Migration(
@@ -448,6 +507,8 @@ def run():
         dst_url=args.dst_url,
         dst_key=args.dst_key,
         dest_workspace=args.dest_workspace,
+        connect_timeout=args.connect_timeout,
+        request_timeout=args.request_timeout,
     )
 
     project_ids = (
