@@ -453,6 +453,13 @@ def run():
         default=None,
         help="Workspace where to store projects, e.g.: 42",
     )
+    parser.add_argument(
+        "--timeout",
+        dest="timeout",
+        type=int,
+        default=TIMEOUT,
+        help=f"Request timeout in seconds (default from TIMEOUT env var or {TIMEOUT})",
+    )
     args = parser.parse_args(sys.argv[1:])
 
     migration = Migration(
@@ -461,6 +468,7 @@ def run():
         dst_url=args.dst_url,
         dst_key=args.dst_key,
         dest_workspace=args.dest_workspace,
+        timeout=args.timeout,
     )
 
     project_ids = (
