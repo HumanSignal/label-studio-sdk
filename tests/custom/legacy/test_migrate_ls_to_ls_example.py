@@ -1,25 +1,49 @@
 import importlib.util
+import sys
 from pathlib import Path
-
+from types import ModuleType, SimpleNamespace
 
 EXAMPLE_PATH = Path(__file__).parents[3] / "examples" / "migrate_ls_to_ls" / "migrate-ls-to-ls.py"
 
 
-def load_migration_module():
+def load_migration_module(monkeypatch):
+    label_studio_sdk = ModuleType("label_studio_sdk")
+    label_studio_sdk.Client = object
+
+    legacy = ModuleType("label_studio_sdk._legacy")
+    legacy_client = ModuleType("label_studio_sdk._legacy.client")
+    legacy_client.TIMEOUT = (10.0, 180)
+    legacy.client = legacy_client
+
+    users = ModuleType("label_studio_sdk._legacy.users")
+    users.User = object
+
+    data_manager = ModuleType("label_studio_sdk.data_manager")
+    data_manager.Filters = SimpleNamespace()
+    data_manager.Operator = SimpleNamespace()
+    data_manager.Type = SimpleNamespace()
+    data_manager.Column = SimpleNamespace()
+
+    monkeypatch.setitem(sys.modules, "label_studio_sdk", label_studio_sdk)
+    monkeypatch.setitem(sys.modules, "label_studio_sdk._legacy", legacy)
+    monkeypatch.setitem(sys.modules, "label_studio_sdk._legacy.client", legacy_client)
+    monkeypatch.setitem(sys.modules, "label_studio_sdk._legacy.users", users)
+    monkeypatch.setitem(sys.modules, "label_studio_sdk.data_manager", data_manager)
+
     spec = importlib.util.spec_from_file_location("migrate_ls_to_ls_example", EXAMPLE_PATH)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
 
 
-def test_migration_defaults_to_smaller_chunks():
-    module = load_migration_module()
+def test_migration_defaults_to_smaller_chunks(monkeypatch):
+    module = load_migration_module(monkeypatch)
 
     assert module.CHUNK_SIZE == 50
 
 
 def test_migration_sets_sdk_and_session_timeouts(monkeypatch):
-    module = load_migration_module()
+    module = load_migration_module(monkeypatch)
 
     class DummySession:
         def __init__(self):

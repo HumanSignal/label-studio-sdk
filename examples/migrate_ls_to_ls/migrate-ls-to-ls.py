@@ -15,10 +15,11 @@ import os
 import time
 
 import requests
+
 from label_studio_sdk import Client
 from label_studio_sdk._legacy import client as legacy_client
 from label_studio_sdk._legacy.users import User
-from label_studio_sdk.data_manager import Filters, Operator, Type, Column
+from label_studio_sdk.data_manager import Column, Filters, Operator, Type
 
 logger = logging.getLogger("migration-ls-to-ls")
 logger.setLevel(logging.DEBUG)
@@ -437,8 +438,8 @@ class Migration:
 
 
 def run():
-    import sys
     import argparse
+    import sys
 
     parser = argparse.ArgumentParser(
         description="Label Studio Project Migration Script"
