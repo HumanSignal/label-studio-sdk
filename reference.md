@@ -31577,6 +31577,7 @@ Organization role. Required unless user_type is viewonly.
 Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role.
 
 * `standard` - Standard
+* `flex` - Flex
 * `viewonly` - View Only
     
 </dd>

@@ -2,4 +2,4 @@
 
 import typing
 
-AssignableUserTypeEnum = typing.Union[typing.Literal["standard", "viewonly"], typing.Any]
+AssignableUserTypeEnum = typing.Union[typing.Literal["standard", "flex", "viewonly"], typing.Any]

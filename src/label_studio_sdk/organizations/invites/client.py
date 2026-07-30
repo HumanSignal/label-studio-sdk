@@ -132,6 +132,7 @@ class InvitesClient:
             Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role.
 
             * `standard` - Standard
+            * `flex` - Flex
             * `viewonly` - View Only
 
         workspaces : typing.Optional[typing.Sequence[int]]
@@ -301,6 +302,7 @@ class AsyncInvitesClient:
             Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role.
 
             * `standard` - Standard
+            * `flex` - Flex
             * `viewonly` - View Only
 
         workspaces : typing.Optional[typing.Sequence[int]]
