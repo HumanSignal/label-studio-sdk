@@ -16490,6 +16490,220 @@ client.workspaces.update(
 </dl>
 </details>
 
+## Analytics Kpis
+<details><summary><code>client.analytics.kpis.<a href="src/label_studio_sdk/analytics/kpis/client.py">list</a>() -> typing.List[KpiMetadata]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Returns metadata for all available KPI (Key Performance Indicator) classes. Each KPI includes its key, label, base class, dependencies, and configuration. This endpoint is useful for discovering available metrics and understanding their relationships and requirements.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
+
+client = LabelStudio(
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
+)
+
+client.analytics.kpis.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.analytics.kpis.<a href="src/label_studio_sdk/analytics/kpis/client.py">get</a>(...) -> KpiDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter). Maximum 50 projects allowed per request for performance reasons.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
+
+client = LabelStudio(
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
+)
+
+client.analytics.kpis.get(
+    kpi_key="kpi_key",
+    tz="tz",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**kpi_key:** `str` — KPI identifier (key)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tz:** `str` — Timezone for date filtering (IANA timezone name, e.g., "America/New_York", "UTC"). The start and end dates will be interpreted in this timezone.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[datetime.datetime]` — End date for filtering (ISO format)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**members:** `typing.Optional[str]` — Comma-separated user IDs. If empty, includes all organization members.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**projects:** `typing.Optional[str]` — Comma-separated project IDs. If empty, includes all organization projects. Maximum 50 projects allowed per request. Requests exceeding this limit will be rejected with a 400 error.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**segment_by_project:** `typing.Optional[bool]` — Whether to segment results by project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**segment_by_time:** `typing.Optional[GetKpisRequestSegmentByTime]` — Time granularity for segmentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**segment_by_user:** `typing.Optional[bool]` — Whether to segment results by user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[datetime.datetime]` — Start date for filtering (ISO format)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ExportStorage Azure
 <details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">list</a>(...) -> typing.List[AzureBlobExportStorage]</code></summary>
 <dl>

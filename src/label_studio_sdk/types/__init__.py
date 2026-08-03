@@ -89,6 +89,17 @@ if typing.TYPE_CHECKING:
     from .hotkeys import Hotkeys
     from .import_api_request import ImportApiRequest
     from .inference_run_cost_estimate import InferenceRunCostEstimate
+    from .kpi_detail_response import KpiDetailResponse
+    from .kpi_matrix_segment import KpiMatrixSegment
+    from .kpi_metadata import KpiMetadata
+    from .kpi_project_info import KpiProjectInfo
+    from .kpi_project_matrix_segment import KpiProjectMatrixSegment
+    from .kpi_project_segment import KpiProjectSegment
+    from .kpi_project_segment_values_item import KpiProjectSegmentValuesItem
+    from .kpi_time_segment import KpiTimeSegment
+    from .kpi_user_info import KpiUserInfo
+    from .kpi_user_segment import KpiUserSegment
+    from .kpi_value import KpiValue
     from .label_distribution_counts_response import LabelDistributionCountsResponse
     from .label_distribution_counts_row import LabelDistributionCountsRow
     from .label_distribution_counts_totals import LabelDistributionCountsTotals
@@ -228,6 +239,7 @@ if typing.TYPE_CHECKING:
     from .scim_settings import ScimSettings
     from .scim_settings_update import ScimSettingsUpdate
     from .scope_enum import ScopeEnum
+    from .segmentation_enum import SegmentationEnum
     from .selected_items_request import SelectedItemsRequest
     from .serialization_option import SerializationOption
     from .serialization_option_request import SerializationOptionRequest
@@ -359,6 +371,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Hotkeys": ".hotkeys",
     "ImportApiRequest": ".import_api_request",
     "InferenceRunCostEstimate": ".inference_run_cost_estimate",
+    "KpiDetailResponse": ".kpi_detail_response",
+    "KpiMatrixSegment": ".kpi_matrix_segment",
+    "KpiMetadata": ".kpi_metadata",
+    "KpiProjectInfo": ".kpi_project_info",
+    "KpiProjectMatrixSegment": ".kpi_project_matrix_segment",
+    "KpiProjectSegment": ".kpi_project_segment",
+    "KpiProjectSegmentValuesItem": ".kpi_project_segment_values_item",
+    "KpiTimeSegment": ".kpi_time_segment",
+    "KpiUserInfo": ".kpi_user_info",
+    "KpiUserSegment": ".kpi_user_segment",
+    "KpiValue": ".kpi_value",
     "LabelDistributionCountsResponse": ".label_distribution_counts_response",
     "LabelDistributionCountsRow": ".label_distribution_counts_row",
     "LabelDistributionCountsTotals": ".label_distribution_counts_totals",
@@ -492,6 +515,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScimSettings": ".scim_settings",
     "ScimSettingsUpdate": ".scim_settings_update",
     "ScopeEnum": ".scope_enum",
+    "SegmentationEnum": ".segmentation_enum",
     "SelectedItemsRequest": ".selected_items_request",
     "SerializationOption": ".serialization_option",
     "SerializationOptionRequest": ".serialization_option_request",
@@ -647,6 +671,17 @@ __all__ = [
     "Hotkeys",
     "ImportApiRequest",
     "InferenceRunCostEstimate",
+    "KpiDetailResponse",
+    "KpiMatrixSegment",
+    "KpiMetadata",
+    "KpiProjectInfo",
+    "KpiProjectMatrixSegment",
+    "KpiProjectSegment",
+    "KpiProjectSegmentValuesItem",
+    "KpiTimeSegment",
+    "KpiUserInfo",
+    "KpiUserSegment",
+    "KpiValue",
     "LabelDistributionCountsResponse",
     "LabelDistributionCountsRow",
     "LabelDistributionCountsTotals",
@@ -780,6 +815,7 @@ __all__ = [
     "ScimSettings",
     "ScimSettingsUpdate",
     "ScopeEnum",
+    "SegmentationEnum",
     "SelectedItemsRequest",
     "SerializationOption",
     "SerializationOptionRequest",

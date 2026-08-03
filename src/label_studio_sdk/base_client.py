@@ -14,6 +14,7 @@ from .environment import LabelStudioEnvironment
 if typing.TYPE_CHECKING:
     from .actions.client import ActionsClient, AsyncActionsClient
     from .activity_logs.client import ActivityLogsClient, AsyncActivityLogsClient
+    from .analytics.client import AnalyticsClient, AsyncAnalyticsClient
     from .annotation_history.client import AnnotationHistoryClient, AsyncAnnotationHistoryClient
     from .annotation_reviews.client import AnnotationReviewsClient, AsyncAnnotationReviewsClient
     from .annotations.client import AnnotationsClient, AsyncAnnotationsClient
@@ -133,6 +134,7 @@ class LabelStudioBase:
             logging=logging,
         )
         self._activity_logs: typing.Optional[ActivityLogsClient] = None
+        self._analytics: typing.Optional[AnalyticsClient] = None
         self._annotation_history: typing.Optional[AnnotationHistoryClient] = None
         self._annotation_reviews: typing.Optional[AnnotationReviewsClient] = None
         self._annotations: typing.Optional[AnnotationsClient] = None
@@ -170,6 +172,14 @@ class LabelStudioBase:
 
             self._activity_logs = ActivityLogsClient(client_wrapper=self._client_wrapper)
         return self._activity_logs
+
+    @property
+    def analytics(self):
+        if self._analytics is None:
+            from .analytics.client import AnalyticsClient  # noqa: E402
+
+            self._analytics = AnalyticsClient(client_wrapper=self._client_wrapper)
+        return self._analytics
 
     @property
     def annotation_history(self):
@@ -509,6 +519,7 @@ class AsyncLabelStudioBase:
             logging=logging,
         )
         self._activity_logs: typing.Optional[AsyncActivityLogsClient] = None
+        self._analytics: typing.Optional[AsyncAnalyticsClient] = None
         self._annotation_history: typing.Optional[AsyncAnnotationHistoryClient] = None
         self._annotation_reviews: typing.Optional[AsyncAnnotationReviewsClient] = None
         self._annotations: typing.Optional[AsyncAnnotationsClient] = None
@@ -546,6 +557,14 @@ class AsyncLabelStudioBase:
 
             self._activity_logs = AsyncActivityLogsClient(client_wrapper=self._client_wrapper)
         return self._activity_logs
+
+    @property
+    def analytics(self):
+        if self._analytics is None:
+            from .analytics.client import AsyncAnalyticsClient  # noqa: E402
+
+            self._analytics = AsyncAnalyticsClient(client_wrapper=self._client_wrapper)
+        return self._analytics
 
     @property
     def annotation_history(self):

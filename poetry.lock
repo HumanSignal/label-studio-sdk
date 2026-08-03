@@ -482,14 +482,14 @@ markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win
 
 [[package]]
 name = "datamodel-code-generator"
-version = "0.71.0"
+version = "0.72.0"
 description = "Datamodel Code Generator"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "datamodel_code_generator-0.71.0-py3-none-any.whl", hash = "sha256:680b68338d59e98a0559eeb54d8e5ca33c35b3ec0bef922ec2cc783f2cb28e9a"},
-    {file = "datamodel_code_generator-0.71.0.tar.gz", hash = "sha256:d27cd7a0d10f9b2db74a41db7f3e050c226da9cf0afb4916a7ab56275ebacbf2"},
+    {file = "datamodel_code_generator-0.72.0-py3-none-any.whl", hash = "sha256:04ea49686a08298bec99a4a8470f87940bacb2a50dcda262bd4c6c46b9ecc1b5"},
+    {file = "datamodel_code_generator-0.72.0.tar.gz", hash = "sha256:1eb5356a75ba7c91f0265ca59e181c8da392a51ec23012f8b0d0f2d8125af5e0"},
 ]
 
 [package.dependencies]
@@ -511,6 +511,7 @@ all = ["graphql-core (>=3.2.3)", "grpcio-tools (>=1.62,<2)", "httpx (>=0.24.1)",
 debug = ["pysnooper (>=0.4.1,<2)"]
 graphql = ["graphql-core (>=3.2.3)"]
 http = ["httpx (>=0.24.1)"]
+httpx2 = ["httpx2 (>=2,<3)"]
 protobuf = ["grpcio-tools (>=1.62,<2)"]
 ruff = ["ruff (>=0.9.10)"]
 ryaml = ["ryaml (>=0.5.1)"]
@@ -3281,14 +3282,14 @@ typing_extensions = ">=4.14.0"
 
 [[package]]
 name = "typer"
-version = "0.27.0"
+version = "0.27.1"
 description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "typer-0.27.0-py3-none-any.whl", hash = "sha256:6f4b27631e47f077871b7dc30e933ec0131c1390fbe0e387ea5574b5bac9ccf1"},
-    {file = "typer-0.27.0.tar.gz", hash = "sha256:629bd12ea5d13a17148125d9a264f949eb171fb3f120f9b04d85873cab054fa5"},
+    {file = "typer-0.27.1-py3-none-any.whl", hash = "sha256:53150287edd11baeb4e4722c8e394fcdf8181c0ae89485cba8d25c778d5edd56"},
+    {file = "typer-0.27.1.tar.gz", hash = "sha256:a79bef8469a79c45498e7b814ecf8d603cc7644e9acbd9e19cac0334240b18df"},
 ]
 
 [package.dependencies]
