@@ -814,15 +814,15 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "httpx-aiohttp"
-version = "0.1.8"
+version = "0.1.12"
 description = "Aiohttp transport for HTTPX"
 optional = true
 python-versions = ">=3.8"
 groups = ["main"]
 markers = "extra == \"aiohttp\""
 files = [
-    {file = "httpx_aiohttp-0.1.8-py3-none-any.whl", hash = "sha256:b7bd958d1331f3759a38a0ba22ad29832cb63ca69498c17735228055bf78fa7e"},
-    {file = "httpx_aiohttp-0.1.8.tar.gz", hash = "sha256:756c5e74cdb568c3248ba63fe82bfe8bbe64b928728720f7eaac64b3cf46f308"},
+    {file = "httpx_aiohttp-0.1.12-py3-none-any.whl", hash = "sha256:5b0eac39a7f360fa7867a60bcb46bb1024eada9c01cbfecdb54dc1edb3fb7141"},
+    {file = "httpx_aiohttp-0.1.12.tar.gz", hash = "sha256:81feec51fd82c0ecfa0e9aaf1b1a6c2591260d5e2bcbeb7eb0277a78e610df2c"},
 ]
 
 [package.dependencies]
@@ -1613,14 +1613,14 @@ markers = {main = "sys_platform != \"emscripten\""}
 
 [[package]]
 name = "nltk"
-version = "3.10.0"
+version = "3.10.1"
 description = "Natural Language Toolkit"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "nltk-3.10.0-py3-none-any.whl", hash = "sha256:54ff84d4916d3ef127e8953bee0023f6a6b320b75d634a19e06ef056d3d244bf"},
-    {file = "nltk-3.10.0.tar.gz", hash = "sha256:4fbac1d98203cbcd1b5d94a2877fb822300072d80604a5e7fae49d2c5f84e8c1"},
+    {file = "nltk-3.10.1-py3-none-any.whl", hash = "sha256:55b8780b6b97732c1c3806d4ae02d46113204b11bfdc19dddb95729f627f8853"},
+    {file = "nltk-3.10.1.tar.gz", hash = "sha256:86a1b41d9ca0d35a2cb72fa60af4c9aaba9fe405b717161fd94cecd69f467007"},
 ]
 
 [package.dependencies]
@@ -3831,4 +3831,4 @@ aiohttp = ["aiohttp", "httpx-aiohttp"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<4"
-content-hash = "a2b4635b62c369a10bc128c16df31c21bf06c225ebbb29c4c3be22b8d974f04d"
+content-hash = "282df5886b023d7e91bbd3afccb62e73309ef4ace262648ab24f28223164788f"

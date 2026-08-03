@@ -4,16 +4,16 @@ datamodel-code-generator>=0.70.0
 doclang>=0.7.1
 httpx>=0.21.2
 ijson>=3.2.3
-jsf==0.11.2
+jsf>=0.11.2,<0.12.0
 jsonschema>=4.23.0
 lxml>=6.1.0
-nltk==3.10.0
+nltk>=3.10.0,<=3.11.0
 numpy>=2.2,<3.0.0
-opencv-python-headless==4.12.0,<4.13
+opencv-python-headless>=4.12.0,<4.13.0
 pandas>=0.24.0
 pydantic>= 1.9.2
 pydantic-core>=2.18.2,<3.0.0
-pyjwt==2.13.0
+pyjwt>=2.13.0,<2.14.0
 requests>=2.33.0
 requests-mock==1.12.1
 typer>=0.12.3
