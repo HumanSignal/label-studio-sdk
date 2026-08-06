@@ -232,14 +232,14 @@ files = [
 
 [[package]]
 name = "argcomplete"
-version = "3.7.1"
+version = "3.7.2"
 description = "Bash tab completion for argparse"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "argcomplete-3.7.1-py3-none-any.whl", hash = "sha256:0bed095030f295599b1018a622a53ea22f4f253e134b87be396b51e59ee00954"},
-    {file = "argcomplete-3.7.1.tar.gz", hash = "sha256:6926a3a70ae70dce1f3dfb5cf1fc984278cd163e78ec18ad2ed7fa4fabd8f281"},
+    {file = "argcomplete-3.7.2-py3-none-any.whl", hash = "sha256:6029205678bdd9c1c728a155f5f9ecf5812393f969eef58807641a2bc2aa5b19"},
+    {file = "argcomplete-3.7.2.tar.gz", hash = "sha256:aad8b69a0b9969edb62db0d1752354c0d50717b10e0cbb00e2a958381b9fc6b9"},
 ]
 
 [package.extras]
@@ -1614,14 +1614,14 @@ markers = {main = "sys_platform != \"emscripten\""}
 
 [[package]]
 name = "nltk"
-version = "3.10.1"
+version = "3.10.2"
 description = "Natural Language Toolkit"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "nltk-3.10.1-py3-none-any.whl", hash = "sha256:55b8780b6b97732c1c3806d4ae02d46113204b11bfdc19dddb95729f627f8853"},
-    {file = "nltk-3.10.1.tar.gz", hash = "sha256:86a1b41d9ca0d35a2cb72fa60af4c9aaba9fe405b717161fd94cecd69f467007"},
+    {file = "nltk-3.10.2-py3-none-any.whl", hash = "sha256:2c7ccacb765c5e26b0cb60fb1b57080af522c6924d12a714a243305ba3637412"},
+    {file = "nltk-3.10.2.tar.gz", hash = "sha256:fcfd80fb77931868cea8357573c79838b8abc609942ef9914d1c9f6070d4645c"},
 ]
 
 [package.dependencies]

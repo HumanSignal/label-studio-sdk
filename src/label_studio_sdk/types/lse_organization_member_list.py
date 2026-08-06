@@ -22,6 +22,11 @@ class LseOrganizationMemberList(UncheckedBaseModel):
     concurrency: typing.Optional[typing.Dict[str, typing.Any]] = None
     contributed_to_projects: typing.Optional[typing.List[LseOrganizationMemberListContributedToProjectsItem]] = None
     created_projects: typing.Optional[typing.List[LseOrganizationMemberListCreatedProjectsItem]] = None
+    flex: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Per-member Flex claim/window state for Members UI (FIT-2339).
+    """
+
     id: typing.Optional[int] = None
     organization: int = pydantic.Field()
     """

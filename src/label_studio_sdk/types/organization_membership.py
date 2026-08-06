@@ -9,12 +9,18 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class OrganizationMembership(UncheckedBaseModel):
     active: typing.Optional[bool] = None
+    flex: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Flex claim/window state for FE expired-seat UX (FIT-2339). Non-Flex → null.
+    """
+
     organization_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Organization ID
     """
 
     role: str
+    user_type: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
