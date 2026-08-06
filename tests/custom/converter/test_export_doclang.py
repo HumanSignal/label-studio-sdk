@@ -1,8 +1,10 @@
+import base64
 import json
 import os
 import shutil
 import tempfile
 import zipfile
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import pytest
@@ -36,13 +38,16 @@ def tmp_output_dir():
 
 @pytest.fixture
 def mock_page_image():
-    def fetch(url, destination_dir, project_dir, upload_dir):
-        path = os.path.join(destination_dir, f"1{doclang_export._image_extension(url)}")
-        with open(path, "wb") as f:
-            f.write(FAKE_PNG_BYTES)
-        return path
+    def fetch(urls, destination_dir, project_dir, upload_dir, hostname, access_token, task_id):
+        pages = {}
+        for page_number, url in enumerate(urls, start=1):
+            path = os.path.join(destination_dir, f"{page_number}{doclang_export._image_extension(url)}")
+            with open(path, "wb") as f:
+                f.write(FAKE_PNG_BYTES)
+            pages[page_number] = path
+        return pages
 
-    with patch.object(doclang_export, "_fetch_page_image", side_effect=fetch) as m:
+    with patch.object(doclang_export, "_fetch_page_images", side_effect=fetch) as m:
         yield m
 
 
@@ -408,16 +413,20 @@ def test_fetch_page_image_uses_staged_copy_without_moving_source(tmp_path):
     destination = tmp_path / "stage"
     destination.mkdir()
 
-    def copy_to_destination(url, output_dir, **kwargs):
-        shutil.copy(source, output_dir)
+    def copy_to_destination(url, **kwargs):
+        shutil.copy(source, kwargs["cache_dir"])
         return str(source)
 
-    with patch.object(doclang_export, "download", side_effect=copy_to_destination):
+    with patch.object(doclang_export, "get_local_path", side_effect=copy_to_destination):
         page_path = doclang_export._fetch_page_image(
             "/data/local-files/?d=folder/page.jpeg",
             str(destination),
+            1,
             project_dir=None,
             upload_dir=None,
+            hostname=None,
+            access_token=None,
+            task_id=None,
         )
 
     assert source.exists()
@@ -572,3 +581,238 @@ def test_directory_input_iterates_all_json_files(tmp_output_dir, mock_page_image
         assert "task-200-annotation-2000.dclx" in names
     finally:
         shutil.rmtree(input_dir, ignore_errors=True)
+
+
+def test_doclang_storage_proxy_page_image(tmp_output_dir, monkeypatch):
+    """Storage proxy URLs resolve via get_local_path with hostname and token."""
+    image_url = "/storage-data/uploaded/?filepath=upload/275114/page.jpg"
+    requested = SimpleNamespace(url=None, headers=None)
+
+    def fake_get_local_path(url, **kwargs):
+        assert url == image_url
+        assert kwargs["hostname"] == "https://labelstudio.example.com"
+        assert kwargs["access_token"] == "secret"
+        assert kwargs["task_id"] == 279288349
+        path = os.path.join(kwargs["cache_dir"], "page.jpg")
+        with open(path, "wb") as f:
+            f.write(FAKE_PNG_BYTES)
+        return path
+
+    monkeypatch.setattr(doclang_export, "get_local_path", fake_get_local_path)
+
+    task = {
+        "id": 279288349,
+        "data": {"image": image_url},
+        "annotations": [
+            {
+                "id": 1,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang><section>Intro</section></doclang>"]},
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    doclang_export.convert_to_doclang(
+        tasks_path,
+        tmp_output_dir,
+        is_dir=False,
+        hostname="https://labelstudio.example.com",
+        access_token="secret",
+    )
+
+    archive = os.path.join(tmp_output_dir, "task-279288349-annotation-1.dclx")
+    with zipfile.ZipFile(archive) as z:
+        assert "pages/1.jpg" in z.namelist()
+        assert z.read("pages/1.jpg") == FAKE_PNG_BYTES
+
+
+def test_doclang_base64_page_raster(tmp_output_dir):
+    jpeg_bytes = b"\xff\xd8\xff\xd8-page"
+    data_url = f"data:image/jpeg;base64,{base64.b64encode(jpeg_bytes).decode('ascii')}"
+    task = {
+        "id": 42,
+        "data": {"image": data_url},
+        "annotations": [
+            {
+                "id": 420,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang/>"]},
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False)
+
+    archive = os.path.join(tmp_output_dir, "task-42-annotation-420.dclx")
+    with zipfile.ZipFile(archive) as z:
+        assert "pages/1.jpg" in z.namelist()
+        assert z.read("pages/1.jpg") == jpeg_bytes
+
+
+def test_doclang_multi_page_pack(tmp_output_dir):
+    page_one = b"\xff\xd8\xffpage1"
+    page_two = b"\xff\xd8\xffpage2"
+    task = {
+        "id": 55,
+        "data": {
+            "pages": [
+                f"data:image/jpeg;base64,{base64.b64encode(page_one).decode('ascii')}",
+                f"data:image/jpeg;base64,{base64.b64encode(page_two).decode('ascii')}",
+            ]
+        },
+        "annotations": [
+            {
+                "id": 550,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {
+                            "text": [
+                                "<doclang><section>P1</section><page_break/><section>P2</section></doclang>"
+                            ]
+                        },
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    doclang_export.convert_to_doclang(
+        tasks_path,
+        tmp_output_dir,
+        is_dir=False,
+        image_key="image",
+        image_list_key="pages",
+    )
+
+    archive = os.path.join(tmp_output_dir, "task-55-annotation-550.dclx")
+    with zipfile.ZipFile(archive) as z:
+        assert "pages/1.jpg" in z.namelist()
+        assert "pages/2.jpg" in z.namelist()
+        assert z.read("pages/1.jpg") == page_one
+        assert z.read("pages/2.jpg") == page_two
+
+
+def test_page_image_failure_still_writes_document_xml(tmp_output_dir, caplog):
+    task = {
+        "id": 66,
+        "data": {"image": "/storage-data/uploaded/?filepath=upload/1/missing.jpg"},
+        "annotations": [
+            {
+                "id": 660,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang><section>Still here</section></doclang>"]},
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    with patch.object(
+        doclang_export,
+        "get_local_path",
+        side_effect=FileNotFoundError("Can't resolve url"),
+    ):
+        with caplog.at_level("WARNING"):
+            count = doclang_export.convert_to_doclang(
+                tasks_path,
+                tmp_output_dir,
+                is_dir=False,
+                hostname="https://labelstudio.example.com",
+                access_token="secret",
+            )
+
+    assert count == 1
+    archive = os.path.join(tmp_output_dir, "task-66-annotation-660.dclx")
+    with zipfile.ZipFile(archive) as z:
+        assert "document.xml" in z.namelist()
+        assert "<section>Still here</section>" in z.read("document.xml").decode()
+        assert not any(name.startswith("pages/") for name in z.namelist())
+    assert any("Failed to fetch page image" in record.message for record in caplog.records)
+
+
+def test_converter_passes_hostname_and_token_to_doclang(tmp_output_dir, monkeypatch):
+    captured = {}
+
+    def fake_convert(*args, **kwargs):
+        captured.update(kwargs)
+        return 0
+
+    monkeypatch.setattr(doclang_export, "convert_to_doclang", fake_convert)
+
+    converter = Converter(
+        config={},
+        project_dir=".",
+        hostname="https://labelstudio.example.com",
+        access_token="secret",
+    )
+    converter.convert(
+        input_data=INPUT_JSON_PATH,
+        output_data=tmp_output_dir,
+        format="DOCLANG",
+        is_dir=False,
+    )
+
+    assert captured["hostname"] == "https://labelstudio.example.com"
+    assert captured["access_token"] == "secret"
+
+
+def test_resolve_image_data_keys_from_label_config():
+    config_xml = (
+        '<View><Image name="image" valueList="$pages"/>'
+        '<TextArea name="doclang" toName="image"/></View>'
+    )
+    single_key, list_key = doclang_export.resolve_image_data_keys(config=config_xml)
+    assert single_key is None
+    assert list_key == "pages"
+
+
+def test_converter_auto_resolves_image_list_key(tmp_output_dir, monkeypatch):
+    captured = {}
+
+    def fake_convert(*args, **kwargs):
+        captured.update(kwargs)
+        return 0
+
+    monkeypatch.setattr(doclang_export, "convert_to_doclang", fake_convert)
+
+    config = parse_config(
+        '<View><Image name="image" value="$image"/>'
+        '<TextArea name="doclang" toName="image"/></View>'
+    )
+    converter = Converter(config=config, project_dir=".")
+    converter.convert(
+        input_data=INPUT_JSON_PATH,
+        output_data=tmp_output_dir,
+        format="DOCLANG",
+        is_dir=False,
+    )
+
+    assert captured["image_key"] == "image"
+    assert captured.get("image_list_key") is None

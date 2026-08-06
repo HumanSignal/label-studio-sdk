@@ -213,6 +213,7 @@ class Converter(object):
         self.upload_dir = upload_dir
         self.download_resources = download_resources
         self._schema = None
+        self._config_string = None
         self.access_token = access_token
         self.hostname = hostname
         self.is_keypoints = None
@@ -225,6 +226,7 @@ class Converter(object):
                     config_string = f.read()
             else:
                 config_string = config
+            self._config_string = config_string
             self._schema = parse_config(config_string)
 
         if self._schema is None:
@@ -326,15 +328,26 @@ class Converter(object):
                 output_image_dir=image_dir
             )
         elif format == Format.DOCLANG:
-            from label_studio_sdk.converter.exports.doclang import convert_to_doclang
+            from label_studio_sdk.converter.exports.doclang import convert_to_doclang, resolve_image_data_keys
+
+            image_key = kwargs.get("image_key")
+            image_list_key = kwargs.get("image_list_key")
+            if image_key is None:
+                single_key, list_key = resolve_image_data_keys(self._schema, self._config_string)
+                image_key = single_key or "image"
+                image_list_key = image_list_key or list_key
+
             convert_to_doclang(
                 input_data,
                 output_data,
                 is_dir=is_dir,
-                image_key=kwargs.get("image_key", "image"),
+                image_key=image_key,
+                image_list_key=image_list_key,
                 download_resources=self.download_resources,
                 project_dir=self.project_dir,
                 upload_dir=self.upload_dir,
+                hostname=self.hostname,
+                access_token=self.access_token,
             )
 
     def _get_data_keys_and_output_tags(self, output_tags=None):

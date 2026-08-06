@@ -5,6 +5,7 @@ results, then packages it according to the DocLang archive specification:
 https://github.com/doclang-project/doclang/blob/main/spec.md#doclang-archive-format.
 """
 
+import base64
 import io
 import json
 import logging
@@ -15,13 +16,14 @@ import shutil
 import tempfile
 from glob import glob
 from pathlib import Path
-from typing import Iterable, Iterator, Optional
+from typing import Iterable, Iterator, Mapping, Optional
 from urllib.parse import parse_qsl, urlparse
 
 import ijson
 from doclang import pack
 from lxml import etree
 
+from label_studio_sdk._extensions.label_studio_tools.core.utils.io import get_local_path
 from label_studio_sdk.converter.utils import download, ensure_dir, get_json_root_type
 
 logger = logging.getLogger(__name__)
@@ -171,9 +173,38 @@ def _extract_doclang_bytes(annotation: dict) -> Optional[bytes]:
     return None
 
 
-def _extract_image_url(task: dict, image_key: str) -> Optional[str]:
-    data = task.get("data") or {}
-    raw = data.get(image_key)
+def resolve_image_data_keys(
+    schema: Optional[Mapping] = None,
+    config: Optional[str] = None,
+) -> tuple[Optional[str], Optional[str]]:
+    """Return (single_image_key, list_image_key) from Image tags in a parsed label config."""
+    single_key = None
+    list_key = None
+    if schema:
+        for info in schema.values():
+            for input_tag in info.get("inputs", []):
+                if input_tag.get("type") != "Image":
+                    continue
+                if input_tag.get("valueList"):
+                    list_key = input_tag["valueList"]
+                elif input_tag.get("value"):
+                    single_key = input_tag["value"]
+
+    if config:
+        parser = etree.XMLParser(resolve_entities=False, no_network=True, load_dtd=False, recover=False)
+        root = etree.fromstring(config.encode("utf-8"), parser=parser)
+        for tag in root.iter():
+            if not isinstance(tag.tag, str) or etree.QName(tag).localname != "Image":
+                continue
+            if tag.attrib.get("valueList"):
+                list_key = tag.attrib["valueList"].lstrip("$")
+            elif tag.attrib.get("value"):
+                single_key = tag.attrib["value"].lstrip("$")
+
+    return single_key, list_key
+
+
+def _normalize_page_source(raw) -> Optional[str]:
     if isinstance(raw, dict):
         raw = raw.get("url")
     if isinstance(raw, str) and raw:
@@ -181,7 +212,27 @@ def _extract_image_url(task: dict, image_key: str) -> Optional[str]:
     return None
 
 
-def _image_extension(url: str) -> str:
+def _extract_page_urls(task: dict, image_key: str, image_list_key: Optional[str] = None) -> list[str]:
+    data = task.get("data") or {}
+    if image_list_key:
+        raw_pages = data.get(image_list_key)
+        if isinstance(raw_pages, list):
+            urls = [_normalize_page_source(item) for item in raw_pages]
+            return [url for url in urls if url]
+
+    raw = data.get(image_key)
+    url = _normalize_page_source(raw)
+    return [url] if url else []
+
+
+def _image_extension(url: str, local_path: Optional[str] = None) -> str:
+    if url.startswith("data:"):
+        mime = url[5:].split(";", 1)[0].strip()
+        guess = mimetypes.guess_extension(mime) or ""
+        if guess == ".jpe":
+            guess = ".jpg"
+        return guess.lower() if guess.lower() in _IMAGE_EXTS else ".png"
+
     parsed = urlparse(url)
     _, ext = posixpath.splitext(parsed.path)
     ext = ext.lower()
@@ -189,23 +240,62 @@ def _image_extension(url: str) -> str:
         ext = ".jpg"
     if ext in _IMAGE_EXTS:
         return ext
+
+    if local_path:
+        _, local_ext = posixpath.splitext(local_path)
+        local_ext = local_ext.lower()
+        if local_ext == ".jpe":
+            local_ext = ".jpg"
+        if local_ext in _IMAGE_EXTS:
+            return local_ext
+
     guess = mimetypes.guess_extension(mimetypes.guess_type(parsed.path)[0] or "") or ""
     return guess.lower() if guess.lower() in _IMAGE_EXTS else ".png"
+
+
+def _write_data_url_page(url: str, destination_dir: str, page_number: int) -> Optional[str]:
+    if not url.startswith("data:"):
+        return None
+
+    try:
+        header, _, encoded = url.partition(",")
+        if ";base64" not in header.lower() or not encoded:
+            logger.warning("Unsupported data URL page raster (expected base64): %s", url[:64])
+            return None
+
+        page_path = os.path.join(destination_dir, f"{page_number}{_image_extension(url)}")
+        with open(page_path, "wb") as page_file:
+            page_file.write(base64.b64decode(encoded))
+        return page_path
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Failed to decode data URL page raster: %s", exc)
+        return None
 
 
 def _fetch_page_image(
     url: str,
     destination_dir: str,
+    page_number: int,
     project_dir: Optional[str],
     upload_dir: Optional[str],
+    hostname: Optional[str],
+    access_token: Optional[str],
+    task_id: Optional[int],
 ) -> Optional[str]:
+    data_url_path = _write_data_url_page(url, destination_dir, page_number)
+    if data_url_path is not None:
+        return data_url_path
+
     try:
-        local_path = download(
-            url,
-            destination_dir,
+        local_path = get_local_path(
+            url=url,
+            hostname=hostname,
             project_dir=project_dir,
-            upload_dir=upload_dir,
+            image_dir=upload_dir,
+            cache_dir=destination_dir,
+            access_token=access_token,
             download_resources=True,
+            task_id=task_id,
         )
         if not local_path or not os.path.exists(local_path):
             logger.warning("Downloaded image not found on disk for %s", url)
@@ -215,13 +305,39 @@ def _fetch_page_image(
         if not os.path.exists(staged_path):
             shutil.copy2(local_path, staged_path)
 
-        page_path = os.path.join(destination_dir, f"1{_image_extension(staged_path)}")
+        page_path = os.path.join(destination_dir, f"{page_number}{_image_extension(url, local_path)}")
         if os.path.abspath(staged_path) != os.path.abspath(page_path):
             os.replace(staged_path, page_path)
         return page_path
     except Exception as exc:  # noqa: BLE001
         logger.warning("Failed to fetch page image %s: %s", url, exc)
         return None
+
+
+def _fetch_page_images(
+    urls: list[str],
+    destination_dir: str,
+    project_dir: Optional[str],
+    upload_dir: Optional[str],
+    hostname: Optional[str],
+    access_token: Optional[str],
+    task_id: Optional[int],
+) -> dict[int, str]:
+    pages: dict[int, str] = {}
+    for page_number, url in enumerate(urls, start=1):
+        page_path = _fetch_page_image(
+            url,
+            destination_dir,
+            page_number,
+            project_dir,
+            upload_dir,
+            hostname,
+            access_token,
+            task_id,
+        )
+        if page_path:
+            pages[page_number] = page_path
+    return pages
 
 
 def _asset_uri_path(uri: str) -> str:
@@ -353,9 +469,13 @@ def convert_to_doclang(
     output_dir: str,
     is_dir: bool = True,
     image_key: str = "image",
+    image_list_key: Optional[str] = None,
     download_resources: bool = True,
     project_dir: Optional[str] = None,
     upload_dir: Optional[str] = None,
+    hostname: Optional[str] = None,
+    access_token: Optional[str] = None,
+    task_id: Optional[int] = None,
 ) -> int:
     """Export annotations to DocLang ``.dclx`` archives.
 
@@ -367,8 +487,8 @@ def convert_to_doclang(
     written = 0
     skipped_no_xml = 0
     for task in _iter_raw_tasks(input_data, is_dir=is_dir):
-        task_id = task.get("id")
-        image_url = _extract_image_url(task, image_key)
+        current_task_id = task.get("id")
+        page_urls = _extract_page_urls(task, image_key, image_list_key)
 
         for ann in _valid_annotations(task):
             document = _extract_doclang_bytes(ann)
@@ -376,7 +496,7 @@ def convert_to_doclang(
                 skipped_no_xml += 1
                 continue
 
-            filename = f"task-{task_id}-annotation-{ann.get('id')}.dclx"
+            filename = f"task-{current_task_id}-annotation-{ann.get('id')}.dclx"
             output_path = os.path.join(output_dir, filename)
             with tempfile.TemporaryDirectory() as tmp:
                 assets = {}
@@ -386,15 +506,23 @@ def convert_to_doclang(
                     document, assets = _stage_document_assets(document, asset_dir, project_dir, upload_dir)
                 document_path = Path(tmp) / "document.dclg"
                 document_path.write_bytes(document)
-                page_path = (
-                    _fetch_page_image(image_url, tmp, project_dir, upload_dir)
-                    if download_resources and image_url
+                pages = (
+                    _fetch_page_images(
+                        page_urls,
+                        tmp,
+                        project_dir,
+                        upload_dir,
+                        hostname,
+                        access_token,
+                        current_task_id,
+                    )
+                    if download_resources and page_urls
                     else None
                 )
                 pack(
                     document_path,
                     output=output_path,
-                    pages={1: page_path} if page_path else None,
+                    pages=pages or None,
                     assets=assets or None,
                     # DocLang 0.x minor releases are intentionally breaking, so full
                     # schema validation is deferred until the format stabilizes:
