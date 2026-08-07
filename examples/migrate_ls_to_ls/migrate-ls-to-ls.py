@@ -14,15 +14,16 @@ import logging
 import os
 import time
 
-import os
 from label_studio_sdk import Client
+from label_studio_sdk._legacy import client as legacy_client
 from label_studio_sdk._legacy.users import User
-from label_studio_sdk.data_manager import Filters, Operator, Type, Column
+from label_studio_sdk.data_manager import Column, Filters, Operator, Type
 
 logger = logging.getLogger("migration-ls-to-ls")
 logger.setLevel(logging.DEBUG)
 
-CHUNK_SIZE = int(os.getenv('CHUNK_SIZE', 1000))
+CHUNK_SIZE = int(os.getenv('CHUNK_SIZE', 50))
+TIMEOUT = int(os.getenv('TIMEOUT', 600))
 DEFAULT_STORAGE = os.getenv('DEFAULT_STORAGE', '')  # 's3', 'gcs' or 'azure'
 DEFAULT_STORAGE_REGEX = os.getenv(
     'DEFAULT_STORAGE_REGEX', '.*'
@@ -46,7 +47,7 @@ DEFAULT_STORAGE_PRESIGN = (
 
 
 class Migration:
-    def __init__(self, src_url, src_key, dst_url, dst_key, dest_workspace):
+    def __init__(self, src_url, src_key, dst_url, dst_key, dest_workspace, timeout=TIMEOUT):
         """Initialize migration that copy projects from one LS instance to another
 
         :param src_url: source Label Studio instance
@@ -54,10 +55,22 @@ class Migration:
         :param dst_url: destination Label Studio instance
         :param dst_key: destination Label Studio token
         :param dest_workspace: destination workspace id
+        :param timeout: request timeout in seconds
         """
+        self.timeout = timeout
+        legacy_client.TIMEOUT = (10.0, self.timeout)
+
         # Connect to the Label Studio API and check the connection
         self.src_ls = Client(url=src_url, api_key=src_key)
         self.dst_ls = Client(url=dst_url, api_key=dst_key)
+        for client in [self.src_ls, self.dst_ls]:
+            original_request = client.session.request
+
+            def timeout_request(*args, _original_request=original_request, **kwargs):
+                kwargs.setdefault("timeout", legacy_client.TIMEOUT)
+                return _original_request(*args, **kwargs)
+
+            client.session.request = timeout_request
         self.users = self.projects = self.project_ids = None
         self.dest_workspace = dest_workspace
 
@@ -392,8 +405,8 @@ class Migration:
 
 
 def run():
-    import sys
     import argparse
+    import sys
 
     parser = argparse.ArgumentParser(
         description="Label Studio Project Migration Script"
@@ -440,6 +453,13 @@ def run():
         default=None,
         help="Workspace where to store projects, e.g.: 42",
     )
+    parser.add_argument(
+        "--timeout",
+        dest="timeout",
+        type=int,
+        default=TIMEOUT,
+        help=f"Request timeout in seconds (default from TIMEOUT env var or {TIMEOUT})",
+    )
     args = parser.parse_args(sys.argv[1:])
 
     migration = Migration(
@@ -448,6 +468,7 @@ def run():
         dst_url=args.dst_url,
         dst_key=args.dst_key,
         dest_workspace=args.dest_workspace,
+        timeout=args.timeout,
     )
 
     project_ids = (

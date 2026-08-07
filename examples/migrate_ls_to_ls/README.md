@@ -53,7 +53,7 @@ pip install -U label-studio-sdk
     pip install -U label-studio-sdk
     ```
 
-2. Go to source (src) and destination (dst) LS instances. Open Account pages (/user/account), copy your Access tokens. 
+2. Go to source (src) and destination (dst) LS instances. Open Account pages (/user/account), copy your legacy Access tokens, not Personal Access Tokens.
 
     > **Attention**: Be careful not to mix up the tokens, otherwise there is a chance you will create a big mess of projects and users.
 
