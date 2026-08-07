@@ -152,12 +152,17 @@ class UsersClient:
         )
         return _response.data
 
-    def get_hotkeys(self, *, request_options: typing.Optional[RequestOptions] = None) -> Hotkeys:
+    def get_hotkeys(
+        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> Hotkeys:
         """
-        Retrieve the custom hotkeys configuration for the current user.
+        Retrieve the current user’s account hotkeys, or their stored personal override for the optional project scope.
 
         Parameters
         ----------
+        project : typing.Optional[int]
+            Project ID for a personal project-specific hotkey override. Omit for account defaults.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -175,20 +180,24 @@ class UsersClient:
         )
         client.users.get_hotkeys()
         """
-        _response = self._raw_client.get_hotkeys(request_options=request_options)
+        _response = self._raw_client.get_hotkeys(project=project, request_options=request_options)
         return _response.data
 
     def update_hotkeys(
         self,
         *,
+        project: typing.Optional[int] = None,
         custom_hotkeys: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Hotkeys:
         """
-        Update the custom hotkeys configuration for the current user.
+        Update the current user’s account hotkeys, or their personal override for the optional project scope.
 
         Parameters
         ----------
+        project : typing.Optional[int]
+            Project ID for a personal project-specific hotkey override. Omit for account defaults.
+
         custom_hotkeys : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
@@ -208,7 +217,9 @@ class UsersClient:
         )
         client.users.update_hotkeys()
         """
-        _response = self._raw_client.update_hotkeys(custom_hotkeys=custom_hotkeys, request_options=request_options)
+        _response = self._raw_client.update_hotkeys(
+            project=project, custom_hotkeys=custom_hotkeys, request_options=request_options
+        )
         return _response.data
 
     def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> ResetTokenUsersResponse:
@@ -702,12 +713,17 @@ class AsyncUsersClient:
         )
         return _response.data
 
-    async def get_hotkeys(self, *, request_options: typing.Optional[RequestOptions] = None) -> Hotkeys:
+    async def get_hotkeys(
+        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> Hotkeys:
         """
-        Retrieve the custom hotkeys configuration for the current user.
+        Retrieve the current user’s account hotkeys, or their stored personal override for the optional project scope.
 
         Parameters
         ----------
+        project : typing.Optional[int]
+            Project ID for a personal project-specific hotkey override. Omit for account defaults.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -733,20 +749,24 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_hotkeys(request_options=request_options)
+        _response = await self._raw_client.get_hotkeys(project=project, request_options=request_options)
         return _response.data
 
     async def update_hotkeys(
         self,
         *,
+        project: typing.Optional[int] = None,
         custom_hotkeys: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Hotkeys:
         """
-        Update the custom hotkeys configuration for the current user.
+        Update the current user’s account hotkeys, or their personal override for the optional project scope.
 
         Parameters
         ----------
+        project : typing.Optional[int]
+            Project ID for a personal project-specific hotkey override. Omit for account defaults.
+
         custom_hotkeys : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
@@ -775,7 +795,7 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update_hotkeys(
-            custom_hotkeys=custom_hotkeys, request_options=request_options
+            project=project, custom_hotkeys=custom_hotkeys, request_options=request_options
         )
         return _response.data
 

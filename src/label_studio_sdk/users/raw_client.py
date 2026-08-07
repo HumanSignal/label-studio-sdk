@@ -11,6 +11,11 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
+from ..errors.bad_request_error import BadRequestError
+from ..errors.forbidden_error import ForbiddenError
+from ..errors.internal_server_error import InternalServerError
+from ..errors.not_found_error import NotFoundError
+from ..errors.unauthorized_error import UnauthorizedError
 from ..types.hotkeys import Hotkeys
 from ..types.lse_user import LseUser
 from ..types.lse_user_api import LseUserApi
@@ -172,12 +177,17 @@ class RawUsersClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_hotkeys(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Hotkeys]:
+    def get_hotkeys(
+        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[Hotkeys]:
         """
-        Retrieve the custom hotkeys configuration for the current user.
+        Retrieve the current user’s account hotkeys, or their stored personal override for the optional project scope.
 
         Parameters
         ----------
+        project : typing.Optional[int]
+            Project ID for a personal project-specific hotkey override. Omit for account defaults.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -189,6 +199,9 @@ class RawUsersClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/current-user/hotkeys/",
             method="GET",
+            params={
+                "project": project,
+            },
             request_options=request_options,
         )
         try:
@@ -201,6 +214,61 @@ class RawUsersClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -213,14 +281,18 @@ class RawUsersClient:
     def update_hotkeys(
         self,
         *,
+        project: typing.Optional[int] = None,
         custom_hotkeys: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Hotkeys]:
         """
-        Update the custom hotkeys configuration for the current user.
+        Update the current user’s account hotkeys, or their personal override for the optional project scope.
 
         Parameters
         ----------
+        project : typing.Optional[int]
+            Project ID for a personal project-specific hotkey override. Omit for account defaults.
+
         custom_hotkeys : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
@@ -234,6 +306,9 @@ class RawUsersClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/current-user/hotkeys/",
             method="PATCH",
+            params={
+                "project": project,
+            },
             json={
                 "custom_hotkeys": custom_hotkeys,
             },
@@ -253,6 +328,61 @@ class RawUsersClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -849,13 +979,16 @@ class AsyncRawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_hotkeys(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Hotkeys]:
         """
-        Retrieve the custom hotkeys configuration for the current user.
+        Retrieve the current user’s account hotkeys, or their stored personal override for the optional project scope.
 
         Parameters
         ----------
+        project : typing.Optional[int]
+            Project ID for a personal project-specific hotkey override. Omit for account defaults.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -867,6 +1000,9 @@ class AsyncRawUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/current-user/hotkeys/",
             method="GET",
+            params={
+                "project": project,
+            },
             request_options=request_options,
         )
         try:
@@ -879,6 +1015,61 @@ class AsyncRawUsersClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -891,14 +1082,18 @@ class AsyncRawUsersClient:
     async def update_hotkeys(
         self,
         *,
+        project: typing.Optional[int] = None,
         custom_hotkeys: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Hotkeys]:
         """
-        Update the custom hotkeys configuration for the current user.
+        Update the current user’s account hotkeys, or their personal override for the optional project scope.
 
         Parameters
         ----------
+        project : typing.Optional[int]
+            Project ID for a personal project-specific hotkey override. Omit for account defaults.
+
         custom_hotkeys : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
@@ -912,6 +1107,9 @@ class AsyncRawUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/current-user/hotkeys/",
             method="PATCH",
+            params={
+                "project": project,
+            },
             json={
                 "custom_hotkeys": custom_hotkeys,
             },
@@ -931,6 +1129,61 @@ class AsyncRawUsersClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

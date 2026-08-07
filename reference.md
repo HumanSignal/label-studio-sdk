@@ -2671,7 +2671,7 @@ client.users.update_current_user()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">get_hotkeys</a>() -> Hotkeys</code></summary>
+<details><summary><code>client.users.<a href="src/label_studio_sdk/users/client.py">get_hotkeys</a>(...) -> Hotkeys</code></summary>
 <dl>
 <dd>
 
@@ -2683,7 +2683,7 @@ client.users.update_current_user()
 <dl>
 <dd>
 
-Retrieve the custom hotkeys configuration for the current user.
+Retrieve the current user’s account hotkeys, or their stored personal override for the optional project scope.
 </dd>
 </dl>
 </dd>
@@ -2722,6 +2722,14 @@ client.users.get_hotkeys()
 <dl>
 <dd>
 
+**project:** `typing.Optional[int]` — Project ID for a personal project-specific hotkey override. Omit for account defaults.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2746,7 +2754,7 @@ client.users.get_hotkeys()
 <dl>
 <dd>
 
-Update the custom hotkeys configuration for the current user.
+Update the current user’s account hotkeys, or their personal override for the optional project scope.
 </dd>
 </dl>
 </dd>
@@ -2781,6 +2789,14 @@ client.users.update_hotkeys()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID for a personal project-specific hotkey override. Omit for account defaults.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
