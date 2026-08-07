@@ -69,14 +69,17 @@ class AzureClient:
     def create(
         self,
         *,
+        project: int,
         account_key: typing.Optional[str] = OMIT,
         account_name: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         container: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobExportStorage:
         """
@@ -84,6 +87,9 @@ class AzureClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         account_key : typing.Optional[str]
             Azure Blob account key
 
@@ -97,16 +103,21 @@ class AzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             Azure blob prefix name
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -123,17 +134,22 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.azure.create()
+        client.export_storage.azure.create(
+            project=1,
+        )
         """
         _response = self._raw_client.create(
+            project=project,
             account_key=account_key,
             account_name=account_name,
             can_delete_objects=can_delete_objects,
             container=container,
             description=description,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -141,6 +157,7 @@ class AzureClient:
     def validate(
         self,
         *,
+        project: int,
         account_key: typing.Optional[str] = OMIT,
         account_name: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
@@ -148,8 +165,10 @@ class AzureClient:
         description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -157,6 +176,9 @@ class AzureClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         account_key : typing.Optional[str]
             Azure Blob account key
 
@@ -170,7 +192,7 @@ class AzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
@@ -178,11 +200,16 @@ class AzureClient:
         prefix : typing.Optional[str]
             Azure blob prefix name
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -198,9 +225,12 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.azure.validate()
+        client.export_storage.azure.validate(
+            project=1,
+        )
         """
         _response = self._raw_client.validate(
+            project=project,
             account_key=account_key,
             account_name=account_name,
             can_delete_objects=can_delete_objects,
@@ -208,8 +238,10 @@ class AzureClient:
             description=description,
             id=id,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -284,7 +316,10 @@ class AzureClient:
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobExportStorage:
         """
@@ -307,16 +342,24 @@ class AzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             Azure blob prefix name
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -346,7 +389,10 @@ class AzureClient:
             description=description,
             prefix=prefix,
             project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -448,14 +494,17 @@ class AsyncAzureClient:
     async def create(
         self,
         *,
+        project: int,
         account_key: typing.Optional[str] = OMIT,
         account_name: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         container: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobExportStorage:
         """
@@ -463,6 +512,9 @@ class AsyncAzureClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         account_key : typing.Optional[str]
             Azure Blob account key
 
@@ -476,16 +528,21 @@ class AsyncAzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             Azure blob prefix name
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -507,20 +564,25 @@ class AsyncAzureClient:
 
 
         async def main() -> None:
-            await client.export_storage.azure.create()
+            await client.export_storage.azure.create(
+                project=1,
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
+            project=project,
             account_key=account_key,
             account_name=account_name,
             can_delete_objects=can_delete_objects,
             container=container,
             description=description,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -528,6 +590,7 @@ class AsyncAzureClient:
     async def validate(
         self,
         *,
+        project: int,
         account_key: typing.Optional[str] = OMIT,
         account_name: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
@@ -535,8 +598,10 @@ class AsyncAzureClient:
         description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -544,6 +609,9 @@ class AsyncAzureClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         account_key : typing.Optional[str]
             Azure Blob account key
 
@@ -557,7 +625,7 @@ class AsyncAzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
@@ -565,11 +633,16 @@ class AsyncAzureClient:
         prefix : typing.Optional[str]
             Azure blob prefix name
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -590,12 +663,15 @@ class AsyncAzureClient:
 
 
         async def main() -> None:
-            await client.export_storage.azure.validate()
+            await client.export_storage.azure.validate(
+                project=1,
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.validate(
+            project=project,
             account_key=account_key,
             account_name=account_name,
             can_delete_objects=can_delete_objects,
@@ -603,8 +679,10 @@ class AsyncAzureClient:
             description=description,
             id=id,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -695,7 +773,10 @@ class AsyncAzureClient:
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureBlobExportStorage:
         """
@@ -718,16 +799,24 @@ class AsyncAzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             Azure blob prefix name
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -765,7 +854,10 @@ class AsyncAzureClient:
             description=description,
             prefix=prefix,
             project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data

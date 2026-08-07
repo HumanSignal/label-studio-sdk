@@ -78,10 +78,12 @@ class RawLocalClient:
     def create(
         self,
         *,
+        project: int,
         description: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -91,23 +93,28 @@ class RawLocalClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         path : typing.Optional[str]
-            Path to local directory
+            Local path
 
-        project : typing.Optional[int]
-            Project ID
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the directory content
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -124,7 +131,9 @@ class RawLocalClient:
                 "description": description,
                 "path": path,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -156,11 +165,13 @@ class RawLocalClient:
     def validate(
         self,
         *,
+        project: int,
         description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -170,26 +181,31 @@ class RawLocalClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
 
         path : typing.Optional[str]
-            Path to local directory
+            Local path
 
-        project : typing.Optional[int]
-            Project ID
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the directory content
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -206,7 +222,9 @@ class RawLocalClient:
                 "id": id,
                 "path": path,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -309,7 +327,9 @@ class RawLocalClient:
         description: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -322,22 +342,27 @@ class RawLocalClient:
         id : int
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         path : typing.Optional[str]
-            Path to local directory
+            Local path
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the directory content
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -354,7 +379,9 @@ class RawLocalClient:
                 "description": description,
                 "path": path,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -488,10 +515,12 @@ class AsyncRawLocalClient:
     async def create(
         self,
         *,
+        project: int,
         description: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -501,23 +530,28 @@ class AsyncRawLocalClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         path : typing.Optional[str]
-            Path to local directory
+            Local path
 
-        project : typing.Optional[int]
-            Project ID
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the directory content
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -534,7 +568,9 @@ class AsyncRawLocalClient:
                 "description": description,
                 "path": path,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -566,11 +602,13 @@ class AsyncRawLocalClient:
     async def validate(
         self,
         *,
+        project: int,
         description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -580,26 +618,31 @@ class AsyncRawLocalClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
 
         path : typing.Optional[str]
-            Path to local directory
+            Local path
 
-        project : typing.Optional[int]
-            Project ID
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the directory content
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -616,7 +659,9 @@ class AsyncRawLocalClient:
                 "id": id,
                 "path": path,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -721,7 +766,9 @@ class AsyncRawLocalClient:
         description: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -734,22 +781,27 @@ class AsyncRawLocalClient:
         id : int
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         path : typing.Optional[str]
-            Path to local directory
+            Local path
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the directory content
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -766,7 +818,9 @@ class AsyncRawLocalClient:
                 "description": description,
                 "path": path,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },

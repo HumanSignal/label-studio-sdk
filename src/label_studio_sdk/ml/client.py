@@ -4,11 +4,10 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.auth_method_enum import AuthMethodEnum
 from ..types.ml_backend import MlBackend
 from .raw_client import AsyncRawMlClient, RawMlClient
-from .types.create_ml_request_auth_method import CreateMlRequestAuthMethod
 from .types.list_model_versions_ml_response import ListModelVersionsMlResponse
-from .types.update_ml_request_auth_method import UpdateMlRequestAuthMethod
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -76,16 +75,18 @@ class MlClient:
     def create(
         self,
         *,
-        auth_method: typing.Optional[CreateMlRequestAuthMethod] = OMIT,
+        project: int,
+        url: str,
+        auth_method: typing.Optional[AuthMethodEnum] = OMIT,
+        auto_update: typing.Optional[bool] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
         basic_auth_user: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        extra_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        extra_params: typing.Optional[typing.Any] = OMIT,
         is_interactive: typing.Optional[bool] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        timeout: typing.Optional[int] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        timeout: typing.Optional[float] = OMIT,
         title: typing.Optional[str] = OMIT,
-        url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
@@ -99,35 +100,38 @@ class MlClient:
         
         Parameters
         ----------
-        auth_method : typing.Optional[CreateMlRequestAuthMethod]
-            Auth method
+        project : int
+        
+        url : str
+            URL for the machine learning model server
+        
+        auth_method : typing.Optional[AuthMethodEnum]
+        
+        auto_update : typing.Optional[bool]
+            If false, model version is set by the user, if true - getting latest version from backend.
         
         basic_auth_pass : typing.Optional[str]
-            Basic auth password
         
         basic_auth_user : typing.Optional[str]
-            Basic auth user
+            HTTP Basic Auth user
         
         description : typing.Optional[str]
-            Description
+            Description for the machine learning backend
         
-        extra_params : typing.Optional[typing.Dict[str, typing.Any]]
-            Extra parameters
+        extra_params : typing.Optional[typing.Any]
+            Any extra parameters passed to the ML Backend during the setup
         
         is_interactive : typing.Optional[bool]
-            Is interactive
+            Used to interactively annotate tasks. If true, model returns one list with results
         
-        project : typing.Optional[int]
-            Project ID
+        model_version : typing.Optional[str]
+            Current model version associated with this machine learning backend
         
-        timeout : typing.Optional[int]
+        timeout : typing.Optional[float]
             Response model timeout
         
         title : typing.Optional[str]
-            Title
-        
-        url : typing.Optional[str]
-            ML backend URL
+            Name of the machine learning backend
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -144,19 +148,24 @@ class MlClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.ml.create()
+        client.ml.create(
+            project=1,
+            url="url",
+        )
         """
         _response = self._raw_client.create(
+            project=project,
+            url=url,
             auth_method=auth_method,
+            auto_update=auto_update,
             basic_auth_pass=basic_auth_pass,
             basic_auth_user=basic_auth_user,
             description=description,
             extra_params=extra_params,
             is_interactive=is_interactive,
-            project=project,
+            model_version=model_version,
             timeout=timeout,
             title=title,
-            url=url,
             request_options=request_options,
         )
         return _response.data
@@ -234,14 +243,16 @@ class MlClient:
         self,
         id: int,
         *,
-        auth_method: typing.Optional[UpdateMlRequestAuthMethod] = OMIT,
+        auth_method: typing.Optional[AuthMethodEnum] = OMIT,
+        auto_update: typing.Optional[bool] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
         basic_auth_user: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        extra_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        extra_params: typing.Optional[typing.Any] = OMIT,
         is_interactive: typing.Optional[bool] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        timeout: typing.Optional[int] = OMIT,
+        timeout: typing.Optional[float] = OMIT,
         title: typing.Optional[str] = OMIT,
         url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -258,35 +269,38 @@ class MlClient:
         ----------
         id : int
         
-        auth_method : typing.Optional[UpdateMlRequestAuthMethod]
-            Auth method
+        auth_method : typing.Optional[AuthMethodEnum]
+        
+        auto_update : typing.Optional[bool]
+            If false, model version is set by the user, if true - getting latest version from backend.
         
         basic_auth_pass : typing.Optional[str]
-            Basic auth password
         
         basic_auth_user : typing.Optional[str]
-            Basic auth user
+            HTTP Basic Auth user
         
         description : typing.Optional[str]
-            Description
+            Description for the machine learning backend
         
-        extra_params : typing.Optional[typing.Dict[str, typing.Any]]
-            Extra parameters
+        extra_params : typing.Optional[typing.Any]
+            Any extra parameters passed to the ML Backend during the setup
         
         is_interactive : typing.Optional[bool]
-            Is interactive
+            Used to interactively annotate tasks. If true, model returns one list with results
+        
+        model_version : typing.Optional[str]
+            Current model version associated with this machine learning backend
         
         project : typing.Optional[int]
-            Project ID
         
-        timeout : typing.Optional[int]
+        timeout : typing.Optional[float]
             Response model timeout
         
         title : typing.Optional[str]
-            Title
+            Name of the machine learning backend
         
         url : typing.Optional[str]
-            ML backend URL
+            URL for the machine learning model server
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -310,11 +324,13 @@ class MlClient:
         _response = self._raw_client.update(
             id,
             auth_method=auth_method,
+            auto_update=auto_update,
             basic_auth_pass=basic_auth_pass,
             basic_auth_user=basic_auth_user,
             description=description,
             extra_params=extra_params,
             is_interactive=is_interactive,
+            model_version=model_version,
             project=project,
             timeout=timeout,
             title=title,
@@ -571,16 +587,18 @@ class AsyncMlClient:
     async def create(
         self,
         *,
-        auth_method: typing.Optional[CreateMlRequestAuthMethod] = OMIT,
+        project: int,
+        url: str,
+        auth_method: typing.Optional[AuthMethodEnum] = OMIT,
+        auto_update: typing.Optional[bool] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
         basic_auth_user: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        extra_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        extra_params: typing.Optional[typing.Any] = OMIT,
         is_interactive: typing.Optional[bool] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        timeout: typing.Optional[int] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        timeout: typing.Optional[float] = OMIT,
         title: typing.Optional[str] = OMIT,
-        url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
@@ -594,35 +612,38 @@ class AsyncMlClient:
         
         Parameters
         ----------
-        auth_method : typing.Optional[CreateMlRequestAuthMethod]
-            Auth method
+        project : int
+        
+        url : str
+            URL for the machine learning model server
+        
+        auth_method : typing.Optional[AuthMethodEnum]
+        
+        auto_update : typing.Optional[bool]
+            If false, model version is set by the user, if true - getting latest version from backend.
         
         basic_auth_pass : typing.Optional[str]
-            Basic auth password
         
         basic_auth_user : typing.Optional[str]
-            Basic auth user
+            HTTP Basic Auth user
         
         description : typing.Optional[str]
-            Description
+            Description for the machine learning backend
         
-        extra_params : typing.Optional[typing.Dict[str, typing.Any]]
-            Extra parameters
+        extra_params : typing.Optional[typing.Any]
+            Any extra parameters passed to the ML Backend during the setup
         
         is_interactive : typing.Optional[bool]
-            Is interactive
+            Used to interactively annotate tasks. If true, model returns one list with results
         
-        project : typing.Optional[int]
-            Project ID
+        model_version : typing.Optional[str]
+            Current model version associated with this machine learning backend
         
-        timeout : typing.Optional[int]
+        timeout : typing.Optional[float]
             Response model timeout
         
         title : typing.Optional[str]
-            Title
-        
-        url : typing.Optional[str]
-            ML backend URL
+            Name of the machine learning backend
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -644,22 +665,27 @@ class AsyncMlClient:
         
         
         async def main() -> None:
-            await client.ml.create()
+            await client.ml.create(
+                project=1,
+                url="url",
+            )
         
         
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
+            project=project,
+            url=url,
             auth_method=auth_method,
+            auto_update=auto_update,
             basic_auth_pass=basic_auth_pass,
             basic_auth_user=basic_auth_user,
             description=description,
             extra_params=extra_params,
             is_interactive=is_interactive,
-            project=project,
+            model_version=model_version,
             timeout=timeout,
             title=title,
-            url=url,
             request_options=request_options,
         )
         return _response.data
@@ -753,14 +779,16 @@ class AsyncMlClient:
         self,
         id: int,
         *,
-        auth_method: typing.Optional[UpdateMlRequestAuthMethod] = OMIT,
+        auth_method: typing.Optional[AuthMethodEnum] = OMIT,
+        auto_update: typing.Optional[bool] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
         basic_auth_user: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        extra_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        extra_params: typing.Optional[typing.Any] = OMIT,
         is_interactive: typing.Optional[bool] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        timeout: typing.Optional[int] = OMIT,
+        timeout: typing.Optional[float] = OMIT,
         title: typing.Optional[str] = OMIT,
         url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -777,35 +805,38 @@ class AsyncMlClient:
         ----------
         id : int
         
-        auth_method : typing.Optional[UpdateMlRequestAuthMethod]
-            Auth method
+        auth_method : typing.Optional[AuthMethodEnum]
+        
+        auto_update : typing.Optional[bool]
+            If false, model version is set by the user, if true - getting latest version from backend.
         
         basic_auth_pass : typing.Optional[str]
-            Basic auth password
         
         basic_auth_user : typing.Optional[str]
-            Basic auth user
+            HTTP Basic Auth user
         
         description : typing.Optional[str]
-            Description
+            Description for the machine learning backend
         
-        extra_params : typing.Optional[typing.Dict[str, typing.Any]]
-            Extra parameters
+        extra_params : typing.Optional[typing.Any]
+            Any extra parameters passed to the ML Backend during the setup
         
         is_interactive : typing.Optional[bool]
-            Is interactive
+            Used to interactively annotate tasks. If true, model returns one list with results
+        
+        model_version : typing.Optional[str]
+            Current model version associated with this machine learning backend
         
         project : typing.Optional[int]
-            Project ID
         
-        timeout : typing.Optional[int]
+        timeout : typing.Optional[float]
             Response model timeout
         
         title : typing.Optional[str]
-            Title
+            Name of the machine learning backend
         
         url : typing.Optional[str]
-            ML backend URL
+            URL for the machine learning model server
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -837,11 +868,13 @@ class AsyncMlClient:
         _response = await self._raw_client.update(
             id,
             auth_method=auth_method,
+            auto_update=auto_update,
             basic_auth_pass=basic_auth_pass,
             basic_auth_user=basic_auth_user,
             description=description,
             extra_params=extra_params,
             is_interactive=is_interactive,
+            model_version=model_version,
             project=project,
             timeout=timeout,
             title=title,

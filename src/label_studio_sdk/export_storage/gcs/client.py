@@ -69,14 +69,17 @@ class GcsClient:
     def create(
         self,
         *,
+        project: int,
         bucket: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsExportStorage:
         """
@@ -84,17 +87,20 @@ class GcsClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         bucket : typing.Optional[str]
             GCS bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -102,11 +108,16 @@ class GcsClient:
         prefix : typing.Optional[str]
             GCS bucket prefix
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -123,17 +134,22 @@ class GcsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.gcs.create()
+        client.export_storage.gcs.create(
+            project=1,
+        )
         """
         _response = self._raw_client.create(
+            project=project,
             bucket=bucket,
             can_delete_objects=can_delete_objects,
             description=description,
             google_application_credentials=google_application_credentials,
             google_project_id=google_project_id,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -141,6 +157,7 @@ class GcsClient:
     def validate(
         self,
         *,
+        project: int,
         bucket: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -148,8 +165,10 @@ class GcsClient:
         google_project_id: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -157,17 +176,20 @@ class GcsClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         bucket : typing.Optional[str]
             GCS bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -178,11 +200,16 @@ class GcsClient:
         prefix : typing.Optional[str]
             GCS bucket prefix
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -198,9 +225,12 @@ class GcsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.gcs.validate()
+        client.export_storage.gcs.validate(
+            project=1,
+        )
         """
         _response = self._raw_client.validate(
+            project=project,
             bucket=bucket,
             can_delete_objects=can_delete_objects,
             description=description,
@@ -208,8 +238,10 @@ class GcsClient:
             google_project_id=google_project_id,
             id=id,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -284,7 +316,10 @@ class GcsClient:
         google_project_id: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsExportStorage:
         """
@@ -298,13 +333,13 @@ class GcsClient:
             GCS bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -313,10 +348,18 @@ class GcsClient:
             GCS bucket prefix
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -346,7 +389,10 @@ class GcsClient:
             google_project_id=google_project_id,
             prefix=prefix,
             project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -448,14 +494,17 @@ class AsyncGcsClient:
     async def create(
         self,
         *,
+        project: int,
         bucket: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsExportStorage:
         """
@@ -463,17 +512,20 @@ class AsyncGcsClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         bucket : typing.Optional[str]
             GCS bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -481,11 +533,16 @@ class AsyncGcsClient:
         prefix : typing.Optional[str]
             GCS bucket prefix
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -507,20 +564,25 @@ class AsyncGcsClient:
 
 
         async def main() -> None:
-            await client.export_storage.gcs.create()
+            await client.export_storage.gcs.create(
+                project=1,
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
+            project=project,
             bucket=bucket,
             can_delete_objects=can_delete_objects,
             description=description,
             google_application_credentials=google_application_credentials,
             google_project_id=google_project_id,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -528,6 +590,7 @@ class AsyncGcsClient:
     async def validate(
         self,
         *,
+        project: int,
         bucket: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -535,8 +598,10 @@ class AsyncGcsClient:
         google_project_id: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -544,17 +609,20 @@ class AsyncGcsClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         bucket : typing.Optional[str]
             GCS bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -565,11 +633,16 @@ class AsyncGcsClient:
         prefix : typing.Optional[str]
             GCS bucket prefix
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -590,12 +663,15 @@ class AsyncGcsClient:
 
 
         async def main() -> None:
-            await client.export_storage.gcs.validate()
+            await client.export_storage.gcs.validate(
+                project=1,
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.validate(
+            project=project,
             bucket=bucket,
             can_delete_objects=can_delete_objects,
             description=description,
@@ -603,8 +679,10 @@ class AsyncGcsClient:
             google_project_id=google_project_id,
             id=id,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -695,7 +773,10 @@ class AsyncGcsClient:
         google_project_id: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsExportStorage:
         """
@@ -709,13 +790,13 @@ class AsyncGcsClient:
             GCS bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -724,10 +805,18 @@ class AsyncGcsClient:
             GCS bucket prefix
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -765,7 +854,10 @@ class AsyncGcsClient:
             google_project_id=google_project_id,
             prefix=prefix,
             project=project,
+            regex_filter=regex_filter,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data

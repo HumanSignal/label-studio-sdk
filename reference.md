@@ -1237,7 +1237,7 @@ Action which was performed in the last annotation history item
 <dl>
 <dd>
 
-**selected_items:** `typing.Optional[SelectedItemsRequest]` 
+**selected_items:** `typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems]` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
     
 </dd>
 </dl>
@@ -1480,19 +1480,6 @@ client = LabelStudio(
 
 client.annotations.update(
     id=1,
-    ground_truth=True,
-    result=[
-        {
-            "from_name": "bboxes",
-            "image_rotation": 0,
-            "original_height": 1080,
-            "original_width": 1920,
-            "to_name": "image",
-            "type": "rectanglelabels",
-            "value": {"height": 60, "rotation": 0, "values": {"rectanglelabels": ["Person"]}, "width": 50, "x": 20, "y": 30}
-        }
-    ],
-    was_cancelled=False,
 )
 
 ```
@@ -1517,7 +1504,7 @@ client.annotations.update(
 <dl>
 <dd>
 
-**completed_by:** `typing.Optional[int]` — User ID of the person who created this annotation
+**bulk_created:** `typing.Optional[bool]` — Annotation was created in bulk mode
     
 </dd>
 </dl>
@@ -1525,7 +1512,7 @@ client.annotations.update(
 <dl>
 <dd>
 
-**ground_truth:** `typing.Optional[bool]` — This annotation is a Ground Truth
+**completed_by:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -1533,7 +1520,76 @@ client.annotations.update(
 <dl>
 <dd>
 
-**lead_time:** `typing.Optional[float]` — How much time it took to annotate the task (in seconds)
+**draft_created_at:** `typing.Optional[datetime.datetime]` — Draft creation time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ground_truth:** `typing.Optional[bool]` — This annotation is a Ground Truth (ground_truth)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**import_id:** `typing.Optional[int]` — Original annotation ID that was at the import step or NULL if this annotation wasn't imported
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_action:** `typing.Optional[AnnotationHistoryActionEnum]` 
+
+Action which was performed in the last annotation history item
+
+* `prediction` - Created from prediction
+* `propagated_annotation` - Created from another annotation
+* `imported` - Imported
+* `submitted` - Submitted
+* `updated` - Updated
+* `skipped` - Skipped
+* `accepted` - Accepted
+* `rejected` - Rejected
+* `fixed_and_accepted` - Fixed and accepted
+* `deleted_review` - Deleted review
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_created_by:** `typing.Optional[int]` — User who created the last annotation history item
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lead_time:** `typing.Optional[float]` — How much time it took to annotate the task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_annotation:** `typing.Optional[int]` — Points to the parent annotation from which this annotation was created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_prediction:** `typing.Optional[int]` — Points to the prediction from which this annotation was created
     
 </dd>
 </dl>
@@ -1549,7 +1605,7 @@ client.annotations.update(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — List of annotation results for the task
     
 </dd>
 </dl>
@@ -1558,6 +1614,14 @@ client.annotations.update(
 <dd>
 
 **task:** `typing.Optional[int]` — Corresponding task for this annotation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**unique_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -1726,19 +1790,6 @@ client = LabelStudio(
 
 client.annotations.create(
     id=1,
-    ground_truth=True,
-    result=[
-        {
-            "from_name": "bboxes",
-            "image_rotation": 0,
-            "original_height": 1080,
-            "original_width": 1920,
-            "to_name": "image",
-            "type": "rectanglelabels",
-            "value": {"height": 60, "rotation": 0, "values": {"rectanglelabels": ["Person"]}, "width": 50, "x": 20, "y": 30}
-        }
-    ],
-    was_cancelled=False,
 )
 
 ```
@@ -1763,63 +1814,7 @@ client.annotations.create(
 <dl>
 <dd>
 
-**completed_by:** `typing.Optional[int]` — User ID of the person who created this annotation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ground_truth:** `typing.Optional[bool]` — This annotation is a Ground Truth
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**lead_time:** `typing.Optional[float]` — How much time it took to annotate the task (in seconds)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID for this annotation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task:** `typing.Optional[int]` — Corresponding task for this annotation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_by:** `typing.Optional[int]` — Last user who updated this annotation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**was_cancelled:** `typing.Optional[bool]` — User skipped the task
+**request:** `AnnotationRequest` 
     
 </dd>
 </dl>
@@ -2656,95 +2651,7 @@ client.users.update_current_user()
 <dl>
 <dd>
 
-**active_organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**allow_newsletters:** `typing.Optional[bool]` — Allow sending newsletters to user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_hotkeys:** `typing.Optional[typing.Any]` — Custom keyboard shortcuts configuration for the user interface
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**date_joined:** `typing.Optional[datetime.datetime]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_notification_settings:** `typing.Optional[typing.Any]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**first_name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_email_verified:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**onboarding_state:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**username:** `typing.Optional[str]` 
+**request:** `PatchedLseUserSerializerUpdateRequest` 
     
 </dd>
 </dl>
@@ -3193,7 +3100,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.users.create()
+client.users.create(
+    username="username",
+)
 
 ```
 </dd>
@@ -3209,7 +3118,7 @@ client.users.create()
 <dl>
 <dd>
 
-**allow_newsletters:** `typing.Optional[bool]` — Whether the user allows newsletters
+**username:** `str` 
     
 </dd>
 </dl>
@@ -3217,7 +3126,7 @@ client.users.create()
 <dl>
 <dd>
 
-**avatar:** `typing.Optional[str]` — Avatar URL of the user
+**active_organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -3225,7 +3134,7 @@ client.users.create()
 <dl>
 <dd>
 
-**email:** `typing.Optional[str]` — Email of the user
+**allow_newsletters:** `typing.Optional[bool]` — Allow sending newsletters to user
     
 </dd>
 </dl>
@@ -3233,7 +3142,7 @@ client.users.create()
 <dl>
 <dd>
 
-**first_name:** `typing.Optional[str]` — First name of the user
+**custom_hotkeys:** `typing.Optional[typing.Any]` — Custom keyboard shortcuts configuration for the user interface
     
 </dd>
 </dl>
@@ -3241,7 +3150,7 @@ client.users.create()
 <dl>
 <dd>
 
-**id:** `typing.Optional[int]` — User ID
+**date_joined:** `typing.Optional[datetime.datetime]` 
     
 </dd>
 </dl>
@@ -3249,7 +3158,7 @@ client.users.create()
 <dl>
 <dd>
 
-**initials:** `typing.Optional[str]` — Initials of the user
+**email:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -3257,7 +3166,7 @@ client.users.create()
 <dl>
 <dd>
 
-**last_name:** `typing.Optional[str]` — Last name of the user
+**first_name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -3265,7 +3174,7 @@ client.users.create()
 <dl>
 <dd>
 
-**phone:** `typing.Optional[str]` — Phone number of the user
+**last_name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -3273,7 +3182,15 @@ client.users.create()
 <dl>
 <dd>
 
-**username:** `typing.Optional[str]` — Username of the user
+**password:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -3504,71 +3421,7 @@ client.users.update(
 <dl>
 <dd>
 
-**allow_newsletters:** `typing.Optional[bool]` — Whether the user allows newsletters
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avatar:** `typing.Optional[str]` — Avatar URL of the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `typing.Optional[str]` — Email of the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**first_name:** `typing.Optional[str]` — First name of the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_user_id:** `typing.Optional[int]` — User ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**initials:** `typing.Optional[str]` — Initials of the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_name:** `typing.Optional[str]` — Last name of the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone:** `typing.Optional[str]` — Phone number of the user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**username:** `typing.Optional[str]` — Username of the user
+**request:** `PatchedLseUserSerializerUpdateRequest` 
     
 </dd>
 </dl>
@@ -4543,7 +4396,6 @@ Perform a Data Manager action with the selected tasks and filters. Note: More co
 ```python
 from label_studio_sdk import LabelStudio
 from label_studio_sdk.environment import LabelStudioEnvironment
-from label_studio_sdk.actions import CreateActionsRequestFilters, CreateActionsRequestFiltersItemsItem, CreateActionsRequestSelectedItemsExcluded
 
 client = LabelStudio(
     api_key="<value>",
@@ -4553,28 +4405,6 @@ client = LabelStudio(
 client.actions.create(
     id="delete_annotators",
     project=1,
-    filters=CreateActionsRequestFilters(
-        conjunction="or",
-        items=[
-            CreateActionsRequestFiltersItemsItem(
-                filter="filter:tasks:id",
-                operator="greater",
-                type="Number",
-                value=123,
-            )
-        ],
-    ),
-    ordering=[
-        "tasks:total_annotations"
-    ],
-    selected_items=CreateActionsRequestSelectedItemsExcluded(
-        all_=True,
-        excluded=[
-            124,
-            125,
-            126
-        ],
-    ),
 )
 
 ```
@@ -4615,7 +4445,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**filters:** `typing.Optional[CreateActionsRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+**filters:** `typing.Optional[PrepareParamsFiltersRequest]` 
     
 </dd>
 </dl>
@@ -4623,7 +4453,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**ordering:** `typing.Optional[typing.List[CreateActionsRequestOrderingItem]]` — List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+**ordering:** `typing.Optional[PrepareParamsOrderingRequest]` 
     
 </dd>
 </dl>
@@ -4631,7 +4461,7 @@ client.actions.create(
 <dl>
 <dd>
 
-**selected_items:** `typing.Optional[CreateActionsRequestSelectedItems]` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+**selected_items:** `typing.Optional[PrepareParamsRequestRequestSelectedItems]` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
     
 </dd>
 </dl>
@@ -4774,15 +4604,7 @@ client.views.create()
 <dl>
 <dd>
 
-**data:** `typing.Optional[CreateViewsRequestData]` — Custom view data
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
+**request:** `ViewRequestRequest` 
     
 </dd>
 </dl>
@@ -5166,7 +4988,7 @@ client.views.update(
 <dl>
 <dd>
 
-**data:** `typing.Optional[UpdateViewsRequestData]` — Custom view data
+**data:** `typing.Optional[ViewDataRequestRequest]` 
     
 </dd>
 </dl>
@@ -9385,7 +9207,10 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.ml.create()
+client.ml.create(
+    project=1,
+    url="url",
+)
 
 ```
 </dd>
@@ -9401,7 +9226,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**auth_method:** `typing.Optional[CreateMlRequestAuthMethod]` — Auth method
+**project:** `int` 
     
 </dd>
 </dl>
@@ -9409,7 +9234,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**basic_auth_pass:** `typing.Optional[str]` — Basic auth password
+**url:** `str` — URL for the machine learning model server
     
 </dd>
 </dl>
@@ -9417,7 +9242,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**basic_auth_user:** `typing.Optional[str]` — Basic auth user
+**auth_method:** `typing.Optional[AuthMethodEnum]` 
     
 </dd>
 </dl>
@@ -9425,7 +9250,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Description
+**auto_update:** `typing.Optional[bool]` — If false, model version is set by the user, if true - getting latest version from backend.
     
 </dd>
 </dl>
@@ -9433,7 +9258,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**extra_params:** `typing.Optional[typing.Dict[str, typing.Any]]` — Extra parameters
+**basic_auth_pass:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -9441,7 +9266,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**is_interactive:** `typing.Optional[bool]` — Is interactive
+**basic_auth_user:** `typing.Optional[str]` — HTTP Basic Auth user
     
 </dd>
 </dl>
@@ -9449,7 +9274,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**description:** `typing.Optional[str]` — Description for the machine learning backend
     
 </dd>
 </dl>
@@ -9457,7 +9282,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**timeout:** `typing.Optional[int]` — Response model timeout
+**extra_params:** `typing.Optional[typing.Any]` — Any extra parameters passed to the ML Backend during the setup
     
 </dd>
 </dl>
@@ -9465,7 +9290,7 @@ client.ml.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Title
+**is_interactive:** `typing.Optional[bool]` — Used to interactively annotate tasks. If true, model returns one list with results
     
 </dd>
 </dl>
@@ -9473,7 +9298,23 @@ client.ml.create()
 <dl>
 <dd>
 
-**url:** `typing.Optional[str]` — ML backend URL
+**model_version:** `typing.Optional[str]` — Current model version associated with this machine learning backend
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**timeout:** `typing.Optional[float]` — Response model timeout
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Name of the machine learning backend
     
 </dd>
 </dl>
@@ -9715,7 +9556,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**auth_method:** `typing.Optional[UpdateMlRequestAuthMethod]` — Auth method
+**auth_method:** `typing.Optional[AuthMethodEnum]` 
     
 </dd>
 </dl>
@@ -9723,7 +9564,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**basic_auth_pass:** `typing.Optional[str]` — Basic auth password
+**auto_update:** `typing.Optional[bool]` — If false, model version is set by the user, if true - getting latest version from backend.
     
 </dd>
 </dl>
@@ -9731,7 +9572,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**basic_auth_user:** `typing.Optional[str]` — Basic auth user
+**basic_auth_pass:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -9739,7 +9580,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Description
+**basic_auth_user:** `typing.Optional[str]` — HTTP Basic Auth user
     
 </dd>
 </dl>
@@ -9747,7 +9588,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**extra_params:** `typing.Optional[typing.Dict[str, typing.Any]]` — Extra parameters
+**description:** `typing.Optional[str]` — Description for the machine learning backend
     
 </dd>
 </dl>
@@ -9755,7 +9596,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**is_interactive:** `typing.Optional[bool]` — Is interactive
+**extra_params:** `typing.Optional[typing.Any]` — Any extra parameters passed to the ML Backend during the setup
     
 </dd>
 </dl>
@@ -9763,7 +9604,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**is_interactive:** `typing.Optional[bool]` — Used to interactively annotate tasks. If true, model returns one list with results
     
 </dd>
 </dl>
@@ -9771,7 +9612,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**timeout:** `typing.Optional[int]` — Response model timeout
+**model_version:** `typing.Optional[str]` — Current model version associated with this machine learning backend
     
 </dd>
 </dl>
@@ -9779,7 +9620,7 @@ client.ml.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Title
+**project:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -9787,7 +9628,23 @@ client.ml.update(
 <dl>
 <dd>
 
-**url:** `typing.Optional[str]` — ML backend URL
+**timeout:** `typing.Optional[float]` — Response model timeout
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Name of the machine learning backend
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**url:** `typing.Optional[str]` — URL for the machine learning model server
     
 </dd>
 </dl>
@@ -10834,19 +10691,12 @@ client = LabelStudio(
 )
 
 client.predictions.create(
-    model_version="yolo-v8",
     result=[
         {
-            "from_name": "bboxes",
-            "image_rotation": 0,
-            "original_height": 1080,
-            "original_width": 1920,
-            "to_name": "image",
-            "type": "rectanglelabels",
-            "value": {"height": 60, "rotation": 0, "values": {"rectanglelabels": ["Person"]}, "width": 50, "x": 20, "y": 30}
+            "key": "value"
         }
     ],
-    score=0.95,
+    task=1,
 )
 
 ```
@@ -10863,31 +10713,7 @@ client.predictions.create(
 <dl>
 <dd>
 
-**model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**score:** `typing.Optional[float]` — Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task:** `typing.Optional[int]` — Task ID for which the prediction is created
+**request:** `PredictionRequest` 
     
 </dd>
 </dl>
@@ -11090,19 +10916,6 @@ client = LabelStudio(
 
 client.predictions.update(
     id=1,
-    model_version="yolo-v8",
-    result=[
-        {
-            "from_name": "bboxes",
-            "image_rotation": 0,
-            "original_height": 1080,
-            "original_width": 1920,
-            "to_name": "image",
-            "type": "rectanglelabels",
-            "value": {"height": 60, "rotation": 0, "values": {"rectanglelabels": ["Person"]}, "width": 50, "x": 20, "y": 30}
-        }
-    ],
-    score=0.95,
 )
 
 ```
@@ -11127,6 +10940,38 @@ client.predictions.update(
 <dl>
 <dd>
 
+**cluster:** `typing.Optional[int]` — Cluster for the current prediction
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mislabeling:** `typing.Optional[float]` — Related task mislabeling score
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model:** `typing.Optional[int]` — An ML Backend instance that created the prediction.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_run:** `typing.Optional[int]` — A run of a ModelVersion that created the prediction.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
     
 </dd>
@@ -11135,7 +10980,7 @@ client.predictions.update(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+**neighbors:** `typing.Optional[typing.Any]` — Array of task IDs of the closest neighbors
     
 </dd>
 </dl>
@@ -11143,7 +10988,7 @@ client.predictions.update(
 <dl>
 <dd>
 
-**score:** `typing.Optional[float]` — Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
+**project:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -11151,7 +10996,23 @@ client.predictions.update(
 <dl>
 <dd>
 
-**task:** `typing.Optional[int]` — Task ID for which the prediction is created
+**result:** `typing.Optional[typing.List[typing.Dict[str, typing.Any]]]` — List of prediction results for the task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**score:** `typing.Optional[float]` — Prediction score
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -11706,7 +11567,6 @@ client = LabelStudio(
 client.project_templates.create_project_from_template(
     id=1,
     title="title",
-    workspace_id=1,
 )
 
 ```
@@ -11739,7 +11599,7 @@ client.project_templates.create_project_from_template(
 <dl>
 <dd>
 
-**workspace_id:** `int` — A unique integer value identifying the workspace in which to create the project.
+**description:** `typing.Optional[str]` — A description for the project.
     
 </dd>
 </dl>
@@ -11747,7 +11607,7 @@ client.project_templates.create_project_from_template(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — A description for the project.
+**workspace_id:** `typing.Optional[int]` — A unique integer value identifying the workspace in which to create the project.
     
 </dd>
 </dl>
@@ -16821,7 +16681,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.export_storage.azure.create()
+client.export_storage.azure.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -16833,6 +16695,14 @@ client.export_storage.azure.create()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -16869,7 +16739,7 @@ client.export_storage.azure.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -16885,7 +16755,7 @@ client.export_storage.azure.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -16893,7 +16763,23 @@ client.export_storage.azure.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -16948,7 +16834,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.export_storage.azure.validate()
+client.export_storage.azure.validate(
+    project=1,
+)
 
 ```
 </dd>
@@ -16960,6 +16848,14 @@ client.export_storage.azure.validate()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -16996,7 +16892,7 @@ client.export_storage.azure.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -17020,7 +16916,7 @@ client.export_storage.azure.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -17028,7 +16924,23 @@ client.export_storage.azure.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -17287,7 +17199,7 @@ client.export_storage.azure.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -17303,7 +17215,7 @@ client.export_storage.azure.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -17311,7 +17223,31 @@ client.export_storage.azure.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -18277,7 +18213,165 @@ client.export_storage.databricks.create(
 <dl>
 <dd>
 
-**request:** `DatabricksExportStorageRequest` 
+**catalog:** `str` — UC catalog name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `str` — Databricks workspace base URL (https://...)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**schema:** `str` — UC schema name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**volume:** `str` — UC volume name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Export path prefix under the volume
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_timeout_s:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_chunk_bytes:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
     
 </dd>
 </dl>
@@ -18360,7 +18454,173 @@ client.export_storage.databricks.validate(
 <dl>
 <dd>
 
-**request:** `DatabricksExportStorageRequest` 
+**catalog:** `str` — UC catalog name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `str` — Databricks workspace base URL (https://...)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**schema:** `str` — UC schema name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**volume:** `str` — UC volume name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Export path prefix under the volume
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_timeout_s:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_chunk_bytes:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
     
 </dd>
 </dl>
@@ -18667,38 +18927,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **prefix:** `typing.Optional[str]` — Export path prefix under the volume
     
 </dd>
@@ -18739,14 +18967,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**status:** `typing.Optional[StorageStatusEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **stream_chunk_bytes:** `typing.Optional[int]` 
     
 </dd>
@@ -18780,14 +19000,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dd>
 
 **token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
     
 </dd>
 </dl>
@@ -19027,7 +19239,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.export_storage.gcs.create()
+client.export_storage.gcs.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -19043,6 +19257,14 @@ client.export_storage.gcs.create()
 <dl>
 <dd>
 
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **bucket:** `typing.Optional[str]` — GCS bucket name
     
 </dd>
@@ -19051,7 +19273,7 @@ client.export_storage.gcs.create()
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -19059,7 +19281,7 @@ client.export_storage.gcs.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -19067,7 +19289,7 @@ client.export_storage.gcs.create()
 <dl>
 <dd>
 
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
     
 </dd>
 </dl>
@@ -19091,7 +19313,7 @@ client.export_storage.gcs.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -19099,7 +19321,23 @@ client.export_storage.gcs.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -19154,7 +19392,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.export_storage.gcs.validate()
+client.export_storage.gcs.validate(
+    project=1,
+)
 
 ```
 </dd>
@@ -19170,6 +19410,14 @@ client.export_storage.gcs.validate()
 <dl>
 <dd>
 
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **bucket:** `typing.Optional[str]` — GCS bucket name
     
 </dd>
@@ -19178,7 +19426,7 @@ client.export_storage.gcs.validate()
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -19186,7 +19434,7 @@ client.export_storage.gcs.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -19194,7 +19442,7 @@ client.export_storage.gcs.validate()
 <dl>
 <dd>
 
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
     
 </dd>
 </dl>
@@ -19226,7 +19474,7 @@ client.export_storage.gcs.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -19234,7 +19482,23 @@ client.export_storage.gcs.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -19469,7 +19733,7 @@ client.export_storage.gcs.update(
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -19477,7 +19741,7 @@ client.export_storage.gcs.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -19485,7 +19749,7 @@ client.export_storage.gcs.update(
 <dl>
 <dd>
 
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
     
 </dd>
 </dl>
@@ -19509,7 +19773,7 @@ client.export_storage.gcs.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -19517,7 +19781,31 @@ client.export_storage.gcs.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -21155,7 +21443,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.export_storage.local.create()
+client.export_storage.local.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -21171,7 +21461,7 @@ client.export_storage.local.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**project:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -21179,7 +21469,7 @@ client.export_storage.local.create()
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` — Path to local directory
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -21187,7 +21477,15 @@ client.export_storage.local.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` — Local path
     
 </dd>
 </dl>
@@ -21203,7 +21501,7 @@ client.export_storage.local.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -21211,7 +21509,15 @@ client.export_storage.local.create()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -21266,7 +21572,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.export_storage.local.validate()
+client.export_storage.local.validate(
+    project=1,
+)
 
 ```
 </dd>
@@ -21282,7 +21590,23 @@ client.export_storage.local.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -21298,15 +21622,7 @@ client.export_storage.local.validate()
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` — Path to local directory
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
+**path:** `typing.Optional[str]` — Local path
     
 </dd>
 </dl>
@@ -21322,7 +21638,7 @@ client.export_storage.local.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -21330,7 +21646,15 @@ client.export_storage.local.validate()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -21557,7 +21881,7 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -21565,7 +21889,7 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` — Path to local directory
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -21573,7 +21897,15 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**path:** `typing.Optional[str]` — Local path
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -21589,7 +21921,7 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -21597,7 +21929,15 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -21807,7 +22147,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.export_storage.redis.create()
+client.export_storage.redis.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -21823,7 +22165,7 @@ client.export_storage.redis.create()
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+**project:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -21831,7 +22173,7 @@ client.export_storage.redis.create()
 <dl>
 <dd>
 
-**db:** `typing.Optional[int]` — Database ID of database to use
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -21839,7 +22181,15 @@ client.export_storage.redis.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**db:** `typing.Optional[int]` — Server Database
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -21879,7 +22229,7 @@ client.export_storage.redis.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -21887,7 +22237,23 @@ client.export_storage.redis.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -21942,7 +22308,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.export_storage.redis.validate()
+client.export_storage.redis.validate(
+    project=1,
+)
 
 ```
 </dd>
@@ -21958,7 +22326,7 @@ client.export_storage.redis.validate()
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+**project:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -21966,7 +22334,7 @@ client.export_storage.redis.validate()
 <dl>
 <dd>
 
-**db:** `typing.Optional[int]` — Database ID of database to use
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -21974,7 +22342,15 @@ client.export_storage.redis.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**db:** `typing.Optional[int]` — Server Database
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -22022,7 +22398,7 @@ client.export_storage.redis.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -22030,7 +22406,23 @@ client.export_storage.redis.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -22257,7 +22649,7 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -22265,7 +22657,7 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
-**db:** `typing.Optional[int]` — Database ID of database to use
+**db:** `typing.Optional[int]` — Server Database
     
 </dd>
 </dl>
@@ -22273,7 +22665,7 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -22313,7 +22705,7 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -22321,7 +22713,31 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -22531,7 +22947,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.export_storage.s3.create()
+client.export_storage.s3.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -22543,6 +22961,14 @@ client.export_storage.s3.create()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -22587,7 +23013,7 @@ client.export_storage.s3.create()
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -22595,7 +23021,7 @@ client.export_storage.s3.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -22611,7 +23037,7 @@ client.export_storage.s3.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -22635,7 +23061,23 @@ client.export_storage.s3.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -22690,7 +23132,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.export_storage.s3.validate()
+client.export_storage.s3.validate(
+    project=1,
+)
 
 ```
 </dd>
@@ -22702,6 +23146,14 @@ client.export_storage.s3.validate()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -22746,7 +23198,7 @@ client.export_storage.s3.validate()
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -22754,7 +23206,7 @@ client.export_storage.s3.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -22778,7 +23230,7 @@ client.export_storage.s3.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -22802,7 +23254,23 @@ client.export_storage.s3.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -23069,7 +23537,7 @@ client.export_storage.s3.update(
 <dl>
 <dd>
 
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
 </dl>
@@ -23077,7 +23545,7 @@ client.export_storage.s3.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -23093,7 +23561,15 @@ client.export_storage.s3.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -23117,7 +23593,23 @@ client.export_storage.s3.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -24083,7 +24575,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.import_storage.azure.create()
+client.import_storage.azure.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -24095,6 +24589,14 @@ client.import_storage.azure.create()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -24123,7 +24625,7 @@ client.import_storage.azure.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -24139,7 +24641,7 @@ client.import_storage.azure.create()
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+**presign:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -24147,7 +24649,7 @@ client.import_storage.azure.create()
 <dl>
 <dd>
 
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
 </dl>
@@ -24155,7 +24657,7 @@ client.import_storage.azure.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the container content
     
 </dd>
 </dl>
@@ -24163,7 +24665,7 @@ client.import_storage.azure.create()
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -24171,7 +24673,7 @@ client.import_storage.azure.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -24179,7 +24681,15 @@ client.import_storage.azure.create()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -24234,7 +24744,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.import_storage.azure.validate()
+client.import_storage.azure.validate(
+    project=1,
+)
 
 ```
 </dd>
@@ -24246,6 +24758,14 @@ client.import_storage.azure.validate()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -24274,7 +24794,7 @@ client.import_storage.azure.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -24298,7 +24818,7 @@ client.import_storage.azure.validate()
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+**presign:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -24306,7 +24826,7 @@ client.import_storage.azure.validate()
 <dl>
 <dd>
 
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
 </dl>
@@ -24314,7 +24834,7 @@ client.import_storage.azure.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the container content
     
 </dd>
 </dl>
@@ -24322,7 +24842,7 @@ client.import_storage.azure.validate()
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -24330,7 +24850,7 @@ client.import_storage.azure.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -24338,7 +24858,15 @@ client.import_storage.azure.validate()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -24589,7 +25117,7 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -24605,7 +25133,7 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+**presign:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -24613,7 +25141,7 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
 </dl>
@@ -24621,7 +25149,7 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -24629,7 +25157,7 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the container content
     
 </dd>
 </dl>
@@ -24637,7 +25165,7 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -24645,7 +25173,23 @@ client.import_storage.azure.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -25627,7 +26171,181 @@ client.import_storage.databricks.create(
 <dl>
 <dd>
 
-**request:** `DatabricksImportStorageRequest` 
+**catalog:** `str` — UC catalog name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `str` — Databricks workspace base URL (https://...)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**schema:** `str` — UC schema name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**volume:** `str` — UC volume name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Path under the volume
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign not supported; always proxied
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_timeout_s:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_chunk_bytes:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
     
 </dd>
 </dl>
@@ -25710,7 +26428,189 @@ client.import_storage.databricks.validate(
 <dl>
 <dd>
 
-**request:** `DatabricksImportStorageRequest` 
+**catalog:** `str` — UC catalog name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `str` — Databricks workspace base URL (https://...)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**schema:** `str` — UC schema name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**volume:** `str` — UC volume name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_type:** `typing.Optional[AuthTypeEnum]` 
+
+Authentication method: PAT, Databricks SP, or Azure AD SP
+
+* `pat` - Personal Access Token
+* `dbx_sp` - Databricks Service Principal
+* `azure_ad_sp` - Azure AD Service Principal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[str]` — Service principal client/application ID (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` — Service principal client secret (required for SP modes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Path under the volume
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign not supported; always proxied
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Unused for Databricks; kept for compatibility
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_timeout_s:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_chunk_bytes:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_id:** `typing.Optional[str]` — Azure AD tenant ID (required for Azure AD SP mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Generate blob URLs in tasks
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verify_tls:** `typing.Optional[bool]` — Verify TLS certificates
     
 </dd>
 </dl>
@@ -26009,38 +26909,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Any]` — Meta and debug information about storage processes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **prefix:** `typing.Optional[str]` — Path under the volume
     
 </dd>
@@ -26105,14 +26973,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dl>
 <dd>
 
-**status:** `typing.Optional[StorageStatusEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **stream_chunk_bytes:** `typing.Optional[int]` 
     
 </dd>
@@ -26146,14 +27006,6 @@ Authentication method: PAT, Databricks SP, or Azure AD SP
 <dd>
 
 **token:** `typing.Optional[str]` — Databricks personal access token (required for PAT mode)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
     
 </dd>
 </dl>
@@ -26393,7 +27245,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.import_storage.gcs.create()
+client.import_storage.gcs.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -26409,6 +27263,14 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **bucket:** `typing.Optional[str]` — GCS bucket name
     
 </dd>
@@ -26417,7 +27279,7 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -26425,7 +27287,7 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
     
 </dd>
 </dl>
@@ -26449,7 +27311,7 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+**presign:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -26457,7 +27319,7 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
 </dl>
@@ -26465,7 +27327,7 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -26473,7 +27335,7 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -26481,7 +27343,7 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -26489,7 +27351,15 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -26544,7 +27414,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.import_storage.gcs.validate()
+client.import_storage.gcs.validate(
+    project=1,
+)
 
 ```
 </dd>
@@ -26560,6 +27432,14 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **bucket:** `typing.Optional[str]` — GCS bucket name
     
 </dd>
@@ -26568,7 +27448,7 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -26576,7 +27456,7 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
     
 </dd>
 </dl>
@@ -26608,7 +27488,7 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+**presign:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -26616,7 +27496,7 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
 </dl>
@@ -26624,7 +27504,7 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -26632,7 +27512,7 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -26640,7 +27520,7 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -26648,7 +27528,15 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -26883,7 +27771,7 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -26891,7 +27779,7 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
     
 </dd>
 </dl>
@@ -26915,7 +27803,7 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+**presign:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -26923,7 +27811,7 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
 </dl>
@@ -26931,7 +27819,7 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -26939,7 +27827,7 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -26947,7 +27835,7 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -26955,7 +27843,23 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -28625,7 +29529,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.import_storage.local.create()
+client.import_storage.local.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -28641,7 +29547,7 @@ client.import_storage.local.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**project:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -28649,7 +29555,7 @@ client.import_storage.local.create()
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` — Path to local directory
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -28657,7 +29563,15 @@ client.import_storage.local.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**path:** `typing.Optional[str]` — Local path
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the directory content
     
 </dd>
 </dl>
@@ -28673,7 +29587,7 @@ client.import_storage.local.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -28681,7 +29595,15 @@ client.import_storage.local.create()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -28736,7 +29658,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.import_storage.local.validate()
+client.import_storage.local.validate(
+    project=1,
+)
 
 ```
 </dd>
@@ -28752,7 +29676,15 @@ client.import_storage.local.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -28768,7 +29700,7 @@ client.import_storage.local.validate()
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` — Path to local directory
+**path:** `typing.Optional[str]` — Local path
     
 </dd>
 </dl>
@@ -28776,7 +29708,7 @@ client.import_storage.local.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the directory content
     
 </dd>
 </dl>
@@ -28792,7 +29724,7 @@ client.import_storage.local.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -28800,7 +29732,15 @@ client.import_storage.local.validate()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -29027,7 +29967,7 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -29035,7 +29975,7 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` — Path to local directory
+**path:** `typing.Optional[str]` — Local path
     
 </dd>
 </dl>
@@ -29043,7 +29983,15 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the directory content
     
 </dd>
 </dl>
@@ -29059,7 +30007,7 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -29067,7 +30015,15 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -29277,7 +30233,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.import_storage.redis.create()
+client.import_storage.redis.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -29293,7 +30251,23 @@ client.import_storage.redis.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**db:** `typing.Optional[int]` — Server Database
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -29333,7 +30307,7 @@ client.import_storage.redis.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -29341,7 +30315,7 @@ client.import_storage.redis.create()
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -29349,7 +30323,7 @@ client.import_storage.redis.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -29357,7 +30331,7 @@ client.import_storage.redis.create()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -29412,7 +30386,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.import_storage.redis.validate()
+client.import_storage.redis.validate(
+    project=1,
+)
 
 ```
 </dd>
@@ -29428,7 +30404,23 @@ client.import_storage.redis.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**db:** `typing.Optional[int]` — Server Database
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -29476,7 +30468,7 @@ client.import_storage.redis.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -29484,7 +30476,7 @@ client.import_storage.redis.validate()
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -29492,7 +30484,7 @@ client.import_storage.redis.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**title:** `typing.Optional[str]` — Cloud storage title
     
 </dd>
 </dl>
@@ -29500,7 +30492,7 @@ client.import_storage.redis.validate()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -29727,7 +30719,15 @@ client.import_storage.redis.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**db:** `typing.Optional[int]` — Server Database
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -29767,7 +30767,7 @@ client.import_storage.redis.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -29775,7 +30775,7 @@ client.import_storage.redis.update(
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -29783,7 +30783,7 @@ client.import_storage.redis.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -29791,7 +30791,15 @@ client.import_storage.redis.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -30001,7 +31009,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.import_storage.s3.create()
+client.import_storage.s3.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -30013,6 +31023,14 @@ client.import_storage.s3.create()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -30057,7 +31075,7 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -30073,7 +31091,7 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` — Presign URLs for download
+**presign:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -30081,7 +31099,7 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
 </dl>
@@ -30089,7 +31107,7 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -30097,15 +31115,7 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -30129,7 +31139,7 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -30137,7 +31147,15 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -30192,7 +31210,9 @@ client = LabelStudio(
     environment=LabelStudioEnvironment.DEFAULT,
 )
 
-client.import_storage.s3.validate()
+client.import_storage.s3.validate(
+    project=1,
+)
 
 ```
 </dd>
@@ -30204,6 +31224,14 @@ client.import_storage.s3.validate()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -30248,7 +31276,7 @@ client.import_storage.s3.validate()
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -30272,7 +31300,7 @@ client.import_storage.s3.validate()
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` — Presign URLs for download
+**presign:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -30280,7 +31308,7 @@ client.import_storage.s3.validate()
 <dl>
 <dd>
 
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
 </dl>
@@ -30288,7 +31316,7 @@ client.import_storage.s3.validate()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -30296,15 +31324,7 @@ client.import_storage.s3.validate()
 <dl>
 <dd>
 
-**recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -30328,7 +31348,7 @@ client.import_storage.s3.validate()
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -30336,7 +31356,15 @@ client.import_storage.s3.validate()
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -30603,7 +31631,7 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Storage description
+**description:** `typing.Optional[str]` — Cloud storage description
     
 </dd>
 </dl>
@@ -30619,7 +31647,7 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-**presign:** `typing.Optional[bool]` — Presign URLs for download
+**presign:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -30627,7 +31655,7 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
     
 </dd>
 </dl>
@@ -30635,7 +31663,7 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -30643,7 +31671,7 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-**recursive_scan:** `typing.Optional[bool]` — Scan recursively
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -30651,7 +31679,7 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
 </dl>
@@ -30675,7 +31703,7 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — Storage title
+**synchronizable:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -30683,7 +31711,15 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
     
 </dd>
 </dl>
@@ -38127,7 +39163,7 @@ Assign multiple users to a collection of tasks within a specific project.
 ```python
 from label_studio_sdk import LabelStudio
 from label_studio_sdk.environment import LabelStudioEnvironment
-from label_studio_sdk.projects.assignments import BulkAssignAssignmentsRequestSelectedItemsIncluded
+from label_studio_sdk.projects.assignments import BulkTaskAssigneesRequestRequestSelectedItemsIncluded
 
 client = LabelStudio(
     api_key="<value>",
@@ -38136,7 +39172,7 @@ client = LabelStudio(
 
 client.projects.assignments.bulk_assign(
     id=1,
-    selected_items=BulkAssignAssignmentsRequestSelectedItemsIncluded(
+    selected_items=BulkTaskAssigneesRequestRequestSelectedItemsIncluded(
         all_=True,
     ),
     type="AN",
@@ -38167,7 +39203,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**selected_items:** `BulkAssignAssignmentsRequestSelectedItems` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+**selected_items:** `BulkTaskAssigneesRequestRequestSelectedItems` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
     
 </dd>
 </dl>
@@ -38175,7 +39211,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**type:** `BulkAssignAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
+**type:** `AssignmentTypeEnum` 
     
 </dd>
 </dl>
@@ -38183,7 +39219,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**users:** `typing.List[int]` — List of user IDs to assign
+**users:** `typing.List[int]` 
     
 </dd>
 </dl>
@@ -38191,7 +39227,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**filters:** `typing.Optional[BulkAssignAssignmentsRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+**filters:** `typing.Optional[PrepareParamsFiltersRequest]` 
     
 </dd>
 </dl>
@@ -38379,7 +39415,7 @@ client.projects.assignments.assign(
 <dl>
 <dd>
 
-**type:** `AssignAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
+**type:** `AssignmentTypeEnum` 
     
 </dd>
 </dl>
@@ -38387,7 +39423,7 @@ client.projects.assignments.assign(
 <dl>
 <dd>
 
-**users:** `typing.List[int]` — List of user IDs to assign
+**users:** `typing.List[int]` 
     
 </dd>
 </dl>
@@ -38555,10 +39591,6 @@ client = LabelStudio(
 client.projects.assignments.update(
     id=1,
     task_pk=1,
-    type="AN",
-    users=[
-        1
-    ],
 )
 
 ```
@@ -38591,7 +39623,7 @@ client.projects.assignments.update(
 <dl>
 <dd>
 
-**type:** `UpdateAssignmentsRequestType` — Assignment type. Use AN for annotate or RE for review.
+**type:** `typing.Optional[AssignmentTypeEnum]` 
     
 </dd>
 </dl>
@@ -38599,7 +39631,7 @@ client.projects.assignments.update(
 <dl>
 <dd>
 
-**users:** `typing.List[int]` — List of user IDs to assign
+**users:** `typing.Optional[typing.List[int]]` 
     
 </dd>
 </dl>

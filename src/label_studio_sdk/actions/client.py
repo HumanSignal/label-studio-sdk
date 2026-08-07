@@ -4,12 +4,12 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.prepare_params_filters_request import PrepareParamsFiltersRequest
+from ..types.prepare_params_ordering_request import PrepareParamsOrderingRequest
 from .raw_client import AsyncRawActionsClient, RawActionsClient
-from .types.create_actions_request_filters import CreateActionsRequestFilters
 from .types.create_actions_request_id import CreateActionsRequestId
-from .types.create_actions_request_ordering_item import CreateActionsRequestOrderingItem
-from .types.create_actions_request_selected_items import CreateActionsRequestSelectedItems
 from .types.list_actions_response_item import ListActionsResponseItem
+from .types.prepare_params_request_request_selected_items import PrepareParamsRequestRequestSelectedItems
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -69,9 +69,9 @@ class ActionsClient:
         id: CreateActionsRequestId,
         project: int,
         view: typing.Optional[int] = None,
-        filters: typing.Optional[CreateActionsRequestFilters] = OMIT,
-        ordering: typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]] = OMIT,
-        selected_items: typing.Optional[CreateActionsRequestSelectedItems] = OMIT,
+        filters: typing.Optional[PrepareParamsFiltersRequest] = OMIT,
+        ordering: typing.Optional[PrepareParamsOrderingRequest] = OMIT,
+        selected_items: typing.Optional[PrepareParamsRequestRequestSelectedItems] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -88,13 +88,11 @@ class ActionsClient:
         view : typing.Optional[int]
             View ID (optional, it has higher priority than filters, selectedItems and ordering from the request body payload)
 
-        filters : typing.Optional[CreateActionsRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+        filters : typing.Optional[PrepareParamsFiltersRequest]
 
-        ordering : typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]
-            List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+        ordering : typing.Optional[PrepareParamsOrderingRequest]
 
-        selected_items : typing.Optional[CreateActionsRequestSelectedItems]
+        selected_items : typing.Optional[PrepareParamsRequestRequestSelectedItems]
             Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         request_options : typing.Optional[RequestOptions]
@@ -107,11 +105,6 @@ class ActionsClient:
         Examples
         --------
         from label_studio_sdk import LabelStudio
-        from label_studio_sdk.actions import (
-            CreateActionsRequestFilters,
-            CreateActionsRequestFiltersItemsItem,
-            CreateActionsRequestSelectedItemsExcluded,
-        )
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
@@ -119,22 +112,6 @@ class ActionsClient:
         client.actions.create(
             id="delete_annotators",
             project=1,
-            filters=CreateActionsRequestFilters(
-                conjunction="or",
-                items=[
-                    CreateActionsRequestFiltersItemsItem(
-                        filter="filter:tasks:id",
-                        operator="greater",
-                        type="Number",
-                        value=123,
-                    )
-                ],
-            ),
-            ordering=["tasks:total_annotations"],
-            selected_items=CreateActionsRequestSelectedItemsExcluded(
-                all_=True,
-                excluded=[124, 125, 126],
-            ),
         )
         """
         _response = self._raw_client.create(
@@ -211,9 +188,9 @@ class AsyncActionsClient:
         id: CreateActionsRequestId,
         project: int,
         view: typing.Optional[int] = None,
-        filters: typing.Optional[CreateActionsRequestFilters] = OMIT,
-        ordering: typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]] = OMIT,
-        selected_items: typing.Optional[CreateActionsRequestSelectedItems] = OMIT,
+        filters: typing.Optional[PrepareParamsFiltersRequest] = OMIT,
+        ordering: typing.Optional[PrepareParamsOrderingRequest] = OMIT,
+        selected_items: typing.Optional[PrepareParamsRequestRequestSelectedItems] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -230,13 +207,11 @@ class AsyncActionsClient:
         view : typing.Optional[int]
             View ID (optional, it has higher priority than filters, selectedItems and ordering from the request body payload)
 
-        filters : typing.Optional[CreateActionsRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+        filters : typing.Optional[PrepareParamsFiltersRequest]
 
-        ordering : typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]
-            List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+        ordering : typing.Optional[PrepareParamsOrderingRequest]
 
-        selected_items : typing.Optional[CreateActionsRequestSelectedItems]
+        selected_items : typing.Optional[PrepareParamsRequestRequestSelectedItems]
             Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         request_options : typing.Optional[RequestOptions]
@@ -251,11 +226,6 @@ class AsyncActionsClient:
         import asyncio
 
         from label_studio_sdk import AsyncLabelStudio
-        from label_studio_sdk.actions import (
-            CreateActionsRequestFilters,
-            CreateActionsRequestFiltersItemsItem,
-            CreateActionsRequestSelectedItemsExcluded,
-        )
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
@@ -266,22 +236,6 @@ class AsyncActionsClient:
             await client.actions.create(
                 id="delete_annotators",
                 project=1,
-                filters=CreateActionsRequestFilters(
-                    conjunction="or",
-                    items=[
-                        CreateActionsRequestFiltersItemsItem(
-                            filter="filter:tasks:id",
-                            operator="greater",
-                            type="Number",
-                            value=123,
-                        )
-                    ],
-                ),
-                ordering=["tasks:total_annotations"],
-                selected_items=CreateActionsRequestSelectedItemsExcluded(
-                    all_=True,
-                    excluded=[124, 125, 126],
-                ),
             )
 
 

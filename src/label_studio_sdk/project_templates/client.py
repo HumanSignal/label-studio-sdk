@@ -331,8 +331,8 @@ class ProjectTemplatesClient:
         id: int,
         *,
         title: str,
-        workspace_id: int,
         description: typing.Optional[str] = OMIT,
+        workspace_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseProject:
         """
@@ -351,11 +351,11 @@ class ProjectTemplatesClient:
         title : str
             The title of the project to be created from the template.
 
-        workspace_id : int
-            A unique integer value identifying the workspace in which to create the project.
-
         description : typing.Optional[str]
             A description for the project.
+
+        workspace_id : typing.Optional[int]
+            A unique integer value identifying the workspace in which to create the project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -375,11 +375,10 @@ class ProjectTemplatesClient:
         client.project_templates.create_project_from_template(
             id=1,
             title="title",
-            workspace_id=1,
         )
         """
         _response = self._raw_client.create_project_from_template(
-            id, title=title, workspace_id=workspace_id, description=description, request_options=request_options
+            id, title=title, description=description, workspace_id=workspace_id, request_options=request_options
         )
         return _response.data
 
@@ -743,8 +742,8 @@ class AsyncProjectTemplatesClient:
         id: int,
         *,
         title: str,
-        workspace_id: int,
         description: typing.Optional[str] = OMIT,
+        workspace_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseProject:
         """
@@ -763,11 +762,11 @@ class AsyncProjectTemplatesClient:
         title : str
             The title of the project to be created from the template.
 
-        workspace_id : int
-            A unique integer value identifying the workspace in which to create the project.
-
         description : typing.Optional[str]
             A description for the project.
+
+        workspace_id : typing.Optional[int]
+            A unique integer value identifying the workspace in which to create the project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -792,13 +791,12 @@ class AsyncProjectTemplatesClient:
             await client.project_templates.create_project_from_template(
                 id=1,
                 title="title",
-                workspace_id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create_project_from_template(
-            id, title=title, workspace_id=workspace_id, description=description, request_options=request_options
+            id, title=title, description=description, workspace_id=workspace_id, request_options=request_options
         )
         return _response.data

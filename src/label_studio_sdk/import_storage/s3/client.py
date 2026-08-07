@@ -69,6 +69,7 @@ class S3Client:
     def create(
         self,
         *,
+        project: int,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
@@ -78,11 +79,11 @@ class S3Client:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -92,6 +93,9 @@ class S3Client:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -108,25 +112,21 @@ class S3Client:
             S3 bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             S3 bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        project : typing.Optional[int]
-            Project ID
+            Presigned URLs TTL (in minutes)
 
         recursive_scan : typing.Optional[bool]
-            Scan recursively
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -134,11 +134,13 @@ class S3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -155,9 +157,12 @@ class S3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.s3.create()
+        client.import_storage.s3.create(
+            project=1,
+        )
         """
         _response = self._raw_client.create(
+            project=project,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
@@ -167,11 +172,11 @@ class S3Client:
             prefix=prefix,
             presign=presign,
             presign_ttl=presign_ttl,
-            project=project,
             recursive_scan=recursive_scan,
             regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
             use_blob_urls=use_blob_urls,
             request_options=request_options,
@@ -181,6 +186,7 @@ class S3Client:
     def validate(
         self,
         *,
+        project: int,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
@@ -191,11 +197,11 @@ class S3Client:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -205,6 +211,9 @@ class S3Client:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -221,7 +230,7 @@ class S3Client:
             S3 bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
@@ -230,19 +239,15 @@ class S3Client:
             S3 bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        project : typing.Optional[int]
-            Project ID
+            Presigned URLs TTL (in minutes)
 
         recursive_scan : typing.Optional[bool]
-            Scan recursively
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -250,11 +255,13 @@ class S3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -270,9 +277,12 @@ class S3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.s3.validate()
+        client.import_storage.s3.validate(
+            project=1,
+        )
         """
         _response = self._raw_client.validate(
+            project=project,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
@@ -283,11 +293,11 @@ class S3Client:
             prefix=prefix,
             presign=presign,
             presign_ttl=presign_ttl,
-            project=project,
             recursive_scan=recursive_scan,
             regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
             use_blob_urls=use_blob_urls,
             request_options=request_options,
@@ -371,6 +381,7 @@ class S3Client:
         regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -398,25 +409,24 @@ class S3Client:
             S3 bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             S3 bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
+            Presigned URLs TTL (in minutes)
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
 
         recursive_scan : typing.Optional[bool]
-            Scan recursively
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -424,11 +434,13 @@ class S3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -465,6 +477,7 @@ class S3Client:
             regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
             use_blob_urls=use_blob_urls,
             request_options=request_options,
@@ -569,6 +582,7 @@ class AsyncS3Client:
     async def create(
         self,
         *,
+        project: int,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
@@ -578,11 +592,11 @@ class AsyncS3Client:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -592,6 +606,9 @@ class AsyncS3Client:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -608,25 +625,21 @@ class AsyncS3Client:
             S3 bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             S3 bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        project : typing.Optional[int]
-            Project ID
+            Presigned URLs TTL (in minutes)
 
         recursive_scan : typing.Optional[bool]
-            Scan recursively
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -634,11 +647,13 @@ class AsyncS3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -660,12 +675,15 @@ class AsyncS3Client:
 
 
         async def main() -> None:
-            await client.import_storage.s3.create()
+            await client.import_storage.s3.create(
+                project=1,
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
+            project=project,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
@@ -675,11 +693,11 @@ class AsyncS3Client:
             prefix=prefix,
             presign=presign,
             presign_ttl=presign_ttl,
-            project=project,
             recursive_scan=recursive_scan,
             regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
             use_blob_urls=use_blob_urls,
             request_options=request_options,
@@ -689,6 +707,7 @@ class AsyncS3Client:
     async def validate(
         self,
         *,
+        project: int,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
@@ -699,11 +718,11 @@ class AsyncS3Client:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -713,6 +732,9 @@ class AsyncS3Client:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -729,7 +751,7 @@ class AsyncS3Client:
             S3 bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
@@ -738,19 +760,15 @@ class AsyncS3Client:
             S3 bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        project : typing.Optional[int]
-            Project ID
+            Presigned URLs TTL (in minutes)
 
         recursive_scan : typing.Optional[bool]
-            Scan recursively
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -758,11 +776,13 @@ class AsyncS3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -783,12 +803,15 @@ class AsyncS3Client:
 
 
         async def main() -> None:
-            await client.import_storage.s3.validate()
+            await client.import_storage.s3.validate(
+                project=1,
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.validate(
+            project=project,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
@@ -799,11 +822,11 @@ class AsyncS3Client:
             prefix=prefix,
             presign=presign,
             presign_ttl=presign_ttl,
-            project=project,
             recursive_scan=recursive_scan,
             regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
             use_blob_urls=use_blob_urls,
             request_options=request_options,
@@ -903,6 +926,7 @@ class AsyncS3Client:
         regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -930,25 +954,24 @@ class AsyncS3Client:
             S3 bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             S3 bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
+            Presigned URLs TTL (in minutes)
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
 
         recursive_scan : typing.Optional[bool]
-            Scan recursively
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -956,11 +979,13 @@ class AsyncS3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1005,6 +1030,7 @@ class AsyncS3Client:
             regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
             use_blob_urls=use_blob_urls,
             request_options=request_options,

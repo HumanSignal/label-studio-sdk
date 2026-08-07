@@ -6,9 +6,21 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .annotation_bulk_serializer_with_selected_items_request_selected_items import (
+        AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems,
+    )
+    from .annotation_bulk_serializer_with_selected_items_request_selected_items_excluded import (
+        AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsExcluded,
+    )
+    from .annotation_bulk_serializer_with_selected_items_request_selected_items_included import (
+        AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsIncluded,
+    )
     from .create_bulk_annotations_response_item import CreateBulkAnnotationsResponseItem
     from .delete_bulk_annotations_response import DeleteBulkAnnotationsResponse
 _dynamic_imports: typing.Dict[str, str] = {
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems": ".annotation_bulk_serializer_with_selected_items_request_selected_items",
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsExcluded": ".annotation_bulk_serializer_with_selected_items_request_selected_items_excluded",
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsIncluded": ".annotation_bulk_serializer_with_selected_items_request_selected_items_included",
     "CreateBulkAnnotationsResponseItem": ".create_bulk_annotations_response_item",
     "DeleteBulkAnnotationsResponse": ".delete_bulk_annotations_response",
 }
@@ -35,4 +47,10 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateBulkAnnotationsResponseItem", "DeleteBulkAnnotationsResponse"]
+__all__ = [
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems",
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsExcluded",
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsIncluded",
+    "CreateBulkAnnotationsResponseItem",
+    "DeleteBulkAnnotationsResponse",
+]

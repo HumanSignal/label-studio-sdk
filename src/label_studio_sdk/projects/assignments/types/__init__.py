@@ -6,61 +6,21 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .assign_assignments_request_type import AssignAssignmentsRequestType
-    from .bulk_assign_assignments_request_filters import BulkAssignAssignmentsRequestFilters
-    from .bulk_assign_assignments_request_filters_conjunction import BulkAssignAssignmentsRequestFiltersConjunction
-    from .bulk_assign_assignments_request_filters_items_item import BulkAssignAssignmentsRequestFiltersItemsItem
-    from .bulk_assign_assignments_request_filters_items_item_child_filters_item import (
-        BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItem,
-    )
-    from .bulk_assign_assignments_request_filters_items_item_child_filters_item_filter import (
-        BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemFilter,
-    )
-    from .bulk_assign_assignments_request_filters_items_item_child_filters_item_operator import (
-        BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemOperator,
-    )
-    from .bulk_assign_assignments_request_filters_items_item_child_filters_item_value import (
-        BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemValue,
-    )
-    from .bulk_assign_assignments_request_filters_items_item_filter import (
-        BulkAssignAssignmentsRequestFiltersItemsItemFilter,
-    )
-    from .bulk_assign_assignments_request_filters_items_item_operator import (
-        BulkAssignAssignmentsRequestFiltersItemsItemOperator,
-    )
-    from .bulk_assign_assignments_request_filters_items_item_value import (
-        BulkAssignAssignmentsRequestFiltersItemsItemValue,
-    )
-    from .bulk_assign_assignments_request_selected_items import BulkAssignAssignmentsRequestSelectedItems
-    from .bulk_assign_assignments_request_selected_items_excluded import (
-        BulkAssignAssignmentsRequestSelectedItemsExcluded,
-    )
-    from .bulk_assign_assignments_request_selected_items_included import (
-        BulkAssignAssignmentsRequestSelectedItemsIncluded,
-    )
-    from .bulk_assign_assignments_request_type import BulkAssignAssignmentsRequestType
     from .bulk_assign_assignments_response import BulkAssignAssignmentsResponse
+    from .bulk_task_assignees_request_request_selected_items import BulkTaskAssigneesRequestRequestSelectedItems
+    from .bulk_task_assignees_request_request_selected_items_excluded import (
+        BulkTaskAssigneesRequestRequestSelectedItemsExcluded,
+    )
+    from .bulk_task_assignees_request_request_selected_items_included import (
+        BulkTaskAssigneesRequestRequestSelectedItemsIncluded,
+    )
     from .delete_assignments_request_type import DeleteAssignmentsRequestType
-    from .update_assignments_request_type import UpdateAssignmentsRequestType
 _dynamic_imports: typing.Dict[str, str] = {
-    "AssignAssignmentsRequestType": ".assign_assignments_request_type",
-    "BulkAssignAssignmentsRequestFilters": ".bulk_assign_assignments_request_filters",
-    "BulkAssignAssignmentsRequestFiltersConjunction": ".bulk_assign_assignments_request_filters_conjunction",
-    "BulkAssignAssignmentsRequestFiltersItemsItem": ".bulk_assign_assignments_request_filters_items_item",
-    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItem": ".bulk_assign_assignments_request_filters_items_item_child_filters_item",
-    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemFilter": ".bulk_assign_assignments_request_filters_items_item_child_filters_item_filter",
-    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemOperator": ".bulk_assign_assignments_request_filters_items_item_child_filters_item_operator",
-    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemValue": ".bulk_assign_assignments_request_filters_items_item_child_filters_item_value",
-    "BulkAssignAssignmentsRequestFiltersItemsItemFilter": ".bulk_assign_assignments_request_filters_items_item_filter",
-    "BulkAssignAssignmentsRequestFiltersItemsItemOperator": ".bulk_assign_assignments_request_filters_items_item_operator",
-    "BulkAssignAssignmentsRequestFiltersItemsItemValue": ".bulk_assign_assignments_request_filters_items_item_value",
-    "BulkAssignAssignmentsRequestSelectedItems": ".bulk_assign_assignments_request_selected_items",
-    "BulkAssignAssignmentsRequestSelectedItemsExcluded": ".bulk_assign_assignments_request_selected_items_excluded",
-    "BulkAssignAssignmentsRequestSelectedItemsIncluded": ".bulk_assign_assignments_request_selected_items_included",
-    "BulkAssignAssignmentsRequestType": ".bulk_assign_assignments_request_type",
     "BulkAssignAssignmentsResponse": ".bulk_assign_assignments_response",
+    "BulkTaskAssigneesRequestRequestSelectedItems": ".bulk_task_assignees_request_request_selected_items",
+    "BulkTaskAssigneesRequestRequestSelectedItemsExcluded": ".bulk_task_assignees_request_request_selected_items_excluded",
+    "BulkTaskAssigneesRequestRequestSelectedItemsIncluded": ".bulk_task_assignees_request_request_selected_items_included",
     "DeleteAssignmentsRequestType": ".delete_assignments_request_type",
-    "UpdateAssignmentsRequestType": ".update_assignments_request_type",
 }
 
 
@@ -86,22 +46,9 @@ def __dir__():
 
 
 __all__ = [
-    "AssignAssignmentsRequestType",
-    "BulkAssignAssignmentsRequestFilters",
-    "BulkAssignAssignmentsRequestFiltersConjunction",
-    "BulkAssignAssignmentsRequestFiltersItemsItem",
-    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItem",
-    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemFilter",
-    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemOperator",
-    "BulkAssignAssignmentsRequestFiltersItemsItemChildFiltersItemValue",
-    "BulkAssignAssignmentsRequestFiltersItemsItemFilter",
-    "BulkAssignAssignmentsRequestFiltersItemsItemOperator",
-    "BulkAssignAssignmentsRequestFiltersItemsItemValue",
-    "BulkAssignAssignmentsRequestSelectedItems",
-    "BulkAssignAssignmentsRequestSelectedItemsExcluded",
-    "BulkAssignAssignmentsRequestSelectedItemsIncluded",
-    "BulkAssignAssignmentsRequestType",
     "BulkAssignAssignmentsResponse",
+    "BulkTaskAssigneesRequestRequestSelectedItems",
+    "BulkTaskAssigneesRequestRequestSelectedItemsExcluded",
+    "BulkTaskAssigneesRequestRequestSelectedItemsIncluded",
     "DeleteAssignmentsRequestType",
-    "UpdateAssignmentsRequestType",
 ]

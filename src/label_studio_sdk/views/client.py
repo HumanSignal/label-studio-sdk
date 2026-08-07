@@ -5,9 +5,8 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.view import View
+from ..types.view_data_request_request import ViewDataRequestRequest
 from .raw_client import AsyncRawViewsClient, RawViewsClient
-from .types.create_views_request_data import CreateViewsRequestData
-from .types.update_views_request_data import UpdateViewsRequestData
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -62,7 +61,7 @@ class ViewsClient:
     def create(
         self,
         *,
-        data: typing.Optional[CreateViewsRequestData] = OMIT,
+        data: typing.Optional[ViewDataRequestRequest] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
@@ -71,8 +70,7 @@ class ViewsClient:
 
         Parameters
         ----------
-        data : typing.Optional[CreateViewsRequestData]
-            Custom view data
+        data : typing.Optional[ViewDataRequestRequest]
 
         project : typing.Optional[int]
             Project ID
@@ -227,7 +225,7 @@ class ViewsClient:
         self,
         id: str,
         *,
-        data: typing.Optional[UpdateViewsRequestData] = OMIT,
+        data: typing.Optional[ViewDataRequestRequest] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
@@ -239,8 +237,7 @@ class ViewsClient:
         id : str
             View ID
 
-        data : typing.Optional[UpdateViewsRequestData]
-            Custom view data
+        data : typing.Optional[ViewDataRequestRequest]
 
         project : typing.Optional[int]
             Project ID
@@ -325,7 +322,7 @@ class AsyncViewsClient:
     async def create(
         self,
         *,
-        data: typing.Optional[CreateViewsRequestData] = OMIT,
+        data: typing.Optional[ViewDataRequestRequest] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
@@ -334,8 +331,7 @@ class AsyncViewsClient:
 
         Parameters
         ----------
-        data : typing.Optional[CreateViewsRequestData]
-            Custom view data
+        data : typing.Optional[ViewDataRequestRequest]
 
         project : typing.Optional[int]
             Project ID
@@ -530,7 +526,7 @@ class AsyncViewsClient:
         self,
         id: str,
         *,
-        data: typing.Optional[UpdateViewsRequestData] = OMIT,
+        data: typing.Optional[ViewDataRequestRequest] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
@@ -542,8 +538,7 @@ class AsyncViewsClient:
         id : str
             View ID
 
-        data : typing.Optional[UpdateViewsRequestData]
-            Custom view data
+        data : typing.Optional[ViewDataRequestRequest]
 
         project : typing.Optional[int]
             Project ID

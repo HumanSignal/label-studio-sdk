@@ -78,6 +78,7 @@ class RawRedisClient:
     def create(
         self,
         *,
+        project: int,
         can_delete_objects: typing.Optional[bool] = OMIT,
         db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -85,8 +86,10 @@ class RawRedisClient:
         password: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
         port: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[RedisExportStorage]:
         """
@@ -94,14 +97,17 @@ class RawRedisClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         db : typing.Optional[int]
-            Database ID of database to use
+            Server Database
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         host : typing.Optional[str]
             Server Host IP (optional)
@@ -115,11 +121,16 @@ class RawRedisClient:
         port : typing.Optional[str]
             Server Port (optional)
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -141,7 +152,10 @@ class RawRedisClient:
                 "path": path,
                 "port": port,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -171,6 +185,7 @@ class RawRedisClient:
     def validate(
         self,
         *,
+        project: int,
         can_delete_objects: typing.Optional[bool] = OMIT,
         db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -179,8 +194,10 @@ class RawRedisClient:
         password: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
         port: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -188,14 +205,17 @@ class RawRedisClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         db : typing.Optional[int]
-            Database ID of database to use
+            Server Database
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         host : typing.Optional[str]
             Server Host IP (optional)
@@ -212,11 +232,16 @@ class RawRedisClient:
         port : typing.Optional[str]
             Server Port (optional)
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -238,7 +263,10 @@ class RawRedisClient:
                 "path": path,
                 "port": port,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -344,7 +372,10 @@ class RawRedisClient:
         path: typing.Optional[str] = OMIT,
         port: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[RedisExportStorage]:
         """
@@ -355,13 +386,13 @@ class RawRedisClient:
         id : int
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         db : typing.Optional[int]
-            Database ID of database to use
+            Server Database
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         host : typing.Optional[str]
             Server Host IP (optional)
@@ -376,10 +407,18 @@ class RawRedisClient:
             Server Port (optional)
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -401,7 +440,10 @@ class RawRedisClient:
                 "path": path,
                 "port": port,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -532,6 +574,7 @@ class AsyncRawRedisClient:
     async def create(
         self,
         *,
+        project: int,
         can_delete_objects: typing.Optional[bool] = OMIT,
         db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -539,8 +582,10 @@ class AsyncRawRedisClient:
         password: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
         port: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[RedisExportStorage]:
         """
@@ -548,14 +593,17 @@ class AsyncRawRedisClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         db : typing.Optional[int]
-            Database ID of database to use
+            Server Database
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         host : typing.Optional[str]
             Server Host IP (optional)
@@ -569,11 +617,16 @@ class AsyncRawRedisClient:
         port : typing.Optional[str]
             Server Port (optional)
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -595,7 +648,10 @@ class AsyncRawRedisClient:
                 "path": path,
                 "port": port,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -625,6 +681,7 @@ class AsyncRawRedisClient:
     async def validate(
         self,
         *,
+        project: int,
         can_delete_objects: typing.Optional[bool] = OMIT,
         db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -633,8 +690,10 @@ class AsyncRawRedisClient:
         password: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
         port: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -642,14 +701,17 @@ class AsyncRawRedisClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         db : typing.Optional[int]
-            Database ID of database to use
+            Server Database
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         host : typing.Optional[str]
             Server Host IP (optional)
@@ -666,11 +728,16 @@ class AsyncRawRedisClient:
         port : typing.Optional[str]
             Server Port (optional)
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -692,7 +759,10 @@ class AsyncRawRedisClient:
                 "path": path,
                 "port": port,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -800,7 +870,10 @@ class AsyncRawRedisClient:
         path: typing.Optional[str] = OMIT,
         port: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[RedisExportStorage]:
         """
@@ -811,13 +884,13 @@ class AsyncRawRedisClient:
         id : int
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         db : typing.Optional[int]
-            Database ID of database to use
+            Server Database
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         host : typing.Optional[str]
             Server Host IP (optional)
@@ -832,10 +905,18 @@ class AsyncRawRedisClient:
             Server Port (optional)
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -857,7 +938,10 @@ class AsyncRawRedisClient:
                 "path": path,
                 "port": port,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",

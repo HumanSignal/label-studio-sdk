@@ -12,14 +12,12 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.bad_request_error import BadRequestError
+from ...types.assignment_type_enum import AssignmentTypeEnum
+from ...types.prepare_params_filters_request import PrepareParamsFiltersRequest
 from ...types.task_assignment import TaskAssignment
-from .types.assign_assignments_request_type import AssignAssignmentsRequestType
-from .types.bulk_assign_assignments_request_filters import BulkAssignAssignmentsRequestFilters
-from .types.bulk_assign_assignments_request_selected_items import BulkAssignAssignmentsRequestSelectedItems
-from .types.bulk_assign_assignments_request_type import BulkAssignAssignmentsRequestType
 from .types.bulk_assign_assignments_response import BulkAssignAssignmentsResponse
+from .types.bulk_task_assignees_request_request_selected_items import BulkTaskAssigneesRequestRequestSelectedItems
 from .types.delete_assignments_request_type import DeleteAssignmentsRequestType
-from .types.update_assignments_request_type import UpdateAssignmentsRequestType
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -34,10 +32,10 @@ class RawAssignmentsClient:
         self,
         id: int,
         *,
-        selected_items: BulkAssignAssignmentsRequestSelectedItems,
-        type: BulkAssignAssignmentsRequestType,
+        selected_items: BulkTaskAssigneesRequestRequestSelectedItems,
+        type: AssignmentTypeEnum,
         users: typing.Sequence[int],
-        filters: typing.Optional[BulkAssignAssignmentsRequestFilters] = OMIT,
+        filters: typing.Optional[PrepareParamsFiltersRequest] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[BulkAssignAssignmentsResponse]:
         """
@@ -53,17 +51,14 @@ class RawAssignmentsClient:
         ----------
         id : int
 
-        selected_items : BulkAssignAssignmentsRequestSelectedItems
+        selected_items : BulkTaskAssigneesRequestRequestSelectedItems
             Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
-        type : BulkAssignAssignmentsRequestType
-            Assignment type. Use AN for annotate or RE for review.
+        type : AssignmentTypeEnum
 
         users : typing.Sequence[int]
-            List of user IDs to assign
 
-        filters : typing.Optional[BulkAssignAssignmentsRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+        filters : typing.Optional[PrepareParamsFiltersRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -78,10 +73,10 @@ class RawAssignmentsClient:
             method="POST",
             json={
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=BulkAssignAssignmentsRequestFilters, direction="write"
+                    object_=filters, annotation=typing.Optional[PrepareParamsFiltersRequest], direction="write"
                 ),
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=BulkAssignAssignmentsRequestSelectedItems, direction="write"
+                    object_=selected_items, annotation=BulkTaskAssigneesRequestRequestSelectedItems, direction="write"
                 ),
                 "type": type,
                 "users": users,
@@ -179,7 +174,7 @@ class RawAssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        type: AssignAssignmentsRequestType,
+        type: AssignmentTypeEnum,
         users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TaskAssignment]:
@@ -200,11 +195,9 @@ class RawAssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : AssignAssignmentsRequestType
-            Assignment type. Use AN for annotate or RE for review.
+        type : AssignmentTypeEnum
 
         users : typing.Sequence[int]
-            List of user IDs to assign
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -311,8 +304,8 @@ class RawAssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        type: UpdateAssignmentsRequestType,
-        users: typing.Sequence[int],
+        type: typing.Optional[AssignmentTypeEnum] = OMIT,
+        users: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TaskAssignment]:
         """
@@ -332,11 +325,9 @@ class RawAssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : UpdateAssignmentsRequestType
-            Assignment type. Use AN for annotate or RE for review.
+        type : typing.Optional[AssignmentTypeEnum]
 
-        users : typing.Sequence[int]
-            List of user IDs to assign
+        users : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -387,10 +378,10 @@ class AsyncRawAssignmentsClient:
         self,
         id: int,
         *,
-        selected_items: BulkAssignAssignmentsRequestSelectedItems,
-        type: BulkAssignAssignmentsRequestType,
+        selected_items: BulkTaskAssigneesRequestRequestSelectedItems,
+        type: AssignmentTypeEnum,
         users: typing.Sequence[int],
-        filters: typing.Optional[BulkAssignAssignmentsRequestFilters] = OMIT,
+        filters: typing.Optional[PrepareParamsFiltersRequest] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[BulkAssignAssignmentsResponse]:
         """
@@ -406,17 +397,14 @@ class AsyncRawAssignmentsClient:
         ----------
         id : int
 
-        selected_items : BulkAssignAssignmentsRequestSelectedItems
+        selected_items : BulkTaskAssigneesRequestRequestSelectedItems
             Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
-        type : BulkAssignAssignmentsRequestType
-            Assignment type. Use AN for annotate or RE for review.
+        type : AssignmentTypeEnum
 
         users : typing.Sequence[int]
-            List of user IDs to assign
 
-        filters : typing.Optional[BulkAssignAssignmentsRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+        filters : typing.Optional[PrepareParamsFiltersRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -431,10 +419,10 @@ class AsyncRawAssignmentsClient:
             method="POST",
             json={
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=BulkAssignAssignmentsRequestFilters, direction="write"
+                    object_=filters, annotation=typing.Optional[PrepareParamsFiltersRequest], direction="write"
                 ),
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=BulkAssignAssignmentsRequestSelectedItems, direction="write"
+                    object_=selected_items, annotation=BulkTaskAssigneesRequestRequestSelectedItems, direction="write"
                 ),
                 "type": type,
                 "users": users,
@@ -532,7 +520,7 @@ class AsyncRawAssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        type: AssignAssignmentsRequestType,
+        type: AssignmentTypeEnum,
         users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TaskAssignment]:
@@ -553,11 +541,9 @@ class AsyncRawAssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : AssignAssignmentsRequestType
-            Assignment type. Use AN for annotate or RE for review.
+        type : AssignmentTypeEnum
 
         users : typing.Sequence[int]
-            List of user IDs to assign
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -664,8 +650,8 @@ class AsyncRawAssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        type: UpdateAssignmentsRequestType,
-        users: typing.Sequence[int],
+        type: typing.Optional[AssignmentTypeEnum] = OMIT,
+        users: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TaskAssignment]:
         """
@@ -685,11 +671,9 @@ class AsyncRawAssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : UpdateAssignmentsRequestType
-            Assignment type. Use AN for annotate or RE for review.
+        type : typing.Optional[AssignmentTypeEnum]
 
-        users : typing.Sequence[int]
-            List of user IDs to assign
+        users : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

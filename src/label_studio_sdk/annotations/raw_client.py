@@ -16,7 +16,9 @@ from ..errors.bad_request_error import BadRequestError
 from ..errors.forbidden_error import ForbiddenError
 from ..types.annotation import Annotation
 from ..types.annotation_history_action_enum import AnnotationHistoryActionEnum
-from ..types.selected_items_request import SelectedItemsRequest
+from .types.annotation_bulk_serializer_with_selected_items_request_selected_items import (
+    AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems,
+)
 from .types.create_bulk_annotations_response_item import CreateBulkAnnotationsResponseItem
 from .types.delete_bulk_annotations_response import DeleteBulkAnnotationsResponse
 from pydantic import ValidationError
@@ -119,7 +121,7 @@ class RawAnnotationsClient:
         parent_prediction: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
-        selected_items: typing.Optional[SelectedItemsRequest] = OMIT,
+        selected_items: typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems] = OMIT,
         task: typing.Optional[int] = OMIT,
         tasks: typing.Optional[typing.Sequence[int]] = OMIT,
         unique_id: typing.Optional[str] = OMIT,
@@ -178,7 +180,8 @@ class RawAnnotationsClient:
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
             List of annotation results for the task
 
-        selected_items : typing.Optional[SelectedItemsRequest]
+        selected_items : typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems]
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         task : typing.Optional[int]
             Corresponding task for this annotation
@@ -218,7 +221,9 @@ class RawAnnotationsClient:
                 "project": project,
                 "result": result,
                 "selected_items": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=typing.Optional[SelectedItemsRequest], direction="write"
+                    object_=selected_items,
+                    annotation=typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems],
+                    direction="write",
                 ),
                 "task": task,
                 "tasks": tasks,
@@ -327,12 +332,20 @@ class RawAnnotationsClient:
         self,
         id: int,
         *,
+        bulk_created: typing.Optional[bool] = OMIT,
         completed_by: typing.Optional[int] = OMIT,
+        draft_created_at: typing.Optional[dt.datetime] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
+        import_id: typing.Optional[int] = OMIT,
+        last_action: typing.Optional[AnnotationHistoryActionEnum] = OMIT,
+        last_created_by: typing.Optional[int] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
+        parent_annotation: typing.Optional[int] = OMIT,
+        parent_prediction: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         task: typing.Optional[int] = OMIT,
+        unique_id: typing.Optional[str] = OMIT,
         updated_by: typing.Optional[int] = OMIT,
         was_cancelled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -344,23 +357,56 @@ class RawAnnotationsClient:
         ----------
         id : int
 
+        bulk_created : typing.Optional[bool]
+            Annotation was created in bulk mode
+
         completed_by : typing.Optional[int]
-            User ID of the person who created this annotation
+
+        draft_created_at : typing.Optional[dt.datetime]
+            Draft creation time
 
         ground_truth : typing.Optional[bool]
-            This annotation is a Ground Truth
+            This annotation is a Ground Truth (ground_truth)
+
+        import_id : typing.Optional[int]
+            Original annotation ID that was at the import step or NULL if this annotation wasn't imported
+
+        last_action : typing.Optional[AnnotationHistoryActionEnum]
+            Action which was performed in the last annotation history item
+
+            * `prediction` - Created from prediction
+            * `propagated_annotation` - Created from another annotation
+            * `imported` - Imported
+            * `submitted` - Submitted
+            * `updated` - Updated
+            * `skipped` - Skipped
+            * `accepted` - Accepted
+            * `rejected` - Rejected
+            * `fixed_and_accepted` - Fixed and accepted
+            * `deleted_review` - Deleted review
+
+        last_created_by : typing.Optional[int]
+            User who created the last annotation history item
 
         lead_time : typing.Optional[float]
-            How much time it took to annotate the task (in seconds)
+            How much time it took to annotate the task
+
+        parent_annotation : typing.Optional[int]
+            Points to the parent annotation from which this annotation was created
+
+        parent_prediction : typing.Optional[int]
+            Points to the prediction from which this annotation was created
 
         project : typing.Optional[int]
             Project ID for this annotation
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+            List of annotation results for the task
 
         task : typing.Optional[int]
             Corresponding task for this annotation
+
+        unique_id : typing.Optional[str]
 
         updated_by : typing.Optional[int]
             Last user who updated this annotation
@@ -380,12 +426,20 @@ class RawAnnotationsClient:
             f"api/annotations/{encode_path_param(id)}/",
             method="PATCH",
             json={
+                "bulk_created": bulk_created,
                 "completed_by": completed_by,
+                "draft_created_at": draft_created_at,
                 "ground_truth": ground_truth,
+                "import_id": import_id,
+                "last_action": last_action,
+                "last_created_by": last_created_by,
                 "lead_time": lead_time,
+                "parent_annotation": parent_annotation,
+                "parent_prediction": parent_prediction,
                 "project": project,
                 "result": result,
                 "task": task,
+                "unique_id": unique_id,
                 "updated_by": updated_by,
                 "was_cancelled": was_cancelled,
             },
@@ -467,12 +521,20 @@ class RawAnnotationsClient:
         self,
         id: int,
         *,
+        bulk_created: typing.Optional[bool] = OMIT,
         completed_by: typing.Optional[int] = OMIT,
+        draft_created_at: typing.Optional[dt.datetime] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
+        import_id: typing.Optional[int] = OMIT,
+        last_action: typing.Optional[AnnotationHistoryActionEnum] = OMIT,
+        last_created_by: typing.Optional[int] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
+        parent_annotation: typing.Optional[int] = OMIT,
+        parent_prediction: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         task: typing.Optional[int] = OMIT,
+        unique_id: typing.Optional[str] = OMIT,
         updated_by: typing.Optional[int] = OMIT,
         was_cancelled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -500,23 +562,56 @@ class RawAnnotationsClient:
         id : int
             Task ID
 
+        bulk_created : typing.Optional[bool]
+            Annotation was created in bulk mode
+
         completed_by : typing.Optional[int]
-            User ID of the person who created this annotation
+
+        draft_created_at : typing.Optional[dt.datetime]
+            Draft creation time
 
         ground_truth : typing.Optional[bool]
-            This annotation is a Ground Truth
+            This annotation is a Ground Truth (ground_truth)
+
+        import_id : typing.Optional[int]
+            Original annotation ID that was at the import step or NULL if this annotation wasn't imported
+
+        last_action : typing.Optional[AnnotationHistoryActionEnum]
+            Action which was performed in the last annotation history item
+
+            * `prediction` - Created from prediction
+            * `propagated_annotation` - Created from another annotation
+            * `imported` - Imported
+            * `submitted` - Submitted
+            * `updated` - Updated
+            * `skipped` - Skipped
+            * `accepted` - Accepted
+            * `rejected` - Rejected
+            * `fixed_and_accepted` - Fixed and accepted
+            * `deleted_review` - Deleted review
+
+        last_created_by : typing.Optional[int]
+            User who created the last annotation history item
 
         lead_time : typing.Optional[float]
-            How much time it took to annotate the task (in seconds)
+            How much time it took to annotate the task
+
+        parent_annotation : typing.Optional[int]
+            Points to the parent annotation from which this annotation was created
+
+        parent_prediction : typing.Optional[int]
+            Points to the prediction from which this annotation was created
 
         project : typing.Optional[int]
             Project ID for this annotation
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+            List of annotation results for the task
 
         task : typing.Optional[int]
             Corresponding task for this annotation
+
+        unique_id : typing.Optional[str]
 
         updated_by : typing.Optional[int]
             Last user who updated this annotation
@@ -536,12 +631,20 @@ class RawAnnotationsClient:
             f"api/tasks/{encode_path_param(id)}/annotations/",
             method="POST",
             json={
+                "bulk_created": bulk_created,
                 "completed_by": completed_by,
+                "draft_created_at": draft_created_at,
                 "ground_truth": ground_truth,
+                "import_id": import_id,
+                "last_action": last_action,
+                "last_created_by": last_created_by,
                 "lead_time": lead_time,
+                "parent_annotation": parent_annotation,
+                "parent_prediction": parent_prediction,
                 "project": project,
                 "result": result,
                 "task": task,
+                "unique_id": unique_id,
                 "updated_by": updated_by,
                 "was_cancelled": was_cancelled,
             },
@@ -665,7 +768,7 @@ class AsyncRawAnnotationsClient:
         parent_prediction: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
-        selected_items: typing.Optional[SelectedItemsRequest] = OMIT,
+        selected_items: typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems] = OMIT,
         task: typing.Optional[int] = OMIT,
         tasks: typing.Optional[typing.Sequence[int]] = OMIT,
         unique_id: typing.Optional[str] = OMIT,
@@ -724,7 +827,8 @@ class AsyncRawAnnotationsClient:
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
             List of annotation results for the task
 
-        selected_items : typing.Optional[SelectedItemsRequest]
+        selected_items : typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems]
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         task : typing.Optional[int]
             Corresponding task for this annotation
@@ -764,7 +868,9 @@ class AsyncRawAnnotationsClient:
                 "project": project,
                 "result": result,
                 "selected_items": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=typing.Optional[SelectedItemsRequest], direction="write"
+                    object_=selected_items,
+                    annotation=typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems],
+                    direction="write",
                 ),
                 "task": task,
                 "tasks": tasks,
@@ -877,12 +983,20 @@ class AsyncRawAnnotationsClient:
         self,
         id: int,
         *,
+        bulk_created: typing.Optional[bool] = OMIT,
         completed_by: typing.Optional[int] = OMIT,
+        draft_created_at: typing.Optional[dt.datetime] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
+        import_id: typing.Optional[int] = OMIT,
+        last_action: typing.Optional[AnnotationHistoryActionEnum] = OMIT,
+        last_created_by: typing.Optional[int] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
+        parent_annotation: typing.Optional[int] = OMIT,
+        parent_prediction: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         task: typing.Optional[int] = OMIT,
+        unique_id: typing.Optional[str] = OMIT,
         updated_by: typing.Optional[int] = OMIT,
         was_cancelled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -894,23 +1008,56 @@ class AsyncRawAnnotationsClient:
         ----------
         id : int
 
+        bulk_created : typing.Optional[bool]
+            Annotation was created in bulk mode
+
         completed_by : typing.Optional[int]
-            User ID of the person who created this annotation
+
+        draft_created_at : typing.Optional[dt.datetime]
+            Draft creation time
 
         ground_truth : typing.Optional[bool]
-            This annotation is a Ground Truth
+            This annotation is a Ground Truth (ground_truth)
+
+        import_id : typing.Optional[int]
+            Original annotation ID that was at the import step or NULL if this annotation wasn't imported
+
+        last_action : typing.Optional[AnnotationHistoryActionEnum]
+            Action which was performed in the last annotation history item
+
+            * `prediction` - Created from prediction
+            * `propagated_annotation` - Created from another annotation
+            * `imported` - Imported
+            * `submitted` - Submitted
+            * `updated` - Updated
+            * `skipped` - Skipped
+            * `accepted` - Accepted
+            * `rejected` - Rejected
+            * `fixed_and_accepted` - Fixed and accepted
+            * `deleted_review` - Deleted review
+
+        last_created_by : typing.Optional[int]
+            User who created the last annotation history item
 
         lead_time : typing.Optional[float]
-            How much time it took to annotate the task (in seconds)
+            How much time it took to annotate the task
+
+        parent_annotation : typing.Optional[int]
+            Points to the parent annotation from which this annotation was created
+
+        parent_prediction : typing.Optional[int]
+            Points to the prediction from which this annotation was created
 
         project : typing.Optional[int]
             Project ID for this annotation
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+            List of annotation results for the task
 
         task : typing.Optional[int]
             Corresponding task for this annotation
+
+        unique_id : typing.Optional[str]
 
         updated_by : typing.Optional[int]
             Last user who updated this annotation
@@ -930,12 +1077,20 @@ class AsyncRawAnnotationsClient:
             f"api/annotations/{encode_path_param(id)}/",
             method="PATCH",
             json={
+                "bulk_created": bulk_created,
                 "completed_by": completed_by,
+                "draft_created_at": draft_created_at,
                 "ground_truth": ground_truth,
+                "import_id": import_id,
+                "last_action": last_action,
+                "last_created_by": last_created_by,
                 "lead_time": lead_time,
+                "parent_annotation": parent_annotation,
+                "parent_prediction": parent_prediction,
                 "project": project,
                 "result": result,
                 "task": task,
+                "unique_id": unique_id,
                 "updated_by": updated_by,
                 "was_cancelled": was_cancelled,
             },
@@ -1017,12 +1172,20 @@ class AsyncRawAnnotationsClient:
         self,
         id: int,
         *,
+        bulk_created: typing.Optional[bool] = OMIT,
         completed_by: typing.Optional[int] = OMIT,
+        draft_created_at: typing.Optional[dt.datetime] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
+        import_id: typing.Optional[int] = OMIT,
+        last_action: typing.Optional[AnnotationHistoryActionEnum] = OMIT,
+        last_created_by: typing.Optional[int] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
+        parent_annotation: typing.Optional[int] = OMIT,
+        parent_prediction: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         task: typing.Optional[int] = OMIT,
+        unique_id: typing.Optional[str] = OMIT,
         updated_by: typing.Optional[int] = OMIT,
         was_cancelled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1050,23 +1213,56 @@ class AsyncRawAnnotationsClient:
         id : int
             Task ID
 
+        bulk_created : typing.Optional[bool]
+            Annotation was created in bulk mode
+
         completed_by : typing.Optional[int]
-            User ID of the person who created this annotation
+
+        draft_created_at : typing.Optional[dt.datetime]
+            Draft creation time
 
         ground_truth : typing.Optional[bool]
-            This annotation is a Ground Truth
+            This annotation is a Ground Truth (ground_truth)
+
+        import_id : typing.Optional[int]
+            Original annotation ID that was at the import step or NULL if this annotation wasn't imported
+
+        last_action : typing.Optional[AnnotationHistoryActionEnum]
+            Action which was performed in the last annotation history item
+
+            * `prediction` - Created from prediction
+            * `propagated_annotation` - Created from another annotation
+            * `imported` - Imported
+            * `submitted` - Submitted
+            * `updated` - Updated
+            * `skipped` - Skipped
+            * `accepted` - Accepted
+            * `rejected` - Rejected
+            * `fixed_and_accepted` - Fixed and accepted
+            * `deleted_review` - Deleted review
+
+        last_created_by : typing.Optional[int]
+            User who created the last annotation history item
 
         lead_time : typing.Optional[float]
-            How much time it took to annotate the task (in seconds)
+            How much time it took to annotate the task
+
+        parent_annotation : typing.Optional[int]
+            Points to the parent annotation from which this annotation was created
+
+        parent_prediction : typing.Optional[int]
+            Points to the prediction from which this annotation was created
 
         project : typing.Optional[int]
             Project ID for this annotation
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+            List of annotation results for the task
 
         task : typing.Optional[int]
             Corresponding task for this annotation
+
+        unique_id : typing.Optional[str]
 
         updated_by : typing.Optional[int]
             Last user who updated this annotation
@@ -1086,12 +1282,20 @@ class AsyncRawAnnotationsClient:
             f"api/tasks/{encode_path_param(id)}/annotations/",
             method="POST",
             json={
+                "bulk_created": bulk_created,
                 "completed_by": completed_by,
+                "draft_created_at": draft_created_at,
                 "ground_truth": ground_truth,
+                "import_id": import_id,
+                "last_action": last_action,
+                "last_created_by": last_created_by,
                 "lead_time": lead_time,
+                "parent_annotation": parent_annotation,
+                "parent_prediction": parent_prediction,
                 "project": project,
                 "result": result,
                 "task": task,
+                "unique_id": unique_id,
                 "updated_by": updated_by,
                 "was_cancelled": was_cancelled,
             },

@@ -78,10 +78,12 @@ class RawLocalClient:
     def create(
         self,
         *,
+        project: int,
+        can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -91,23 +93,28 @@ class RawLocalClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         path : typing.Optional[str]
-            Path to local directory
-
-        project : typing.Optional[int]
-            Project ID
+            Local path
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -121,10 +128,12 @@ class RawLocalClient:
             "api/storages/export/localfiles",
             method="POST",
             json={
+                "can_delete_objects": can_delete_objects,
                 "description": description,
                 "path": path,
                 "project": project,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -156,11 +165,13 @@ class RawLocalClient:
     def validate(
         self,
         *,
+        project: int,
+        can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -170,26 +181,31 @@ class RawLocalClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
 
         path : typing.Optional[str]
-            Path to local directory
-
-        project : typing.Optional[int]
-            Project ID
+            Local path
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -202,11 +218,13 @@ class RawLocalClient:
             "api/storages/export/localfiles/validate",
             method="POST",
             json={
+                "can_delete_objects": can_delete_objects,
                 "description": description,
                 "id": id,
                 "path": path,
                 "project": project,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -306,10 +324,12 @@ class RawLocalClient:
         self,
         id: int,
         *,
+        can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -321,23 +341,28 @@ class RawLocalClient:
         ----------
         id : int
 
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         path : typing.Optional[str]
-            Path to local directory
+            Local path
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -351,10 +376,12 @@ class RawLocalClient:
             f"api/storages/export/localfiles/{encode_path_param(id)}",
             method="PATCH",
             json={
+                "can_delete_objects": can_delete_objects,
                 "description": description,
                 "path": path,
                 "project": project,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -487,10 +514,12 @@ class AsyncRawLocalClient:
     async def create(
         self,
         *,
+        project: int,
+        can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -500,23 +529,28 @@ class AsyncRawLocalClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         path : typing.Optional[str]
-            Path to local directory
-
-        project : typing.Optional[int]
-            Project ID
+            Local path
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -530,10 +564,12 @@ class AsyncRawLocalClient:
             "api/storages/export/localfiles",
             method="POST",
             json={
+                "can_delete_objects": can_delete_objects,
                 "description": description,
                 "path": path,
                 "project": project,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -565,11 +601,13 @@ class AsyncRawLocalClient:
     async def validate(
         self,
         *,
+        project: int,
+        can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -579,26 +617,31 @@ class AsyncRawLocalClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
 
         path : typing.Optional[str]
-            Path to local directory
-
-        project : typing.Optional[int]
-            Project ID
+            Local path
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -611,11 +654,13 @@ class AsyncRawLocalClient:
             "api/storages/export/localfiles/validate",
             method="POST",
             json={
+                "can_delete_objects": can_delete_objects,
                 "description": description,
                 "id": id,
                 "path": path,
                 "project": project,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -717,10 +762,12 @@ class AsyncRawLocalClient:
         self,
         id: int,
         *,
+        can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         path: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -732,23 +779,28 @@ class AsyncRawLocalClient:
         ----------
         id : int
 
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         path : typing.Optional[str]
-            Path to local directory
+            Local path
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
 
         regex_filter : typing.Optional[str]
             Regex for filtering objects
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -762,10 +814,12 @@ class AsyncRawLocalClient:
             f"api/storages/export/localfiles/{encode_path_param(id)}",
             method="PATCH",
             json={
+                "can_delete_objects": can_delete_objects,
                 "description": description,
                 "path": path,
                 "project": project,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },

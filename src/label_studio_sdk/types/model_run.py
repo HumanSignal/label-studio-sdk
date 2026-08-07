@@ -26,6 +26,7 @@ class ModelRun(UncheckedBaseModel):
     Job ID for inference job for a ModelRun e.g. Adala job ID
     """
 
+    model_version: int
     organization: typing.Optional[int] = None
     parent_model: typing.Optional[int] = None
     predictions_updated_at: typing.Optional[dt.datetime] = None

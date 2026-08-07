@@ -72,10 +72,16 @@ class PredictionsClient:
     def create(
         self,
         *,
+        result: typing.Sequence[typing.Dict[str, typing.Any]],
+        task: int,
+        cluster: typing.Optional[int] = OMIT,
+        mislabeling: typing.Optional[float] = OMIT,
+        model: typing.Optional[int] = OMIT,
+        model_run: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
-        result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
+        neighbors: typing.Optional[typing.Any] = OMIT,
+        project: typing.Optional[int] = OMIT,
         score: typing.Optional[float] = OMIT,
-        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
@@ -83,17 +89,33 @@ class PredictionsClient:
 
         Parameters
         ----------
+        result : typing.Sequence[typing.Dict[str, typing.Any]]
+            List of prediction results for the task
+
+        task : int
+
+        cluster : typing.Optional[int]
+            Cluster for the current prediction
+
+        mislabeling : typing.Optional[float]
+            Related task mislabeling score
+
+        model : typing.Optional[int]
+            An ML Backend instance that created the prediction.
+
+        model_run : typing.Optional[int]
+            A run of a ModelVersion that created the prediction.
+
         model_version : typing.Optional[str]
             Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
-        result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+        neighbors : typing.Optional[typing.Any]
+            Array of task IDs of the closest neighbors
+
+        project : typing.Optional[int]
 
         score : typing.Optional[float]
-            Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
-
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+            Prediction score
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -111,30 +133,22 @@ class PredictionsClient:
             api_key="YOUR_API_KEY",
         )
         client.predictions.create(
-            model_version="yolo-v8",
-            result=[
-                {
-                    "from_name": "bboxes",
-                    "image_rotation": 0,
-                    "original_height": 1080,
-                    "original_width": 1920,
-                    "to_name": "image",
-                    "type": "rectanglelabels",
-                    "value": {
-                        "height": 60,
-                        "rotation": 0,
-                        "values": {"rectanglelabels": ["Person"]},
-                        "width": 50,
-                        "x": 20,
-                        "y": 30,
-                    },
-                }
-            ],
-            score=0.95,
+            result=[{"key": "value"}],
+            task=1,
         )
         """
         _response = self._raw_client.create(
-            model_version=model_version, result=result, score=score, task=task, request_options=request_options
+            result=result,
+            task=task,
+            cluster=cluster,
+            mislabeling=mislabeling,
+            model=model,
+            model_run=model_run,
+            model_version=model_version,
+            neighbors=neighbors,
+            project=project,
+            score=score,
+            request_options=request_options,
         )
         return _response.data
 
@@ -203,7 +217,13 @@ class PredictionsClient:
         self,
         id: int,
         *,
+        cluster: typing.Optional[int] = OMIT,
+        mislabeling: typing.Optional[float] = OMIT,
+        model: typing.Optional[int] = OMIT,
+        model_run: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        neighbors: typing.Optional[typing.Any] = OMIT,
+        project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         score: typing.Optional[float] = OMIT,
         task: typing.Optional[int] = OMIT,
@@ -217,17 +237,33 @@ class PredictionsClient:
         id : int
             Prediction ID
 
+        cluster : typing.Optional[int]
+            Cluster for the current prediction
+
+        mislabeling : typing.Optional[float]
+            Related task mislabeling score
+
+        model : typing.Optional[int]
+            An ML Backend instance that created the prediction.
+
+        model_run : typing.Optional[int]
+            A run of a ModelVersion that created the prediction.
+
         model_version : typing.Optional[str]
             Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
+        neighbors : typing.Optional[typing.Any]
+            Array of task IDs of the closest neighbors
+
+        project : typing.Optional[int]
+
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+            List of prediction results for the task
 
         score : typing.Optional[float]
-            Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
+            Prediction score
 
         task : typing.Optional[int]
-            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -246,30 +282,21 @@ class PredictionsClient:
         )
         client.predictions.update(
             id=1,
-            model_version="yolo-v8",
-            result=[
-                {
-                    "from_name": "bboxes",
-                    "image_rotation": 0,
-                    "original_height": 1080,
-                    "original_width": 1920,
-                    "to_name": "image",
-                    "type": "rectanglelabels",
-                    "value": {
-                        "height": 60,
-                        "rotation": 0,
-                        "values": {"rectanglelabels": ["Person"]},
-                        "width": 50,
-                        "x": 20,
-                        "y": 30,
-                    },
-                }
-            ],
-            score=0.95,
         )
         """
         _response = self._raw_client.update(
-            id, model_version=model_version, result=result, score=score, task=task, request_options=request_options
+            id,
+            cluster=cluster,
+            mislabeling=mislabeling,
+            model=model,
+            model_run=model_run,
+            model_version=model_version,
+            neighbors=neighbors,
+            project=project,
+            result=result,
+            score=score,
+            task=task,
+            request_options=request_options,
         )
         return _response.data
 
@@ -343,10 +370,16 @@ class AsyncPredictionsClient:
     async def create(
         self,
         *,
+        result: typing.Sequence[typing.Dict[str, typing.Any]],
+        task: int,
+        cluster: typing.Optional[int] = OMIT,
+        mislabeling: typing.Optional[float] = OMIT,
+        model: typing.Optional[int] = OMIT,
+        model_run: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
-        result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
+        neighbors: typing.Optional[typing.Any] = OMIT,
+        project: typing.Optional[int] = OMIT,
         score: typing.Optional[float] = OMIT,
-        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
@@ -354,17 +387,33 @@ class AsyncPredictionsClient:
 
         Parameters
         ----------
+        result : typing.Sequence[typing.Dict[str, typing.Any]]
+            List of prediction results for the task
+
+        task : int
+
+        cluster : typing.Optional[int]
+            Cluster for the current prediction
+
+        mislabeling : typing.Optional[float]
+            Related task mislabeling score
+
+        model : typing.Optional[int]
+            An ML Backend instance that created the prediction.
+
+        model_run : typing.Optional[int]
+            A run of a ModelVersion that created the prediction.
+
         model_version : typing.Optional[str]
             Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
-        result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+        neighbors : typing.Optional[typing.Any]
+            Array of task IDs of the closest neighbors
+
+        project : typing.Optional[int]
 
         score : typing.Optional[float]
-            Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
-
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+            Prediction score
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -387,33 +436,25 @@ class AsyncPredictionsClient:
 
         async def main() -> None:
             await client.predictions.create(
-                model_version="yolo-v8",
-                result=[
-                    {
-                        "from_name": "bboxes",
-                        "image_rotation": 0,
-                        "original_height": 1080,
-                        "original_width": 1920,
-                        "to_name": "image",
-                        "type": "rectanglelabels",
-                        "value": {
-                            "height": 60,
-                            "rotation": 0,
-                            "values": {"rectanglelabels": ["Person"]},
-                            "width": 50,
-                            "x": 20,
-                            "y": 30,
-                        },
-                    }
-                ],
-                score=0.95,
+                result=[{"key": "value"}],
+                task=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            model_version=model_version, result=result, score=score, task=task, request_options=request_options
+            result=result,
+            task=task,
+            cluster=cluster,
+            mislabeling=mislabeling,
+            model=model,
+            model_run=model_run,
+            model_version=model_version,
+            neighbors=neighbors,
+            project=project,
+            score=score,
+            request_options=request_options,
         )
         return _response.data
 
@@ -498,7 +539,13 @@ class AsyncPredictionsClient:
         self,
         id: int,
         *,
+        cluster: typing.Optional[int] = OMIT,
+        mislabeling: typing.Optional[float] = OMIT,
+        model: typing.Optional[int] = OMIT,
+        model_run: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        neighbors: typing.Optional[typing.Any] = OMIT,
+        project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         score: typing.Optional[float] = OMIT,
         task: typing.Optional[int] = OMIT,
@@ -512,17 +559,33 @@ class AsyncPredictionsClient:
         id : int
             Prediction ID
 
+        cluster : typing.Optional[int]
+            Cluster for the current prediction
+
+        mislabeling : typing.Optional[float]
+            Related task mislabeling score
+
+        model : typing.Optional[int]
+            An ML Backend instance that created the prediction.
+
+        model_run : typing.Optional[int]
+            A run of a ModelVersion that created the prediction.
+
         model_version : typing.Optional[str]
             Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
+        neighbors : typing.Optional[typing.Any]
+            Array of task IDs of the closest neighbors
+
+        project : typing.Optional[int]
+
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+            List of prediction results for the task
 
         score : typing.Optional[float]
-            Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
+            Prediction score
 
         task : typing.Optional[int]
-            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -546,32 +609,23 @@ class AsyncPredictionsClient:
         async def main() -> None:
             await client.predictions.update(
                 id=1,
-                model_version="yolo-v8",
-                result=[
-                    {
-                        "from_name": "bboxes",
-                        "image_rotation": 0,
-                        "original_height": 1080,
-                        "original_width": 1920,
-                        "to_name": "image",
-                        "type": "rectanglelabels",
-                        "value": {
-                            "height": 60,
-                            "rotation": 0,
-                            "values": {"rectanglelabels": ["Person"]},
-                            "width": 50,
-                            "x": 20,
-                            "y": 30,
-                        },
-                    }
-                ],
-                score=0.95,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            id, model_version=model_version, result=result, score=score, task=task, request_options=request_options
+            id,
+            cluster=cluster,
+            mislabeling=mislabeling,
+            model=model,
+            model_run=model_run,
+            model_version=model_version,
+            neighbors=neighbors,
+            project=project,
+            result=result,
+            score=score,
+            task=task,
+            request_options=request_options,
         )
         return _response.data

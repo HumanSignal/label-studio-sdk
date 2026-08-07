@@ -78,6 +78,7 @@ class RawGcsClient:
     def create(
         self,
         *,
+        project: int,
         bucket: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
@@ -85,8 +86,9 @@ class RawGcsClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -96,14 +98,17 @@ class RawGcsClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         bucket : typing.Optional[str]
             GCS bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -112,22 +117,23 @@ class RawGcsClient:
             GCS bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for direct download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
+            Presigned URLs TTL (in minutes)
 
-        project : typing.Optional[int]
-            Project ID
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -149,7 +155,9 @@ class RawGcsClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -181,6 +189,7 @@ class RawGcsClient:
     def validate(
         self,
         *,
+        project: int,
         bucket: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
@@ -189,8 +198,9 @@ class RawGcsClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -200,14 +210,17 @@ class RawGcsClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         bucket : typing.Optional[str]
             GCS bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -219,22 +232,23 @@ class RawGcsClient:
             GCS bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for direct download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
+            Presigned URLs TTL (in minutes)
 
-        project : typing.Optional[int]
-            Project ID
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -256,7 +270,9 @@ class RawGcsClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -364,7 +380,9 @@ class RawGcsClient:
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -380,10 +398,10 @@ class RawGcsClient:
             GCS bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -392,22 +410,26 @@ class RawGcsClient:
             GCS bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for direct download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
+            Presigned URLs TTL (in minutes)
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -429,7 +451,9 @@ class RawGcsClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -563,6 +587,7 @@ class AsyncRawGcsClient:
     async def create(
         self,
         *,
+        project: int,
         bucket: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
@@ -570,8 +595,9 @@ class AsyncRawGcsClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -581,14 +607,17 @@ class AsyncRawGcsClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         bucket : typing.Optional[str]
             GCS bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -597,22 +626,23 @@ class AsyncRawGcsClient:
             GCS bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for direct download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
+            Presigned URLs TTL (in minutes)
 
-        project : typing.Optional[int]
-            Project ID
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -634,7 +664,9 @@ class AsyncRawGcsClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -666,6 +698,7 @@ class AsyncRawGcsClient:
     async def validate(
         self,
         *,
+        project: int,
         bucket: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
@@ -674,8 +707,9 @@ class AsyncRawGcsClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -685,14 +719,17 @@ class AsyncRawGcsClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         bucket : typing.Optional[str]
             GCS bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -704,22 +741,23 @@ class AsyncRawGcsClient:
             GCS bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for direct download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
+            Presigned URLs TTL (in minutes)
 
-        project : typing.Optional[int]
-            Project ID
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -741,7 +779,9 @@ class AsyncRawGcsClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },
@@ -851,7 +891,9 @@ class AsyncRawGcsClient:
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -867,10 +909,10 @@ class AsyncRawGcsClient:
             GCS bucket name
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
         google_project_id : typing.Optional[str]
             Google project ID
@@ -879,22 +921,26 @@ class AsyncRawGcsClient:
             GCS bucket prefix
 
         presign : typing.Optional[bool]
-            Presign URLs for direct download
 
         presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
+            Presigned URLs TTL (in minutes)
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -916,7 +962,9 @@ class AsyncRawGcsClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
                 "use_blob_urls": use_blob_urls,
             },

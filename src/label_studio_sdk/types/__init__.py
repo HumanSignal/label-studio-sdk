@@ -29,6 +29,7 @@ if typing.TYPE_CHECKING:
     from .assignable_user_type_enum import AssignableUserTypeEnum
     from .assignment_settings import AssignmentSettings
     from .assignment_settings_request import AssignmentSettingsRequest
+    from .assignment_type_enum import AssignmentTypeEnum
     from .associated_project import AssociatedProject
     from .auth_method_enum import AuthMethodEnum
     from .auth_type_enum import AuthTypeEnum
@@ -51,6 +52,7 @@ if typing.TYPE_CHECKING:
     from .comment_request import CommentRequest
     from .comment_serializer_with_expanded_user import CommentSerializerWithExpandedUser
     from .configurable_permission_option import ConfigurablePermissionOption
+    from .conjunction_enum import ConjunctionEnum
     from .control_tag_weight import ControlTagWeight
     from .control_tag_weight_request import ControlTagWeightRequest
     from .converted_format import ConvertedFormat
@@ -62,9 +64,7 @@ if typing.TYPE_CHECKING:
     from .data_quality_agreement_distribution import DataQualityAgreementDistribution
     from .data_quality_confusion_pair import DataQualityConfusionPair
     from .databricks_export_storage import DatabricksExportStorage
-    from .databricks_export_storage_request import DatabricksExportStorageRequest
     from .databricks_import_storage import DatabricksImportStorage
-    from .databricks_import_storage_request import DatabricksImportStorageRequest
     from .default_model_version_name_response import DefaultModelVersionNameResponse
     from .default_role import DefaultRole
     from .dimension import Dimension
@@ -194,10 +194,30 @@ if typing.TYPE_CHECKING:
     from .paginated_project_subset_tasks_response_list import PaginatedProjectSubsetTasksResponseList
     from .paginated_role_based_task_list import PaginatedRoleBasedTaskList
     from .paginated_state_model_list import PaginatedStateModelList
+    from .patched_lse_user_serializer_update_request import PatchedLseUserSerializerUpdateRequest
     from .pause import Pause
     from .pause_request import PauseRequest
     from .prediction import Prediction
     from .prediction_request import PredictionRequest
+    from .prepare_params_filters_request import PrepareParamsFiltersRequest
+    from .prepare_params_filters_request_items_item import PrepareParamsFiltersRequestItemsItem
+    from .prepare_params_filters_request_items_item_child_filters_item import (
+        PrepareParamsFiltersRequestItemsItemChildFiltersItem,
+    )
+    from .prepare_params_filters_request_items_item_child_filters_item_filter import (
+        PrepareParamsFiltersRequestItemsItemChildFiltersItemFilter,
+    )
+    from .prepare_params_filters_request_items_item_child_filters_item_operator import (
+        PrepareParamsFiltersRequestItemsItemChildFiltersItemOperator,
+    )
+    from .prepare_params_filters_request_items_item_child_filters_item_value import (
+        PrepareParamsFiltersRequestItemsItemChildFiltersItemValue,
+    )
+    from .prepare_params_filters_request_items_item_filter import PrepareParamsFiltersRequestItemsItemFilter
+    from .prepare_params_filters_request_items_item_operator import PrepareParamsFiltersRequestItemsItemOperator
+    from .prepare_params_filters_request_items_item_value import PrepareParamsFiltersRequestItemsItemValue
+    from .prepare_params_ordering_request import PrepareParamsOrderingRequest
+    from .prepare_params_ordering_request_item import PrepareParamsOrderingRequestItem
     from .project import Project
     from .project_duplicate_mode_enum import ProjectDuplicateModeEnum
     from .project_group import ProjectGroup
@@ -240,7 +260,6 @@ if typing.TYPE_CHECKING:
     from .scim_settings_update import ScimSettingsUpdate
     from .scope_enum import ScopeEnum
     from .segmentation_enum import SegmentationEnum
-    from .selected_items_request import SelectedItemsRequest
     from .serialization_option import SerializationOption
     from .serialization_option_request import SerializationOptionRequest
     from .serialization_options import SerializationOptions
@@ -271,7 +290,6 @@ if typing.TYPE_CHECKING:
     from .token_rotate_response import TokenRotateResponse
     from .trial_role_enum import TrialRoleEnum
     from .triggered_by import TriggeredBy
-    from .type_enum import TypeEnum
     from .user_simple import UserSimple
     from .user_simple_request import UserSimpleRequest
     from .validate_saml_metadata_url_response import ValidateSamlMetadataUrlResponse
@@ -279,7 +297,9 @@ if typing.TYPE_CHECKING:
     from .value_counts_backfill_job_triggered_by_value import ValueCountsBackfillJobTriggeredByValue
     from .version_response import VersionResponse
     from .view import View
+    from .view_data_request_request import ViewDataRequestRequest
     from .view_locked_by import ViewLockedBy
+    from .view_request_request import ViewRequestRequest
     from .webhook import Webhook
     from .webhook_serializer_for_update import WebhookSerializerForUpdate
     from .who_am_i_lse_fields import WhoAmILseFields
@@ -311,6 +331,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssignableUserTypeEnum": ".assignable_user_type_enum",
     "AssignmentSettings": ".assignment_settings",
     "AssignmentSettingsRequest": ".assignment_settings_request",
+    "AssignmentTypeEnum": ".assignment_type_enum",
     "AssociatedProject": ".associated_project",
     "AuthMethodEnum": ".auth_method_enum",
     "AuthTypeEnum": ".auth_type_enum",
@@ -333,6 +354,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CommentRequest": ".comment_request",
     "CommentSerializerWithExpandedUser": ".comment_serializer_with_expanded_user",
     "ConfigurablePermissionOption": ".configurable_permission_option",
+    "ConjunctionEnum": ".conjunction_enum",
     "ControlTagWeight": ".control_tag_weight",
     "ControlTagWeightRequest": ".control_tag_weight_request",
     "ConvertedFormat": ".converted_format",
@@ -344,9 +366,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DataQualityAgreementDistribution": ".data_quality_agreement_distribution",
     "DataQualityConfusionPair": ".data_quality_confusion_pair",
     "DatabricksExportStorage": ".databricks_export_storage",
-    "DatabricksExportStorageRequest": ".databricks_export_storage_request",
     "DatabricksImportStorage": ".databricks_import_storage",
-    "DatabricksImportStorageRequest": ".databricks_import_storage_request",
     "DefaultModelVersionNameResponse": ".default_model_version_name_response",
     "DefaultRole": ".default_role",
     "Dimension": ".dimension",
@@ -470,10 +490,22 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PaginatedProjectSubsetTasksResponseList": ".paginated_project_subset_tasks_response_list",
     "PaginatedRoleBasedTaskList": ".paginated_role_based_task_list",
     "PaginatedStateModelList": ".paginated_state_model_list",
+    "PatchedLseUserSerializerUpdateRequest": ".patched_lse_user_serializer_update_request",
     "Pause": ".pause",
     "PauseRequest": ".pause_request",
     "Prediction": ".prediction",
     "PredictionRequest": ".prediction_request",
+    "PrepareParamsFiltersRequest": ".prepare_params_filters_request",
+    "PrepareParamsFiltersRequestItemsItem": ".prepare_params_filters_request_items_item",
+    "PrepareParamsFiltersRequestItemsItemChildFiltersItem": ".prepare_params_filters_request_items_item_child_filters_item",
+    "PrepareParamsFiltersRequestItemsItemChildFiltersItemFilter": ".prepare_params_filters_request_items_item_child_filters_item_filter",
+    "PrepareParamsFiltersRequestItemsItemChildFiltersItemOperator": ".prepare_params_filters_request_items_item_child_filters_item_operator",
+    "PrepareParamsFiltersRequestItemsItemChildFiltersItemValue": ".prepare_params_filters_request_items_item_child_filters_item_value",
+    "PrepareParamsFiltersRequestItemsItemFilter": ".prepare_params_filters_request_items_item_filter",
+    "PrepareParamsFiltersRequestItemsItemOperator": ".prepare_params_filters_request_items_item_operator",
+    "PrepareParamsFiltersRequestItemsItemValue": ".prepare_params_filters_request_items_item_value",
+    "PrepareParamsOrderingRequest": ".prepare_params_ordering_request",
+    "PrepareParamsOrderingRequestItem": ".prepare_params_ordering_request_item",
     "Project": ".project",
     "ProjectDuplicateModeEnum": ".project_duplicate_mode_enum",
     "ProjectGroup": ".project_group",
@@ -516,7 +548,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScimSettingsUpdate": ".scim_settings_update",
     "ScopeEnum": ".scope_enum",
     "SegmentationEnum": ".segmentation_enum",
-    "SelectedItemsRequest": ".selected_items_request",
     "SerializationOption": ".serialization_option",
     "SerializationOptionRequest": ".serialization_option_request",
     "SerializationOptions": ".serialization_options",
@@ -547,7 +578,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TokenRotateResponse": ".token_rotate_response",
     "TrialRoleEnum": ".trial_role_enum",
     "TriggeredBy": ".triggered_by",
-    "TypeEnum": ".type_enum",
     "UserSimple": ".user_simple",
     "UserSimpleRequest": ".user_simple_request",
     "ValidateSamlMetadataUrlResponse": ".validate_saml_metadata_url_response",
@@ -555,7 +585,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ValueCountsBackfillJobTriggeredByValue": ".value_counts_backfill_job_triggered_by_value",
     "VersionResponse": ".version_response",
     "View": ".view",
+    "ViewDataRequestRequest": ".view_data_request_request",
     "ViewLockedBy": ".view_locked_by",
+    "ViewRequestRequest": ".view_request_request",
     "Webhook": ".webhook",
     "WebhookSerializerForUpdate": ".webhook_serializer_for_update",
     "WhoAmILseFields": ".who_am_i_lse_fields",
@@ -611,6 +643,7 @@ __all__ = [
     "AssignableUserTypeEnum",
     "AssignmentSettings",
     "AssignmentSettingsRequest",
+    "AssignmentTypeEnum",
     "AssociatedProject",
     "AuthMethodEnum",
     "AuthTypeEnum",
@@ -633,6 +666,7 @@ __all__ = [
     "CommentRequest",
     "CommentSerializerWithExpandedUser",
     "ConfigurablePermissionOption",
+    "ConjunctionEnum",
     "ControlTagWeight",
     "ControlTagWeightRequest",
     "ConvertedFormat",
@@ -644,9 +678,7 @@ __all__ = [
     "DataQualityAgreementDistribution",
     "DataQualityConfusionPair",
     "DatabricksExportStorage",
-    "DatabricksExportStorageRequest",
     "DatabricksImportStorage",
-    "DatabricksImportStorageRequest",
     "DefaultModelVersionNameResponse",
     "DefaultRole",
     "Dimension",
@@ -770,10 +802,22 @@ __all__ = [
     "PaginatedProjectSubsetTasksResponseList",
     "PaginatedRoleBasedTaskList",
     "PaginatedStateModelList",
+    "PatchedLseUserSerializerUpdateRequest",
     "Pause",
     "PauseRequest",
     "Prediction",
     "PredictionRequest",
+    "PrepareParamsFiltersRequest",
+    "PrepareParamsFiltersRequestItemsItem",
+    "PrepareParamsFiltersRequestItemsItemChildFiltersItem",
+    "PrepareParamsFiltersRequestItemsItemChildFiltersItemFilter",
+    "PrepareParamsFiltersRequestItemsItemChildFiltersItemOperator",
+    "PrepareParamsFiltersRequestItemsItemChildFiltersItemValue",
+    "PrepareParamsFiltersRequestItemsItemFilter",
+    "PrepareParamsFiltersRequestItemsItemOperator",
+    "PrepareParamsFiltersRequestItemsItemValue",
+    "PrepareParamsOrderingRequest",
+    "PrepareParamsOrderingRequestItem",
     "Project",
     "ProjectDuplicateModeEnum",
     "ProjectGroup",
@@ -816,7 +860,6 @@ __all__ = [
     "ScimSettingsUpdate",
     "ScopeEnum",
     "SegmentationEnum",
-    "SelectedItemsRequest",
     "SerializationOption",
     "SerializationOptionRequest",
     "SerializationOptions",
@@ -847,7 +890,6 @@ __all__ = [
     "TokenRotateResponse",
     "TrialRoleEnum",
     "TriggeredBy",
-    "TypeEnum",
     "UserSimple",
     "UserSimpleRequest",
     "ValidateSamlMetadataUrlResponse",
@@ -855,7 +897,9 @@ __all__ = [
     "ValueCountsBackfillJobTriggeredByValue",
     "VersionResponse",
     "View",
+    "ViewDataRequestRequest",
     "ViewLockedBy",
+    "ViewRequestRequest",
     "Webhook",
     "WebhookSerializerForUpdate",
     "WhoAmILseFields",

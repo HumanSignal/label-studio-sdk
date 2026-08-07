@@ -78,14 +78,17 @@ class RawAzureClient:
     def create(
         self,
         *,
+        project: int,
         account_key: typing.Optional[str] = OMIT,
         account_name: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         container: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AzureBlobExportStorage]:
         """
@@ -93,6 +96,9 @@ class RawAzureClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         account_key : typing.Optional[str]
             Azure Blob account key
 
@@ -106,16 +112,21 @@ class RawAzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             Azure blob prefix name
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -136,7 +147,10 @@ class RawAzureClient:
                 "description": description,
                 "prefix": prefix,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -166,6 +180,7 @@ class RawAzureClient:
     def validate(
         self,
         *,
+        project: int,
         account_key: typing.Optional[str] = OMIT,
         account_name: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
@@ -173,8 +188,10 @@ class RawAzureClient:
         description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -182,6 +199,9 @@ class RawAzureClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         account_key : typing.Optional[str]
             Azure Blob account key
 
@@ -195,7 +215,7 @@ class RawAzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
@@ -203,11 +223,16 @@ class RawAzureClient:
         prefix : typing.Optional[str]
             Azure blob prefix name
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -228,7 +253,10 @@ class RawAzureClient:
                 "id": id,
                 "prefix": prefix,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -333,7 +361,10 @@ class RawAzureClient:
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AzureBlobExportStorage]:
         """
@@ -356,16 +387,24 @@ class RawAzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             Azure blob prefix name
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -386,7 +425,10 @@ class RawAzureClient:
                 "description": description,
                 "prefix": prefix,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -517,14 +559,17 @@ class AsyncRawAzureClient:
     async def create(
         self,
         *,
+        project: int,
         account_key: typing.Optional[str] = OMIT,
         account_name: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         container: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AzureBlobExportStorage]:
         """
@@ -532,6 +577,9 @@ class AsyncRawAzureClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         account_key : typing.Optional[str]
             Azure Blob account key
 
@@ -545,16 +593,21 @@ class AsyncRawAzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             Azure blob prefix name
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -575,7 +628,10 @@ class AsyncRawAzureClient:
                 "description": description,
                 "prefix": prefix,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -605,6 +661,7 @@ class AsyncRawAzureClient:
     async def validate(
         self,
         *,
+        project: int,
         account_key: typing.Optional[str] = OMIT,
         account_name: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
@@ -612,8 +669,10 @@ class AsyncRawAzureClient:
         description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -621,6 +680,9 @@ class AsyncRawAzureClient:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         account_key : typing.Optional[str]
             Azure Blob account key
 
@@ -634,7 +696,7 @@ class AsyncRawAzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
@@ -642,11 +704,16 @@ class AsyncRawAzureClient:
         prefix : typing.Optional[str]
             Azure blob prefix name
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -667,7 +734,10 @@ class AsyncRawAzureClient:
                 "id": id,
                 "prefix": prefix,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -774,7 +844,10 @@ class AsyncRawAzureClient:
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AzureBlobExportStorage]:
         """
@@ -797,16 +870,24 @@ class AsyncRawAzureClient:
             Azure blob container
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             Azure blob prefix name
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -827,7 +908,10 @@ class AsyncRawAzureClient:
                 "description": description,
                 "prefix": prefix,
                 "project": project,
+                "regex_filter": regex_filter,
+                "synchronizable": synchronizable,
                 "title": title,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",

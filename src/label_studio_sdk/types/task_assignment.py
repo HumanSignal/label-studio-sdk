@@ -6,7 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .type_enum import TypeEnum
+from .assignment_type_enum import AssignmentTypeEnum
 
 
 class TaskAssignment(UncheckedBaseModel):
@@ -38,7 +38,7 @@ class TaskAssignment(UncheckedBaseModel):
     Assigned task
     """
 
-    type: typing.Optional[TypeEnum] = pydantic.Field(default=None)
+    type: typing.Optional[AssignmentTypeEnum] = pydantic.Field(default=None)
     """
     Type of assignment: Annotate|Review
     

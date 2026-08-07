@@ -12,8 +12,7 @@ from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..types.view import View
-from .types.create_views_request_data import CreateViewsRequestData
-from .types.update_views_request_data import UpdateViewsRequestData
+from ..types.view_data_request_request import ViewDataRequestRequest
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -73,7 +72,7 @@ class RawViewsClient:
     def create(
         self,
         *,
-        data: typing.Optional[CreateViewsRequestData] = OMIT,
+        data: typing.Optional[ViewDataRequestRequest] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[View]:
@@ -82,8 +81,7 @@ class RawViewsClient:
 
         Parameters
         ----------
-        data : typing.Optional[CreateViewsRequestData]
-            Custom view data
+        data : typing.Optional[ViewDataRequestRequest]
 
         project : typing.Optional[int]
             Project ID
@@ -101,12 +99,9 @@ class RawViewsClient:
             method="POST",
             json={
                 "data": convert_and_respect_annotation_metadata(
-                    object_=data, annotation=CreateViewsRequestData, direction="write"
+                    object_=data, annotation=ViewDataRequestRequest, direction="write"
                 ),
                 "project": project,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -291,7 +286,7 @@ class RawViewsClient:
         self,
         id: str,
         *,
-        data: typing.Optional[UpdateViewsRequestData] = OMIT,
+        data: typing.Optional[ViewDataRequestRequest] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[View]:
@@ -303,8 +298,7 @@ class RawViewsClient:
         id : str
             View ID
 
-        data : typing.Optional[UpdateViewsRequestData]
-            Custom view data
+        data : typing.Optional[ViewDataRequestRequest]
 
         project : typing.Optional[int]
             Project ID
@@ -322,7 +316,7 @@ class RawViewsClient:
             method="PATCH",
             json={
                 "data": convert_and_respect_annotation_metadata(
-                    object_=data, annotation=UpdateViewsRequestData, direction="write"
+                    object_=data, annotation=ViewDataRequestRequest, direction="write"
                 ),
                 "project": project,
             },
@@ -405,7 +399,7 @@ class AsyncRawViewsClient:
     async def create(
         self,
         *,
-        data: typing.Optional[CreateViewsRequestData] = OMIT,
+        data: typing.Optional[ViewDataRequestRequest] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[View]:
@@ -414,8 +408,7 @@ class AsyncRawViewsClient:
 
         Parameters
         ----------
-        data : typing.Optional[CreateViewsRequestData]
-            Custom view data
+        data : typing.Optional[ViewDataRequestRequest]
 
         project : typing.Optional[int]
             Project ID
@@ -433,12 +426,9 @@ class AsyncRawViewsClient:
             method="POST",
             json={
                 "data": convert_and_respect_annotation_metadata(
-                    object_=data, annotation=CreateViewsRequestData, direction="write"
+                    object_=data, annotation=ViewDataRequestRequest, direction="write"
                 ),
                 "project": project,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -625,7 +615,7 @@ class AsyncRawViewsClient:
         self,
         id: str,
         *,
-        data: typing.Optional[UpdateViewsRequestData] = OMIT,
+        data: typing.Optional[ViewDataRequestRequest] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[View]:
@@ -637,8 +627,7 @@ class AsyncRawViewsClient:
         id : str
             View ID
 
-        data : typing.Optional[UpdateViewsRequestData]
-            Custom view data
+        data : typing.Optional[ViewDataRequestRequest]
 
         project : typing.Optional[int]
             Project ID
@@ -656,7 +645,7 @@ class AsyncRawViewsClient:
             method="PATCH",
             json={
                 "data": convert_and_respect_annotation_metadata(
-                    object_=data, annotation=UpdateViewsRequestData, direction="write"
+                    object_=data, annotation=ViewDataRequestRequest, direction="write"
                 ),
                 "project": project,
             },

@@ -82,10 +82,16 @@ class RawPredictionsClient:
     def create(
         self,
         *,
+        result: typing.Sequence[typing.Dict[str, typing.Any]],
+        task: int,
+        cluster: typing.Optional[int] = OMIT,
+        mislabeling: typing.Optional[float] = OMIT,
+        model: typing.Optional[int] = OMIT,
+        model_run: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
-        result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
+        neighbors: typing.Optional[typing.Any] = OMIT,
+        project: typing.Optional[int] = OMIT,
         score: typing.Optional[float] = OMIT,
-        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Prediction]:
         """
@@ -93,17 +99,33 @@ class RawPredictionsClient:
 
         Parameters
         ----------
+        result : typing.Sequence[typing.Dict[str, typing.Any]]
+            List of prediction results for the task
+
+        task : int
+
+        cluster : typing.Optional[int]
+            Cluster for the current prediction
+
+        mislabeling : typing.Optional[float]
+            Related task mislabeling score
+
+        model : typing.Optional[int]
+            An ML Backend instance that created the prediction.
+
+        model_run : typing.Optional[int]
+            A run of a ModelVersion that created the prediction.
+
         model_version : typing.Optional[str]
             Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
-        result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+        neighbors : typing.Optional[typing.Any]
+            Array of task IDs of the closest neighbors
+
+        project : typing.Optional[int]
 
         score : typing.Optional[float]
-            Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
-
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+            Prediction score
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -117,13 +139,16 @@ class RawPredictionsClient:
             "api/predictions/",
             method="POST",
             json={
+                "cluster": cluster,
+                "mislabeling": mislabeling,
+                "model": model,
+                "model_run": model_run,
                 "model_version": model_version,
+                "neighbors": neighbors,
+                "project": project,
                 "result": result,
                 "score": score,
                 "task": task,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -225,7 +250,13 @@ class RawPredictionsClient:
         self,
         id: int,
         *,
+        cluster: typing.Optional[int] = OMIT,
+        mislabeling: typing.Optional[float] = OMIT,
+        model: typing.Optional[int] = OMIT,
+        model_run: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        neighbors: typing.Optional[typing.Any] = OMIT,
+        project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         score: typing.Optional[float] = OMIT,
         task: typing.Optional[int] = OMIT,
@@ -239,17 +270,33 @@ class RawPredictionsClient:
         id : int
             Prediction ID
 
+        cluster : typing.Optional[int]
+            Cluster for the current prediction
+
+        mislabeling : typing.Optional[float]
+            Related task mislabeling score
+
+        model : typing.Optional[int]
+            An ML Backend instance that created the prediction.
+
+        model_run : typing.Optional[int]
+            A run of a ModelVersion that created the prediction.
+
         model_version : typing.Optional[str]
             Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
+        neighbors : typing.Optional[typing.Any]
+            Array of task IDs of the closest neighbors
+
+        project : typing.Optional[int]
+
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+            List of prediction results for the task
 
         score : typing.Optional[float]
-            Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
+            Prediction score
 
         task : typing.Optional[int]
-            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -263,7 +310,13 @@ class RawPredictionsClient:
             f"api/predictions/{encode_path_param(id)}/",
             method="PATCH",
             json={
+                "cluster": cluster,
+                "mislabeling": mislabeling,
+                "model": model,
+                "model_run": model_run,
                 "model_version": model_version,
+                "neighbors": neighbors,
+                "project": project,
                 "result": result,
                 "score": score,
                 "task": task,
@@ -359,10 +412,16 @@ class AsyncRawPredictionsClient:
     async def create(
         self,
         *,
+        result: typing.Sequence[typing.Dict[str, typing.Any]],
+        task: int,
+        cluster: typing.Optional[int] = OMIT,
+        mislabeling: typing.Optional[float] = OMIT,
+        model: typing.Optional[int] = OMIT,
+        model_run: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
-        result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
+        neighbors: typing.Optional[typing.Any] = OMIT,
+        project: typing.Optional[int] = OMIT,
         score: typing.Optional[float] = OMIT,
-        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Prediction]:
         """
@@ -370,17 +429,33 @@ class AsyncRawPredictionsClient:
 
         Parameters
         ----------
+        result : typing.Sequence[typing.Dict[str, typing.Any]]
+            List of prediction results for the task
+
+        task : int
+
+        cluster : typing.Optional[int]
+            Cluster for the current prediction
+
+        mislabeling : typing.Optional[float]
+            Related task mislabeling score
+
+        model : typing.Optional[int]
+            An ML Backend instance that created the prediction.
+
+        model_run : typing.Optional[int]
+            A run of a ModelVersion that created the prediction.
+
         model_version : typing.Optional[str]
             Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
-        result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+        neighbors : typing.Optional[typing.Any]
+            Array of task IDs of the closest neighbors
+
+        project : typing.Optional[int]
 
         score : typing.Optional[float]
-            Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
-
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+            Prediction score
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -394,13 +469,16 @@ class AsyncRawPredictionsClient:
             "api/predictions/",
             method="POST",
             json={
+                "cluster": cluster,
+                "mislabeling": mislabeling,
+                "model": model,
+                "model_run": model_run,
                 "model_version": model_version,
+                "neighbors": neighbors,
+                "project": project,
                 "result": result,
                 "score": score,
                 "task": task,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -506,7 +584,13 @@ class AsyncRawPredictionsClient:
         self,
         id: int,
         *,
+        cluster: typing.Optional[int] = OMIT,
+        mislabeling: typing.Optional[float] = OMIT,
+        model: typing.Optional[int] = OMIT,
+        model_run: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        neighbors: typing.Optional[typing.Any] = OMIT,
+        project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         score: typing.Optional[float] = OMIT,
         task: typing.Optional[int] = OMIT,
@@ -520,17 +604,33 @@ class AsyncRawPredictionsClient:
         id : int
             Prediction ID
 
+        cluster : typing.Optional[int]
+            Cluster for the current prediction
+
+        mislabeling : typing.Optional[float]
+            Related task mislabeling score
+
+        model : typing.Optional[int]
+            An ML Backend instance that created the prediction.
+
+        model_run : typing.Optional[int]
+            A run of a ModelVersion that created the prediction.
+
         model_version : typing.Optional[str]
             Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
+        neighbors : typing.Optional[typing.Any]
+            Array of task IDs of the closest neighbors
+
+        project : typing.Optional[int]
+
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
-            Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+            List of prediction results for the task
 
         score : typing.Optional[float]
-            Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
+            Prediction score
 
         task : typing.Optional[int]
-            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -544,7 +644,13 @@ class AsyncRawPredictionsClient:
             f"api/predictions/{encode_path_param(id)}/",
             method="PATCH",
             json={
+                "cluster": cluster,
+                "mislabeling": mislabeling,
+                "model": model,
+                "model_run": model_run,
                 "model_version": model_version,
+                "neighbors": neighbors,
+                "project": project,
                 "result": result,
                 "score": score,
                 "task": task,

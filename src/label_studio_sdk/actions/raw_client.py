@@ -10,11 +10,11 @@ from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
-from .types.create_actions_request_filters import CreateActionsRequestFilters
+from ..types.prepare_params_filters_request import PrepareParamsFiltersRequest
+from ..types.prepare_params_ordering_request import PrepareParamsOrderingRequest
 from .types.create_actions_request_id import CreateActionsRequestId
-from .types.create_actions_request_ordering_item import CreateActionsRequestOrderingItem
-from .types.create_actions_request_selected_items import CreateActionsRequestSelectedItems
 from .types.list_actions_response_item import ListActionsResponseItem
+from .types.prepare_params_request_request_selected_items import PrepareParamsRequestRequestSelectedItems
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -77,9 +77,9 @@ class RawActionsClient:
         id: CreateActionsRequestId,
         project: int,
         view: typing.Optional[int] = None,
-        filters: typing.Optional[CreateActionsRequestFilters] = OMIT,
-        ordering: typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]] = OMIT,
-        selected_items: typing.Optional[CreateActionsRequestSelectedItems] = OMIT,
+        filters: typing.Optional[PrepareParamsFiltersRequest] = OMIT,
+        ordering: typing.Optional[PrepareParamsOrderingRequest] = OMIT,
+        selected_items: typing.Optional[PrepareParamsRequestRequestSelectedItems] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -96,13 +96,11 @@ class RawActionsClient:
         view : typing.Optional[int]
             View ID (optional, it has higher priority than filters, selectedItems and ordering from the request body payload)
 
-        filters : typing.Optional[CreateActionsRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+        filters : typing.Optional[PrepareParamsFiltersRequest]
 
-        ordering : typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]
-            List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+        ordering : typing.Optional[PrepareParamsOrderingRequest]
 
-        selected_items : typing.Optional[CreateActionsRequestSelectedItems]
+        selected_items : typing.Optional[PrepareParamsRequestRequestSelectedItems]
             Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         request_options : typing.Optional[RequestOptions]
@@ -122,11 +120,13 @@ class RawActionsClient:
             },
             json={
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=CreateActionsRequestFilters, direction="write"
+                    object_=filters, annotation=typing.Optional[PrepareParamsFiltersRequest], direction="write"
                 ),
                 "ordering": ordering,
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=CreateActionsRequestSelectedItems, direction="write"
+                    object_=selected_items,
+                    annotation=typing.Optional[PrepareParamsRequestRequestSelectedItems],
+                    direction="write",
                 ),
             },
             headers={
@@ -204,9 +204,9 @@ class AsyncRawActionsClient:
         id: CreateActionsRequestId,
         project: int,
         view: typing.Optional[int] = None,
-        filters: typing.Optional[CreateActionsRequestFilters] = OMIT,
-        ordering: typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]] = OMIT,
-        selected_items: typing.Optional[CreateActionsRequestSelectedItems] = OMIT,
+        filters: typing.Optional[PrepareParamsFiltersRequest] = OMIT,
+        ordering: typing.Optional[PrepareParamsOrderingRequest] = OMIT,
+        selected_items: typing.Optional[PrepareParamsRequestRequestSelectedItems] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -223,13 +223,11 @@ class AsyncRawActionsClient:
         view : typing.Optional[int]
             View ID (optional, it has higher priority than filters, selectedItems and ordering from the request body payload)
 
-        filters : typing.Optional[CreateActionsRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+        filters : typing.Optional[PrepareParamsFiltersRequest]
 
-        ordering : typing.Optional[typing.Sequence[CreateActionsRequestOrderingItem]]
-            List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
+        ordering : typing.Optional[PrepareParamsOrderingRequest]
 
-        selected_items : typing.Optional[CreateActionsRequestSelectedItems]
+        selected_items : typing.Optional[PrepareParamsRequestRequestSelectedItems]
             Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         request_options : typing.Optional[RequestOptions]
@@ -249,11 +247,13 @@ class AsyncRawActionsClient:
             },
             json={
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=CreateActionsRequestFilters, direction="write"
+                    object_=filters, annotation=typing.Optional[PrepareParamsFiltersRequest], direction="write"
                 ),
                 "ordering": ordering,
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=CreateActionsRequestSelectedItems, direction="write"
+                    object_=selected_items,
+                    annotation=typing.Optional[PrepareParamsRequestRequestSelectedItems],
+                    direction="write",
                 ),
             },
             headers={

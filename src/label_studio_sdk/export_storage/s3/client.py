@@ -69,6 +69,7 @@ class S3Client:
     def create(
         self,
         *,
+        project: int,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
@@ -77,10 +78,12 @@ class S3Client:
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3ExportStorage:
         """
@@ -88,6 +91,9 @@ class S3Client:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -104,16 +110,16 @@ class S3Client:
             S3 bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -121,8 +127,13 @@ class S3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -139,9 +150,12 @@ class S3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.s3.create()
+        client.export_storage.s3.create(
+            project=1,
+        )
         """
         _response = self._raw_client.create(
+            project=project,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
@@ -150,10 +164,12 @@ class S3Client:
             can_delete_objects=can_delete_objects,
             description=description,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -161,6 +177,7 @@ class S3Client:
     def validate(
         self,
         *,
+        project: int,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
@@ -170,10 +187,12 @@ class S3Client:
         description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -181,6 +200,9 @@ class S3Client:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -197,10 +219,10 @@ class S3Client:
             S3 bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
@@ -208,8 +230,8 @@ class S3Client:
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -217,8 +239,13 @@ class S3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -234,9 +261,12 @@ class S3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.s3.validate()
+        client.export_storage.s3.validate(
+            project=1,
+        )
         """
         _response = self._raw_client.validate(
+            project=project,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
@@ -246,10 +276,12 @@ class S3Client:
             description=description,
             id=id,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -326,9 +358,12 @@ class S3Client:
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3ExportStorage:
         """
@@ -354,16 +389,19 @@ class S3Client:
             S3 bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             S3 bucket prefix
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -371,8 +409,13 @@ class S3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -404,9 +447,12 @@ class S3Client:
             description=description,
             prefix=prefix,
             project=project,
+            regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -508,6 +554,7 @@ class AsyncS3Client:
     async def create(
         self,
         *,
+        project: int,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
@@ -516,10 +563,12 @@ class AsyncS3Client:
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3ExportStorage:
         """
@@ -527,6 +576,9 @@ class AsyncS3Client:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -543,16 +595,16 @@ class AsyncS3Client:
             S3 bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -560,8 +612,13 @@ class AsyncS3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -583,12 +640,15 @@ class AsyncS3Client:
 
 
         async def main() -> None:
-            await client.export_storage.s3.create()
+            await client.export_storage.s3.create(
+                project=1,
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
+            project=project,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
@@ -597,10 +657,12 @@ class AsyncS3Client:
             can_delete_objects=can_delete_objects,
             description=description,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -608,6 +670,7 @@ class AsyncS3Client:
     async def validate(
         self,
         *,
+        project: int,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
@@ -617,10 +680,12 @@ class AsyncS3Client:
         description: typing.Optional[str] = OMIT,
         id: typing.Optional[int] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -628,6 +693,9 @@ class AsyncS3Client:
 
         Parameters
         ----------
+        project : int
+            A unique integer value identifying this project.
+
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -644,10 +712,10 @@ class AsyncS3Client:
             S3 bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         id : typing.Optional[int]
             Storage ID. If set, storage with specified ID will be updated
@@ -655,8 +723,8 @@ class AsyncS3Client:
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        project : typing.Optional[int]
-            Project ID
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -664,8 +732,13 @@ class AsyncS3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -686,12 +759,15 @@ class AsyncS3Client:
 
 
         async def main() -> None:
-            await client.export_storage.s3.validate()
+            await client.export_storage.s3.validate(
+                project=1,
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.validate(
+            project=project,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
@@ -701,10 +777,12 @@ class AsyncS3Client:
             description=description,
             id=id,
             prefix=prefix,
-            project=project,
+            regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data
@@ -797,9 +875,12 @@ class AsyncS3Client:
         description: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3ExportStorage:
         """
@@ -825,16 +906,19 @@ class AsyncS3Client:
             S3 bucket name
 
         can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+            Deletion from storage enabled
 
         description : typing.Optional[str]
-            Storage description
+            Cloud storage description
 
         prefix : typing.Optional[str]
             S3 bucket prefix
 
         project : typing.Optional[int]
-            Project ID
+            A unique integer value identifying this project.
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -842,8 +926,13 @@ class AsyncS3Client:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        synchronizable : typing.Optional[bool]
+
         title : typing.Optional[str]
-            Storage title
+            Cloud storage title
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -883,9 +972,12 @@ class AsyncS3Client:
             description=description,
             prefix=prefix,
             project=project,
+            regex_filter=regex_filter,
             region_name=region_name,
             s3endpoint=s3endpoint,
+            synchronizable=synchronizable,
             title=title,
+            use_blob_urls=use_blob_urls,
             request_options=request_options,
         )
         return _response.data

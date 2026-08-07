@@ -377,8 +377,8 @@ class RawProjectTemplatesClient:
         id: int,
         *,
         title: str,
-        workspace_id: int,
         description: typing.Optional[str] = OMIT,
+        workspace_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseProject]:
         """
@@ -397,11 +397,11 @@ class RawProjectTemplatesClient:
         title : str
             The title of the project to be created from the template.
 
-        workspace_id : int
-            A unique integer value identifying the workspace in which to create the project.
-
         description : typing.Optional[str]
             A description for the project.
+
+        workspace_id : typing.Optional[int]
+            A unique integer value identifying the workspace in which to create the project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -808,8 +808,8 @@ class AsyncRawProjectTemplatesClient:
         id: int,
         *,
         title: str,
-        workspace_id: int,
         description: typing.Optional[str] = OMIT,
+        workspace_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseProject]:
         """
@@ -828,11 +828,11 @@ class AsyncRawProjectTemplatesClient:
         title : str
             The title of the project to be created from the template.
 
-        workspace_id : int
-            A unique integer value identifying the workspace in which to create the project.
-
         description : typing.Optional[str]
             A description for the project.
+
+        workspace_id : typing.Optional[int]
+            A unique integer value identifying the workspace in which to create the project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

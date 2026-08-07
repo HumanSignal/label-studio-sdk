@@ -6,14 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .create_ml_request_auth_method import CreateMlRequestAuthMethod
     from .list_model_versions_ml_response import ListModelVersionsMlResponse
-    from .update_ml_request_auth_method import UpdateMlRequestAuthMethod
-_dynamic_imports: typing.Dict[str, str] = {
-    "CreateMlRequestAuthMethod": ".create_ml_request_auth_method",
-    "ListModelVersionsMlResponse": ".list_model_versions_ml_response",
-    "UpdateMlRequestAuthMethod": ".update_ml_request_auth_method",
-}
+_dynamic_imports: typing.Dict[str, str] = {"ListModelVersionsMlResponse": ".list_model_versions_ml_response"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -37,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateMlRequestAuthMethod", "ListModelVersionsMlResponse", "UpdateMlRequestAuthMethod"]
+__all__ = ["ListModelVersionsMlResponse"]

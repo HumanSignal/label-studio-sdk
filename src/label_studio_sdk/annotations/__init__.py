@@ -6,8 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import CreateBulkAnnotationsResponseItem, DeleteBulkAnnotationsResponse
+    from .types import (
+        AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems,
+        AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsExcluded,
+        AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsIncluded,
+        CreateBulkAnnotationsResponseItem,
+        DeleteBulkAnnotationsResponse,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems": ".types",
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsExcluded": ".types",
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsIncluded": ".types",
     "CreateBulkAnnotationsResponseItem": ".types",
     "DeleteBulkAnnotationsResponse": ".types",
 }
@@ -34,4 +43,10 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateBulkAnnotationsResponseItem", "DeleteBulkAnnotationsResponse"]
+__all__ = [
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItems",
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsExcluded",
+    "AnnotationBulkSerializerWithSelectedItemsRequestSelectedItemsIncluded",
+    "CreateBulkAnnotationsResponseItem",
+    "DeleteBulkAnnotationsResponse",
+]
