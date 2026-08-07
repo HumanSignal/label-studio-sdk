@@ -2,4 +2,4 @@
 
 import typing
 
-ReviewSettingsSamplingEnum = typing.Union[typing.Literal["task_id", "random"], typing.Any]
+ReviewSettingsSamplingEnum = typing.Union[typing.Literal["task_id", "random", "by_annotator"], typing.Any]

@@ -11,6 +11,11 @@ from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
 
 
 class ReviewSettings(UncheckedBaseModel):
+    annotator_batch_percent: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Percent of an annotator’s work to review before moving to another annotator
+    """
+
     anonymize_annotations: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Hide annotator names from annotations while review
@@ -63,10 +68,11 @@ class ReviewSettings(UncheckedBaseModel):
 
     sampling: typing.Optional[ReviewSettingsSamplingEnum] = pydantic.Field(default=None)
     """
-    By Task ID / Random
+    By Task ID / Random / By Annotator
     
     * `task_id` - By Task ID
     * `random` - Random
+    * `by_annotator` - By Annotator
     """
 
     show_agreement_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
