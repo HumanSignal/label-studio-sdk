@@ -6,13 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .assignable_organization_role_enum import AssignableOrganizationRoleEnum
+from .role_source_enum import RoleSourceEnum
 
 
 class ProjectRole(UncheckedBaseModel):
     id: typing.Optional[int] = None
     project: int
     role: AssignableOrganizationRoleEnum
-    role_source: typing.Optional[str] = None
+    role_source: typing.Optional[RoleSourceEnum] = None
     user: int
 
     if IS_PYDANTIC_V2:

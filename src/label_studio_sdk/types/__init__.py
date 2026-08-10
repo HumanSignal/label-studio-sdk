@@ -252,6 +252,7 @@ if typing.TYPE_CHECKING:
     from .review_settings_request import ReviewSettingsRequest
     from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
     from .role_based_task import RoleBasedTask
+    from .role_source_enum import RoleSourceEnum
     from .s3export_storage import S3ExportStorage
     from .s3import_storage import S3ImportStorage
     from .saml_settings import SamlSettings
@@ -540,6 +541,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReviewSettingsRequest": ".review_settings_request",
     "ReviewSettingsSamplingEnum": ".review_settings_sampling_enum",
     "RoleBasedTask": ".role_based_task",
+    "RoleSourceEnum": ".role_source_enum",
     "S3ExportStorage": ".s3export_storage",
     "S3ImportStorage": ".s3import_storage",
     "SamlSettings": ".saml_settings",
@@ -852,6 +854,7 @@ __all__ = [
     "ReviewSettingsRequest",
     "ReviewSettingsSamplingEnum",
     "RoleBasedTask",
+    "RoleSourceEnum",
     "S3ExportStorage",
     "S3ImportStorage",
     "SamlSettings",
