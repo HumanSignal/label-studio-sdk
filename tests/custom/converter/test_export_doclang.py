@@ -533,6 +533,198 @@ def test_converter_dispatch_to_doclang(tmp_output_dir, mock_page_image):
     assert os.path.exists(os.path.join(tmp_output_dir, "task-1-annotation-11.dclx"))
 
 
+def test_exports_doclang_from_draft_when_annotation_is_layout_only(tmp_output_dir, mock_page_image):
+    """Regression for FIT-2369: DocLang only in draft, not on committed annotation."""
+    task = {
+        "id": 279288350,
+        "data": {"image": "https://example.com/pages/page-2.png"},
+        "annotations": [
+            {
+                "id": 100629122,
+                "result": [
+                    {
+                        "from_name": "docling",
+                        "to_name": "docling",
+                        "type": "rectanglelabels",
+                        "value": {
+                            "x": 1.0,
+                            "y": 2.0,
+                            "width": 3.0,
+                            "height": 4.0,
+                            "rectanglelabels": ["Text"],
+                        },
+                    }
+                ],
+            }
+        ],
+        "drafts": [
+            {
+                "id": 29602202,
+                "annotation": 100629122,
+                "result": [
+                    {
+                        "id": "doclang_wd9akrb0z",
+                        "from_name": "doclang",
+                        "to_name": "docling",
+                        "type": "textarea",
+                        "value": {
+                            "text": ["<doclang><section>Draft-only DocLang</section></doclang>"]
+                        },
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    count = doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False)
+
+    assert count == 1
+    archive = os.path.join(tmp_output_dir, "task-279288350-draft-29602202.dclx")
+    assert os.path.exists(archive)
+    with zipfile.ZipFile(archive) as z:
+        assert "<section>Draft-only DocLang</section>" in z.read("document.xml").decode()
+
+
+def test_exports_doclang_from_prediction(tmp_output_dir, mock_page_image):
+    task = {
+        "id": 42,
+        "data": {"image": "https://example.com/page.png"},
+        "annotations": [],
+        "predictions": [
+            {
+                "id": 9001,
+                "model_version": "docling-v1",
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang><text>predicted</text></doclang>"]},
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    count = doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False)
+
+    assert count == 1
+    archive = os.path.join(tmp_output_dir, "task-42-prediction-9001.dclx")
+    assert os.path.exists(archive)
+    with zipfile.ZipFile(archive) as z:
+        assert "<text>predicted</text>" in z.read("document.xml").decode()
+
+
+def test_skips_draft_when_linked_annotation_already_exported_doclang(tmp_output_dir, mock_page_image):
+    doclang_xml = "<doclang><text>committed</text></doclang>"
+    task = {
+        "id": 43,
+        "data": {},
+        "annotations": [
+            {
+                "id": 430,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": [doclang_xml]},
+                    }
+                ],
+            }
+        ],
+        "drafts": [
+            {
+                "id": 431,
+                "annotation": 430,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang><text>draft update</text></doclang>"]},
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    count = doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False, download_resources=False)
+
+    assert count == 1
+    assert os.path.exists(os.path.join(tmp_output_dir, "task-43-annotation-430.dclx"))
+    assert not os.path.exists(os.path.join(tmp_output_dir, "task-43-draft-431.dclx"))
+
+
+def test_fetches_page_images_once_for_multiple_sources_on_same_task(tmp_output_dir, mock_page_image):
+    """Page rasters are task-level resources; do not re-download per DocLang source."""
+    task = {
+        "id": 44,
+        "data": {"image": "https://example.com/page.png"},
+        "annotations": [
+            {
+                "id": 440,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang><text>annotation</text></doclang>"]},
+                    }
+                ],
+            }
+        ],
+        "predictions": [
+            {
+                "id": 441,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang><text>prediction</text></doclang>"]},
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    count = doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False)
+
+    assert count == 2
+    mock_page_image.assert_called_once()
+    assert os.path.exists(os.path.join(tmp_output_dir, "task-44-annotation-440.dclx"))
+    assert os.path.exists(os.path.join(tmp_output_dir, "task-44-prediction-441.dclx"))
+
+
+def test_valid_annotations_skips_non_dict_entries():
+    task = {
+        "annotations": [
+            None,
+            "bad",
+            {"id": 1, "was_cancelled": True, "result": []},
+            {
+                "id": 2,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang><text>ok</text></doclang>"]},
+                    }
+                ],
+            },
+        ]
+    }
+    assert [ann["id"] for ann in doclang_export._valid_annotations(task)] == [2]
+
+
 def test_directory_input_iterates_all_json_files(tmp_output_dir, mock_page_image):
     """is_dir=True should pull tasks from every *.json file in the directory."""
     task_a = {

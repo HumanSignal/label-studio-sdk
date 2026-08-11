@@ -3,6 +3,27 @@
 Finds DocLang XML in standard Label Studio, ReactCode, and custom Interface
 results, then packages it according to the DocLang archive specification:
 https://github.com/doclang-project/doclang/blob/main/spec.md#doclang-archive-format.
+
+Document discovery (export sources)
+------------------------------------
+DocLang archives are written from three task payload sources, in order:
+
+1. **Annotations** — each non-cancelled, non-skipped entry in ``annotations``
+   (or legacy ``completions``). One ``.dclx`` per annotation whose ``result``
+   contains DocLang XML.
+
+2. **Drafts** — each entry in ``drafts`` whose ``result`` contains DocLang XML.
+   When a draft is linked to an annotation via ``annotation`` and that annotation
+   already produced a DocLang archive in step 1, the draft is skipped so the
+   same labeling session does not emit duplicate documents.
+
+3. **Predictions** — each entry in ``predictions`` whose ``result`` contains
+   DocLang XML. Predictions are always exported under their own id; they are
+   never deduplicated against annotations or drafts.
+
+Archive filenames use distinct prefixes (``annotation``, ``draft``,
+``prediction``) plus the source id so outputs from different source kinds
+cannot collide.
 """
 
 import base64
@@ -16,7 +37,7 @@ import shutil
 import tempfile
 from glob import glob
 from pathlib import Path
-from typing import Iterable, Iterator, Mapping, Optional
+from typing import Iterable, Iterator, NamedTuple, Optional, Mapping
 from urllib.parse import parse_qsl, urlparse
 
 import ijson
@@ -459,9 +480,55 @@ def _stage_document_assets(
 def _valid_annotations(task: dict) -> Iterable[dict]:
     annotations = task.get("annotations") or task.get("completions") or []
     for ann in annotations:
+        if not isinstance(ann, dict):
+            continue
         if ann.get("was_cancelled") or ann.get("skipped"):
             continue
         yield ann
+
+
+class _DoclangSource(NamedTuple):
+    kind: str
+    source_id: int | str
+    document: bytes
+
+
+def _archive_filename(task_id, source: _DoclangSource) -> str:
+    return f"task-{task_id}-{source.kind}-{source.source_id}.dclx"
+
+
+def _iter_doclang_sources(task: dict) -> Iterable[_DoclangSource]:
+    """Yield annotation, draft, and prediction sources that contain DocLang XML."""
+    exported_annotation_ids: set[int | str] = set()
+
+    for index, ann in enumerate(_valid_annotations(task)):
+        document = _extract_doclang_bytes(ann)
+        if document is None:
+            continue
+        ann_id = ann.get("id", index)
+        exported_annotation_ids.add(ann_id)
+        yield _DoclangSource("annotation", ann_id, document)
+
+    for index, draft in enumerate(task.get("drafts") or []):
+        if not isinstance(draft, dict):
+            continue
+        linked_annotation = draft.get("annotation")
+        if linked_annotation is not None and linked_annotation in exported_annotation_ids:
+            continue
+        document = _extract_doclang_bytes(draft)
+        if document is None:
+            continue
+        draft_id = draft.get("id", index)
+        yield _DoclangSource("draft", draft_id, document)
+
+    for index, prediction in enumerate(task.get("predictions") or []):
+        if not isinstance(prediction, dict):
+            continue
+        document = _extract_doclang_bytes(prediction)
+        if document is None:
+            continue
+        prediction_id = prediction.get("id", index)
+        yield _DoclangSource("prediction", prediction_id, document)
 
 
 def convert_to_doclang(
@@ -475,65 +542,62 @@ def convert_to_doclang(
     upload_dir: Optional[str] = None,
     hostname: Optional[str] = None,
     access_token: Optional[str] = None,
-    task_id: Optional[int] = None,
 ) -> int:
     """Export annotations to DocLang ``.dclx`` archives.
 
-    One archive is written per non-cancelled annotation that contains a DocLang
-    XML region. Returns the number of archives written.
+    One archive is written per annotation, draft, or prediction that contains a
+    DocLang XML region (see module docstring for discovery rules). Returns the
+    number of archives written.
     """
     ensure_dir(output_dir)
 
     written = 0
-    skipped_no_xml = 0
     for task in _iter_raw_tasks(input_data, is_dir=is_dir):
-        current_task_id = task.get("id")
+        sources = list(_iter_doclang_sources(task))
+        if not sources:
+            continue
+
+        task_id = task.get("id")
         page_urls = _extract_page_urls(task, image_key, image_list_key)
 
-        for ann in _valid_annotations(task):
-            document = _extract_doclang_bytes(ann)
-            if document is None:
-                skipped_no_xml += 1
-                continue
+        with tempfile.TemporaryDirectory() as task_tmp:
+            pages = (
+                _fetch_page_images(
+                    page_urls,
+                    task_tmp,
+                    project_dir,
+                    upload_dir,
+                    hostname,
+                    access_token,
+                    task_id,
+                )
+                if download_resources and page_urls
+                else None
+            )
 
-            filename = f"task-{current_task_id}-annotation-{ann.get('id')}.dclx"
-            output_path = os.path.join(output_dir, filename)
-            with tempfile.TemporaryDirectory() as tmp:
-                assets = {}
-                if download_resources:
-                    asset_dir = os.path.join(tmp, "assets")
-                    ensure_dir(asset_dir)
-                    document, assets = _stage_document_assets(document, asset_dir, project_dir, upload_dir)
-                document_path = Path(tmp) / "document.dclg"
-                document_path.write_bytes(document)
-                pages = (
-                    _fetch_page_images(
-                        page_urls,
-                        tmp,
-                        project_dir,
-                        upload_dir,
-                        hostname,
-                        access_token,
-                        current_task_id,
+            for source in sources:
+                filename = _archive_filename(task_id, source)
+                output_path = os.path.join(output_dir, filename)
+                with tempfile.TemporaryDirectory() as tmp:
+                    document = source.document
+                    assets = {}
+                    if download_resources:
+                        asset_dir = os.path.join(tmp, "assets")
+                        ensure_dir(asset_dir)
+                        document, assets = _stage_document_assets(document, asset_dir, project_dir, upload_dir)
+                    document_path = Path(tmp) / "document.dclg"
+                    document_path.write_bytes(document)
+                    pack(
+                        document_path,
+                        output=output_path,
+                        pages=pages or None,
+                        assets=assets or None,
+                        # DocLang 0.x minor releases are intentionally breaking, so full
+                        # schema validation is deferred until the format stabilizes:
+                        # validate=True,
+                        validate=False,
                     )
-                    if download_resources and page_urls
-                    else None
-                )
-                pack(
-                    document_path,
-                    output=output_path,
-                    pages=pages or None,
-                    assets=assets or None,
-                    # DocLang 0.x minor releases are intentionally breaking, so full
-                    # schema validation is deferred until the format stabilizes:
-                    # validate=True,
-                    validate=False,
-                )
-            written += 1
+                written += 1
 
-    logger.info(
-        "DocLang export: wrote %d archives (skipped %d annotations with no DocLang XML)",
-        written,
-        skipped_no_xml,
-    )
+    logger.info("DocLang export: wrote %d archives", written)
     return written
