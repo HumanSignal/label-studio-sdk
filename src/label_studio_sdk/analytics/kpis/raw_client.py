@@ -75,6 +75,7 @@ class RawKpisClient:
         kpi_key: str,
         *,
         tz: str,
+        all_: typing.Optional[bool] = None,
         end: typing.Optional[dt.datetime] = None,
         members: typing.Optional[str] = None,
         projects: typing.Optional[str] = None,
@@ -100,6 +101,9 @@ class RawKpisClient:
 
         tz : str
             Timezone for date filtering (IANA timezone name, e.g., "America/New_York", "UTC"). The start and end dates will be interpreted in this timezone.
+
+        all_ : typing.Optional[bool]
+            When true with segment_by_user, return only members with performance data (capped). Used by Member Performance Select All discovery.
 
         end : typing.Optional[dt.datetime]
             End date for filtering (ISO format)
@@ -134,6 +138,7 @@ class RawKpisClient:
             f"api/analytics/kpis/{encode_path_param(kpi_key)}",
             method="GET",
             params={
+                "all": all_,
                 "end": serialize_datetime(end) if end is not None else None,
                 "members": members,
                 "projects": projects,
@@ -242,6 +247,7 @@ class AsyncRawKpisClient:
         kpi_key: str,
         *,
         tz: str,
+        all_: typing.Optional[bool] = None,
         end: typing.Optional[dt.datetime] = None,
         members: typing.Optional[str] = None,
         projects: typing.Optional[str] = None,
@@ -267,6 +273,9 @@ class AsyncRawKpisClient:
 
         tz : str
             Timezone for date filtering (IANA timezone name, e.g., "America/New_York", "UTC"). The start and end dates will be interpreted in this timezone.
+
+        all_ : typing.Optional[bool]
+            When true with segment_by_user, return only members with performance data (capped). Used by Member Performance Select All discovery.
 
         end : typing.Optional[dt.datetime]
             End date for filtering (ISO format)
@@ -301,6 +310,7 @@ class AsyncRawKpisClient:
             f"api/analytics/kpis/{encode_path_param(kpi_key)}",
             method="GET",
             params={
+                "all": all_,
                 "end": serialize_datetime(end) if end is not None else None,
                 "members": members,
                 "projects": projects,

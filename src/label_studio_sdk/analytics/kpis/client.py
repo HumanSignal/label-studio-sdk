@@ -63,6 +63,7 @@ class KpisClient:
         kpi_key: str,
         *,
         tz: str,
+        all_: typing.Optional[bool] = None,
         end: typing.Optional[dt.datetime] = None,
         members: typing.Optional[str] = None,
         projects: typing.Optional[str] = None,
@@ -88,6 +89,9 @@ class KpisClient:
 
         tz : str
             Timezone for date filtering (IANA timezone name, e.g., "America/New_York", "UTC"). The start and end dates will be interpreted in this timezone.
+
+        all_ : typing.Optional[bool]
+            When true with segment_by_user, return only members with performance data (capped). Used by Member Performance Select All discovery.
 
         end : typing.Optional[dt.datetime]
             End date for filtering (ISO format)
@@ -133,6 +137,7 @@ class KpisClient:
         _response = self._raw_client.get(
             kpi_key,
             tz=tz,
+            all_=all_,
             end=end,
             members=members,
             projects=projects,
@@ -205,6 +210,7 @@ class AsyncKpisClient:
         kpi_key: str,
         *,
         tz: str,
+        all_: typing.Optional[bool] = None,
         end: typing.Optional[dt.datetime] = None,
         members: typing.Optional[str] = None,
         projects: typing.Optional[str] = None,
@@ -230,6 +236,9 @@ class AsyncKpisClient:
 
         tz : str
             Timezone for date filtering (IANA timezone name, e.g., "America/New_York", "UTC"). The start and end dates will be interpreted in this timezone.
+
+        all_ : typing.Optional[bool]
+            When true with segment_by_user, return only members with performance data (capped). Used by Member Performance Select All discovery.
 
         end : typing.Optional[dt.datetime]
             End date for filtering (ISO format)
@@ -283,6 +292,7 @@ class AsyncKpisClient:
         _response = await self._raw_client.get(
             kpi_key,
             tz=tz,
+            all_=all_,
             end=end,
             members=members,
             projects=projects,

@@ -14,6 +14,11 @@ class KpiUserSegment(UncheckedBaseModel):
     Returns parallel arrays: users and values.
     """
 
+    total: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    When all=true, total members with performance data before the breakdown cap.
+    """
+
     users: typing.List[KpiUserInfo] = pydantic.Field()
     """
     Array of user information

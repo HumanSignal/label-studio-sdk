@@ -16512,6 +16512,14 @@ client.analytics.kpis.get(
 <dl>
 <dd>
 
+**all:** `typing.Optional[bool]` — When true with segment_by_user, return only members with performance data (capped). Used by Member Performance Select All discovery.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **end:** `typing.Optional[datetime.datetime]` — End date for filtering (ISO format)
     
 </dd>
