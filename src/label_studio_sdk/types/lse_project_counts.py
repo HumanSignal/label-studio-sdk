@@ -13,6 +13,7 @@ class LseProjectCounts(UncheckedBaseModel):
     make sure, that you use correct one(Project.objects.with_counts())
     """
 
+    duplication_status: typing.Optional[str] = None
     finished_task_number: typing.Optional[int] = None
     ground_truth_number: typing.Optional[int] = pydantic.Field(default=None)
     """
