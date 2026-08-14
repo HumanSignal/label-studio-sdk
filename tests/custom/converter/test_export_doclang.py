@@ -567,9 +567,7 @@ def test_exports_doclang_from_draft_when_annotation_is_layout_only(tmp_output_di
                         "from_name": "doclang",
                         "to_name": "docling",
                         "type": "textarea",
-                        "value": {
-                            "text": ["<doclang><section>Draft-only DocLang</section></doclang>"]
-                        },
+                        "value": {"text": ["<doclang><section>Draft-only DocLang</section></doclang>"]},
                     }
                 ],
             }
@@ -660,6 +658,187 @@ def test_skips_draft_when_linked_annotation_already_exported_doclang(tmp_output_
     assert count == 1
     assert os.path.exists(os.path.join(tmp_output_dir, "task-43-annotation-430.dclx"))
     assert not os.path.exists(os.path.join(tmp_output_dir, "task-43-draft-431.dclx"))
+
+
+def test_exports_doclang_from_task_data_only(tmp_output_dir, mock_page_image):
+    """FIT-2381: DocLang embedded in task.data exports when no annotation XML exists."""
+    doclang_xml = "<doclang><section>Source document</section></doclang>"
+    task = {
+        "id": 50,
+        "data": {"doclang": doclang_xml},
+        "annotations": [],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    count = doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False, download_resources=False)
+
+    assert count == 1
+    archive = os.path.join(tmp_output_dir, "task-50-data.dclx")
+    assert os.path.exists(archive)
+    with zipfile.ZipFile(archive) as z:
+        assert "<section>Source document</section>" in z.read("document.xml").decode()
+
+
+def test_exports_doclang_from_nested_task_data(tmp_output_dir, mock_page_image):
+    task = {
+        "id": 51,
+        "data": {
+            "metadata": {"kind": "import"},
+            "payload": {"document": "<doclang><text>nested</text></doclang>"},
+        },
+        "annotations": [],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    count = doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False, download_resources=False)
+
+    assert count == 1
+    with zipfile.ZipFile(os.path.join(tmp_output_dir, "task-51-data.dclx")) as z:
+        assert "<text>nested</text>" in z.read("document.xml").decode()
+
+
+@pytest.mark.parametrize(
+    ("source_field", "source"),
+    [
+        (
+            "annotations",
+            {
+                "id": 520,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang><text>annotated</text></doclang>"]},
+                    }
+                ],
+            },
+        ),
+        (
+            "drafts",
+            {
+                "id": 521,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang><text>draft</text></doclang>"]},
+                    }
+                ],
+            },
+        ),
+        (
+            "predictions",
+            {
+                "id": 522,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": ["<doclang><text>predicted</text></doclang>"]},
+                    }
+                ],
+            },
+        ),
+    ],
+)
+def test_task_data_is_fallback_to_result_sources(tmp_output_dir, mock_page_image, source_field, source):
+    data_xml = "<doclang><text>canonical source</text></doclang>"
+    task = {
+        "id": 52,
+        "data": {"doclang": data_xml},
+        source_field: [source],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    count = doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False, download_resources=False)
+
+    assert count == 1
+    assert not os.path.exists(os.path.join(tmp_output_dir, "task-52-data.dclx"))
+
+
+def test_skips_task_data_duplicate_of_annotation(tmp_output_dir, mock_page_image):
+    doclang_xml = "<doclang><text>shared</text></doclang>"
+    task = {
+        "id": 53,
+        "data": {"document": doclang_xml},
+        "annotations": [
+            {
+                "id": 530,
+                "result": [
+                    {
+                        "from_name": "doclang",
+                        "type": "textarea",
+                        "value": {"text": [doclang_xml]},
+                    }
+                ],
+            }
+        ],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    count = doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False, download_resources=False)
+
+    assert count == 1
+    assert os.path.exists(os.path.join(tmp_output_dir, "task-53-annotation-530.dclx"))
+    assert not os.path.exists(os.path.join(tmp_output_dir, "task-53-data.dclx"))
+
+
+def test_ignores_invalid_doclang_in_task_data(tmp_output_dir):
+    task = {
+        "id": 54,
+        "data": {
+            "doclang": "<not-doclang/>",
+            "notes": "plain text",
+            "nested": {"document": "<doclang>"},
+            "metadata": {"raw_xml": "<doclang><text>incidental</text></doclang>"},
+        },
+        "annotations": [],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    count = doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False, download_resources=False)
+
+    assert count == 0
+    assert os.listdir(tmp_output_dir) == ["tasks.json"]
+
+
+def test_exports_multiple_distinct_doclang_from_task_data(tmp_output_dir, mock_page_image):
+    doc_a = "<doclang><text>first</text></doclang>"
+    doc_b = "<doclang><text>second</text></doclang>"
+    task = {
+        "id": 55,
+        "data": {
+            "versions": [
+                {"document": doc_a},
+                {"document": doc_b},
+            ]
+        },
+        "annotations": [],
+    }
+    tasks_path = os.path.join(tmp_output_dir, "tasks.json")
+    with open(tasks_path, "w") as f:
+        json.dump([task], f)
+
+    count = doclang_export.convert_to_doclang(tasks_path, tmp_output_dir, is_dir=False, download_resources=False)
+
+    assert count == 2
+    names = set(os.listdir(tmp_output_dir))
+    assert "task-55-data-1.dclx" in names
+    assert "task-55-data-2.dclx" in names
+    with zipfile.ZipFile(os.path.join(tmp_output_dir, "task-55-data-1.dclx")) as z:
+        assert "<text>first</text>" in z.read("document.xml").decode()
+    with zipfile.ZipFile(os.path.join(tmp_output_dir, "task-55-data-2.dclx")) as z:
+        assert "<text>second</text>" in z.read("document.xml").decode()
 
 
 def test_fetches_page_images_once_for_multiple_sources_on_same_task(tmp_output_dir, mock_page_image):
@@ -876,9 +1055,7 @@ def test_doclang_multi_page_pack(tmp_output_dir):
                         "from_name": "doclang",
                         "type": "textarea",
                         "value": {
-                            "text": [
-                                "<doclang><section>P1</section><page_break/><section>P2</section></doclang>"
-                            ]
+                            "text": ["<doclang><section>P1</section><page_break/><section>P2</section></doclang>"]
                         },
                     }
                 ],
@@ -976,10 +1153,7 @@ def test_converter_passes_hostname_and_token_to_doclang(tmp_output_dir, monkeypa
 
 
 def test_resolve_image_data_keys_from_label_config():
-    config_xml = (
-        '<View><Image name="image" valueList="$pages"/>'
-        '<TextArea name="doclang" toName="image"/></View>'
-    )
+    config_xml = '<View><Image name="image" valueList="$pages"/><TextArea name="doclang" toName="image"/></View>'
     single_key, list_key = doclang_export.resolve_image_data_keys(config=config_xml)
     assert single_key is None
     assert list_key == "pages"
@@ -994,10 +1168,7 @@ def test_converter_auto_resolves_image_list_key(tmp_output_dir, monkeypatch):
 
     monkeypatch.setattr(doclang_export, "convert_to_doclang", fake_convert)
 
-    config = parse_config(
-        '<View><Image name="image" value="$image"/>'
-        '<TextArea name="doclang" toName="image"/></View>'
-    )
+    config = parse_config('<View><Image name="image" value="$image"/><TextArea name="doclang" toName="image"/></View>')
     converter = Converter(config=config, project_dir=".")
     converter.convert(
         input_data=INPUT_JSON_PATH,

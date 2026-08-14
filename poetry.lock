@@ -561,14 +561,14 @@ markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win
 
 [[package]]
 name = "datamodel-code-generator"
-version = "0.72.3"
+version = "0.72.4"
 description = "Datamodel Code Generator"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "datamodel_code_generator-0.72.3-py3-none-any.whl", hash = "sha256:4536f6dd12dd86c9c7a78b16ef83ae9aa7a9cbdb8bef8a3b63baa4ad9d3d3829"},
-    {file = "datamodel_code_generator-0.72.3.tar.gz", hash = "sha256:a20160de09b76d4a293ccba5a9ee5c341b5365890237ac1ff812f420e4c09f3b"},
+    {file = "datamodel_code_generator-0.72.4-py3-none-any.whl", hash = "sha256:96cb2edbcf3b50c4cc246a48dac5cb5ff848af0675bb4e81235467c47e1038e4"},
+    {file = "datamodel_code_generator-0.72.4.tar.gz", hash = "sha256:b9f0992d46eac4664c4e0b633d93c6e384d39fa8f2df491ac79f05f72ae724fd"},
 ]
 
 [package.dependencies]
@@ -1693,14 +1693,14 @@ markers = {main = "sys_platform != \"emscripten\""}
 
 [[package]]
 name = "nltk"
-version = "3.10.2"
+version = "3.10.3"
 description = "Natural Language Toolkit"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "nltk-3.10.2-py3-none-any.whl", hash = "sha256:2c7ccacb765c5e26b0cb60fb1b57080af522c6924d12a714a243305ba3637412"},
-    {file = "nltk-3.10.2.tar.gz", hash = "sha256:fcfd80fb77931868cea8357573c79838b8abc609942ef9914d1c9f6070d4645c"},
+    {file = "nltk-3.10.3-py3-none-any.whl", hash = "sha256:ff9598a8e20518ee0d557745890cc4435b9578489e2dcbc69c4f81fa060caf7c"},
+    {file = "nltk-3.10.3.tar.gz", hash = "sha256:bb9327a461c3811c2fa4900e03840401f2126adfb30c0072827c433bd2444ea4"},
 ]
 
 [package.dependencies]
@@ -2125,15 +2125,15 @@ xmp = ["defusedxml"]
 
 [[package]]
 name = "platformdirs"
-version = "4.11.2"
+version = "4.11.3"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 markers = "sys_platform != \"emscripten\""
 files = [
-    {file = "platformdirs-4.11.2-py3-none-any.whl", hash = "sha256:7f89089b6ea71bda7962953edcf784b2e2d9d285b40ad88be2bb75c6e9d82ab4"},
-    {file = "platformdirs-4.11.2.tar.gz", hash = "sha256:3a2ae5fca3520a01ab1be8b45613537f52ddf5b5f6f53d88233892dfbf0cd82d"},
+    {file = "platformdirs-4.11.3-py3-none-any.whl", hash = "sha256:5ed065d443751de711da036041a7a214122efc4a4de393b3f4137ba5576540e7"},
+    {file = "platformdirs-4.11.3.tar.gz", hash = "sha256:66a73d38a849810252df809a3d8bcbda8e26f6c189920e7535ad608a48dbb5ab"},
 ]
 
 [[package]]
