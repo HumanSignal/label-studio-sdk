@@ -14,6 +14,10 @@ class BulkAssignAssignmentsResponse(UncheckedBaseModel):
     async_: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="async"), pydantic.Field(alias="async")
     ] = None
+    task_ids: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
+    """
+    Task IDs included in this assignment request.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
