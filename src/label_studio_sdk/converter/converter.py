@@ -182,9 +182,9 @@ class Converter(object):
         },
         Format.DOCLANG: {
             "title": "DocLang (.dclx)",
-            "description": "Package annotations from the Docling Interface as DocLang OPC archives (document.xml + page image) for downstream Docling model training.",
+            "description": "Package annotations from the Doclang Interface as DocLang OPC archives (document.xml + page image) for downstream Docling model training.",
             "link": "https://github.com/doclang-project/doclang/blob/main/spec.md#doclang-archive-format",
-            "tags": ["document", "docling"],
+            "tags": ["document", "doclang"],
         },
     }
 

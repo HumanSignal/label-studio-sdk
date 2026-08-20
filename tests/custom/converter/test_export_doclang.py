@@ -480,7 +480,7 @@ def test_format_registered_in_all_formats():
     assert Format.DOCLANG in formats
     info = formats[Format.DOCLANG]
     assert info["title"] == "DocLang (.dclx)"
-    assert "docling" in info["tags"]
+    assert "doclang" in info["tags"]
 
 
 @pytest.mark.parametrize(
