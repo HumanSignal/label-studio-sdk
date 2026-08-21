@@ -27,6 +27,25 @@ def concat_urls(base_url, url):
     return base_url.rstrip("/") + "/" + url.lstrip("/")
 
 
+def encode_presign_fileuri(cloud_uri: str) -> str:
+    """Base64-urlsafe-encode a cloud URI for /tasks/<id>/presign/?fileuri=.
+
+    Matches server-side resolve_uris / ResolveStorageUriAPIMixin (FIT-2611).
+    """
+    return base64.urlsafe_b64encode(cloud_uri.encode()).decode()
+
+
+def is_cloud_storage_uri(url) -> bool:
+    """True for Label Studio cloud source URIs (S3 / GCS / Azure Blob).
+
+    Matches both ``s3://bucket/...`` and the historical ``s3:`` prefix check used
+    throughout this module so scheme detection stays consistent (FIT-2611).
+    """
+    return isinstance(url, str) and (
+        url.startswith("s3:") or url.startswith("gs:") or url.startswith("azure-blob:")
+    )
+
+
 def get_data_dir():
     data_dir = user_data_dir(appname=_DIR_APP_NAME)
     os.makedirs(data_dir, exist_ok=True)
@@ -162,9 +181,7 @@ def get_local_path(
 
     is_uploaded_file = url.startswith("/data/upload")
     is_local_storage_file = url.startswith("/data/") and "?d=" in url
-    is_cloud_storage_file = (
-        url.startswith("s3:") or url.startswith("gs:") or url.startswith("azure-blob:")
-    )
+    is_cloud_storage_file = is_cloud_storage_uri(url)
     parsed_url = urlparse(url)
     query_params = parse_qs(parsed_url.query)
     storage_filepath = query_params.get("filepath", [None])[0]
@@ -254,7 +271,13 @@ def get_local_path(
                 raise Exception(
                     "Label Studio Task ID is required for cloud storage files"
                 )
-            url = concat_urls(hostname, f"/tasks/{task_id}/presign/?fileuri={url}")
+            # Keep the original cloud URI for cache key / filename; the HTTP URL uses
+            # base64 fileuri to match server resolve_uris (FIT-2611).
+            storage_filepath = url
+            encoded_fileuri = encode_presign_fileuri(url)
+            url = concat_urls(
+                hostname, f"/tasks/{task_id}/presign/?fileuri={encoded_fileuri}"
+            )
             logger.info(
                 "Cloud storage file: Resolving url using hostname ["
                 + hostname
@@ -312,7 +335,8 @@ def download_and_cache(
         if is_local_storage_file:
             return os.path.basename(target_url.split("?d=")[1])
         if is_cloud_storage_file:
-            return os.path.basename(target_url)
+            # Prefer original cloud URI — download URL is a base64 /presign/ endpoint.
+            return os.path.basename(storage_fp or target_url)
         if is_storage_data_file:
             sfp = storage_fp or parse_qs(parsed.query).get("filepath", [None])[0]
             name = os.path.basename(sfp or "")
@@ -320,7 +344,9 @@ def download_and_cache(
         return os.path.basename(parsed.path)
 
     def _cache_path(target_url, fname):
-        return _build_cache_path(cache_dir, target_url, fname)
+        # Stable cache keys for cloud: hash the original gs://|s3://|azure-blob:// URI.
+        hash_key = storage_filepath if is_cloud_storage_file and storage_filepath else target_url
+        return _build_cache_path(cache_dir, hash_key, fname)
 
     cache_dir = cache_dir or get_cache_dir()
     current_filename = _filename_for(url, storage_filepath)
@@ -431,9 +457,7 @@ def get_base64_content(
 
     is_uploaded_file = url.startswith("/data/upload")
     is_local_storage_file = url.startswith("/data/") and "?d=" in url
-    is_cloud_storage_file = (
-        url.startswith("s3:") or url.startswith("gs:") or url.startswith("azure-blob:")
-    )
+    is_cloud_storage_file = is_cloud_storage_uri(url)
     parsed_url = urlparse(url)
     query_params = parse_qs(parsed_url.query)
     storage_filepath = query_params.get("filepath", [None])[0]
@@ -470,7 +494,10 @@ def get_base64_content(
                 raise Exception(
                     "Label Studio Task ID is required for cloud storage files"
                 )
-            url = concat_urls(hostname, f"/tasks/{task_id}/presign/?fileuri={url}")
+            encoded_fileuri = encode_presign_fileuri(url)
+            url = concat_urls(
+                hostname, f"/tasks/{task_id}/presign/?fileuri={encoded_fileuri}"
+            )
             logger.info(
                 "Cloud storage file: Resolving url using hostname ["
                 + hostname

@@ -38,15 +38,15 @@ test_cases = [
     # Cloud Storages
     (
         "s3://bucket/prefix/1.jpg",
-        f"test-data-dir/.cache/{_DIR_APP_NAME}/4fca0572__1.jpg",
+        f"test-data-dir/.cache/{_DIR_APP_NAME}/d7390ac3__1.jpg",
     ),
     (
         "gs://bucket/prefix/1.jpg",
-        f"test-data-dir/.cache/{_DIR_APP_NAME}/1e2682e4__1.jpg",
+        f"test-data-dir/.cache/{_DIR_APP_NAME}/bbd2df49__1.jpg",
     ),
     (
         "azure-blob://bucket/prefix/1.jpg",
-        f"test-data-dir/.cache/{_DIR_APP_NAME}/1a4dc8b3__1.jpg",
+        f"test-data-dir/.cache/{_DIR_APP_NAME}/12a00348__1.jpg",
     ),
     # http(s) URLs
     (

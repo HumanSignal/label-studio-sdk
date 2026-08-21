@@ -192,7 +192,53 @@ def download(
     return_relative_path=False,
     upload_dir=None,
     download_resources=True,
+    hostname=None,
+    access_token=None,
+    task_id=None,
 ):
+    """Download a resource into ``output_dir``.
+
+    Prefer ``get_local_path`` for Label Studio task media (uploads, storage proxy,
+    and cloud URIs) when ``hostname`` / ``task_id`` / ``access_token`` are available.
+    This helper remains for VOC-era callers, audio, and DocLang that pass plain
+    HTTP(S) or local ``/data/`` paths without full task context.
+
+    For cloud schemes (``s3://``, ``gs://``, ``azure-blob://``), when task context
+    is provided, delegates to ``get_local_path`` (FIT-2611). Without task context,
+    cloud URIs raise ``ValueError`` instead of a silent HTTP GET failure.
+    """
+    from label_studio_sdk._extensions.label_studio_tools.core.utils.io import (
+        get_local_path,
+        is_cloud_storage_uri,
+    )
+
+    if is_cloud_storage_uri(url):
+        if not hostname or task_id is None:
+            raise ValueError(
+                "Cloud storage URIs require hostname and task_id; use get_local_path(...) "
+                "or pass hostname/task_id/access_token to download()."
+            )
+
+        local_path = get_local_path(
+            url=url,
+            cache_dir=output_dir,
+            hostname=hostname,
+            project_dir=project_dir,
+            image_dir=upload_dir,
+            download_resources=download_resources,
+            access_token=access_token,
+            task_id=task_id,
+        )
+        ensure_dir(output_dir)
+        if download_resources and local_path and os.path.exists(local_path):
+            dest = os.path.join(output_dir, os.path.basename(local_path))
+            if os.path.abspath(local_path) != os.path.abspath(dest):
+                shutil.copy(local_path, dest)
+            local_path = dest
+        if return_relative_path:
+            return os.path.join(os.path.basename(output_dir), os.path.basename(local_path))
+        return local_path
+
     is_local_file = url.startswith("/data/") and "?d=" in url
     is_uploaded_file = url.startswith("/data/upload")
 
