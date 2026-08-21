@@ -726,6 +726,7 @@ class RawStatsClient:
         id: int,
         *,
         choice_keys: typing.Optional[str] = None,
+        filters: typing.Optional[typing.Dict[str, typing.Any]] = None,
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -746,6 +747,9 @@ class RawStatsClient:
         choice_keys : typing.Optional[str]
             Explicit choice keys to fetch, joined by "___PIPE___" (for example: "label___SEP___pos___PIPE___quality___SEP___4"). When provided, pagination params are ignored.
 
+        filters : typing.Optional[typing.Dict[str, typing.Any]]
+            Optional JSON-encoded Data Manager Filters object (`conjunction` + `items[]`). Label Distribution accepts AND-only plans (no nested `child_filters`) with curated fields: `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`. Source-time fields (`annotations_updated_at`, `predictions_updated_at`) are not supported. An empty `items` list is treated as unfiltered.
+
         limit : typing.Optional[int]
             Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
 
@@ -765,6 +769,7 @@ class RawStatsClient:
             method="GET",
             params={
                 "choice_keys": choice_keys,
+                "filters": filters,
                 "limit": limit,
                 "offset": offset,
             },
@@ -2218,6 +2223,7 @@ class AsyncRawStatsClient:
         id: int,
         *,
         choice_keys: typing.Optional[str] = None,
+        filters: typing.Optional[typing.Dict[str, typing.Any]] = None,
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -2238,6 +2244,9 @@ class AsyncRawStatsClient:
         choice_keys : typing.Optional[str]
             Explicit choice keys to fetch, joined by "___PIPE___" (for example: "label___SEP___pos___PIPE___quality___SEP___4"). When provided, pagination params are ignored.
 
+        filters : typing.Optional[typing.Dict[str, typing.Any]]
+            Optional JSON-encoded Data Manager Filters object (`conjunction` + `items[]`). Label Distribution accepts AND-only plans (no nested `child_filters`) with curated fields: `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`. Source-time fields (`annotations_updated_at`, `predictions_updated_at`) are not supported. An empty `items` list is treated as unfiltered.
+
         limit : typing.Optional[int]
             Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
 
@@ -2257,6 +2266,7 @@ class AsyncRawStatsClient:
             method="GET",
             params={
                 "choice_keys": choice_keys,
+                "filters": filters,
                 "limit": limit,
                 "offset": offset,
             },

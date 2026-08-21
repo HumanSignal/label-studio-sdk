@@ -36535,6 +36535,14 @@ client.projects.stats.label_distribution_counts(
 <dl>
 <dd>
 
+**filters:** `typing.Optional[typing.Dict[str, typing.Any]]` — Optional JSON-encoded Data Manager Filters object (`conjunction` + `items[]`). Label Distribution accepts AND-only plans (no nested `child_filters`) with curated fields: `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`. Source-time fields (`annotations_updated_at`, `predictions_updated_at`) are not supported. An empty `items` list is treated as unfiltered.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **limit:** `typing.Optional[int]` — Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
     
 </dd>
