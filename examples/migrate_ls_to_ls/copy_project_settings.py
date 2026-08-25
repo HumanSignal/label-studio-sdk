@@ -57,6 +57,12 @@ LSE_PROJECT_FIELDS = [
     'output_schema',
 ]
 
+# A few of the fields above are also in migrate-ls-to-ls.py's create payload,
+# require_comment_on_skip among them. They are re-applied here deliberately:
+# the project serializer applies the flattened lse_project fields on update,
+# while create only handles the custom-interface ones explicitly, so a value
+# sent at creation does not necessarily land.
+
 # Core project fields that migrate-ls-to-ls.py does not carry.
 CORE_FIELDS = [
     'annotator_evaluation_enabled',
@@ -165,6 +171,15 @@ def recalculate_task_states(dst, project_id, settle_seconds):
     recalculation, so a project with a cohort below 100% keeps its existing
     cohort. Stepping down to 1 and back would clear every overlap and force the
     cohort to be re-selected from scratch.
+
+    Scope, for a project whose cohort is below 100%: this rebuilds completion
+    only for the tasks inside the cohort, because the branch it takes updates
+    the tasks carrying an overlap above 1. Tasks outside the cohort are not
+    reached. They do not need to be: the import itself rearranges the cohort
+    when the percentage is below 100, and that rearrangement ends by rebuilding
+    completion across every task in the project. Forcing a second full rebuild
+    here by nudging the cohort percentage would re-select the cohort at random,
+    which is worse than the problem it would solve.
     """
     project = dst.get_project(project_id)
     maximum = project.get('maximum_annotations')

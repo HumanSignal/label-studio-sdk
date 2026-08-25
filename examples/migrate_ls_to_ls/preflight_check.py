@@ -34,7 +34,7 @@ from pathlib import Path
 
 import requests
 
-TIMEOUT = 120
+TIMEOUT = 600  # matches the default in migrate-ls-to-ls.py
 PAGE_SIZE = 200
 
 
@@ -57,8 +57,13 @@ class Instance:
                 params={'project': project_id, 'page': page, 'page_size': PAGE_SIZE, 'fields': 'all'},
                 timeout=TIMEOUT,
             )
-            if r.status_code == 404:  # paged past the end
-                break
+            if r.status_code == 404:
+                if page == 1:
+                    raise SystemExit(
+                        f'Project {project_id} returned 404 on the first page. Check the id and the '
+                        'token, and do not use these counts as a baseline.'
+                    )
+                break  # paged past the end
             r.raise_for_status()
             payload = r.json()
             batch = payload.get('tasks', payload) if isinstance(payload, dict) else payload
@@ -200,7 +205,7 @@ def preflight(src, dst, project_ids, out_dir):
     return 0
 
 
-def verify(src, dst, mapping, out_dir):
+def verify(dst, mapping, out_dir):
     failures = 0
 
     for source_id, target_id in sorted(mapping.items(), key=lambda kv: int(kv[0])):
@@ -271,7 +276,7 @@ def main():
             mapping = json.load(fh)
         if not mapping:
             raise SystemExit(f'{args.verify} is empty; run migrate-ls-to-ls.py first')
-        sys.exit(verify(src, dst, mapping, out_dir))
+        sys.exit(verify(dst, mapping, out_dir))
 
     if not args.project_ids:
         raise SystemExit('--project-ids is required for a pre-flight run')
