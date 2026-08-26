@@ -223,9 +223,21 @@ class LseProject(UncheckedBaseModel):
     """
 
     prompts: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
-    queue_done: typing.Optional[int] = None
-    queue_left: typing.Optional[int] = None
-    queue_total: typing.Optional[int] = None
+    queue_done: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Annotator-only: tasks this user has completed in the labeling queue for the project.
+    """
+
+    queue_left: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Reviewer-only: remaining tasks in this user's manually assigned review queue. Returns 0 when no manual assignments apply; the project card then uses `review_total_tasks` and `reviewed_number` for auto-review progress. Not the same as the project-wide `tasks_pending_review` KPI.
+    """
+
+    queue_total: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Role-dependent queue size. Annotators: total tasks in the labeling queue. Reviewers (list/counts): total manually assigned review tasks (same pool as `reviewer_queue_total`). Not the same as `task_number` (all project tasks) or `review_total_tasks` (auto-review stream pool).
+    """
+
     require_comment_on_skip: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Require comment to skip
@@ -237,7 +249,11 @@ class LseProject(UncheckedBaseModel):
     """
 
     review_settings: ReviewSettings
-    reviewer_queue_total: typing.Optional[int] = None
+    reviewer_queue_total: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Tasks manually assigned to this user for review (`reviewer_queue_total_count`). Null for annotators.
+    """
+
     sampling: typing.Optional[ProjectSamplingEnum] = None
     show_annotation_history: typing.Optional[bool] = pydantic.Field(default=None)
     """

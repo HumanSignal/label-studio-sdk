@@ -14,20 +14,48 @@ class LseProjectCounts(UncheckedBaseModel):
     """
 
     duplication_status: typing.Optional[str] = None
-    finished_task_number: typing.Optional[int] = None
+    finished_task_number: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Project-wide count of tasks considered finished under project completion rules (agreement threshold, overlap, or FSM states such as needs-review and completed). Not a per-user queue counter. Analytics KPIs such as `annotated_tasks`, `done_tasks`, and `total_tasks` measure related but not identical project-wide totals.
+    """
+
     ground_truth_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Honeypot annotation number in project
     """
 
     id: typing.Optional[int] = None
-    num_tasks_with_annotations: typing.Optional[int] = None
-    queue_done: typing.Optional[int] = None
-    queue_left: typing.Optional[int] = None
-    queue_total: typing.Optional[int] = None
+    num_tasks_with_annotations: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Tasks with at least one annotation. For annotators, counts only tasks this user annotated; for other roles, counts project-wide. For analytics, use annotated_tasks or related KPIs with explicit project/member filters.
+    """
+
+    queue_done: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Annotator-only: tasks this user has completed in the labeling queue for the project.
+    """
+
+    queue_left: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Reviewer-only: remaining tasks in this user's manually assigned review queue. Returns 0 when no manual assignments apply; the project card then uses `review_total_tasks` and `reviewed_number` for auto-review progress. Not the same as the project-wide `tasks_pending_review` KPI.
+    """
+
+    queue_total: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Role-dependent queue size. Annotators: total tasks in the labeling queue. Reviewers (list/counts): total manually assigned review tasks (same pool as `reviewer_queue_total`). Not the same as `task_number` (all project tasks) or `review_total_tasks` (auto-review stream pool).
+    """
+
     rejected: typing.Optional[int] = None
-    review_total_tasks: typing.Optional[int] = None
-    reviewed_number: typing.Optional[int] = None
+    review_total_tasks: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Total tasks in this user's reviewer queue for the project (denominator for personal review progress). Respects review sampling limits when configured. Null for annotators. This is not the project-wide reviewed or pending count; see Analytics KPIs tasks_reviewed and tasks_pending_review for org-level totals.
+    """
+
+    reviewed_number: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Tasks this user has reviewed in the project (personal reviewer progress shown on the project card). Includes only reviews created by the authenticated user, so the value can be lower than the project-wide reviewed total when multiple reviewers participate. Null for annotators. For all reviewed tasks in the project, use the Analytics KPI tasks_reviewed: GET /api/analytics/kpis/tasks_reviewed?projects={id}&tz=UTC.
+    """
+
     skipped_annotations_number: typing.Optional[int] = None
     task_number: typing.Optional[int] = pydantic.Field(default=None)
     """

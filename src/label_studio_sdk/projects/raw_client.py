@@ -64,7 +64,12 @@ class RawProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AllRolesProjectList, PaginatedAllRolesProjectListList]:
         """
-        Retrieve a list of projects.
+        Retrieve a list of projects. Counter fields in each result follow one of two scopes:
+
+        * **Per-user progress** — computed for the authenticated user and their project role (for example `reviewed_number`, `review_total_tasks`, `queue_done`, `queue_total`, `queue_left`). These power project-card progress in the UI and differ across users. Note: `queue_left` counts manual review assignments only; when it is `0`, the card uses `review_total_tasks` / `reviewed_number` for auto-review progress.
+        * **Project-wide totals** — the same for every caller (for example `task_number`, `finished_task_number`).
+
+        For organization-level reviewed-task totals (all reviewers combined), use `GET /api/analytics/kpis/tasks_reviewed?projects={id}&tz=UTC` rather than `reviewed_number`. See Analytics KPI `tasks_reviewed`, `tasks_pending_review`, `annotated_tasks`, and `total_tasks` for other project-wide metrics.
 
         Parameters
         ----------
@@ -522,7 +527,7 @@ class RawProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseProjectResponse]:
         """
-        Retrieve information about a project by project ID.
+        Retrieve information about a project by project ID. Counter fields use per-user or project-wide scope as documented on each field; for all reviewed tasks in the project use `GET /api/analytics/kpis/tasks_reviewed?projects={id}&tz=UTC`.
 
         Parameters
         ----------
@@ -1370,7 +1375,12 @@ class AsyncRawProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AllRolesProjectList, PaginatedAllRolesProjectListList]:
         """
-        Retrieve a list of projects.
+        Retrieve a list of projects. Counter fields in each result follow one of two scopes:
+
+        * **Per-user progress** — computed for the authenticated user and their project role (for example `reviewed_number`, `review_total_tasks`, `queue_done`, `queue_total`, `queue_left`). These power project-card progress in the UI and differ across users. Note: `queue_left` counts manual review assignments only; when it is `0`, the card uses `review_total_tasks` / `reviewed_number` for auto-review progress.
+        * **Project-wide totals** — the same for every caller (for example `task_number`, `finished_task_number`).
+
+        For organization-level reviewed-task totals (all reviewers combined), use `GET /api/analytics/kpis/tasks_reviewed?projects={id}&tz=UTC` rather than `reviewed_number`. See Analytics KPI `tasks_reviewed`, `tasks_pending_review`, `annotated_tasks`, and `total_tasks` for other project-wide metrics.
 
         Parameters
         ----------
@@ -1831,7 +1841,7 @@ class AsyncRawProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseProjectResponse]:
         """
-        Retrieve information about a project by project ID.
+        Retrieve information about a project by project ID. Counter fields use per-user or project-wide scope as documented on each field; for all reviewed tasks in the project use `GET /api/analytics/kpis/tasks_reviewed?projects={id}&tz=UTC`.
 
         Parameters
         ----------
