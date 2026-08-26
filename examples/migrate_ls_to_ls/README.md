@@ -91,23 +91,3 @@ pip install -U label-studio-sdk
 
 
      To know workspace ID you should open a network console, select a newly created workspace or refresh the page fully, and find `/api/workspaces/**<id>**/memberships` call in the network console. 
-
-# Migrating in-flight projects
-
-If the projects being moved are partway through their work, and the target
-instance is already in service, this script is only part of the job. It carries
-tasks, annotations and authorship, and a fixed list of core project fields. It
-does not carry the enterprise project settings, storage connections, project
-membership, or the identity mapping the annotations depend on.
-
-[`lse-in-flight-project-migration-runbook.md`](lse-in-flight-project-migration-runbook.md)
-covers the rest, and adds two supporting scripts in this directory:
-
-* `preflight_check.py` — before the migration, verifies that every annotator who
-  authored work in the source exists in the target organization under the same
-  address. An author who cannot be resolved does not fail the import; the
-  annotation is silently attached to the account performing it. Re-run it with
-  `--verify` afterwards to compare the target to the recorded counts.
-* `copy_project_settings.py` — after the migration, copies the review,
-  assignment and agreement settings that the migration leaves at their
-  defaults, and rebuilds per-task completion state.
