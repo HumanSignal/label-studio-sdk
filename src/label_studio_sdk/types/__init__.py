@@ -48,6 +48,7 @@ if typing.TYPE_CHECKING:
     from .budget_reset_period_enum import BudgetResetPeriodEnum
     from .cancel_model_run_response import CancelModelRunResponse
     from .child_filter import ChildFilter
+    from .collection_mode_enum import CollectionModeEnum
     from .comment import Comment
     from .comment_request import CommentRequest
     from .comment_serializer_with_expanded_user import CommentSerializerWithExpandedUser
@@ -351,6 +352,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BudgetResetPeriodEnum": ".budget_reset_period_enum",
     "CancelModelRunResponse": ".cancel_model_run_response",
     "ChildFilter": ".child_filter",
+    "CollectionModeEnum": ".collection_mode_enum",
     "Comment": ".comment",
     "CommentRequest": ".comment_request",
     "CommentSerializerWithExpandedUser": ".comment_serializer_with_expanded_user",
@@ -664,6 +666,7 @@ __all__ = [
     "BudgetResetPeriodEnum",
     "CancelModelRunResponse",
     "ChildFilter",
+    "CollectionModeEnum",
     "Comment",
     "CommentRequest",
     "CommentSerializerWithExpandedUser",

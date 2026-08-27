@@ -6,6 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .collection_mode_enum import CollectionModeEnum
 from .control_tag_weight import ControlTagWeight
 from .project_sampling_enum import ProjectSamplingEnum
 from .skip_queue_enum import SkipQueueEnum
@@ -21,6 +22,14 @@ class LseProjectCreate(UncheckedBaseModel):
     annotator_evaluation_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Enable annotator evaluation for the project
+    """
+
+    collection_mode: typing.Optional[CollectionModeEnum] = pydantic.Field(default=None)
+    """
+    Data Collection project mode (assigned or open). Set only at creation; immutable afterwards. Requires use_custom_interface.
+    
+    * `assigned` - Assigned
+    * `open` - Open
     """
 
     color: typing.Optional[str] = None

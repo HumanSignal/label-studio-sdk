@@ -80,6 +80,11 @@ class LseProject(UncheckedBaseModel):
     """
 
     assignment_settings: AssignmentSettings
+    collection_mode: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Data Collection project mode (assigned/open); null for non-collection projects. Set at creation only.
+    """
+
     color: typing.Optional[str] = pydantic.Field(default=None)
     """
     Color

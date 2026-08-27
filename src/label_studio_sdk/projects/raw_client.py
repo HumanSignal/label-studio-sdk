@@ -18,6 +18,7 @@ from ..types.agreement_methodology_enum import AgreementMethodologyEnum
 from ..types.all_roles_project_list import AllRolesProjectList
 from ..types.annotator_evaluation_metric_enum import AnnotatorEvaluationMetricEnum
 from ..types.assignment_settings_request import AssignmentSettingsRequest
+from ..types.collection_mode_enum import CollectionModeEnum
 from ..types.control_tag_weight_request import ControlTagWeightRequest
 from ..types.import_api_request import ImportApiRequest
 from ..types.lse_project_create import LseProjectCreate
@@ -183,6 +184,7 @@ class RawProjectsClient:
         self,
         *,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
+        collection_mode: typing.Optional[CollectionModeEnum] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
@@ -230,6 +232,12 @@ class RawProjectsClient:
         ----------
         annotator_evaluation_enabled : typing.Optional[bool]
             Enable annotator evaluation for the project
+
+        collection_mode : typing.Optional[CollectionModeEnum]
+            Data Collection project mode (assigned or open). Set only at creation; immutable afterwards. Requires use_custom_interface.
+
+            * `assigned` - Assigned
+            * `open` - Open
 
         color : typing.Optional[str]
 
@@ -345,6 +353,7 @@ class RawProjectsClient:
             method="POST",
             json={
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
+                "collection_mode": collection_mode,
                 "color": color,
                 "control_weights": convert_and_respect_annotation_metadata(
                     object_=control_weights,
@@ -1497,6 +1506,7 @@ class AsyncRawProjectsClient:
         self,
         *,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
+        collection_mode: typing.Optional[CollectionModeEnum] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Optional[ControlTagWeightRequest]]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
@@ -1544,6 +1554,12 @@ class AsyncRawProjectsClient:
         ----------
         annotator_evaluation_enabled : typing.Optional[bool]
             Enable annotator evaluation for the project
+
+        collection_mode : typing.Optional[CollectionModeEnum]
+            Data Collection project mode (assigned or open). Set only at creation; immutable afterwards. Requires use_custom_interface.
+
+            * `assigned` - Assigned
+            * `open` - Open
 
         color : typing.Optional[str]
 
@@ -1659,6 +1675,7 @@ class AsyncRawProjectsClient:
             method="POST",
             json={
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
+                "collection_mode": collection_mode,
                 "color": color,
                 "control_weights": convert_and_respect_annotation_metadata(
                     object_=control_weights,

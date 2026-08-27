@@ -11875,6 +11875,19 @@ client.projects.create()
 <dl>
 <dd>
 
+**collection_mode:** `typing.Optional[CollectionModeEnum]` 
+
+Data Collection project mode (assigned or open). Set only at creation; immutable afterwards. Requires use_custom_interface.
+
+* `assigned` - Assigned
+* `open` - Open
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **color:** `typing.Optional[str]` 
     
 </dd>
