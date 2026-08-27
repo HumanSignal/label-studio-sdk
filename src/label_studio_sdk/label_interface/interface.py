@@ -1073,14 +1073,23 @@ class LabelInterface:
     def _get_valid_values_for_control(self, control):
         """Get valid values for a control tag to provide better error messages."""
         try:
+            parts = []
+            if hasattr(control, '_value_class'):
+                # Prefer pydantic field names so shape failures are actionable
+                # (not only the label enum — FIT-2686).
+                value_cls = control._value_class
+                fields = list(getattr(value_cls, 'model_fields', {}).keys()) or list(
+                    getattr(value_cls, '__fields__', {}).keys()
+                )
+                if fields:
+                    parts.append(f"expected fields: {fields}")
+                else:
+                    parts.append(f"expected structure: {value_cls.__name__}")
             if hasattr(control, 'labels') and control.labels:
-                # For tags with predefined labels (Choices, Labels, etc.)
-                return f"{control.labels}"
-            elif hasattr(control, '_value_class'):
-                # For tags with value classes, show the expected structure
-                return f"expected structure: {control._value_class.__name__}"
-            else:
-                return "no specific validation rules"
+                parts.append(f"valid labels: {control.labels}")
+            if parts:
+                return "; ".join(parts)
+            return "no specific validation rules"
         except Exception:
             return "unknown validation rules"
 

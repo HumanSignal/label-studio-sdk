@@ -19,10 +19,14 @@ _TAG_TO_CLASS = {
     "labels": "LabelsTag",
     "brush": "BrushTag",
     "brushlabels": "BrushLabelsTag",
+    "bitmask": "BitmaskTag",
+    "bitmasklabels": "BitmaskLabelsTag",
+    "magicwand": "MagicWandTag",
     "ellipse": "EllipseTag",
     "ellipselabels": "EllipseLabelsTag",
     "keypoint": "KeyPointTag",
     "keypointlabels": "KeyPointLabelsTag",
+    "vector": "VectorTag",
     "vectorlabels": "VectorLabelsTag",
     "ocrlabels": "OcrLabelsTag",
     "polygon": "PolygonTag",
@@ -43,6 +47,7 @@ _TAG_TO_CLASS = {
     "taxonomy": "TaxonomyTag",
     "textarea": "TextAreaTag",
     "timeserieslabels": "TimeSeriesLabelsTag",
+    "timelinelabels": "TimelineLabelsTag",
     
     # SELF-REFERENCING TAGS
     "chatmessage": "ChatMessageTag",
@@ -348,6 +353,13 @@ class ControlTag(LabelStudioTag):
             if not self._validate_value_labels(value):
                 return False
 
+        # Missing `_value_class` means this control is not registered for shape
+        # validation (or is a generic ControlTag). Do not treat that as an
+        # invalid payload — callers used to see misleading "Valid options: [labels]"
+        # errors for BitmaskLabels / TimelineLabels before those tags were added.
+        if not hasattr(self, "_value_class"):
+            return True
+
         try:
             inst = self._value_class(**value)
             return True
@@ -607,6 +619,8 @@ class LabelsTag(ControlTag):
             'ellipse': EllipseValue,
             'keypoint': KeyPointValue,
             'brush': BrushValue,
+            'bitmask': BitmaskValue,
+            'vector': VectorValue,
         }
 
         region = context.get('region', {})
@@ -791,6 +805,59 @@ class BrushLabelsTag(BrushTag):
         }
 
 
+class MagicWandTag(BrushTag):
+    """MagicWand control serializes brush-shaped RLE regions (FIT-2686 parity)."""
+
+    tag: str = "MagicWand"
+
+
+class BitmaskValue(BaseModel):
+    """Value for unlabeled Bitmask regions (PNG data URL geometry)."""
+
+    imageDataURL: str
+    format: Optional[str] = None
+
+
+class BitmaskLabelsValue(BitmaskValue):
+    bitmasklabels: List[str]
+
+
+class BitmaskTag(ControlTag):
+    """Unlabeled Bitmask control — prediction value is a PNG data URL mask."""
+
+    tag: str = "Bitmask"
+    _value_class: Type[BitmaskValue] = BitmaskValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "imageDataURL": {"type": "string"},
+                "format": {"type": "string"},
+            },
+            "required": ["imageDataURL"],
+        }
+
+
+class BitmaskLabelsTag(BitmaskTag):
+    """Labeled Bitmask control (imageDataURL + bitmasklabels)."""
+
+    tag: str = "BitmaskLabels"
+    _label_attr_name: str = "bitmasklabels"
+    _value_class: Type[BitmaskLabelsValue] = BitmaskLabelsValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "imageDataURL": {"type": "string"},
+                "format": {"type": "string"},
+                "bitmasklabels": self._labels_json_schema(),
+            },
+            "required": ["imageDataURL", "bitmasklabels"],
+        }
+
+
 class EllipseValue(BaseModel):
     x: confloat(le=100)
     y: confloat(le=100)
@@ -887,7 +954,7 @@ class KeyPointLabelsTag(ControlTag):
 
 
 class VectorVertex(BaseModel):
-    """Single vertex in a VectorLabels region."""
+    """Single vertex in a Vector / VectorLabels region."""
     x: float
     y: float
     id: Optional[str] = None
@@ -895,11 +962,44 @@ class VectorVertex(BaseModel):
     prevPointId: Optional[str] = None
 
 
-class VectorLabelsValue(BaseModel):
-    """Value for VectorLabels control tag."""
+class VectorValue(BaseModel):
+    """Value for unlabeled Vector control tag."""
     closed: Optional[bool] = False
     vertices: List[VectorVertex]
+
+
+class VectorLabelsValue(VectorValue):
+    """Value for VectorLabels control tag."""
     vectorlabels: List[str]
+
+
+class VectorTag(ControlTag):
+    """Control tag for unlabeled vector/line annotations."""
+    tag: str = "Vector"
+    _value_class: Type[VectorValue] = VectorValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "closed": {"type": "boolean"},
+                "vertices": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "x": {"type": "number"},
+                            "y": {"type": "number"},
+                            "id": {"type": "string"},
+                            "isBezier": {"type": "boolean"},
+                            "prevPointId": {"type": "string"},
+                        },
+                        "required": ["x", "y"],
+                    },
+                },
+            },
+            "required": ["vertices"],
+        }
 
 
 class VectorLabelsTag(ControlTag):
@@ -1644,6 +1744,52 @@ class TextAreaTag(ControlTag):
 class TimeSeriesValue(SpanSelection):
     instant: bool
     timeserieslabels: List[str]
+
+
+class TimelineRange(BaseModel):
+    """A single frame range for TimelineLabels regions."""
+
+    start: Union[int, float]
+    end: Union[int, float]
+    enabled: Optional[bool] = None
+
+
+class TimelineLabelsValue(BaseModel):
+    """Value for TimelineLabels control tag (video/audio frame ranges)."""
+
+    # Align with to_json_schema minItems: 1 — empty ranges are invalid in the editor
+    ranges: List[TimelineRange] = Field(..., min_length=1)
+    timelinelabels: List[str]
+
+
+class TimelineLabelsTag(ControlTag):
+    """Control tag for timeline frame-range labels on Video/Audio."""
+
+    tag: str = "TimelineLabels"
+    _label_attr_name: str = "timelinelabels"
+    _value_class: Type[TimelineLabelsValue] = TimelineLabelsValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "properties": {
+                "ranges": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "start": {"type": "number"},
+                            "end": {"type": "number"},
+                            "enabled": {"type": "boolean"},
+                        },
+                        "required": ["start", "end"],
+                    },
+                    "minItems": 1,
+                },
+                "timelinelabels": self._labels_json_schema(),
+            },
+            "required": ["ranges", "timelinelabels"],
+        }
 
 
 class TimeSeriesLabelsTag(ControlTag):

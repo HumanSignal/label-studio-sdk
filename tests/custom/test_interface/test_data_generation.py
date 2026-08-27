@@ -108,6 +108,24 @@ LABEL_ARRAY_TAG_CONFIGS = {
       </TimeSeriesLabels>
     </View>
     """,
+    "BitmaskLabelsTag": """
+    <View>
+      <Image name="image" value="$image"/>
+      <BitmaskLabels name="label" toName="image">
+        <Label value="Mask1"/>
+        <Label value="Mask2"/>
+      </BitmaskLabels>
+    </View>
+    """,
+    "TimelineLabelsTag": """
+    <View>
+      <Video name="video" value="$video"/>
+      <TimelineLabels name="label" toName="video">
+        <Label value="TL1"/>
+        <Label value="TL2"/>
+      </TimelineLabels>
+    </View>
+    """,
 }
 
 

@@ -7,6 +7,10 @@ from .configs import (
     PREDICTION_LABELS_CONFIG,
     PREDICTION_BRUSH_CONFIG,
     PREDICTION_BRUSH_LABELS_CONFIG,
+    PREDICTION_BITMASK_CONFIG,
+    PREDICTION_BITMASK_LABELS_CONFIG,
+    PREDICTION_TIMELINE_LABELS_CONFIG,
+    PREDICTION_VECTOR_CONFIG,
     PREDICTION_ELLIPSE_CONFIG,
     PREDICTION_ELLIPSE_LABELS_CONFIG,
     PREDICTION_KEYPOINT_CONFIG,
@@ -211,6 +215,139 @@ class TestPredictionValidation:
             "score": 0.5
         }
         assert li.validate_prediction(pred) is True
+
+    def test_bitmask_validation(self):
+        """Unlabeled Bitmask predictions require imageDataURL (FIT-2686)."""
+        li = LabelInterface(PREDICTION_BITMASK_CONFIG)
+        control = li.get_control("bitmask")
+        assert type(control).__name__ == "BitmaskTag"
+        assert hasattr(control, "_value_class")
+
+        valid_pred = {
+            "result": [{
+                "from_name": "bitmask",
+                "to_name": "image",
+                "type": "bitmask",
+                "value": {"imageDataURL": "data:image/png;base64,abc"},
+            }],
+            "score": 0.8,
+        }
+        assert li.validate_prediction(valid_pred) is True
+
+        invalid_pred = copy.deepcopy(valid_pred)
+        del invalid_pred["result"][0]["value"]["imageDataURL"]
+        assert li.validate_prediction(invalid_pred) is False
+        errors = li.validate_prediction(invalid_pred, return_errors=True)
+        assert any("Invalid value for control 'bitmask'" in error for error in errors)
+        assert any("expected fields" in error for error in errors)
+
+    def test_bitmask_labels_validation(self):
+        """BitmaskLabels predictions with imageDataURL + bitmasklabels (FIT-2686)."""
+        li = LabelInterface(PREDICTION_BITMASK_LABELS_CONFIG)
+        control = li.get_control("labels")
+        assert type(control).__name__ == "BitmaskLabelsTag"
+        assert hasattr(control, "_value_class")
+
+        valid_pred = {
+            "result": [{
+                "from_name": "labels",
+                "to_name": "image",
+                "type": "bitmasklabels",
+                "value": {
+                    "imageDataURL": "data:image/png;base64,abc",
+                    "bitmasklabels": ["A"],
+                },
+            }],
+            "score": 0.9,
+        }
+        assert li.validate_prediction(valid_pred) is True
+
+        # Optional format (clients sometimes send it) should not fail
+        with_format = copy.deepcopy(valid_pred)
+        with_format["result"][0]["value"]["format"] = "png"
+        assert li.validate_prediction(with_format) is True
+
+        invalid_label = copy.deepcopy(valid_pred)
+        invalid_label["result"][0]["value"]["bitmasklabels"] = ["not-a-label"]
+        assert li.validate_prediction(invalid_label) is False
+        errors = li.validate_prediction(invalid_label, return_errors=True)
+        assert any("Invalid value for control 'labels'" in error for error in errors)
+
+        missing_url = copy.deepcopy(valid_pred)
+        del missing_url["result"][0]["value"]["imageDataURL"]
+        assert li.validate_prediction(missing_url) is False
+        errors = li.validate_prediction(missing_url, return_errors=True)
+        assert any("Invalid value for control 'labels'" in error for error in errors)
+        assert any("expected fields" in error for error in errors)
+
+    def test_timeline_labels_validation(self):
+        """TimelineLabels predictions with ranges + timelinelabels (FIT-2686)."""
+        li = LabelInterface(PREDICTION_TIMELINE_LABELS_CONFIG)
+        control = li.get_control("tl")
+        assert type(control).__name__ == "TimelineLabelsTag"
+        assert hasattr(control, "_value_class")
+
+        valid_pred = {
+            "result": [{
+                "from_name": "tl",
+                "to_name": "video",
+                "type": "timelinelabels",
+                "value": {
+                    "ranges": [{"start": 3, "end": 5}],
+                    "timelinelabels": ["A"],
+                },
+            }],
+            "score": 0.85,
+        }
+        assert li.validate_prediction(valid_pred) is True
+
+        # Optional enabled on ranges (client-added) should not fail
+        with_enabled = copy.deepcopy(valid_pred)
+        with_enabled["result"][0]["value"]["ranges"][0]["enabled"] = True
+        assert li.validate_prediction(with_enabled) is True
+
+        invalid_label = copy.deepcopy(valid_pred)
+        invalid_label["result"][0]["value"]["timelinelabels"] = ["Nope"]
+        assert li.validate_prediction(invalid_label) is False
+
+        missing_ranges = copy.deepcopy(valid_pred)
+        del missing_ranges["result"][0]["value"]["ranges"]
+        assert li.validate_prediction(missing_ranges) is False
+        errors = li.validate_prediction(missing_ranges, return_errors=True)
+        assert any("Invalid value for control 'tl'" in error for error in errors)
+        assert any("expected fields" in error for error in errors)
+
+        # Empty ranges must fail (matches to_json_schema minItems: 1 / editor)
+        empty_ranges = copy.deepcopy(valid_pred)
+        empty_ranges["result"][0]["value"]["ranges"] = []
+        assert li.validate_prediction(empty_ranges) is False
+        errors = li.validate_prediction(empty_ranges, return_errors=True)
+        assert any("Invalid value for control 'tl'" in error for error in errors)
+
+    def test_vector_validation(self):
+        """Unlabeled Vector predictions require vertices (FIT-2686)."""
+        li = LabelInterface(PREDICTION_VECTOR_CONFIG)
+        control = li.get_control("vector")
+        assert type(control).__name__ == "VectorTag"
+        assert hasattr(control, "_value_class")
+
+        valid_pred = {
+            "result": [{
+                "from_name": "vector",
+                "to_name": "image",
+                "type": "vector",
+                "value": {
+                    "closed": False,
+                    "vertices": [{"x": 10.0, "y": 20.0}, {"x": 30.0, "y": 40.0}],
+                },
+            }],
+            "score": 0.7,
+        }
+        assert li.validate_prediction(valid_pred) is True
+
+        invalid_pred = copy.deepcopy(valid_pred)
+        del invalid_pred["result"][0]["value"]["vertices"]
+        assert li.validate_prediction(invalid_pred) is False
 
     def test_brush_labels_validation(self):
         """Test BrushLabels tag validation"""

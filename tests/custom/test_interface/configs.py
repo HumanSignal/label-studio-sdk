@@ -186,6 +186,40 @@ PREDICTION_BRUSH_LABELS_CONFIG = """
 </View>
 """
 
+PREDICTION_BITMASK_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <Bitmask name="bitmask" toName="image"/>
+</View>
+"""
+
+PREDICTION_BITMASK_LABELS_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <BitmaskLabels name="labels" toName="image">
+    <Label value="A" background="red"/>
+    <Label value="B" background="blue"/>
+  </BitmaskLabels>
+</View>
+"""
+
+PREDICTION_TIMELINE_LABELS_CONFIG = """
+<View>
+  <Video name="video" value="$video"/>
+  <TimelineLabels name="tl" toName="video">
+    <Label value="A" background="red"/>
+    <Label value="Moving" background="blue"/>
+  </TimelineLabels>
+</View>
+"""
+
+PREDICTION_VECTOR_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <Vector name="vector" toName="image"/>
+</View>
+"""
+
 PREDICTION_ELLIPSE_CONFIG = """
 <View>
   <Image name="image" value="$image"/>
