@@ -13,6 +13,7 @@ class BillingFlags(UncheckedBaseModel):
     allow_activity_log: bool
     allow_ai: bool
     allow_ask_ai: bool
+    allow_ask_ai_screenshots: typing.Optional[bool] = None
     allow_data_credentials: bool
     allow_invite_people: bool
     allow_invite_project_experts: bool
@@ -21,6 +22,7 @@ class BillingFlags(UncheckedBaseModel):
     allow_reviewing: bool
     allow_sso: bool
     allow_storage_proxy: bool
+    ask_ai_screenshots: bool
     automax_enabled: bool
     automax_token_exists: bool
     cloud_instance: bool
