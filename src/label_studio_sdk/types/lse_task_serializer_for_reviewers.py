@@ -123,6 +123,14 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     reviews_rejected: typing.Optional[int] = None
     state: typing.Optional[str] = None
     storage_filename: typing.Optional[str] = None
+    submission: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    The file of the latest SUBMITTED annotation, for the collection grid.
+    
+    Read from the annotation (the submission's source of truth); the task
+    itself carries only the brief.
+    """
+
     total_annotations: typing.Optional[int] = None
     total_predictions: typing.Optional[int] = None
     unresolved_comment_count: typing.Optional[int] = pydantic.Field(default=None)
