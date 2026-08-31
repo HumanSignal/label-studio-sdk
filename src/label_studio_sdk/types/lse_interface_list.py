@@ -10,6 +10,11 @@ from .user_simple import UserSimple
 
 
 class LseInterfaceList(UncheckedBaseModel):
+    accepts_submissions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether this interface can receive an uploaded file as a submission.
+    """
+
     created_at: typing.Optional[dt.datetime] = None
     created_by: typing.Optional[UserSimple] = None
     description: typing.Optional[str] = None

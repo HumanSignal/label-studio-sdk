@@ -125,10 +125,15 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     storage_filename: typing.Optional[str] = None
     submission: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
-    The file of the latest SUBMITTED annotation, for the collection grid.
+    The contributor's own submitted file, for the collection grid.
     
     Read from the annotation (the submission's source of truth); the task
-    itself carries only the brief.
+    itself is untouched input.
+    
+    Scoped to the requester, exactly as ``get_annotations`` scopes the
+    annotation list: a contributor sees the file they submitted and never
+    another contributor's media. The column is only offered to annotators,
+    so this is also the only case that renders.
     """
 
     total_annotations: typing.Optional[int] = None
