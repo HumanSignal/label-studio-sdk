@@ -184,9 +184,10 @@ class MembersClient:
             Member
 
         user_type : typing.Optional[StandardUserTypeEnum]
-            Membership seat type. Assigning a working role to a View-Only member upgrades them to a paid Standard seat. View-Only is not accepted because paid-to-View-Only downgrade is not supported.
+            Membership seat type. Assigning a working role to a View-Only member upgrades them to a paid Standard seat. Flex seats keep the working role and consume Flex capacity in assigned claim mode. View-Only is not accepted because paid-to-View-Only downgrade is not supported.
 
             * `standard` - Standard
+            * `flex` - Flex
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -468,9 +469,10 @@ class AsyncMembersClient:
             Member
 
         user_type : typing.Optional[StandardUserTypeEnum]
-            Membership seat type. Assigning a working role to a View-Only member upgrades them to a paid Standard seat. View-Only is not accepted because paid-to-View-Only downgrade is not supported.
+            Membership seat type. Assigning a working role to a View-Only member upgrades them to a paid Standard seat. Flex seats keep the working role and consume Flex capacity in assigned claim mode. View-Only is not accepted because paid-to-View-Only downgrade is not supported.
 
             * `standard` - Standard
+            * `flex` - Flex
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

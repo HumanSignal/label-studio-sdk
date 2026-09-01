@@ -129,7 +129,7 @@ class InvitesClient:
             * `NO` - Not Activated
 
         user_type : typing.Optional[AssignableUserTypeEnum]
-            Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role.
+            Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role. Flex members keep a normal working role and consume Flex capacity in assigned claim mode.
 
             * `standard` - Standard
             * `flex` - Flex
@@ -299,7 +299,7 @@ class AsyncInvitesClient:
             * `NO` - Not Activated
 
         user_type : typing.Optional[AssignableUserTypeEnum]
-            Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role.
+            Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role. Flex members keep a normal working role and consume Flex capacity in assigned claim mode.
 
             * `standard` - Standard
             * `flex` - Flex
