@@ -956,6 +956,14 @@ client.annotation_reviews.update(
 <dl>
 <dd>
 
+**reject_action:** `typing.Optional[RejectActionEnum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **remove_from_queue:** `typing.Optional[bool]` 
     
 </dd>

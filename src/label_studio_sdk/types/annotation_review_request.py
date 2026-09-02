@@ -6,6 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .reject_action_enum import RejectActionEnum
 
 
 class AnnotationReviewRequest(UncheckedBaseModel):
@@ -32,6 +33,7 @@ class AnnotationReviewRequest(UncheckedBaseModel):
 
     comment: typing.Optional[str] = None
     last_annotation_history: typing.Optional[int] = None
+    reject_action: typing.Optional[RejectActionEnum] = None
     remove_from_queue: typing.Optional[bool] = None
     result: typing.Optional[typing.Any] = None
     started_at: typing.Optional[dt.datetime] = None

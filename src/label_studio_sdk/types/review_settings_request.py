@@ -5,12 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .reject_action_enum import RejectActionEnum
 from .requeue_rejected_tasks_mode_enum import RequeueRejectedTasksModeEnum
 from .review_criteria_enum import ReviewCriteriaEnum
 from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
 
 
 class ReviewSettingsRequest(UncheckedBaseModel):
+    allowed_reject_actions: typing.Optional[typing.List[RejectActionEnum]] = None
     annotator_batch_percent: typing.Optional[str] = pydantic.Field(default=None)
     """
     Percent of an annotator’s work to review before moving to another annotator
@@ -19,6 +21,15 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     anonymize_annotations: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Hide annotator names from annotations while review
+    """
+
+    default_reject_action: typing.Optional[RejectActionEnum] = pydantic.Field(default=None)
+    """
+    Reject action a reviewer triggers in one click, without opening the reject options menu
+    
+    * `remove` - Remove
+    * `requeue` - Requeue
+    * `redistribute` - Redistribute
     """
 
     instruction: typing.Optional[str] = pydantic.Field(default=None)
@@ -34,7 +45,7 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     project: typing.Optional[int] = None
     requeue_rejected_tasks_mode: typing.Optional[RequeueRejectedTasksModeEnum] = pydantic.Field(default=None)
     """
-    Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
+    Deprecated. Prefer allowed_reject_actions. Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
     
     * `requeue` - Requeue
     * `remove` - Remove

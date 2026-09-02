@@ -6,6 +6,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.annotation_review import AnnotationReview
+from ..types.reject_action_enum import RejectActionEnum
 from .raw_client import AsyncRawAnnotationReviewsClient, RawAnnotationReviewsClient
 
 # this is used as the default value for optional parameters
@@ -86,6 +87,7 @@ class AnnotationReviewsClient:
         accepted: typing.Optional[bool] = OMIT,
         comment: typing.Optional[str] = OMIT,
         last_annotation_history: typing.Optional[int] = OMIT,
+        reject_action: typing.Optional[RejectActionEnum] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
         result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
@@ -114,6 +116,8 @@ class AnnotationReviewsClient:
         comment : typing.Optional[str]
 
         last_annotation_history : typing.Optional[int]
+
+        reject_action : typing.Optional[RejectActionEnum]
 
         remove_from_queue : typing.Optional[bool]
 
@@ -146,6 +150,7 @@ class AnnotationReviewsClient:
             accepted=accepted,
             comment=comment,
             last_annotation_history=last_annotation_history,
+            reject_action=reject_action,
             remove_from_queue=remove_from_queue,
             result=result,
             started_at=started_at,
@@ -234,6 +239,7 @@ class AnnotationReviewsClient:
         annotation: typing.Optional[int] = OMIT,
         comment: typing.Optional[str] = OMIT,
         last_annotation_history: typing.Optional[int] = OMIT,
+        reject_action: typing.Optional[RejectActionEnum] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
         result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
@@ -262,6 +268,8 @@ class AnnotationReviewsClient:
         comment : typing.Optional[str]
 
         last_annotation_history : typing.Optional[int]
+
+        reject_action : typing.Optional[RejectActionEnum]
 
         remove_from_queue : typing.Optional[bool]
 
@@ -294,6 +302,7 @@ class AnnotationReviewsClient:
             annotation=annotation,
             comment=comment,
             last_annotation_history=last_annotation_history,
+            reject_action=reject_action,
             remove_from_queue=remove_from_queue,
             result=result,
             started_at=started_at,
@@ -384,6 +393,7 @@ class AsyncAnnotationReviewsClient:
         accepted: typing.Optional[bool] = OMIT,
         comment: typing.Optional[str] = OMIT,
         last_annotation_history: typing.Optional[int] = OMIT,
+        reject_action: typing.Optional[RejectActionEnum] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
         result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
@@ -412,6 +422,8 @@ class AsyncAnnotationReviewsClient:
         comment : typing.Optional[str]
 
         last_annotation_history : typing.Optional[int]
+
+        reject_action : typing.Optional[RejectActionEnum]
 
         remove_from_queue : typing.Optional[bool]
 
@@ -452,6 +464,7 @@ class AsyncAnnotationReviewsClient:
             accepted=accepted,
             comment=comment,
             last_annotation_history=last_annotation_history,
+            reject_action=reject_action,
             remove_from_queue=remove_from_queue,
             result=result,
             started_at=started_at,
@@ -556,6 +569,7 @@ class AsyncAnnotationReviewsClient:
         annotation: typing.Optional[int] = OMIT,
         comment: typing.Optional[str] = OMIT,
         last_annotation_history: typing.Optional[int] = OMIT,
+        reject_action: typing.Optional[RejectActionEnum] = OMIT,
         remove_from_queue: typing.Optional[bool] = OMIT,
         result: typing.Optional[typing.Any] = OMIT,
         started_at: typing.Optional[dt.datetime] = OMIT,
@@ -584,6 +598,8 @@ class AsyncAnnotationReviewsClient:
         comment : typing.Optional[str]
 
         last_annotation_history : typing.Optional[int]
+
+        reject_action : typing.Optional[RejectActionEnum]
 
         remove_from_queue : typing.Optional[bool]
 
@@ -624,6 +640,7 @@ class AsyncAnnotationReviewsClient:
             annotation=annotation,
             comment=comment,
             last_annotation_history=last_annotation_history,
+            reject_action=reject_action,
             remove_from_queue=remove_from_queue,
             result=result,
             started_at=started_at,
