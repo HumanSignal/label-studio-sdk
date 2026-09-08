@@ -43288,6 +43288,14 @@ client.sso.saml.update(
 <dl>
 <dd>
 
+**user_type_groups:** `typing.Optional[typing.List[typing.List[str]]]` — Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **workspaces_groups:** `typing.Optional[typing.List[typing.List[str]]]` — Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
     
 </dd>
@@ -43612,6 +43620,14 @@ client.sso.scim.update(
 <dd>
 
 **roles_groups:** `typing.Optional[typing.List[typing.List[str]]]` — Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_type_groups:** `typing.Optional[typing.List[typing.List[str]]]` — Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
     
 </dd>
 </dl>

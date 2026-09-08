@@ -19,6 +19,16 @@ class ScimSettings(UncheckedBaseModel):
     Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
     """
 
+    user_type_capacities: typing.Optional[typing.Dict[str, typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
+    """
+    Live seat usage and limits by seat type (Standard, View Only, Flex).
+    """
+
+    user_type_groups: typing.Optional[typing.List[typing.List[str]]] = pydantic.Field(default=None)
+    """
+    Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
+    """
+
     workspaces_groups: typing.Optional[typing.List[typing.List[str]]] = pydantic.Field(default=None)
     """
     Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.

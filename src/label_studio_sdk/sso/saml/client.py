@@ -75,6 +75,7 @@ class SamlClient:
         metadata_xml: typing.Optional[str] = OMIT,
         projects_groups: typing.Optional[typing.Sequence[ProjectGroupRequest]] = OMIT,
         roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
+        user_type_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SamlSettingsUpdate:
@@ -122,6 +123,9 @@ class SamlClient:
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
             Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
 
+        user_type_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+            Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
+
         workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
             Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
 
@@ -164,6 +168,7 @@ class SamlClient:
             metadata_xml=metadata_xml,
             projects_groups=projects_groups,
             roles_groups=roles_groups,
+            user_type_groups=user_type_groups,
             workspaces_groups=workspaces_groups,
             request_options=request_options,
         )
@@ -308,6 +313,7 @@ class AsyncSamlClient:
         metadata_xml: typing.Optional[str] = OMIT,
         projects_groups: typing.Optional[typing.Sequence[ProjectGroupRequest]] = OMIT,
         roles_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
+        user_type_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         workspaces_groups: typing.Optional[typing.Sequence[typing.Sequence[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SamlSettingsUpdate:
@@ -354,6 +360,9 @@ class AsyncSamlClient:
 
         roles_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
             Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+
+        user_type_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
+            Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
 
         workspaces_groups : typing.Optional[typing.Sequence[typing.Sequence[str]]]
             Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
@@ -405,6 +414,7 @@ class AsyncSamlClient:
             metadata_xml=metadata_xml,
             projects_groups=projects_groups,
             roles_groups=roles_groups,
+            user_type_groups=user_type_groups,
             workspaces_groups=workspaces_groups,
             request_options=request_options,
         )
