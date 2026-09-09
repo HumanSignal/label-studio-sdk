@@ -611,7 +611,19 @@ class Converter(object):
                     v = deepcopy(r.get("value", {}))
                     v["type"] = "chatmessage"
                     outputs[from_name].append(v)
-                    
+
+                # Interface / custom-interface projects use an empty labeling schema
+                # (<View></View>), so regions never match a control tag. Keep them so
+                # json_min / csv / related exports still include annotation data.
+                elif from_name and not self._schema:
+                    v = deepcopy(r.get("value") or {})
+                    v["type"] = r.get("type") or "unknown"
+                    if "original_width" in r:
+                        v["original_width"] = r["original_width"]
+                    if "original_height" in r:
+                        v["original_height"] = r["original_height"]
+                    outputs[from_name].append(v)
+
                 else:
                     pass
 
