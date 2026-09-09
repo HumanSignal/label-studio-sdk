@@ -201,3 +201,69 @@ def test_chat_csv_export():
         "professional can make a big difference."
     )
     assert transcript == expected_transcript
+
+
+def test_empty_schema_csv_keeps_interface_annotation_regions(tmp_path):
+    """Interface projects use an empty labeling schema (<View></View>).
+
+    CSV export must still include annotation columns for labels/coordinates
+    (FIT-2758) — same empty-schema path as json_min (FIT-2757).
+    """
+    input_path = tmp_path / "interface_task.json"
+    output_dir = tmp_path / "out"
+    output_dir.mkdir()
+    input_path.write_text(
+        json.dumps(
+            [
+                {
+                    "id": 1,
+                    "data": {"image": "https://example.com/a.jpg"},
+                    "annotations": [
+                        {
+                            "id": 10,
+                            "created_at": "2024-01-01T00:00:00Z",
+                            "completed_by": {"email": "a@example.com"},
+                            "result": [
+                                {
+                                    "from_name": "boxes",
+                                    "to_name": "image",
+                                    "type": "rectanglelabels",
+                                    "original_width": 100,
+                                    "original_height": 100,
+                                    "value": {
+                                        "x": 10,
+                                        "y": 20,
+                                        "width": 30,
+                                        "height": 40,
+                                        "rectanglelabels": ["car"],
+                                    },
+                                },
+                                {
+                                    "from_name": "sentiment",
+                                    "to_name": "image",
+                                    "type": "choices",
+                                    "value": {"choices": ["positive"]},
+                                },
+                            ],
+                        }
+                    ],
+                }
+            ]
+        )
+    )
+
+    converter = Converter({}, str(tmp_path))
+    converter.convert_to_csv(
+        str(input_path), str(output_dir), sep=",", header=True, is_dir=False
+    )
+
+    df = read_csv(output_dir / "result.csv", sep=",")
+    assert "boxes" in df.columns, "spatial annotation column must be present"
+    assert "sentiment" in df.columns, "choice annotation column must be present"
+    boxes = json.loads(df.iloc[0].boxes)
+    assert isinstance(boxes, list) and len(boxes) == 1
+    assert boxes[0]["x"] == 10
+    assert boxes[0]["y"] == 20
+    assert boxes[0]["width"] == 30
+    assert boxes[0]["height"] == 40
+    assert boxes[0]["rectanglelabels"] == ["car"]
