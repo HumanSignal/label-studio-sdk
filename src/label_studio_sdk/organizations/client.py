@@ -137,7 +137,6 @@ class OrganizationsClient:
         id: int,
         *,
         contact_info: typing.Optional[str] = OMIT,
-        created_by: typing.Optional[int] = OMIT,
         custom_interfaces_enabled: typing.Optional[bool] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
@@ -164,8 +163,6 @@ class OrganizationsClient:
         id : int
 
         contact_info : typing.Optional[str]
-
-        created_by : typing.Optional[int]
 
         custom_interfaces_enabled : typing.Optional[bool]
             Enable or disable custom interfaces for this organization
@@ -218,7 +215,6 @@ class OrganizationsClient:
         _response = self._raw_client.update(
             id,
             contact_info=contact_info,
-            created_by=created_by,
             custom_interfaces_enabled=custom_interfaces_enabled,
             custom_scripts_enabled=custom_scripts_enabled,
             email_notification_settings=email_notification_settings,
@@ -531,7 +527,6 @@ class AsyncOrganizationsClient:
         id: int,
         *,
         contact_info: typing.Optional[str] = OMIT,
-        created_by: typing.Optional[int] = OMIT,
         custom_interfaces_enabled: typing.Optional[bool] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
@@ -558,8 +553,6 @@ class AsyncOrganizationsClient:
         id : int
 
         contact_info : typing.Optional[str]
-
-        created_by : typing.Optional[int]
 
         custom_interfaces_enabled : typing.Optional[bool]
             Enable or disable custom interfaces for this organization
@@ -620,7 +613,6 @@ class AsyncOrganizationsClient:
         _response = await self._raw_client.update(
             id,
             contact_info=contact_info,
-            created_by=created_by,
             custom_interfaces_enabled=custom_interfaces_enabled,
             custom_scripts_enabled=custom_scripts_enabled,
             email_notification_settings=email_notification_settings,

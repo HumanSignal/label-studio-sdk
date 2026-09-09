@@ -8642,14 +8642,6 @@ client.organizations.update(
 <dl>
 <dd>
 
-**created_by:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **custom_interfaces_enabled:** `typing.Optional[bool]` — Enable or disable custom interfaces for this organization
     
 </dd>
