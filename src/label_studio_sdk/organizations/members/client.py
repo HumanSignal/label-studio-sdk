@@ -9,6 +9,7 @@ from ...core.request_options import RequestOptions
 from ...types.assignable_organization_role_enum import AssignableOrganizationRoleEnum
 from ...types.lse_organization_member_list import LseOrganizationMemberList
 from ...types.organization_member import OrganizationMember
+from ...types.organization_member_filter_schema import OrganizationMemberFilterSchema
 from ...types.paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
 from ...types.standard_user_type_enum import StandardUserTypeEnum
 from .raw_client import AsyncRawMembersClient, RawMembersClient
@@ -211,6 +212,171 @@ class MembersClient:
         _response = self._raw_client.update(
             id, role=role, user_id=user_id, user_type=user_type, request_options=request_options
         )
+        return _response.data
+
+    def get_filter_schema(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> OrganizationMemberFilterSchema:
+        """
+        Return the filter dimensions enabled for the current organization and actor.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationMemberFilterSchema
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.members.get_filter_schema(
+            id=1,
+        )
+        """
+        _response = self._raw_client.get_filter_schema(id, request_options=request_options)
+        return _response.data
+
+    def list_filtered(
+        self,
+        id: int,
+        *,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
+        filters: typing.Optional[str] = None,
+        is_deleted: typing.Optional[bool] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        role: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        search: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        user_last_activity_gte: typing.Optional[dt.datetime] = None,
+        user_last_activity_lte: typing.Optional[dt.datetime] = None,
+        user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedLseOrganizationMemberListList:
+        """
+        Retrieve a paginated organization-member list using the versioned `filters` query parameter.
+
+        Parameters
+        ----------
+        id : int
+
+        exclude_project_id : typing.Optional[float]
+
+        exclude_workspace_id : typing.Optional[float]
+
+        filters : typing.Optional[str]
+            Versioned JSON organization-member filter payload.
+
+        is_deleted : typing.Optional[bool]
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        role : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
+        search : typing.Optional[str]
+            A search term.
+
+        tags : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
+
+        user_last_activity_gte : typing.Optional[dt.datetime]
+
+        user_last_activity_lte : typing.Optional[dt.datetime]
+
+        user_type : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedLseOrganizationMemberListList
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.members.list_filtered(
+            id=1,
+        )
+        """
+        _response = self._raw_client.list_filtered(
+            id,
+            exclude_project_id=exclude_project_id,
+            exclude_workspace_id=exclude_workspace_id,
+            filters=filters,
+            is_deleted=is_deleted,
+            ordering=ordering,
+            page=page,
+            page_size=page_size,
+            role=role,
+            search=search,
+            tags=tags,
+            user_last_activity_gte=user_last_activity_gte,
+            user_last_activity_lte=user_last_activity_lte,
+            user_type=user_type,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def search(
+        self, id: int, *, filters: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> LseOrganizationMemberList:
+        """
+        POST transport for the versioned organization-member filter payload.
+
+        Parameters
+        ----------
+        id : int
+
+        filters : typing.Any
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseOrganizationMemberList
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.members.search(
+            id=1,
+            filters={"key": "value"},
+        )
+        """
+        _response = self._raw_client.search(id, filters=filters, request_options=request_options)
         return _response.data
 
     def get(
@@ -504,6 +670,195 @@ class AsyncMembersClient:
         _response = await self._raw_client.update(
             id, role=role, user_id=user_id, user_type=user_type, request_options=request_options
         )
+        return _response.data
+
+    async def get_filter_schema(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> OrganizationMemberFilterSchema:
+        """
+        Return the filter dimensions enabled for the current organization and actor.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationMemberFilterSchema
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.members.get_filter_schema(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_filter_schema(id, request_options=request_options)
+        return _response.data
+
+    async def list_filtered(
+        self,
+        id: int,
+        *,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
+        filters: typing.Optional[str] = None,
+        is_deleted: typing.Optional[bool] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        role: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        search: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        user_last_activity_gte: typing.Optional[dt.datetime] = None,
+        user_last_activity_lte: typing.Optional[dt.datetime] = None,
+        user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedLseOrganizationMemberListList:
+        """
+        Retrieve a paginated organization-member list using the versioned `filters` query parameter.
+
+        Parameters
+        ----------
+        id : int
+
+        exclude_project_id : typing.Optional[float]
+
+        exclude_workspace_id : typing.Optional[float]
+
+        filters : typing.Optional[str]
+            Versioned JSON organization-member filter payload.
+
+        is_deleted : typing.Optional[bool]
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        role : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
+        search : typing.Optional[str]
+            A search term.
+
+        tags : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
+
+        user_last_activity_gte : typing.Optional[dt.datetime]
+
+        user_last_activity_lte : typing.Optional[dt.datetime]
+
+        user_type : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedLseOrganizationMemberListList
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.members.list_filtered(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_filtered(
+            id,
+            exclude_project_id=exclude_project_id,
+            exclude_workspace_id=exclude_workspace_id,
+            filters=filters,
+            is_deleted=is_deleted,
+            ordering=ordering,
+            page=page,
+            page_size=page_size,
+            role=role,
+            search=search,
+            tags=tags,
+            user_last_activity_gte=user_last_activity_gte,
+            user_last_activity_lte=user_last_activity_lte,
+            user_type=user_type,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def search(
+        self, id: int, *, filters: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> LseOrganizationMemberList:
+        """
+        POST transport for the versioned organization-member filter payload.
+
+        Parameters
+        ----------
+        id : int
+
+        filters : typing.Any
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseOrganizationMemberList
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.members.search(
+                id=1,
+                filters={"key": "value"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.search(id, filters=filters, request_options=request_options)
         return _response.data
 
     async def get(

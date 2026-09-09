@@ -19,6 +19,7 @@ from ...errors.not_found_error import NotFoundError
 from ...types.assignable_organization_role_enum import AssignableOrganizationRoleEnum
 from ...types.lse_organization_member_list import LseOrganizationMemberList
 from ...types.organization_member import OrganizationMember
+from ...types.organization_member_filter_schema import OrganizationMemberFilterSchema
 from ...types.paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
 from ...types.standard_user_type_enum import StandardUserTypeEnum
 from pydantic import ValidationError
@@ -233,6 +234,210 @@ class RawMembersClient:
                 "role": role,
                 "user_id": user_id,
                 "user_type": user_type,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    LseOrganizationMemberList,
+                    construct_type(
+                        type_=LseOrganizationMemberList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_filter_schema(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[OrganizationMemberFilterSchema]:
+        """
+        Return the filter dimensions enabled for the current organization and actor.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[OrganizationMemberFilterSchema]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/organizations/{encode_path_param(id)}/memberships/filter-schema",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    OrganizationMemberFilterSchema,
+                    construct_type(
+                        type_=OrganizationMemberFilterSchema,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_filtered(
+        self,
+        id: int,
+        *,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
+        filters: typing.Optional[str] = None,
+        is_deleted: typing.Optional[bool] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        role: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        search: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        user_last_activity_gte: typing.Optional[dt.datetime] = None,
+        user_last_activity_lte: typing.Optional[dt.datetime] = None,
+        user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PaginatedLseOrganizationMemberListList]:
+        """
+        Retrieve a paginated organization-member list using the versioned `filters` query parameter.
+
+        Parameters
+        ----------
+        id : int
+
+        exclude_project_id : typing.Optional[float]
+
+        exclude_workspace_id : typing.Optional[float]
+
+        filters : typing.Optional[str]
+            Versioned JSON organization-member filter payload.
+
+        is_deleted : typing.Optional[bool]
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        role : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
+        search : typing.Optional[str]
+            A search term.
+
+        tags : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
+
+        user_last_activity_gte : typing.Optional[dt.datetime]
+
+        user_last_activity_lte : typing.Optional[dt.datetime]
+
+        user_type : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[PaginatedLseOrganizationMemberListList]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/organizations/{encode_path_param(id)}/memberships/search",
+            method="GET",
+            params={
+                "exclude_project_id": exclude_project_id,
+                "exclude_workspace_id": exclude_workspace_id,
+                "filters": filters,
+                "is_deleted": is_deleted,
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "role": ",".join(map(str, role)) if isinstance(role, (list, tuple, set)) else role,
+                "search": search,
+                "tags": ",".join(map(str, tags)) if isinstance(tags, (list, tuple, set)) else tags,
+                "user__last_activity__gte": serialize_datetime(user_last_activity_gte)
+                if user_last_activity_gte is not None
+                else None,
+                "user__last_activity__lte": serialize_datetime(user_last_activity_lte)
+                if user_last_activity_lte is not None
+                else None,
+                "user_type": ",".join(map(str, user_type)) if isinstance(user_type, (list, tuple, set)) else user_type,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PaginatedLseOrganizationMemberListList,
+                    construct_type(
+                        type_=PaginatedLseOrganizationMemberListList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def search(
+        self, id: int, *, filters: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[LseOrganizationMemberList]:
+        """
+        POST transport for the versioned organization-member filter payload.
+
+        Parameters
+        ----------
+        id : int
+
+        filters : typing.Any
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[LseOrganizationMemberList]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/organizations/{encode_path_param(id)}/memberships/search",
+            method="POST",
+            json={
+                "filters": filters,
             },
             headers={
                 "content-type": "application/json",
@@ -595,6 +800,210 @@ class AsyncRawMembersClient:
                 "role": role,
                 "user_id": user_id,
                 "user_type": user_type,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    LseOrganizationMemberList,
+                    construct_type(
+                        type_=LseOrganizationMemberList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_filter_schema(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[OrganizationMemberFilterSchema]:
+        """
+        Return the filter dimensions enabled for the current organization and actor.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[OrganizationMemberFilterSchema]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/organizations/{encode_path_param(id)}/memberships/filter-schema",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    OrganizationMemberFilterSchema,
+                    construct_type(
+                        type_=OrganizationMemberFilterSchema,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_filtered(
+        self,
+        id: int,
+        *,
+        exclude_project_id: typing.Optional[float] = None,
+        exclude_workspace_id: typing.Optional[float] = None,
+        filters: typing.Optional[str] = None,
+        is_deleted: typing.Optional[bool] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        role: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        search: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        user_last_activity_gte: typing.Optional[dt.datetime] = None,
+        user_last_activity_lte: typing.Optional[dt.datetime] = None,
+        user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PaginatedLseOrganizationMemberListList]:
+        """
+        Retrieve a paginated organization-member list using the versioned `filters` query parameter.
+
+        Parameters
+        ----------
+        id : int
+
+        exclude_project_id : typing.Optional[float]
+
+        exclude_workspace_id : typing.Optional[float]
+
+        filters : typing.Optional[str]
+            Versioned JSON organization-member filter payload.
+
+        is_deleted : typing.Optional[bool]
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        role : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
+        search : typing.Optional[str]
+            A search term.
+
+        tags : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Multiple values may be separated by commas.
+
+        user_last_activity_gte : typing.Optional[dt.datetime]
+
+        user_last_activity_lte : typing.Optional[dt.datetime]
+
+        user_type : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Multiple values may be separated by commas.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[PaginatedLseOrganizationMemberListList]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/organizations/{encode_path_param(id)}/memberships/search",
+            method="GET",
+            params={
+                "exclude_project_id": exclude_project_id,
+                "exclude_workspace_id": exclude_workspace_id,
+                "filters": filters,
+                "is_deleted": is_deleted,
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "role": ",".join(map(str, role)) if isinstance(role, (list, tuple, set)) else role,
+                "search": search,
+                "tags": ",".join(map(str, tags)) if isinstance(tags, (list, tuple, set)) else tags,
+                "user__last_activity__gte": serialize_datetime(user_last_activity_gte)
+                if user_last_activity_gte is not None
+                else None,
+                "user__last_activity__lte": serialize_datetime(user_last_activity_lte)
+                if user_last_activity_lte is not None
+                else None,
+                "user_type": ",".join(map(str, user_type)) if isinstance(user_type, (list, tuple, set)) else user_type,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PaginatedLseOrganizationMemberListList,
+                    construct_type(
+                        type_=PaginatedLseOrganizationMemberListList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def search(
+        self, id: int, *, filters: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[LseOrganizationMemberList]:
+        """
+        POST transport for the versioned organization-member filter payload.
+
+        Parameters
+        ----------
+        id : int
+
+        filters : typing.Any
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[LseOrganizationMemberList]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/organizations/{encode_path_param(id)}/memberships/search",
+            method="POST",
+            json={
+                "filters": filters,
             },
             headers={
                 "content-type": "application/json",

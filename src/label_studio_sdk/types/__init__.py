@@ -174,6 +174,14 @@ if typing.TYPE_CHECKING:
     from .organization_member import OrganizationMember
     from .organization_member_contributed_to_projects_item import OrganizationMemberContributedToProjectsItem
     from .organization_member_created_projects_item import OrganizationMemberCreatedProjectsItem
+    from .organization_member_filter_schema import OrganizationMemberFilterSchema
+    from .organization_member_membership_option import OrganizationMemberMembershipOption
+    from .organization_member_membership_option_kind_enum import OrganizationMemberMembershipOptionKindEnum
+    from .organization_member_membership_project_option import OrganizationMemberMembershipProjectOption
+    from .organization_member_membership_project_option_kind_enum import (
+        OrganizationMemberMembershipProjectOptionKindEnum,
+    )
+    from .organization_member_skills_option import OrganizationMemberSkillsOption
     from .organization_member_tag import OrganizationMemberTag
     from .organization_member_tag_import_status import OrganizationMemberTagImportStatus
     from .organization_member_tag_import_status_status_enum import OrganizationMemberTagImportStatusStatusEnum
@@ -473,6 +481,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrganizationMember": ".organization_member",
     "OrganizationMemberContributedToProjectsItem": ".organization_member_contributed_to_projects_item",
     "OrganizationMemberCreatedProjectsItem": ".organization_member_created_projects_item",
+    "OrganizationMemberFilterSchema": ".organization_member_filter_schema",
+    "OrganizationMemberMembershipOption": ".organization_member_membership_option",
+    "OrganizationMemberMembershipOptionKindEnum": ".organization_member_membership_option_kind_enum",
+    "OrganizationMemberMembershipProjectOption": ".organization_member_membership_project_option",
+    "OrganizationMemberMembershipProjectOptionKindEnum": ".organization_member_membership_project_option_kind_enum",
+    "OrganizationMemberSkillsOption": ".organization_member_skills_option",
     "OrganizationMemberTag": ".organization_member_tag",
     "OrganizationMemberTagImportStatus": ".organization_member_tag_import_status",
     "OrganizationMemberTagImportStatusStatusEnum": ".organization_member_tag_import_status_status_enum",
@@ -788,6 +802,12 @@ __all__ = [
     "OrganizationMember",
     "OrganizationMemberContributedToProjectsItem",
     "OrganizationMemberCreatedProjectsItem",
+    "OrganizationMemberFilterSchema",
+    "OrganizationMemberMembershipOption",
+    "OrganizationMemberMembershipOptionKindEnum",
+    "OrganizationMemberMembershipProjectOption",
+    "OrganizationMemberMembershipProjectOptionKindEnum",
+    "OrganizationMemberSkillsOption",
     "OrganizationMemberTag",
     "OrganizationMemberTagImportStatus",
     "OrganizationMemberTagImportStatusStatusEnum",
