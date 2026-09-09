@@ -536,6 +536,7 @@ class TasksClient:
         event_key: str,
         event_time: dt.datetime,
         annotation: typing.Optional[int] = OMIT,
+        annotation_draft: typing.Optional[int] = OMIT,
         annotation_draft_id: typing.Optional[int] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
         review: typing.Optional[int] = OMIT,
@@ -606,6 +607,9 @@ class TasksClient:
         annotation : typing.Optional[int]
             Annotation ID associated with this event
 
+        annotation_draft : typing.Optional[int]
+            Draft annotation ID associated with this event (alias for annotation_draft_id)
+
         annotation_draft_id : typing.Optional[int]
             Draft annotation ID associated with this event
 
@@ -645,6 +649,7 @@ class TasksClient:
             event_key=event_key,
             event_time=event_time,
             annotation=annotation,
+            annotation_draft=annotation_draft,
             annotation_draft_id=annotation_draft_id,
             meta=meta,
             review=review,
@@ -1235,6 +1240,7 @@ class AsyncTasksClient:
         event_key: str,
         event_time: dt.datetime,
         annotation: typing.Optional[int] = OMIT,
+        annotation_draft: typing.Optional[int] = OMIT,
         annotation_draft_id: typing.Optional[int] = OMIT,
         meta: typing.Optional[typing.Any] = OMIT,
         review: typing.Optional[int] = OMIT,
@@ -1305,6 +1311,9 @@ class AsyncTasksClient:
         annotation : typing.Optional[int]
             Annotation ID associated with this event
 
+        annotation_draft : typing.Optional[int]
+            Draft annotation ID associated with this event (alias for annotation_draft_id)
+
         annotation_draft_id : typing.Optional[int]
             Draft annotation ID associated with this event
 
@@ -1351,6 +1360,7 @@ class AsyncTasksClient:
             event_key=event_key,
             event_time=event_time,
             annotation=annotation,
+            annotation_draft=annotation_draft,
             annotation_draft_id=annotation_draft_id,
             meta=meta,
             review=review,

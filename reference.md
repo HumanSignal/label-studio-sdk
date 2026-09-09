@@ -14842,6 +14842,14 @@ client.tasks.create_event(
 <dl>
 <dd>
 
+**annotation_draft:** `typing.Optional[int]` — Draft annotation ID associated with this event (alias for annotation_draft_id)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **annotation_draft_id:** `typing.Optional[int]` — Draft annotation ID associated with this event
     
 </dd>
