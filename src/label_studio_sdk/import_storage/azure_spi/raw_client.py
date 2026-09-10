@@ -11,6 +11,7 @@ from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
+from ...types.auth_mode_enum import AuthModeEnum
 from ...types.azure_service_principal_import_storage import AzureServicePrincipalImportStorage
 from ...types.storage_status_enum import StorageStatusEnum
 from pydantic import ValidationError
@@ -88,6 +89,7 @@ class RawAzureSpiClient:
         *,
         project: int,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
         container: typing.Optional[str] = OMIT,
@@ -126,6 +128,12 @@ class RawAzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         client_id : typing.Optional[str]
             Azure Blob Service Principal Client ID
@@ -197,6 +205,7 @@ class RawAzureSpiClient:
             method="POST",
             json={
                 "account_name": account_name,
+                "auth_mode": auth_mode,
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "container": container,
@@ -246,6 +255,7 @@ class RawAzureSpiClient:
         *,
         project: int,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
         container: typing.Optional[str] = OMIT,
@@ -284,6 +294,12 @@ class RawAzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         client_id : typing.Optional[str]
             Azure Blob Service Principal Client ID
@@ -354,6 +370,7 @@ class RawAzureSpiClient:
             method="POST",
             json={
                 "account_name": account_name,
+                "auth_mode": auth_mode,
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "container": container,
@@ -482,6 +499,7 @@ class RawAzureSpiClient:
         id: int,
         *,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
         container: typing.Optional[str] = OMIT,
@@ -520,6 +538,12 @@ class RawAzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         client_id : typing.Optional[str]
             Azure Blob Service Principal Client ID
@@ -594,6 +618,7 @@ class RawAzureSpiClient:
             method="PATCH",
             json={
                 "account_name": account_name,
+                "auth_mode": auth_mode,
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "container": container,
@@ -759,6 +784,7 @@ class AsyncRawAzureSpiClient:
         *,
         project: int,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
         container: typing.Optional[str] = OMIT,
@@ -797,6 +823,12 @@ class AsyncRawAzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         client_id : typing.Optional[str]
             Azure Blob Service Principal Client ID
@@ -868,6 +900,7 @@ class AsyncRawAzureSpiClient:
             method="POST",
             json={
                 "account_name": account_name,
+                "auth_mode": auth_mode,
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "container": container,
@@ -917,6 +950,7 @@ class AsyncRawAzureSpiClient:
         *,
         project: int,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
         container: typing.Optional[str] = OMIT,
@@ -955,6 +989,12 @@ class AsyncRawAzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         client_id : typing.Optional[str]
             Azure Blob Service Principal Client ID
@@ -1025,6 +1065,7 @@ class AsyncRawAzureSpiClient:
             method="POST",
             json={
                 "account_name": account_name,
+                "auth_mode": auth_mode,
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "container": container,
@@ -1155,6 +1196,7 @@ class AsyncRawAzureSpiClient:
         id: int,
         *,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
         container: typing.Optional[str] = OMIT,
@@ -1193,6 +1235,12 @@ class AsyncRawAzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         client_id : typing.Optional[str]
             Azure Blob Service Principal Client ID
@@ -1267,6 +1315,7 @@ class AsyncRawAzureSpiClient:
             method="PATCH",
             json={
                 "account_name": account_name,
+                "auth_mode": auth_mode,
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "container": container,

@@ -6,6 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .auth_mode_enum import AuthModeEnum
 from .storage_status_enum import StorageStatusEnum
 
 
@@ -13,6 +14,14 @@ class AzureServicePrincipalImportStorageRequest(UncheckedBaseModel):
     account_name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Azure Blob account name
+    """
+
+    auth_mode: typing.Optional[AuthModeEnum] = pydantic.Field(default=None)
+    """
+    Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+    
+    * `service_principal` - Service Principal
+    * `workload_identity` - Workload identity
     """
 
     client_id: typing.Optional[str] = pydantic.Field(default=None)

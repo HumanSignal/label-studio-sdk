@@ -32,6 +32,7 @@ if typing.TYPE_CHECKING:
     from .assignment_type_enum import AssignmentTypeEnum
     from .associated_project import AssociatedProject
     from .auth_method_enum import AuthMethodEnum
+    from .auth_mode_enum import AuthModeEnum
     from .auth_type_enum import AuthTypeEnum
     from .azure_blob_export_storage import AzureBlobExportStorage
     from .azure_blob_import_storage import AzureBlobImportStorage
@@ -347,6 +348,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssignmentTypeEnum": ".assignment_type_enum",
     "AssociatedProject": ".associated_project",
     "AuthMethodEnum": ".auth_method_enum",
+    "AuthModeEnum": ".auth_mode_enum",
     "AuthTypeEnum": ".auth_type_enum",
     "AzureBlobExportStorage": ".azure_blob_export_storage",
     "AzureBlobImportStorage": ".azure_blob_import_storage",
@@ -670,6 +672,7 @@ __all__ = [
     "AssignmentTypeEnum",
     "AssociatedProject",
     "AuthMethodEnum",
+    "AuthModeEnum",
     "AuthTypeEnum",
     "AzureBlobExportStorage",
     "AzureBlobImportStorage",

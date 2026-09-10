@@ -18039,6 +18039,19 @@ client.export_storage.azure_spi.update(
 <dl>
 <dd>
 
+**auth_mode:** `typing.Optional[AuthModeEnum]` 
+
+Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+* `service_principal` - Service Principal
+* `workload_identity` - Workload identity
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
     
 </dd>
@@ -25974,6 +25987,19 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_mode:** `typing.Optional[AuthModeEnum]` 
+
+Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+* `service_principal` - Service Principal
+* `workload_identity` - Workload identity
     
 </dd>
 </dl>

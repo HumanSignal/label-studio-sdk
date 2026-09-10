@@ -5,6 +5,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.auth_mode_enum import AuthModeEnum
 from ...types.azure_service_principal_export_storage import AzureServicePrincipalExportStorage
 from ...types.storage_status_enum import StorageStatusEnum
 from .raw_client import AsyncRawAzureSpiClient, RawAzureSpiClient
@@ -79,6 +80,7 @@ class AzureSpiClient:
         *,
         project: int,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
@@ -115,6 +117,12 @@ class AzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
@@ -190,6 +198,7 @@ class AzureSpiClient:
         _response = self._raw_client.create(
             project=project,
             account_name=account_name,
+            auth_mode=auth_mode,
             can_delete_objects=can_delete_objects,
             client_id=client_id,
             client_secret=client_secret,
@@ -217,6 +226,7 @@ class AzureSpiClient:
         *,
         project: int,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
@@ -253,6 +263,12 @@ class AzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
@@ -327,6 +343,7 @@ class AzureSpiClient:
         _response = self._raw_client.validate(
             project=project,
             account_name=account_name,
+            auth_mode=auth_mode,
             can_delete_objects=can_delete_objects,
             client_id=client_id,
             client_secret=client_secret,
@@ -427,6 +444,7 @@ class AzureSpiClient:
         id: int,
         *,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
@@ -463,6 +481,12 @@ class AzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
@@ -541,6 +565,7 @@ class AzureSpiClient:
         _response = self._raw_client.update(
             id,
             account_name=account_name,
+            auth_mode=auth_mode,
             can_delete_objects=can_delete_objects,
             client_id=client_id,
             client_secret=client_secret,
@@ -677,6 +702,7 @@ class AsyncAzureSpiClient:
         *,
         project: int,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
@@ -713,6 +739,12 @@ class AsyncAzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
@@ -796,6 +828,7 @@ class AsyncAzureSpiClient:
         _response = await self._raw_client.create(
             project=project,
             account_name=account_name,
+            auth_mode=auth_mode,
             can_delete_objects=can_delete_objects,
             client_id=client_id,
             client_secret=client_secret,
@@ -823,6 +856,7 @@ class AsyncAzureSpiClient:
         *,
         project: int,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
@@ -859,6 +893,12 @@ class AsyncAzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
@@ -941,6 +981,7 @@ class AsyncAzureSpiClient:
         _response = await self._raw_client.validate(
             project=project,
             account_name=account_name,
+            auth_mode=auth_mode,
             can_delete_objects=can_delete_objects,
             client_id=client_id,
             client_secret=client_secret,
@@ -1057,6 +1098,7 @@ class AsyncAzureSpiClient:
         id: int,
         *,
         account_name: typing.Optional[str] = OMIT,
+        auth_mode: typing.Optional[AuthModeEnum] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
@@ -1093,6 +1135,12 @@ class AsyncAzureSpiClient:
 
         account_name : typing.Optional[str]
             Azure Blob account name
+
+        auth_mode : typing.Optional[AuthModeEnum]
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
 
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled
@@ -1179,6 +1227,7 @@ class AsyncAzureSpiClient:
         _response = await self._raw_client.update(
             id,
             account_name=account_name,
+            auth_mode=auth_mode,
             can_delete_objects=can_delete_objects,
             client_id=client_id,
             client_secret=client_secret,
