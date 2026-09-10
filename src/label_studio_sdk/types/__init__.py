@@ -75,6 +75,8 @@ if typing.TYPE_CHECKING:
     from .file_upload import FileUpload
     from .filter import Filter
     from .filter_group import FilterGroup
+    from .flex_active_block import FlexActiveBlock
+    from .flex_checks import FlexChecks
     from .fsm_backfill_job_status_enum import FsmBackfillJobStatusEnum
     from .fsm_transition_execute_response import FsmTransitionExecuteResponse
     from .gcs_export_storage import GcsExportStorage
@@ -388,6 +390,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FileUpload": ".file_upload",
     "Filter": ".filter",
     "FilterGroup": ".filter_group",
+    "FlexActiveBlock": ".flex_active_block",
+    "FlexChecks": ".flex_checks",
     "FsmBackfillJobStatusEnum": ".fsm_backfill_job_status_enum",
     "FsmTransitionExecuteResponse": ".fsm_transition_execute_response",
     "GcsExportStorage": ".gcs_export_storage",
@@ -709,6 +713,8 @@ __all__ = [
     "FileUpload",
     "Filter",
     "FilterGroup",
+    "FlexActiveBlock",
+    "FlexChecks",
     "FsmBackfillJobStatusEnum",
     "FsmTransitionExecuteResponse",
     "GcsExportStorage",

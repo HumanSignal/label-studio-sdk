@@ -7,11 +7,13 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .count_limit import CountLimit
+from .flex_checks import FlexChecks
 from .prompts_status_enum import PromptsStatusEnum
 
 
 class BillingChecks(UncheckedBaseModel):
     export_storages: CountLimit
+    flex: typing.Optional[FlexChecks] = None
     import_storages: CountLimit
     is_license_expired: bool
     is_license_warning: bool
