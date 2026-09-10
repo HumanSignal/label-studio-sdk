@@ -45,7 +45,11 @@ class LseProjectCounts(UncheckedBaseModel):
     Role-dependent queue size. Annotators: total tasks in the labeling queue. Reviewers (list/counts): total manually assigned review tasks (same pool as `reviewer_queue_total`). Not the same as `task_number` (all project tasks) or `review_total_tasks` (auto-review stream pool).
     """
 
-    rejected: typing.Optional[int] = None
+    rejected: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Annotator-only: this user's annotations rejected by reviewers.
+    """
+
     review_total_tasks: typing.Optional[int] = pydantic.Field(default=None)
     """
     Total tasks in this user's reviewer queue for the project (denominator for personal review progress). Respects review sampling limits when configured. Null for annotators. This is not the project-wide reviewed or pending count; see Analytics KPIs tasks_reviewed and tasks_pending_review for org-level totals.

@@ -252,7 +252,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     """
 
     ready: typing.Optional[bool] = None
-    rejected: typing.Optional[int] = None
+    rejected: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Annotator-only: this user's annotations rejected by reviewers.
+    """
+
     require_comment_on_skip: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Require comment to skip
