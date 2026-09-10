@@ -15,6 +15,20 @@ class LabelDistributionStructureResponse(UncheckedBaseModel):
     """
 
     dimensions: typing.List[LabelDistributionStructureDimension]
+    has_predictions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    True when the project has at least one Prediction row.
+    """
+
+    prediction_filters_supported: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    True when the UI may offer prediction-scoped filters (prediction identity ready and the project has predictions).
+    """
+
+    prediction_identity_ready: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    True when dimension value-counts cache is at prediction-identity version 2. Prediction-scoped Label Distribution filters require this.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
