@@ -7265,6 +7265,14 @@ client.interfaces.list()
 <dl>
 <dd>
 
+**has_published_versions:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>

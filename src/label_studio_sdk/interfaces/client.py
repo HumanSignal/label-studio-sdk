@@ -31,6 +31,7 @@ class InterfacesClient:
     def list(
         self,
         *,
+        has_published_versions: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -50,6 +51,8 @@ class InterfacesClient:
 
         Parameters
         ----------
+        has_published_versions : typing.Optional[bool]
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
@@ -84,6 +87,7 @@ class InterfacesClient:
         client.interfaces.list()
         """
         _response = self._raw_client.list(
+            has_published_versions=has_published_versions,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -819,6 +823,7 @@ class AsyncInterfacesClient:
     async def list(
         self,
         *,
+        has_published_versions: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -838,6 +843,8 @@ class AsyncInterfacesClient:
 
         Parameters
         ----------
+        has_published_versions : typing.Optional[bool]
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
@@ -880,6 +887,7 @@ class AsyncInterfacesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
+            has_published_versions=has_published_versions,
             ordering=ordering,
             page=page,
             page_size=page_size,

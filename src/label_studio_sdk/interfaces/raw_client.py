@@ -27,6 +27,7 @@ class RawInterfacesClient:
     def list(
         self,
         *,
+        has_published_versions: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -46,6 +47,8 @@ class RawInterfacesClient:
 
         Parameters
         ----------
+        has_published_versions : typing.Optional[bool]
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
@@ -74,6 +77,7 @@ class RawInterfacesClient:
             "api/interfaces/",
             method="GET",
             params={
+                "has_published_versions": has_published_versions,
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
@@ -926,6 +930,7 @@ class AsyncRawInterfacesClient:
     async def list(
         self,
         *,
+        has_published_versions: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -945,6 +950,8 @@ class AsyncRawInterfacesClient:
 
         Parameters
         ----------
+        has_published_versions : typing.Optional[bool]
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
@@ -973,6 +980,7 @@ class AsyncRawInterfacesClient:
             "api/interfaces/",
             method="GET",
             params={
+                "has_published_versions": has_published_versions,
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
