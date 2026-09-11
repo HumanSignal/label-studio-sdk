@@ -916,13 +916,22 @@ class Converter(object):
                     annotations[-1].update({"annotator": get_annotator(item)})
             if keypoint_labels:
                 kp_order = build_kp_order(self._schema)
-                annotations.append(process_keypoints_for_coco(
-                    keypoint_labels,
-                    kp_order,
-                    annotation_id=len(annotations),
-                    image_id=image_id,
-                    category_name_to_id=category_name_to_id,
-                ))
+                if not kp_order:
+                    # SAM2 prompt keypoints typically have no model_index. Skip
+                    # rather than failing the rest of the COCO export (#480).
+                    logger.warning(
+                        f"Skipping COCO keypoint export because KeyPointLabels have no model_index {task_id=}"
+                    )
+                else:
+                    kp_annotation = process_keypoints_for_coco(
+                        keypoint_labels,
+                        kp_order,
+                        annotation_id=len(annotations),
+                        image_id=image_id,
+                        category_name_to_id=category_name_to_id,
+                    )
+                    if kp_annotation is not None:
+                        annotations.append(kp_annotation)
 
         with io.open(output_file, mode="w", encoding="utf8") as fout:
             json.dump(

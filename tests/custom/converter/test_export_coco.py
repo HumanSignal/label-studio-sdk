@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 from label_studio_sdk.converter import Converter
+from label_studio_sdk.converter.keypoints import process_keypoints_for_coco
 
 
 TEST_DATA_DIR = Path(__file__).resolve().parent / "data" / "test_export_coco"
@@ -235,3 +236,153 @@ def test_convert_to_coco_preserves_explicit_category_ids(temp_out_dir: Path):
 
     annotation_category_ids = {ann["category_id"] for ann in coco["annotations"]}
     assert annotation_category_ids == {10, 7}
+
+
+SAM2_GHOST_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <BrushLabels name="tag" toName="image">
+    <Label value="defect"/>
+  </BrushLabels>
+  <KeyPointLabels name="tag2" toName="image" smart="true">
+    <Label value="defect" model_index="0"/>
+  </KeyPointLabels>
+  <RectangleLabels name="tag3" toName="image" smart="true">
+    <Label value="defect"/>
+  </RectangleLabels>
+</View>
+""".strip()
+
+SAM2_GHOST_CONFIG_NO_MODEL_INDEX = SAM2_GHOST_CONFIG.replace(' model_index="0"', "")
+
+
+def _sam2_task_with_ghost_keypoint(include_xy=False):
+    keypoint_value = {"width": 0.5, "keypointlabels": ["defect"]}
+    if include_xy:
+        keypoint_value["x"] = 15
+        keypoint_value["y"] = 25
+    return [
+        {
+            "id": 1,
+            "data": {"image": "not-downloaded.jpg"},
+            "annotations": [
+                {
+                    "id": 1,
+                    "result": [
+                        {
+                            "id": "ghost",
+                            "type": "keypointlabels",
+                            "value": keypoint_value,
+                            "to_name": "image",
+                            "from_name": "tag2",
+                            "original_width": 100,
+                            "original_height": 100,
+                        },
+                        {
+                            "id": "rect",
+                            "type": "rectanglelabels",
+                            "value": {
+                                "x": 10,
+                                "y": 10,
+                                "width": 20,
+                                "height": 20,
+                                "rotation": 0,
+                                "rectanglelabels": ["defect"],
+                            },
+                            "to_name": "image",
+                            "from_name": "tag3",
+                            "original_width": 100,
+                            "original_height": 100,
+                        },
+                    ],
+                }
+            ],
+        }
+    ]
+
+
+def test_process_keypoints_for_coco_skips_keypoints_without_xy():
+    """Ghost/SAM2 prompt keypoints without x/y must not abort COCO keypoint packing."""
+    ghost = {
+        "original_width": 100,
+        "original_height": 100,
+        "width": 0.5,
+        "keypointlabels": ["keypoint_label1"],
+    }
+    missing_none = {
+        "original_width": 100,
+        "original_height": 100,
+        "x": None,
+        "y": None,
+        "keypointlabels": ["keypoint_label1"],
+    }
+    valid = {
+        "original_width": 100,
+        "original_height": 100,
+        "x": 10,
+        "y": 20,
+        "keypointlabels": ["keypoint_label2"],
+    }
+    ann = process_keypoints_for_coco(
+        [ghost, missing_none, valid],
+        kp_order=["keypoint_label1", "keypoint_label2"],
+        annotation_id=7,
+        image_id=3,
+        category_name_to_id={"keypoint_label1": 1, "keypoint_label2": 1},
+    )
+    assert ann is not None
+    assert ann["num_keypoints"] == 1
+    assert ann["keypoints"][0:3] == [0, 0, 0]
+    assert ann["keypoints"][3:6] == [10, 20, 2]
+
+
+def test_process_keypoints_for_coco_returns_none_when_all_keypoints_lack_xy():
+    ghost = {
+        "original_width": 100,
+        "original_height": 100,
+        "keypointlabels": ["keypoint_label1"],
+    }
+    assert (
+        process_keypoints_for_coco(
+            [ghost],
+            kp_order=["keypoint_label1"],
+            annotation_id=0,
+            image_id=0,
+            category_name_to_id={"keypoint_label1": 0},
+        )
+        is None
+    )
+
+
+def test_convert_to_coco_skips_sam2_ghost_keypoints_without_xy(temp_out_dir: Path):
+    """SAM2 prompt keypoints with no x/y must not fail COCO export of other regions."""
+    input_path = temp_out_dir / "input.json"
+    input_path.write_text(json.dumps(_sam2_task_with_ghost_keypoint(include_xy=False)))
+
+    converter = Converter(config=SAM2_GHOST_CONFIG, project_dir=PROJECT_DIR, download_resources=False)
+    converter.convert_to_coco(
+        str(input_path), str(temp_out_dir), output_image_dir=str(temp_out_dir / "images"), is_dir=False
+    )
+
+    coco = json.loads((temp_out_dir / "result.json").read_text())
+    assert coco["annotations"], "rectangle annotation should still be exported"
+    assert not any("keypoints" in ann for ann in coco["annotations"])
+    rect = coco["annotations"][0]
+    assert rect["bbox"][2] > 0 and rect["bbox"][3] > 0
+
+
+def test_convert_to_coco_skips_sam2_keypoints_without_model_index(temp_out_dir: Path):
+    """SAM2 KeyPointLabels without model_index must not fail the rest of COCO export."""
+    input_path = temp_out_dir / "input.json"
+    input_path.write_text(json.dumps(_sam2_task_with_ghost_keypoint(include_xy=True)))
+
+    converter = Converter(
+        config=SAM2_GHOST_CONFIG_NO_MODEL_INDEX, project_dir=PROJECT_DIR, download_resources=False
+    )
+    converter.convert_to_coco(
+        str(input_path), str(temp_out_dir), output_image_dir=str(temp_out_dir / "images"), is_dir=False
+    )
+
+    coco = json.loads((temp_out_dir / "result.json").read_text())
+    assert coco["annotations"], "rectangle annotation should still be exported"
+    assert not any("keypoints" in ann for ann in coco["annotations"])
