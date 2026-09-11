@@ -38,6 +38,14 @@ The SDK also includes a CLI entrypoint that mirrors SDK resources and methods.
 
 On **leaf commands** (for example `projects create`), use **`-h`** for minimal help (one-line summary, SDK signature, and options) and **`--help`** for the full generated documentation (parameters, examples, return shape, and options). Top-level groups only register **`--help`**.
 
+Nested Fern client groups map to nested CLI subcommands: dots in the Python SDK path become spaces, and underscores become hyphens. For example, `client.projects.stats.label_distribution_counts(...)` is:
+
+```bash
+label-studio-sdk projects stats label-distribution-counts --param id=1 --dry-run
+```
+
+Other nested examples: `import-storage s3 list`, `organizations members list`, `analytics kpis ...`, `sso saml ...`.
+
 ```bash
 export LABEL_STUDIO_API_KEY="YOUR_API_KEY"
 export LABEL_STUDIO_URL="YOUR_BASE_URL"
@@ -47,6 +55,9 @@ label-studio-sdk projects create -h
 
 # full help (longer)
 label-studio-sdk projects create --help
+
+# nested group help
+label-studio-sdk projects stats --help
 
 # top-level
 label-studio-sdk --help

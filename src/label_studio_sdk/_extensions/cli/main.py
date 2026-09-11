@@ -104,15 +104,25 @@ def _discover_services() -> list[str]:
     return sorted(name for name in service_names if not any(ch.isupper() for ch in name))
 
 
+def _pkg_root() -> Path:
+    return Path(__file__).resolve().parents[2]
+
+
 def _service_client_file(service_name: str) -> Path | None:
-    pkg_root = Path(__file__).resolve().parents[2]
-    candidate = pkg_root / service_name / "client.py"
+    return _client_file_for_path((service_name,))
+
+
+def _client_file_for_path(path: tuple[str, ...]) -> Path | None:
+    candidate = _pkg_root().joinpath(*path) / "client.py"
     return candidate if candidate.exists() else None
 
 
 def _service_client_ext_file(service_name: str) -> Path | None:
-    pkg_root = Path(__file__).resolve().parents[2]
-    candidate = pkg_root / service_name / "client_ext.py"
+    return _client_ext_file_for_path((service_name,))
+
+
+def _client_ext_file_for_path(path: tuple[str, ...]) -> Path | None:
+    candidate = _pkg_root().joinpath(*path) / "client_ext.py"
     return candidate if candidate.exists() else None
 
 
@@ -205,10 +215,24 @@ def _extract_class_method_meta(class_node: ClassDef) -> dict[str, dict[str, str]
     return methods
 
 
-def _resolve_runtime_base_service_class(service_name: str, class_node: ClassDef) -> Any:
+def _extract_nested_client_names(class_node: ClassDef) -> list[str]:
+    """Return Fern `@property` subclient names (excludes with_raw_response)."""
+    names: list[str] = []
+    for node in class_node.body:
+        if not isinstance(node, FunctionDef):
+            continue
+        if not any(getattr(dec, "id", None) == "property" for dec in node.decorator_list):
+            continue
+        if node.name.startswith("_") or node.name == "with_raw_response":
+            continue
+        names.append(node.name)
+    return names
+
+
+def _resolve_runtime_base_service_class(path: tuple[str, ...], class_node: ClassDef) -> Any:
     runtime_base_class = None
     try:
-        module_name = f"label_studio_sdk.{service_name}.client"
+        module_name = "label_studio_sdk." + ".".join(path) + ".client"
         runtime_module = importlib.import_module(module_name)
         runtime_base_class = getattr(runtime_module, class_node.name, None)
     except Exception:
@@ -216,11 +240,12 @@ def _resolve_runtime_base_service_class(service_name: str, class_node: ClassDef)
     return runtime_base_class
 
 
-def _discover_methods(service_name: str) -> dict[str, dict[str, str]]:
-    client_file = _service_client_file(service_name)
+def _discover_methods_at_path(path: tuple[str, ...]) -> dict[str, dict[str, str]]:
+    client_file = _client_file_for_path(path)
     if client_file is None:
         return {}
 
+    service_name = path[-1]
     base_module = ast_parse(client_file.read_text(encoding="utf-8"))
     class_node = _find_client_class_node(base_module, service_name, ext=False)
     if class_node is None:
@@ -229,8 +254,13 @@ def _discover_methods(service_name: str) -> dict[str, dict[str, str]]:
     methods = _extract_class_method_meta(class_node)
     ext_method_names: set[str] = set()
 
-    client_ext_file = _service_client_ext_file(service_name)
-    if client_ext_file is not None and service_name in _services_with_label_studio_overrides():
+    # Apply client_ext overrides when LabelStudio wires an Ext client (top-level),
+    # or whenever a nested package ships client_ext.py (e.g. projects.exports).
+    client_ext_file = _client_ext_file_for_path(path)
+    apply_ext = client_ext_file is not None and (
+        len(path) > 1 or path[0] in _services_with_label_studio_overrides()
+    )
+    if apply_ext and client_ext_file is not None:
         ext_module = ast_parse(client_ext_file.read_text(encoding="utf-8"))
         ext_class_node = _find_client_class_node(ext_module, service_name, ext=True)
         if ext_class_node is not None:
@@ -239,15 +269,60 @@ def _discover_methods(service_name: str) -> dict[str, dict[str, str]]:
             methods.update(ext_methods)
             ext_method_names = set(ext_methods.keys())
 
-    runtime_base_class = _resolve_runtime_base_service_class(service_name, class_node)
+    runtime_base_class = _resolve_runtime_base_service_class(path, class_node)
+    # Prefer Ext runtime class for signature formatting when Ext is wired.
+    if apply_ext and client_ext_file is not None:
+        try:
+            ext_module_name = "label_studio_sdk." + ".".join(path) + ".client_ext"
+            ext_runtime_module = importlib.import_module(ext_module_name)
+            ext_runtime_class = getattr(
+                ext_runtime_module, _client_class_name(service_name, ext=True), None
+            )
+            if ext_runtime_class is not None:
+                runtime_base_class = ext_runtime_class
+                ext_method_names = set()  # allow runtime signatures for all methods
+        except Exception:
+            pass
+
     for method_name in list(methods.keys()):
         runtime_method = None
-        # Extension signatures come from AST without importing heavy extension modules.
+        # Extension signatures come from AST without importing heavy extension modules
+        # unless we successfully loaded the Ext runtime class above.
         if method_name not in ext_method_names and runtime_base_class is not None:
             runtime_method = getattr(runtime_base_class, method_name, None)
         if runtime_method is not None and callable(runtime_method):
             methods[method_name]["signature"] = _signature_from_class_method(runtime_method)
     return methods
+
+
+def _discover_client_tree(path: tuple[str, ...]) -> dict[str, Any]:
+    """Recursively discover methods and nested Fern subclients for a client path."""
+    client_file = _client_file_for_path(path)
+    if client_file is None:
+        return {"methods": {}, "children": {}}
+
+    service_name = path[-1]
+    base_module = ast_parse(client_file.read_text(encoding="utf-8"))
+    class_node = _find_client_class_node(base_module, service_name, ext=False)
+    if class_node is None:
+        return {"methods": {}, "children": {}}
+
+    methods = _discover_methods_at_path(path)
+    children: dict[str, Any] = {}
+    for nested_name in _extract_nested_client_names(class_node):
+        child_path = path + (nested_name,)
+        # Only register nested groups that resolve to a real client package.
+        if _client_file_for_path(child_path) is None:
+            continue
+        child_tree = _discover_client_tree(child_path)
+        if child_tree["methods"] or child_tree["children"]:
+            children[nested_name] = child_tree
+
+    return {"methods": methods, "children": children}
+
+
+def _discover_methods(service_name: str) -> dict[str, dict[str, str]]:
+    return _discover_methods_at_path((service_name,))
 
 
 def _parse_value(raw: str) -> Any:
@@ -403,15 +478,16 @@ def callback(
     ctx.obj = {"api_key": api_key, "base_url": base_url, "pretty": pretty, "client": None}
 
 
-def _make_method_command(service_name: str, method_name: str, method_meta: dict[str, str]):
+def _make_method_command(service_path: tuple[str, ...], method_name: str, method_meta: dict[str, str]):
     signature = method_meta.get("signature", "()")
     raw_api_doc = _sanitize_sdk_docstring_for_cli(method_meta.get("doc", ""))
     raw_api_doc = _format_request_types_for_help(raw_api_doc)
     summary = _extract_summary(raw_api_doc)
     api_doc = raw_api_doc
+    service_dotted = ".".join(service_path)
 
-    help_suffix = f"\n\n---\nSDK signature: `{service_name}.{method_name}{signature}`"
-    method_help = (api_doc + help_suffix).strip() if api_doc else f"SDK signature: `{service_name}.{method_name}{signature}`"
+    help_suffix = f"\n\n---\nSDK signature: `{service_dotted}.{method_name}{signature}`"
+    method_help = (api_doc + help_suffix).strip() if api_doc else f"SDK signature: `{service_dotted}.{method_name}{signature}`"
     short_help_body = (
         f"{summary}{help_suffix}" if summary else help_suffix.lstrip()
     ).strip()
@@ -475,7 +551,7 @@ def _make_method_command(service_name: str, method_name: str, method_meta: dict[
             typer.echo(
                 json.dumps(
                     {
-                        "service": service_name,
+                        "service": service_dotted,
                         "method": method_name,
                         "signature": signature,
                         "args": args,
@@ -487,29 +563,40 @@ def _make_method_command(service_name: str, method_name: str, method_meta: dict[
             return
 
         client = _get_client(ctx)
-        service = getattr(client, service_name)
-        method = getattr(service, method_name)
+        target: Any = client
+        for part in service_path:
+            target = getattr(target, part)
+        method = getattr(target, method_name)
         result = method(*args, **kwargs)
         payload = _to_jsonable(result)
         indent = 2 if ctx.obj.get("pretty", True) else None
         typer.echo(json.dumps(payload, indent=indent))
 
-    _command.__name__ = f"{service_name}_{method_name}_command"
+    _command.__name__ = f"{'_'.join(service_path)}_{method_name}_command"
     _command.__doc__ = method_help
     return _command
 
 
-for _service in _discover_services():
-    _methods_meta = _discover_methods(_service)
-    if not _methods_meta:
-        continue
+def _register_client_tree(parent_app: typer.Typer, path: tuple[str, ...], tree: dict[str, Any]) -> None:
+    group_help = ".".join(path)
     service_app = typer.Typer(
-        help=_service,
+        help=group_help,
         context_settings={"help_option_names": ["--help"]},
     )
-    for _method, _meta in _methods_meta.items():
-        service_app.command(name=_method.replace("_", "-"))(_make_method_command(_service, _method, _meta))
-    app.add_typer(service_app, name=_service.replace("_", "-"))
+    for method_name, method_meta in tree.get("methods", {}).items():
+        service_app.command(name=method_name.replace("_", "-"))(
+            _make_method_command(path, method_name, method_meta)
+        )
+    for child_name, child_tree in tree.get("children", {}).items():
+        _register_client_tree(service_app, path + (child_name,), child_tree)
+    parent_app.add_typer(service_app, name=path[-1].replace("_", "-"))
+
+
+for _service in _discover_services():
+    _tree = _discover_client_tree((_service,))
+    if not _tree["methods"] and not _tree["children"]:
+        continue
+    _register_client_tree(app, (_service,), _tree)
 
 
 def main() -> None:
