@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .bad_request_error import BadRequestError
+    from .conflict_error import ConflictError
     from .forbidden_error import ForbiddenError
     from .internal_server_error import InternalServerError
     from .method_not_allowed_error import MethodNotAllowedError
@@ -14,6 +15,7 @@ if typing.TYPE_CHECKING:
     from .unauthorized_error import UnauthorizedError
 _dynamic_imports: typing.Dict[str, str] = {
     "BadRequestError": ".bad_request_error",
+    "ConflictError": ".conflict_error",
     "ForbiddenError": ".forbidden_error",
     "InternalServerError": ".internal_server_error",
     "MethodNotAllowedError": ".method_not_allowed_error",
@@ -45,6 +47,7 @@ def __dir__():
 
 __all__ = [
     "BadRequestError",
+    "ConflictError",
     "ForbiddenError",
     "InternalServerError",
     "MethodNotAllowedError",

@@ -37033,7 +37033,7 @@ client.projects.stats.finished_tasks(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`.
+Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`. Omitting `filters` preserves the unfiltered cached-count behavior.
 </dd>
 </dl>
 </dd>
@@ -37058,6 +37058,7 @@ client = LabelStudio(
 
 client.projects.stats.label_distribution_counts(
     id=1,
+    filters="{\"conjunction\":\"and\",\"items\":[{\"filter\":\"filter:tasks:annotators\",\"operator\":\"contains\",\"type\":\"List\",\"value\":[7]},{\"filter\":\"filter:tasks:ground_truth\",\"operator\":\"equal\",\"type\":\"Boolean\",\"value\":true}]}",
 )
 
 ```
@@ -37090,7 +37091,7 @@ client.projects.stats.label_distribution_counts(
 <dl>
 <dd>
 
-**filters:** `typing.Optional[typing.Dict[str, typing.Any]]` — Optional JSON-encoded Data Manager Filters object (`conjunction` + `items[]`). Label Distribution accepts AND-only plans (no nested `child_filters`) with curated fields: `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`, `filter:tasks:annotations_updated_at`, and `filter:tasks:predictions_updated_at`. Source updated-at fields require an inclusive timezone-aware Datetime range (`operator: "in"`, `value: {"min": ..., "max": ...}`). An empty `items` list is treated as unfiltered.
+**filters:** `typing.Optional[str]` — Optional JSON-encoded string containing a curated filter plan (not an exploded object). Pass one JSON string query value (for example `json.dumps(Filters.create(...))` from `label_studio_sdk.data_manager`); do not pass a nested object or Fern will explode `filters[...]` keys. The plan uses normalized AND semantics (`conjunction` must be `"and"`), contains at most 20 items, does not permit nested `child_filters`, and treats an empty `items` list as unfiltered. Supported filter fields are `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`, `filter:tasks:annotations_updated_at`, and `filter:tasks:predictions_updated_at`. Each item requires `filter`, `operator`, `type`, and `value`. Annotator filters require one or more positive integer IDs. Model-version filters require 1-100 non-empty strings. Source updated-at filters require an inclusive, ordered, timezone-aware range object with string `min` and `max` timestamps.
     
 </dd>
 </dl>

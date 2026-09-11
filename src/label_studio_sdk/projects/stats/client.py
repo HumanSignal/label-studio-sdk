@@ -602,7 +602,7 @@ class StatsClient:
         id: int,
         *,
         choice_keys: typing.Optional[str] = None,
-        filters: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        filters: typing.Optional[str] = None,
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -614,7 +614,7 @@ class StatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`.
+        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`. Omitting `filters` preserves the unfiltered cached-count behavior.
 
         Parameters
         ----------
@@ -623,8 +623,8 @@ class StatsClient:
         choice_keys : typing.Optional[str]
             Explicit choice keys to fetch, joined by "___PIPE___" (for example: "label___SEP___pos___PIPE___quality___SEP___4"). When provided, pagination params are ignored.
 
-        filters : typing.Optional[typing.Dict[str, typing.Any]]
-            Optional JSON-encoded Data Manager Filters object (`conjunction` + `items[]`). Label Distribution accepts AND-only plans (no nested `child_filters`) with curated fields: `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`, `filter:tasks:annotations_updated_at`, and `filter:tasks:predictions_updated_at`. Source updated-at fields require an inclusive timezone-aware Datetime range (`operator: "in"`, `value: {"min": ..., "max": ...}`). An empty `items` list is treated as unfiltered.
+        filters : typing.Optional[str]
+            Optional JSON-encoded string containing a curated filter plan (not an exploded object). Pass one JSON string query value (for example `json.dumps(Filters.create(...))` from `label_studio_sdk.data_manager`); do not pass a nested object or Fern will explode `filters[...]` keys. The plan uses normalized AND semantics (`conjunction` must be `"and"`), contains at most 20 items, does not permit nested `child_filters`, and treats an empty `items` list as unfiltered. Supported filter fields are `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`, `filter:tasks:annotations_updated_at`, and `filter:tasks:predictions_updated_at`. Each item requires `filter`, `operator`, `type`, and `value`. Annotator filters require one or more positive integer IDs. Model-version filters require 1-100 non-empty strings. Source updated-at filters require an inclusive, ordered, timezone-aware range object with string `min` and `max` timestamps.
 
         limit : typing.Optional[int]
             Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
@@ -649,6 +649,7 @@ class StatsClient:
         )
         client.projects.stats.label_distribution_counts(
             id=1,
+            filters='{"conjunction":"and","items":[{"filter":"filter:tasks:annotators","operator":"contains","type":"List","value":[7]},{"filter":"filter:tasks:ground_truth","operator":"equal","type":"Boolean","value":true}]}',
         )
         """
         _response = self._raw_client.label_distribution_counts(
@@ -1900,7 +1901,7 @@ class AsyncStatsClient:
         id: int,
         *,
         choice_keys: typing.Optional[str] = None,
-        filters: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        filters: typing.Optional[str] = None,
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1912,7 +1913,7 @@ class AsyncStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`.
+        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`. Omitting `filters` preserves the unfiltered cached-count behavior.
 
         Parameters
         ----------
@@ -1921,8 +1922,8 @@ class AsyncStatsClient:
         choice_keys : typing.Optional[str]
             Explicit choice keys to fetch, joined by "___PIPE___" (for example: "label___SEP___pos___PIPE___quality___SEP___4"). When provided, pagination params are ignored.
 
-        filters : typing.Optional[typing.Dict[str, typing.Any]]
-            Optional JSON-encoded Data Manager Filters object (`conjunction` + `items[]`). Label Distribution accepts AND-only plans (no nested `child_filters`) with curated fields: `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`, `filter:tasks:annotations_updated_at`, and `filter:tasks:predictions_updated_at`. Source updated-at fields require an inclusive timezone-aware Datetime range (`operator: "in"`, `value: {"min": ..., "max": ...}`). An empty `items` list is treated as unfiltered.
+        filters : typing.Optional[str]
+            Optional JSON-encoded string containing a curated filter plan (not an exploded object). Pass one JSON string query value (for example `json.dumps(Filters.create(...))` from `label_studio_sdk.data_manager`); do not pass a nested object or Fern will explode `filters[...]` keys. The plan uses normalized AND semantics (`conjunction` must be `"and"`), contains at most 20 items, does not permit nested `child_filters`, and treats an empty `items` list as unfiltered. Supported filter fields are `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`, `filter:tasks:annotations_updated_at`, and `filter:tasks:predictions_updated_at`. Each item requires `filter`, `operator`, `type`, and `value`. Annotator filters require one or more positive integer IDs. Model-version filters require 1-100 non-empty strings. Source updated-at filters require an inclusive, ordered, timezone-aware range object with string `min` and `max` timestamps.
 
         limit : typing.Optional[int]
             Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
@@ -1952,6 +1953,7 @@ class AsyncStatsClient:
         async def main() -> None:
             await client.projects.stats.label_distribution_counts(
                 id=1,
+                filters='{"conjunction":"and","items":[{"filter":"filter:tasks:annotators","operator":"contains","type":"List","value":[7]},{"filter":"filter:tasks:ground_truth","operator":"equal","type":"Boolean","value":true}]}',
             )
 
 
