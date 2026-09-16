@@ -29,7 +29,7 @@ class User(BaseModel):
     last_name: str
     username: str
     email: str
-    last_activity: datetime
+    last_activity: Optional[datetime] = None
     initials: str
     phone: str
     active_organization: Optional[int] = None
