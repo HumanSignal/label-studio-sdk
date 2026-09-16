@@ -35,6 +35,7 @@ class PaginatedClient:
         last_activity_gte: typing.Optional[dt.datetime] = None,
         last_activity_lte: typing.Optional[dt.datetime] = None,
         no_annotators: typing.Optional[bool] = None,
+        no_view_only: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -80,6 +81,9 @@ class PaginatedClient:
 
         no_annotators : typing.Optional[bool]
             Exclude annotators from the results
+
+        no_view_only : typing.Optional[bool]
+            Exclude view-only users from the results
 
         ordering : typing.Optional[str]
             Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
@@ -161,6 +165,7 @@ class PaginatedClient:
             last_activity_gte=last_activity_gte,
             last_activity_lte=last_activity_lte,
             no_annotators=no_annotators,
+            no_view_only=no_view_only,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -197,6 +202,7 @@ class AsyncPaginatedClient:
         last_activity_gte: typing.Optional[dt.datetime] = None,
         last_activity_lte: typing.Optional[dt.datetime] = None,
         no_annotators: typing.Optional[bool] = None,
+        no_view_only: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -242,6 +248,9 @@ class AsyncPaginatedClient:
 
         no_annotators : typing.Optional[bool]
             Exclude annotators from the results
+
+        no_view_only : typing.Optional[bool]
+            Exclude view-only users from the results
 
         ordering : typing.Optional[str]
             Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
@@ -332,6 +341,7 @@ class AsyncPaginatedClient:
             last_activity_gte=last_activity_gte,
             last_activity_lte=last_activity_lte,
             no_annotators=no_annotators,
+            no_view_only=no_view_only,
             ordering=ordering,
             page=page,
             page_size=page_size,

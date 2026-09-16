@@ -41184,6 +41184,14 @@ client.projects.members.paginated.list(
 <dl>
 <dd>
 
+**no_view_only:** `typing.Optional[bool]` — Exclude view-only users from the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ordering:** `typing.Optional[str]` 
 
 Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
