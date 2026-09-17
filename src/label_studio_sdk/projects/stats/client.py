@@ -408,7 +408,7 @@ class StatsClient:
             Comma separated list of user IDs to get ground truth agreement for
 
         per_label : typing.Optional[bool]
-            Per label
+            Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1212,7 +1212,7 @@ class StatsClient:
         user_pk : int
 
         per_label : typing.Optional[bool]
-            Calculate agreement per label
+            Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1667,7 +1667,7 @@ class AsyncStatsClient:
             Comma separated list of user IDs to get ground truth agreement for
 
         per_label : typing.Optional[bool]
-            Per label
+            Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2611,7 +2611,7 @@ class AsyncStatsClient:
         user_pk : int
 
         per_label : typing.Optional[bool]
-            Calculate agreement per label
+            Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -480,7 +480,7 @@ class RawStatsClient:
             Comma separated list of user IDs to get ground truth agreement for
 
         per_label : typing.Optional[bool]
-            Per label
+            Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1189,6 +1189,17 @@ class RawStatsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1528,7 +1539,7 @@ class RawStatsClient:
         user_pk : int
 
         per_label : typing.Optional[bool]
-            Calculate agreement per label
+            Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1999,7 +2010,7 @@ class AsyncRawStatsClient:
             Comma separated list of user IDs to get ground truth agreement for
 
         per_label : typing.Optional[bool]
-            Per label
+            Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2708,6 +2719,17 @@ class AsyncRawStatsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -3047,7 +3069,7 @@ class AsyncRawStatsClient:
         user_pk : int
 
         per_label : typing.Optional[bool]
-            Calculate agreement per label
+            Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

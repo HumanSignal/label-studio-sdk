@@ -36661,7 +36661,7 @@ client.projects.stats.users_ground_truth_agreement(
 <dl>
 <dd>
 
-**per_label:** `typing.Optional[bool]` — Per label
+**per_label:** `typing.Optional[bool]` — Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
     
 </dd>
 </dl>
@@ -38230,7 +38230,7 @@ client.projects.stats.user_ground_truth_agreement(
 <dl>
 <dd>
 
-**per_label:** `typing.Optional[bool]` — Calculate agreement per label
+**per_label:** `typing.Optional[bool]` — Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
     
 </dd>
 </dl>
