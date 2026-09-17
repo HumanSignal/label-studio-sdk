@@ -117,6 +117,7 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
 
     review_time: typing.Optional[int] = None
     reviewed: typing.Optional[bool] = None
+    reviewed_at: typing.Optional[dt.datetime] = None
     reviewers: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
     reviewers_count: typing.Optional[int] = None
     reviews_accepted: typing.Optional[int] = None

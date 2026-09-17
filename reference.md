@@ -14662,6 +14662,14 @@ client.tasks.update(
 <dl>
 <dd>
 
+**reviewed_at:** `typing.Optional[datetime.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **reviews_accepted:** `typing.Optional[int]` 
     
 </dd>
