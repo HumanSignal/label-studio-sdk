@@ -2,7 +2,9 @@
 
 The Label Studio SDK includes an `interface` CLI group for building, validating, previewing, and syncing interfaces from local JSX modules.
 
-Interfaces are Enterprise-only in Label Studio. The CLI can still scaffold and validate files locally, but syncing, previewing, and project creation require an Enterprise instance with the interfaces API enabled.
+Interfaces are Enterprise-only in Label Studio. The CLI can still scaffold and validate files locally. Syncing and
+project creation require an Enterprise instance with the interfaces API enabled. Preview needs an Enterprise instance
+only to download its version-compatible browser artifact on first use and when revalidating the cache.
 
 ## Prerequisites
 
@@ -195,16 +197,42 @@ The scenario context includes:
 
 ### `preview`
 
-Open the Label Studio interface playground and live-sync source changes.
+Start the local interface playground and live-sync source changes.
 
 ```bash
 label-studio-sdk interface preview ./my-interface
 label-studio-sdk interface preview Screen.jsx --task task.json
 label-studio-sdk interface preview Screen.jsx --task task.json --no-open
 label-studio-sdk interface preview Screen.jsx --lse-url http://localhost:8080
+label-studio-sdk interface preview Screen.jsx --offline
 ```
 
-`preview` starts a local file watcher. Pass a directory to use the scaffolded bundle defaults: `Screen.jsx` for the interface and `task.json` or `sample.json` for example task data. On each save, it pushes the current source to the playground session. The initial push can include task data from `--task` or the bundle's task-data file; later source saves update the code, and task-data saves update the task.
+`preview` downloads the version-compatible playground and sandbox artifacts from the configured Label Studio instance,
+verifies them, and stores them in an origin- and protocol-scoped user cache. The first uncached run requires
+`LABEL_STUDIO_API_KEY`; the CLI sends it with the same `Token` or `Bearer` authentication used by other SDK commands.
+Before downloading public static assets, it probes `GET /api/current-user/whoami` and fails closed on `401`/`403` when
+no verified cache exists. It never retries an authenticated asset request anonymously.
+
+The CLI then starts two listeners bound only to `127.0.0.1`: one hosts the playground and localhost SSE file updates;
+the other hosts the isolated sandbox shell. Both use unguessable capability paths. The API token is used only by the
+CLI during artifact bootstrap and is never placed in browser JavaScript, HTML, query parameters, or local storage.
+Treat the printed capability URL as workstation-local sensitive data and do not publish it. This preview layer does
+not expose a Save gateway or proxy Label Studio API requests.
+
+Pass a directory to use the scaffolded bundle defaults: `Screen.jsx` for the interface and `task.json` or `sample.json`
+for example task data. Source and task saves travel over localhost SSE only—there is no Django playground stream,
+Redis, Streamer, WebSocket, long poll, or long-lived Label Studio request.
+
+On later starts, the CLI makes a short authenticated manifest revalidation request. If Label Studio is unreachable or
+returns an authentication error and a verified cache exists, preview starts from that cache and prints a stale-artifact
+warning. `--offline` skips all network access and requires an existing verified cache. A protocol mismatch fails before
+the browser opens. The server's selected artifact path does not change during the process; cache cleanup retains the
+active snapshot and one prior snapshot.
+
+View-Only users cannot mint the PAT needed for first-run bootstrap. Cookie SSO, OAuth proxies, and IAP browser bootstrap
+are out of scope; allow access to `/react-app/local-playground/` and `/react-app/editor-standalone/`, or populate the
+cache from a reachable instance. Cached live preview still works without a token. `validate` remains fully local, while
+`sync`, `pull`, and `start` remain authenticated server operations.
 
 ### `sync`
 
@@ -295,7 +323,9 @@ label-studio-sdk interface doctor
 label-studio-sdk interface doctor --lse-url http://localhost:8080
 ```
 
-The command checks Node.js, npm, the API token, validator dependency installation, and the configured Label Studio URL.
+The command checks Node.js, npm, the API token, validator dependencies, LSE reachability, and API authentication
+separately. It also reports the preview cache path, origin key, protocol, artifact fingerprint, and last successful
+fetch.
 
 ## Sidecar Files
 
@@ -314,7 +344,9 @@ The sidecar is keyed by Label Studio base URL and stores:
 - last pushed source hash
 - last pushed timestamp
 
-This lets future `sync`, `start`, and `open` commands find the saved interface without requiring `--id`. A sidecar source version can point at a draft version until you publish it.
+This lets future `preview`, `sync`, `start`, and `open` commands find the saved interface without requiring `--id`.
+Preview includes the matching-origin ID in local file-update events. A sidecar source version can point at a draft
+version until you publish it.
 
 ## Auth and URL Resolution
 
@@ -339,6 +371,16 @@ LS_URL
 ```
 
 Tokens that look like JWTs use `Bearer` authentication. Other tokens use Label Studio `Token` authentication.
+
+## Preview diagnostics
+
+`label-studio-sdk interface doctor` reports the local preview protocol and whether a verified artifact exists for the
+configured canonical Label Studio origin. Reachability, API authentication, validator setup, and preview cache health
+are separate checks so an unreachable server does not make a valid offline cache appear corrupt.
+
+Preview's cache is stored in the platform user cache directory under `label-studio-sdk/interface-preview`. Cache slots
+are keyed by canonical origin (scheme, host, and port) and local protocol version; artifacts from different Label Studio
+instances or protocol majors are never mixed.
 
 ## Troubleshooting
 
@@ -365,6 +407,20 @@ These are warnings during static validation but required for scenario validation
 `no sidecar entry`
 
 Run `label-studio-sdk interface sync Screen.jsx` for the target Label Studio URL, or pass `--id` to commands that support it.
+
+`offline preview requires a verified cache`
+
+Run preview once without `--offline` against a reachable Label Studio Enterprise instance using a valid API key.
+
+`preview protocol mismatch`
+
+The installed SDK and the configured Label Studio instance do not share a local-preview protocol. Update the older side
+before retrying; the CLI will not serve an incompatible cached artifact.
+
+`failed to download preview assets and no verified cache exists`
+
+Confirm the instance includes `/react-app/local-playground/manifest.json`, that the API key is valid, and that any
+fronting proxy allows the local-playground and editor-standalone static paths.
 
 `multiple workspaces titled ...`
 

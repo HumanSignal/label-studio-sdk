@@ -6,6 +6,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
 
+from .preview_fakes import FakePreviewCache, FakePreviewServer
 from typer.testing import CliRunner
 
 from label_studio_sdk._extensions.cli.main import app as root_app
@@ -173,6 +174,15 @@ def _reset_fake_http() -> None:
     FakeHttpClient.instances = []
     FakeHttpClient.interface_payload = deepcopy(DEFAULT_INTERFACE_PAYLOAD)
     FakeHttpClient.access_token = _jwt_token("access")
+
+
+def _mock_preview_runtime(monkeypatch: Any) -> None:
+    FakePreviewServer.instances = []
+    FakePreviewCache.instances = []
+    FakePreviewCache.error = None
+    monkeypatch.delenv("LABEL_STUDIO_API_KEY", raising=False)
+    monkeypatch.setattr(interface_cli, "PreviewAssetCache", FakePreviewCache)
+    monkeypatch.setattr(interface_cli, "LocalPreviewServer", FakePreviewServer)
 
 
 def test_sync_creates_interface_and_writes_sidecar(monkeypatch: Any, tmp_path: Path) -> None:
@@ -447,18 +457,18 @@ def test_preview_accepts_interface_directory(monkeypatch: Any, tmp_path: Path) -
         yield set()
 
     _reset_fake_http()
+    _mock_preview_runtime(monkeypatch)
     monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=fake_watch))
-    monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
 
     result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
 
     assert result.exit_code == 0, result.output
-    client = FakeHttpClient.instances[-1]
-    assert client.calls[0][0] == "POST"
-    payload = client.calls[0][2]
+    payload = FakePreviewServer.instances[-1].updates[0]
     assert payload == {
         "code": "({ default: function Screen() { return null; } })",
         "task": {"text": "Example"},
+        "interface_id": None,
+        "lse_url": "http://ls",
     }
     assert calls["watch_paths"] == (file.parent.resolve(),)
 
@@ -496,17 +506,15 @@ def test_preview_resolves_local_paths(monkeypatch: Any, tmp_path: Path) -> None:
         yield set()
 
     _reset_fake_http()
+    _mock_preview_runtime(monkeypatch)
     monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=fake_watch))
-    monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
 
     result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
 
     assert result.exit_code == 0, result.output
     assert "embedded local file:" in result.output
 
-    client = FakeHttpClient.instances[-1]
-    assert client.calls[0][0] == "POST"
-    payload = client.calls[0][2]
+    payload = FakePreviewServer.instances[-1].updates[0]
 
     expected_rel = f"data:image/jpeg;base64,{base64.b64encode(b'mock image relative content').decode('utf-8')}"
     expected_abs = f"data:image/png;base64,{base64.b64encode(b'mock image absolute content').decode('utf-8')}"
@@ -638,23 +646,25 @@ def test_preview_sends_last_task_data_on_code_change(monkeypatch: Any, tmp_path:
         raise KeyboardInterrupt
 
     _reset_fake_http()
+    _mock_preview_runtime(monkeypatch)
     monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=fake_watch))
-    monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
 
     result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
 
     assert result.exit_code == 0, result.output
-    client = FakeHttpClient.instances[-1]
-    assert len(client.calls) >= 2
-    assert client.calls[0][0] == "POST"
-    assert client.calls[0][2] == {
+    updates = FakePreviewServer.instances[-1].updates
+    assert len(updates) >= 2
+    assert updates[0] == {
         "code": "({ default: function Screen() { return null; } })",
         "task": {"text": "Example"},
+        "interface_id": None,
+        "lse_url": "http://ls",
     }
-    assert client.calls[1][0] == "POST"
-    assert client.calls[1][2] == {
+    assert updates[1] == {
         "code": "({ default: function Screen() { return 'changed'; } })",
         "task": {"text": "Example"},
+        "interface_id": None,
+        "lse_url": "http://ls",
     }
 
 
@@ -676,12 +686,12 @@ def test_preview_warns_when_task_references_missing_local_media(monkeypatch: Any
     task.write_text('{"image": "posum.jpg", "title": "Wildlife sample"}', encoding="utf-8")
 
     _reset_fake_http()
+    _mock_preview_runtime(monkeypatch)
     monkeypatch.setitem(
         sys.modules,
         "watchfiles",
         SimpleNamespace(watch=lambda *paths, **kwargs: (_ for _ in ()).throw(KeyboardInterrupt)),
     )
-    monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
 
     result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
 
@@ -706,20 +716,58 @@ def test_preview_watches_and_discovers_task_file_later(monkeypatch: Any, tmp_pat
         raise KeyboardInterrupt
 
     _reset_fake_http()
+    _mock_preview_runtime(monkeypatch)
     monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=fake_watch))
-    monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
 
     result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
 
     assert result.exit_code == 0, result.output
     assert calls["watch_paths"] == (file.parent.resolve(),)
 
-    client = FakeHttpClient.instances[-1]
-    # First call had no task data (pushed initial code)
-    assert client.calls[0][0] == "POST"
-    assert client.calls[0][2].get("task") is None
+    updates = FakePreviewServer.instances[-1].updates
+    # First event had no task data.
+    assert updates[0].get("task") is None
 
-    # Second call (after watcher triggered and discovered task.json)
-    assert len(client.calls) >= 2
-    assert client.calls[1][0] == "POST"
-    assert client.calls[1][2]["task"] == {"text": "Discovered Task"}
+    # Second event (after watcher triggered and discovered task.json).
+    assert len(updates) >= 2
+    assert updates[1]["task"] == {"text": "Discovered Task"}
+
+
+def test_doctor_reports_cache_identity_and_separates_reachability_from_api_auth(
+    monkeypatch: Any, tmp_path: Path
+) -> None:
+    class DiagnosticCache:
+        def __init__(self, origin: str) -> None:
+            assert origin == "https://ls.example"
+
+        def diagnostics(self) -> Any:
+            return SimpleNamespace(
+                cache_path=tmp_path / "origin-key" / "protocol-1",
+                origin_key="origin-key",
+                fingerprint="artifact-fingerprint",
+                protocol_version=1,
+                last_successful_fetch="2026-09-17T12:00:00+00:00",
+                verified=True,
+            )
+
+    def fake_get(url: str, **kwargs: Any) -> FakeResponse:
+        if url.endswith("/api/current-user/whoami"):
+            assert kwargs["headers"] == {"Authorization": "Token secret"}
+            return FakeResponse({"detail": "Invalid token"}, status_code=401)
+        return FakeResponse({}, status_code=200)
+
+    monkeypatch.setenv("LABEL_STUDIO_API_KEY", "secret")
+    monkeypatch.setattr(interface_cli, "PreviewAssetCache", DiagnosticCache)
+    monkeypatch.setattr(interface_cli, "_ensure_validator_ready", lambda **_kwargs: tmp_path / "validator")
+    monkeypatch.setattr(interface_cli.shutil, "which", lambda name: f"/usr/bin/{name}")
+    monkeypatch.setattr(interface_cli.httpx, "get", fake_get)
+
+    result = runner.invoke(interface_cli.app, ["doctor", "--lse-url", "https://ls.example"])
+
+    assert result.exit_code == 1
+    assert "OK LSE reachability: https://ls.example -> HTTP 200" in result.output
+    assert "FAIL API auth: https://ls.example/api/current-user/whoami -> HTTP 401" in result.output
+    assert f"OK preview cache path: {tmp_path}/origin-key/protocol-1" in result.output
+    assert "OK preview origin key: origin-key" in result.output
+    assert "OK preview fingerprint: artifact-fingerprint" in result.output
+    assert "OK preview last fetch: 2026-09-17T12:00:00+00:00" in result.output

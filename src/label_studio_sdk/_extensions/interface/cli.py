@@ -4,11 +4,8 @@ import hashlib
 import json
 import os
 import re
-import secrets
 import shutil
 import subprocess
-import time
-import urllib.parse
 import uuid
 import webbrowser
 from dataclasses import dataclass
@@ -21,6 +18,14 @@ import appdirs
 import httpx
 import jwt
 import typer
+from .preview import (
+    PROTOCOL_VERSION,
+    InvalidPreviewManifestError,
+    LocalPreviewServer,
+    PreviewAssetCache,
+    PreviewCacheError,
+    ProtocolMismatchError,
+)
 
 SIDECAR_SUFFIX = ".ls-interface.json"
 DEFAULT_BASE_URL = "https://app.humansignal.com"
@@ -261,28 +266,6 @@ def _resolve_interface_file(path: Path) -> Path:
     raise typer.Exit(code=2)
 
 
-def _post_preview(
-    client: httpx.Client,
-    push_url: str,
-    *,
-    code: str,
-    task: dict[str, Any] | None,
-    headers: dict[str, str] | None = None,
-) -> bool:
-    payload: dict[str, Any] = {"code": code}
-    if task is not None:
-        payload["task"] = task
-    try:
-        resp = client.post(push_url, json=payload, headers=headers, timeout=10.0)
-    except httpx.HTTPError as exc:
-        typer.echo(f"  preview sync failed: {exc}", err=True)
-        return False
-    if resp.status_code >= 400:
-        typer.echo(f"  preview sync failed: HTTP {resp.status_code} {resp.text[:200]}", err=True)
-        return False
-    return True
-
-
 def _validator_cache_dir() -> Path:
     return Path(appdirs.user_cache_dir("label-studio-sdk", "HumanSignal")) / "interface-validator"
 
@@ -446,6 +429,14 @@ def _write_sidecar(file: Path, data: dict[str, Any]) -> Path:
     sidecar = _sidecar_path(file)
     sidecar.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return sidecar
+
+
+def _sidecar_interface_id_for_origin(file: Path, base: str) -> int | None:
+    sidecar_entry = _read_sidecar(file).get(base)
+    sidecar_interface_id = sidecar_entry.get("interface_id") if _is_record(sidecar_entry) else None
+    if isinstance(sidecar_interface_id, int) and not isinstance(sidecar_interface_id, bool):
+        return sidecar_interface_id
+    return None
 
 
 def _resolve_workspace(
@@ -855,8 +846,9 @@ def preview(
         help="Base URL of the Label Studio instance.",
     ),
     no_open: bool = typer.Option(False, "--no-open", help="Do not open the browser."),
+    offline: bool = typer.Option(False, "--offline", help="Use only a previously verified preview asset cache."),
 ) -> None:
-    """Open the playground and live-sync local changes."""
+    """Run a capability-protected local playground and live-sync local changes."""
     try:
         from watchfiles import watch
     except ImportError:
@@ -869,65 +861,90 @@ def preview(
     file = _resolve_interface_file(source_path).resolve()
     task = task.resolve() if task is not None else None
     base = _resolve_base_url(ctx, lse_url)
-    resolved_token = _resolve_token(ctx, token)
-    headers = _auth_headers(resolved_token, base_url=base) if resolved_token else {}
-    playground_token = secrets.token_urlsafe(16)
-    push_url = f"{base}/api/interfaces/playground/{playground_token}/push/"
-    playground_url = (
-        f"{base}/interfaces/playground?s={urllib.parse.quote(playground_token)}&file={urllib.parse.quote(file.name)}"
-    )
+    interface_id = _sidecar_interface_id_for_origin(file, base)
+    cache = PreviewAssetCache(base)
+    resolved_token = None if offline else _resolve_token(ctx, token)
+    try:
+        headers = _auth_headers(resolved_token, base_url=base) if resolved_token else {}
+    except typer.Exit:
+        if cache.current_snapshot() is None:
+            raise
+        headers = {}
+        typer.echo("warning: token refresh failed; using verified preview cache", err=True)
+    try:
+        with httpx.Client(timeout=30.0, follow_redirects=False) as client:
+            snapshot = cache.resolve(client=client, headers=headers, offline=offline)
+    except ProtocolMismatchError as exc:
+        typer.echo(f"error: preview protocol mismatch: {exc}", err=True)
+        raise typer.Exit(code=1) from None
+    except (PreviewCacheError, InvalidPreviewManifestError, ValueError) as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(code=1) from None
+    if snapshot.warning:
+        typer.echo(f"warning: {snapshot.warning}", err=True)
 
-    typer.echo(f"playground: {playground_url}")
-    typer.echo(f"watching:   {file}")
-    if task_data is not None:
-        typer.echo(f"task data:  {task}")
+    cache.acquire_lease(snapshot.root)
+    try:
+        with LocalPreviewServer(
+            asset_root=snapshot.root,
+            upstream_origin=base,
+            bound_interface_id=interface_id,
+        ) as server:
+            playground_url = server.url
+            typer.echo(f"playground: {playground_url}")
+            typer.echo(f"assets:     {snapshot.source} (protocol {snapshot.protocol_version})")
+            typer.echo(f"watching:   {file}")
+            if task_data is not None:
+                typer.echo(f"task data:  {task}")
 
-    with httpx.Client() as client:
-        code = file.read_text(encoding="utf-8")
-        last_pushed_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
-        if _post_preview(client, push_url, code=code, task=task_data, headers=headers):
-            typer.echo("  pushed initial code")
-        else:
-            last_pushed_hash = ""
+            code = file.read_text(encoding="utf-8")
+            last_pushed_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
+            server.publish_file_update(code=code, task=task_data, interface_id=interface_id, lse_url=base)
+            if not no_open:
+                webbrowser.open(playground_url)
 
-        if not no_open:
-            webbrowser.open(playground_url)
+            try:
+                current_task_data = task_data
+                watch_dir = file.parent
+                for changes in watch(watch_dir, step=200, recursive=False):
+                    changed_paths = {Path(path).resolve() for _, path in changes}
+                    file_changed = file in changed_paths
+                    task_changed = False
+                    if task is None:
+                        resolved_task = _resolve_bundle_file(source_path, None, TASK_FILE_CANDIDATES)
+                        if resolved_task is not None:
+                            task = resolved_task.resolve()
+                            task_changed = True
+                    else:
+                        task_changed = task in changed_paths
 
-        try:
-            current_task_data = task_data
-            watch_dir = file.parent
-            for changes in watch(watch_dir, step=200, recursive=False):
-                changed_paths = {Path(path).resolve() for _, path in changes}
-                file_changed = file in changed_paths
-                task_changed = False
-                if task is None:
-                    resolved_task = _resolve_bundle_file(source_path, None, TASK_FILE_CANDIDATES)
-                    if resolved_task is not None:
-                        task = resolved_task.resolve()
-                        task_changed = True
-                else:
-                    task_changed = task in changed_paths
-
-                if not file_changed and not task_changed:
-                    continue
-                try:
-                    code = file.read_text(encoding="utf-8")
-                except OSError as exc:
-                    typer.echo(f"  read failed: {exc}", err=True)
-                    continue
-                source_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
-                if source_hash == last_pushed_hash and not task_changed:
-                    continue
-                if task_changed and task is not None:
-                    current_task_data = _load_task(task)
-                stamp = time.strftime("%H:%M:%S")
-                if _post_preview(client, push_url, code=code, task=current_task_data, headers=headers):
+                    if not file_changed and not task_changed:
+                        continue
+                    try:
+                        code = file.read_text(encoding="utf-8")
+                    except OSError as exc:
+                        typer.echo(f"  read failed: {exc}", err=True)
+                        continue
+                    source_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
+                    if source_hash == last_pushed_hash and not task_changed:
+                        continue
+                    if task_changed and task is not None:
+                        current_task_data = _load_task(task)
+                    # Sidecar may be written by sync/Save after preview started; refresh each publish.
+                    interface_id = _sidecar_interface_id_for_origin(file, base)
+                    server.publish_file_update(
+                        code=code,
+                        task=current_task_data,
+                        interface_id=interface_id,
+                        lse_url=base,
+                    )
                     last_pushed_hash = source_hash
                     suffix = " and task data" if task_changed else ""
-                    typer.echo(f"  [{stamp}] pushed {len(code)} bytes{suffix}")
-        except KeyboardInterrupt:
-            typer.echo("\nbye")
-
+                    typer.echo(f"  updated {len(code)} bytes{suffix}")
+            except KeyboardInterrupt:
+                typer.echo("\nbye")
+    finally:
+        cache.release_lease(snapshot.root)
 
 @app.command()
 def validate(
@@ -1433,11 +1450,37 @@ def doctor(
         checks.append(("validator cache", False, "not ready"))
 
     base = _resolve_base_url(ctx, lse_url)
+    diagnostics = PreviewAssetCache(base).diagnostics()
+    checks.append(("preview cache path", True, str(diagnostics.cache_path)))
+    checks.append(("preview origin key", True, diagnostics.origin_key))
+    checks.append(
+        ("preview protocol", diagnostics.protocol_version == PROTOCOL_VERSION, str(diagnostics.protocol_version))
+    )
+    checks.append(
+        ("preview fingerprint", diagnostics.fingerprint is not None, diagnostics.fingerprint or "no verified cache")
+    )
+    checks.append(
+        (
+            "preview last fetch",
+            diagnostics.last_successful_fetch is not None,
+            diagnostics.last_successful_fetch or "never",
+        )
+    )
     try:
         response = httpx.get(base, timeout=5.0)
-        checks.append(("Label Studio URL", response.status_code < 500, f"{base} -> HTTP {response.status_code}"))
+        checks.append(("LSE reachability", response.status_code < 500, f"{base} -> HTTP {response.status_code}"))
     except httpx.HTTPError as exc:
-        checks.append(("Label Studio URL", False, f"{base} -> {exc}"))
+        checks.append(("LSE reachability", False, f"{base} -> {exc}"))
+
+    auth_url = f"{base}/api/current-user/whoami"
+    if token:
+        try:
+            response = httpx.get(auth_url, headers=_auth_headers(token, base_url=base), timeout=5.0)
+            checks.append(("API auth", response.status_code < 400, f"{auth_url} -> HTTP {response.status_code}"))
+        except httpx.HTTPError as exc:
+            checks.append(("API auth", False, f"{auth_url} -> {exc}"))
+    else:
+        checks.append(("API auth", False, "token missing; not attempted"))
 
     ok = True
     for name, passed, detail in checks:
