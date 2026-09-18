@@ -469,6 +469,7 @@ def test_preview_accepts_interface_directory(monkeypatch: Any, tmp_path: Path) -
         "task": {"text": "Example"},
         "interface_id": None,
         "lse_url": "http://ls",
+        "workspace": None,
     }
     assert calls["watch_paths"] == (file.parent.resolve(),)
 
@@ -659,12 +660,14 @@ def test_preview_sends_last_task_data_on_code_change(monkeypatch: Any, tmp_path:
         "task": {"text": "Example"},
         "interface_id": None,
         "lse_url": "http://ls",
+        "workspace": None,
     }
     assert updates[1] == {
         "code": "({ default: function Screen() { return 'changed'; } })",
         "task": {"text": "Example"},
         "interface_id": None,
         "lse_url": "http://ls",
+        "workspace": None,
     }
 
 

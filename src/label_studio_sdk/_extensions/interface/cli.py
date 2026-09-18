@@ -439,6 +439,32 @@ def _sidecar_interface_id_for_origin(file: Path, base: str) -> int | None:
     return None
 
 
+def _sidecar_workspace_for_origin(file: Path, base: str) -> int | None:
+    sidecar_entry = _read_sidecar(file).get(base)
+    workspace = sidecar_entry.get("workspace") if _is_record(sidecar_entry) else None
+    if isinstance(workspace, int) and not isinstance(workspace, bool):
+        return workspace
+    return None
+
+
+def _persist_preview_binding(file: Path, base: str, payload: dict[str, Any]) -> None:
+    interface_id = payload.get("id")
+    if not isinstance(interface_id, int) or isinstance(interface_id, bool):
+        return
+    sidecar = _read_sidecar(file)
+    sidecar = sidecar if isinstance(sidecar, dict) else {}
+    existing = sidecar.get(base)
+    entry = dict(existing) if _is_record(existing) else {}
+    entry["interface_id"] = interface_id
+    if isinstance(payload.get("title"), str):
+        entry["title"] = payload["title"]
+    workspace = payload.get("workspace")
+    if workspace is None or (isinstance(workspace, int) and not isinstance(workspace, bool)):
+        entry["workspace"] = workspace
+    sidecar[base] = entry
+    _write_sidecar(file, sidecar)
+
+
 def _resolve_workspace(
     client: httpx.Client,
     base: str,
@@ -862,8 +888,10 @@ def preview(
     task = task.resolve() if task is not None else None
     base = _resolve_base_url(ctx, lse_url)
     interface_id = _sidecar_interface_id_for_origin(file, base)
+    workspace_id = _sidecar_workspace_for_origin(file, base)
     cache = PreviewAssetCache(base)
-    resolved_token = None if offline else _resolve_token(ctx, token)
+    # `--offline` skips asset network only; keep a resolved token so Save BFF still works.
+    resolved_token = _resolve_token(ctx, token)
     try:
         headers = _auth_headers(resolved_token, base_url=base) if resolved_token else {}
     except typer.Exit:
@@ -888,7 +916,9 @@ def preview(
         with LocalPreviewServer(
             asset_root=snapshot.root,
             upstream_origin=base,
+            auth_headers=headers,
             bound_interface_id=interface_id,
+            on_interface_bound=lambda payload: _persist_preview_binding(file, base, payload),
         ) as server:
             playground_url = server.url
             typer.echo(f"playground: {playground_url}")
@@ -899,7 +929,13 @@ def preview(
 
             code = file.read_text(encoding="utf-8")
             last_pushed_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
-            server.publish_file_update(code=code, task=task_data, interface_id=interface_id, lse_url=base)
+            server.publish_file_update(
+                code=code,
+                task=task_data,
+                interface_id=interface_id,
+                lse_url=base,
+                workspace=workspace_id,
+            )
             if not no_open:
                 webbrowser.open(playground_url)
 
@@ -932,11 +968,13 @@ def preview(
                         current_task_data = _load_task(task)
                     # Sidecar may be written by sync/Save after preview started; refresh each publish.
                     interface_id = _sidecar_interface_id_for_origin(file, base)
+                    workspace_id = _sidecar_workspace_for_origin(file, base)
                     server.publish_file_update(
                         code=code,
                         task=current_task_data,
                         interface_id=interface_id,
                         lse_url=base,
+                        workspace=workspace_id,
                     )
                     last_pushed_hash = source_hash
                     suffix = " and task data" if task_changed else ""

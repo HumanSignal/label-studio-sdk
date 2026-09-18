@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import PurePosixPath
 from typing import Any, TypedDict
 
-PROTOCOL_VERSION = 1
+PROTOCOL_VERSION = 2
 
 
 class ProtocolMismatchError(ValueError):
@@ -20,6 +20,7 @@ class PreviewFileUpdate(TypedDict):
     task: dict[str, Any] | None
     interfaceId: int | None
     lseUrl: str
+    workspace: int | None
 
 
 @dataclass(frozen=True)

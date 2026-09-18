@@ -29,6 +29,6 @@ def test_protocol_version_matches_shared_json_contract() -> None:
     assert isinstance(PROTOCOL_VERSION, int) and not isinstance(PROTOCOL_VERSION, bool)
 
 
-def test_protocol_version_true_is_not_accepted_as_version_one() -> None:
+def test_boolean_protocol_version_is_rejected() -> None:
     with pytest.raises(ProtocolMismatchError):
         PreviewManifest.parse({"protocolVersion": True, "files": {"index.html": "index.html"}})
