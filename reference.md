@@ -39676,6 +39676,9 @@ client.projects.review_routing_rules.bulk_replace(
     id=1,
     rules=[
         ReviewRoutingRuleRequestRequest(
+            agreement_threshold=None,
+            dimension=None,
+            operator=None,
             sample_rate="sample_rate",
         )
     ],
