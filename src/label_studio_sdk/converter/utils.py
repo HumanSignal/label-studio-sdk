@@ -21,8 +21,10 @@ from PIL import Image
 from lxml import etree
 from nltk.tokenize.treebank import TreebankWordTokenizer
 
-from label_studio_sdk._extensions.label_studio_tools.core.utils.params import get_env
-from label_studio_sdk._extensions.label_studio_tools.core.utils.io import safe_build_path
+from label_studio_sdk._extensions.label_studio_tools.core.utils.io import (
+    resolve_local_storage_file,
+    safe_build_path,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -30,9 +32,6 @@ _LABEL_TAGS = {"Label", "Choice"}
 _NOT_CONTROL_TAGS = {
     "Filter",
 }
-LOCAL_FILES_DOCUMENT_ROOT = get_env(
-    "LOCAL_FILES_DOCUMENT_ROOT", default=os.path.abspath(os.sep)
-)
 
 TreebankWordTokenizer.PUNCTUATION = [
     (re.compile(r"([:,])([^\d])"), r" \1 \2"),
@@ -260,11 +259,9 @@ def download(
         return filepath
 
     if is_local_file:
-        filename, dir_path = url.split("/data/", 1)[-1].split("?d=")
-        dir_path = str(urllib.parse.unquote(dir_path))
-        filepath = safe_build_path(LOCAL_FILES_DOCUMENT_ROOT, dir_path)
-        if not os.path.exists(filepath):
-            raise FileNotFoundError(filepath)
+        filepath = resolve_local_storage_file(url)
+        if not filepath or not os.path.exists(filepath):
+            raise FileNotFoundError(filepath or url)
         if download_resources:
             shutil.copy(filepath, output_dir)
         return filepath

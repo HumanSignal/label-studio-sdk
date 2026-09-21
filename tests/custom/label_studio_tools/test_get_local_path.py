@@ -10,6 +10,7 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.io import (
     _DIR_APP_NAME,
     get_base64_content,
     get_local_path,
+    local_files_resolver,
 )
 
 
@@ -328,3 +329,95 @@ def test_get_base64_content_fallback(monkeypatch):
     assert calls[-1] == fallback_url
 
 
+
+
+_IO = "label_studio_sdk._extensions.label_studio_tools.core.utils.io"
+
+
+@pytest.mark.parametrize("root", [None, "", "/"])
+def test_get_local_path_local_storage_needs_explicit_root(monkeypatch, tmp_path, root):
+    """Without a real document root the file must not be read from disk, only requested from Label Studio."""
+    monkeypatch.delenv("LABEL_STUDIO_URL", raising=False)
+    monkeypatch.delenv("LABEL_STUDIO_HOST", raising=False)
+    secret = tmp_path / "secret.txt"
+    secret.write_bytes(b"secret")
+
+    with patch(f"{_IO}.LOCAL_FILES_DOCUMENT_ROOT", root):
+        with pytest.raises(FileNotFoundError, match="Can.t resolve url"):
+            get_local_path(f"/data/local-files/?d={secret}", cache_dir=str(tmp_path / "cache"))
+
+
+def test_get_local_path_local_storage_absolute_d_stays_under_root(tmp_path):
+    root = tmp_path / "root"
+    (root / "etc").mkdir(parents=True)
+    (root / "etc" / "file.txt").write_bytes(b"inside")
+
+    with patch(f"{_IO}.LOCAL_FILES_DOCUMENT_ROOT", str(root)):
+        local_path = get_local_path("/data/local-files/?d=/etc/file.txt", download_resources=False)
+
+    assert local_path == str(root / "etc" / "file.txt")
+
+
+@pytest.mark.parametrize(
+    "query, expected",
+    [
+        ("d=my%20dir/1.jpg", "my dir/1.jpg"),
+        # Trailing params stay out of the path
+        ("d=my_dir/1.jpg&foo=bar", "my_dir/1.jpg"),
+        # Decoded once: a literal "%41" in the file name must not become "A"
+        ("d=my_dir/a%2541.jpg", "my_dir/a%41.jpg"),
+        # Same as request.GET.get("d") in the /data/local-files/ view
+        ("d=first.jpg&d=last.jpg", "last.jpg"),
+    ],
+)
+def test_get_local_path_local_storage_parses_d_like_the_view(tmp_path, query, expected):
+    source = tmp_path / "1.jpg"
+    source.write_bytes(b"image")
+    requested = []
+
+    def resolver(relative_path):
+        requested.append(relative_path)
+        return str(source)
+
+    with local_files_resolver(resolver):
+        local_path = get_local_path(f"/data/local-files/?{query}", download_resources=False)
+
+    assert local_path == str(source)
+    assert requested == [expected]
+
+
+def test_get_local_path_local_storage_without_path(tmp_path):
+    def resolver(relative_path):
+        raise AssertionError("an empty ?d= must not reach the resolver")
+
+    with local_files_resolver(resolver):
+        with pytest.raises(FileNotFoundError, match="no file path"):
+            get_local_path("/data/local-files/?d=", download_resources=False)
+
+
+def test_get_local_path_local_storage_denied_by_resolver_is_not_downloaded(monkeypatch, tmp_path):
+    def fail_get(*args, **kwargs):
+        raise AssertionError("a denied Local Storage file must not be fetched over HTTP")
+
+    monkeypatch.setattr(f"{_IO}.requests.get", fail_get)
+
+    with local_files_resolver(lambda relative_path: None):
+        with pytest.raises(FileNotFoundError, match="not available"):
+            get_local_path(
+                "/data/local-files/?d=etc/passwd",
+                cache_dir=str(tmp_path),
+                hostname="http://app.heartex.com",
+                access_token="secret",
+                download_resources=True,
+            )
+
+
+def test_get_local_path_upload_rejects_non_numeric_project(monkeypatch, tmp_path):
+    monkeypatch.delenv("LABEL_STUDIO_URL", raising=False)
+    monkeypatch.delenv("LABEL_STUDIO_HOST", raising=False)
+    image_dir = tmp_path / "upload"
+    image_dir.mkdir()
+    (tmp_path / "secret.txt").write_bytes(b"secret")
+
+    with pytest.raises(FileNotFoundError, match="Can.t resolve url"):
+        get_local_path("/data/upload/../secret.txt", image_dir=str(image_dir))

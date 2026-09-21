@@ -3,9 +3,12 @@ import hashlib
 import io
 import logging
 import os
+import posixpath
 import shutil
 from contextlib import contextmanager
+from contextvars import ContextVar
 from tempfile import mkdtemp
+from typing import Callable, Optional
 from urllib.parse import parse_qs, urlparse
 
 import jwt
@@ -15,12 +18,15 @@ from appdirs import user_cache_dir, user_data_dir
 from label_studio_sdk._extensions.label_studio_tools.core.utils.params import get_env
 
 _DIR_APP_NAME = "label-studio"
-LOCAL_FILES_DOCUMENT_ROOT = get_env(
-    "LOCAL_FILES_DOCUMENT_ROOT", default=os.path.abspath(os.sep)
-)
+# No default: without an explicit root, Local Storage files are never read from disk
+LOCAL_FILES_DOCUMENT_ROOT = get_env("LOCAL_FILES_DOCUMENT_ROOT")
 VERIFY_SSL = get_env("VERIFY_SSL", default=True, is_bool=True)
 
 logger = logging.getLogger(__name__)
+
+_local_files_resolver: ContextVar[Optional[Callable[[str], Optional[str]]]] = ContextVar(
+    "local_files_resolver", default=None
+)
 
 
 def concat_urls(base_url, url):
@@ -67,6 +73,58 @@ def safe_build_path(base_dir: str, user_path: str) -> str:
         raise ValueError(f"Invalid path: {user_path}")
 
     return absolute_path
+
+
+@contextmanager
+def local_files_resolver(resolver: Optional[Callable[[str], Optional[str]]]):
+    """Route Local Storage lookups through ``resolver`` for the duration of the block.
+
+    ``resolver`` receives the decoded ``?d=`` value of a ``/data/local-files/`` URL and returns
+    the file path it may be read from, or None when the caller has no access to it. Label Studio
+    installs one for server-side exports, because only the server knows which Local Files
+    storages a project is allowed to read.
+    """
+    token = _local_files_resolver.set(resolver)
+    try:
+        yield
+    finally:
+        _local_files_resolver.reset(token)
+
+
+def _local_files_root() -> Optional[str]:
+    if not LOCAL_FILES_DOCUMENT_ROOT:
+        return None
+    root = os.path.abspath(LOCAL_FILES_DOCUMENT_ROOT)
+    # "/" would turn every readable file into a Local Storage file
+    if root == os.path.abspath(os.sep):
+        return None
+    return root
+
+
+def resolve_local_storage_file(url: str) -> Optional[str]:
+    """Map a ``/data/local-files/?d=<path>`` URL to a path on disk.
+
+    Returns None when the file should be fetched from Label Studio instead: no resolver is
+    installed and LOCAL_FILES_DOCUMENT_ROOT is unset or "/". Raises FileNotFoundError when an
+    installed resolver denies the path, so callers don't fetch it some other way.
+    """
+    # Parsed like request.GET.get("d") in the /data/local-files/ view: decoded once, the last value wins
+    values = parse_qs(urlparse(url).query, keep_blank_values=True).get("d")
+    relative_path = values[-1] if values else ""
+    if not relative_path:
+        raise FileNotFoundError(f"Local Storage URL has no file path: {url}")
+    resolver = _local_files_resolver.get()
+    if resolver is not None:
+        filepath = resolver(relative_path)
+        if filepath is None:
+            raise FileNotFoundError(f"Local Storage file is not available: {relative_path}")
+        return filepath
+
+    root = _local_files_root()
+    if root is None:
+        return None
+    # Same normalization as the /data/local-files/ view: "?d=" is always relative to the root
+    return safe_build_path(root, posixpath.normpath(relative_path).lstrip("/"))
 
 
 def is_jwt_well_formed(token: str) -> bool:
@@ -120,7 +178,8 @@ def get_local_path(
 
       **Project storage**
       - Local Storage: /data/local-files?d=dir/1.jpg
-        → Reads from LOCAL_FILES_DOCUMENT_ROOT if present; otherwise downloads from https://<hostname>/data/local-files?d=…
+        → Reads from disk via the installed local_files_resolver, or from LOCAL_FILES_DOCUMENT_ROOT when it is set
+          explicitly; otherwise downloads from https://<hostname>/data/local-files?d=…
       - Project cloud storage: s3://… gs://… azure-blob://…
         → https://<hostname>/tasks/<task_id>/presign/?fileuri=<cloud-uri> then download
 
@@ -193,9 +252,8 @@ def get_local_path(
     # this code allow to read Local Storage files directly from a directory
     # instead of downloading them from LS instance
     if is_local_storage_file:
-        filepath = url.split("?d=")[1]
-        filepath = safe_build_path(LOCAL_FILES_DOCUMENT_ROOT, filepath)
-        if os.path.exists(filepath):
+        filepath = resolve_local_storage_file(url)
+        if filepath and os.path.exists(filepath):
             logger.debug(
                 f"Local Storage file path exists locally, use it as a local file: {filepath}"
             )
@@ -218,7 +276,8 @@ def get_local_path(
     # Uploaded file: try to load locally otherwise download below
     # this code allow to read Uploaded files directly from a directory
     # instead of downloading them from LS instance
-    if is_uploaded_file and os.path.exists(image_dir):
+    # A non-numeric project segment such as ".." would step outside image_dir
+    if is_uploaded_file and url.split("/")[-2].isdigit() and os.path.exists(image_dir):
         project_id = url.split("/")[-2]  # To retrieve project_id
         filepath = os.path.join(image_dir, project_id, os.path.basename(url))
         if os.path.exists(filepath):
@@ -467,9 +526,8 @@ def get_base64_content(
 
     # Local storage file: try to load locally
     if is_local_storage_file:
-        filepath = url.split("?d=")[1]
-        filepath = safe_build_path(LOCAL_FILES_DOCUMENT_ROOT, filepath)
-        if os.path.exists(filepath):
+        filepath = resolve_local_storage_file(url)
+        if filepath and os.path.exists(filepath):
             logger.debug(
                 f"Local Storage file path exists locally, read content directly: {filepath}"
             )

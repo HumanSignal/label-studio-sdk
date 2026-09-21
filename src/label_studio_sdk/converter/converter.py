@@ -7,6 +7,7 @@ import re
 import xml.dom
 import xml.dom.minidom
 from collections import defaultdict
+from contextlib import nullcontext
 from copy import deepcopy
 from datetime import datetime
 from enum import Enum
@@ -37,6 +38,7 @@ from label_studio_sdk.converter.utils import (
 from label_studio_sdk._extensions.label_studio_tools.core.utils.io import (
     get_local_path,
     is_cloud_storage_uri,
+    local_files_resolver,
 )
 from label_studio_sdk.converter.exports.yolo import process_and_save_yolo_annotations
 
@@ -202,6 +204,7 @@ class Converter(object):
         download_resources=True,
         access_token=None,
         hostname=None,
+        local_files_resolver=None,
     ):
         """Initialize Label Studio Converter for Exports
 
@@ -210,6 +213,8 @@ class Converter(object):
         :param output_tags: it will be calculated automatically, contains label names
         :param upload_dir: upload root directory with files that were imported using LS GUI
         :param download_resources: if True, LS will try to download images, audio, etc and include them to export
+        :param local_files_resolver: callable that maps a Local Storage ``?d=`` path to a file this export may read,
+          or returns None to skip it; see ``local_files_resolver()`` in label_studio_tools.core.utils.io
         """
         self.project_dir = project_dir
         self.upload_dir = upload_dir
@@ -218,6 +223,7 @@ class Converter(object):
         self._config_string = None
         self.access_token = access_token
         self.hostname = hostname
+        self.local_files_resolver = local_files_resolver
         self.is_keypoints = None
 
         if isinstance(config, dict):
@@ -244,6 +250,12 @@ class Converter(object):
         self._supported_formats = self._get_supported_formats()
 
     def convert(self, input_data, output_data, format, is_dir=True, **kwargs):
+        # Scoped to this call so every format's downloads go through the resolver, however deep they happen
+        scope = local_files_resolver(self.local_files_resolver) if self.local_files_resolver else nullcontext()
+        with scope:
+            return self._convert(input_data, output_data, format, is_dir=is_dir, **kwargs)
+
+    def _convert(self, input_data, output_data, format, is_dir=True, **kwargs):
         if isinstance(format, str):
             format = Format.from_string(format)
 
