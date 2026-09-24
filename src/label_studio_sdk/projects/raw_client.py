@@ -36,6 +36,8 @@ from ..types.user_simple_request import UserSimpleRequest
 from .types.duplicate_projects_response import DuplicateProjectsResponse
 from .types.import_predictions_projects_response import ImportPredictionsProjectsResponse
 from .types.import_tasks_projects_response import ImportTasksProjectsResponse
+from .types.lse_project_create_request_dm_column_defaults import LseProjectCreateRequestDmColumnDefaults
+from .types.patched_lse_project_update_request_dm_column_defaults import PatchedLseProjectUpdateRequestDmColumnDefaults
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -192,6 +194,7 @@ class RawProjectsClient:
         custom_interface_compiled: typing.Optional[str] = OMIT,
         custom_interface_params: typing.Optional[typing.Any] = OMIT,
         description: typing.Optional[str] = OMIT,
+        dm_column_defaults: typing.Optional[LseProjectCreateRequestDmColumnDefaults] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
@@ -255,6 +258,9 @@ class RawProjectsClient:
 
         description : typing.Optional[str]
             Description (Public)
+
+        dm_column_defaults : typing.Optional[LseProjectCreateRequestDmColumnDefaults]
+            Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
 
         enable_empty_annotation : typing.Optional[bool]
             Allow annotators to submit empty annotations
@@ -367,6 +373,11 @@ class RawProjectsClient:
                 "custom_interface_compiled": custom_interface_compiled,
                 "custom_interface_params": custom_interface_params,
                 "description": description,
+                "dm_column_defaults": convert_and_respect_annotation_metadata(
+                    object_=dm_column_defaults,
+                    annotation=typing.Optional[LseProjectCreateRequestDmColumnDefaults],
+                    direction="write",
+                ),
                 "enable_empty_annotation": enable_empty_annotation,
                 "evaluate_predictions_automatically": evaluate_predictions_automatically,
                 "expert_instruction": expert_instruction,
@@ -638,6 +649,7 @@ class RawProjectsClient:
         custom_script: typing.Optional[str] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
+        dm_column_defaults: typing.Optional[PatchedLseProjectUpdateRequestDmColumnDefaults] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
@@ -751,6 +763,9 @@ class RawProjectsClient:
 
         description : typing.Optional[str]
             Description (Public)
+
+        dm_column_defaults : typing.Optional[PatchedLseProjectUpdateRequestDmColumnDefaults]
+            Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
 
         enable_empty_annotation : typing.Optional[bool]
             Allow empty annotations
@@ -899,6 +914,11 @@ class RawProjectsClient:
                 "custom_script": custom_script,
                 "custom_task_lock_ttl": custom_task_lock_ttl,
                 "description": description,
+                "dm_column_defaults": convert_and_respect_annotation_metadata(
+                    object_=dm_column_defaults,
+                    annotation=typing.Optional[PatchedLseProjectUpdateRequestDmColumnDefaults],
+                    direction="write",
+                ),
                 "enable_empty_annotation": enable_empty_annotation,
                 "evaluate_predictions_automatically": evaluate_predictions_automatically,
                 "expert_instruction": expert_instruction,
@@ -1514,6 +1534,7 @@ class AsyncRawProjectsClient:
         custom_interface_compiled: typing.Optional[str] = OMIT,
         custom_interface_params: typing.Optional[typing.Any] = OMIT,
         description: typing.Optional[str] = OMIT,
+        dm_column_defaults: typing.Optional[LseProjectCreateRequestDmColumnDefaults] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
@@ -1577,6 +1598,9 @@ class AsyncRawProjectsClient:
 
         description : typing.Optional[str]
             Description (Public)
+
+        dm_column_defaults : typing.Optional[LseProjectCreateRequestDmColumnDefaults]
+            Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
 
         enable_empty_annotation : typing.Optional[bool]
             Allow annotators to submit empty annotations
@@ -1689,6 +1713,11 @@ class AsyncRawProjectsClient:
                 "custom_interface_compiled": custom_interface_compiled,
                 "custom_interface_params": custom_interface_params,
                 "description": description,
+                "dm_column_defaults": convert_and_respect_annotation_metadata(
+                    object_=dm_column_defaults,
+                    annotation=typing.Optional[LseProjectCreateRequestDmColumnDefaults],
+                    direction="write",
+                ),
                 "enable_empty_annotation": enable_empty_annotation,
                 "evaluate_predictions_automatically": evaluate_predictions_automatically,
                 "expert_instruction": expert_instruction,
@@ -1962,6 +1991,7 @@ class AsyncRawProjectsClient:
         custom_script: typing.Optional[str] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
+        dm_column_defaults: typing.Optional[PatchedLseProjectUpdateRequestDmColumnDefaults] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
@@ -2075,6 +2105,9 @@ class AsyncRawProjectsClient:
 
         description : typing.Optional[str]
             Description (Public)
+
+        dm_column_defaults : typing.Optional[PatchedLseProjectUpdateRequestDmColumnDefaults]
+            Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
 
         enable_empty_annotation : typing.Optional[bool]
             Allow empty annotations
@@ -2223,6 +2256,11 @@ class AsyncRawProjectsClient:
                 "custom_script": custom_script,
                 "custom_task_lock_ttl": custom_task_lock_ttl,
                 "description": description,
+                "dm_column_defaults": convert_and_respect_annotation_metadata(
+                    object_=dm_column_defaults,
+                    annotation=typing.Optional[PatchedLseProjectUpdateRequestDmColumnDefaults],
+                    direction="write",
+                ),
                 "enable_empty_annotation": enable_empty_annotation,
                 "evaluate_predictions_automatically": evaluate_predictions_automatically,
                 "expert_instruction": expert_instruction,

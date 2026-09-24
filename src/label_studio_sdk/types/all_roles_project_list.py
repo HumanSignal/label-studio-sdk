@@ -7,6 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agreement_methodology_enum import AgreementMethodologyEnum
+from .all_roles_project_list_dm_column_defaults import AllRolesProjectListDmColumnDefaults
 from .annotator_evaluation_metric_enum import AnnotatorEvaluationMetricEnum
 from .assignment_settings import AssignmentSettings
 from .blueprint_list import BlueprintList
@@ -135,6 +136,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     """
 
     description_short: typing.Optional[str] = None
+    dm_column_defaults: typing.Optional[AllRolesProjectListDmColumnDefaults] = pydantic.Field(default=None)
+    """
+    Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
+    """
+
     duplication_done: typing.Optional[bool] = None
     duplication_status: typing.Optional[str] = None
     enable_empty_annotation: typing.Optional[bool] = pydantic.Field(default=None)

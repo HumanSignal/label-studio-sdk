@@ -18,6 +18,9 @@ if typing.TYPE_CHECKING:
     from .agreement_v2backfill_trigger_request_request import AgreementV2BackfillTriggerRequestRequest
     from .agreement_v2backfill_trigger_response import AgreementV2BackfillTriggerResponse
     from .all_roles_project_list import AllRolesProjectList
+    from .all_roles_project_list_dm_column_defaults import AllRolesProjectListDmColumnDefaults
+    from .all_roles_project_list_dm_column_defaults_explore import AllRolesProjectListDmColumnDefaultsExplore
+    from .all_roles_project_list_dm_column_defaults_labeling import AllRolesProjectListDmColumnDefaultsLabeling
     from .annotation import Annotation
     from .annotation_history import AnnotationHistory
     from .annotation_history_action_enum import AnnotationHistoryActionEnum
@@ -132,7 +135,16 @@ if typing.TYPE_CHECKING:
     from .lse_project import LseProject
     from .lse_project_counts import LseProjectCounts
     from .lse_project_create import LseProjectCreate
+    from .lse_project_create_dm_column_defaults import LseProjectCreateDmColumnDefaults
+    from .lse_project_create_dm_column_defaults_explore import LseProjectCreateDmColumnDefaultsExplore
+    from .lse_project_create_dm_column_defaults_labeling import LseProjectCreateDmColumnDefaultsLabeling
+    from .lse_project_dm_column_defaults import LseProjectDmColumnDefaults
+    from .lse_project_dm_column_defaults_explore import LseProjectDmColumnDefaultsExplore
+    from .lse_project_dm_column_defaults_labeling import LseProjectDmColumnDefaultsLabeling
     from .lse_project_response import LseProjectResponse
+    from .lse_project_response_dm_column_defaults import LseProjectResponseDmColumnDefaults
+    from .lse_project_response_dm_column_defaults_explore import LseProjectResponseDmColumnDefaultsExplore
+    from .lse_project_response_dm_column_defaults_labeling import LseProjectResponseDmColumnDefaultsLabeling
     from .lse_s3export_storage import LseS3ExportStorage
     from .lse_s3export_storage_request import LseS3ExportStorageRequest
     from .lse_s3import_storage import LseS3ImportStorage
@@ -335,6 +347,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgreementV2BackfillTriggerRequestRequest": ".agreement_v2backfill_trigger_request_request",
     "AgreementV2BackfillTriggerResponse": ".agreement_v2backfill_trigger_response",
     "AllRolesProjectList": ".all_roles_project_list",
+    "AllRolesProjectListDmColumnDefaults": ".all_roles_project_list_dm_column_defaults",
+    "AllRolesProjectListDmColumnDefaultsExplore": ".all_roles_project_list_dm_column_defaults_explore",
+    "AllRolesProjectListDmColumnDefaultsLabeling": ".all_roles_project_list_dm_column_defaults_labeling",
     "Annotation": ".annotation",
     "AnnotationHistory": ".annotation_history",
     "AnnotationHistoryActionEnum": ".annotation_history_action_enum",
@@ -447,7 +462,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LseProject": ".lse_project",
     "LseProjectCounts": ".lse_project_counts",
     "LseProjectCreate": ".lse_project_create",
+    "LseProjectCreateDmColumnDefaults": ".lse_project_create_dm_column_defaults",
+    "LseProjectCreateDmColumnDefaultsExplore": ".lse_project_create_dm_column_defaults_explore",
+    "LseProjectCreateDmColumnDefaultsLabeling": ".lse_project_create_dm_column_defaults_labeling",
+    "LseProjectDmColumnDefaults": ".lse_project_dm_column_defaults",
+    "LseProjectDmColumnDefaultsExplore": ".lse_project_dm_column_defaults_explore",
+    "LseProjectDmColumnDefaultsLabeling": ".lse_project_dm_column_defaults_labeling",
     "LseProjectResponse": ".lse_project_response",
+    "LseProjectResponseDmColumnDefaults": ".lse_project_response_dm_column_defaults",
+    "LseProjectResponseDmColumnDefaultsExplore": ".lse_project_response_dm_column_defaults_explore",
+    "LseProjectResponseDmColumnDefaultsLabeling": ".lse_project_response_dm_column_defaults_labeling",
     "LseS3ExportStorage": ".lse_s3export_storage",
     "LseS3ExportStorageRequest": ".lse_s3export_storage_request",
     "LseS3ImportStorage": ".lse_s3import_storage",
@@ -660,6 +684,9 @@ __all__ = [
     "AgreementV2BackfillTriggerRequestRequest",
     "AgreementV2BackfillTriggerResponse",
     "AllRolesProjectList",
+    "AllRolesProjectListDmColumnDefaults",
+    "AllRolesProjectListDmColumnDefaultsExplore",
+    "AllRolesProjectListDmColumnDefaultsLabeling",
     "Annotation",
     "AnnotationHistory",
     "AnnotationHistoryActionEnum",
@@ -772,7 +799,16 @@ __all__ = [
     "LseProject",
     "LseProjectCounts",
     "LseProjectCreate",
+    "LseProjectCreateDmColumnDefaults",
+    "LseProjectCreateDmColumnDefaultsExplore",
+    "LseProjectCreateDmColumnDefaultsLabeling",
+    "LseProjectDmColumnDefaults",
+    "LseProjectDmColumnDefaultsExplore",
+    "LseProjectDmColumnDefaultsLabeling",
     "LseProjectResponse",
+    "LseProjectResponseDmColumnDefaults",
+    "LseProjectResponseDmColumnDefaultsExplore",
+    "LseProjectResponseDmColumnDefaultsLabeling",
     "LseS3ExportStorage",
     "LseS3ExportStorageRequest",
     "LseS3ImportStorage",

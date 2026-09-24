@@ -10,6 +10,7 @@ from .agreement_methodology_enum import AgreementMethodologyEnum
 from .annotator_evaluation_metric_enum import AnnotatorEvaluationMetricEnum
 from .assignment_settings import AssignmentSettings
 from .control_tag_weight import ControlTagWeight
+from .lse_project_response_dm_column_defaults import LseProjectResponseDmColumnDefaults
 from .project_sampling_enum import ProjectSamplingEnum
 from .review_settings import ReviewSettings
 from .skip_queue_enum import SkipQueueEnum
@@ -129,6 +130,11 @@ class LseProjectResponse(UncheckedBaseModel):
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Description (Public)
+    """
+
+    dm_column_defaults: typing.Optional[LseProjectResponseDmColumnDefaults] = pydantic.Field(default=None)
+    """
+    Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
     """
 
     duplication_done: typing.Optional[bool] = None

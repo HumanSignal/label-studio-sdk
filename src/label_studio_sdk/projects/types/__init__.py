@@ -9,10 +9,26 @@ if typing.TYPE_CHECKING:
     from .duplicate_projects_response import DuplicateProjectsResponse
     from .import_predictions_projects_response import ImportPredictionsProjectsResponse
     from .import_tasks_projects_response import ImportTasksProjectsResponse
+    from .lse_project_create_request_dm_column_defaults import LseProjectCreateRequestDmColumnDefaults
+    from .lse_project_create_request_dm_column_defaults_explore import LseProjectCreateRequestDmColumnDefaultsExplore
+    from .lse_project_create_request_dm_column_defaults_labeling import LseProjectCreateRequestDmColumnDefaultsLabeling
+    from .patched_lse_project_update_request_dm_column_defaults import PatchedLseProjectUpdateRequestDmColumnDefaults
+    from .patched_lse_project_update_request_dm_column_defaults_explore import (
+        PatchedLseProjectUpdateRequestDmColumnDefaultsExplore,
+    )
+    from .patched_lse_project_update_request_dm_column_defaults_labeling import (
+        PatchedLseProjectUpdateRequestDmColumnDefaultsLabeling,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "DuplicateProjectsResponse": ".duplicate_projects_response",
     "ImportPredictionsProjectsResponse": ".import_predictions_projects_response",
     "ImportTasksProjectsResponse": ".import_tasks_projects_response",
+    "LseProjectCreateRequestDmColumnDefaults": ".lse_project_create_request_dm_column_defaults",
+    "LseProjectCreateRequestDmColumnDefaultsExplore": ".lse_project_create_request_dm_column_defaults_explore",
+    "LseProjectCreateRequestDmColumnDefaultsLabeling": ".lse_project_create_request_dm_column_defaults_labeling",
+    "PatchedLseProjectUpdateRequestDmColumnDefaults": ".patched_lse_project_update_request_dm_column_defaults",
+    "PatchedLseProjectUpdateRequestDmColumnDefaultsExplore": ".patched_lse_project_update_request_dm_column_defaults_explore",
+    "PatchedLseProjectUpdateRequestDmColumnDefaultsLabeling": ".patched_lse_project_update_request_dm_column_defaults_labeling",
 }
 
 
@@ -37,4 +53,14 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["DuplicateProjectsResponse", "ImportPredictionsProjectsResponse", "ImportTasksProjectsResponse"]
+__all__ = [
+    "DuplicateProjectsResponse",
+    "ImportPredictionsProjectsResponse",
+    "ImportTasksProjectsResponse",
+    "LseProjectCreateRequestDmColumnDefaults",
+    "LseProjectCreateRequestDmColumnDefaultsExplore",
+    "LseProjectCreateRequestDmColumnDefaultsLabeling",
+    "PatchedLseProjectUpdateRequestDmColumnDefaults",
+    "PatchedLseProjectUpdateRequestDmColumnDefaultsExplore",
+    "PatchedLseProjectUpdateRequestDmColumnDefaultsLabeling",
+]

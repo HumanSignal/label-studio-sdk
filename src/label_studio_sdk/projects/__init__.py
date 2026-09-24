@@ -6,7 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import DuplicateProjectsResponse, ImportPredictionsProjectsResponse, ImportTasksProjectsResponse
+    from .types import (
+        DuplicateProjectsResponse,
+        ImportPredictionsProjectsResponse,
+        ImportTasksProjectsResponse,
+        LseProjectCreateRequestDmColumnDefaults,
+        LseProjectCreateRequestDmColumnDefaultsExplore,
+        LseProjectCreateRequestDmColumnDefaultsLabeling,
+        PatchedLseProjectUpdateRequestDmColumnDefaults,
+        PatchedLseProjectUpdateRequestDmColumnDefaultsExplore,
+        PatchedLseProjectUpdateRequestDmColumnDefaultsLabeling,
+    )
     from . import assignments, exports, members, metrics, pauses, review_routing_rules, roles, stats
     from .assignments import (
         BulkAssignAssignmentsResponse,
@@ -79,6 +89,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImportTasksProjectsResponse": ".types",
     "LeadTimeStatsResponse": ".stats",
     "LeadTimeStatsResponseLeadTimeStatsItem": ".stats",
+    "LseProjectCreateRequestDmColumnDefaults": ".types",
+    "LseProjectCreateRequestDmColumnDefaultsExplore": ".types",
+    "LseProjectCreateRequestDmColumnDefaultsLabeling": ".types",
     "MemberPerformanceParticipantsStatsRequestTable": ".stats",
     "MemberPerformanceRowsStatsRequestTable": ".stats",
     "MemberPerformanceRowsStatsResponse": ".stats",
@@ -87,6 +100,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModelVersionAnnotatorAgreementStatsResponse": ".stats",
     "ModelVersionGroundTruthAgreementStatsResponse": ".stats",
     "ModelVersionPredictionAgreementStatsResponse": ".stats",
+    "PatchedLseProjectUpdateRequestDmColumnDefaults": ".types",
+    "PatchedLseProjectUpdateRequestDmColumnDefaultsExplore": ".types",
+    "PatchedLseProjectUpdateRequestDmColumnDefaultsLabeling": ".types",
     "TotalAgreementStatsResponse": ".stats",
     "TotalAgreementStatsResponseOne": ".stats",
     "TotalAgreementStatsResponseZero": ".stats",
@@ -159,6 +175,9 @@ __all__ = [
     "ImportTasksProjectsResponse",
     "LeadTimeStatsResponse",
     "LeadTimeStatsResponseLeadTimeStatsItem",
+    "LseProjectCreateRequestDmColumnDefaults",
+    "LseProjectCreateRequestDmColumnDefaultsExplore",
+    "LseProjectCreateRequestDmColumnDefaultsLabeling",
     "MemberPerformanceParticipantsStatsRequestTable",
     "MemberPerformanceRowsStatsRequestTable",
     "MemberPerformanceRowsStatsResponse",
@@ -167,6 +186,9 @@ __all__ = [
     "ModelVersionAnnotatorAgreementStatsResponse",
     "ModelVersionGroundTruthAgreementStatsResponse",
     "ModelVersionPredictionAgreementStatsResponse",
+    "PatchedLseProjectUpdateRequestDmColumnDefaults",
+    "PatchedLseProjectUpdateRequestDmColumnDefaultsExplore",
+    "PatchedLseProjectUpdateRequestDmColumnDefaultsLabeling",
     "TotalAgreementStatsResponse",
     "TotalAgreementStatsResponseOne",
     "TotalAgreementStatsResponseZero",

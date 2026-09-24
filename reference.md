@@ -12114,6 +12114,14 @@ Data Collection project mode (assigned or open). Set only at creation; immutable
 <dl>
 <dd>
 
+**dm_column_defaults:** `typing.Optional[LseProjectCreateRequestDmColumnDefaults]` — Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
     
 </dd>
@@ -12928,6 +12936,14 @@ Metric used to evaluate annotators. Defaults to gt_agreement.
 <dd>
 
 **description:** `typing.Optional[str]` — Description (Public)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dm_column_defaults:** `typing.Optional[PatchedLseProjectUpdateRequestDmColumnDefaults]` — Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
     
 </dd>
 </dl>
