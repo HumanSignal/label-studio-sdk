@@ -37057,7 +37057,7 @@ client.projects.stats.finished_tasks(
             This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
         </p>
     </Card>
-Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`. Omitting `filters` preserves the unfiltered cached-count behavior.
+Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`. Omitting `filters` preserves the unfiltered cached-count behavior. When a non-empty `filters` plan is provided, filtered aggregation is aggregation-complete and non-paginated: the response includes all structure choice keys and `next_offset` is always null (limit/offset are ignored for filtered requests).
 </dd>
 </dl>
 </dd>
@@ -37123,7 +37123,7 @@ client.projects.stats.label_distribution_counts(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` — Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
+**limit:** `typing.Optional[int]` — Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided. Also ignored for filtered requests (non-empty `filters`), which always return the full aggregation-complete choice set.
     
 </dd>
 </dl>
@@ -37131,7 +37131,7 @@ client.projects.stats.label_distribution_counts(
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` — Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided.
+**offset:** `typing.Optional[int]` — Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided. Ignored for filtered requests (non-empty `filters`).
     
 </dd>
 </dl>

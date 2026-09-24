@@ -614,7 +614,7 @@ class StatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`. Omitting `filters` preserves the unfiltered cached-count behavior.
+        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`. Omitting `filters` preserves the unfiltered cached-count behavior. When a non-empty `filters` plan is provided, filtered aggregation is aggregation-complete and non-paginated: the response includes all structure choice keys and `next_offset` is always null (limit/offset are ignored for filtered requests).
 
         Parameters
         ----------
@@ -627,10 +627,10 @@ class StatsClient:
             Optional JSON-encoded string containing a curated filter plan (not an exploded object). Pass one JSON string query value (for example `json.dumps(Filters.create(...))` from `label_studio_sdk.data_manager`); do not pass a nested object or Fern will explode `filters[...]` keys. The plan uses normalized AND semantics (`conjunction` must be `"and"`), contains at most 20 items, does not permit nested `child_filters`, and treats an empty `items` list as unfiltered. Supported filter fields are `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`, `filter:tasks:annotations_updated_at`, and `filter:tasks:predictions_updated_at`. Each item requires `filter`, `operator`, `type`, and `value`. Annotator filters require one or more positive integer IDs. Model-version filters require 1-100 non-empty strings. Source updated-at filters require an inclusive, ordered, timezone-aware range object with string `min` and `max` timestamps.
 
         limit : typing.Optional[int]
-            Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
+            Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided. Also ignored for filtered requests (non-empty `filters`), which always return the full aggregation-complete choice set.
 
         offset : typing.Optional[int]
-            Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided.
+            Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided. Ignored for filtered requests (non-empty `filters`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1913,7 +1913,7 @@ class AsyncStatsClient:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`. Omitting `filters` preserves the unfiltered cached-count behavior.
+        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`. Omitting `filters` preserves the unfiltered cached-count behavior. When a non-empty `filters` plan is provided, filtered aggregation is aggregation-complete and non-paginated: the response includes all structure choice keys and `next_offset` is always null (limit/offset are ignored for filtered requests).
 
         Parameters
         ----------
@@ -1926,10 +1926,10 @@ class AsyncStatsClient:
             Optional JSON-encoded string containing a curated filter plan (not an exploded object). Pass one JSON string query value (for example `json.dumps(Filters.create(...))` from `label_studio_sdk.data_manager`); do not pass a nested object or Fern will explode `filters[...]` keys. The plan uses normalized AND semantics (`conjunction` must be `"and"`), contains at most 20 items, does not permit nested `child_filters`, and treats an empty `items` list as unfiltered. Supported filter fields are `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`, `filter:tasks:annotations_updated_at`, and `filter:tasks:predictions_updated_at`. Each item requires `filter`, `operator`, `type`, and `value`. Annotator filters require one or more positive integer IDs. Model-version filters require 1-100 non-empty strings. Source updated-at filters require an inclusive, ordered, timezone-aware range object with string `min` and `max` timestamps.
 
         limit : typing.Optional[int]
-            Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
+            Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided. Also ignored for filtered requests (non-empty `filters`), which always return the full aggregation-complete choice set.
 
         offset : typing.Optional[int]
-            Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided.
+            Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided. Ignored for filtered requests (non-empty `filters`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

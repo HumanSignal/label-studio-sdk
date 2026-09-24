@@ -12,7 +12,7 @@ from .label_distribution_counts_totals import LabelDistributionCountsTotals
 class LabelDistributionCountsResponse(UncheckedBaseModel):
     next_offset: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Next offset for pagination when using limit/offset mode; null when there are no more results or when filtering by explicit `choice_keys`.
+    Next offset for pagination when using limit/offset mode; null when there are no more results, when filtering by explicit `choice_keys`, or for filtered (aggregation-complete / non-paginated) responses.
     """
 
     results: typing.List[LabelDistributionCountsRow]
