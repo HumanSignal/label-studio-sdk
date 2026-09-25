@@ -16,7 +16,6 @@ from operator import itemgetter
 from urllib.parse import parse_qsl, quote, urlencode, urlparse, urlsplit, urlunsplit
 
 import numpy as np
-import requests
 from PIL import Image
 from lxml import etree
 from nltk.tokenize.treebank import TreebankWordTokenizer
@@ -208,6 +207,7 @@ def download(
     """
     from label_studio_sdk._extensions.label_studio_tools.core.utils.io import (
         get_local_path,
+        http_get,
         is_cloud_storage_uri,
     )
 
@@ -285,7 +285,7 @@ def download(
     if not os.path.exists(filepath):
         logger.info("Download {url} to {filepath}".format(url=url, filepath=filepath))
         if download_resources:
-            r = requests.get(url)
+            r = http_get(url)
             r.raise_for_status()
             with io.open(filepath, mode="wb") as fout:
                 fout.write(r.content)

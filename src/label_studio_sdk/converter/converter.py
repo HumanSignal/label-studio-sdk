@@ -7,7 +7,7 @@ import re
 import xml.dom
 import xml.dom.minidom
 from collections import defaultdict
-from contextlib import nullcontext
+from contextlib import ExitStack
 from copy import deepcopy
 from datetime import datetime
 from enum import Enum
@@ -37,6 +37,7 @@ from label_studio_sdk.converter.utils import (
 )
 from label_studio_sdk._extensions.label_studio_tools.core.utils.io import (
     get_local_path,
+    http_session,
     is_cloud_storage_uri,
     local_files_resolver,
 )
@@ -205,6 +206,7 @@ class Converter(object):
         access_token=None,
         hostname=None,
         local_files_resolver=None,
+        http_session=None,
     ):
         """Initialize Label Studio Converter for Exports
 
@@ -215,6 +217,8 @@ class Converter(object):
         :param download_resources: if True, LS will try to download images, audio, etc and include them to export
         :param local_files_resolver: callable that maps a Local Storage ``?d=`` path to a file this export may read,
           or returns None to skip it; see ``local_files_resolver()`` in label_studio_tools.core.utils.io
+        :param http_session: requests.Session used for every media download instead of plain ``requests``,
+          e.g. one that refuses internal addresses; see ``http_session()`` in label_studio_tools.core.utils.io
         """
         self.project_dir = project_dir
         self.upload_dir = upload_dir
@@ -224,6 +228,7 @@ class Converter(object):
         self.access_token = access_token
         self.hostname = hostname
         self.local_files_resolver = local_files_resolver
+        self.http_session = http_session
         self.is_keypoints = None
 
         if isinstance(config, dict):
@@ -250,9 +255,12 @@ class Converter(object):
         self._supported_formats = self._get_supported_formats()
 
     def convert(self, input_data, output_data, format, is_dir=True, **kwargs):
-        # Scoped to this call so every format's downloads go through the resolver, however deep they happen
-        scope = local_files_resolver(self.local_files_resolver) if self.local_files_resolver else nullcontext()
-        with scope:
+        # Scoped to this call so every format's downloads go through them, however deep they happen
+        with ExitStack() as stack:
+            if self.local_files_resolver:
+                stack.enter_context(local_files_resolver(self.local_files_resolver))
+            if self.http_session:
+                stack.enter_context(http_session(self.http_session))
             return self._convert(input_data, output_data, format, is_dir=is_dir, **kwargs)
 
     def _convert(self, input_data, output_data, format, is_dir=True, **kwargs):

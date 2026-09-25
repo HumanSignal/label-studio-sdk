@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 _local_files_resolver: ContextVar[Optional[Callable[[str], Optional[str]]]] = ContextVar(
     "local_files_resolver", default=None
 )
+_http_session: ContextVar[Optional[requests.Session]] = ContextVar("http_session", default=None)
 
 
 def concat_urls(base_url, url):
@@ -89,6 +90,25 @@ def local_files_resolver(resolver: Optional[Callable[[str], Optional[str]]]):
         yield
     finally:
         _local_files_resolver.reset(token)
+
+
+@contextmanager
+def http_session(session: Optional[requests.Session]):
+    """Send media downloads through ``session`` for the duration of the block.
+
+    Label Studio installs one for server-side exports, because task data can point at any URL and
+    only the server knows which destinations it may reach (e.g. an SSRF-safe adapter).
+    """
+    token = _http_session.set(session)
+    try:
+        yield
+    finally:
+        _http_session.reset(token)
+
+
+def http_get(url, **kwargs):
+    session = _http_session.get()
+    return (session or requests).get(url, **kwargs)
 
 
 def _local_files_root() -> Optional[str]:
@@ -419,7 +439,7 @@ def download_and_cache(
 
     headers = _build_headers(url, hostname, access_token)
     try:
-        r = requests.get(url, stream=True, headers=headers, verify=VERIFY_SSL)
+        r = http_get(url, stream=True, headers=headers, verify=VERIFY_SSL)
         r.raise_for_status()
         target_url = url
         target_filepath = current_filepath
@@ -439,7 +459,7 @@ def download_and_cache(
             return fb_filepath
         fb_headers = _build_headers(fallback_upload_url, hostname, access_token)
         try:
-            r = requests.get(fallback_upload_url, stream=True, headers=fb_headers, verify=VERIFY_SSL)
+            r = http_get(fallback_upload_url, stream=True, headers=fb_headers, verify=VERIFY_SSL)
             r.raise_for_status()
             target_url = fallback_upload_url
             target_filepath = fb_filepath
@@ -594,7 +614,7 @@ def get_base64_content(
             fallback_upload_url = concat_urls(hostname, fallback_path)
 
     try:
-        r = requests.get(url, headers=headers, verify=VERIFY_SSL)
+        r = http_get(url, headers=headers, verify=VERIFY_SSL)
         r.raise_for_status()
         return base64.b64encode(r.content).decode("utf-8")
     except requests.exceptions.SSLError as e:
@@ -611,7 +631,7 @@ def get_base64_content(
             )
             fb_headers = _build_headers(fallback_upload_url, hostname, access_token)
             try:
-                r = requests.get(fallback_upload_url, headers=fb_headers, verify=VERIFY_SSL)
+                r = http_get(fallback_upload_url, headers=fb_headers, verify=VERIFY_SSL)
                 r.raise_for_status()
                 return base64.b64encode(r.content).decode("utf-8")
             except Exception:
