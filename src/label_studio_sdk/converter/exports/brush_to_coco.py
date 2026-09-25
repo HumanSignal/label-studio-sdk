@@ -2,18 +2,18 @@
 Convert brush annotations and polygon annotations to COCO format.
 This module handles RLE encoded brush masks and converts them to COCO segmentation format.
 """
-import logging
-import random
 import io
-import os
 import json
-import numpy as np
-import cv2
-from copy import deepcopy
+import logging
+import os
+import random
 from datetime import datetime
 
-from label_studio_sdk.converter.utils import ensure_dir, get_annotator
+import cv2
+import numpy as np
+
 import label_studio_sdk.converter.brush as brush_module
+from label_studio_sdk.converter.utils import ensure_dir, get_annotator
 
 logger = logging.getLogger(__name__)
 
@@ -171,7 +171,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
         # Extract image information
         image_path = None
         for key, value in item['input'].items():
-            if isinstance(value, str) and any(value.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']):
+            if isinstance(value, str) and any(value.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp']):
                 image_path = value
                 break
         
@@ -243,7 +243,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
 
                         # check required keys exist
                         if not all(k in annotation for k in ['rle', 'original_width', 'original_height']):
-                            logger.warning(f"Missing required keys for RLE annotation. Skipping.")
+                            logger.warning("Missing required keys for RLE annotation. Skipping.")
                             continue
 
                         # Process brush annotation (RLE encoded mask)
@@ -272,7 +272,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                     elif 'points' in annotation and type_key == 'polygonlabels':
                         # check required keys exist
                         if not all(k in annotation for k in ['points', 'original_width', 'original_height']):
-                            logger.warning(f"Missing required keys for polygon annotation. Skipping.")
+                            logger.warning("Missing required keys for polygon annotation. Skipping.")
                             continue
                         # Process polygon annotation
                         segmentation, bbox, area = generate_contour_from_polygon(
@@ -298,7 +298,7 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                     elif annotation_type == 'rectanglelabels' or type_key == 'labels':
                         # check required keys exist
                         if not all(k in annotation for k in ['x', 'y', 'width', 'height', 'original_width', 'original_height']):
-                            logger.warning(f"Missing required keys for rectangle annotation. Skipping.")
+                            logger.warning("Missing required keys for rectangle annotation. Skipping.")
                             continue
 
                         # Convert from percentage to absolute coordinates
