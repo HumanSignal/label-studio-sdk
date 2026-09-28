@@ -1318,48 +1318,71 @@ def start(
 
 
 SCREEN_TEMPLATE = """const labels = ["Positive", "Negative"];
+const REGION_ID = "sentiment-choice";
 
-function Screen({ task, regions, setRegions }) {
-  const text = task.data?.text ?? "Add text in task.json";
+function Screen({ task, regions, params, readOnly, addRegion, updateRegion }) {
+  const text = getField(task.data, params?.textField ?? "text") ?? "Add text in task.json";
+  const current = (regions || []).find((r) => r.id === REGION_ID);
+  const selected = current?.labels?.[0];
 
+  // Every change goes through addRegion/updateRegion so the shell records undo/redo history.
   const choose = (label) => {
-    const region = {
-      id: globalThis.crypto?.randomUUID?.() ?? `region-${Date.now()}`,
-      type: "choices",
-      from_name: "sentiment",
-      to_name: "text",
-      value: { choices: [label] },
-    };
-    setRegions([region]);
+    if (readOnly) return;
+    if (current) updateRegion(REGION_ID, { labels: [label] });
+    else addRegion({ id: REGION_ID, type: "choices", labels: [label] });
   };
 
   return (
-    <div style={{ padding: 24, fontFamily: "Arial, sans-serif" }}>
-      <p>{text}</p>
+    <div className="p-6 bg-neutral-background text-neutral-content">
+      <p>{String(text)}</p>
       <div style={{ display: "flex", gap: 8 }}>
         {labels.map((label) => (
-          <button key={label} type="button" onClick={() => choose(label)}>
+          <button
+            key={label}
+            type="button"
+            aria-pressed={selected === label}
+            className={selected === label ? "bg-primary-surface border-primary-border" : "bg-neutral-surface border-neutral-border"}
+            style={{ borderWidth: 1, borderRadius: 6, padding: "6px 12px" }}
+            onClick={() => choose(label)}
+          >
             {label}
           </button>
         ))}
       </div>
-      <pre>{JSON.stringify(regions, null, 2)}</pre>
     </div>
   );
 }
 
 function getResults(regions) {
-  return regions;
+  return (regions || [])
+    .filter((r) => r.type === "choices" && r.labels?.length)
+    .map((r) => ({
+      id: r.id,
+      from_name: "sentiment",
+      to_name: "text",
+      type: "choices",
+      value: { choices: r.labels },
+      origin: "manual",
+    }));
 }
 
 function parseResults(results) {
-  return { regions: results };
+  const regions = (results || [])
+    .filter((r) => r.type === "choices" && r.from_name === "sentiment")
+    .map((r) => ({ id: REGION_ID, type: "choices", labels: r.value?.choices || [] }));
+  return { regions, relations: [] };
 }
 
 ({
   default: Screen,
   getResults,
   parseResults,
+  paramsSchema: {
+    type: "object",
+    properties: {
+      textField: { type: "string", title: "Text field", default: "text" },
+    },
+  },
   inputSchema: {
     type: "object",
     properties: {
@@ -1372,7 +1395,7 @@ function parseResults(results) {
       sentiment: { type: "string", enum: labels },
     },
   },
-});
+})
 """
 
 TASK_TEMPLATE = """{

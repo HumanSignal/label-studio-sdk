@@ -45,6 +45,16 @@ def test_init_scaffolds_interface_files(tmp_path: Path) -> None:
     assert "refusing to overwrite" in second.output
 
 
+
+def test_init_screen_template_uses_shell_region_callbacks(tmp_path: Path) -> None:
+    # FIT-2953: the scaffold must follow DynamicScreenProps (no setRegions) so shell undo/redo records edits.
+    runner.invoke(interface_cli.app, ["init", str(tmp_path)])
+    screen = (tmp_path / "Screen.jsx").read_text(encoding="utf-8")
+
+    assert "setRegions" not in screen
+    assert "addRegion" in screen and "updateRegion" in screen
+    assert screen.rstrip().endswith("})")
+
 class FakeResponse:
     def __init__(self, payload: dict[str, Any], status_code: int = 200) -> None:
         self.payload = payload
