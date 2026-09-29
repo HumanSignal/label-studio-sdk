@@ -138,6 +138,7 @@ class OrganizationsClient:
         self,
         id: int,
         *,
+        allow_unsafe_instruction_tags: typing.Optional[bool] = OMIT,
         contact_info: typing.Optional[str] = OMIT,
         custom_interfaces_enabled: typing.Optional[bool] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
@@ -163,6 +164,9 @@ class OrganizationsClient:
         Parameters
         ----------
         id : int
+
+        allow_unsafe_instruction_tags : typing.Optional[bool]
+            Keep script, iframe, style and other active tags in project instructions
 
         contact_info : typing.Optional[str]
 
@@ -216,6 +220,7 @@ class OrganizationsClient:
         """
         _response = self._raw_client.update(
             id,
+            allow_unsafe_instruction_tags=allow_unsafe_instruction_tags,
             contact_info=contact_info,
             custom_interfaces_enabled=custom_interfaces_enabled,
             custom_scripts_enabled=custom_scripts_enabled,
@@ -602,6 +607,7 @@ class AsyncOrganizationsClient:
         self,
         id: int,
         *,
+        allow_unsafe_instruction_tags: typing.Optional[bool] = OMIT,
         contact_info: typing.Optional[str] = OMIT,
         custom_interfaces_enabled: typing.Optional[bool] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
@@ -627,6 +633,9 @@ class AsyncOrganizationsClient:
         Parameters
         ----------
         id : int
+
+        allow_unsafe_instruction_tags : typing.Optional[bool]
+            Keep script, iframe, style and other active tags in project instructions
 
         contact_info : typing.Optional[str]
 
@@ -688,6 +697,7 @@ class AsyncOrganizationsClient:
         """
         _response = await self._raw_client.update(
             id,
+            allow_unsafe_instruction_tags=allow_unsafe_instruction_tags,
             contact_info=contact_info,
             custom_interfaces_enabled=custom_interfaces_enabled,
             custom_scripts_enabled=custom_scripts_enabled,

@@ -11,6 +11,7 @@ from .organization_role_enum import OrganizationRoleEnum
 
 
 class LseOrganization(UncheckedBaseModel):
+    allow_unsafe_instruction_tags: typing.Optional[bool] = None
     billing: OrganizationBilling
     created_at: typing.Optional[dt.datetime] = None
     custom_interfaces_enabled: typing.Optional[bool] = pydantic.Field(default=None)

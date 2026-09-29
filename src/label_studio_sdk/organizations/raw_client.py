@@ -163,6 +163,7 @@ class RawOrganizationsClient:
         self,
         id: int,
         *,
+        allow_unsafe_instruction_tags: typing.Optional[bool] = OMIT,
         contact_info: typing.Optional[str] = OMIT,
         custom_interfaces_enabled: typing.Optional[bool] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
@@ -188,6 +189,9 @@ class RawOrganizationsClient:
         Parameters
         ----------
         id : int
+
+        allow_unsafe_instruction_tags : typing.Optional[bool]
+            Keep script, iframe, style and other active tags in project instructions
 
         contact_info : typing.Optional[str]
 
@@ -232,6 +236,7 @@ class RawOrganizationsClient:
             f"api/organizations/{encode_path_param(id)}",
             method="PATCH",
             json={
+                "allow_unsafe_instruction_tags": allow_unsafe_instruction_tags,
                 "contact_info": contact_info,
                 "custom_interfaces_enabled": custom_interfaces_enabled,
                 "custom_scripts_enabled": custom_scripts_enabled,
@@ -677,6 +682,7 @@ class AsyncRawOrganizationsClient:
         self,
         id: int,
         *,
+        allow_unsafe_instruction_tags: typing.Optional[bool] = OMIT,
         contact_info: typing.Optional[str] = OMIT,
         custom_interfaces_enabled: typing.Optional[bool] = OMIT,
         custom_scripts_enabled: typing.Optional[bool] = OMIT,
@@ -702,6 +708,9 @@ class AsyncRawOrganizationsClient:
         Parameters
         ----------
         id : int
+
+        allow_unsafe_instruction_tags : typing.Optional[bool]
+            Keep script, iframe, style and other active tags in project instructions
 
         contact_info : typing.Optional[str]
 
@@ -746,6 +755,7 @@ class AsyncRawOrganizationsClient:
             f"api/organizations/{encode_path_param(id)}",
             method="PATCH",
             json={
+                "allow_unsafe_instruction_tags": allow_unsafe_instruction_tags,
                 "contact_info": contact_info,
                 "custom_interfaces_enabled": custom_interfaces_enabled,
                 "custom_scripts_enabled": custom_scripts_enabled,

@@ -8642,6 +8642,14 @@ client.organizations.update(
 <dl>
 <dd>
 
+**allow_unsafe_instruction_tags:** `typing.Optional[bool]` — Keep script, iframe, style and other active tags in project instructions
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **contact_info:** `typing.Optional[str]` 
     
 </dd>
