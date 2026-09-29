@@ -122,6 +122,7 @@ if typing.TYPE_CHECKING:
     from .lse_fields import LseFields
     from .lse_interface import LseInterface
     from .lse_interface_append_version_request import LseInterfaceAppendVersionRequest
+    from .lse_interface_duplicate_request_mode_enum import LseInterfaceDuplicateRequestModeEnum
     from .lse_interface_list import LseInterfaceList
     from .lse_interface_request import LseInterfaceRequest
     from .lse_interface_version_id_request import LseInterfaceVersionIdRequest
@@ -451,6 +452,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LseFields": ".lse_fields",
     "LseInterface": ".lse_interface",
     "LseInterfaceAppendVersionRequest": ".lse_interface_append_version_request",
+    "LseInterfaceDuplicateRequestModeEnum": ".lse_interface_duplicate_request_mode_enum",
     "LseInterfaceList": ".lse_interface_list",
     "LseInterfaceRequest": ".lse_interface_request",
     "LseInterfaceVersionIdRequest": ".lse_interface_version_id_request",
@@ -788,6 +790,7 @@ __all__ = [
     "LseFields",
     "LseInterface",
     "LseInterfaceAppendVersionRequest",
+    "LseInterfaceDuplicateRequestModeEnum",
     "LseInterfaceList",
     "LseInterfaceRequest",
     "LseInterfaceVersionIdRequest",

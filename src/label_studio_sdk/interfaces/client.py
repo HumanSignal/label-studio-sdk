@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.lse_interface import LseInterface
 from ..types.lse_interface_append_version_request import LseInterfaceAppendVersionRequest
+from ..types.lse_interface_duplicate_request_mode_enum import LseInterfaceDuplicateRequestModeEnum
 from ..types.paginated_lse_interface_list_list import PaginatedLseInterfaceListList
 from .raw_client import AsyncRawInterfacesClient, RawInterfacesClient
 
@@ -569,17 +570,11 @@ class InterfacesClient:
         self,
         id: int,
         *,
-        code: str,
-        compiled: str,
-        title: str,
-        artifacts: typing.Optional[typing.Any] = OMIT,
-        data_sample: typing.Optional[typing.Any] = OMIT,
+        compiled: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        input_schema: typing.Optional[typing.Any] = OMIT,
-        messages: typing.Optional[typing.Any] = OMIT,
-        metadata: typing.Optional[typing.Any] = OMIT,
-        output_schema: typing.Optional[typing.Any] = OMIT,
-        versions: typing.Optional[typing.Any] = OMIT,
+        mode: typing.Optional[LseInterfaceDuplicateRequestModeEnum] = OMIT,
+        params: typing.Optional[typing.Any] = OMIT,
+        title: typing.Optional[str] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseInterface:
@@ -597,37 +592,26 @@ class InterfacesClient:
         id : int
             A unique integer value identifying this interface.
 
-        code : str
-            JSX source code for the interface screen module
-
-        compiled : str
-
-        title : str
-
-        artifacts : typing.Optional[typing.Any]
-            AI-produced code snapshots for session continuity
-
-        data_sample : typing.Optional[typing.Any]
-            Sample task data for preview
+        compiled : typing.Optional[str]
+            Client-compiled bundle, accepted only when the source has none stored (system templates).
 
         description : typing.Optional[str]
+            Description for the copy. Defaults to the source interface's description.
 
-        input_schema : typing.Optional[typing.Any]
-            JSON Schema declaring expected task data field types for import validation
+        mode : typing.Optional[LseInterfaceDuplicateRequestModeEnum]
+            'last' (default) copies only the current state; 'all' carries the full version history.
 
-        messages : typing.Optional[typing.Any]
-            Chat conversation history
+            * `last` - last
+            * `all` - all
 
-        metadata : typing.Optional[typing.Any]
-            Arbitrary metadata for this interface
+        params : typing.Optional[typing.Any]
+            Initial screen params (an object) seeded on the copy. Can't be combined with mode='all'.
 
-        output_schema : typing.Optional[typing.Any]
-            JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
-
-        versions : typing.Optional[typing.Any]
-            Code version history
+        title : typing.Optional[str]
+            Title for the copy. Defaults to "<source title> (Copy)" when omitted or blank.
 
         workspace : typing.Optional[int]
+            Workspace ID to duplicate into. Omit or null for no workspace.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -646,24 +630,15 @@ class InterfacesClient:
         )
         client.interfaces.duplicate(
             id=1,
-            code="code",
-            compiled="compiled",
-            title="title",
         )
         """
         _response = self._raw_client.duplicate(
             id,
-            code=code,
             compiled=compiled,
-            title=title,
-            artifacts=artifacts,
-            data_sample=data_sample,
             description=description,
-            input_schema=input_schema,
-            messages=messages,
-            metadata=metadata,
-            output_schema=output_schema,
-            versions=versions,
+            mode=mode,
+            params=params,
+            title=title,
             workspace=workspace,
             request_options=request_options,
         )
@@ -1417,17 +1392,11 @@ class AsyncInterfacesClient:
         self,
         id: int,
         *,
-        code: str,
-        compiled: str,
-        title: str,
-        artifacts: typing.Optional[typing.Any] = OMIT,
-        data_sample: typing.Optional[typing.Any] = OMIT,
+        compiled: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        input_schema: typing.Optional[typing.Any] = OMIT,
-        messages: typing.Optional[typing.Any] = OMIT,
-        metadata: typing.Optional[typing.Any] = OMIT,
-        output_schema: typing.Optional[typing.Any] = OMIT,
-        versions: typing.Optional[typing.Any] = OMIT,
+        mode: typing.Optional[LseInterfaceDuplicateRequestModeEnum] = OMIT,
+        params: typing.Optional[typing.Any] = OMIT,
+        title: typing.Optional[str] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseInterface:
@@ -1445,37 +1414,26 @@ class AsyncInterfacesClient:
         id : int
             A unique integer value identifying this interface.
 
-        code : str
-            JSX source code for the interface screen module
-
-        compiled : str
-
-        title : str
-
-        artifacts : typing.Optional[typing.Any]
-            AI-produced code snapshots for session continuity
-
-        data_sample : typing.Optional[typing.Any]
-            Sample task data for preview
+        compiled : typing.Optional[str]
+            Client-compiled bundle, accepted only when the source has none stored (system templates).
 
         description : typing.Optional[str]
+            Description for the copy. Defaults to the source interface's description.
 
-        input_schema : typing.Optional[typing.Any]
-            JSON Schema declaring expected task data field types for import validation
+        mode : typing.Optional[LseInterfaceDuplicateRequestModeEnum]
+            'last' (default) copies only the current state; 'all' carries the full version history.
 
-        messages : typing.Optional[typing.Any]
-            Chat conversation history
+            * `last` - last
+            * `all` - all
 
-        metadata : typing.Optional[typing.Any]
-            Arbitrary metadata for this interface
+        params : typing.Optional[typing.Any]
+            Initial screen params (an object) seeded on the copy. Can't be combined with mode='all'.
 
-        output_schema : typing.Optional[typing.Any]
-            JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
-
-        versions : typing.Optional[typing.Any]
-            Code version history
+        title : typing.Optional[str]
+            Title for the copy. Defaults to "<source title> (Copy)" when omitted or blank.
 
         workspace : typing.Optional[int]
+            Workspace ID to duplicate into. Omit or null for no workspace.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1499,9 +1457,6 @@ class AsyncInterfacesClient:
         async def main() -> None:
             await client.interfaces.duplicate(
                 id=1,
-                code="code",
-                compiled="compiled",
-                title="title",
             )
 
 
@@ -1509,17 +1464,11 @@ class AsyncInterfacesClient:
         """
         _response = await self._raw_client.duplicate(
             id,
-            code=code,
             compiled=compiled,
-            title=title,
-            artifacts=artifacts,
-            data_sample=data_sample,
             description=description,
-            input_schema=input_schema,
-            messages=messages,
-            metadata=metadata,
-            output_schema=output_schema,
-            versions=versions,
+            mode=mode,
+            params=params,
+            title=title,
             workspace=workspace,
             request_options=request_options,
         )

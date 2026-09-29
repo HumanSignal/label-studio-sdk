@@ -8045,9 +8045,6 @@ client = LabelStudio(
 
 client.interfaces.duplicate(
     id=1,
-    code="code",
-    compiled="compiled",
-    title="title",
 )
 
 ```
@@ -8072,7 +8069,52 @@ client.interfaces.duplicate(
 <dl>
 <dd>
 
-**request:** `LseInterfaceRequest` 
+**compiled:** `typing.Optional[str]` — Client-compiled bundle, accepted only when the source has none stored (system templates).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Description for the copy. Defaults to the source interface's description.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mode:** `typing.Optional[LseInterfaceDuplicateRequestModeEnum]` 
+
+'last' (default) copies only the current state; 'all' carries the full version history.
+
+* `last` - last
+* `all` - all
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**params:** `typing.Optional[typing.Any]` — Initial screen params (an object) seeded on the copy. Can't be combined with mode='all'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Title for the copy. Defaults to "<source title> (Copy)" when omitted or blank.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace:** `typing.Optional[int]` — Workspace ID to duplicate into. Omit or null for no workspace.
     
 </dd>
 </dl>
