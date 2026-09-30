@@ -34,7 +34,6 @@ import uuid
 from collections import defaultdict
 
 import numpy as np
-from PIL import Image
 
 logger = logging.getLogger(__name__)
 
@@ -216,6 +215,8 @@ def save_brush_images_from_annotation(
         if out_format == "numpy":
             np.save(filename, image)
         elif out_format == "png":
+            from PIL import Image
+
             im = Image.fromarray(image)
             im.save(filename + ".png")
         else:
@@ -442,6 +443,8 @@ def image2rle(path):
                  so you can mark background as black and foreground as white
     :return: list of ints in RLE format
     """
+    from PIL import Image
+
     with Image.open(path).convert("L") as image:
         mask = np.array((np.array(image) > 128) * 255, dtype=np.uint8)
         array = mask.ravel()
