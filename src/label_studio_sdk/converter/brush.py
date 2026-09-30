@@ -28,16 +28,24 @@ const arrayForWordSize = (ws: number, n: number) => {
 };
 """
 
+import logging
 import os
 import uuid
-import numpy as np
-import logging
-
-from PIL import Image
 from collections import defaultdict
-from itertools import groupby
+
+import numpy as np
+from PIL import Image
 
 logger = logging.getLogger(__name__)
+
+# POC dual-path (libs/hs-rust): backends / dual / load live in converter.hs_backends.
+
+
+def _rle_to_numpy_uint8(decoded) -> np.ndarray:
+    """Normalize rust `bytes` / python ndarray to a writable uint8 1-D array."""
+    if isinstance(decoded, np.ndarray):
+        return decoded.astype(np.uint8, copy=False)
+    return np.frombuffer(decoded, dtype=np.uint8).copy()
 
 
 ### Brush Export ###
@@ -66,11 +74,13 @@ def bytes2bit(data):
     return "".join([str(access_bit(data, i)) for i in range(len(data) * 8)])
 
 
-def decode_rle(rle, print_params: bool = False):
-    """from LS RLE to numpy uint8 3d image [width, height, channel]
+def decode_rle_python(rle, print_params: bool = False):
+    """Pure-Python RLE decode (baseline for POC comparison).
+
+    from LS RLE to numpy uint8 flat buffer (RGBA planar, length = W*H*4).
 
     Args:
-        print_params (bool, optional): If true, a RLE parameters print statement is suppressed
+        print_params (bool, optional): If true, print RLE header parameters.
     """
     input = InputStream(bytes2bit(rle))
     num = input.read(32)
@@ -78,9 +88,7 @@ def decode_rle(rle, print_params: bool = False):
     rle_sizes = [input.read(4) + 1 for _ in range(4)]
 
     if print_params:
-        print(
-            "RLE params:", num, "values", word_size, "word_size", rle_sizes, "rle_sizes"
-        )
+        print("RLE params:", num, "values", word_size, "word_size", rle_sizes, "rle_sizes")
 
     i = 0
     out = np.zeros(num, dtype=np.uint8)
@@ -97,6 +105,58 @@ def decode_rle(rle, print_params: bool = False):
                 out[i] = val
                 i += 1
     return out
+
+
+def decode_rle_rust(rle, print_params: bool = False):
+    """Rust/PyO3 RLE decode via optional ``hs_rust.brush`` extension."""
+    from label_studio_sdk.converter.hs_backends import require_hs_rust
+
+    native = require_hs_rust()
+    if print_params:
+        # Header logging stays on the Python path; rust returns pixels only.
+        _ = decode_rle_python(rle, print_params=True)
+    return _rle_to_numpy_uint8(native.brush.decode_rle(rle))
+
+
+def decode_rle(rle, print_params: bool = False):
+    """from LS RLE to numpy uint8 flat buffer (RGBA planar).
+
+    Backend selected by ``HS_RUST_BACKEND`` (python|rust|dual). Default is
+    python so environments without the native extension keep working.
+    """
+    from label_studio_sdk.converter.hs_backends import (
+        HS_BRUSH_PROFILE_ENV,
+        DualTimings,
+        hs_rust_backend,
+        run_hs_backend,
+    )
+
+    def _rust():
+        # Dual already ran Python (with print_params); skip a second header dump.
+        return decode_rle_rust(rle, print_params=print_params and hs_rust_backend() != "dual")
+
+    def _compare(py_out, rust_out):
+        if py_out.shape != rust_out.shape or not np.array_equal(py_out, rust_out):
+            raise AssertionError(
+                f"hs_rust.brush dual-path mismatch: python shape={py_out.shape} rust shape={rust_out.shape}"
+            )
+
+    def _on_profile(timings: DualTimings, py_out, _rust_out):
+        logger.info(
+            "hs_rust.brush decode_rle dual: python=%.4fms rust=%.4fms speedup=%.1fx n=%d",
+            timings.python * 1000,
+            timings.rust * 1000,
+            (timings.python / timings.rust) if timings.rust > 0 else float("inf"),
+            int(py_out.size),
+        )
+
+    return run_hs_backend(
+        lambda: decode_rle_python(rle, print_params=print_params),
+        _rust,
+        compare=_compare,
+        profile_env=HS_BRUSH_PROFILE_ENV,
+        on_profile=_on_profile,
+    )
 
 
 def decode_from_annotation(from_name, results):
@@ -142,23 +202,14 @@ def save_brush_images_from_annotation(
         email = completed_by.get("email", "")
     else:
         email = str(completed_by)
-    email = "".join(
-        x for x in email if x.isalnum() or x == "@" or x == "."
-    )  # sanitize filename
+    email = "".join(x for x in email if x.isalnum() or x == "@" or x == ".")  # sanitize filename
 
     for name in layers:
         sanitized_name = name.replace("/", "-").replace("\\", "-")
 
         filename = os.path.join(
             out_dir,
-            "task-"
-            + str(task_id)
-            + "-annotation-"
-            + str(annotation_id)
-            + "-by-"
-            + email
-            + "-"
-            + sanitized_name,
+            "task-" + str(task_id) + "-annotation-" + str(annotation_id) + "-by-" + email + "-" + sanitized_name,
         )
         image = layers[name]
         logger.debug(f"Save image to {filename}")
@@ -321,7 +372,7 @@ def encode_rle(arr, wordsize=8, rle_sizes=[3, 4, 8, 16]):
                     out_str += "1"
 
                     out_str += "11"
-                    out_str += f"{2 ** 16 - 1:016b}"
+                    out_str += f"{2**16 - 1:016b}"
 
                     out_str += f"{value:08b}"
                     length_temp -= 2**16
@@ -360,9 +411,7 @@ def contour2rle(contours, contour_id, img_width, img_height):
     import cv2  # opencv
 
     mask_im = np.zeros((img_width, img_height, 4))
-    mask_contours = cv2.drawContours(
-        mask_im, contours, contour_id, color=(0, 255, 0, 100), thickness=-1
-    )
+    mask_contours = cv2.drawContours(mask_im, contours, contour_id, color=(0, 255, 0, 100), thickness=-1)
     rle_out = encode_rle(mask_contours.ravel().astype(int))
     return rle_out
 
