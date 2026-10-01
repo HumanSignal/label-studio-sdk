@@ -7801,6 +7801,14 @@ client.interfaces.partial_update(
 <dl>
 <dd>
 
+**scenarios:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` 
     
 </dd>
@@ -7975,6 +7983,14 @@ client.interfaces.append_versions(
 <dd>
 
 **output_schema:** `typing.Optional[typing.Any]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scenarios:** `typing.Optional[str]` 
     
 </dd>
 </dl>

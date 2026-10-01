@@ -105,6 +105,8 @@ async function runScenario(browser, compiledBody, scenario, index, scriptPaths) 
   let roundTripResults = [];
   let parsed = null;
 
+  const plan = planScenarioSteps(scenario);
+
   validateScenarioDefinition(scenario, errors);
   if (errors.length > 0) {
     return {
@@ -112,11 +114,14 @@ async function runScenario(browser, compiledBody, scenario, index, scriptPaths) 
       ok: false,
       errors,
       warnings,
+      steps: plan.map((step) => ({ ...step, label: step.template, status: "not-reached", durationMs: 0 })),
       results,
       parsed,
       roundTripResults,
     };
   }
+
+  const tracker = createStepTracker(scenario, plan);
 
   const page = await browser.newPage({ viewport: { width: 1024, height: 768 } });
 
@@ -165,30 +170,46 @@ async function runScenario(browser, compiledBody, scenario, index, scriptPaths) 
 
     await page.waitForFunction(() => Boolean(window.__hsScenario), null, { timeout: 5000 });
 
-    await scenario.run(makeScenarioContext(page));
+    await scenario.run(makeScenarioContext(page, tracker.api));
+    tracker.close();
 
-    await validateVisibleText(page, scenario.expect?.visibleText, errors);
+    if (scenario.expect?.visibleText !== undefined) {
+      tracker.enter("@expect.visibleText");
+      const produced = [];
+      await validateVisibleText(page, scenario.expect.visibleText, produced);
+      errors.push(...tracker.attribute(produced));
+    }
 
+    tracker.enter("@serialize");
     results = await page.evaluate(() => window.__hsScenario.getResults());
     const outputSchema = await page.evaluate(() => window.__hsScenario.getOutputSchema());
-    errors.push(...validateAnnotationResults(results, outputSchema, "serialize"));
-    errors.push(...compareExpectedResults(results, scenario.expect?.results));
+    errors.push(...tracker.attribute(validateAnnotationResults(results, outputSchema, "serialize")));
 
+    if (scenario.expect?.results !== undefined) {
+      tracker.enter("@expect.results");
+      errors.push(...tracker.attribute(compareExpectedResults(results, scenario.expect.results)));
+    }
+
+    tracker.enter("@round-trip");
     const roundTrip = await validateRoundTrip(page, results, outputSchema);
     parsed = roundTrip.parsed;
     roundTripResults = roundTrip.results;
-    errors.push(...roundTrip.errors);
+    errors.push(...tracker.attribute(roundTrip.errors));
   } catch (error) {
-    errors.push({ stage: "scenario", message: errorMessage(error) });
+    errors.push({ stage: "scenario", message: errorMessage(error), stepKey: tracker.fail() });
   } finally {
     await page.close();
   }
+
+  const snapshot = tracker.snapshot();
+  errors.push(...snapshot.errors);
 
   return {
     name,
     ok: errors.length === 0,
     errors,
     warnings,
+    steps: snapshot.steps,
     results,
     parsed,
     roundTripResults,
@@ -248,6 +269,31 @@ function validateScenarioDefinition(scenario, errors) {
   if (scenario.expect !== undefined && !isPlainObject(scenario.expect)) {
     errors.push({ stage: "scenario-file", message: `Scenario "${scenario.name || "<unnamed>"}" expect must be an object.` });
   }
+  if (scenario.steps !== undefined) {
+    if (!isPlainObject(scenario.steps)) {
+      errors.push({
+        stage: "scenario-file",
+        message: "Scenario `steps` must be an object mapping step keys to labels, in execution order.",
+      });
+    } else {
+      for (const [key, value] of Object.entries(scenario.steps)) {
+        if (key.startsWith("@")) {
+          errors.push({
+            stage: "scenario-file",
+            message: `Step key ${JSON.stringify(key)} is reserved: "@" prefixes the harness phases.`,
+          });
+        }
+        if (typeof value !== "string" && typeof value !== "function") {
+          errors.push({
+            stage: "scenario-file",
+            message: `Step ${JSON.stringify(key)} must be a label string or a function returning one.`,
+          });
+        } else if (typeof value === "string" && !value.trim()) {
+          errors.push({ stage: "scenario-file", message: `Step ${JSON.stringify(key)} must have a non-empty label.` });
+        }
+      }
+    }
+  }
   for (const key of ["task", "params", "settings", "initialRegions", "initialRelations", "selectedRegionIds", "initialResults", "interfaces", "readOnly"]) {
     const value = scenario[key];
     if (value !== undefined && !isJsonSerializable(value)) {
@@ -259,9 +305,197 @@ function validateScenarioDefinition(scenario, errors) {
   }
 }
 
-function makeScenarioContext(page) {
+// --- Step plans -------------------------------------------------------------
+//
+// Mirrors the in-browser runner in editor-shell (`sandbox/scenario-plan.ts` and
+// `sandbox/scenario-runtime.ts`). The two runners ship in different packages and cannot share
+// a module, so the semantics below — declaration order is execution order, steps run exactly
+// once, harness phases are appended as `@`-prefixed steps — must be kept in sync by hand.
+
+/** Stands in for a runtime value while a step label is rendered ahead of the run. */
+function placeholderArgument() {
+  const render = () => "…";
+  return new Proxy(render, {
+    get(_target, key) {
+      if (key === Symbol.toPrimitive || key === "toString" || key === "valueOf") return render;
+      return placeholderArgument();
+    },
+    apply: () => placeholderArgument(),
+  });
+}
+
+function renderStepLabel(key, declaration, args) {
+  if (typeof declaration === "string") return declaration || key;
+  if (typeof declaration === "function") {
+    try {
+      const rendered = declaration(...args);
+      if (typeof rendered === "string" && rendered) return rendered;
+    } catch {
+      // A formatter that throws must not fail the step it was only labelling.
+    }
+  }
+  return key;
+}
+
+function declaredSteps(scenario) {
+  if (!isPlainObject(scenario) || !isPlainObject(scenario.steps)) return {};
+  const steps = {};
+  for (const [key, value] of Object.entries(scenario.steps)) {
+    if (typeof value === "string" || typeof value === "function") steps[key] = value;
+  }
+  return steps;
+}
+
+/** The ordered step list a scenario declares, resolved before anything executes. */
+function planScenarioSteps(scenario) {
+  const plan = [];
+  for (const [key, declaration] of Object.entries(declaredSteps(scenario))) {
+    const args = typeof declaration === "function"
+      ? Array.from({ length: declaration.length }, () => placeholderArgument())
+      : [];
+    plan.push({ key, template: renderStepLabel(key, declaration, args), builtin: false });
+  }
+  const expectation = isPlainObject(scenario) && isPlainObject(scenario.expect) ? scenario.expect : null;
+  if (expectation && expectation.visibleText !== undefined) {
+    plan.push({ key: "@expect.visibleText", template: "check expected visible text", builtin: true });
+  }
+  plan.push({ key: "@serialize", template: "serialize annotation results", builtin: true });
+  if (expectation && expectation.results !== undefined) {
+    plan.push({ key: "@expect.results", template: "compare expected results", builtin: true });
+  }
+  plan.push({ key: "@round-trip", template: "restore parsed results and re-serialize", builtin: true });
+  return plan;
+}
+
+const PASSTHROUGH_STEP_KEYS = new Set(["then", "toJSON", "constructor", "inspect"]);
+
+function createStepTracker(scenario, plan) {
+  const declarations = declaredSteps(scenario);
+  const fired = [];
+  const now = () => Number(process.hrtime.bigint() / 1000n) / 1000;
+
+  const closeOpen = (failed) => {
+    const open = fired[fired.length - 1];
+    if (!open || open.endedAt !== undefined) return undefined;
+    open.endedAt = now();
+    open.failed = failed;
+    return open.key;
+  };
+
+  const record = (key, label) => {
+    closeOpen(false);
+    fired.push({ key, label, startedAt: now() });
+    return label;
+  };
+
+  const target = {};
+  for (const [key, declaration] of Object.entries(declarations)) {
+    target[key] = (...args) => record(key, renderStepLabel(key, declaration, args));
+  }
+
+  const api = new Proxy(target, {
+    get(container, key, receiver) {
+      if (typeof key === "string" && !(key in container) && !PASSTHROUGH_STEP_KEYS.has(key)) {
+        throw new Error(
+          `step.${key}() is not declared in this scenario's \`steps\`. Declared steps: ${
+            Object.keys(declarations).join(", ") || "none"
+          }.`,
+        );
+      }
+      return Reflect.get(container, key, receiver);
+    },
+  });
+
+  return {
+    api,
+    enter(key) {
+      const entry = plan.find((step) => step.key === key);
+      record(key, entry ? entry.template : key);
+    },
+    close() {
+      closeOpen(false);
+    },
+    fail() {
+      return closeOpen(true);
+    },
+    /** Marks the open phase failed and stamps its key onto the errors it produced. */
+    attribute(produced) {
+      if (produced.length === 0) return produced;
+      const stepKey = closeOpen(true);
+      return produced.map((error) => (error.stepKey ? error : { ...error, stepKey }));
+    },
+    snapshot() {
+      closeOpen(false);
+      const errors = [];
+      const firedByKey = new Map();
+      for (const entry of fired) {
+        if (firedByKey.has(entry.key)) {
+          errors.push({
+            stage: "steps",
+            message: `Step ${JSON.stringify(entry.key)} ran more than once. Steps must be unconditional and run exactly once.`,
+            stepKey: entry.key,
+          });
+          continue;
+        }
+        firedByKey.set(entry.key, entry);
+      }
+
+      let lastFiredIndex = -1;
+      plan.forEach((entry, index) => {
+        if (firedByKey.has(entry.key)) lastFiredIndex = index;
+      });
+
+      const steps = plan.map((entry, index) => {
+        const run = firedByKey.get(entry.key);
+        if (!run) {
+          return {
+            ...entry,
+            label: entry.template,
+            status: index < lastFiredIndex ? "skipped" : "not-reached",
+            durationMs: 0,
+          };
+        }
+        return {
+          ...entry,
+          label: run.label,
+          status: run.failed ? "failed" : "passed",
+          durationMs: Math.max(0, (run.endedAt ?? run.startedAt) - run.startedAt),
+        };
+      });
+
+      const planOrder = new Map(plan.map((entry, index) => [entry.key, index]));
+      let previousIndex = -1;
+      for (const entry of fired) {
+        const index = planOrder.get(entry.key);
+        if (index === undefined) continue;
+        if (index < previousIndex) {
+          errors.push({
+            stage: "steps",
+            message: `Step ${JSON.stringify(entry.key)} ran out of order. Declaration order in \`steps\` is execution order.`,
+            stepKey: entry.key,
+          });
+        }
+        previousIndex = Math.max(previousIndex, index);
+      }
+
+      for (const step of steps) {
+        if (step.status !== "skipped") continue;
+        errors.push({
+          stage: "steps",
+          message: `Step ${JSON.stringify(step.key)} never ran even though a later step did. Steps must be unconditional.`,
+          stepKey: step.key,
+        });
+      }
+
+      return { steps, errors };
+    },
+  };
+}
+
+function makeScenarioContext(page, step) {
   return {
     page,
+    step,
     async getResults() {
       return page.evaluate(() => window.__hsScenario.getResults());
     },

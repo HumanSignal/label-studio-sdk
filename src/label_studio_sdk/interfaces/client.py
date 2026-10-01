@@ -112,6 +112,7 @@ class InterfacesClient:
         messages: typing.Optional[typing.Any] = OMIT,
         metadata: typing.Optional[typing.Any] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
+        scenarios: typing.Optional[str] = OMIT,
         versions: typing.Optional[typing.Any] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -154,6 +155,8 @@ class InterfacesClient:
         output_schema : typing.Optional[typing.Any]
             JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
 
+        scenarios : typing.Optional[str]
+
         versions : typing.Optional[typing.Any]
             Code version history
 
@@ -191,6 +194,7 @@ class InterfacesClient:
             messages=messages,
             metadata=metadata,
             output_schema=output_schema,
+            scenarios=scenarios,
             versions=versions,
             workspace=workspace,
             request_options=request_options,
@@ -248,6 +252,7 @@ class InterfacesClient:
         messages: typing.Optional[typing.Any] = OMIT,
         metadata: typing.Optional[typing.Any] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
+        scenarios: typing.Optional[str] = OMIT,
         versions: typing.Optional[typing.Any] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -293,6 +298,8 @@ class InterfacesClient:
         output_schema : typing.Optional[typing.Any]
             JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
 
+        scenarios : typing.Optional[str]
+
         versions : typing.Optional[typing.Any]
             Code version history
 
@@ -332,6 +339,7 @@ class InterfacesClient:
             messages=messages,
             metadata=metadata,
             output_schema=output_schema,
+            scenarios=scenarios,
             versions=versions,
             workspace=workspace,
             request_options=request_options,
@@ -387,6 +395,7 @@ class InterfacesClient:
         messages: typing.Optional[typing.Any] = OMIT,
         metadata: typing.Optional[typing.Any] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
+        scenarios: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         versions: typing.Optional[typing.Any] = OMIT,
         workspace: typing.Optional[int] = OMIT,
@@ -431,6 +440,8 @@ class InterfacesClient:
         output_schema : typing.Optional[typing.Any]
             JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
 
+        scenarios : typing.Optional[str]
+
         title : typing.Optional[str]
 
         versions : typing.Optional[typing.Any]
@@ -468,6 +479,7 @@ class InterfacesClient:
             messages=messages,
             metadata=metadata,
             output_schema=output_schema,
+            scenarios=scenarios,
             title=title,
             versions=versions,
             workspace=workspace,
@@ -488,6 +500,7 @@ class InterfacesClient:
         messages: typing.Optional[typing.Any] = OMIT,
         metadata: typing.Optional[typing.Any] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
+        scenarios: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseInterface:
@@ -522,6 +535,8 @@ class InterfacesClient:
         metadata : typing.Optional[typing.Any]
 
         output_schema : typing.Optional[typing.Any]
+
+        scenarios : typing.Optional[str]
 
         title : typing.Optional[str]
 
@@ -561,6 +576,7 @@ class InterfacesClient:
             messages=messages,
             metadata=metadata,
             output_schema=output_schema,
+            scenarios=scenarios,
             title=title,
             request_options=request_options,
         )
@@ -886,6 +902,7 @@ class AsyncInterfacesClient:
         messages: typing.Optional[typing.Any] = OMIT,
         metadata: typing.Optional[typing.Any] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
+        scenarios: typing.Optional[str] = OMIT,
         versions: typing.Optional[typing.Any] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -927,6 +944,8 @@ class AsyncInterfacesClient:
 
         output_schema : typing.Optional[typing.Any]
             JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
+
+        scenarios : typing.Optional[str]
 
         versions : typing.Optional[typing.Any]
             Code version history
@@ -973,6 +992,7 @@ class AsyncInterfacesClient:
             messages=messages,
             metadata=metadata,
             output_schema=output_schema,
+            scenarios=scenarios,
             versions=versions,
             workspace=workspace,
             request_options=request_options,
@@ -1038,6 +1058,7 @@ class AsyncInterfacesClient:
         messages: typing.Optional[typing.Any] = OMIT,
         metadata: typing.Optional[typing.Any] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
+        scenarios: typing.Optional[str] = OMIT,
         versions: typing.Optional[typing.Any] = OMIT,
         workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1082,6 +1103,8 @@ class AsyncInterfacesClient:
 
         output_schema : typing.Optional[typing.Any]
             JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
+
+        scenarios : typing.Optional[str]
 
         versions : typing.Optional[typing.Any]
             Code version history
@@ -1130,6 +1153,7 @@ class AsyncInterfacesClient:
             messages=messages,
             metadata=metadata,
             output_schema=output_schema,
+            scenarios=scenarios,
             versions=versions,
             workspace=workspace,
             request_options=request_options,
@@ -1193,6 +1217,7 @@ class AsyncInterfacesClient:
         messages: typing.Optional[typing.Any] = OMIT,
         metadata: typing.Optional[typing.Any] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
+        scenarios: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         versions: typing.Optional[typing.Any] = OMIT,
         workspace: typing.Optional[int] = OMIT,
@@ -1236,6 +1261,8 @@ class AsyncInterfacesClient:
 
         output_schema : typing.Optional[typing.Any]
             JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
+
+        scenarios : typing.Optional[str]
 
         title : typing.Optional[str]
 
@@ -1282,6 +1309,7 @@ class AsyncInterfacesClient:
             messages=messages,
             metadata=metadata,
             output_schema=output_schema,
+            scenarios=scenarios,
             title=title,
             versions=versions,
             workspace=workspace,
@@ -1302,6 +1330,7 @@ class AsyncInterfacesClient:
         messages: typing.Optional[typing.Any] = OMIT,
         metadata: typing.Optional[typing.Any] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
+        scenarios: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseInterface:
@@ -1336,6 +1365,8 @@ class AsyncInterfacesClient:
         metadata : typing.Optional[typing.Any]
 
         output_schema : typing.Optional[typing.Any]
+
+        scenarios : typing.Optional[str]
 
         title : typing.Optional[str]
 
@@ -1383,6 +1414,7 @@ class AsyncInterfacesClient:
             messages=messages,
             metadata=metadata,
             output_schema=output_schema,
+            scenarios=scenarios,
             title=title,
             request_options=request_options,
         )

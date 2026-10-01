@@ -32,6 +32,7 @@ class LseInterfaceAppendVersionRequest(UncheckedBaseModel):
     params_schema: typing_extensions.Annotated[
         typing.Optional[typing.Any], FieldMetadata(alias="paramsSchema"), pydantic.Field(alias="paramsSchema")
     ] = None
+    scenarios: typing.Optional[str] = None
     screen_params: typing_extensions.Annotated[
         typing.Optional[typing.Any], FieldMetadata(alias="screenParams"), pydantic.Field(alias="screenParams")
     ] = None

@@ -45,6 +45,7 @@ class LseInterfaceRequest(UncheckedBaseModel):
     JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
     """
 
+    scenarios: typing.Optional[str] = None
     title: str
     versions: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """

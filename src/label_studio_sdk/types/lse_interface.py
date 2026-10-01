@@ -56,6 +56,7 @@ class LseInterface(UncheckedBaseModel):
     """
 
     projects_count: typing.Optional[int] = None
+    scenarios: typing.Optional[str] = None
     title: str
     updated_at: typing.Optional[dt.datetime] = None
     versions: typing.Optional[typing.Any] = pydantic.Field(default=None)

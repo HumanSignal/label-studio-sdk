@@ -384,6 +384,31 @@ def _print_static_report(file: Path, report: dict[str, Any], *, overall_ok: bool
         typer.echo(f"  specVersion: {metadata['specVersion']}")
 
 
+_STEP_MARKERS = {
+    "passed": ("ok  ", typer.colors.GREEN),
+    "failed": ("FAIL", typer.colors.RED),
+    "skipped": ("skip", typer.colors.YELLOW),
+    "not-reached": ("--  ", typer.colors.BRIGHT_BLACK),
+}
+
+
+def _print_scenario_steps(scenario: dict[str, Any]) -> None:
+    """Prints the step trail with each failure at the boundary it happened on."""
+    steps = scenario.get("steps") or []
+    if not steps:
+        return
+    errors = [error for error in scenario.get("errors") or [] if isinstance(error, dict)]
+    for index, step in enumerate(steps, start=1):
+        for error in errors:
+            if error.get("stepKey") != step.get("key"):
+                continue
+            line = f"        error [{error.get('stage', 'scenario')}]: {error.get('message', '')}"
+            typer.echo(typer.style(line, fg=typer.colors.RED), err=True)
+        marker, color = _STEP_MARKERS.get(step.get("status", "not-reached"), ("?   ", typer.colors.WHITE))
+        label = step.get("label") or step.get("template") or step.get("key", "")
+        typer.echo(typer.style(f"      {marker} {index}. {label}", fg=color))
+
+
 def _print_scenario_report(report: dict[str, Any]) -> None:
     scenario_count = len(report.get("scenarios") or [])
     if scenario_count:
@@ -394,10 +419,18 @@ def _print_scenario_report(report: dict[str, Any]) -> None:
     for scenario in report.get("scenarios") or []:
         name = scenario.get("name") or "<unnamed>"
         color = typer.colors.GREEN if scenario.get("ok") else typer.colors.RED
-        typer.echo(typer.style(f"    {'OK' if scenario.get('ok') else 'FAIL'} {name}", fg=color))
+        steps = scenario.get("steps") or []
+        failed_at = next((index for index, step in enumerate(steps, start=1) if step.get("status") == "failed"), None)
+        summary = f" (failed at step {failed_at} of {len(steps)})" if failed_at else ""
+        typer.echo(typer.style(f"    {'OK' if scenario.get('ok') else 'FAIL'} {name}{summary}", fg=color))
+        _print_scenario_steps(scenario)
+        step_keys = {step.get("key") for step in steps}
         for error in scenario.get("errors") or []:
             stage = error.get("stage", "scenario") if isinstance(error, dict) else "scenario"
             message = error.get("message", "") if isinstance(error, dict) else str(error)
+            # Errors tied to a step were already printed next to it.
+            if isinstance(error, dict) and error.get("stepKey") in step_keys:
+                continue
             typer.echo(typer.style(f"      error [{stage}]: {message}", fg=typer.colors.RED), err=True)
         for warning in scenario.get("warnings") or []:
             stage = warning.get("stage", "scenario") if isinstance(warning, dict) else "scenario"
@@ -1386,7 +1419,7 @@ function parseResults(results) {
   inputSchema: {
     type: "object",
     properties: {
-      text: { type: "dataField", default: "text" },
+      text: { type: "dataField", dataType: "string", default: "text" },
     },
   },
   outputSchema: {
@@ -1411,7 +1444,13 @@ SCENARIO_TEMPLATE = """export default [
         text: "The interface CLI is ready to use."
       }
     },
-    async run({ page }) {
+    // Declaration order is execution order. Each step must run exactly once and
+    // unconditionally, so the whole plan is known before the scenario runs.
+    steps: {
+      pick: (label) => `select the ${label} sentiment`
+    },
+    async run({ page, step }) {
+      step.pick("Positive");
       await page.getByRole("button", { name: "Positive" }).click();
     },
     expect: {
