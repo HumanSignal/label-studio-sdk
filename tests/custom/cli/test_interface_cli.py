@@ -746,6 +746,81 @@ def test_preview_watches_and_discovers_task_file_later(monkeypatch: Any, tmp_pat
     assert updates[1]["task"] == {"text": "Discovered Task"}
 
 
+def _png_data_uri(content: bytes) -> str:
+    return f"data:image/png;base64,{base64.b64encode(content).decode('utf-8')}"
+
+
+def test_preview_reembeds_local_media_added_after_task(monkeypatch: Any, tmp_path: Path) -> None:
+    """FIT-2986: task.json written before its media file must load once the file lands."""
+    file = tmp_path / "Screen.jsx"
+    file.write_text("({ default: function Screen() { return null; } })", encoding="utf-8")
+    (tmp_path / "task.json").write_text('{"image": "photo.png"}', encoding="utf-8")
+    image = tmp_path / "photo.png"
+
+    def fake_watch(*paths: Path, **kwargs: Any) -> Any:
+        image.write_bytes(b"late image")
+        yield [("added", str(image))]
+        raise KeyboardInterrupt
+
+    _reset_fake_http()
+    _mock_preview_runtime(monkeypatch)
+    monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=fake_watch))
+
+    result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
+
+    assert result.exit_code == 0, result.output
+    updates = FakePreviewServer.instances[-1].updates
+    assert updates[0]["task"] == {"image": "photo.png"}
+    assert len(updates) == 2
+    assert updates[1]["task"] == {"image": _png_data_uri(b"late image")}
+
+
+def test_preview_reembeds_local_media_when_file_changes(monkeypatch: Any, tmp_path: Path) -> None:
+    file = tmp_path / "Screen.jsx"
+    file.write_text("({ default: function Screen() { return null; } })", encoding="utf-8")
+    (tmp_path / "task.json").write_text('{"image": "photo.png"}', encoding="utf-8")
+    image = tmp_path / "photo.png"
+    image.write_bytes(b"first image")
+
+    def fake_watch(*paths: Path, **kwargs: Any) -> Any:
+        image.write_bytes(b"second image")
+        yield [("modified", str(image))]
+        raise KeyboardInterrupt
+
+    _reset_fake_http()
+    _mock_preview_runtime(monkeypatch)
+    monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=fake_watch))
+
+    result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
+
+    assert result.exit_code == 0, result.output
+    updates = FakePreviewServer.instances[-1].updates
+    assert updates[0]["task"] == {"image": _png_data_uri(b"first image")}
+    assert len(updates) == 2
+    assert updates[1]["task"] == {"image": _png_data_uri(b"second image")}
+
+
+def test_preview_ignores_changes_to_unreferenced_files(monkeypatch: Any, tmp_path: Path) -> None:
+    file = tmp_path / "Screen.jsx"
+    file.write_text("({ default: function Screen() { return null; } })", encoding="utf-8")
+    (tmp_path / "task.json").write_text('{"image": "photo.png"}', encoding="utf-8")
+    other = tmp_path / "notes.png"
+
+    def fake_watch(*paths: Path, **kwargs: Any) -> Any:
+        other.write_bytes(b"unrelated")
+        yield [("added", str(other))]
+        raise KeyboardInterrupt
+
+    _reset_fake_http()
+    _mock_preview_runtime(monkeypatch)
+    monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=fake_watch))
+
+    result = runner.invoke(interface_cli.app, ["preview", str(tmp_path), "--lse-url", "http://ls", "--no-open"])
+
+    assert result.exit_code == 0, result.output
+    assert len(FakePreviewServer.instances[-1].updates) == 1
+
+
 def test_doctor_reports_cache_identity_and_separates_reachability_from_api_auth(
     monkeypatch: Any, tmp_path: Path
 ) -> None:

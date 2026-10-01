@@ -209,16 +209,50 @@ def _resolve_local_paths(data: Any, base_dirs: list[Path]) -> Any:
     return data
 
 
+def _task_base_dirs(task_path: Path | None) -> list[Path]:
+    base_dirs = [Path.cwd()]
+    if task_path is not None:
+        base_dirs.insert(0, task_path.parent)
+    return base_dirs
+
+
+def _local_path_candidates(data: Any, base_dirs: list[Path]) -> set[Path]:
+    """Every file a task string could embed via `_resolve_local_paths`, whether or not it exists yet."""
+    if isinstance(data, dict):
+        return set().union(*(_local_path_candidates(v, base_dirs) for v in data.values()))
+    if isinstance(data, list):
+        return set().union(*(_local_path_candidates(x, base_dirs) for x in data))
+    if not isinstance(data, str) or not data or "\x00" in data or "\n" in data:
+        return set()
+    if data.startswith(("http://", "https://", "data:")):
+        return set()
+    try:
+        p = Path(data)
+        if not p.suffix:
+            return set()
+        return {(p if p.is_absolute() else base_dir / p).resolve() for base_dir in base_dirs}
+    except (OSError, ValueError, RuntimeError):
+        return set()
+
+
+def _task_local_file_refs(task_path: Path | None) -> set[Path]:
+    """Local media a task references, so preview re-embeds it when the file appears or changes (FIT-2986)."""
+    if task_path is None:
+        return set()
+    try:
+        raw = json.loads(task_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return set()
+    return _local_path_candidates(raw, _task_base_dirs(task_path))
+
+
 def _load_task(task_path: Path | None) -> dict[str, Any] | None:
     task = _load_json_file(task_path, label="task file")
     if task is not None and not isinstance(task, dict):
         typer.echo("error: --task must decode to a JSON object", err=True)
         raise typer.Exit(code=2)
     if task is not None:
-        base_dirs = [Path.cwd()]
-        if task_path is not None:
-            base_dirs.insert(0, task_path.parent)
-        task = _resolve_local_paths(task, base_dirs)
+        task = _resolve_local_paths(task, _task_base_dirs(task_path))
         _warn_unresolved_local_media_in_task(task)
     return task
 
@@ -974,6 +1008,7 @@ def preview(
 
             try:
                 current_task_data = task_data
+                task_media_refs = _task_local_file_refs(task)
                 watch_dir = file.parent
                 for changes in watch(watch_dir, step=200, recursive=False):
                     changed_paths = {Path(path).resolve() for _, path in changes}
@@ -985,7 +1020,8 @@ def preview(
                             task = resolved_task.resolve()
                             task_changed = True
                     else:
-                        task_changed = task in changed_paths
+                        # Media copied in after task.json (or replaced) must re-embed, not wait for a task save.
+                        task_changed = task in changed_paths or not changed_paths.isdisjoint(task_media_refs)
 
                     if not file_changed and not task_changed:
                         continue
@@ -999,6 +1035,7 @@ def preview(
                         continue
                     if task_changed and task is not None:
                         current_task_data = _load_task(task)
+                        task_media_refs = _task_local_file_refs(task)
                     # Sidecar may be written by sync/Save after preview started; refresh each publish.
                     interface_id = _sidecar_interface_id_for_origin(file, base)
                     workspace_id = _sidecar_workspace_for_origin(file, base)
