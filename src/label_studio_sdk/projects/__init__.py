@@ -17,7 +17,7 @@ if typing.TYPE_CHECKING:
         PatchedLseProjectUpdateRequestDmColumnDefaultsExplore,
         PatchedLseProjectUpdateRequestDmColumnDefaultsLabeling,
     )
-    from . import assignments, exports, members, metrics, pauses, review_routing_rules, roles, stats
+    from . import assignments, exports, imports, members, metrics, pauses, reimports, review_routing_rules, roles, stats
     from .assignments import (
         BulkAssignAssignmentsResponse,
         BulkTaskAssigneesRequestRequestSelectedItems,
@@ -122,9 +122,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsersReviewScoreStatsResponseReviewScoreValue": ".stats",
     "assignments": ".assignments",
     "exports": ".exports",
+    "imports": ".imports",
     "members": ".members",
     "metrics": ".metrics",
     "pauses": ".pauses",
+    "reimports": ".reimports",
     "review_routing_rules": ".review_routing_rules",
     "roles": ".roles",
     "stats": ".stats",
@@ -208,9 +210,11 @@ __all__ = [
     "UsersReviewScoreStatsResponseReviewScoreValue",
     "assignments",
     "exports",
+    "imports",
     "members",
     "metrics",
     "pauses",
+    "reimports",
     "review_routing_rules",
     "roles",
     "stats",

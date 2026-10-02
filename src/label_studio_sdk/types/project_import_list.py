@@ -9,24 +9,18 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .project_import_status_enum import ProjectImportStatusEnum
 
 
-class ProjectImport(UncheckedBaseModel):
+class ProjectImportList(UncheckedBaseModel):
     """
-    Detail serializer for async project imports.
-
-    Note: ``tasks`` (raw request payload) is intentionally omitted from the public
-    API for payload size and data-exposure safety. Use ``task_ids`` when
-    ``return_task_ids`` was requested on create.
+    Slim list serializer — excludes large fields like task_ids.
     """
 
     annotation_count: typing.Optional[int] = None
     commit_to_project: typing.Optional[bool] = None
-    could_be_tasks_list: typing.Optional[bool] = None
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
     """
 
-    data_columns: typing.Optional[typing.Any] = None
     duration: typing.Optional[int] = None
     error: typing.Optional[str] = None
     file_upload_ids: typing.Optional[typing.Any] = None
@@ -35,21 +29,15 @@ class ProjectImport(UncheckedBaseModel):
     Complete or fail time
     """
 
-    found_formats: typing.Optional[typing.Any] = None
     id: typing.Optional[int] = None
-    preannotated_from_fields: typing.Optional[typing.Any] = None
     prediction_count: typing.Optional[int] = None
     project: typing.Optional[int] = None
-    return_task_ids: typing.Optional[bool] = None
     status: typing.Optional[ProjectImportStatusEnum] = None
     task_count: typing.Optional[int] = None
-    task_ids: typing.Optional[typing.Any] = None
     updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last time import progress or terminal status was updated
     """
-
-    url: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

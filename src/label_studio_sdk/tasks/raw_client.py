@@ -46,14 +46,17 @@ class RawTasksClient:
                     4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
 
                     This endpoint returns detailed information about the import including task counts, status, and any error messages.
+                    While an import is running, `task_count` / annotation / prediction counts update as batches commit.
+                    Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
 
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this project import.
+            A unique integer value identifying this project.
 
         import_pk : int
+            A unique integer value identifying this project import.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -836,14 +839,17 @@ class AsyncRawTasksClient:
                     4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
 
                     This endpoint returns detailed information about the import including task counts, status, and any error messages.
+                    While an import is running, `task_count` / annotation / prediction counts update as batches commit.
+                    Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
 
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this project import.
+            A unique integer value identifying this project.
 
         import_pk : int
+            A unique integer value identifying this project import.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

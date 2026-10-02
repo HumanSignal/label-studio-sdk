@@ -13898,6 +13898,8 @@ client.projects.validate_label_config(
             4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
             
             This endpoint returns detailed information about the import including task counts, status, and any error messages.
+            While an import is running, `task_count` / annotation / prediction counts update as batches commit.
+            Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
         
 </dd>
 </dl>
@@ -13940,7 +13942,7 @@ client.tasks.create_many_status(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project import.
+**id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -13948,7 +13950,7 @@ client.tasks.create_many_status(
 <dl>
 <dd>
 
-**import_pk:** `int` 
+**import_pk:** `int` — A unique integer value identifying this project import.
     
 </dd>
 </dl>
@@ -39110,6 +39112,104 @@ client.projects.exports.download(...)
 </dl>
 </details>
 
+## Projects Imports
+<details><summary><code>client.projects.imports.<a href="src/label_studio_sdk/projects/imports/client.py">list</a>(...) -> PaginatedProjectImportListList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List asynchronous import jobs for a project (paginated). Optionally filter by `status`. Use `page` / `page_size` query params.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
+
+client = LabelStudio(
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
+)
+
+client.projects.imports.list(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — Page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results per page (max 100).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[str]` — Filter by import status (created, in_progress, failed, completed).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Projects Members
 <details><summary><code>client.projects.members.<a href="src/label_studio_sdk/projects/members/client.py">add</a>(...) -> ProjectMember</code></summary>
 <dl>
@@ -39606,6 +39706,198 @@ client.projects.metrics.update(
 <dd>
 
 **metric_name:** `typing.Optional[str]` — Agreement metric
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Projects Reimports
+<details><summary><code>client.projects.reimports.<a href="src/label_studio_sdk/projects/reimports/client.py">list</a>(...) -> PaginatedProjectReimportListList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List asynchronous reimport jobs for a project (paginated). Optionally filter by `status`. Use `page` / `page_size` query params.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
+
+client = LabelStudio(
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
+)
+
+client.projects.reimports.list(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — Page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results per page (max 100).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[str]` — Filter by reimport status (created, in_progress, failed, completed).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.reimports.<a href="src/label_studio_sdk/projects/reimports/client.py">get</a>(...) -> ProjectReimport</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+            Poll the status of an asynchronous project reimport operation.
+            
+            **Usage:**
+            1. When you POST to reimport tasks, you'll receive a response with a reimport ID
+            2. Use that `reimport_id` with this GET endpoint to check the reimport status
+            3. Poll this endpoint to see if the reimport has completed, is still processing, or has failed
+            4. **Reimport errors and failures will only be visible in this GET response**, not in the original POST request
+            
+            This endpoint returns detailed information about the reimport including task counts, status, and any error messages.
+            While a reimport is running, `task_count` / annotation / prediction counts update as batches commit.
+            Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
+
+client = LabelStudio(
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
+)
+
+client.projects.reimports.get(
+    id=1,
+    reimport_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reimport_pk:** `int` — A unique integer value identifying this project reimport.
     
 </dd>
 </dl>

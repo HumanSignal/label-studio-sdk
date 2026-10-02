@@ -37,9 +37,11 @@ from .types.patched_lse_project_update_request_dm_column_defaults import Patched
 if typing.TYPE_CHECKING:
     from .assignments.client import AssignmentsClient, AsyncAssignmentsClient
     from .exports.client import AsyncExportsClient, ExportsClient
+    from .imports.client import AsyncImportsClient, ImportsClient
     from .members.client import AsyncMembersClient, MembersClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
     from .pauses.client import AsyncPausesClient, PausesClient
+    from .reimports.client import AsyncReimportsClient, ReimportsClient
     from .review_routing_rules.client import AsyncReviewRoutingRulesClient, ReviewRoutingRulesClient
     from .roles.client import AsyncRolesClient, RolesClient
     from .stats.client import AsyncStatsClient, StatsClient
@@ -54,8 +56,10 @@ class ProjectsClient:
         self._roles: typing.Optional[RolesClient] = None
         self._stats: typing.Optional[StatsClient] = None
         self._exports: typing.Optional[ExportsClient] = None
+        self._imports: typing.Optional[ImportsClient] = None
         self._members: typing.Optional[MembersClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
+        self._reimports: typing.Optional[ReimportsClient] = None
         self._review_routing_rules: typing.Optional[ReviewRoutingRulesClient] = None
         self._assignments: typing.Optional[AssignmentsClient] = None
         self._pauses: typing.Optional[PausesClient] = None
@@ -1240,6 +1244,14 @@ class ProjectsClient:
         return self._exports
 
     @property
+    def imports(self):
+        if self._imports is None:
+            from .imports.client import ImportsClient  # noqa: E402
+
+            self._imports = ImportsClient(client_wrapper=self._client_wrapper)
+        return self._imports
+
+    @property
     def members(self):
         if self._members is None:
             from .members.client import MembersClient  # noqa: E402
@@ -1254,6 +1266,14 @@ class ProjectsClient:
 
             self._metrics = MetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
+
+    @property
+    def reimports(self):
+        if self._reimports is None:
+            from .reimports.client import ReimportsClient  # noqa: E402
+
+            self._reimports = ReimportsClient(client_wrapper=self._client_wrapper)
+        return self._reimports
 
     @property
     def review_routing_rules(self):
@@ -1287,8 +1307,10 @@ class AsyncProjectsClient:
         self._roles: typing.Optional[AsyncRolesClient] = None
         self._stats: typing.Optional[AsyncStatsClient] = None
         self._exports: typing.Optional[AsyncExportsClient] = None
+        self._imports: typing.Optional[AsyncImportsClient] = None
         self._members: typing.Optional[AsyncMembersClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
+        self._reimports: typing.Optional[AsyncReimportsClient] = None
         self._review_routing_rules: typing.Optional[AsyncReviewRoutingRulesClient] = None
         self._assignments: typing.Optional[AsyncAssignmentsClient] = None
         self._pauses: typing.Optional[AsyncPausesClient] = None
@@ -2562,6 +2584,14 @@ class AsyncProjectsClient:
         return self._exports
 
     @property
+    def imports(self):
+        if self._imports is None:
+            from .imports.client import AsyncImportsClient  # noqa: E402
+
+            self._imports = AsyncImportsClient(client_wrapper=self._client_wrapper)
+        return self._imports
+
+    @property
     def members(self):
         if self._members is None:
             from .members.client import AsyncMembersClient  # noqa: E402
@@ -2576,6 +2606,14 @@ class AsyncProjectsClient:
 
             self._metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
+
+    @property
+    def reimports(self):
+        if self._reimports is None:
+            from .reimports.client import AsyncReimportsClient  # noqa: E402
+
+            self._reimports = AsyncReimportsClient(client_wrapper=self._client_wrapper)
+        return self._reimports
 
     @property
     def review_routing_rules(self):
