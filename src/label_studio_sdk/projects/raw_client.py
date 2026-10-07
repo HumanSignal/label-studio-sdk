@@ -185,6 +185,8 @@ class RawProjectsClient:
     def create(
         self,
         *,
+        annotator_column_access_grant: typing.Optional[typing.Sequence[str]] = OMIT,
+        annotator_column_access_revoke: typing.Optional[typing.Sequence[str]] = OMIT,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         collection_mode: typing.Optional[CollectionModeEnum] = OMIT,
         color: typing.Optional[str] = OMIT,
@@ -211,6 +213,8 @@ class RawProjectsClient:
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        reviewer_column_access_grant: typing.Optional[typing.Sequence[str]] = OMIT,
+        reviewer_column_access_revoke: typing.Optional[typing.Sequence[str]] = OMIT,
         sampling: typing.Optional[ProjectSamplingEnum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
@@ -233,6 +237,12 @@ class RawProjectsClient:
 
         Parameters
         ----------
+        annotator_column_access_grant : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
+        annotator_column_access_revoke : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
         annotator_evaluation_enabled : typing.Optional[bool]
             Enable annotator evaluation for the project
 
@@ -306,6 +316,12 @@ class RawProjectsClient:
         reveal_preannotations_interactively : typing.Optional[bool]
             Reveal pre-annotations interactively
 
+        reviewer_column_access_grant : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
+        reviewer_column_access_revoke : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
         sampling : typing.Optional[ProjectSamplingEnum]
 
         show_annotation_history : typing.Optional[bool]
@@ -358,6 +374,8 @@ class RawProjectsClient:
             "api/projects/",
             method="POST",
             json={
+                "annotator_column_access_grant": annotator_column_access_grant,
+                "annotator_column_access_revoke": annotator_column_access_revoke,
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
                 "collection_mode": collection_mode,
                 "color": color,
@@ -394,6 +412,8 @@ class RawProjectsClient:
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pinned_at": pinned_at,
                 "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "reviewer_column_access_grant": reviewer_column_access_grant,
+                "reviewer_column_access_revoke": reviewer_column_access_revoke,
                 "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
@@ -632,6 +652,8 @@ class RawProjectsClient:
         agreement_threshold: typing.Optional[str] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
+        annotator_column_access_grant: typing.Optional[typing.Sequence[str]] = OMIT,
+        annotator_column_access_revoke: typing.Optional[typing.Sequence[str]] = OMIT,
         annotator_evaluation_continuous_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         annotator_evaluation_metric: typing.Optional[AnnotatorEvaluationMetricEnum] = OMIT,
@@ -670,6 +692,8 @@ class RawProjectsClient:
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
         review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
+        reviewer_column_access_grant: typing.Optional[typing.Sequence[str]] = OMIT,
+        reviewer_column_access_revoke: typing.Optional[typing.Sequence[str]] = OMIT,
         sampling: typing.Optional[ProjectSamplingEnum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
@@ -713,6 +737,12 @@ class RawProjectsClient:
 
         annotation_limit_percent : typing.Optional[str]
             Limit by percentage of tasks
+
+        annotator_column_access_grant : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
+        annotator_column_access_revoke : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
 
         annotator_evaluation_continuous_tasks : typing.Optional[int]
             Continuous Evaluation: Required tasks
@@ -823,6 +853,12 @@ class RawProjectsClient:
 
         review_settings : typing.Optional[ReviewSettingsRequest]
 
+        reviewer_column_access_grant : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
+        reviewer_column_access_revoke : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
         sampling : typing.Optional[ProjectSamplingEnum]
 
         show_annotation_history : typing.Optional[bool]
@@ -889,6 +925,8 @@ class RawProjectsClient:
                 "agreement_threshold": agreement_threshold,
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,
+                "annotator_column_access_grant": annotator_column_access_grant,
+                "annotator_column_access_revoke": annotator_column_access_revoke,
                 "annotator_evaluation_continuous_tasks": annotator_evaluation_continuous_tasks,
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
                 "annotator_evaluation_metric": annotator_evaluation_metric,
@@ -941,6 +979,8 @@ class RawProjectsClient:
                 "review_settings": convert_and_respect_annotation_metadata(
                     object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
                 ),
+                "reviewer_column_access_grant": reviewer_column_access_grant,
+                "reviewer_column_access_revoke": reviewer_column_access_revoke,
                 "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
@@ -1525,6 +1565,8 @@ class AsyncRawProjectsClient:
     async def create(
         self,
         *,
+        annotator_column_access_grant: typing.Optional[typing.Sequence[str]] = OMIT,
+        annotator_column_access_revoke: typing.Optional[typing.Sequence[str]] = OMIT,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         collection_mode: typing.Optional[CollectionModeEnum] = OMIT,
         color: typing.Optional[str] = OMIT,
@@ -1551,6 +1593,8 @@ class AsyncRawProjectsClient:
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        reviewer_column_access_grant: typing.Optional[typing.Sequence[str]] = OMIT,
+        reviewer_column_access_revoke: typing.Optional[typing.Sequence[str]] = OMIT,
         sampling: typing.Optional[ProjectSamplingEnum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
@@ -1573,6 +1617,12 @@ class AsyncRawProjectsClient:
 
         Parameters
         ----------
+        annotator_column_access_grant : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
+        annotator_column_access_revoke : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
         annotator_evaluation_enabled : typing.Optional[bool]
             Enable annotator evaluation for the project
 
@@ -1646,6 +1696,12 @@ class AsyncRawProjectsClient:
         reveal_preannotations_interactively : typing.Optional[bool]
             Reveal pre-annotations interactively
 
+        reviewer_column_access_grant : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
+        reviewer_column_access_revoke : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
         sampling : typing.Optional[ProjectSamplingEnum]
 
         show_annotation_history : typing.Optional[bool]
@@ -1698,6 +1754,8 @@ class AsyncRawProjectsClient:
             "api/projects/",
             method="POST",
             json={
+                "annotator_column_access_grant": annotator_column_access_grant,
+                "annotator_column_access_revoke": annotator_column_access_revoke,
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
                 "collection_mode": collection_mode,
                 "color": color,
@@ -1734,6 +1792,8 @@ class AsyncRawProjectsClient:
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pinned_at": pinned_at,
                 "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "reviewer_column_access_grant": reviewer_column_access_grant,
+                "reviewer_column_access_revoke": reviewer_column_access_revoke,
                 "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,
@@ -1974,6 +2034,8 @@ class AsyncRawProjectsClient:
         agreement_threshold: typing.Optional[str] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
+        annotator_column_access_grant: typing.Optional[typing.Sequence[str]] = OMIT,
+        annotator_column_access_revoke: typing.Optional[typing.Sequence[str]] = OMIT,
         annotator_evaluation_continuous_tasks: typing.Optional[int] = OMIT,
         annotator_evaluation_enabled: typing.Optional[bool] = OMIT,
         annotator_evaluation_metric: typing.Optional[AnnotatorEvaluationMetricEnum] = OMIT,
@@ -2012,6 +2074,8 @@ class AsyncRawProjectsClient:
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
         review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
+        reviewer_column_access_grant: typing.Optional[typing.Sequence[str]] = OMIT,
+        reviewer_column_access_revoke: typing.Optional[typing.Sequence[str]] = OMIT,
         sampling: typing.Optional[ProjectSamplingEnum] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
@@ -2055,6 +2119,12 @@ class AsyncRawProjectsClient:
 
         annotation_limit_percent : typing.Optional[str]
             Limit by percentage of tasks
+
+        annotator_column_access_grant : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
+        annotator_column_access_revoke : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
 
         annotator_evaluation_continuous_tasks : typing.Optional[int]
             Continuous Evaluation: Required tasks
@@ -2165,6 +2235,12 @@ class AsyncRawProjectsClient:
 
         review_settings : typing.Optional[ReviewSettingsRequest]
 
+        reviewer_column_access_grant : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
+        reviewer_column_access_revoke : typing.Optional[typing.Sequence[str]]
+            Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+
         sampling : typing.Optional[ProjectSamplingEnum]
 
         show_annotation_history : typing.Optional[bool]
@@ -2231,6 +2307,8 @@ class AsyncRawProjectsClient:
                 "agreement_threshold": agreement_threshold,
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,
+                "annotator_column_access_grant": annotator_column_access_grant,
+                "annotator_column_access_revoke": annotator_column_access_revoke,
                 "annotator_evaluation_continuous_tasks": annotator_evaluation_continuous_tasks,
                 "annotator_evaluation_enabled": annotator_evaluation_enabled,
                 "annotator_evaluation_metric": annotator_evaluation_metric,
@@ -2283,6 +2361,8 @@ class AsyncRawProjectsClient:
                 "review_settings": convert_and_respect_annotation_metadata(
                     object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
                 ),
+                "reviewer_column_access_grant": reviewer_column_access_grant,
+                "reviewer_column_access_revoke": reviewer_column_access_revoke,
                 "sampling": sampling,
                 "show_annotation_history": show_annotation_history,
                 "show_collab_predictions": show_collab_predictions,

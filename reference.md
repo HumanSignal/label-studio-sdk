@@ -12103,6 +12103,22 @@ client.projects.create()
 <dl>
 <dd>
 
+**annotator_column_access_grant:** `typing.Optional[typing.List[str]]` — Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotator_column_access_revoke:** `typing.Optional[typing.List[str]]` — Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **annotator_evaluation_enabled:** `typing.Optional[bool]` — Enable annotator evaluation for the project
     
 </dd>
@@ -12309,6 +12325,22 @@ Data Collection project mode (assigned or open). Set only at creation; immutable
 <dd>
 
 **reveal_preannotations_interactively:** `typing.Optional[bool]` — Reveal pre-annotations interactively
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reviewer_column_access_grant:** `typing.Optional[typing.List[str]]` — Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reviewer_column_access_revoke:** `typing.Optional[typing.List[str]]` — Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
     
 </dd>
 </dl>
@@ -12867,6 +12899,22 @@ Methodology (Consensus / Pairwise Averaging)
 <dl>
 <dd>
 
+**annotator_column_access_grant:** `typing.Optional[typing.List[str]]` — Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotator_column_access_revoke:** `typing.Optional[typing.List[str]]` — Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **annotator_evaluation_continuous_tasks:** `typing.Optional[int]` — Continuous Evaluation: Required tasks
     
 </dd>
@@ -13170,6 +13218,22 @@ Metric used to evaluate annotators. Defaults to gt_agreement.
 <dd>
 
 **review_settings:** `typing.Optional[ReviewSettingsRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reviewer_column_access_grant:** `typing.Optional[typing.List[str]]` — Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reviewer_column_access_revoke:** `typing.Optional[typing.List[str]]` — Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
     
 </dd>
 </dl>
