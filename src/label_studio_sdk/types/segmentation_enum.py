@@ -3,5 +3,5 @@
 import typing
 
 SegmentationEnum = typing.Union[
-    typing.Literal["none", "time", "user", "project", "matrix", "project_matrix"], typing.Any
+    typing.Literal["none", "time", "user", "project", "matrix", "project_matrix", "user_project"], typing.Any
 ]

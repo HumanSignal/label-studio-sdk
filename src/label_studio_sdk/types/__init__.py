@@ -106,6 +106,8 @@ if typing.TYPE_CHECKING:
     from .kpi_project_segment_values_item import KpiProjectSegmentValuesItem
     from .kpi_time_segment import KpiTimeSegment
     from .kpi_user_info import KpiUserInfo
+    from .kpi_user_project_info import KpiUserProjectInfo
+    from .kpi_user_project_segment import KpiUserProjectSegment
     from .kpi_user_segment import KpiUserSegment
     from .kpi_value import KpiValue
     from .label_distribution_counts_response import LabelDistributionCountsResponse
@@ -441,6 +443,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KpiProjectSegmentValuesItem": ".kpi_project_segment_values_item",
     "KpiTimeSegment": ".kpi_time_segment",
     "KpiUserInfo": ".kpi_user_info",
+    "KpiUserProjectInfo": ".kpi_user_project_info",
+    "KpiUserProjectSegment": ".kpi_user_project_segment",
     "KpiUserSegment": ".kpi_user_segment",
     "KpiValue": ".kpi_value",
     "LabelDistributionCountsResponse": ".label_distribution_counts_response",
@@ -784,6 +788,8 @@ __all__ = [
     "KpiProjectSegmentValuesItem",
     "KpiTimeSegment",
     "KpiUserInfo",
+    "KpiUserProjectInfo",
+    "KpiUserProjectSegment",
     "KpiUserSegment",
     "KpiValue",
     "LabelDistributionCountsResponse",

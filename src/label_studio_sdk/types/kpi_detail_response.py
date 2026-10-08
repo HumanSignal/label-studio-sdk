@@ -9,6 +9,7 @@ from .kpi_matrix_segment import KpiMatrixSegment
 from .kpi_project_matrix_segment import KpiProjectMatrixSegment
 from .kpi_project_segment import KpiProjectSegment
 from .kpi_time_segment import KpiTimeSegment
+from .kpi_user_project_segment import KpiUserProjectSegment
 from .kpi_user_segment import KpiUserSegment
 from .kpi_value import KpiValue
 from .segmentation_enum import SegmentationEnum
@@ -28,6 +29,11 @@ class KpiDetailResponse(UncheckedBaseModel):
     by_user: typing.Optional[KpiUserSegment] = pydantic.Field(default=None)
     """
     User-segmented data (compact format with parallel arrays)
+    """
+
+    by_user_project: typing.Optional[KpiUserProjectSegment] = pydantic.Field(default=None)
+    """
+    Sparse 2D segmentation (user × project)
     """
 
     kpi_key: str = pydantic.Field()
@@ -60,6 +66,7 @@ class KpiDetailResponse(UncheckedBaseModel):
     * `project` - project
     * `matrix` - matrix
     * `project_matrix` - project_matrix
+    * `user_project` - user_project
     """
 
     time_series: typing.Optional[KpiTimeSegment] = pydantic.Field(default=None)

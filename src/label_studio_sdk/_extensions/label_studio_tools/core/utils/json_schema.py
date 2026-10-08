@@ -76,13 +76,13 @@ def json_schema_to_pydantic(json_schema: dict, class_name: str = 'MyModel') -> G
     
     # Create a new module object with the unique name and execute the generated model code in the context of the new module
     mod = types.ModuleType(module_name)
-    exec(model_code, mod.__dict__)
-    model_class = getattr(mod, class_name)
-    
+
     try:
-        # Add the new module to sys.modules to make it importable
-        # This is necessary to avoid Pydantic errors related to undefined models
+        # Register the module before executing the code: Pydantic (>= 2.14) looks the defining module up in
+        # sys.modules while parametrized generics such as RootModel[List[...]] are created at import time.
         sys.modules[module_name] = mod
+        exec(model_code, mod.__dict__)
+        model_class = getattr(mod, class_name)
         logger.debug(f"Generated Pydantic model: {model_class}")
         yield model_class
     finally:
