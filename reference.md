@@ -39570,6 +39570,14 @@ client.projects.members.export_csv(...)
 <dl>
 <dd>
 
+**tags_operator:** `typing.Optional[str]` — How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **user_type:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
@@ -41322,6 +41330,14 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
+**tags_operator:** `typing.Optional[str]` — How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **user_type:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
@@ -41490,6 +41506,14 @@ client.projects.members.bulk.delete(
 <dd>
 
 **tags:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags_operator:** `typing.Optional[str]` — How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
     
 </dd>
 </dl>
@@ -41711,6 +41735,14 @@ Returns users who have any of the specified roles either:
 <dd>
 
 **tags:** `typing.Optional[str]` — Filter members by tags. Use a comma-separated list of tag IDs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags_operator:** `typing.Optional[ListPaginatedRequestTagsOperator]` — How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag).
     
 </dd>
 </dl>

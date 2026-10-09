@@ -125,6 +125,7 @@ class MembersClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        tags_operator: typing.Optional[str] = None,
         user_type: typing.Optional[str] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -166,6 +167,9 @@ class MembersClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        tags_operator : typing.Optional[str]
+            How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+
         user_type : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
@@ -190,6 +194,7 @@ class MembersClient:
             role=role,
             search=search,
             tags=tags,
+            tags_operator=tags_operator,
             user_type=user_type,
             with_deleted=with_deleted,
             request_options=request_options,
@@ -340,6 +345,7 @@ class AsyncMembersClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        tags_operator: typing.Optional[str] = None,
         user_type: typing.Optional[str] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -381,6 +387,9 @@ class AsyncMembersClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        tags_operator : typing.Optional[str]
+            How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+
         user_type : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
@@ -405,6 +414,7 @@ class AsyncMembersClient:
             role=role,
             search=search,
             tags=tags,
+            tags_operator=tags_operator,
             user_type=user_type,
             with_deleted=with_deleted,
             request_options=request_options,

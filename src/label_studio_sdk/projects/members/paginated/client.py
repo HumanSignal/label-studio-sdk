@@ -9,6 +9,7 @@ from ....core.request_options import RequestOptions
 from ....types.paginated_paginated_project_member_list import PaginatedPaginatedProjectMemberList
 from ....types.paginated_project_member import PaginatedProjectMember
 from .raw_client import AsyncRawPaginatedClient, RawPaginatedClient
+from .types.list_paginated_request_tags_operator import ListPaginatedRequestTagsOperator
 
 
 class PaginatedClient:
@@ -42,6 +43,7 @@ class PaginatedClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        tags_operator: typing.Optional[ListPaginatedRequestTagsOperator] = None,
         user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -128,6 +130,9 @@ class PaginatedClient:
         tags : typing.Optional[str]
             Filter members by tags. Use a comma-separated list of tag IDs.
 
+        tags_operator : typing.Optional[ListPaginatedRequestTagsOperator]
+            How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag).
+
         user_type : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Multiple values may be separated by commas.
 
@@ -172,6 +177,7 @@ class PaginatedClient:
             role=role,
             search=search,
             tags=tags,
+            tags_operator=tags_operator,
             user_type=user_type,
             with_deleted=with_deleted,
             request_options=request_options,
@@ -209,6 +215,7 @@ class AsyncPaginatedClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        tags_operator: typing.Optional[ListPaginatedRequestTagsOperator] = None,
         user_type: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -295,6 +302,9 @@ class AsyncPaginatedClient:
         tags : typing.Optional[str]
             Filter members by tags. Use a comma-separated list of tag IDs.
 
+        tags_operator : typing.Optional[ListPaginatedRequestTagsOperator]
+            How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag).
+
         user_type : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Multiple values may be separated by commas.
 
@@ -348,6 +358,7 @@ class AsyncPaginatedClient:
             role=role,
             search=search,
             tags=tags,
+            tags_operator=tags_operator,
             user_type=user_type,
             with_deleted=with_deleted,
             request_options=request_options,

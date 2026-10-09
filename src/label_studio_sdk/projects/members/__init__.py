@@ -8,7 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import bulk, paginated
     from .bulk import DeleteBulkResponse
-_dynamic_imports: typing.Dict[str, str] = {"DeleteBulkResponse": ".bulk", "bulk": ".bulk", "paginated": ".paginated"}
+    from .paginated import ListPaginatedRequestTagsOperator
+_dynamic_imports: typing.Dict[str, str] = {
+    "DeleteBulkResponse": ".bulk",
+    "ListPaginatedRequestTagsOperator": ".paginated",
+    "bulk": ".bulk",
+    "paginated": ".paginated",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -32,4 +38,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["DeleteBulkResponse", "bulk", "paginated"]
+__all__ = ["DeleteBulkResponse", "ListPaginatedRequestTagsOperator", "bulk", "paginated"]

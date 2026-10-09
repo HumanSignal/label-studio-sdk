@@ -34,6 +34,7 @@ class RawBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        tags_operator: typing.Optional[str] = None,
         user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
@@ -71,6 +72,9 @@ class RawBulkClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        tags_operator : typing.Optional[str]
+            How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+
         user_type : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
@@ -100,6 +104,7 @@ class RawBulkClient:
                 "role": role,
                 "search": search,
                 "tags": tags,
+                "tags_operator": tags_operator,
                 "user_type": user_type,
             },
             json={
@@ -147,6 +152,7 @@ class RawBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        tags_operator: typing.Optional[str] = None,
         user_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeleteBulkResponse]:
@@ -187,6 +193,9 @@ class RawBulkClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        tags_operator : typing.Optional[str]
+            How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+
         user_type : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
@@ -210,6 +219,7 @@ class RawBulkClient:
                 "role": role,
                 "search": search,
                 "tags": tags,
+                "tags_operator": tags_operator,
                 "user_type": user_type,
             },
             request_options=request_options,
@@ -248,6 +258,7 @@ class AsyncRawBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        tags_operator: typing.Optional[str] = None,
         user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
@@ -285,6 +296,9 @@ class AsyncRawBulkClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        tags_operator : typing.Optional[str]
+            How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+
         user_type : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
@@ -314,6 +328,7 @@ class AsyncRawBulkClient:
                 "role": role,
                 "search": search,
                 "tags": tags,
+                "tags_operator": tags_operator,
                 "user_type": user_type,
             },
             json={
@@ -361,6 +376,7 @@ class AsyncRawBulkClient:
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
+        tags_operator: typing.Optional[str] = None,
         user_type: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeleteBulkResponse]:
@@ -401,6 +417,9 @@ class AsyncRawBulkClient:
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
+        tags_operator : typing.Optional[str]
+            How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+
         user_type : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
@@ -424,6 +443,7 @@ class AsyncRawBulkClient:
                 "role": role,
                 "search": search,
                 "tags": tags,
+                "tags_operator": tags_operator,
                 "user_type": user_type,
             },
             request_options=request_options,

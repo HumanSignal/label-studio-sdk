@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ListPaginatedRequestTagsOperator
-_dynamic_imports: typing.Dict[str, str] = {"ListPaginatedRequestTagsOperator": ".types"}
+    from .list_paginated_request_tags_operator import ListPaginatedRequestTagsOperator
+_dynamic_imports: typing.Dict[str, str] = {"ListPaginatedRequestTagsOperator": ".list_paginated_request_tags_operator"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
