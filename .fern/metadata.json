@@ -50,8 +50,8 @@
     },
     "pyproject_toml": "[project.scripts]\nlabel-studio-converter = \"label_studio_sdk.converter.main:main\"\nlabel-studio-sdk = \"label_studio_sdk._extensions.cli.main:main\"\n"
   },
-  "originGitCommit": "eb6f8a9662b53f407e9dc50d6b14a8bd549803ff",
+  "originGitCommit": "4150261198eb51719983c3e608197d3044aaa9c8",
   "originGitCommitIsDirty": false,
   "invokedBy": "manual",
-  "sdkVersion": "2.1.5"
+  "sdkVersion": "2.1.6"
 }
