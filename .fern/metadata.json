@@ -37,7 +37,7 @@
       "requests-mock": "1.12.1",
       "numpy": ">=2.2,<3.0.0",
       "opencv-python-headless": ">=4.12.0,<4.13.0",
-      "datamodel-code-generator": ">=0.70.0",
+      "datamodel-code-generator": ">=0.81.0",
       "doclang": ">=0.7.1",
       "jsf": ">=0.11.2,<0.12.0",
       "pyjwt": ">=2.14.0,<3.0.0",
@@ -50,8 +50,8 @@
     },
     "pyproject_toml": "[project.scripts]\nlabel-studio-converter = \"label_studio_sdk.converter.main:main\"\nlabel-studio-sdk = \"label_studio_sdk._extensions.cli.main:main\"\n"
   },
-  "originGitCommit": "794b8b8c3b8d72cf98834bab13e01ce4b777d821",
-  "originGitCommitIsDirty": true,
+  "originGitCommit": "eb6f8a9662b53f407e9dc50d6b14a8bd549803ff",
+  "originGitCommitIsDirty": false,
   "invokedBy": "manual",
-  "sdkVersion": "2.1.4"
+  "sdkVersion": "2.1.5"
 }
