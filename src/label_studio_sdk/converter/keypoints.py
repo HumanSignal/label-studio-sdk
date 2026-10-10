@@ -102,10 +102,17 @@ def process_keypoints_for_coco(keypoint_labels, kp_order, annotation_id, image_i
 
     keypoints = [0] * (len(kp_order) * 3)
 
+    parsed_any = False
     for kp in keypoint_labels:
-        width, height = kp["original_width"], kp["original_height"]
-        x, y = kp['x'] / 100 * width, kp['y'] / 100 * height
-        labels = kp.get('keypointlabels', [])
+        # SAM2 prompt/"ghost" keypoints are stored without coordinates. Skip them
+        # instead of aborting the whole COCO export (see issue #480).
+        try:
+            width, height = kp["original_width"], kp["original_height"]
+            x, y = kp["x"] / 100 * width, kp["y"] / 100 * height
+        except (KeyError, TypeError, ValueError):
+            continue
+        parsed_any = True
+        labels = kp.get("keypointlabels", [])
         v = 2 if labels else 0
         for label in labels:
             if label in kp_order:
@@ -113,6 +120,9 @@ def process_keypoints_for_coco(keypoint_labels, kp_order, annotation_id, image_i
                 keypoints[3 * idx] = int(round(x))
                 keypoints[3 * idx + 1] = int(round(y))
                 keypoints[3 * idx + 2] = v
+
+    if not parsed_any:
+        return None
 
     num_keypoints = sum(1 for i in range(len(kp_order)) if keypoints[3*i + 2] > 0)
 
