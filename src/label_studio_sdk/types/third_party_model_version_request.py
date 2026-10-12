@@ -15,7 +15,6 @@ class ThirdPartyModelVersionRequest(UncheckedBaseModel):
     """
 
     model_provider_connection: typing.Optional[int] = None
-    organization: typing.Optional[int] = None
     parent_model: typing.Optional[int] = pydantic.Field(default=None)
     """
     Parent model interface ID

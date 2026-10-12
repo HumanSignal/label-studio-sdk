@@ -43299,14 +43299,6 @@ client.prompts.versions.update(
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **parent_model:** `typing.Optional[int]` — Parent model interface ID
     
 </dd>

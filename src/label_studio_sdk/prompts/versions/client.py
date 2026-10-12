@@ -122,7 +122,6 @@ class VersionsClient:
         title: str,
         max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -153,8 +152,6 @@ class VersionsClient:
             Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
 
         parent_model : typing.Optional[int]
             Parent model interface ID
@@ -199,7 +196,6 @@ class VersionsClient:
             title=title,
             max_few_shot_examples=max_few_shot_examples,
             model_provider_connection=model_provider_connection,
-            organization=organization,
             parent_model=parent_model,
             provider=provider,
             request_options=request_options,
@@ -294,7 +290,6 @@ class VersionsClient:
         *,
         max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
@@ -321,8 +316,6 @@ class VersionsClient:
             Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
 
         parent_model : typing.Optional[int]
             Parent model interface ID
@@ -372,7 +365,6 @@ class VersionsClient:
             version_id,
             max_few_shot_examples=max_few_shot_examples,
             model_provider_connection=model_provider_connection,
-            organization=organization,
             parent_model=parent_model,
             prompt=prompt,
             provider=provider,
@@ -670,7 +662,6 @@ class AsyncVersionsClient:
         title: str,
         max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -701,8 +692,6 @@ class AsyncVersionsClient:
             Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
 
         parent_model : typing.Optional[int]
             Parent model interface ID
@@ -755,7 +744,6 @@ class AsyncVersionsClient:
             title=title,
             max_few_shot_examples=max_few_shot_examples,
             model_provider_connection=model_provider_connection,
-            organization=organization,
             parent_model=parent_model,
             provider=provider,
             request_options=request_options,
@@ -866,7 +854,6 @@ class AsyncVersionsClient:
         *,
         max_few_shot_examples: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
@@ -893,8 +880,6 @@ class AsyncVersionsClient:
             Max number of few-shot examples to include in prompts. 0 = disabled.
 
         model_provider_connection : typing.Optional[int]
-
-        organization : typing.Optional[int]
 
         parent_model : typing.Optional[int]
             Parent model interface ID
@@ -952,7 +937,6 @@ class AsyncVersionsClient:
             version_id,
             max_few_shot_examples=max_few_shot_examples,
             model_provider_connection=model_provider_connection,
-            organization=organization,
             parent_model=parent_model,
             prompt=prompt,
             provider=provider,
