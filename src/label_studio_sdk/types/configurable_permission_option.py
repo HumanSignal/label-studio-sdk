@@ -14,6 +14,11 @@ class ConfigurablePermissionOption(UncheckedBaseModel):
     label: typing.Optional[str] = None
     options: typing.List[AssignableOrganizationRoleEnum]
     permission: str
+    requires: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Permission a role must also hold for this permission to take effect.
+    """
+
     tooltip: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
