@@ -23,6 +23,7 @@ _ALLOWED_BFF_ROUTES = (
 )
 _PATCH_INTERFACE_RE = re.compile(r"^/api/interfaces/([0-9]+)/$")
 _MAX_BFF_BODY_BYTES = 5 * 1024 * 1024
+_PERMISSION_DENIED_FALLBACK = "You do not have permission to perform this action in Label Studio."
 
 
 def _is_safe_asset_relative(value: str) -> bool:
@@ -238,6 +239,22 @@ class LocalPreviewServer:
         if self._on_interface_bound is not None:
             self._on_interface_bound(payload)
 
+    def _permission_denied_detail(self, content: bytes) -> str:
+        """Upstream 403 ``detail`` for the Save UI, or a generic message if unusable or credential-bearing."""
+        try:
+            payload = json.loads(content)
+        except (TypeError, ValueError):
+            return _PERMISSION_DENIED_FALLBACK
+        detail = payload.get("detail") if isinstance(payload, dict) else None
+        if not isinstance(detail, str) or not detail.strip():
+            return _PERMISSION_DENIED_FALLBACK
+        secrets_in_headers = {
+            part for value in self.auth_headers.values() for part in (value, *value.split()) if len(part) >= 8
+        }
+        if any(secret in detail for secret in secrets_in_headers):
+            return _PERMISSION_DENIED_FALLBACK
+        return detail
+
     def _bff_route_allowed(self, method: str, upstream_path: str) -> bool:
         if method == "GET" and upstream_path == "/api/workspaces/":
             return True
@@ -406,7 +423,11 @@ class LocalPreviewServer:
                     if create_locked:
                         with owner._condition:
                             owner._create_in_flight = False
-                    self._json_error(response.status_code, "Label Studio authentication failed")
+                    if response.status_code == HTTPStatus.FORBIDDEN:
+                        # 403 is a permission verdict (e.g. missing interfaces.author), not an auth failure.
+                        self._json_error(HTTPStatus.FORBIDDEN, owner._permission_denied_detail(response.content))
+                    else:
+                        self._json_error(HTTPStatus.UNAUTHORIZED, "Label Studio authentication failed")
                     return
                 if (
                     method == "POST"

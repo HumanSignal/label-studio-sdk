@@ -309,6 +309,75 @@ def test_save_bff_sanitizes_auth_failures_and_upstream_timeouts(tmp_path: Path) 
     assert response.json() == {"detail": "upstream request failed"}
 
 
+def test_save_bff_surfaces_upstream_permission_denied_detail(tmp_path: Path) -> None:
+    """A 403 from LSE is a permission verdict, not an auth failure: show its detail (FIT-3156)."""
+    requests: list[httpx.Request] = []
+
+    def forbidden(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(
+            403,
+            json={
+                "id": "4b3c",
+                "status_code": 403,
+                "version": "2.37.0",
+                "detail": "You do not have permission to author Interfaces.",
+                "exc_info": None,
+            },
+            request=request,
+        )
+
+    with (
+        httpx.Client(transport=httpx.MockTransport(forbidden)) as upstream_client,
+        LocalPreviewServer(
+            asset_root=_assets(tmp_path),
+            upstream_origin="https://ls.example",
+            auth_headers={"Authorization": "Bearer server-secret"},
+            upstream_client=upstream_client,
+        ) as server,
+    ):
+        bff = f"{server.host_origin}/{server.capability}/bff"
+        first = httpx.post(f"{bff}/api/interfaces/", json={"title": "Demo"})
+        # The create lock is released, so a retry reaches LSE instead of a 409.
+        retry = httpx.post(f"{bff}/api/interfaces/", json={"title": "Demo"})
+
+    assert first.status_code == 403
+    assert first.json() == {"detail": "You do not have permission to author Interfaces."}
+    assert retry.status_code == 403
+    assert len(requests) == 2
+
+
+@pytest.mark.parametrize(
+    "upstream_body",
+    (
+        {"detail": "Bearer server-secret is not allowed"},
+        {"detail": {"nested": "not a string"}},
+        {"no_detail": True},
+        "<html>Forbidden</html>",
+    ),
+)
+def test_save_bff_falls_back_for_unusable_permission_denied_detail(tmp_path: Path, upstream_body: Any) -> None:
+    def forbidden(request: httpx.Request) -> httpx.Response:
+        if isinstance(upstream_body, str):
+            return httpx.Response(403, text=upstream_body, request=request)
+        return httpx.Response(403, json=upstream_body, request=request)
+
+    with (
+        httpx.Client(transport=httpx.MockTransport(forbidden)) as upstream_client,
+        LocalPreviewServer(
+            asset_root=_assets(tmp_path),
+            upstream_origin="https://ls.example",
+            auth_headers={"Authorization": "Bearer server-secret"},
+            upstream_client=upstream_client,
+        ) as server,
+    ):
+        response = httpx.get(f"{server.host_origin}/{server.capability}/bff/api/workspaces/")
+
+    assert response.status_code == 403
+    assert response.json() == {"detail": "You do not have permission to perform this action in Label Studio."}
+    assert "server-secret" not in response.text
+
+
 def test_sse_waiter_receives_later_update(tmp_path: Path) -> None:
     received: dict[str, Any] = {}
     with LocalPreviewServer(asset_root=_assets(tmp_path), upstream_origin="https://ls.example") as server:
