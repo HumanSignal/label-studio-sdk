@@ -454,6 +454,7 @@ class PromptsClient:
         *,
         archived: typing.Optional[bool] = None,
         ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        is_skill_assessment: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -474,6 +475,9 @@ class PromptsClient:
 
         ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
             Multiple values may be separated by commas.
+
+        is_skill_assessment : typing.Optional[bool]
+            Filter by skill assessments
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -515,6 +519,7 @@ class PromptsClient:
         _response = self._raw_client.compatible_projects(
             archived=archived,
             ids=ids,
+            is_skill_assessment=is_skill_assessment,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -1179,6 +1184,7 @@ class AsyncPromptsClient:
         *,
         archived: typing.Optional[bool] = None,
         ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        is_skill_assessment: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -1199,6 +1205,9 @@ class AsyncPromptsClient:
 
         ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
             Multiple values may be separated by commas.
+
+        is_skill_assessment : typing.Optional[bool]
+            Filter by skill assessments
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -1248,6 +1257,7 @@ class AsyncPromptsClient:
         _response = await self._raw_client.compatible_projects(
             archived=archived,
             ids=ids,
+            is_skill_assessment=is_skill_assessment,
             ordering=ordering,
             page=page,
             page_size=page_size,

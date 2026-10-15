@@ -6830,6 +6830,14 @@ client.prompts.compatible_projects()
 <dl>
 <dd>
 
+**is_skill_assessment:** `typing.Optional[bool]` — Filter by skill assessments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
@@ -11968,6 +11976,14 @@ client.projects.list()
 <dl>
 <dd>
 
+**is_skill_assessment:** `typing.Optional[bool]` — Filter by skill assessments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **members_limit:** `typing.Optional[int]` — Maximum number of members to return
     
 </dd>
@@ -12563,6 +12579,14 @@ client.projects.list_counts()
 <dl>
 <dd>
 
+**is_skill_assessment:** `typing.Optional[bool]` — Filter by skill assessments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
@@ -13114,6 +13138,14 @@ Metric used to evaluate annotators. Defaults to gt_agreement.
 <dd>
 
 **is_published:** `typing.Optional[bool]` — Whether or not the project is published to annotators
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_skill_assessment:** `typing.Optional[bool]` — Skill assessment: tests contributors instead of producing work
     
 </dd>
 </dl>

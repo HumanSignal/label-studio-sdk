@@ -533,6 +533,7 @@ class RawPromptsClient:
         *,
         archived: typing.Optional[bool] = None,
         ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        is_skill_assessment: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -553,6 +554,9 @@ class RawPromptsClient:
 
         ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
             Multiple values may be separated by commas.
+
+        is_skill_assessment : typing.Optional[bool]
+            Filter by skill assessments
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -588,6 +592,7 @@ class RawPromptsClient:
             params={
                 "archived": archived,
                 "ids": ",".join(map(str, ids)) if isinstance(ids, (list, tuple, set)) else ids,
+                "is_skill_assessment": is_skill_assessment,
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
@@ -1305,6 +1310,7 @@ class AsyncRawPromptsClient:
         *,
         archived: typing.Optional[bool] = None,
         ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        is_skill_assessment: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -1325,6 +1331,9 @@ class AsyncRawPromptsClient:
 
         ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
             Multiple values may be separated by commas.
+
+        is_skill_assessment : typing.Optional[bool]
+            Filter by skill assessments
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -1360,6 +1369,7 @@ class AsyncRawPromptsClient:
             params={
                 "archived": archived,
                 "ids": ",".join(map(str, ids)) if isinstance(ids, (list, tuple, set)) else ids,
+                "is_skill_assessment": is_skill_assessment,
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,

@@ -82,6 +82,7 @@ class ProjectsClient:
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
+        is_skill_assessment: typing.Optional[bool] = None,
         members_limit: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
@@ -114,6 +115,9 @@ class ProjectsClient:
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        is_skill_assessment : typing.Optional[bool]
+            Filter by skill assessments
 
         members_limit : typing.Optional[int]
             Maximum number of members to return
@@ -169,6 +173,7 @@ class ProjectsClient:
             filter=filter,
             ids=ids,
             include=include,
+            is_skill_assessment=is_skill_assessment,
             members_limit=members_limit,
             ordering=ordering,
             page=page,
@@ -435,6 +440,7 @@ class ProjectsClient:
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
+        is_skill_assessment: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -461,6 +467,9 @@ class ProjectsClient:
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        is_skill_assessment : typing.Optional[bool]
+            Filter by skill assessments
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -508,6 +517,7 @@ class ProjectsClient:
             filter=filter,
             ids=ids,
             include=include,
+            is_skill_assessment=is_skill_assessment,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -624,6 +634,7 @@ class ProjectsClient:
         internal_description: typing.Optional[typing.Any] = OMIT,
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
+        is_skill_assessment: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
         maximum_annotations: typing.Optional[int] = OMIT,
@@ -761,6 +772,9 @@ class ProjectsClient:
 
         is_published : typing.Optional[bool]
             Whether or not the project is published to annotators
+
+        is_skill_assessment : typing.Optional[bool]
+            Skill assessment: tests contributors instead of producing work
 
         label_config : typing.Optional[str]
             Labeling Configuration
@@ -904,6 +918,7 @@ class ProjectsClient:
             internal_description=internal_description,
             is_draft=is_draft,
             is_published=is_published,
+            is_skill_assessment=is_skill_assessment,
             label_config=label_config,
             max_additional_annotators_assignable=max_additional_annotators_assignable,
             maximum_annotations=maximum_annotations,
@@ -1373,6 +1388,7 @@ class AsyncProjectsClient:
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
+        is_skill_assessment: typing.Optional[bool] = None,
         members_limit: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
@@ -1405,6 +1421,9 @@ class AsyncProjectsClient:
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        is_skill_assessment : typing.Optional[bool]
+            Filter by skill assessments
 
         members_limit : typing.Optional[int]
             Maximum number of members to return
@@ -1469,6 +1488,7 @@ class AsyncProjectsClient:
             filter=filter,
             ids=ids,
             include=include,
+            is_skill_assessment=is_skill_assessment,
             members_limit=members_limit,
             ordering=ordering,
             page=page,
@@ -1743,6 +1763,7 @@ class AsyncProjectsClient:
         filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
+        is_skill_assessment: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -1769,6 +1790,9 @@ class AsyncProjectsClient:
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        is_skill_assessment : typing.Optional[bool]
+            Filter by skill assessments
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -1824,6 +1848,7 @@ class AsyncProjectsClient:
             filter=filter,
             ids=ids,
             include=include,
+            is_skill_assessment=is_skill_assessment,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -1956,6 +1981,7 @@ class AsyncProjectsClient:
         internal_description: typing.Optional[typing.Any] = OMIT,
         is_draft: typing.Optional[bool] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
+        is_skill_assessment: typing.Optional[bool] = OMIT,
         label_config: typing.Optional[str] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
         maximum_annotations: typing.Optional[int] = OMIT,
@@ -2093,6 +2119,9 @@ class AsyncProjectsClient:
 
         is_published : typing.Optional[bool]
             Whether or not the project is published to annotators
+
+        is_skill_assessment : typing.Optional[bool]
+            Skill assessment: tests contributors instead of producing work
 
         label_config : typing.Optional[str]
             Labeling Configuration
@@ -2244,6 +2273,7 @@ class AsyncProjectsClient:
             internal_description=internal_description,
             is_draft=is_draft,
             is_published=is_published,
+            is_skill_assessment=is_skill_assessment,
             label_config=label_config,
             max_additional_annotators_assignable=max_additional_annotators_assignable,
             maximum_annotations=maximum_annotations,

@@ -187,6 +187,11 @@ class LseProject(UncheckedBaseModel):
     Whether or not the project is published to annotators
     """
 
+    is_skill_assessment: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Skill assessment: tests contributors instead of producing work
+    """
+
     label_config: typing.Optional[str] = pydantic.Field(default=None)
     """
     Labeling Configuration
