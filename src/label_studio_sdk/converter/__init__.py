@@ -4,4 +4,9 @@ try:
 except ModuleNotFoundError as e:
     print(e)
 
+try:
+    from .exports.appen import to_appen_report  # noqa: F401 — public re-export
+except ModuleNotFoundError as e:
+    print(e)
+
 __version__ = "0.0.59.dev"

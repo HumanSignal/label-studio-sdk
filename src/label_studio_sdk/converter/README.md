@@ -12,8 +12,9 @@ https://github.com/HumanSignal/label-studio-sdk/tree/master/src/label_studio_sdk
 - [Introduction](#introduction)
 - [Examples](#examples)
     - [JSON](#json)
-    - [CSV](#csv)
-    - [JSON-MIN](#json-min)
+- [CSV](#csv)
+- [Appen Full report CSV (`to_appen_report`)](#appen-full-report-csv-to_appen_report)
+- [JSON-MIN](#json-min)
     - [CSV Chat Transcript](#csv-chat-transcript)
     - [CoNLL 2003](#conll-2003)
     - [COCO](#coco)
@@ -90,6 +91,30 @@ The goose neck needs a little coaxing	Neutral
 ```
 
 Use cases: any tasks
+
+#### Appen Full report CSV (`to_appen_report`)
+
+Transform a Label Studio JSON export into an Appen classic job-level **Full** report CSV (`type=full` — one row per judgment/annotation).
+
+```python
+from label_studio_sdk.converter import to_appen_report
+
+csv_text = to_appen_report("exported_tasks.json", mode="full")
+# or: to_appen_report(tasks, mode="full", output="appen_full.csv")
+```
+
+Column order matches classic Appen/CrowdFlower Full downloads: system prefix → answers → source. The system prefix is always:
+
+`_unit_id,_created_at,_golden,_id,_missed,_started_at,_tainted,_channel,_trust,_worker_id,_country,_region,_city,_ip`
+
+**Appen references (parity target):**
+
+- [Results / report types](https://success.appen.com/appen-success-center/dashboards-reports/results) (Full vs Aggregated vs Source)
+- API: `GET https://api.appen.com/v1/jobs/{job_id}.csv?type=full&key={api_key}` ([FAQ](https://success.appen.com/hc/en-us/articles/115000832063-Frequently-Asked-Questions))
+- [Integrating with the API](https://success.appen.com/hc/en-us/articles/202703445-Integrating-with-the-API) (judgment fields ⇔ Full CSV row)
+- [First-time user guide PDF](https://appen-success-center.s3.amazonaws.com/first_time_user_guide/Appen+Platform+First+Time+User+Guide_12-08-2020.pdf) (Full report definition)
+
+Only `mode="full"` is supported. See `exports/appen.py` module docstring and `tests/custom/converter/test_appen_report.py` for allowed diffs vs a live Appen download.
 
 #### JSON-MIN
 JSON-MIN exports now flatten `<Chat>` conversations into plain message objects while preserving metadata such as `createdAt` and `tool_calls`.

@@ -1,0 +1,122 @@
+[
+  {
+    "id": 101,
+    "data": {
+      "text": "hello world",
+      "source_url": "https://example.com/a"
+    },
+    "meta": {},
+    "annotations": [
+      {
+        "id": 1001,
+        "completed_by": {"id": 7, "email": "ann1@example.com"},
+        "created_at": "2024-01-01T10:00:00.000000Z",
+        "updated_at": "2024-01-01T10:00:05.000000Z",
+        "lead_time": 5.0,
+        "was_cancelled": false,
+        "result": [
+          {
+            "from_name": "sentiment",
+            "to_name": "text",
+            "type": "choices",
+            "value": {"choices": ["positive"]}
+          },
+          {
+            "from_name": "comment",
+            "to_name": "text",
+            "type": "textarea",
+            "value": {"text": ["looks good"]}
+          }
+        ]
+      },
+      {
+        "id": 1002,
+        "completed_by": {"id": 8, "email": "ann2@example.com"},
+        "created_at": "2024-01-01T11:00:00.000000Z",
+        "updated_at": "2024-01-01T11:00:03.000000Z",
+        "lead_time": 3.0,
+        "was_cancelled": false,
+        "result": [
+          {
+            "from_name": "sentiment",
+            "to_name": "text",
+            "type": "choices",
+            "value": {"choices": ["negative"]}
+          },
+          {
+            "from_name": "comment",
+            "to_name": "text",
+            "type": "textarea",
+            "value": {"text": ["nope"]}
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "data": {
+      "text": "second unit",
+      "source_url": "https://example.com/b"
+    },
+    "meta": {
+      "_unit_id": 999001,
+      "_trust": 0.95,
+      "_golden": false,
+      "_tainted": false,
+      "_country": "USA",
+      "_region": "CA"
+    },
+    "annotations": [
+      {
+        "id": 1003,
+        "completed_by": {"id": 7, "email": "ann1@example.com"},
+        "created_at": "2024-01-02T09:00:00.000000Z",
+        "updated_at": "2024-01-02T09:00:02.000000Z",
+        "lead_time": 2.0,
+        "was_cancelled": false,
+        "result": [
+          {
+            "from_name": "sentiment",
+            "to_name": "text",
+            "type": "choices",
+            "value": {"choices": ["positive"]}
+          },
+          {
+            "from_name": "comment",
+            "to_name": "text",
+            "type": "textarea",
+            "value": {"text": ["ok"]}
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "data": {
+      "text": "with data unit_id",
+      "source_url": "https://example.com/c",
+      "unit_id": 555
+    },
+    "meta": {},
+    "annotations": [
+      {
+        "id": 1004,
+        "completed_by": 9,
+        "created_at": "2024-01-03T08:00:00.000000Z",
+        "updated_at": "2024-01-03T08:00:01.000000Z",
+        "lead_time": 1.0,
+        "was_cancelled": false,
+        "result": [
+          {
+            "from_name": "sentiment",
+            "to_name": "text",
+            "type": "choices",
+            "value": {"choices": ["neutral"]}
+          }
+        ]
+      }
+    ]
+  }
+]
