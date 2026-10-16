@@ -150,6 +150,7 @@ class OrganizationsClient:
         react_code_settings: typing.Optional[typing.Any] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
+        token_expires_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganization:
         """
@@ -199,6 +200,9 @@ class OrganizationsClient:
 
         token : typing.Optional[str]
 
+        token_expires_at : typing.Optional[dt.datetime]
+            When the current invite link stops working; null works only while expiration is disabled
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -232,6 +236,7 @@ class OrganizationsClient:
             react_code_settings=react_code_settings,
             title=title,
             token=token,
+            token_expires_at=token_expires_at,
             request_options=request_options,
         )
         return _response.data
@@ -619,6 +624,7 @@ class AsyncOrganizationsClient:
         react_code_settings: typing.Optional[typing.Any] = OMIT,
         title: typing.Optional[str] = OMIT,
         token: typing.Optional[str] = OMIT,
+        token_expires_at: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganization:
         """
@@ -668,6 +674,9 @@ class AsyncOrganizationsClient:
 
         token : typing.Optional[str]
 
+        token_expires_at : typing.Optional[dt.datetime]
+            When the current invite link stops working; null works only while expiration is disabled
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -709,6 +718,7 @@ class AsyncOrganizationsClient:
             react_code_settings=react_code_settings,
             title=title,
             token=token,
+            token_expires_at=token_expires_at,
             request_options=request_options,
         )
         return _response.data

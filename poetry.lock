@@ -612,34 +612,38 @@ markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win
 
 [[package]]
 name = "datamodel-code-generator"
-version = "0.83.0"
+version = "0.85.0"
 description = "Datamodel Code Generator"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "datamodel_code_generator-0.83.0-py3-none-any.whl", hash = "sha256:371d80be360b2a57bc48462169553af57fa30225c0264ad85ae5f0d59b9d143a"},
-    {file = "datamodel_code_generator-0.83.0.tar.gz", hash = "sha256:30d841e31b82095c4ef11f3dbfc99525f559a146250b9e685e2a2e4a196ca0a1"},
+    {file = "datamodel_code_generator-0.85.0-py3-none-any.whl", hash = "sha256:a5d79348bd37ce193e88585a50647f9d1a770ad87cd36d4243c33a5a655ffffd"},
+    {file = "datamodel_code_generator-0.85.0.tar.gz", hash = "sha256:9ee5afe243e03e8f17a24ded0b13fba07f9a2a530ec165c6075298dc43c7a143"},
 ]
 
 [package.dependencies]
 argcomplete = ">=2.10.1,<4"
-black = {version = ">=19.10b0", markers = "sys_platform != \"emscripten\""}
+black = [
+    {version = ">=19.10b0", markers = "python_version < \"3.15\" and sys_platform != \"emscripten\""},
+    {version = ">=26.5", markers = "python_version >= \"3.15\" and sys_platform != \"emscripten\""},
+]
 genson = ">=1.2.1,<2"
 inflect = ">=4.1,<8"
 isort = {version = ">=4.3.21,<9", markers = "sys_platform != \"emscripten\""}
 jinja2 = ">=2.10.1,<4"
 pydantic = [
-    {version = ">=2,<3", markers = "python_version < \"3.14\""},
-    {version = ">=2.12,<3", markers = "python_version >= \"3.14\""},
+    {version = ">=2,<2.10 || >2.10,<2.10.1 || >2.10.1,<2.10.2 || >2.10.2,<3", markers = "python_version < \"3.14\""},
+    {version = ">=2.12,<3", markers = "python_version == \"3.14\""},
+    {version = ">=2.14,<3", markers = "python_version >= \"3.15\""},
 ]
 pyyaml = ">=6.0.1"
 tomli = {version = ">=2.2.1,<3", markers = "python_version < \"3.11\""}
 typing-extensions = ">=4.16,<5"
 
 [package.extras]
-all = ["black (>=19.10b0) ; sys_platform != \"emscripten\"", "graphql-core (>=3.2.3)", "grpcio-tools (>=1.62,<2)", "httpx (>=0.24.1)", "isort (>=4.3.21,<9) ; sys_platform != \"emscripten\"", "openapi-spec-validator (>=0.2.8,<0.8)", "prance (>=0.18.2)", "pysnooper (>=0.4.1,<2)", "ruff (>=0.9.10)", "watchfiles (>=1.1)"]
-black = ["black (>=19.10b0) ; sys_platform != \"emscripten\""]
+all = ["black (>=19.10b0) ; python_version < \"3.15\" and sys_platform != \"emscripten\"", "black (>=26.5) ; python_version >= \"3.15\" and sys_platform != \"emscripten\"", "graphql-core (>=3.2.3)", "grpcio-tools (>=1.62,<2)", "httpx (>=0.24.1)", "isort (>=4.3.21,<9) ; sys_platform != \"emscripten\"", "openapi-spec-validator (>=0.2.8,<0.8)", "prance (>=0.18.2)", "pysnooper (>=0.4.1,<2)", "ruff (>=0.9.10)", "watchfiles (>=1.1)"]
+black = ["black (>=19.10b0) ; python_version < \"3.15\" and sys_platform != \"emscripten\"", "black (>=26.5) ; python_version >= \"3.15\" and sys_platform != \"emscripten\""]
 debug = ["pysnooper (>=0.4.1,<2)"]
 graphql = ["graphql-core (>=3.2.3)"]
 http = ["httpx (>=0.24.1)"]
@@ -2040,7 +2044,7 @@ description = "Powerful data structures for data analysis, time series, and stat
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
-markers = "python_version >= \"3.14\" or python_version == \"3.10\""
+markers = "python_version == \"3.10\" or python_version >= \"3.14\""
 files = [
     {file = "pandas-2.3.3-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:376c6446ae31770764215a6c937f72d917f214b43560603cd60da6408f183b6c"},
     {file = "pandas-2.3.3-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:e19d192383eab2f4ceb30b412b22ea30690c9e618f78870357ae1d682912015a"},
@@ -2371,15 +2375,15 @@ files = [
 
 [[package]]
 name = "platformdirs"
-version = "4.13.0"
+version = "4.13.3"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 markers = "sys_platform != \"emscripten\" and python_version >= \"3.11\""
 files = [
-    {file = "platformdirs-4.13.0-py3-none-any.whl", hash = "sha256:3dbcf4cd708f21cf876c4eaa90e58412bc4f033d87143f41b1493ff77c25b7e1"},
-    {file = "platformdirs-4.13.0.tar.gz", hash = "sha256:1aa0b0d3f224c1f07c295121e312a5a24a180d6ae5a8425ea1784b3e3863e9c0"},
+    {file = "platformdirs-4.13.3-py3-none-any.whl", hash = "sha256:f6ad7f447f24f8a3b82cce5976387428bff894a0eca6c3488f4a17f153c130c4"},
+    {file = "platformdirs-4.13.3.tar.gz", hash = "sha256:5e567f664eb087ab8521c0179cd8d1bd60857d271136567a39719e28e2d383ce"},
 ]
 
 [[package]]
@@ -2892,7 +2896,7 @@ description = "World timezone definitions, modern and historical"
 optional = false
 python-versions = "*"
 groups = ["main"]
-markers = "python_version >= \"3.14\" or python_version == \"3.10\""
+markers = "python_version == \"3.10\" or python_version >= \"3.14\""
 files = [
     {file = "pytz-2026.5-py2.py3-none-any.whl", hash = "sha256:e658af3757f9e26a9d25dd2aff38335acd92bc9104f890a894b2c1ba28311b03"},
     {file = "pytz-2026.5.tar.gz", hash = "sha256:fa23724b9c486543b9ff54a327ee7569ac83ade54bb9afd0fc18676620401c86"},

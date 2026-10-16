@@ -8907,6 +8907,14 @@ client.organizations.update(
 <dl>
 <dd>
 
+**token_expires_at:** `typing.Optional[datetime.datetime]` — When the current invite link stops working; null works only while expiration is disabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
