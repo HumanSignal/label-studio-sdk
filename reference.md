@@ -8158,6 +8158,109 @@ client.interfaces.duplicate(
 </dl>
 </details>
 
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py">move</a>(...) -> LseInterfaceMovePlan</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Move a saved interface to a workspace, your Personal Sandbox, or Shared (`workspace: null`). A workspace-scoped interface can only be used by projects in its workspace, so connected projects move with it when needed. Send `dry_run: true` first to get the move plan, then confirm with `dry_run: false` and the `expected_project_ids` from that plan. The response is the plan in every case; a blocked move or a changed plan returns 409 with the fresh plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
+
+client = LabelStudio(
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
+)
+
+client.interfaces.move(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this interface.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — Return the move plan without changing anything.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expected_project_ids:** `typing.Optional[typing.List[int]]` — Required when dry_run is false: IDs of the projects in workspace groups with outcome "move" from the dry run you confirmed. If the server computes a different set, it responds with 409 "interface_move_plan_changed" and the fresh plan.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace:** `typing.Optional[int]` — Target workspace ID, or null to make the interface Shared.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py">publish_version</a>(...) -> LseInterface</code></summary>
 <dl>
 <dd>

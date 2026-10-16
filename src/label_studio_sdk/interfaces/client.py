@@ -7,6 +7,7 @@ from ..core.request_options import RequestOptions
 from ..types.lse_interface import LseInterface
 from ..types.lse_interface_append_version_request import LseInterfaceAppendVersionRequest
 from ..types.lse_interface_duplicate_request_mode_enum import LseInterfaceDuplicateRequestModeEnum
+from ..types.lse_interface_move_plan import LseInterfaceMovePlan
 from ..types.paginated_lse_interface_list_list import PaginatedLseInterfaceListList
 from .raw_client import AsyncRawInterfacesClient, RawInterfacesClient
 
@@ -655,6 +656,66 @@ class InterfacesClient:
             mode=mode,
             params=params,
             title=title,
+            workspace=workspace,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def move(
+        self,
+        id: int,
+        *,
+        dry_run: typing.Optional[bool] = OMIT,
+        expected_project_ids: typing.Optional[typing.Sequence[int]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseInterfaceMovePlan:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Move a saved interface to a workspace, your Personal Sandbox, or Shared (`workspace: null`). A workspace-scoped interface can only be used by projects in its workspace, so connected projects move with it when needed. Send `dry_run: true` first to get the move plan, then confirm with `dry_run: false` and the `expected_project_ids` from that plan. The response is the plan in every case; a blocked move or a changed plan returns 409 with the fresh plan.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this interface.
+
+        dry_run : typing.Optional[bool]
+            Return the move plan without changing anything.
+
+        expected_project_ids : typing.Optional[typing.Sequence[int]]
+            Required when dry_run is false: IDs of the projects in workspace groups with outcome "move" from the dry run you confirmed. If the server computes a different set, it responds with 409 "interface_move_plan_changed" and the fresh plan.
+
+        workspace : typing.Optional[int]
+            Target workspace ID, or null to make the interface Shared.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseInterfaceMovePlan
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.interfaces.move(
+            id=1,
+        )
+        """
+        _response = self._raw_client.move(
+            id,
+            dry_run=dry_run,
+            expected_project_ids=expected_project_ids,
             workspace=workspace,
             request_options=request_options,
         )
@@ -1501,6 +1562,74 @@ class AsyncInterfacesClient:
             mode=mode,
             params=params,
             title=title,
+            workspace=workspace,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def move(
+        self,
+        id: int,
+        *,
+        dry_run: typing.Optional[bool] = OMIT,
+        expected_project_ids: typing.Optional[typing.Sequence[int]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseInterfaceMovePlan:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Move a saved interface to a workspace, your Personal Sandbox, or Shared (`workspace: null`). A workspace-scoped interface can only be used by projects in its workspace, so connected projects move with it when needed. Send `dry_run: true` first to get the move plan, then confirm with `dry_run: false` and the `expected_project_ids` from that plan. The response is the plan in every case; a blocked move or a changed plan returns 409 with the fresh plan.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this interface.
+
+        dry_run : typing.Optional[bool]
+            Return the move plan without changing anything.
+
+        expected_project_ids : typing.Optional[typing.Sequence[int]]
+            Required when dry_run is false: IDs of the projects in workspace groups with outcome "move" from the dry run you confirmed. If the server computes a different set, it responds with 409 "interface_move_plan_changed" and the fresh plan.
+
+        workspace : typing.Optional[int]
+            Target workspace ID, or null to make the interface Shared.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseInterfaceMovePlan
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.interfaces.move(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.move(
+            id,
+            dry_run=dry_run,
+            expected_project_ids=expected_project_ids,
             workspace=workspace,
             request_options=request_options,
         )

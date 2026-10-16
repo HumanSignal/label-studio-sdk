@@ -97,6 +97,11 @@ if typing.TYPE_CHECKING:
     from .hotkeys import Hotkeys
     from .import_api_request import ImportApiRequest
     from .inference_run_cost_estimate import InferenceRunCostEstimate
+    from .interface_move_blocker_enum import InterfaceMoveBlockerEnum
+    from .interface_move_blocking_reason_enum import InterfaceMoveBlockingReasonEnum
+    from .interface_move_code_enum import InterfaceMoveCodeEnum
+    from .interface_move_notice_enum import InterfaceMoveNoticeEnum
+    from .interface_move_outcome_enum import InterfaceMoveOutcomeEnum
     from .kpi_detail_response import KpiDetailResponse
     from .kpi_matrix_segment import KpiMatrixSegment
     from .kpi_metadata import KpiMetadata
@@ -126,6 +131,10 @@ if typing.TYPE_CHECKING:
     from .lse_interface_append_version_request import LseInterfaceAppendVersionRequest
     from .lse_interface_duplicate_request_mode_enum import LseInterfaceDuplicateRequestModeEnum
     from .lse_interface_list import LseInterfaceList
+    from .lse_interface_move_plan import LseInterfaceMovePlan
+    from .lse_interface_move_project import LseInterfaceMoveProject
+    from .lse_interface_move_workspace import LseInterfaceMoveWorkspace
+    from .lse_interface_move_workspace_group import LseInterfaceMoveWorkspaceGroup
     from .lse_interface_request import LseInterfaceRequest
     from .lse_interface_version_id_request import LseInterfaceVersionIdRequest
     from .lse_key_indicator_value import LseKeyIndicatorValue
@@ -434,6 +443,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Hotkeys": ".hotkeys",
     "ImportApiRequest": ".import_api_request",
     "InferenceRunCostEstimate": ".inference_run_cost_estimate",
+    "InterfaceMoveBlockerEnum": ".interface_move_blocker_enum",
+    "InterfaceMoveBlockingReasonEnum": ".interface_move_blocking_reason_enum",
+    "InterfaceMoveCodeEnum": ".interface_move_code_enum",
+    "InterfaceMoveNoticeEnum": ".interface_move_notice_enum",
+    "InterfaceMoveOutcomeEnum": ".interface_move_outcome_enum",
     "KpiDetailResponse": ".kpi_detail_response",
     "KpiMatrixSegment": ".kpi_matrix_segment",
     "KpiMetadata": ".kpi_metadata",
@@ -463,6 +477,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LseInterfaceAppendVersionRequest": ".lse_interface_append_version_request",
     "LseInterfaceDuplicateRequestModeEnum": ".lse_interface_duplicate_request_mode_enum",
     "LseInterfaceList": ".lse_interface_list",
+    "LseInterfaceMovePlan": ".lse_interface_move_plan",
+    "LseInterfaceMoveProject": ".lse_interface_move_project",
+    "LseInterfaceMoveWorkspace": ".lse_interface_move_workspace",
+    "LseInterfaceMoveWorkspaceGroup": ".lse_interface_move_workspace_group",
     "LseInterfaceRequest": ".lse_interface_request",
     "LseInterfaceVersionIdRequest": ".lse_interface_version_id_request",
     "LseKeyIndicatorValue": ".lse_key_indicator_value",
@@ -779,6 +797,11 @@ __all__ = [
     "Hotkeys",
     "ImportApiRequest",
     "InferenceRunCostEstimate",
+    "InterfaceMoveBlockerEnum",
+    "InterfaceMoveBlockingReasonEnum",
+    "InterfaceMoveCodeEnum",
+    "InterfaceMoveNoticeEnum",
+    "InterfaceMoveOutcomeEnum",
     "KpiDetailResponse",
     "KpiMatrixSegment",
     "KpiMetadata",
@@ -808,6 +831,10 @@ __all__ = [
     "LseInterfaceAppendVersionRequest",
     "LseInterfaceDuplicateRequestModeEnum",
     "LseInterfaceList",
+    "LseInterfaceMovePlan",
+    "LseInterfaceMoveProject",
+    "LseInterfaceMoveWorkspace",
+    "LseInterfaceMoveWorkspaceGroup",
     "LseInterfaceRequest",
     "LseInterfaceVersionIdRequest",
     "LseKeyIndicatorValue",

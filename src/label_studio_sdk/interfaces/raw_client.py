@@ -14,6 +14,7 @@ from ..core.unchecked_base_model import construct_type
 from ..types.lse_interface import LseInterface
 from ..types.lse_interface_append_version_request import LseInterfaceAppendVersionRequest
 from ..types.lse_interface_duplicate_request_mode_enum import LseInterfaceDuplicateRequestModeEnum
+from ..types.lse_interface_move_plan import LseInterfaceMovePlan
 from ..types.paginated_lse_interface_list_list import PaginatedLseInterfaceListList
 from pydantic import ValidationError
 
@@ -722,6 +723,79 @@ class RawInterfacesClient:
                     LseInterface,
                     construct_type(
                         type_=LseInterface,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def move(
+        self,
+        id: int,
+        *,
+        dry_run: typing.Optional[bool] = OMIT,
+        expected_project_ids: typing.Optional[typing.Sequence[int]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[LseInterfaceMovePlan]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Move a saved interface to a workspace, your Personal Sandbox, or Shared (`workspace: null`). A workspace-scoped interface can only be used by projects in its workspace, so connected projects move with it when needed. Send `dry_run: true` first to get the move plan, then confirm with `dry_run: false` and the `expected_project_ids` from that plan. The response is the plan in every case; a blocked move or a changed plan returns 409 with the fresh plan.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this interface.
+
+        dry_run : typing.Optional[bool]
+            Return the move plan without changing anything.
+
+        expected_project_ids : typing.Optional[typing.Sequence[int]]
+            Required when dry_run is false: IDs of the projects in workspace groups with outcome "move" from the dry run you confirmed. If the server computes a different set, it responds with 409 "interface_move_plan_changed" and the fresh plan.
+
+        workspace : typing.Optional[int]
+            Target workspace ID, or null to make the interface Shared.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[LseInterfaceMovePlan]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/interfaces/{encode_path_param(id)}/move/",
+            method="POST",
+            json={
+                "dry_run": dry_run,
+                "expected_project_ids": expected_project_ids,
+                "workspace": workspace,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    LseInterfaceMovePlan,
+                    construct_type(
+                        type_=LseInterfaceMovePlan,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1622,6 +1696,79 @@ class AsyncRawInterfacesClient:
                     LseInterface,
                     construct_type(
                         type_=LseInterface,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def move(
+        self,
+        id: int,
+        *,
+        dry_run: typing.Optional[bool] = OMIT,
+        expected_project_ids: typing.Optional[typing.Sequence[int]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[LseInterfaceMovePlan]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Move a saved interface to a workspace, your Personal Sandbox, or Shared (`workspace: null`). A workspace-scoped interface can only be used by projects in its workspace, so connected projects move with it when needed. Send `dry_run: true` first to get the move plan, then confirm with `dry_run: false` and the `expected_project_ids` from that plan. The response is the plan in every case; a blocked move or a changed plan returns 409 with the fresh plan.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this interface.
+
+        dry_run : typing.Optional[bool]
+            Return the move plan without changing anything.
+
+        expected_project_ids : typing.Optional[typing.Sequence[int]]
+            Required when dry_run is false: IDs of the projects in workspace groups with outcome "move" from the dry run you confirmed. If the server computes a different set, it responds with 409 "interface_move_plan_changed" and the fresh plan.
+
+        workspace : typing.Optional[int]
+            Target workspace ID, or null to make the interface Shared.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[LseInterfaceMovePlan]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/interfaces/{encode_path_param(id)}/move/",
+            method="POST",
+            json={
+                "dry_run": dry_run,
+                "expected_project_ids": expected_project_ids,
+                "workspace": workspace,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    LseInterfaceMovePlan,
+                    construct_type(
+                        type_=LseInterfaceMovePlan,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

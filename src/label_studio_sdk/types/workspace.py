@@ -32,6 +32,11 @@ class Workspace(UncheckedBaseModel):
     """
 
     id: typing.Optional[int] = None
+    interfaces_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Saved interfaces in the workspace. A workspace with interfaces cannot be deleted.
+    """
+
     is_archived: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Workspace is archived
