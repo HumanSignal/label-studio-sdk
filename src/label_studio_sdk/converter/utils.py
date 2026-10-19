@@ -5,7 +5,6 @@ import io
 import logging
 import math
 import os
-import re
 import shutil
 import urllib
 import posixpath
@@ -18,12 +17,12 @@ from urllib.parse import parse_qsl, quote, urlencode, urlparse, urlsplit, urluns
 import numpy as np
 from PIL import Image
 from lxml import etree
-from nltk.tokenize.treebank import TreebankWordTokenizer
 
 from label_studio_sdk._extensions.label_studio_tools.core.utils.io import (
     resolve_local_storage_file,
     safe_build_path,
 )
+from label_studio_sdk.converter.treebank import TreebankWordTokenizer
 
 logger = logging.getLogger(__name__)
 
@@ -31,19 +30,6 @@ _LABEL_TAGS = {"Label", "Choice"}
 _NOT_CONTROL_TAGS = {
     "Filter",
 }
-
-TreebankWordTokenizer.PUNCTUATION = [
-    (re.compile(r"([:,])([^\d])"), r" \1 \2"),
-    (re.compile(r"([:,])$"), r" \1 "),
-    (re.compile(r"\.\.\."), r" ... "),
-    (re.compile(r"[;@#$/%&]"), r" \g<0> "),
-    (
-        re.compile(r'([^\.])(\.)([\]\)}>"\']*)\s*$'),
-        r"\1 \2\3 ",
-    ),  # Handles the final period.
-    (re.compile(r"[?!]"), r" \g<0> "),
-    (re.compile(r"([^'])' "), r"\1 ' "),
-]
 
 
 class ExpandFullPath(argparse.Action):
