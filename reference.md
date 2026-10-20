@@ -11794,14 +11794,6 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**created_by:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **custom_script:** `typing.Optional[str]` — custom script (Plugin) for projects created from this template
     
 </dd>
@@ -11819,14 +11811,6 @@ client.project_templates.update(
 <dd>
 
 **name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>

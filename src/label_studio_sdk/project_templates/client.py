@@ -70,10 +70,8 @@ class ProjectTemplatesClient:
         name: str,
         project_id: int,
         assignment_settings: typing.Optional[typing.Any] = OMIT,
-        created_by: typing.Optional[int] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         project_settings: typing.Optional[typing.Any] = OMIT,
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         review_settings: typing.Optional[typing.Any] = OMIT,
@@ -99,14 +97,10 @@ class ProjectTemplatesClient:
         assignment_settings : typing.Optional[typing.Any]
             general dict serialized assignment settings
 
-        created_by : typing.Optional[int]
-
         custom_script : typing.Optional[str]
             custom script (Plugin) for projects created from this template
 
         description : typing.Optional[str]
-
-        organization : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Any]
             general dict serialized project settings
@@ -145,10 +139,8 @@ class ProjectTemplatesClient:
             name=name,
             project_id=project_id,
             assignment_settings=assignment_settings,
-            created_by=created_by,
             custom_script=custom_script,
             description=description,
-            organization=organization,
             project_settings=project_settings,
             require_comment_on_skip=require_comment_on_skip,
             review_settings=review_settings,
@@ -234,11 +226,9 @@ class ProjectTemplatesClient:
         id: int,
         *,
         assignment_settings: typing.Optional[typing.Any] = OMIT,
-        created_by: typing.Optional[int] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         project_id: typing.Optional[int] = OMIT,
         project_settings: typing.Optional[typing.Any] = OMIT,
         require_comment_on_skip: typing.Optional[bool] = OMIT,
@@ -263,16 +253,12 @@ class ProjectTemplatesClient:
         assignment_settings : typing.Optional[typing.Any]
             general dict serialized assignment settings
 
-        created_by : typing.Optional[int]
-
         custom_script : typing.Optional[str]
             custom script (Plugin) for projects created from this template
 
         description : typing.Optional[str]
 
         name : typing.Optional[str]
-
-        organization : typing.Optional[int]
 
         project_id : typing.Optional[int]
 
@@ -311,11 +297,9 @@ class ProjectTemplatesClient:
         _response = self._raw_client.update(
             id,
             assignment_settings=assignment_settings,
-            created_by=created_by,
             custom_script=custom_script,
             description=description,
             name=name,
-            organization=organization,
             project_id=project_id,
             project_settings=project_settings,
             require_comment_on_skip=require_comment_on_skip,
@@ -449,10 +433,8 @@ class AsyncProjectTemplatesClient:
         name: str,
         project_id: int,
         assignment_settings: typing.Optional[typing.Any] = OMIT,
-        created_by: typing.Optional[int] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         project_settings: typing.Optional[typing.Any] = OMIT,
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         review_settings: typing.Optional[typing.Any] = OMIT,
@@ -478,14 +460,10 @@ class AsyncProjectTemplatesClient:
         assignment_settings : typing.Optional[typing.Any]
             general dict serialized assignment settings
 
-        created_by : typing.Optional[int]
-
         custom_script : typing.Optional[str]
             custom script (Plugin) for projects created from this template
 
         description : typing.Optional[str]
-
-        organization : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Any]
             general dict serialized project settings
@@ -532,10 +510,8 @@ class AsyncProjectTemplatesClient:
             name=name,
             project_id=project_id,
             assignment_settings=assignment_settings,
-            created_by=created_by,
             custom_script=custom_script,
             description=description,
-            organization=organization,
             project_settings=project_settings,
             require_comment_on_skip=require_comment_on_skip,
             review_settings=review_settings,
@@ -637,11 +613,9 @@ class AsyncProjectTemplatesClient:
         id: int,
         *,
         assignment_settings: typing.Optional[typing.Any] = OMIT,
-        created_by: typing.Optional[int] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         project_id: typing.Optional[int] = OMIT,
         project_settings: typing.Optional[typing.Any] = OMIT,
         require_comment_on_skip: typing.Optional[bool] = OMIT,
@@ -666,16 +640,12 @@ class AsyncProjectTemplatesClient:
         assignment_settings : typing.Optional[typing.Any]
             general dict serialized assignment settings
 
-        created_by : typing.Optional[int]
-
         custom_script : typing.Optional[str]
             custom script (Plugin) for projects created from this template
 
         description : typing.Optional[str]
 
         name : typing.Optional[str]
-
-        organization : typing.Optional[int]
 
         project_id : typing.Optional[int]
 
@@ -722,11 +692,9 @@ class AsyncProjectTemplatesClient:
         _response = await self._raw_client.update(
             id,
             assignment_settings=assignment_settings,
-            created_by=created_by,
             custom_script=custom_script,
             description=description,
             name=name,
-            organization=organization,
             project_id=project_id,
             project_settings=project_settings,
             require_comment_on_skip=require_comment_on_skip,

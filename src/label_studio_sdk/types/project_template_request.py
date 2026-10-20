@@ -13,7 +13,6 @@ class ProjectTemplateRequest(UncheckedBaseModel):
     general dict serialized assignment settings
     """
 
-    created_by: typing.Optional[int] = None
     custom_script: typing.Optional[str] = pydantic.Field(default=None)
     """
     custom script (Plugin) for projects created from this template
@@ -21,7 +20,6 @@ class ProjectTemplateRequest(UncheckedBaseModel):
 
     description: typing.Optional[str] = None
     name: str
-    organization: typing.Optional[int] = None
     project_id: int
     project_settings: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
