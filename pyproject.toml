@@ -14,7 +14,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -36,8 +35,8 @@ packages = [
 Repository = 'https://github.com/HumanSignal/label-studio-sdk'
 
 [tool.poetry.dependencies]
-python = ">=3.10,<4"
-Pillow = ">=12.3.0"
+python = ">=3.11,<4"
+Pillow = ">=13.0.0"
 aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
 appdirs = ">=1.4.3"
 datamodel-code-generator = ">=0.81.0"
