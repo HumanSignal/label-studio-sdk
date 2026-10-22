@@ -1636,7 +1636,7 @@ class ChatMessageTag(ControlTag):
                     "properties": {
                         "role": {"type": "string"},
                         "content": {"type": "string"},
-                        "createdAt": {"type": "number"}
+                        "createdAt": {"type": "integer"}
                     },
                     "additionalProperties": True
                 }

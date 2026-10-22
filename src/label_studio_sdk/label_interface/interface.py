@@ -26,7 +26,7 @@ from .control_tags import (
 from .label_tags import LabelTag
 from .object_tags import ObjectTag
 from .objects import AnnotationValue, PredictionValue, Region, TaskValue
-from jsf import JSF
+from .schema_example import generate_example
 from lxml import etree
 from pydantic import BaseModel
 
@@ -1232,7 +1232,7 @@ class LabelInterface:
 
     @staticmethod
     def _schema_has_empty_enum(schema: Any) -> bool:
-        """Detect JSON Schema fragments that JSF cannot generate from."""
+        """Detect JSON Schema fragments that no valid example exists for."""
         if isinstance(schema, dict):
             if schema.get("enum") == []:
                 return True
@@ -1260,7 +1260,7 @@ class LabelInterface:
             if not self._can_generate_sample_region(control, schema):
                 logger.debug("Skipping sample region generation for control tag %s", control.name)
                 continue
-            generated_data[control.name] = JSF(schema).generate()
+            generated_data[control.name] = generate_example(schema)
         return self.create_regions(generated_data)
 
     def generate_sample_prediction(self) -> Optional[dict]:
