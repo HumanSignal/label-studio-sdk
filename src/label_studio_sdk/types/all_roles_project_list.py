@@ -182,6 +182,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     Whether or not the project is in the middle of being created
     """
 
+    is_onboarding_project: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Onboarding project: contributors must pass it before identity verification
+    """
+
     is_published: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether or not the project is published to annotators
