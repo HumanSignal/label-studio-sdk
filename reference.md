@@ -41417,6 +41417,14 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
+**filters:** `typing.Optional[str]` — Versioned JSON member-filter payload, the same one the organization members list accepts. Only when all=True. When advanced member filtering is enabled, do not also supply role, user_type, tags, or last-activity legacy filter parameters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **last_activity_gte:** `typing.Optional[str]` — Filter by last activity (ISO 8601 formatted date). Only when all=True.
     
 </dd>
@@ -41433,7 +41441,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**role:** `typing.Optional[str]` — Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+**role:** `typing.Optional[str]` — Filter by organization role. Only when all=True. (comma-separated values)
     
 </dd>
 </dl>
@@ -41441,7 +41449,7 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
-**search:** `typing.Optional[str]` — Search term for filtering members by name, email, or username. Only when all=True.
+**search:** `typing.Optional[str]` — Search members by first name, last name, email, or an enabled optional member-list column. Only when all=True.
     
 </dd>
 </dl>
@@ -41458,6 +41466,22 @@ client.projects.members.bulk.post(
 <dd>
 
 **tags_operator:** `typing.Optional[str]` — How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_last_activity_gte:** `typing.Optional[str]` — Filter user__last_activity by greater than or equal to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_last_activity_lte:** `typing.Optional[str]` — Filter user__last_activity by less than or equal to
     
 </dd>
 </dl>
@@ -41585,6 +41609,14 @@ client.projects.members.bulk.delete(
 <dd>
 
 **excluded:** `typing.Optional[str]` — Comma-separated list of user IDs to keep assigned when `all=true`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `typing.Optional[str]` — Filter id by in list
     
 </dd>
 </dl>
@@ -45486,6 +45518,62 @@ client.workspaces.members.bulk.post(
 <dd>
 
 **all:** `bool` — Apply to all workspace members
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filters:** `typing.Optional[str]` — Versioned JSON member-filter payload, the same one the organization members list accepts. Only when all=True. When advanced member filtering is enabled, do not also supply role, user_type, tags, or last-activity legacy filter parameters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search members by first name, last name, email, or an enabled optional member-list column. Only when all=True.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_last_activity_gte:** `typing.Optional[str]` — Filter user__last_activity by greater than or equal to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_last_activity_lte:** `typing.Optional[str]` — Filter user__last_activity by less than or equal to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_type:** `typing.Optional[str]` — Multiple values may be separated by commas. (comma-separated values)
     
 </dd>
 </dl>

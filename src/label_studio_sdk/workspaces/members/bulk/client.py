@@ -32,6 +32,13 @@ class BulkClient:
         id: int,
         *,
         all_: bool,
+        filters: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
+        user_last_activity_gte: typing.Optional[str] = None,
+        user_last_activity_lte: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -51,6 +58,27 @@ class BulkClient:
 
         all_ : bool
             Apply to all workspace members
+
+        filters : typing.Optional[str]
+            Versioned JSON member-filter payload, the same one the organization members list accepts. Only when all=True. When advanced member filtering is enabled, do not also supply role, user_type, tags, or last-activity legacy filter parameters.
+
+        role : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        search : typing.Optional[str]
+            Search members by first name, last name, email, or an enabled optional member-list column. Only when all=True.
+
+        tags : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        user_last_activity_gte : typing.Optional[str]
+            Filter user__last_activity by greater than or equal to
+
+        user_last_activity_lte : typing.Optional[str]
+            Filter user__last_activity by less than or equal to
+
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
 
         excluded : typing.Optional[typing.Sequence[int]]
             Excluded user IDs
@@ -79,7 +107,18 @@ class BulkClient:
         )
         """
         _response = self._raw_client.post(
-            id, all_=all_, excluded=excluded, included=included, request_options=request_options
+            id,
+            all_=all_,
+            filters=filters,
+            role=role,
+            search=search,
+            tags=tags,
+            user_last_activity_gte=user_last_activity_gte,
+            user_last_activity_lte=user_last_activity_lte,
+            user_type=user_type,
+            excluded=excluded,
+            included=included,
+            request_options=request_options,
         )
         return _response.data
 
@@ -167,6 +206,13 @@ class AsyncBulkClient:
         id: int,
         *,
         all_: bool,
+        filters: typing.Optional[str] = None,
+        role: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        tags: typing.Optional[str] = None,
+        user_last_activity_gte: typing.Optional[str] = None,
+        user_last_activity_lte: typing.Optional[str] = None,
+        user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -186,6 +232,27 @@ class AsyncBulkClient:
 
         all_ : bool
             Apply to all workspace members
+
+        filters : typing.Optional[str]
+            Versioned JSON member-filter payload, the same one the organization members list accepts. Only when all=True. When advanced member filtering is enabled, do not also supply role, user_type, tags, or last-activity legacy filter parameters.
+
+        role : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        search : typing.Optional[str]
+            Search members by first name, last name, email, or an enabled optional member-list column. Only when all=True.
+
+        tags : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
+
+        user_last_activity_gte : typing.Optional[str]
+            Filter user__last_activity by greater than or equal to
+
+        user_last_activity_lte : typing.Optional[str]
+            Filter user__last_activity by less than or equal to
+
+        user_type : typing.Optional[str]
+            Multiple values may be separated by commas. (comma-separated values)
 
         excluded : typing.Optional[typing.Sequence[int]]
             Excluded user IDs
@@ -222,7 +289,18 @@ class AsyncBulkClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.post(
-            id, all_=all_, excluded=excluded, included=included, request_options=request_options
+            id,
+            all_=all_,
+            filters=filters,
+            role=role,
+            search=search,
+            tags=tags,
+            user_last_activity_gte=user_last_activity_gte,
+            user_last_activity_lte=user_last_activity_lte,
+            user_type=user_type,
+            excluded=excluded,
+            included=included,
+            request_options=request_options,
         )
         return _response.data
 

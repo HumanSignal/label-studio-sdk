@@ -33,12 +33,15 @@ class BulkClient:
         id: int,
         *,
         all_: bool,
+        filters: typing.Optional[str] = None,
         last_activity_gte: typing.Optional[str] = None,
         last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
         tags_operator: typing.Optional[str] = None,
+        user_last_activity_gte: typing.Optional[str] = None,
+        user_last_activity_lte: typing.Optional[str] = None,
         user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
@@ -61,6 +64,9 @@ class BulkClient:
         all_ : bool
             Apply to all project members
 
+        filters : typing.Optional[str]
+            Versioned JSON member-filter payload, the same one the organization members list accepts. Only when all=True. When advanced member filtering is enabled, do not also supply role, user_type, tags, or last-activity legacy filter parameters.
+
         last_activity_gte : typing.Optional[str]
             Filter by last activity (ISO 8601 formatted date). Only when all=True.
 
@@ -68,16 +74,22 @@ class BulkClient:
             Filter by last activity upper bound (ISO 8601 formatted date). Only when all=True.
 
         role : typing.Optional[str]
-            Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+            Filter by organization role. Only when all=True. (comma-separated values)
 
         search : typing.Optional[str]
-            Search term for filtering members by name, email, or username. Only when all=True.
+            Search members by first name, last name, email, or an enabled optional member-list column. Only when all=True.
 
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
         tags_operator : typing.Optional[str]
             How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+
+        user_last_activity_gte : typing.Optional[str]
+            Filter user__last_activity by greater than or equal to
+
+        user_last_activity_lte : typing.Optional[str]
+            Filter user__last_activity by less than or equal to
 
         user_type : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
@@ -114,12 +126,15 @@ class BulkClient:
         _response = self._raw_client.post(
             id,
             all_=all_,
+            filters=filters,
             last_activity_gte=last_activity_gte,
             last_activity_lte=last_activity_lte,
             role=role,
             search=search,
             tags=tags,
             tags_operator=tags_operator,
+            user_last_activity_gte=user_last_activity_gte,
+            user_last_activity_lte=user_last_activity_lte,
             user_type=user_type,
             excluded=excluded,
             included=included,
@@ -134,6 +149,7 @@ class BulkClient:
         *,
         all_: typing.Optional[bool] = None,
         excluded: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
         included: typing.Optional[str] = None,
         last_activity_gte: typing.Optional[str] = None,
         last_activity_lte: typing.Optional[str] = None,
@@ -162,6 +178,9 @@ class BulkClient:
 
         excluded : typing.Optional[str]
             Comma-separated list of user IDs to keep assigned when `all=true`.
+
+        ids : typing.Optional[str]
+            Filter id by in list
 
         included : typing.Optional[str]
             Comma-separated list of user IDs to unassign when `all=false`.
@@ -210,6 +229,7 @@ class BulkClient:
             id,
             all_=all_,
             excluded=excluded,
+            ids=ids,
             included=included,
             last_activity_gte=last_activity_gte,
             last_activity_lte=last_activity_lte,
@@ -243,12 +263,15 @@ class AsyncBulkClient:
         id: int,
         *,
         all_: bool,
+        filters: typing.Optional[str] = None,
         last_activity_gte: typing.Optional[str] = None,
         last_activity_lte: typing.Optional[str] = None,
         role: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         tags: typing.Optional[str] = None,
         tags_operator: typing.Optional[str] = None,
+        user_last_activity_gte: typing.Optional[str] = None,
+        user_last_activity_lte: typing.Optional[str] = None,
         user_type: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
@@ -271,6 +294,9 @@ class AsyncBulkClient:
         all_ : bool
             Apply to all project members
 
+        filters : typing.Optional[str]
+            Versioned JSON member-filter payload, the same one the organization members list accepts. Only when all=True. When advanced member filtering is enabled, do not also supply role, user_type, tags, or last-activity legacy filter parameters.
+
         last_activity_gte : typing.Optional[str]
             Filter by last activity (ISO 8601 formatted date). Only when all=True.
 
@@ -278,16 +304,22 @@ class AsyncBulkClient:
             Filter by last activity upper bound (ISO 8601 formatted date). Only when all=True.
 
         role : typing.Optional[str]
-            Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+            Filter by organization role. Only when all=True. (comma-separated values)
 
         search : typing.Optional[str]
-            Search term for filtering members by name, email, or username. Only when all=True.
+            Search members by first name, last name, email, or an enabled optional member-list column. Only when all=True.
 
         tags : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
 
         tags_operator : typing.Optional[str]
             How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.
+
+        user_last_activity_gte : typing.Optional[str]
+            Filter user__last_activity by greater than or equal to
+
+        user_last_activity_lte : typing.Optional[str]
+            Filter user__last_activity by less than or equal to
 
         user_type : typing.Optional[str]
             Multiple values may be separated by commas. (comma-separated values)
@@ -332,12 +364,15 @@ class AsyncBulkClient:
         _response = await self._raw_client.post(
             id,
             all_=all_,
+            filters=filters,
             last_activity_gte=last_activity_gte,
             last_activity_lte=last_activity_lte,
             role=role,
             search=search,
             tags=tags,
             tags_operator=tags_operator,
+            user_last_activity_gte=user_last_activity_gte,
+            user_last_activity_lte=user_last_activity_lte,
             user_type=user_type,
             excluded=excluded,
             included=included,
@@ -352,6 +387,7 @@ class AsyncBulkClient:
         *,
         all_: typing.Optional[bool] = None,
         excluded: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
         included: typing.Optional[str] = None,
         last_activity_gte: typing.Optional[str] = None,
         last_activity_lte: typing.Optional[str] = None,
@@ -380,6 +416,9 @@ class AsyncBulkClient:
 
         excluded : typing.Optional[str]
             Comma-separated list of user IDs to keep assigned when `all=true`.
+
+        ids : typing.Optional[str]
+            Filter id by in list
 
         included : typing.Optional[str]
             Comma-separated list of user IDs to unassign when `all=false`.
@@ -436,6 +475,7 @@ class AsyncBulkClient:
             id,
             all_=all_,
             excluded=excluded,
+            ids=ids,
             included=included,
             last_activity_gte=last_activity_gte,
             last_activity_lte=last_activity_lte,
