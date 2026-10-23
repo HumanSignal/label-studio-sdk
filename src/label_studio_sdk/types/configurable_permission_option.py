@@ -10,6 +10,11 @@ from .assignable_organization_role_enum import AssignableOrganizationRoleEnum
 
 class ConfigurablePermissionOption(UncheckedBaseModel):
     default: typing.List[AssignableOrganizationRoleEnum]
+    excluded_by: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Broader permission that supersedes this one; it only takes effect for roles without it.
+    """
+
     group: typing.Optional[str] = None
     label: typing.Optional[str] = None
     options: typing.List[AssignableOrganizationRoleEnum]
