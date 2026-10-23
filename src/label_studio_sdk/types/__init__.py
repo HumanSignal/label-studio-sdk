@@ -185,6 +185,8 @@ if typing.TYPE_CHECKING:
     from .lseapi_token_list import LseapiTokenList
     from .lsejwt_settings import LsejwtSettings
     from .maybe_expanded_comment import MaybeExpandedComment
+    from .member_skill import MemberSkill
+    from .member_skill_status_enum import MemberSkillStatusEnum
     from .metric_param import MetricParam
     from .ml_backend import MlBackend
     from .model_interface import ModelInterface
@@ -525,6 +527,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LseapiTokenList": ".lseapi_token_list",
     "LsejwtSettings": ".lsejwt_settings",
     "MaybeExpandedComment": ".maybe_expanded_comment",
+    "MemberSkill": ".member_skill",
+    "MemberSkillStatusEnum": ".member_skill_status_enum",
     "MetricParam": ".metric_param",
     "MlBackend": ".ml_backend",
     "ModelInterface": ".model_interface",
@@ -879,6 +883,8 @@ __all__ = [
     "LseapiTokenList",
     "LsejwtSettings",
     "MaybeExpandedComment",
+    "MemberSkill",
+    "MemberSkillStatusEnum",
     "MetricParam",
     "MlBackend",
     "ModelInterface",

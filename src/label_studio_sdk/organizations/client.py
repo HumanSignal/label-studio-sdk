@@ -282,7 +282,7 @@ class OrganizationsClient:
         self, id: int, *, search: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[OrganizationMemberSkillsOption]:
         """
-        Return self-reported Skills values with Contributor Setup display metadata.
+        Return Skills values held by members, self-reported or set by a skill assessment, with Contributor Setup display metadata. Owners, Administrators and Managers only.
 
         Parameters
         ----------
@@ -772,7 +772,7 @@ class AsyncOrganizationsClient:
         self, id: int, *, search: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[OrganizationMemberSkillsOption]:
         """
-        Return self-reported Skills values with Contributor Setup display metadata.
+        Return Skills values held by members, self-reported or set by a skill assessment, with Contributor Setup display metadata. Owners, Administrators and Managers only.
 
         Parameters
         ----------

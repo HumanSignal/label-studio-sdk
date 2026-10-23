@@ -253,6 +253,7 @@ class MembersClient:
         exclude_project_id: typing.Optional[float] = None,
         exclude_workspace_id: typing.Optional[float] = None,
         filters: typing.Optional[str] = None,
+        include_skills: typing.Optional[bool] = None,
         is_deleted: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
@@ -278,6 +279,9 @@ class MembersClient:
 
         filters : typing.Optional[str]
             Versioned JSON organization-member filter payload.
+
+        include_skills : typing.Optional[bool]
+            Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
 
         is_deleted : typing.Optional[bool]
 
@@ -330,6 +334,7 @@ class MembersClient:
             exclude_project_id=exclude_project_id,
             exclude_workspace_id=exclude_workspace_id,
             filters=filters,
+            include_skills=include_skills,
             is_deleted=is_deleted,
             ordering=ordering,
             page=page,
@@ -345,7 +350,12 @@ class MembersClient:
         return _response.data
 
     def search(
-        self, id: int, *, filters: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        filters: typing.Any,
+        include_skills: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
         """
         POST transport for the versioned organization-member filter payload.
@@ -355,6 +365,9 @@ class MembersClient:
         id : int
 
         filters : typing.Any
+
+        include_skills : typing.Optional[bool]
+            Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -376,7 +389,9 @@ class MembersClient:
             filters={"key": "value"},
         )
         """
-        _response = self._raw_client.search(id, filters=filters, request_options=request_options)
+        _response = self._raw_client.search(
+            id, filters=filters, include_skills=include_skills, request_options=request_options
+        )
         return _response.data
 
     def get(
@@ -719,6 +734,7 @@ class AsyncMembersClient:
         exclude_project_id: typing.Optional[float] = None,
         exclude_workspace_id: typing.Optional[float] = None,
         filters: typing.Optional[str] = None,
+        include_skills: typing.Optional[bool] = None,
         is_deleted: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
@@ -744,6 +760,9 @@ class AsyncMembersClient:
 
         filters : typing.Optional[str]
             Versioned JSON organization-member filter payload.
+
+        include_skills : typing.Optional[bool]
+            Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
 
         is_deleted : typing.Optional[bool]
 
@@ -804,6 +823,7 @@ class AsyncMembersClient:
             exclude_project_id=exclude_project_id,
             exclude_workspace_id=exclude_workspace_id,
             filters=filters,
+            include_skills=include_skills,
             is_deleted=is_deleted,
             ordering=ordering,
             page=page,
@@ -819,7 +839,12 @@ class AsyncMembersClient:
         return _response.data
 
     async def search(
-        self, id: int, *, filters: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        filters: typing.Any,
+        include_skills: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
         """
         POST transport for the versioned organization-member filter payload.
@@ -829,6 +854,9 @@ class AsyncMembersClient:
         id : int
 
         filters : typing.Any
+
+        include_skills : typing.Optional[bool]
+            Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -858,7 +886,9 @@ class AsyncMembersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.search(id, filters=filters, request_options=request_options)
+        _response = await self._raw_client.search(
+            id, filters=filters, include_skills=include_skills, request_options=request_options
+        )
         return _response.data
 
     async def get(

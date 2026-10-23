@@ -28,6 +28,7 @@ class RawPaginatedClient:
         *,
         ids: typing.Optional[str] = None,
         implicit: typing.Optional[bool] = None,
+        include_skills: typing.Optional[bool] = None,
         last_activity_gte: typing.Optional[dt.datetime] = None,
         last_activity_lte: typing.Optional[dt.datetime] = None,
         no_annotators: typing.Optional[bool] = None,
@@ -69,6 +70,9 @@ class RawPaginatedClient:
 
         implicit : typing.Optional[bool]
             Include/Exclude implicit project members in the results. If not provided, explicit + implicit members are returned.
+
+        include_skills : typing.Optional[bool]
+            Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
 
         last_activity_gte : typing.Optional[dt.datetime]
             Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
@@ -150,6 +154,7 @@ class RawPaginatedClient:
             params={
                 "ids": ids,
                 "implicit": implicit,
+                "include_skills": include_skills,
                 "last_activity__gte": serialize_datetime(last_activity_gte) if last_activity_gte is not None else None,
                 "last_activity__lte": serialize_datetime(last_activity_lte) if last_activity_lte is not None else None,
                 "no_annotators": no_annotators,
@@ -181,6 +186,7 @@ class RawPaginatedClient:
                     id,
                     ids=ids,
                     implicit=implicit,
+                    include_skills=include_skills,
                     last_activity_gte=last_activity_gte,
                     last_activity_lte=last_activity_lte,
                     no_annotators=no_annotators,
@@ -217,6 +223,7 @@ class AsyncRawPaginatedClient:
         *,
         ids: typing.Optional[str] = None,
         implicit: typing.Optional[bool] = None,
+        include_skills: typing.Optional[bool] = None,
         last_activity_gte: typing.Optional[dt.datetime] = None,
         last_activity_lte: typing.Optional[dt.datetime] = None,
         no_annotators: typing.Optional[bool] = None,
@@ -258,6 +265,9 @@ class AsyncRawPaginatedClient:
 
         implicit : typing.Optional[bool]
             Include/Exclude implicit project members in the results. If not provided, explicit + implicit members are returned.
+
+        include_skills : typing.Optional[bool]
+            Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
 
         last_activity_gte : typing.Optional[dt.datetime]
             Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
@@ -339,6 +349,7 @@ class AsyncRawPaginatedClient:
             params={
                 "ids": ids,
                 "implicit": implicit,
+                "include_skills": include_skills,
                 "last_activity__gte": serialize_datetime(last_activity_gte) if last_activity_gte is not None else None,
                 "last_activity__lte": serialize_datetime(last_activity_lte) if last_activity_lte is not None else None,
                 "no_annotators": no_annotators,
@@ -372,6 +383,7 @@ class AsyncRawPaginatedClient:
                         id,
                         ids=ids,
                         implicit=implicit,
+                        include_skills=include_skills,
                         last_activity_gte=last_activity_gte,
                         last_activity_lte=last_activity_lte,
                         no_annotators=no_annotators,

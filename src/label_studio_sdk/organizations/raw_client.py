@@ -364,7 +364,7 @@ class RawOrganizationsClient:
         self, id: int, *, search: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[OrganizationMemberSkillsOption]]:
         """
-        Return self-reported Skills values with Contributor Setup display metadata.
+        Return Skills values held by members, self-reported or set by a skill assessment, with Contributor Setup display metadata. Owners, Administrators and Managers only.
 
         Parameters
         ----------
@@ -888,7 +888,7 @@ class AsyncRawOrganizationsClient:
         self, id: int, *, search: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[OrganizationMemberSkillsOption]]:
         """
-        Return self-reported Skills values with Contributor Setup display metadata.
+        Return Skills values held by members, self-reported or set by a skill assessment, with Contributor Setup display metadata. Owners, Administrators and Managers only.
 
         Parameters
         ----------

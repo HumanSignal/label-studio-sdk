@@ -309,6 +309,7 @@ class RawMembersClient:
         exclude_project_id: typing.Optional[float] = None,
         exclude_workspace_id: typing.Optional[float] = None,
         filters: typing.Optional[str] = None,
+        include_skills: typing.Optional[bool] = None,
         is_deleted: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
@@ -334,6 +335,9 @@ class RawMembersClient:
 
         filters : typing.Optional[str]
             Versioned JSON organization-member filter payload.
+
+        include_skills : typing.Optional[bool]
+            Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
 
         is_deleted : typing.Optional[bool]
 
@@ -377,6 +381,7 @@ class RawMembersClient:
                 "exclude_project_id": exclude_project_id,
                 "exclude_workspace_id": exclude_workspace_id,
                 "filters": filters,
+                "include_skills": include_skills,
                 "is_deleted": is_deleted,
                 "ordering": ordering,
                 "page": page,
@@ -414,7 +419,12 @@ class RawMembersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def search(
-        self, id: int, *, filters: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        filters: typing.Any,
+        include_skills: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseOrganizationMemberList]:
         """
         POST transport for the versioned organization-member filter payload.
@@ -424,6 +434,9 @@ class RawMembersClient:
         id : int
 
         filters : typing.Any
+
+        include_skills : typing.Optional[bool]
+            Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -436,6 +449,9 @@ class RawMembersClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/organizations/{encode_path_param(id)}/memberships/search",
             method="POST",
+            params={
+                "include_skills": include_skills,
+            },
             json={
                 "filters": filters,
             },
@@ -875,6 +891,7 @@ class AsyncRawMembersClient:
         exclude_project_id: typing.Optional[float] = None,
         exclude_workspace_id: typing.Optional[float] = None,
         filters: typing.Optional[str] = None,
+        include_skills: typing.Optional[bool] = None,
         is_deleted: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
@@ -900,6 +917,9 @@ class AsyncRawMembersClient:
 
         filters : typing.Optional[str]
             Versioned JSON organization-member filter payload.
+
+        include_skills : typing.Optional[bool]
+            Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
 
         is_deleted : typing.Optional[bool]
 
@@ -943,6 +963,7 @@ class AsyncRawMembersClient:
                 "exclude_project_id": exclude_project_id,
                 "exclude_workspace_id": exclude_workspace_id,
                 "filters": filters,
+                "include_skills": include_skills,
                 "is_deleted": is_deleted,
                 "ordering": ordering,
                 "page": page,
@@ -980,7 +1001,12 @@ class AsyncRawMembersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def search(
-        self, id: int, *, filters: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        filters: typing.Any,
+        include_skills: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseOrganizationMemberList]:
         """
         POST transport for the versioned organization-member filter payload.
@@ -990,6 +1016,9 @@ class AsyncRawMembersClient:
         id : int
 
         filters : typing.Any
+
+        include_skills : typing.Optional[bool]
+            Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1002,6 +1031,9 @@ class AsyncRawMembersClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/organizations/{encode_path_param(id)}/memberships/search",
             method="POST",
+            params={
+                "include_skills": include_skills,
+            },
             json={
                 "filters": filters,
             },

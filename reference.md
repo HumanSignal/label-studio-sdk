@@ -9020,7 +9020,7 @@ client.organizations.api_organizations_memberships_filter_options_membership_lis
 <dl>
 <dd>
 
-Return self-reported Skills values with Contributor Setup display metadata.
+Return Skills values held by members, self-reported or set by a skill assessment, with Contributor Setup display metadata. Owners, Administrators and Managers only.
 </dd>
 </dl>
 </dd>
@@ -34701,6 +34701,14 @@ client.organizations.members.list_filtered(
 <dl>
 <dd>
 
+**include_skills:** `typing.Optional[bool]` — Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **is_deleted:** `typing.Optional[bool]` 
     
 </dd>
@@ -34856,6 +34864,14 @@ client.organizations.members.search(
 <dd>
 
 **filters:** `typing.Any` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_skills:** `typing.Optional[bool]` — Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
     
 </dd>
 </dl>
@@ -41785,6 +41801,14 @@ client.projects.members.paginated.list(
 <dd>
 
 **implicit:** `typing.Optional[bool]` — Include/Exclude implicit project members in the results. If not provided, explicit + implicit members are returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_skills:** `typing.Optional[bool]` — Add `skills` to each row: the member's skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.
     
 </dd>
 </dl>
