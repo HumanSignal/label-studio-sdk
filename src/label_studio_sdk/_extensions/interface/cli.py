@@ -986,6 +986,7 @@ def preview(
             auth_headers=headers,
             bound_interface_id=interface_id,
             on_interface_bound=lambda payload: _persist_preview_binding(file, base, payload),
+            fetch_components=not offline,
         ) as server:
             playground_url = server.url
             typer.echo(f"playground: {playground_url}")

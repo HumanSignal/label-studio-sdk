@@ -400,3 +400,128 @@ def test_sse_waiter_receives_later_update(tmp_path: Path) -> None:
 
     assert received["code"] == "later"
     assert received["interfaceId"] is None
+
+
+# FIT-3237: Interface Components are not in the verified snapshot (1.5k files, mostly icon chunks), so the
+# sandbox server fetches them on first use from the instance and keeps them inside the active snapshot.
+
+
+def _component_upstream(requests: list[httpx.Request], files: dict[str, bytes] | None = None):
+    files = files or {
+        "/react-app/editor-standalone/components/ImageCanvas.CJxrEQ-S.js": b"export const ImageCanvas = 1;",
+        "/react-app/editor-standalone/components/icons/Star.js": b"export const StarIcon = 1;",
+        "/react-app/editor-standalone/components/assets/decode-audio.Cq_l2TZw.wasm": b"\0asm",
+    }
+
+    def upstream(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        body = files.get(request.url.path)
+        if body is None:
+            return httpx.Response(404, content=b"missing", request=request)
+        return httpx.Response(200, content=body, request=request)
+
+    return upstream
+
+
+def _component_server(tmp_path: Path, upstream, *, fetch_components: bool = True):
+    client = httpx.Client(transport=httpx.MockTransport(upstream))
+    server = LocalPreviewServer(
+        asset_root=_assets(tmp_path),
+        upstream_origin="https://ls.example",
+        auth_headers={"Authorization": "Bearer server-secret"},
+        upstream_client=client,
+        fetch_components=fetch_components,
+    )
+    return client, server
+
+
+def test_sandbox_fetches_component_files_on_first_use_and_caches_them(tmp_path: Path) -> None:
+    requests: list[httpx.Request] = []
+    client, server = _component_server(tmp_path, _component_upstream(requests))
+    with client, server:
+        base = f"{server.sandbox_origin}/{server.sandbox_capability}/components"
+        for path, body in (
+            ("ImageCanvas.CJxrEQ-S.js", b"export const ImageCanvas = 1;"),
+            ("icons/Star.js", b"export const StarIcon = 1;"),
+            ("assets/decode-audio.Cq_l2TZw.wasm", b"\0asm"),
+        ):
+            first = httpx.get(f"{base}/{path}")
+            assert first.status_code == 200, path
+            assert first.content == body
+            assert first.headers["Cache-Control"] == "no-store"
+            assert httpx.get(f"{base}/{path}").content == body
+
+        assert httpx.get(f"{base}/assets/decode-audio.Cq_l2TZw.wasm").headers["Content-Type"] == "application/wasm"
+        assert httpx.get(f"{base}/ImageCanvas.CJxrEQ-S.js").headers["Content-Type"].startswith("text/javascript")
+        # One upstream request per file; the repeats were served from the snapshot.
+        assert sorted(request.url.path for request in requests) == sorted(
+            [
+                "/react-app/editor-standalone/components/ImageCanvas.CJxrEQ-S.js",
+                "/react-app/editor-standalone/components/icons/Star.js",
+                "/react-app/editor-standalone/components/assets/decode-audio.Cq_l2TZw.wasm",
+            ]
+        )
+        # Public static assets: never send the API token upstream.
+        assert all("Authorization" not in request.headers for request in requests)
+        cached = server.asset_root / "editor-standalone/components/ImageCanvas.CJxrEQ-S.js"
+        assert cached.read_bytes() == b"export const ImageCanvas = 1;"
+
+
+def test_sandbox_serves_components_manifest_only_from_the_snapshot(tmp_path: Path) -> None:
+    requests: list[httpx.Request] = []
+    client, server = _component_server(
+        tmp_path,
+        _component_upstream(requests, {"/react-app/editor-standalone/components/manifest.json": b'{"stale": 1}'}),
+    )
+    with client, server:
+        url = f"{server.sandbox_origin}/{server.sandbox_capability}/components/manifest.json"
+        assert httpx.get(url).status_code == 404
+        assert requests == []
+
+        (server.asset_root / "editor-standalone/components").mkdir(parents=True, exist_ok=True)
+        (server.asset_root / "editor-standalone/components/manifest.json").write_bytes(b'{"components": {}}')
+        assert httpx.get(url).content == b'{"components": {}}'
+        assert requests == []
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "ImageCanvas.js",  # un-hashed chunk name
+        "manifest-a1b2c3d4.json",  # the hashed manifest copy is fetched by the cache, not here
+        "ImageCanvas.CJxrEQ-S.html",  # unexpected extension
+        "%2e%2e/%2e%2e/interface-shell.html",
+        "icons/%2e%2e/ImageCanvas.CJxrEQ-S.js",
+        "icons/star.js",  # icon names are PascalCase
+    ],
+)
+def test_sandbox_rejects_unexpected_component_paths_without_fetching(tmp_path: Path, path: str) -> None:
+    requests: list[httpx.Request] = []
+    client, server = _component_server(tmp_path, _component_upstream(requests))
+    with client, server:
+        response = httpx.get(f"{server.sandbox_origin}/{server.sandbox_capability}/components/{path}")
+        assert response.status_code in (403, 404)
+        assert requests == []
+
+
+def test_sandbox_does_not_cache_upstream_errors(tmp_path: Path) -> None:
+    requests: list[httpx.Request] = []
+    client, server = _component_server(tmp_path, _component_upstream(requests, {}))
+    with client, server:
+        url = f"{server.sandbox_origin}/{server.sandbox_capability}/components/Missing.AbCdEf12.js"
+        assert httpx.get(url).status_code == 404
+        assert httpx.get(url).status_code == 404
+        assert len(requests) == 2
+        assert not (server.asset_root / "editor-standalone/components/Missing.AbCdEf12.js").exists()
+
+
+def test_sandbox_offline_serves_only_cached_components(tmp_path: Path) -> None:
+    requests: list[httpx.Request] = []
+    client, server = _component_server(tmp_path, _component_upstream(requests), fetch_components=False)
+    with client, server:
+        base = f"{server.sandbox_origin}/{server.sandbox_capability}/components"
+        assert httpx.get(f"{base}/ImageCanvas.CJxrEQ-S.js").status_code == 404
+        (server.asset_root / "editor-standalone/components").mkdir(parents=True, exist_ok=True)
+        (server.asset_root / "editor-standalone/components/ImageCanvas.CJxrEQ-S.js").write_bytes(b"cached")
+        assert httpx.get(f"{base}/ImageCanvas.CJxrEQ-S.js").content == b"cached"
+        assert requests == []

@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from typing import Any
 
 import httpx
+import pytest
 from .preview_fakes import FakePreviewCache, FakePreviewServer, preview_asset_root
 from typer.testing import CliRunner
 
@@ -166,6 +167,26 @@ def test_preview_offline_passes_no_auth_requirement_to_cache(monkeypatch: Any, t
     assert result.exit_code == 0, result.output
     assert FakePreviewCache.instances[0].calls[0]["offline"] is True
     assert FakePreviewCache.instances[0].calls[0]["headers"] == {}
+    # FIT-3237: offline serves only Interface Components files a previous run fetched.
+    assert FakePreviewServer.instances[0].kwargs["fetch_components"] is False
+
+
+@pytest.mark.parametrize("offline", [False, True], ids=["online", "offline"])
+def test_preview_fetches_components_on_demand_unless_offline(monkeypatch: Any, tmp_path: Path, offline: bool) -> None:
+    FakePreviewCache.instances = []
+    FakePreviewCache.error = None
+    FakePreviewServer.instances = []
+    monkeypatch.setattr(cli, "PreviewAssetCache", FakePreviewCache)
+    monkeypatch.setattr(cli, "LocalPreviewServer", FakePreviewServer)
+    monkeypatch.setitem(sys.modules, "watchfiles", SimpleNamespace(watch=_stop_watch))
+    file = tmp_path / "Screen.jsx"
+    file.write_text("({ default: function Screen() { return null; } })", encoding="utf-8")
+
+    args = ["preview", str(file), "--no-open", "--token", "secret", "--lse-url", "https://ls.example"]
+    result = runner.invoke(cli.app, args + (["--offline"] if offline else []))
+
+    assert result.exit_code == 0, result.output
+    assert FakePreviewServer.instances[0].kwargs["fetch_components"] is (not offline)
 
 
 def test_protocol_mismatch_fails_before_browser_or_server(monkeypatch: Any, tmp_path: Path) -> None:

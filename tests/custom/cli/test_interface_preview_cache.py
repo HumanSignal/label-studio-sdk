@@ -182,8 +182,183 @@ def test_unchanged_manifests_reuse_verified_assets_after_short_revalidation(tmp_
     assert [request.url.path for request in calls] == [
         "/api/current-user/whoami",
         "/react-app/local-playground/manifest.json",
+        "/api/interfaces/editor-bundle/",
         "/react-app/editor-standalone/manifest.json",
+        "/react-app/editor-standalone/components/manifest.json",
     ]
+
+
+def test_app_editor_bundle_wins_over_stale_cdn_manifest(tmp_path: Path) -> None:
+    """FIT-3235: the CDN can serve last deploy's manifest.json; the app's hashed names are authoritative."""
+    origin = "https://fresh.example"
+    responses = _responses(origin)
+    responses[f"{origin}/api/interfaces/editor-bundle/"] = (
+        200,
+        json.dumps(
+            {"main.js": "main-new.js", "main.css": "main-new.css", "interface-shell.html": "interface-shell-new.html"}
+        ).encode(),
+    )
+    responses[f"{origin}/react-app/editor-standalone/main-new.js"] = (200, b"fresh editor")
+    responses[f"{origin}/react-app/editor-standalone/main-new.css"] = (200, b"fresh{}")
+    responses[f"{origin}/react-app/editor-standalone/interface-shell-new.html"] = (200, b"<html>fresh shell</html>")
+    calls: list[httpx.Request] = []
+    cache = PreviewAssetCache(origin, cache_root=tmp_path)
+
+    with _client(responses, calls) as client:
+        snapshot = cache.resolve(client=client, headers={"Authorization": "Token secret"})
+
+    assert snapshot.verified
+    assert (snapshot.root / "editor-standalone/main-new.js").read_bytes() == b"fresh editor"
+    assert not (snapshot.root / "editor-standalone/main-abc.js").exists()
+    # The hashed shell is stored under the stable name the local preview server serves.
+    assert (snapshot.root / "editor-standalone/interface-shell.html").read_bytes() == b"<html>fresh shell</html>"
+    # The snapshot's manifest.json (served to the local shell) names the fresh bundle.
+    assert json.loads((snapshot.root / "editor-standalone/manifest.json").read_bytes()) == {
+        "main.css": "main-new.css",
+        "main.js": "main-new.js",
+    }
+    paths = [request.url.path for request in calls]
+    assert "/react-app/editor-standalone/manifest.json" not in paths
+    assert "/react-app/editor-standalone/interface-shell.html" not in paths
+
+
+def test_shell_only_deploy_refreshes_the_snapshot(tmp_path: Path) -> None:
+    """Same bundle, new hashed shell: the fingerprint must change or the stale shell stays cached."""
+    origin = "https://shell.example"
+    cache = PreviewAssetCache(origin, cache_root=tmp_path)
+
+    def responses_with_shell(name: str, body: bytes) -> dict[str, tuple[int, bytes]]:
+        responses = _responses(origin)
+        responses[f"{origin}/api/interfaces/editor-bundle/"] = (
+            200,
+            json.dumps({"main.js": "main-abc.js", "main.css": "main-abc.css", "interface-shell.html": name}).encode(),
+        )
+        responses[f"{origin}/react-app/editor-standalone/{name}"] = (200, body)
+        return responses
+
+    with _client(responses_with_shell("interface-shell-one.html", b"<html>one</html>"), []) as client:
+        first = cache.resolve(client=client, headers={"Authorization": "Token secret"})
+    with _client(responses_with_shell("interface-shell-two.html", b"<html>two</html>"), []) as client:
+        second = cache.resolve(client=client, headers={"Authorization": "Token secret"})
+
+    assert second.root != first.root
+    assert (second.root / "editor-standalone/interface-shell.html").read_bytes() == b"<html>two</html>"
+
+
+@pytest.mark.parametrize(
+    "status, body",
+    [
+        (403, b'{"detail":"forbidden"}'),
+        (200, b"not json"),
+        (200, json.dumps({"main.js": "https://evil.example/x.js", "main.css": "main-x.css"}).encode()),
+        (200, json.dumps({"main.js": "../main-x.js", "main.css": "main-x.css"}).encode()),
+        (
+            200,
+            json.dumps(
+                {"main.js": "main-x.js", "main.css": "main-x.css", "interface-shell.html": "../x.html"}
+            ).encode(),
+        ),
+    ],
+    ids=["forbidden", "not-json", "foreign-url", "traversal", "unsafe-shell"],
+)
+def test_unusable_editor_bundle_response_falls_back_to_manifest(tmp_path: Path, status: int, body: bytes) -> None:
+    origin = "https://fallback.example"
+    responses = _responses(origin)
+    responses[f"{origin}/api/interfaces/editor-bundle/"] = (status, body)
+    cache = PreviewAssetCache(origin, cache_root=tmp_path)
+
+    with _client(responses, []) as client:
+        snapshot = cache.resolve(client=client, headers={"Authorization": "Token secret"})
+
+    assert (snapshot.root / "editor-standalone/main-abc.js").read_bytes() == b"editor"
+
+
+COMPONENTS_MANIFEST = json.dumps(
+    {"version": "1.0.0", "components": {"ImageCanvas": {"chunk": "components/ImageCanvas.CJxrEQ-S.js"}}}
+).encode()
+
+
+def _with_components(origin: str, name: str = "components/manifest-a1b2c3d4.json", body: bytes = COMPONENTS_MANIFEST):
+    responses = _responses(origin)
+    responses[f"{origin}/api/interfaces/editor-bundle/"] = (
+        200,
+        json.dumps({"main.js": "main-abc.js", "main.css": "main-abc.css", "components/manifest.json": name}).encode(),
+    )
+    responses[f"{origin}/react-app/editor-standalone/{name}"] = (200, body)
+    return responses
+
+
+def test_hashed_components_manifest_is_stored_under_its_stable_name(tmp_path: Path) -> None:
+    """FIT-3237: the sandbox loads components/manifest.json from the snapshot; the CDN copy can be stale."""
+    origin = "https://components.example"
+    calls: list[httpx.Request] = []
+    cache = PreviewAssetCache(origin, cache_root=tmp_path)
+
+    with _client(_with_components(origin), calls) as client:
+        snapshot = cache.resolve(client=client, headers={"Authorization": "Token secret"})
+
+    assert snapshot.verified
+    assert (snapshot.root / "editor-standalone/components/manifest.json").read_bytes() == COMPONENTS_MANIFEST
+    paths = [request.url.path for request in calls]
+    assert "/react-app/editor-standalone/components/manifest-a1b2c3d4.json" in paths
+    assert "/react-app/editor-standalone/components/manifest.json" not in paths
+
+
+def test_components_manifest_only_deploy_refreshes_the_snapshot(tmp_path: Path) -> None:
+    origin = "https://components-refresh.example"
+    cache = PreviewAssetCache(origin, cache_root=tmp_path)
+    with _client(_with_components(origin), []) as client:
+        first = cache.resolve(client=client, headers={"Authorization": "Token secret"})
+    second_body = COMPONENTS_MANIFEST.replace(b"CJxrEQ-S", b"NewHash1")
+    with _client(_with_components(origin, "components/manifest-e5f6a7b8.json", second_body), []) as client:
+        second = cache.resolve(client=client, headers={"Authorization": "Token secret"})
+
+    assert second.root != first.root
+    assert (second.root / "editor-standalone/components/manifest.json").read_bytes() == second_body
+
+
+def test_components_manifest_falls_back_to_unhashed_copy(tmp_path: Path) -> None:
+    """Servers that don't name a hashed copy: use the un-hashed manifest (may be CDN-stale, as before)."""
+    origin = "https://components-fallback.example"
+    responses = _responses(origin)
+    responses[f"{origin}/react-app/editor-standalone/components/manifest.json"] = (200, COMPONENTS_MANIFEST)
+    cache = PreviewAssetCache(origin, cache_root=tmp_path)
+
+    with _client(responses, []) as client:
+        snapshot = cache.resolve(client=client, headers={"Authorization": "Token secret"})
+
+    assert (snapshot.root / "editor-standalone/components/manifest.json").read_bytes() == COMPONENTS_MANIFEST
+
+
+def test_missing_components_manifest_does_not_block_activation(tmp_path: Path) -> None:
+    """Builds without Interface Components (or older servers) still preview interfaces that don't use them."""
+    origin = "https://no-components.example"
+    cache = PreviewAssetCache(origin, cache_root=tmp_path)
+
+    with _client(_responses(origin), []) as client:
+        snapshot = cache.resolve(client=client, headers={"Authorization": "Token secret"})
+
+    assert snapshot.verified
+    assert not (snapshot.root / "editor-standalone/components/manifest.json").exists()
+
+
+@pytest.mark.parametrize(
+    "name",
+    ["../manifest-a1b2c3d4.json", "components/../../x.json", "https://evil.example/m.json", "components/manifest.json"],
+)
+def test_unsafe_components_manifest_name_falls_back(tmp_path: Path, name: str) -> None:
+    origin = "https://components-unsafe.example"
+    responses = _with_components(origin, name)
+    responses[f"{origin}/react-app/editor-standalone/components/manifest.json"] = (200, b'{"components": {}}')
+    calls: list[httpx.Request] = []
+    cache = PreviewAssetCache(origin, cache_root=tmp_path)
+
+    with _client(responses, calls) as client:
+        snapshot = cache.resolve(client=client, headers={"Authorization": "Token secret"})
+
+    # The whole API payload is rejected, so the CLI behaves like an older server.
+    assert (snapshot.root / "editor-standalone/main-abc.js").read_bytes() == b"editor"
+    assert "evil.example" not in " ".join(str(request.url) for request in calls)
 
 
 def test_offline_uses_verified_cache_without_network(tmp_path: Path) -> None:
@@ -517,10 +692,12 @@ def test_corrupt_current_snapshot_is_refetched_instead_of_served(tmp_path: Path)
 
     assert repaired.root != first.root
     assert repaired.verified
-    assert [request.url.path for request in calls][:3] == [
+    assert [request.url.path for request in calls][:5] == [
         "/api/current-user/whoami",
         "/react-app/local-playground/manifest.json",
+        "/api/interfaces/editor-bundle/",
         "/react-app/editor-standalone/manifest.json",
+        "/react-app/editor-standalone/components/manifest.json",
     ]
 
 

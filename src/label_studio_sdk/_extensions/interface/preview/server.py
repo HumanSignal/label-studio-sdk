@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import mimetypes
+import os
 import re
 import secrets
 import threading
@@ -24,6 +25,11 @@ _ALLOWED_BFF_ROUTES = (
 _PATCH_INTERFACE_RE = re.compile(r"^/api/interfaces/([0-9]+)/$")
 _MAX_BFF_BODY_BYTES = 5 * 1024 * 1024
 _PERMISSION_DENIED_FALLBACK = "You do not have permission to perform this action in Label Studio."
+# Interface Components files the sandbox may fetch on first use (FIT-3237): content-hashed chunks, CSS,
+# workers and wasm (`<name>.<hash>.<ext>`, also under assets/) and the Phosphor icon chunks
+# (`icons/<Name>.js`). The components manifest is never fetched here; it comes from the verified snapshot.
+_COMPONENT_FILE_RE = re.compile(r"(?:assets/)?[\w.-]+\.[A-Za-z0-9_-]{8}\.(?:js|css|wasm)|icons/[A-Z][A-Za-z0-9]*\.js")
+_MAX_COMPONENT_FILE_BYTES = 64 * 1024 * 1024
 
 
 def _is_safe_asset_relative(value: str) -> bool:
@@ -62,6 +68,7 @@ class LocalPreviewServer:
         sandbox_capability: str | None = None,
         bound_interface_id: int | None = None,
         on_interface_bound: Callable[[dict[str, Any]], None] | None = None,
+        fetch_components: bool = False,
     ) -> None:
         self.asset_root = Path(asset_root).resolve()
         self.upstream_origin = upstream_origin.rstrip("/")
@@ -72,6 +79,9 @@ class LocalPreviewServer:
         self.sandbox_capability = sandbox_capability or secrets.token_urlsafe(32)
         if self.host_capability == self.sandbox_capability:
             self.sandbox_capability = secrets.token_urlsafe(32)
+        # Download Interface Components files into the active snapshot on first use. Off for --offline,
+        # where only files a previous run fetched are served.
+        self.fetch_components = fetch_components
         self._bound_interface_id = _coerce_interface_id(bound_interface_id)
         self._on_interface_bound = on_interface_bound
         self._upstream_client = upstream_client
@@ -476,7 +486,10 @@ class LocalPreviewServer:
                 pure = PurePosixPath(relative)
                 target = (owner.asset_root / "editor-standalone" / pure).resolve()
                 editor_root = (owner.asset_root / "editor-standalone").resolve()
-                if not target.is_relative_to(editor_root) or not target.is_file():
+                if not target.is_relative_to(editor_root):
+                    self.send_error(HTTPStatus.NOT_FOUND)
+                    return
+                if not target.is_file() and not owner._fetch_component(relative):
                     self.send_error(HTTPStatus.NOT_FOUND)
                     return
                 content = target.read_bytes()
@@ -496,6 +509,39 @@ class LocalPreviewServer:
                 return
 
         return SandboxHandler
+
+    def _fetch_component(self, relative: str) -> bool:
+        """Download one Interface Components file into the active snapshot; False when it is unavailable.
+
+        Only component paths the sandbox loads are eligible, and they are public static assets, so the
+        request carries no API token. Hashed names never change content; icon chunks are re-fetched per
+        snapshot, i.e. per deploy.
+        """
+        name = relative.removeprefix("components/")
+        if not self.fetch_components or name == relative or not _COMPONENT_FILE_RE.fullmatch(name):
+            return False
+        assert self._upstream_client is not None
+        url = f"{self.upstream_origin}/react-app/editor-standalone/{relative}"
+        body = bytearray()
+        try:
+            with self._upstream_client.stream("GET", url, follow_redirects=False) as response:
+                if response.status_code != HTTPStatus.OK:
+                    return False
+                for chunk in response.iter_bytes():
+                    body.extend(chunk)
+                    if len(body) > _MAX_COMPONENT_FILE_BYTES:
+                        return False
+        except httpx.HTTPError:
+            return False
+        target = self.asset_root / "editor-standalone" / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        staging = target.with_name(f".{target.name}.{secrets.token_hex(8)}.tmp")
+        try:
+            staging.write_bytes(bytes(body))
+            os.replace(staging, target)
+        finally:
+            staging.unlink(missing_ok=True)
+        return True
 
     def _sandbox_csp(self) -> str:
         return "; ".join(

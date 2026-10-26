@@ -23,6 +23,11 @@ LOCAL_ASSET_BASE = "/react-app/local-playground/"
 EDITOR_MANIFEST_PATH = "/react-app/editor-standalone/manifest.json"
 EDITOR_ASSET_BASE = "/react-app/editor-standalone/"
 EDITOR_SHELL_PATH = "/react-app/editor-standalone/interface-shell.html"
+COMPONENTS_MANIFEST_RELATIVE = "editor-standalone/components/manifest.json"
+# App-resolved hashed editor bundle names (EDITOR_MANIFEST_PATH's shape, plus optional hashed
+# "interface-shell.html" and "components/manifest.json"). The CDN can serve the un-hashed manifest.json,
+# shell and components manifest stale after a deploy; this API response is never CDN-cached.
+EDITOR_BUNDLE_API_PATH = "/api/interfaces/editor-bundle/"
 VERIFICATION_FILE = ".verified.json"
 CURRENT_FILE = "CURRENT"
 LAST_FETCH_FILE = "LAST_FETCH"
@@ -162,11 +167,21 @@ class PreviewAssetCache:
         local_payload = local_response.json()
         manifest = PreviewManifest.parse(local_payload)
 
-        editor_response = client.get(self.origin + EDITOR_MANIFEST_PATH, headers=headers, follow_redirects=False)
-        editor_response.raise_for_status()
-        editor_manifest = editor_response.json()
-        editor_assets = _editor_assets(editor_manifest)
-        manifest_fingerprint = _manifest_fingerprint(local_payload, editor_manifest)
+        editor_payload, editor_manifest_bytes = self._fetch_editor_manifest(client, headers)
+        shell_name = editor_payload.pop(_EDITOR_SHELL_KEY, None)
+        shell_path = EDITOR_ASSET_BASE + shell_name if shell_name else EDITOR_SHELL_PATH
+        components_manifest = self._fetch_components_manifest(
+            client, headers, editor_payload.pop(_EDITOR_COMPONENTS_KEY, None)
+        )
+        editor_assets = _editor_assets(editor_payload)
+        # The shell and components manifest are part of the deploy identity: a change to either alone
+        # must refresh the snapshot too.
+        identity = dict(editor_payload)
+        if shell_name:
+            identity[_EDITOR_SHELL_KEY] = shell_name
+        if components_manifest is not None:
+            identity[_EDITOR_COMPONENTS_KEY] = hashlib.sha256(components_manifest).hexdigest()
+        manifest_fingerprint = _manifest_fingerprint(local_payload, identity)
         cached = self.current_snapshot()
         if cached is not None:
             metadata = self._snapshot_metadata(cached.root)
@@ -200,12 +215,15 @@ class PreviewAssetCache:
                 _write_asset(staging, target_name, content)
                 checksums[target_name] = digest
 
-            editor_manifest_bytes = editor_response.content
             _write_asset(staging, "editor-standalone/manifest.json", editor_manifest_bytes)
             checksums["editor-standalone/manifest.json"] = hashlib.sha256(editor_manifest_bytes).hexdigest()
-            shell = self._fetch_asset(client, self.origin + EDITOR_SHELL_PATH, headers)
+            shell = self._fetch_asset(client, self.origin + shell_path, headers)
             _write_asset(staging, "editor-standalone/interface-shell.html", shell)
             checksums["editor-standalone/interface-shell.html"] = hashlib.sha256(shell).hexdigest()
+            if components_manifest is not None:
+                # Component chunks themselves are fetched on first use by the sandbox server.
+                _write_asset(staging, COMPONENTS_MANIFEST_RELATIVE, components_manifest)
+                checksums[COMPONENTS_MANIFEST_RELATIVE] = hashlib.sha256(components_manifest).hexdigest()
             for path, url, expected_hash in editor_assets:
                 target_name = f"editor-standalone/{path}"
                 asset_url = _allowlisted_asset_url(self.origin, EDITOR_ASSET_BASE, url)
@@ -257,6 +275,59 @@ class PreviewAssetCache:
                 else:
                     shutil.rmtree(staging, ignore_errors=True)
             raise
+
+    def _fetch_editor_manifest(self, client: httpx.Client, headers: dict[str, str]) -> tuple[dict[str, Any], bytes]:
+        """Editor manifest payload and the bytes to store as the snapshot's manifest.json.
+
+        Prefers the app's hashed names (and hashed shell, when named) over the CDN-cacheable
+        manifest.json. Servers without the endpoint (404), callers without access (403) or an
+        unusable payload fall back to manifest.json so older LSE releases keep working.
+        """
+        response = client.get(self.origin + EDITOR_BUNDLE_API_PATH, headers=headers, follow_redirects=False)
+        if response.status_code == 200:
+            try:
+                payload = response.json()
+            except ValueError:
+                payload = None
+            if _is_hashed_editor_bundle(payload):
+                bundle = {name: payload[name] for name in _HASHED_EDITOR_BUNDLE}
+                return dict(payload), json.dumps(bundle, sort_keys=True, separators=(",", ":")).encode("utf-8")
+
+        response = client.get(self.origin + EDITOR_MANIFEST_PATH, headers=headers, follow_redirects=False)
+        response.raise_for_status()
+        payload = response.json()
+        if isinstance(payload, dict):
+            # Only the API names hashed copies; never trust them from the CDN manifest.
+            payload.pop(_EDITOR_SHELL_KEY, None)
+            payload.pop(_EDITOR_COMPONENTS_KEY, None)
+        return payload, response.content
+
+    def _fetch_components_manifest(
+        self, client: httpx.Client, headers: dict[str, str], hashed_name: str | None
+    ) -> bytes | None:
+        """Interface Components manifest bytes, or None when the instance publishes none.
+
+        A hashed copy named by the API is required; the un-hashed fallback (older servers, which the CDN
+        may serve stale) is optional so builds without Interface Components keep previewing.
+        """
+        if hashed_name:
+            content = self._fetch_asset(client, self.origin + EDITOR_ASSET_BASE + hashed_name, headers)
+        else:
+            response = client.get(
+                self.origin + EDITOR_ASSET_BASE + "components/manifest.json", headers=headers, follow_redirects=False
+            )
+            if response.status_code != 200:
+                return None
+            content = response.content
+        try:
+            payload = json.loads(content)
+        except ValueError:
+            payload = None
+        if not isinstance(payload, dict) or not isinstance(payload.get("components"), dict):
+            if hashed_name:
+                raise PreviewCacheError("components manifest must be a JSON object with components")
+            return None
+        return content
 
     @staticmethod
     def _fetch_asset(client: httpx.Client, url: str, headers: dict[str, str]) -> bytes:
@@ -482,6 +553,32 @@ def _manifest_fingerprint(local_payload: Any, editor_payload: Any) -> str:
         separators=(",", ":"),
     ).encode()
     return hashlib.sha256(canonical).hexdigest()
+
+
+_HASHED_EDITOR_BUNDLE = {
+    "main.js": re.compile(r"main-[A-Za-z0-9_-]+\.js"),
+    "main.css": re.compile(r"main-[A-Za-z0-9_-]+\.css"),
+}
+_EDITOR_SHELL_KEY = "interface-shell.html"
+_EDITOR_COMPONENTS_KEY = "components/manifest.json"
+# Optional hashed copies the API may name, and the file names they must have.
+_HASHED_EDITOR_OPTIONAL = {
+    _EDITOR_SHELL_KEY: re.compile(r"interface-shell-[A-Za-z0-9_-]+\.html"),
+    _EDITOR_COMPONENTS_KEY: re.compile(r"components/manifest-[A-Za-z0-9_-]+\.json"),
+}
+
+
+def _is_hashed_editor_bundle(payload: Any) -> bool:
+    if not isinstance(payload, dict) or set(payload) - set(_HASHED_EDITOR_OPTIONAL) != set(_HASHED_EDITOR_BUNDLE):
+        return False
+    for key, pattern in _HASHED_EDITOR_OPTIONAL.items():
+        value = payload.get(key)
+        if value is not None and not (isinstance(value, str) and pattern.fullmatch(value)):
+            return False
+    return all(
+        isinstance(payload[name], str) and pattern.fullmatch(payload[name])
+        for name, pattern in _HASHED_EDITOR_BUNDLE.items()
+    )
 
 
 def _editor_assets(payload: Any) -> list[tuple[str, str, str | None]]:

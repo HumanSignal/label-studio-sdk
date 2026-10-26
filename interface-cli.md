@@ -229,6 +229,15 @@ warning. `--offline` skips all network access and requires an existing verified 
 the browser opens. The server's selected artifact path does not change during the process; cache cleanup retains the
 active snapshot and one prior snapshot.
 
+The hashed editor bundle names come from `GET /api/interfaces/editor-bundle/`, which the app resolves on every request,
+so a CDN copy of `/react-app/editor-standalone/manifest.json` left stale by a deploy cannot pin an old editor. Instances
+without that endpoint, or keys without the Interfaces permission, fall back to `manifest.json`.
+
+Interface Components (`window.InterfaceComponents`, `EditorUI.Icons`) are not downloaded up front. The cache stores the
+instance's components manifest, and the preview fetches each component chunk, stylesheet, worker, wasm file or icon the
+first time an interface uses it, keeping it with the cached snapshot for later runs. With `--offline`, only components a
+previous run already loaded are available.
+
 View-Only users cannot mint the PAT needed for first-run bootstrap. Cookie SSO, OAuth proxies, and IAP browser bootstrap
 are out of scope; allow access to `/react-app/local-playground/` and `/react-app/editor-standalone/`, or populate the
 cache from a reachable instance. Cached live preview still works without a token. `validate` remains fully local, while
