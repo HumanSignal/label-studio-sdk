@@ -40,6 +40,7 @@ tests/custom/test_interface
 tests/custom/cli
 tests/custom/test_client_wrapper.py
 tests/custom/test_tokens_client_ext.py
+tests/custom/test_tasks_create_many_status_alias.py
 
 # manual workflows
 .github/workflows/build_pypi.yml

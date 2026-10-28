@@ -10,7 +10,6 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.lse_task import LseTask
 from ..types.paginated_role_based_task_list import PaginatedRoleBasedTaskList
-from ..types.project_import import ProjectImport
 from ..types.role_based_task import RoleBasedTask
 from ..types.task_event import TaskEvent
 from .raw_client import AsyncRawTasksClient, RawTasksClient
@@ -38,55 +37,6 @@ class TasksClient:
         RawTasksClient
         """
         return self._raw_client
-
-    def create_many_status(
-        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectImport:
-        """
-
-                    Poll the status of an asynchronous project import operation.
-
-                    **Usage:**
-                    1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{"import": <import_id>}`
-                    2. Use that `import_id` with this GET endpoint to check the import status
-                    3. Poll this endpoint to see if the import has completed, is still processing, or has failed
-                    4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
-
-                    This endpoint returns detailed information about the import including task counts, status, and any error messages.
-                    While an import is running, `task_count` / annotation / prediction counts update as batches commit.
-                    Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
-
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-
-        import_pk : int
-            A unique integer value identifying this project import.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ProjectImport
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.tasks.create_many_status(
-            id=1,
-            import_pk=1,
-        )
-        """
-        _response = self._raw_client.create_many_status(id, import_pk, request_options=request_options)
-        return _response.data
 
     def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -689,63 +639,6 @@ class AsyncTasksClient:
         AsyncRawTasksClient
         """
         return self._raw_client
-
-    async def create_many_status(
-        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectImport:
-        """
-
-                    Poll the status of an asynchronous project import operation.
-
-                    **Usage:**
-                    1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{"import": <import_id>}`
-                    2. Use that `import_id` with this GET endpoint to check the import status
-                    3. Poll this endpoint to see if the import has completed, is still processing, or has failed
-                    4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
-
-                    This endpoint returns detailed information about the import including task counts, status, and any error messages.
-                    While an import is running, `task_count` / annotation / prediction counts update as batches commit.
-                    Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
-
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-
-        import_pk : int
-            A unique integer value identifying this project import.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ProjectImport
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.tasks.create_many_status(
-                id=1,
-                import_pk=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create_many_status(id, import_pk, request_options=request_options)
-        return _response.data
 
     async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """

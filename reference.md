@@ -14067,100 +14067,6 @@ client.projects.validate_label_config(
 </details>
 
 ## Tasks
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create_many_status</a>(...) -> ProjectImport</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-            Poll the status of an asynchronous project import operation.
-            
-            **Usage:**
-            1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{"import": <import_id>}`
-            2. Use that `import_id` with this GET endpoint to check the import status
-            3. Poll this endpoint to see if the import has completed, is still processing, or has failed
-            4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
-            
-            This endpoint returns detailed information about the import including task counts, status, and any error messages.
-            While an import is running, `task_count` / annotation / prediction counts update as batches commit.
-            Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
-        
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-from label_studio_sdk.environment import LabelStudioEnvironment
-
-client = LabelStudio(
-    api_key="<value>",
-    environment=LabelStudioEnvironment.DEFAULT,
-)
-
-client.tasks.create_many_status(
-    id=1,
-    import_pk=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**import_pk:** `int` — A unique integer value identifying this project import.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">delete_all_tasks</a>(...)</code></summary>
 <dl>
 <dd>
@@ -39398,6 +39304,102 @@ client.projects.imports.list(
 <dd>
 
 **status:** `typing.Optional[str]` — Filter by import status (created, in_progress, failed, completed).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.imports.<a href="src/label_studio_sdk/projects/imports/client.py">get</a>(...) -> ProjectImport</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+            Poll the status of an asynchronous project import operation.
+
+            *Note*: this endpoint is also accessible as `client.tasks.create_many_status`, its historical location.
+            
+            **Usage:**
+            1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{"import": <import_id>}`
+            2. Use that `import_id` with this GET endpoint to check the import status
+            3. Poll this endpoint to see if the import has completed, is still processing, or has failed
+            4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
+            
+            This endpoint returns detailed information about the import including task counts, status, and any error messages.
+            While an import is running, `task_count` / annotation / prediction counts update as batches commit.
+            Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
+
+client = LabelStudio(
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
+)
+
+client.projects.imports.get(
+    id=1,
+    import_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**import_pk:** `int` — A unique integer value identifying this project import.
     
 </dd>
 </dl>

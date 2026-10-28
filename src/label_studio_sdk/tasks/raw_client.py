@@ -18,7 +18,6 @@ from ..errors.not_found_error import NotFoundError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.lse_task import LseTask
 from ..types.paginated_role_based_task_list import PaginatedRoleBasedTaskList
-from ..types.project_import import ProjectImport
 from ..types.role_based_task import RoleBasedTask
 from ..types.task_event import TaskEvent
 from .types.list_tasks_request_fields import ListTasksRequestFields
@@ -31,64 +30,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawTasksClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    def create_many_status(
-        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ProjectImport]:
-        """
-
-                    Poll the status of an asynchronous project import operation.
-
-                    **Usage:**
-                    1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{"import": <import_id>}`
-                    2. Use that `import_id` with this GET endpoint to check the import status
-                    3. Poll this endpoint to see if the import has completed, is still processing, or has failed
-                    4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
-
-                    This endpoint returns detailed information about the import including task counts, status, and any error messages.
-                    While an import is running, `task_count` / annotation / prediction counts update as batches commit.
-                    Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
-
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-
-        import_pk : int
-            A unique integer value identifying this project import.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ProjectImport]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{encode_path_param(id)}/imports/{encode_path_param(import_pk)}/",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ProjectImport,
-                    construct_type(
-                        type_=ProjectImport,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete_all_tasks(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
@@ -824,64 +765,6 @@ class RawTasksClient:
 class AsyncRawTasksClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    async def create_many_status(
-        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ProjectImport]:
-        """
-
-                    Poll the status of an asynchronous project import operation.
-
-                    **Usage:**
-                    1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{"import": <import_id>}`
-                    2. Use that `import_id` with this GET endpoint to check the import status
-                    3. Poll this endpoint to see if the import has completed, is still processing, or has failed
-                    4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
-
-                    This endpoint returns detailed information about the import including task counts, status, and any error messages.
-                    While an import is running, `task_count` / annotation / prediction counts update as batches commit.
-                    Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
-
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-
-        import_pk : int
-            A unique integer value identifying this project import.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ProjectImport]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{encode_path_param(id)}/imports/{encode_path_param(import_pk)}/",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ProjectImport,
-                    construct_type(
-                        type_=ProjectImport,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete_all_tasks(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None

@@ -5,12 +5,14 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import encode_path_param
 from ...core.pagination import AsyncPager, SyncPager
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.paginated_project_import_list_list import PaginatedProjectImportListList
+from ...types.project_import import ProjectImport
 from ...types.project_import_list import ProjectImportList
 from pydantic import ValidationError
 
@@ -93,6 +95,66 @@ class RawImportsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get(
+        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ProjectImport]:
+        """
+
+                    Poll the status of an asynchronous project import operation.
+
+                    *Note*: this endpoint is also accessible as `client.tasks.create_many_status`, its historical location.
+
+                    **Usage:**
+                    1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{"import": <import_id>}`
+                    2. Use that `import_id` with this GET endpoint to check the import status
+                    3. Poll this endpoint to see if the import has completed, is still processing, or has failed
+                    4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
+
+                    This endpoint returns detailed information about the import including task counts, status, and any error messages.
+                    While an import is running, `task_count` / annotation / prediction counts update as batches commit.
+                    Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
+
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        import_pk : int
+            A unique integer value identifying this project import.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ProjectImport]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/imports/{encode_path_param(import_pk)}/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ProjectImport,
+                    construct_type(
+                        type_=ProjectImport,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawImportsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -166,6 +228,66 @@ class AsyncRawImportsClient:
                     )
 
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get(
+        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ProjectImport]:
+        """
+
+                    Poll the status of an asynchronous project import operation.
+
+                    *Note*: this endpoint is also accessible as `client.tasks.create_many_status`, its historical location.
+
+                    **Usage:**
+                    1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{"import": <import_id>}`
+                    2. Use that `import_id` with this GET endpoint to check the import status
+                    3. Poll this endpoint to see if the import has completed, is still processing, or has failed
+                    4. **Import errors and failures will only be visible in this GET response**, not in the original POST request
+
+                    This endpoint returns detailed information about the import including task counts, status, and any error messages.
+                    While an import is running, `task_count` / annotation / prediction counts update as batches commit.
+                    Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.
+
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        import_pk : int
+            A unique integer value identifying this project import.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ProjectImport]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/imports/{encode_path_param(import_pk)}/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ProjectImport,
+                    construct_type(
+                        type_=ProjectImport,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
