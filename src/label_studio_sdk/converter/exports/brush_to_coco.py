@@ -252,23 +252,54 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                             annotation['original_width'], 
                             annotation['original_height']
                         )
-                        
+                        # --- OLD LOGIC STARTS HERE ---
                         # Create separate annotation for each contour
-                        for i, (segmentation, bbox, area) in enumerate(zip(segmentations, bboxes, areas)):
-                            coco_annotation = {
-                                'id': annotation_id,
-                                'image_id': image_id,
-                                'category_id': category_id,
-                                'segmentation': [segmentation],  # COCO format requires double nesting
-                                'area': area,
-                                'bbox': bbox,
-                                'iscrowd': 0,
-                                'annotator': get_annotator(item, "unknown")
-                            }
-                            coco_data['annotations'].append(coco_annotation)
-                            annotation_id += 1
-                            valid_annotations = True
-                    
+                        #for i, (segmentation, bbox, area) in enumerate(zip(segmentations, bboxes, areas)):
+                        #   coco_annotation = {
+                        #       'id': annotation_id,
+                        #        'image_id': image_id,
+                        #        'category_id': category_id,
+                        #        'segmentation': [segmentation],  # COCO format requires double nesting
+                        #        'area': area,
+                        #        'bbox': bbox,
+                        #        'iscrowd': 0,
+                        #        'annotator': get_annotator(item, "unknown")
+                        #    }
+                        #    coco_data['annotations'].append(coco_annotation)
+                        #    annotation_id += 1
+                        #   valid_annotations = True
+                            # --- OLD LOGIC ENDS HERE ---
+                    # --- NEW LOGIC STARTS HERE ---
+                          # If contours are found, group them into a single annotation
+                          # This correctly handles objects with multiple disconnected parts (occlusions)
+                          if segmentations:
+                              # 1. Combine all contour polygons into one list for the 'segmentation' field
+                              # The 'segmentations' variable already holds this list: [[poly1], [poly2], ...]
+                              
+                              # 2. Calculate the total area by summing the areas of all parts
+                              total_area = sum(areas)
+                              
+                              # 3. Calculate a single bounding box that encloses all parts
+                              min_x = min(b[0] for b in bboxes)
+                              min_y = min(b[1] for b in bboxes)
+                              max_x_w = max(b[0] + b[2] for b in bboxes)
+                              max_y_h = max(b[1] + b[3] for b in bboxes)
+                              union_bbox = [min_x, min_y, max_x_w - min_x, max_y_h - min_y]
+                              
+                              coco_annotation = {
+                                  'id': annotation_id,
+                                  'image_id': image_id,
+                                  'category_id': category_id,
+                                  'segmentation': [segmentations],  
+                                  'area': total_area,            # CHANGED: Use the sum of all areas
+                                  'bbox': union_bbox,            # CHANGED: Use the combined bounding box
+                                  'iscrowd': 0,
+                                  'annotator': get_annotator(item, "unknown")
+                              }
+                              coco_data['annotations'].append(coco_annotation)
+                              annotation_id += 1
+                              valid_annotations = True
+                          # --- NEW LOGIC ENDS HERE ---
                     elif 'points' in annotation and type_key == 'polygonlabels':
                         # check required keys exist
                         if not all(k in annotation for k in ['points', 'original_width', 'original_height']):
