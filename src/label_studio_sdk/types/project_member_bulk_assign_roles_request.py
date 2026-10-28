@@ -5,21 +5,16 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .assignable_organization_role_enum import AssignableOrganizationRoleEnum
+from .project_member_bulk_assign_roles_role_enum import ProjectMemberBulkAssignRolesRoleEnum
 
 
 class ProjectMemberBulkAssignRolesRequest(UncheckedBaseModel):
-    role: AssignableOrganizationRoleEnum = pydantic.Field()
+    role: ProjectMemberBulkAssignRolesRoleEnum = pydantic.Field()
     """
     Role
     
-    * `OW` - Owner
-    * `AD` - Administrator
-    * `MA` - Manager
     * `RE` - Reviewer
     * `AN` - Annotator
-    * `DI` - Deactivated
-    * `NO` - Not Activated
     """
 
     user_id: int = pydantic.Field()

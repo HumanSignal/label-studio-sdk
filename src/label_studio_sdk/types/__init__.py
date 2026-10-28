@@ -272,6 +272,7 @@ if typing.TYPE_CHECKING:
     from .project_member import ProjectMember
     from .project_member_bulk_assign_response import ProjectMemberBulkAssignResponse
     from .project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
+    from .project_member_bulk_assign_roles_role_enum import ProjectMemberBulkAssignRolesRoleEnum
     from .project_reimport import ProjectReimport
     from .project_reimport_list import ProjectReimportList
     from .project_role import ProjectRole
@@ -604,6 +605,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProjectMember": ".project_member",
     "ProjectMemberBulkAssignResponse": ".project_member_bulk_assign_response",
     "ProjectMemberBulkAssignRolesRequest": ".project_member_bulk_assign_roles_request",
+    "ProjectMemberBulkAssignRolesRoleEnum": ".project_member_bulk_assign_roles_role_enum",
     "ProjectReimport": ".project_reimport",
     "ProjectReimportList": ".project_reimport_list",
     "ProjectRole": ".project_role",
@@ -960,6 +962,7 @@ __all__ = [
     "ProjectMember",
     "ProjectMemberBulkAssignResponse",
     "ProjectMemberBulkAssignRolesRequest",
+    "ProjectMemberBulkAssignRolesRoleEnum",
     "ProjectReimport",
     "ProjectReimportList",
     "ProjectRole",

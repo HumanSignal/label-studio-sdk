@@ -9,9 +9,3 @@ updates:
       day: "monday"
     commit-message:
       prefix: "ci:"
-    cooldown:
-      default-days: 4
-    groups:
-      github-actions-updates:
-        patterns:
-          - "*"
