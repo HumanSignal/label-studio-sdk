@@ -16327,6 +16327,14 @@ client.workspaces.list()
 <dl>
 <dd>
 
+**interface_targets:** `typing.Optional[bool]` — Only workspaces you can save an interface into: the workspaces you may manage, plus your Personal Sandbox if interfaces are allowed there.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **is_archived:** `typing.Optional[bool]` — Filter by archived status. Set to false to exclude archived workspaces.
     
 </dd>

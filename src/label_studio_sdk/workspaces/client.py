@@ -38,6 +38,7 @@ class WorkspacesClient:
         self,
         *,
         include_all_workspaces: typing.Optional[bool] = None,
+        interface_targets: typing.Optional[bool] = None,
         is_archived: typing.Optional[bool] = None,
         is_personal: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
@@ -56,6 +57,9 @@ class WorkspacesClient:
         ----------
         include_all_workspaces : typing.Optional[bool]
             Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+
+        interface_targets : typing.Optional[bool]
+            Only workspaces you can save an interface into: the workspaces you may manage, plus your Personal Sandbox if interfaces are allowed there.
 
         is_archived : typing.Optional[bool]
             Filter by archived status. Set to false to exclude archived workspaces.
@@ -85,6 +89,7 @@ class WorkspacesClient:
         """
         _response = self._raw_client.list(
             include_all_workspaces=include_all_workspaces,
+            interface_targets=interface_targets,
             is_archived=is_archived,
             is_personal=is_personal,
             ordering=ordering,
@@ -336,6 +341,7 @@ class AsyncWorkspacesClient:
         self,
         *,
         include_all_workspaces: typing.Optional[bool] = None,
+        interface_targets: typing.Optional[bool] = None,
         is_archived: typing.Optional[bool] = None,
         is_personal: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
@@ -354,6 +360,9 @@ class AsyncWorkspacesClient:
         ----------
         include_all_workspaces : typing.Optional[bool]
             Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+
+        interface_targets : typing.Optional[bool]
+            Only workspaces you can save an interface into: the workspaces you may manage, plus your Personal Sandbox if interfaces are allowed there.
 
         is_archived : typing.Optional[bool]
             Filter by archived status. Set to false to exclude archived workspaces.
@@ -391,6 +400,7 @@ class AsyncWorkspacesClient:
         """
         _response = await self._raw_client.list(
             include_all_workspaces=include_all_workspaces,
+            interface_targets=interface_targets,
             is_archived=is_archived,
             is_personal=is_personal,
             ordering=ordering,
