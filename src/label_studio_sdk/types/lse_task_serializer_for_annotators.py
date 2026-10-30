@@ -19,8 +19,7 @@ class LseTaskSerializerForAnnotators(UncheckedBaseModel):
     """
     Return annotations for the task.
     
-    If annotations_stub=True is in context (via feature flag
-    fflag_fix_all_fit_720_lazy_load_annotations), returns lightweight
+    If annotations_stub=True is in context, returns lightweight
     annotation stubs without result data for improved performance.
     """
 
