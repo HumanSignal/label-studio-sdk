@@ -155,6 +155,7 @@ def decode_rle(rle, print_params: bool = False):
         compare=_compare,
         profile_env=HS_BRUSH_PROFILE_ENV,
         on_profile=_on_profile,
+        surface="brush.decode_rle",
     )
 
 

@@ -11,6 +11,11 @@ Ops sets one global knob:
 ``dual`` is local-dev only and requires ``HS_RUST_ALLOW_DUAL`` truthy.
 Unknown / malformed values fail closed to ``python`` / ``False``.
 
+In ``rust`` mode Rust errors propagate: there is no Python fallback. Every
+rust-mode call is reported to the observer installed with
+``set_hs_rust_call_observer`` as ``(surface, outcome)``, outcome ``ok`` or
+``error``, so a broken environment shows up in metrics.
+
 Call sites share:
 
 * ``load_hs_rust`` / ``require_hs_rust`` — extension import (success cached)
@@ -34,6 +39,10 @@ HS_BACKEND_CHOICES = frozenset({"python", "rust", "dual"})
 HS_RUST_BACKEND_ENV = "HS_RUST_BACKEND"
 HS_RUST_ALLOW_DUAL_ENV = "HS_RUST_ALLOW_DUAL"
 
+# Outcomes reported to the call observer for each rust-mode call.
+HS_RUST_OUTCOME_OK = "ok"
+HS_RUST_OUTCOME_ERROR = "error"
+
 # Per-surface dual-profile knobs (all go through env_truthy).
 HS_BRUSH_PROFILE_ENV = "HS_BRUSH_PROFILE"
 HS_AGREEMENT_PROFILE_ENV = "HS_AGREEMENT_PROFILE"
@@ -48,6 +57,8 @@ _ENV_PREFIXES = ("LABEL_STUDIO_", "HEARTEX_", "")
 # Cached only after a successful import. Failed imports are not sticky so a
 # later ``maturin develop`` in the same process can succeed without restart.
 _HS_RUST_MODULE: Any | None = None
+
+_HS_RUST_CALL_OBSERVER: Callable[[str, str], None] | None = None
 
 _HS_RUST_MISSING_MSG = (
     "HS_RUST_BACKEND=rust|dual requires the hs_rust extension. "
@@ -143,6 +154,22 @@ def clear_hs_rust_module_cache() -> None:
     _HS_RUST_MODULE = None
 
 
+def set_hs_rust_call_observer(observer: Callable[[str, str], None] | None) -> None:
+    """Install ``observer(surface, outcome)`` for rust-mode calls (e.g. a metrics counter)."""
+    global _HS_RUST_CALL_OBSERVER
+    _HS_RUST_CALL_OBSERVER = observer
+
+
+def _observe_hs_rust_call(surface: str, outcome: str) -> None:
+    observer = _HS_RUST_CALL_OBSERVER
+    if observer is None:
+        return
+    try:
+        observer(surface, outcome)
+    except Exception:
+        logger.debug("hs_rust call observer failed", exc_info=True)
+
+
 def profile_timed(enabled: bool, fn: Callable[[], T]) -> tuple[T, float]:
     """Run ``fn``; measure wall time only when profiling is enabled."""
     if not enabled:
@@ -207,18 +234,30 @@ def run_hs_backend(
     profile_env: str | None = None,
     on_profile: Callable[[DualTimings, T, T], None] | None = None,
     rust_setup: Callable[[], S] | None = None,
+    surface: str = "unknown",
 ) -> T:
     """Dispatch ``python`` | ``rust`` | ``dual`` for an hs-rust callsite.
 
     * ``rust`` / ``dual``: optional ``rust_setup`` runs first (Vipere pool init);
       its result is passed as the sole argument to ``rust_fn``. Without setup,
       ``rust_fn`` is called with no arguments.
+    * ``rust``: errors from ``rust_setup`` or ``rust_fn`` propagate (no Python
+      fallback); each call is reported to the observer under ``surface``.
     * ``dual``: runs python then rust, calls ``compare(py, rust)`` if given,
       optionally profiles when ``profile_env`` is truthy, returns the rust result.
     """
     backend = hs_rust_backend()
     if backend == "python":
         return python_fn()
+
+    if backend == "rust":
+        try:
+            result = rust_fn(rust_setup()) if rust_setup is not None else rust_fn()
+        except Exception:
+            _observe_hs_rust_call(surface, HS_RUST_OUTCOME_ERROR)
+            raise
+        _observe_hs_rust_call(surface, HS_RUST_OUTCOME_OK)
+        return result
 
     profile = backend == "dual" and bool(profile_env) and env_truthy(profile_env)
 
@@ -229,9 +268,6 @@ def run_hs_backend(
 
     def _rust() -> T:
         return rust_fn(setup) if rust_setup is not None else rust_fn()
-
-    if backend == "rust":
-        return _rust()
 
     # dual
     python_out, t_py = profile_timed(profile, python_fn)
