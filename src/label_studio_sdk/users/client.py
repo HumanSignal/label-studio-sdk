@@ -78,7 +78,6 @@ class UsersClient:
         onboarding_state: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUserApi:
         """
@@ -116,8 +115,6 @@ class UsersClient:
 
         phone : typing.Optional[str]
 
-        username : typing.Optional[str]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -147,7 +144,6 @@ class UsersClient:
             onboarding_state=onboarding_state,
             password=password,
             phone=phone,
-            username=username,
             request_options=request_options,
         )
         return _response.data
@@ -485,7 +481,6 @@ class UsersClient:
         onboarding_state: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUser:
         """
@@ -522,8 +517,6 @@ class UsersClient:
 
         phone : typing.Optional[str]
 
-        username : typing.Optional[str]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -556,7 +549,6 @@ class UsersClient:
             onboarding_state=onboarding_state,
             password=password,
             phone=phone,
-            username=username,
             request_options=request_options,
         )
         return _response.data
@@ -631,7 +623,6 @@ class AsyncUsersClient:
         onboarding_state: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUserApi:
         """
@@ -668,8 +659,6 @@ class AsyncUsersClient:
         password : typing.Optional[str]
 
         phone : typing.Optional[str]
-
-        username : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -708,7 +697,6 @@ class AsyncUsersClient:
             onboarding_state=onboarding_state,
             password=password,
             phone=phone,
-            username=username,
             request_options=request_options,
         )
         return _response.data
@@ -1118,7 +1106,6 @@ class AsyncUsersClient:
         onboarding_state: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUser:
         """
@@ -1154,8 +1141,6 @@ class AsyncUsersClient:
         password : typing.Optional[str]
 
         phone : typing.Optional[str]
-
-        username : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1197,7 +1182,6 @@ class AsyncUsersClient:
             onboarding_state=onboarding_state,
             password=password,
             phone=phone,
-            username=username,
             request_options=request_options,
         )
         return _response.data

@@ -35,7 +35,6 @@ class PatchedLseUserSerializerUpdateRequest(UncheckedBaseModel):
     onboarding_state: typing.Optional[str] = None
     password: typing.Optional[str] = None
     phone: typing.Optional[str] = None
-    username: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

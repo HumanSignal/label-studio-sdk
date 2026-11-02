@@ -90,7 +90,6 @@ class RawUsersClient:
         onboarding_state: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseUserApi]:
         """
@@ -128,8 +127,6 @@ class RawUsersClient:
 
         phone : typing.Optional[str]
 
-        username : typing.Optional[str]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -153,7 +150,6 @@ class RawUsersClient:
                 "onboarding_state": onboarding_state,
                 "password": password,
                 "phone": phone,
-                "username": username,
             },
             request_options=request_options,
             omit=OMIT,
@@ -737,7 +733,6 @@ class RawUsersClient:
         onboarding_state: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseUser]:
         """
@@ -774,8 +769,6 @@ class RawUsersClient:
 
         phone : typing.Optional[str]
 
-        username : typing.Optional[str]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -799,7 +792,6 @@ class RawUsersClient:
                 "onboarding_state": onboarding_state,
                 "password": password,
                 "phone": phone,
-                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -891,7 +883,6 @@ class AsyncRawUsersClient:
         onboarding_state: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseUserApi]:
         """
@@ -929,8 +920,6 @@ class AsyncRawUsersClient:
 
         phone : typing.Optional[str]
 
-        username : typing.Optional[str]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -954,7 +943,6 @@ class AsyncRawUsersClient:
                 "onboarding_state": onboarding_state,
                 "password": password,
                 "phone": phone,
-                "username": username,
             },
             request_options=request_options,
             omit=OMIT,
@@ -1542,7 +1530,6 @@ class AsyncRawUsersClient:
         onboarding_state: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
         phone: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseUser]:
         """
@@ -1579,8 +1566,6 @@ class AsyncRawUsersClient:
 
         phone : typing.Optional[str]
 
-        username : typing.Optional[str]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1604,7 +1589,6 @@ class AsyncRawUsersClient:
                 "onboarding_state": onboarding_state,
                 "password": password,
                 "phone": phone,
-                "username": username,
             },
             headers={
                 "content-type": "application/json",
