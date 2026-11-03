@@ -14,6 +14,7 @@ from .lse_project_dm_column_defaults import LseProjectDmColumnDefaults
 from .project_sampling_enum import ProjectSamplingEnum
 from .review_settings import ReviewSettings
 from .skip_queue_enum import SkipQueueEnum
+from .state_source_enum import StateSourceEnum
 from .user_simple import UserSimple
 
 
@@ -329,6 +330,21 @@ class LseProject(UncheckedBaseModel):
     """
 
     state: typing.Optional[str] = None
+    state_marked_done_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    When the project was marked as Done. Null unless state_source is "manual". Managers+ only.
+    """
+
+    state_marked_done_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
+    """
+    User who marked the project as Done. Null unless state_source is "manual". Managers+ only.
+    """
+
+    state_source: typing.Optional[StateSourceEnum] = pydantic.Field(default=None)
+    """
+    "manual" while a Manager+ has marked the project as Done, "auto" while the state is calculated from tasks. Null when project states are not available.
+    """
+
     strict_task_overlap: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Enforce strict overlap limit

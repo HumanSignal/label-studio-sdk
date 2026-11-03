@@ -326,6 +326,7 @@ if typing.TYPE_CHECKING:
     from .state_backfill_status_response import StateBackfillStatusResponse
     from .state_enum import StateEnum
     from .state_model import StateModel
+    from .state_source_enum import StateSourceEnum
     from .state_triggered_by import StateTriggeredBy
     from .storage_status_enum import StorageStatusEnum
     from .task_agreement_matrix_response import TaskAgreementMatrixResponse
@@ -659,6 +660,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StateBackfillStatusResponse": ".state_backfill_status_response",
     "StateEnum": ".state_enum",
     "StateModel": ".state_model",
+    "StateSourceEnum": ".state_source_enum",
     "StateTriggeredBy": ".state_triggered_by",
     "StorageStatusEnum": ".storage_status_enum",
     "TaskAgreementMatrixResponse": ".task_agreement_matrix_response",
@@ -1016,6 +1018,7 @@ __all__ = [
     "StateBackfillStatusResponse",
     "StateEnum",
     "StateModel",
+    "StateSourceEnum",
     "StateTriggeredBy",
     "StorageStatusEnum",
     "TaskAgreementMatrixResponse",
