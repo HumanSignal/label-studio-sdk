@@ -24661,14 +24661,6 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**external_id:** `typing.Optional[str]` — AWS ExternalId
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **last_sync:** `typing.Optional[datetime.datetime]` — Last sync finished time
     
 </dd>
@@ -32769,14 +32761,6 @@ client.import_storage.s3s.update(
 <dd>
 
 **description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS ExternalId
     
 </dd>
 </dl>

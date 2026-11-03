@@ -47,11 +47,6 @@ class LseS3ExportStorageRequest(UncheckedBaseModel):
     Cloud storage description
     """
 
-    external_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    AWS ExternalId
-    """
-
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last sync finished time

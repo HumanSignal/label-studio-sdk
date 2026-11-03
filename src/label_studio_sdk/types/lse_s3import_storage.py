@@ -49,7 +49,7 @@ class LseS3ImportStorage(UncheckedBaseModel):
 
     external_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    AWS ExternalId
+    AWS ExternalId. Set by the server; read-only.
     """
 
     id: typing.Optional[int] = None

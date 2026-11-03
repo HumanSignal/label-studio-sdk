@@ -95,7 +95,6 @@ class RawS3SClient:
         bucket: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
@@ -149,9 +148,6 @@ class RawS3SClient:
 
         description : typing.Optional[str]
             Cloud storage description
-
-        external_id : typing.Optional[str]
-            AWS ExternalId
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -211,7 +207,6 @@ class RawS3SClient:
                 "bucket": bucket,
                 "can_delete_objects": can_delete_objects,
                 "description": description,
-                "external_id": external_id,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -263,7 +258,6 @@ class RawS3SClient:
         bucket: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
@@ -317,9 +311,6 @@ class RawS3SClient:
 
         description : typing.Optional[str]
             Cloud storage description
-
-        external_id : typing.Optional[str]
-            AWS ExternalId
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -378,7 +369,6 @@ class RawS3SClient:
                 "bucket": bucket,
                 "can_delete_objects": can_delete_objects,
                 "description": description,
-                "external_id": external_id,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -508,7 +498,6 @@ class RawS3SClient:
         bucket: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
@@ -560,9 +549,6 @@ class RawS3SClient:
 
         description : typing.Optional[str]
             Cloud storage description
-
-        external_id : typing.Optional[str]
-            AWS ExternalId
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -628,7 +614,6 @@ class RawS3SClient:
                 "bucket": bucket,
                 "can_delete_objects": can_delete_objects,
                 "description": description,
-                "external_id": external_id,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -796,7 +781,6 @@ class AsyncRawS3SClient:
         bucket: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
@@ -850,9 +834,6 @@ class AsyncRawS3SClient:
 
         description : typing.Optional[str]
             Cloud storage description
-
-        external_id : typing.Optional[str]
-            AWS ExternalId
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -912,7 +893,6 @@ class AsyncRawS3SClient:
                 "bucket": bucket,
                 "can_delete_objects": can_delete_objects,
                 "description": description,
-                "external_id": external_id,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -964,7 +944,6 @@ class AsyncRawS3SClient:
         bucket: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
@@ -1018,9 +997,6 @@ class AsyncRawS3SClient:
 
         description : typing.Optional[str]
             Cloud storage description
-
-        external_id : typing.Optional[str]
-            AWS ExternalId
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -1079,7 +1055,6 @@ class AsyncRawS3SClient:
                 "bucket": bucket,
                 "can_delete_objects": can_delete_objects,
                 "description": description,
-                "external_id": external_id,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -1211,7 +1186,6 @@ class AsyncRawS3SClient:
         bucket: typing.Optional[str] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
@@ -1263,9 +1237,6 @@ class AsyncRawS3SClient:
 
         description : typing.Optional[str]
             Cloud storage description
-
-        external_id : typing.Optional[str]
-            AWS ExternalId
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -1331,7 +1302,6 @@ class AsyncRawS3SClient:
                 "bucket": bucket,
                 "can_delete_objects": can_delete_objects,
                 "description": description,
-                "external_id": external_id,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
