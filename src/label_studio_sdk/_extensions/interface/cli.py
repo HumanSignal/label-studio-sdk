@@ -16,8 +16,8 @@ from typing import Any
 
 import appdirs
 import httpx
-import jwt
 import typer
+from ...core.api_error import ApiError
 from .preview import (
     PROTOCOL_VERSION,
     InvalidPreviewManifestError,
@@ -26,7 +26,10 @@ from .preview import (
     PreviewCacheError,
     ProtocolMismatchError,
 )
+from .preview.server import AuthHeaderProvider
 
+# Raised while getting an access token: rejected or expired token, network failure, malformed response.
+_AUTH_ERRORS = (ApiError, httpx.HTTPError, ValueError)
 SIDECAR_SUFFIX = ".ls-interface.json"
 DEFAULT_BASE_URL = "https://app.humansignal.com"
 VALIDATOR_PACKAGE = "label_studio_sdk._extensions.interface.validator"
@@ -82,47 +85,31 @@ def _resolve_token(ctx: typer.Context | None, explicit: str | None = None) -> st
     return explicit or ctx_obj.get("api_key") or os.getenv("LABEL_STUDIO_API_KEY")
 
 
-def _jwt_claims(token: str) -> dict[str, Any] | None:
-    if token.count(".") != 2:
-        return None
+def _auth_header_provider(token: str, base_url: str) -> AuthHeaderProvider:
+    """Auth headers from the SDK client, the same token handling every other SDK command uses.
+
+    A personal access token is exchanged for an access token that is renewed before it expires, so a
+    long-running preview keeps working (FIT-3310). Raises ``ApiError`` for an expired personal access token.
+    """
+    from label_studio_sdk import LabelStudio
+
+    return LabelStudio(api_key=token, base_url=base_url).get_auth_headers
+
+
+def _report_auth_error(exc: Exception) -> None:
+    if isinstance(exc, ApiError):
+        detail = exc.body.get("detail", exc.body) if isinstance(exc.body, dict) else exc.body
+        typer.echo(f"error: Label Studio authentication failed (HTTP {exc.status_code}): {detail}", err=True)
+    else:
+        typer.echo(f"error: could not get a Label Studio access token: {exc}", err=True)
+
+
+def _auth_headers(token: str, *, base_url: str) -> dict[str, str]:
     try:
-        claims = jwt.decode(token, options={"verify_signature": False, "verify_exp": False})
-    except jwt.InvalidTokenError:
-        return None
-    return claims if isinstance(claims, dict) else None
-
-
-def _refresh_access_token(base_url: str, refresh_token: str) -> str:
-    with httpx.Client(timeout=30.0) as client:
-        try:
-            response = client.post(
-                f"{base_url}/api/token/refresh/",
-                json={"refresh": refresh_token},
-                headers={"Content-Type": "application/json"},
-            )
-            response.raise_for_status()
-        except httpx.HTTPStatusError as exc:
-            _surface_http_error(exc)
-            raise typer.Exit(code=1) from None
-        except httpx.HTTPError as exc:
-            typer.echo(f"error: failed to refresh API token: {exc}", err=True)
-            raise typer.Exit(code=1) from None
-
-    data = response.json()
-    access_token = data.get("access") if isinstance(data, dict) else None
-    if not isinstance(access_token, str) or not access_token:
-        typer.echo("error: token refresh response did not include an access token", err=True)
-        raise typer.Exit(code=1)
-    return access_token
-
-
-def _auth_headers(token: str, *, base_url: str | None = None) -> dict[str, str]:
-    claims = _jwt_claims(token)
-    if base_url is not None and claims and claims.get("token_type") == "refresh":
-        token = _refresh_access_token(base_url, token)
-        claims = _jwt_claims(token)
-    scheme = "Bearer" if claims else "Token"
-    return {"Authorization": f"{scheme} {token}"}
+        return _auth_header_provider(token, base_url)()
+    except _AUTH_ERRORS as exc:
+        _report_auth_error(exc)
+        raise typer.Exit(code=1) from None
 
 
 def _load_json_file(path: Path | None, *, label: str) -> Any:
@@ -959,13 +946,19 @@ def preview(
     cache = PreviewAssetCache(base)
     # `--offline` skips asset network only; keep a resolved token so Save BFF still works.
     resolved_token = _resolve_token(ctx, token)
-    try:
-        headers = _auth_headers(resolved_token, base_url=base) if resolved_token else {}
-    except typer.Exit:
-        if cache.current_snapshot() is None:
-            raise
-        headers = {}
-        typer.echo("warning: token refresh failed; using verified preview cache", err=True)
+    auth_provider: AuthHeaderProvider | None = None
+    headers: dict[str, str] = {}
+    if resolved_token:
+        try:
+            auth_provider = _auth_header_provider(resolved_token, base)
+            headers = auth_provider()
+        except _AUTH_ERRORS as exc:
+            _report_auth_error(exc)
+            if cache.current_snapshot() is None:
+                raise typer.Exit(code=1) from None
+            auth_provider = None
+            headers = {}
+            typer.echo("warning: token refresh failed; using verified preview cache", err=True)
     try:
         with httpx.Client(timeout=30.0, follow_redirects=False) as client:
             snapshot = cache.resolve(client=client, headers=headers, offline=offline)
@@ -983,7 +976,7 @@ def preview(
         with LocalPreviewServer(
             asset_root=snapshot.root,
             upstream_origin=base,
-            auth_headers=headers,
+            auth_header_provider=auth_provider,
             bound_interface_id=interface_id,
             on_interface_bound=lambda payload: _persist_preview_binding(file, base, payload),
             fetch_components=not offline,

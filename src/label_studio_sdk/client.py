@@ -13,6 +13,19 @@ class LabelStudio(LabelStudioBase):
         self._tasks_ext: typing.Optional[TasksClientExt] = None
         self._projects_ext: typing.Optional[ProjectsClientExt] = None
 
+    def get_auth_headers(self, *, refresh: bool = False) -> typing.Dict[str, str]:
+        """The authentication header this client sends on its next request.
+
+        A JWT refresh token (personal access token) is exchanged for an access token, which is reused until it
+        expires and renewed before it is sent. Legacy tokens are returned as-is. ``refresh=True`` discards the
+        cached access token first, for a request the server rejected as unauthenticated although the local
+        clock still considered the token valid.
+        """
+        if refresh:
+            self._client_wrapper._tokens_client.discard_access_token()
+        headers = self._client_wrapper.get_headers()
+        return {key: value for key, value in headers.items() if key.lower() in ("authorization", "x-api-key")}
+
     @property
     def tasks(self) -> TasksClientExt:  # type: ignore[override]
         # Fern-generated base clients often expose `tasks` as a read-only @property.

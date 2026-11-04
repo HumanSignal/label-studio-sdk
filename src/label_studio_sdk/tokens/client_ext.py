@@ -19,6 +19,10 @@ class TokensClientExt:
         self._api_key = api_key
         self._client_wrapper = client_wrapper
         self._use_legacy_token = not self._is_valid_jwt_token(api_key, raise_if_expired=True)
+        # Only a refresh token is exchanged; any other JWT (e.g. a Service Account access token) is sent as-is.
+        self._exchanges_refresh_token = (
+            not self._use_legacy_token and self._decode_jwt_payload(api_key).get("token_type") == "refresh"
+        )
 
         # cache state for access token when using jwt-based api_key
         self._access_token: typing.Optional[str] = None
@@ -87,8 +91,8 @@ class TokensClientExt:
     @property
     def api_key(self) -> str:
         """Get the current access token, refreshing if necessary."""
-        # Legacy tokens: just return the API key directly
-        if self._use_legacy_token:
+        # Legacy tokens and JWTs other than a refresh token are sent as-is
+        if self._use_legacy_token or not self._exchanges_refresh_token:
             return self._api_key
 
         # JWT tokens: handle refresh if needed
@@ -100,6 +104,16 @@ class TokensClientExt:
                     self._set_access_token(token_response.access)
         
         return self._access_token
+
+    def discard_access_token(self) -> None:
+        """Forget the cached access token so the next ``api_key`` read refreshes it."""
+        with self._token_refresh_lock:
+            self._access_token = None
+            self._access_token_expiration = None
+
+    def _refresh_url(self) -> str:
+        # The trailing slash keeps a path prefix (Label Studio served under /label-studio/) in the join.
+        return urllib.parse.urljoin(f"{self._base_url.rstrip('/')}/", "api/token/refresh/")
 
     def _get_client_params(self, existing_client: httpx.AsyncClient) -> dict:
         """Extract parameters from an existing client to create a new one.
@@ -141,7 +155,7 @@ class TokensClientExt:
         if isinstance(existing_client, httpx.Client):
             response = existing_client.request(
                 method="POST",
-                url=urllib.parse.urljoin(f"{self._base_url}", "api/token/refresh/"),
+                url=self._refresh_url(),
                 json={"refresh": token},
                 headers={"Content-Type": "application/json"},
             )
@@ -152,7 +166,7 @@ class TokensClientExt:
             with httpx.Client(**client_params) as sync_client:
                 response = sync_client.request(
                     method="POST",
-                    url=urllib.parse.urljoin(f"{self._base_url}/", "api/token/refresh/"),
+                    url=self._refresh_url(),
                     json={"refresh": token},
                     headers={"Content-Type": "application/json"},
                 )

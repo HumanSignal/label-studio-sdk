@@ -210,6 +210,8 @@ label-studio-sdk interface preview Screen.jsx --offline
 `preview` downloads the version-compatible playground and sandbox artifacts from the configured Label Studio instance,
 verifies them, and stores them in an origin- and protocol-scoped user cache. The first uncached run requires
 `LABEL_STUDIO_API_KEY`; the CLI sends it with the same `Token` or `Bearer` authentication used by other SDK commands.
+A personal access token is exchanged for a short-lived access token, which the preview renews before it expires, so
+Save keeps working however long the preview runs.
 Before downloading public static assets, it probes `GET /api/current-user/whoami` and fails closed on `401`/`403` when
 no verified cache exists. It never retries an authenticated asset request anonymously.
 

@@ -11,7 +11,7 @@ from collections.abc import Callable
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path, PurePosixPath
-from typing import Any
+from typing import Any, Protocol
 from urllib.parse import urlencode, urlsplit
 
 import httpx
@@ -30,6 +30,16 @@ _PERMISSION_DENIED_FALLBACK = "You do not have permission to perform this action
 # (`icons/<Name>.js`). The components manifest is never fetched here; it comes from the verified snapshot.
 _COMPONENT_FILE_RE = re.compile(r"(?:assets/)?[\w.-]+\.[A-Za-z0-9_-]{8}\.(?:js|css|wasm)|icons/[A-Z][A-Za-z0-9]*\.js")
 _MAX_COMPONENT_FILE_BYTES = 64 * 1024 * 1024
+
+
+class AuthHeaderProvider(Protocol):
+    """Upstream auth headers for the next request; ``refresh=True`` renews them after an upstream 401."""
+
+    def __call__(self, *, refresh: bool = False) -> dict[str, str]: ...
+
+
+class _AuthUnavailable(Exception):
+    """The auth header provider failed (for example the PAT was revoked or has expired)."""
 
 
 def _is_safe_asset_relative(value: str) -> bool:
@@ -61,7 +71,7 @@ class LocalPreviewServer:
         *,
         asset_root: Path,
         upstream_origin: str,
-        auth_headers: dict[str, str] | None = None,
+        auth_header_provider: AuthHeaderProvider | None = None,
         upstream_client: httpx.Client | None = None,
         capability: str | None = None,
         host_capability: str | None = None,
@@ -72,7 +82,9 @@ class LocalPreviewServer:
     ) -> None:
         self.asset_root = Path(asset_root).resolve()
         self.upstream_origin = upstream_origin.rstrip("/")
-        self.auth_headers = dict(auth_headers or {})
+        # Called for every upstream request, so a long-running preview never sends an expired access token
+        # (FIT-3310). The CLI backs it with the SDK client's token handling (`LabelStudio.get_auth_headers`).
+        self._auth_header_provider = auth_header_provider
         # Host and sandbox use distinct capability tokens so a leaked sandbox URL
         # cannot authorize host SSE / Save BFF (ticket: per-origin capability).
         self.host_capability = host_capability or capability or secrets.token_urlsafe(32)
@@ -130,7 +142,7 @@ class LocalPreviewServer:
 
     @property
     def save_enabled(self) -> bool:
-        return bool(self.auth_headers.get("Authorization"))
+        return self._auth_header_provider is not None
 
     @property
     def url(self) -> str:
@@ -249,7 +261,7 @@ class LocalPreviewServer:
         if self._on_interface_bound is not None:
             self._on_interface_bound(payload)
 
-    def _permission_denied_detail(self, content: bytes) -> str:
+    def _permission_denied_detail(self, content: bytes, sent_headers: dict[str, str]) -> str:
         """Upstream 403 ``detail`` for the Save UI, or a generic message if unusable or credential-bearing."""
         try:
             payload = json.loads(content)
@@ -259,7 +271,7 @@ class LocalPreviewServer:
         if not isinstance(detail, str) or not detail.strip():
             return _PERMISSION_DENIED_FALLBACK
         secrets_in_headers = {
-            part for value in self.auth_headers.values() for part in (value, *value.split()) if len(part) >= 8
+            part for value in sent_headers.values() for part in (value, *value.split()) if len(part) >= 8
         }
         if any(secret in detail for secret in secrets_in_headers):
             return _PERMISSION_DENIED_FALLBACK
@@ -393,7 +405,7 @@ class LocalPreviewServer:
                 if not owner._bff_route_allowed(method, upstream_path):
                     self._json_error(HTTPStatus.FORBIDDEN, "operation is not allowed by the preview gateway")
                     return
-                if not owner.auth_headers.get("Authorization"):
+                if owner._auth_header_provider is None:
                     self._json_error(HTTPStatus.UNAUTHORIZED, "Label Studio authentication failed")
                     return
                 try:
@@ -405,14 +417,12 @@ class LocalPreviewServer:
                     self._json_error(HTTPStatus.REQUEST_ENTITY_TOO_LARGE, "request body is too large")
                     return
                 body = self.rfile.read(length) if length else None
-                headers = {**owner.auth_headers}
-                if body is not None:
-                    headers["Content-Type"] = "application/json"
                 # Forward query strings only for read routes; Save mutations are path-bound.
                 url = owner.upstream_origin + upstream_path
                 if method == "GET" and query:
                     url += f"?{query}"
                 assert owner._upstream_client is not None
+                upstream_client = owner._upstream_client
                 create_locked = False
                 if method == "POST" and upstream_path == "/api/interfaces/":
                     with owner._condition:
@@ -421,13 +431,44 @@ class LocalPreviewServer:
                             return
                         owner._create_in_flight = True
                         create_locked = True
+
+                def send(auth_headers: dict[str, str]) -> httpx.Response:
+                    headers = dict(auth_headers)
+                    if body is not None:
+                        headers["Content-Type"] = "application/json"
+                    return upstream_client.request(method, url, content=body, headers=headers)
+
+                provider = owner._auth_header_provider
+
+                def auth(*, refresh: bool = False) -> dict[str, str]:
+                    try:
+                        return provider(refresh=refresh)
+                    except httpx.HTTPError:
+                        raise
+                    except Exception as exc:
+                        raise _AuthUnavailable from exc
+
                 try:
-                    response = owner._upstream_client.request(method, url, content=body, headers=headers)
+                    sent_auth = auth()
+                    response = send(sent_auth)
+                    if response.status_code == HTTPStatus.UNAUTHORIZED:
+                        # Upstream considers the token expired while the local clock does not (clock skew). A 401
+                        # is returned before the view runs, so one retry (even of a create) cannot duplicate it.
+                        retry_auth = auth(refresh=True)
+                        if retry_auth != sent_auth:
+                            sent_auth = retry_auth
+                            response = send(sent_auth)
                 except httpx.HTTPError:
                     if create_locked:
                         with owner._condition:
                             owner._create_in_flight = False
                     self._json_error(HTTPStatus.BAD_GATEWAY, "upstream request failed")
+                    return
+                except _AuthUnavailable:
+                    if create_locked:
+                        with owner._condition:
+                            owner._create_in_flight = False
+                    self._json_error(HTTPStatus.UNAUTHORIZED, "Label Studio authentication failed")
                     return
                 if response.status_code in (HTTPStatus.UNAUTHORIZED, HTTPStatus.FORBIDDEN):
                     if create_locked:
@@ -435,7 +476,9 @@ class LocalPreviewServer:
                             owner._create_in_flight = False
                     if response.status_code == HTTPStatus.FORBIDDEN:
                         # 403 is a permission verdict (e.g. missing interfaces.author), not an auth failure.
-                        self._json_error(HTTPStatus.FORBIDDEN, owner._permission_denied_detail(response.content))
+                        self._json_error(
+                            HTTPStatus.FORBIDDEN, owner._permission_denied_detail(response.content, sent_auth)
+                        )
                     else:
                         self._json_error(HTTPStatus.UNAUTHORIZED, "Label Studio authentication failed")
                     return

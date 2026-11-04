@@ -19,7 +19,9 @@ def _jwt_token(token_type: str) -> str:
     def encode(value: dict[str, Any]) -> str:
         return base64.urlsafe_b64encode(json.dumps(value).encode("utf-8")).rstrip(b"=").decode("ascii")
 
-    return f"{encode({'alg': 'HS256', 'typ': 'JWT'})}.{encode({'token_type': token_type})}.{encode({'sig': True})}"
+    # Label Studio tokens always carry `exp`; the SDK client rejects JWTs without one.
+    claims = {"token_type": token_type, "exp": 4102444800}
+    return f"{encode({'alg': 'HS256', 'typ': 'JWT'})}.{encode(claims)}.{encode({'sig': True})}"
 
 
 def test_root_cli_includes_interface_group() -> None:
@@ -109,6 +111,10 @@ class FakeHttpClient:
     def get(self, url: str) -> FakeResponse:
         self.calls.append(("GET", url, None))
         return FakeResponse(deepcopy(FakeHttpClient.interface_payload))
+
+    def request(self, method: str, url: str, json: dict[str, Any] | None = None, **kwargs: Any) -> FakeResponse:
+        # The SDK client's token refresh goes through `request`.
+        return self.post(url, json=json) if method == "POST" else self.get(url)
 
     def post(self, url: str, json: dict[str, Any] | None = None, **kwargs: Any) -> FakeResponse:
         self.calls.append(("POST", url, json))
