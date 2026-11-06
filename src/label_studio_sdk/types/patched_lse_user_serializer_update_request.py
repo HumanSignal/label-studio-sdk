@@ -22,6 +22,11 @@ class PatchedLseUserSerializerUpdateRequest(UncheckedBaseModel):
     Allow sending newsletters to user
     """
 
+    current_password: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Your current password. Required when you change your own password.
+    """
+
     custom_hotkeys: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Custom keyboard shortcuts configuration for the user interface

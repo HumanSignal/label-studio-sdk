@@ -81,6 +81,7 @@ class RawUsersClient:
         *,
         active_organization: typing.Optional[int] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        current_password: typing.Optional[str] = OMIT,
         custom_hotkeys: typing.Optional[typing.Any] = OMIT,
         date_joined: typing.Optional[dt.datetime] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
@@ -107,6 +108,9 @@ class RawUsersClient:
 
         allow_newsletters : typing.Optional[bool]
             Allow sending newsletters to user
+
+        current_password : typing.Optional[str]
+            Your current password. Required when you change your own password.
 
         custom_hotkeys : typing.Optional[typing.Any]
             Custom keyboard shortcuts configuration for the user interface
@@ -141,6 +145,7 @@ class RawUsersClient:
             json={
                 "active_organization": active_organization,
                 "allow_newsletters": allow_newsletters,
+                "current_password": current_password,
                 "custom_hotkeys": custom_hotkeys,
                 "date_joined": date_joined,
                 "email_notification_settings": email_notification_settings,
@@ -724,6 +729,7 @@ class RawUsersClient:
         *,
         active_organization: typing.Optional[int] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        current_password: typing.Optional[str] = OMIT,
         custom_hotkeys: typing.Optional[typing.Any] = OMIT,
         date_joined: typing.Optional[dt.datetime] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
@@ -749,6 +755,9 @@ class RawUsersClient:
 
         allow_newsletters : typing.Optional[bool]
             Allow sending newsletters to user
+
+        current_password : typing.Optional[str]
+            Your current password. Required when you change your own password.
 
         custom_hotkeys : typing.Optional[typing.Any]
             Custom keyboard shortcuts configuration for the user interface
@@ -783,6 +792,7 @@ class RawUsersClient:
             json={
                 "active_organization": active_organization,
                 "allow_newsletters": allow_newsletters,
+                "current_password": current_password,
                 "custom_hotkeys": custom_hotkeys,
                 "date_joined": date_joined,
                 "email_notification_settings": email_notification_settings,
@@ -874,6 +884,7 @@ class AsyncRawUsersClient:
         *,
         active_organization: typing.Optional[int] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        current_password: typing.Optional[str] = OMIT,
         custom_hotkeys: typing.Optional[typing.Any] = OMIT,
         date_joined: typing.Optional[dt.datetime] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
@@ -900,6 +911,9 @@ class AsyncRawUsersClient:
 
         allow_newsletters : typing.Optional[bool]
             Allow sending newsletters to user
+
+        current_password : typing.Optional[str]
+            Your current password. Required when you change your own password.
 
         custom_hotkeys : typing.Optional[typing.Any]
             Custom keyboard shortcuts configuration for the user interface
@@ -934,6 +948,7 @@ class AsyncRawUsersClient:
             json={
                 "active_organization": active_organization,
                 "allow_newsletters": allow_newsletters,
+                "current_password": current_password,
                 "custom_hotkeys": custom_hotkeys,
                 "date_joined": date_joined,
                 "email_notification_settings": email_notification_settings,
@@ -1521,6 +1536,7 @@ class AsyncRawUsersClient:
         *,
         active_organization: typing.Optional[int] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        current_password: typing.Optional[str] = OMIT,
         custom_hotkeys: typing.Optional[typing.Any] = OMIT,
         date_joined: typing.Optional[dt.datetime] = OMIT,
         email_notification_settings: typing.Optional[typing.Any] = OMIT,
@@ -1546,6 +1562,9 @@ class AsyncRawUsersClient:
 
         allow_newsletters : typing.Optional[bool]
             Allow sending newsletters to user
+
+        current_password : typing.Optional[str]
+            Your current password. Required when you change your own password.
 
         custom_hotkeys : typing.Optional[typing.Any]
             Custom keyboard shortcuts configuration for the user interface
@@ -1580,6 +1599,7 @@ class AsyncRawUsersClient:
             json={
                 "active_organization": active_organization,
                 "allow_newsletters": allow_newsletters,
+                "current_password": current_password,
                 "custom_hotkeys": custom_hotkeys,
                 "date_joined": date_joined,
                 "email_notification_settings": email_notification_settings,
