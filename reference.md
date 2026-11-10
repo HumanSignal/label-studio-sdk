@@ -38728,7 +38728,7 @@ client.projects.exports.list(
 <dl>
 <dd>
 
-Create a new export request to start a background task and generate an export file for a specific project by ID.
+Create a new export request to start a background task and generate an export file for a specific project by ID. Optional `since` / `until` limit the snapshot to tasks with `updated_at` in the half-open window `[since, until)`. `since` must be in the past; an omitted or later `until` becomes create/request time minus INCREMENTAL_EXPORT_UNTIL_LAG_SECONDS. Set `ephemeral=true` to omit the snapshot from list endpoints. On deployments that run the RQ cron scheduler (SaaS; on-prem with `rqcron.enabled`), ephemeral exports older than EPHEMERAL_EXPORT_TTL_HOURS (default 24) are deleted by a daily low-queue sweep; otherwise they remain unlisted until explicitly deleted. Use the resolved `until` from the response as `since` on the next incremental create. Task deletions are not represented in incremental snapshots (only surviving tasks with bumped `updated_at`). Rows committed after the export query starts but stamped with `updated_at` before `until` can fall outside both consecutive windows; the default `until` lag mitigates long transactions.
 </dd>
 </dl>
 </dd>
@@ -38809,6 +38809,14 @@ client.projects.exports.create(
 <dl>
 <dd>
 
+**ephemeral:** `typing.Optional[bool]` — When true, the export is omitted from list endpoints. Detail and download by id still work. TTL deletion (EPHEMERAL_EXPORT_TTL_HOURS, default 24) runs via the RQ cron scheduler when enabled (SaaS; on-prem `rqcron.enabled`); otherwise delete explicitly.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **finished_at:** `typing.Optional[datetime.datetime]` — Complete or fail time
     
 </dd>
@@ -38833,6 +38841,14 @@ client.projects.exports.create(
 <dl>
 <dd>
 
+**since:** `typing.Optional[datetime.datetime]` — Inclusive lower bound on Task.updated_at for an incremental snapshot. Omit for a full export. Pair with until for a half-open window [since, until).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **status:** `typing.Optional[ProjectImportStatusEnum]` 
     
 </dd>
@@ -38850,6 +38866,14 @@ client.projects.exports.create(
 <dd>
 
 **title:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**until:** `typing.Optional[datetime.datetime]` — Exclusive upper bound on Task.updated_at. If omitted, or later than create/request time minus INCREMENTAL_EXPORT_UNTIL_LAG_SECONDS, the server uses that time instead. Use the returned value as since on the next incremental create.
     
 </dd>
 </dl>

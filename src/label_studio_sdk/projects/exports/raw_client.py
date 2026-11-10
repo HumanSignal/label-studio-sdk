@@ -235,16 +235,19 @@ class RawExportsClient:
         converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
         counters: typing.Optional[typing.Any] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        ephemeral: typing.Optional[bool] = OMIT,
         finished_at: typing.Optional[dt.datetime] = OMIT,
         md5: typing.Optional[str] = OMIT,
         serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
+        since: typing.Optional[dt.datetime] = OMIT,
         status: typing.Optional[ProjectImportStatusEnum] = OMIT,
         task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
         title: typing.Optional[str] = OMIT,
+        until: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LseExportCreate]:
         """
-        Create a new export request to start a background task and generate an export file for a specific project by ID.
+        Create a new export request to start a background task and generate an export file for a specific project by ID. Optional `since` / `until` limit the snapshot to tasks with `updated_at` in the half-open window `[since, until)`. `since` must be in the past; an omitted or later `until` becomes create/request time minus INCREMENTAL_EXPORT_UNTIL_LAG_SECONDS. Set `ephemeral=true` to omit the snapshot from list endpoints. On deployments that run the RQ cron scheduler (SaaS; on-prem with `rqcron.enabled`), ephemeral exports older than EPHEMERAL_EXPORT_TTL_HOURS (default 24) are deleted by a daily low-queue sweep; otherwise they remain unlisted until explicitly deleted. Use the resolved `until` from the response as `since` on the next incremental create. Task deletions are not represented in incremental snapshots (only surviving tasks with bumped `updated_at`). Rows committed after the export query starts but stamped with `updated_at` before `until` can fall outside both consecutive windows; the default `until` lag mitigates long transactions.
 
         Parameters
         ----------
@@ -259,6 +262,9 @@ class RawExportsClient:
 
         created_by : typing.Optional[UserSimpleRequest]
 
+        ephemeral : typing.Optional[bool]
+            When true, the export is omitted from list endpoints. Detail and download by id still work. TTL deletion (EPHEMERAL_EXPORT_TTL_HOURS, default 24) runs via the RQ cron scheduler when enabled (SaaS; on-prem `rqcron.enabled`); otherwise delete explicitly.
+
         finished_at : typing.Optional[dt.datetime]
             Complete or fail time
 
@@ -266,11 +272,17 @@ class RawExportsClient:
 
         serialization_options : typing.Optional[SerializationOptionsRequest]
 
+        since : typing.Optional[dt.datetime]
+            Inclusive lower bound on Task.updated_at for an incremental snapshot. Omit for a full export. Pair with until for a half-open window [since, until).
+
         status : typing.Optional[ProjectImportStatusEnum]
 
         task_filter_options : typing.Optional[LseTaskFilterOptionsRequest]
 
         title : typing.Optional[str]
+
+        until : typing.Optional[dt.datetime]
+            Exclusive upper bound on Task.updated_at. If omitted, or later than create/request time minus INCREMENTAL_EXPORT_UNTIL_LAG_SECONDS, the server uses that time instead. Use the returned value as since on the next incremental create.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -294,16 +306,19 @@ class RawExportsClient:
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
+                "ephemeral": ephemeral,
                 "finished_at": finished_at,
                 "md5": md5,
                 "serialization_options": convert_and_respect_annotation_metadata(
                     object_=serialization_options, annotation=SerializationOptionsRequest, direction="write"
                 ),
+                "since": since,
                 "status": status,
                 "task_filter_options": convert_and_respect_annotation_metadata(
                     object_=task_filter_options, annotation=LseTaskFilterOptionsRequest, direction="write"
                 ),
                 "title": title,
+                "until": until,
             },
             headers={
                 "content-type": "application/json",
@@ -760,16 +775,19 @@ class AsyncRawExportsClient:
         converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
         counters: typing.Optional[typing.Any] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        ephemeral: typing.Optional[bool] = OMIT,
         finished_at: typing.Optional[dt.datetime] = OMIT,
         md5: typing.Optional[str] = OMIT,
         serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
+        since: typing.Optional[dt.datetime] = OMIT,
         status: typing.Optional[ProjectImportStatusEnum] = OMIT,
         task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
         title: typing.Optional[str] = OMIT,
+        until: typing.Optional[dt.datetime] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LseExportCreate]:
         """
-        Create a new export request to start a background task and generate an export file for a specific project by ID.
+        Create a new export request to start a background task and generate an export file for a specific project by ID. Optional `since` / `until` limit the snapshot to tasks with `updated_at` in the half-open window `[since, until)`. `since` must be in the past; an omitted or later `until` becomes create/request time minus INCREMENTAL_EXPORT_UNTIL_LAG_SECONDS. Set `ephemeral=true` to omit the snapshot from list endpoints. On deployments that run the RQ cron scheduler (SaaS; on-prem with `rqcron.enabled`), ephemeral exports older than EPHEMERAL_EXPORT_TTL_HOURS (default 24) are deleted by a daily low-queue sweep; otherwise they remain unlisted until explicitly deleted. Use the resolved `until` from the response as `since` on the next incremental create. Task deletions are not represented in incremental snapshots (only surviving tasks with bumped `updated_at`). Rows committed after the export query starts but stamped with `updated_at` before `until` can fall outside both consecutive windows; the default `until` lag mitigates long transactions.
 
         Parameters
         ----------
@@ -784,6 +802,9 @@ class AsyncRawExportsClient:
 
         created_by : typing.Optional[UserSimpleRequest]
 
+        ephemeral : typing.Optional[bool]
+            When true, the export is omitted from list endpoints. Detail and download by id still work. TTL deletion (EPHEMERAL_EXPORT_TTL_HOURS, default 24) runs via the RQ cron scheduler when enabled (SaaS; on-prem `rqcron.enabled`); otherwise delete explicitly.
+
         finished_at : typing.Optional[dt.datetime]
             Complete or fail time
 
@@ -791,11 +812,17 @@ class AsyncRawExportsClient:
 
         serialization_options : typing.Optional[SerializationOptionsRequest]
 
+        since : typing.Optional[dt.datetime]
+            Inclusive lower bound on Task.updated_at for an incremental snapshot. Omit for a full export. Pair with until for a half-open window [since, until).
+
         status : typing.Optional[ProjectImportStatusEnum]
 
         task_filter_options : typing.Optional[LseTaskFilterOptionsRequest]
 
         title : typing.Optional[str]
+
+        until : typing.Optional[dt.datetime]
+            Exclusive upper bound on Task.updated_at. If omitted, or later than create/request time minus INCREMENTAL_EXPORT_UNTIL_LAG_SECONDS, the server uses that time instead. Use the returned value as since on the next incremental create.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -819,16 +846,19 @@ class AsyncRawExportsClient:
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
+                "ephemeral": ephemeral,
                 "finished_at": finished_at,
                 "md5": md5,
                 "serialization_options": convert_and_respect_annotation_metadata(
                     object_=serialization_options, annotation=SerializationOptionsRequest, direction="write"
                 ),
+                "since": since,
                 "status": status,
                 "task_filter_options": convert_and_respect_annotation_metadata(
                     object_=task_filter_options, annotation=LseTaskFilterOptionsRequest, direction="write"
                 ),
                 "title": title,
+                "until": until,
             },
             headers={
                 "content-type": "application/json",

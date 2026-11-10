@@ -20,6 +20,11 @@ class Export(UncheckedBaseModel):
     """
 
     created_by: typing.Optional[UserSimple] = None
+    ephemeral: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When true, the export is omitted from list endpoints. Detail and download by id still work. TTL deletion (EPHEMERAL_EXPORT_TTL_HOURS, default 24) runs via the RQ cron scheduler when enabled (SaaS; on-prem `rqcron.enabled`); otherwise delete explicitly.
+    """
+
     finished_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Complete or fail time
@@ -27,8 +32,17 @@ class Export(UncheckedBaseModel):
 
     id: typing.Optional[int] = None
     md5: typing.Optional[str] = None
+    since: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Inclusive lower bound on Task.updated_at for an incremental snapshot. Omit for a full export. Pair with until for a half-open window [since, until).
+    """
+
     status: typing.Optional[ProjectImportStatusEnum] = None
     title: typing.Optional[str] = None
+    until: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Exclusive upper bound on Task.updated_at. If omitted, or later than create/request time minus INCREMENTAL_EXPORT_UNTIL_LAG_SECONDS, the server uses that time instead. Use the returned value as since on the next incremental create.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
