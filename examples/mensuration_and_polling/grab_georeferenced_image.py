@@ -80,8 +80,8 @@ if __name__ == "__main__":
 
     # sign up with a trial account at https://sentinel-hub.com and create an OAuth client
     config = SHConfig()
-    config.sh_client_id = "cee4e332-5202-4f6c-b159-f87debf7e733"
-    config.sh_client_secret = "w7sAaO3njHFoL3p9CQxxqKZPPkfVVC8f"
+    config.sh_client_id = None
+    config.sh_client_secret = None
 
     # lon-lat bounding box of the Grand Canyon
     bbox = BBox(bbox=(-112.2, 36.0, -112.0, 36.2), crs=CRS.WGS84)
