@@ -18,7 +18,7 @@ class BlueprintList(UncheckedBaseModel):
     id: typing.Optional[int] = None
     share_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    base64 encoded id
+    Public identifier used in share links (the random share token).
     """
 
     short_url: typing.Optional[str] = None
