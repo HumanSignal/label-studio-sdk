@@ -20,6 +20,7 @@ class OrganizationMemberSkillsOption(UncheckedBaseModel):
     field_key: str
     field_label: str
     label: str
+    levels: typing.Optional[typing.List[typing.Dict[str, str]]] = None
     parent_code: typing.Optional[str] = None
     section_key: str
     section_title: str

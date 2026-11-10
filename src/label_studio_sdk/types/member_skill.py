@@ -9,9 +9,13 @@ from .member_skill_status_enum import MemberSkillStatusEnum
 
 
 class MemberSkill(UncheckedBaseModel):
+    claimed_level: typing.Optional[str] = None
     code: str
+    failed_level: typing.Optional[str] = None
     label: str
+    levels: typing.Optional[typing.List[typing.Dict[str, str]]] = None
     status: MemberSkillStatusEnum
+    verified_level: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
