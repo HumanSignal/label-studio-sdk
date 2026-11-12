@@ -90,6 +90,11 @@ class DefaultRole(UncheckedBaseModel):
     Set to current time to prevent creating or editing annotations in quick view.
     """
 
+    slug: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    DNS-safe organization slug used to build the default primary domain (<slug>.<ORG_DOMAIN_BASE>). Nullable until the org domains backfill runs (FIT-2959).
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
