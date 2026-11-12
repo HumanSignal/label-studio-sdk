@@ -214,7 +214,6 @@ class RawProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
@@ -309,8 +308,6 @@ class RawProjectsClient:
 
         model_version : typing.Optional[str]
             Machine learning model version
-
-        organization : typing.Optional[int]
 
         output_schema : typing.Optional[typing.Any]
 
@@ -413,7 +410,6 @@ class RawProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "model_version": model_version,
-                "organization": organization,
                 "output_schema": output_schema,
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pinned_at": pinned_at,
@@ -696,7 +692,6 @@ class RawProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
@@ -847,8 +842,6 @@ class RawProjectsClient:
         model_version : typing.Optional[str]
             Machine learning model version
 
-        organization : typing.Optional[int]
-
         output_schema : typing.Optional[typing.Any]
 
         overlap_cohort_percentage : typing.Optional[int]
@@ -985,7 +978,6 @@ class RawProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "model_version": model_version,
-                "organization": organization,
                 "output_schema": output_schema,
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
@@ -1610,7 +1602,6 @@ class AsyncRawProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
@@ -1705,8 +1696,6 @@ class AsyncRawProjectsClient:
 
         model_version : typing.Optional[str]
             Machine learning model version
-
-        organization : typing.Optional[int]
 
         output_schema : typing.Optional[typing.Any]
 
@@ -1809,7 +1798,6 @@ class AsyncRawProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "model_version": model_version,
-                "organization": organization,
                 "output_schema": output_schema,
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pinned_at": pinned_at,
@@ -2094,7 +2082,6 @@ class AsyncRawProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         model_version: typing.Optional[str] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         output_schema: typing.Optional[typing.Any] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
         pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
@@ -2245,8 +2232,6 @@ class AsyncRawProjectsClient:
         model_version : typing.Optional[str]
             Machine learning model version
 
-        organization : typing.Optional[int]
-
         output_schema : typing.Optional[typing.Any]
 
         overlap_cohort_percentage : typing.Optional[int]
@@ -2383,7 +2368,6 @@ class AsyncRawProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "model_version": model_version,
-                "organization": organization,
                 "output_schema": output_schema,
                 "overlap_cohort_percentage": overlap_cohort_percentage,
                 "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,

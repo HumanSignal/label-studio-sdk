@@ -12403,14 +12403,6 @@ Data Collection project mode (assigned or open). Set only at creation; immutable
 <dl>
 <dd>
 
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **output_schema:** `typing.Optional[typing.Any]` 
     
 </dd>
@@ -13281,14 +13273,6 @@ Metric used to evaluate annotators. Defaults to gt_agreement.
 <dd>
 
 **model_version:** `typing.Optional[str]` — Machine learning model version
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
     
 </dd>
 </dl>
