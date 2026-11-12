@@ -217,14 +217,14 @@ typing-extensions = {version = ">=4.2", markers = "python_version < \"3.13\""}
 
 [[package]]
 name = "annotated-doc"
-version = "0.0.5"
+version = "0.0.6"
 description = "Document parameters, class attributes, return types, and variables inline, with Annotated."
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "annotated_doc-0.0.5-py3-none-any.whl", hash = "sha256:117bac03a25ede5df5440e855b32d556049ca169ead221505badf432fed4b101"},
-    {file = "annotated_doc-0.0.5.tar.gz", hash = "sha256:c7e58ce09192557605d8bbd92836d7e1d520ac9580096042c0bfd197efacf1bb"},
+    {file = "annotated_doc-0.0.6-py3-none-any.whl", hash = "sha256:361ca0950cc7082f53fa69e9328409f40a62c61e57e0a47e1825a08078a58a53"},
+    {file = "annotated_doc-0.0.6.tar.gz", hash = "sha256:7969bb69912085b2285849c0dcac0b4b374fd180c13cf10a87f284ffcf347bbf"},
 ]
 
 [[package]]
@@ -571,14 +571,14 @@ markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win
 
 [[package]]
 name = "datamodel-code-generator"
-version = "0.92.0"
+version = "0.95.0"
 description = "Datamodel Code Generator"
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "datamodel_code_generator-0.92.0-py3-none-any.whl", hash = "sha256:763875be7a125aa0abe6a55a2614bbfaded798dca68aabb904a590a41199abd3"},
-    {file = "datamodel_code_generator-0.92.0.tar.gz", hash = "sha256:1f4537e6a5970d104b781d833443b3ba34b246105de396e5368f8a58bc7bd9c2"},
+    {file = "datamodel_code_generator-0.95.0-py3-none-any.whl", hash = "sha256:7b5d5071de4f66c60ed56c2232338bb8db888dd308bb1ac9611104184ee271cd"},
+    {file = "datamodel_code_generator-0.95.0.tar.gz", hash = "sha256:81971c2cb0a219d5cbcd98b25fc9d6045cdd781bd85ae6416cacc39c2bf2373d"},
 ]
 
 [package.dependencies]
@@ -600,13 +600,16 @@ pyyaml = ">=6.0.1"
 typing-extensions = ">=4.16,<5"
 
 [package.extras]
-all = ["black (>=19.10b0) ; python_version < \"3.15\" and sys_platform != \"emscripten\"", "black (>=26.5) ; python_version >= \"3.15\" and sys_platform != \"emscripten\"", "certifi (>=2026.10.19)", "graphql-core (>=3.2.3)", "grpcio-tools (>=1.62,<2)", "httpx (>=0.24.1)", "isort (>=4.3.21,<9) ; sys_platform != \"emscripten\"", "openapi-spec-validator (>=0.2.8,<0.8)", "prance (>=0.18.2)", "pysnooper (>=0.4.1,<2)", "ruff (>=0.9.10)", "watchfiles (>=1.1)"]
+all = ["argcomplete (>=2.10.1,<4)", "black (>=19.10b0) ; python_version < \"3.15\" and sys_platform != \"emscripten\"", "black (>=26.5) ; python_version >= \"3.15\" and sys_platform != \"emscripten\"", "certifi (>=2026.10.19)", "genson (>=1.2.1,<2)", "graphql-core (>=3.2.3)", "grpcio-tools (>=1.62,<2)", "httpx (>=0.24.1)", "isort (>=4.3.21,<9) ; sys_platform != \"emscripten\"", "jinja2 (>=2.10.1,<4)", "openapi-spec-validator (>=0.2.8,<0.8)", "prance (>=0.18.2)", "pysnooper (>=0.4.1,<2)", "ruff (>=0.9.10)", "watchfiles (>=1.1)"]
+argcomplete = ["argcomplete (>=2.10.1,<4)"]
 black = ["black (>=19.10b0) ; python_version < \"3.15\" and sys_platform != \"emscripten\"", "black (>=26.5) ; python_version >= \"3.15\" and sys_platform != \"emscripten\""]
 debug = ["pysnooper (>=0.4.1,<2)"]
+genson = ["genson (>=1.2.1,<2)"]
 graphql = ["graphql-core (>=3.2.3)"]
 http = ["certifi (>=2026.10.19)", "httpx (>=0.24.1)"]
 httpx2 = ["httpx2 (>=2,<3)"]
 isort = ["isort (>=4.3.21,<9) ; sys_platform != \"emscripten\""]
+jinja2 = ["jinja2 (>=2.10.1,<4)"]
 protobuf = ["grpcio-tools (>=1.62,<2)"]
 ruff = ["ruff (>=0.9.10)"]
 ryaml = ["ryaml (>=0.5.1)"]
@@ -3075,14 +3078,14 @@ typing_extensions = ">=4.14.0"
 
 [[package]]
 name = "typer"
-version = "0.29.0"
+version = "0.29.1"
 description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "typer-0.29.0-py3-none-any.whl", hash = "sha256:b3c3de6e06a848274dc7bd56a433499e9cf25fa1d40aa3ba4eccfec4e1624c7b"},
-    {file = "typer-0.29.0.tar.gz", hash = "sha256:6871960a1603fba66af2ff751be48a6735af6480a67660afaf2fab2f7e008ed4"},
+    {file = "typer-0.29.1-py3-none-any.whl", hash = "sha256:00dbc549c13428bec1be55fe1f4d0fb8c6637a310e4f178ef14abe9534ee7b58"},
+    {file = "typer-0.29.1.tar.gz", hash = "sha256:ab6eb3880bf67ce96147734717f9ec333c06f66e361f3ea947d0be43da39f242"},
 ]
 
 [package.dependencies]
