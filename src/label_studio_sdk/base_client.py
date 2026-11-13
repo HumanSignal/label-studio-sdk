@@ -102,7 +102,7 @@ class LabelStudioBase:
         *,
         base_url: typing.Optional[str] = None,
         environment: LabelStudioEnvironment = LabelStudioEnvironment.DEFAULT,
-        api_key: typing.Optional[str] = os.getenv("LABEL_STUDIO_API_KEY"),
+        api_key: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -114,6 +114,7 @@ class LabelStudioBase:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("LABEL_STUDIO_API_KEY")
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting LABEL_STUDIO_API_KEY"
@@ -489,7 +490,7 @@ class AsyncLabelStudioBase:
         *,
         base_url: typing.Optional[str] = None,
         environment: LabelStudioEnvironment = LabelStudioEnvironment.DEFAULT,
-        api_key: typing.Optional[str] = os.getenv("LABEL_STUDIO_API_KEY"),
+        api_key: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -501,6 +502,7 @@ class AsyncLabelStudioBase:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("LABEL_STUDIO_API_KEY")
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting LABEL_STUDIO_API_KEY"
