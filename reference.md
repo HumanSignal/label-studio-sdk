@@ -9156,130 +9156,15 @@ client.organizations.update_default_role(
 <dl>
 <dd>
 
-**annotator_reviewer_firewall_enabled_at:** `typing.Optional[datetime.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_interfaces_enabled:** `typing.Optional[bool]` — Enable custom interfaces for this organization. When disabled, projects with use_custom_interface=True will not render custom interfaces anywhere in the product (label stream, embed, data manager, interfaces dashboard).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_scripts_enabled_at:** `typing.Optional[datetime.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**default_role:** `typing.Optional[OrganizationRoleEnum]` 
+**default_role:** `typing.Optional[DefaultRoleDefaultRoleEnum]` 
 
 Default membership role for invited users
 
-* `OW` - Owner
 * `AD` - Administrator
 * `MA` - Manager
 * `RE` - Reviewer
 * `AN` - Annotator
-* `DI` - Deactivated
 * `NO` - Not Activated
-* `VO` - View Only
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_notification_settings:** `typing.Optional[typing.Any]` — Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_domains:** `typing.Optional[typing.Any]` — List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_enabled:** `typing.Optional[bool]` — Enable embed functionality for this organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_settings:** `typing.Optional[typing.Any]` — Embed settings for this organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — External ID to uniquely identify this organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extra_data_on_activity_logs:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**interface_settings:** `typing.Optional[typing.Any]` — Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**label_stream_navigation_disabled_at:** `typing.Optional[datetime.datetime]` — Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` — A unique integer value identifying this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**react_code_settings:** `typing.Optional[typing.Any]` — ReactCode tag security settings. Structure: {"mode": "disabled"|"src_only"|"everything", "allowed_origins": ["https://..."], "allowed_permissions": ["camera", ...]}
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**read_only_quick_view_enabled_at:** `typing.Optional[datetime.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
     
 </dd>
 </dl>
@@ -38553,12 +38438,12 @@ client.projects.exports.download_sync(...)
 <dd>
 
 
-        This endpoint is deprecated in Enterprise. Use the async export API instead:
-        POST /api/projects/{{id}}/exports/ (see [Create new export](api:POST/api/projects/{id}/exports/)).
+This endpoint is deprecated in Enterprise. Use the async export API instead:
+POST /api/projects/{{id}}/exports/ (see [Create new export](api:POST/api/projects/{id}/exports/)).
 
-        In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
 
-        Retrieve the available export formats for the current project by ID.
+Retrieve the available export formats for the current project by ID.
 </dd>
 </dl>
 </dd>

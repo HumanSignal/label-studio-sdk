@@ -72,6 +72,7 @@ if typing.TYPE_CHECKING:
     from .databricks_import_storage import DatabricksImportStorage
     from .default_model_version_name_response import DefaultModelVersionNameResponse
     from .default_role import DefaultRole
+    from .default_role_default_role_enum import DefaultRoleDefaultRoleEnum
     from .dimension import Dimension
     from .dimension_list import DimensionList
     from .edition_enum import EditionEnum
@@ -422,6 +423,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DatabricksImportStorage": ".databricks_import_storage",
     "DefaultModelVersionNameResponse": ".default_model_version_name_response",
     "DefaultRole": ".default_role",
+    "DefaultRoleDefaultRoleEnum": ".default_role_default_role_enum",
     "Dimension": ".dimension",
     "DimensionList": ".dimension_list",
     "EditionEnum": ".edition_enum",
@@ -780,6 +782,7 @@ __all__ = [
     "DatabricksImportStorage",
     "DefaultModelVersionNameResponse",
     "DefaultRole",
+    "DefaultRoleDefaultRoleEnum",
     "Dimension",
     "DimensionList",
     "EditionEnum",
