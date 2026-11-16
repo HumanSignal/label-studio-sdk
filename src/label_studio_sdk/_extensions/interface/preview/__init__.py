@@ -7,6 +7,13 @@ from .protocol import (
     PreviewManifest,
     ProtocolMismatchError,
 )
+from .scenario_bundle import (
+    ScenarioBundleError,
+    ScenarioEditorBundleServer,
+    resolve_scenario_editor_bundle,
+    screen_uses_interface_components,
+    serve_scenario_editor_bundle,
+)
 from .server import LocalPreviewServer
 
 __all__ = [
@@ -21,4 +28,9 @@ __all__ = [
     "PreviewFileUpdate",
     "PreviewManifest",
     "ProtocolMismatchError",
+    "ScenarioBundleError",
+    "ScenarioEditorBundleServer",
+    "resolve_scenario_editor_bundle",
+    "screen_uses_interface_components",
+    "serve_scenario_editor_bundle",
 ]

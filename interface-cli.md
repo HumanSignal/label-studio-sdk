@@ -149,20 +149,21 @@ Run offline validation.
 label-studio-sdk interface validate ./my-interface
 label-studio-sdk interface validate Screen.jsx
 label-studio-sdk interface validate Screen.jsx --scenario scenarios.js
+label-studio-sdk interface validate Screen.jsx --scenario scenarios.js --lse-url http://localhost:8080
 label-studio-sdk interface validate Screen.jsx --json
 ```
 
 Static validation checks:
 
 - JSX compilation
-- undefined JSX component references
+- undefined JSX component references (recognizing components destructured from `window.InterfaceComponents`)
 - final module object shape
 - schema export shape
 - missing optional exports
-- `getResults` and `parseResults` smoke tests
+- `getResults` and `parseResults` smoke tests (with a built-in pure-helper shim for `window.InterfaceComponents` `to*Results` / `from*Results` converters)
 - `outputSchema` and `parseResults` consistency
 
-Scenario validation uses Playwright in a minimal React harness. Scenario files must default-export an array of scenario objects:
+Scenario validation uses Playwright in a browser harness. For screens that reference `window.InterfaceComponents`, `validate --scenario` loads the Label Studio `editor-standalone` sandbox shell and preloads the referenced component chunks automatically—reusing a verified local `interface preview` cache snapshot when available, or fetching the bundle on demand when `LABEL_STUDIO_URL` (or `--lse-url`) is configured. Scenario files must default-export an array of scenario objects:
 
 ```js
 export default [

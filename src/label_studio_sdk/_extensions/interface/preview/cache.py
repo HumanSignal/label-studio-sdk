@@ -74,7 +74,12 @@ class PreviewAssetCache:
     ) -> None:
         self.origin = _normalize_origin(origin)
         self.protocol_version = protocol_version
-        root = cache_root or Path(appdirs.user_cache_dir("label-studio-sdk", "HumanSignal")) / "interface-preview"
+        default_root = (
+            Path(os.environ["LS_INTERFACE_PREVIEW_CACHE_DIR"])
+            if os.environ.get("LS_INTERFACE_PREVIEW_CACHE_DIR")
+            else Path(appdirs.user_cache_dir("label-studio-sdk", "HumanSignal")) / "interface-preview"
+        )
+        root = cache_root or default_root
         self.origin_key = hashlib.sha256(self.origin.encode()).hexdigest()[:20]
         self.scope_dir = Path(root) / self.origin_key / f"protocol-{protocol_version}"
 

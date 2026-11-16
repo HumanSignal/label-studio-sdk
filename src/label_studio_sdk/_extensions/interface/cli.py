@@ -25,6 +25,9 @@ from .preview import (
     PreviewAssetCache,
     PreviewCacheError,
     ProtocolMismatchError,
+    ScenarioBundleError,
+    screen_uses_interface_components,
+    serve_scenario_editor_bundle,
 )
 from .preview.server import AuthHeaderProvider
 
@@ -33,7 +36,13 @@ _AUTH_ERRORS = (ApiError, httpx.HTTPError, ValueError)
 SIDECAR_SUFFIX = ".ls-interface.json"
 DEFAULT_BASE_URL = "https://app.humansignal.com"
 VALIDATOR_PACKAGE = "label_studio_sdk._extensions.interface.validator"
-VALIDATOR_ASSETS = ("package.json", "package-lock.json", "validate.mjs", "scenario-runner.mjs")
+VALIDATOR_ASSETS = (
+    "package.json",
+    "package-lock.json",
+    "interface-components-shim.mjs",
+    "validate.mjs",
+    "scenario-runner.mjs",
+)
 INTERFACE_FILE_CANDIDATES = ("Screen.jsx", "Interface.jsx", "interface.jsx", "index.jsx")
 TASK_FILE_CANDIDATES = ("task.json", "sample.json", "example-task.json", "example_task.json")
 SCENARIO_FILE_CANDIDATES = ("scenarios.js", "scenario.js")
@@ -78,6 +87,12 @@ def _resolve_base_url(ctx: typer.Context | None, explicit: str | None = None) ->
     return (
         explicit or ctx_obj.get("base_url") or os.getenv("LABEL_STUDIO_URL") or os.getenv("LS_URL") or DEFAULT_BASE_URL
     ).rstrip("/")
+
+
+def _explicit_base_url(ctx: typer.Context | None, explicit: str | None = None) -> str | None:
+    ctx_obj = _context_obj(ctx)
+    raw = explicit or ctx_obj.get("base_url") or os.getenv("LABEL_STUDIO_URL") or os.getenv("LS_URL")
+    return raw.rstrip("/") if isinstance(raw, str) and raw.strip() else None
 
 
 def _resolve_token(ctx: typer.Context | None, explicit: str | None = None) -> str | None:
@@ -346,12 +361,58 @@ def _ensure_validator_ready(*, require_scenario: bool = False) -> Path:
         if result.returncode != 0:
             typer.echo(f"npm install failed:\n{result.stderr}", err=True)
             raise typer.Exit(code=2)
+    if require_scenario:
+        node_bin = shutil.which("node")
+        if node_bin is None:
+            typer.echo("error: `node` is required to run scenario validation.", err=True)
+            raise typer.Exit(code=2)
+        probe = subprocess.run(
+            [
+                node_bin,
+                "--input-type=module",
+                "-e",
+                "import fs from 'node:fs'; import { chromium } from 'playwright'; process.exit(fs.existsSync(chromium.executablePath()) ? 0 : 1);",
+            ],
+            cwd=cache_dir,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        if probe.returncode != 0:
+            npx = shutil.which("npx")
+            if npx is None:
+                typer.echo("error: `npx` is required to install Playwright Chromium.", err=True)
+                raise typer.Exit(code=2)
+            typer.echo("installing Playwright Chromium for scenario validation (one-time)...", err=True)
+            pw_install = subprocess.run(
+                [npx, "playwright", "install", "chromium"],
+                cwd=cache_dir,
+                capture_output=True,
+                text=True,
+                timeout=300,
+            )
+            if pw_install.returncode != 0:
+                detail = "\n".join(
+                    part.strip() for part in (pw_install.stderr, pw_install.stdout) if part and part.strip()
+                )
+                typer.echo(f"playwright install chromium failed:\n{detail}", err=True)
+                raise typer.Exit(code=2)
     return cache_dir
 
 
-def _run_node_json(args: list[str], *, timeout: int, timeout_label: str) -> dict[str, Any]:
+def _run_node_json(
+    args: list[str],
+    *,
+    timeout: int,
+    timeout_label: str,
+    extra_env: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    env = None
+    if extra_env:
+        env = dict(os.environ)
+        env.update(extra_env)
     try:
-        result = subprocess.run(args, capture_output=True, text=True, timeout=timeout)
+        result = subprocess.run(args, capture_output=True, text=True, timeout=timeout, env=env)
     except subprocess.TimeoutExpired:
         typer.echo(f"error: {timeout_label} timed out after {timeout}s", err=True)
         raise typer.Exit(code=2) from None
@@ -382,16 +443,75 @@ def _run_validator(file: Path) -> dict[str, Any]:
     )
 
 
-def _run_scenarios(file: Path, scenario: Path) -> dict[str, Any]:
+def _has_cli_pinned_base_url(ctx: typer.Context | None, lse_url: str | None) -> bool:
+    if lse_url and lse_url.strip():
+        return True
+    cur = ctx
+    saw_base_url_param = False
+    while cur is not None:
+        get_source = getattr(cur, "get_parameter_source", None)
+        if callable(get_source):
+            for param_name in ("lse_url", "base_url"):
+                source = get_source(param_name)
+                if source is not None:
+                    if param_name == "base_url":
+                        saw_base_url_param = True
+                    if getattr(source, "name", None) == "COMMANDLINE":
+                        return True
+        cur = getattr(cur, "parent", None)
+    ctx_base = _context_obj(ctx).get("base_url")
+    return bool(not saw_base_url_param and isinstance(ctx_base, str) and ctx_base.strip())
+
+
+def _run_scenarios(
+    file: Path,
+    scenario: Path,
+    *,
+    ctx: typer.Context | None = None,
+    lse_url: str | None = None,
+    token: str | None = None,
+) -> dict[str, Any]:
     if scenario.suffix != ".js":
         typer.echo(f"error: --scenario expects a .js scenario module, got {scenario}", err=True)
         raise typer.Exit(code=2)
     cache_dir = _ensure_validator_ready(require_scenario=True)
-    return _run_node_json(
-        ["node", str(cache_dir / "scenario-runner.mjs"), str(file.resolve()), str(scenario.resolve())],
-        timeout=120,
-        timeout_label="scenario runner",
-    )
+    source = file.read_text(encoding="utf-8")
+    cmd = ["node", str(cache_dir / "scenario-runner.mjs"), str(file.resolve()), str(scenario.resolve())]
+
+    if not screen_uses_interface_components(source):
+        return _run_node_json(cmd, timeout=120, timeout_label="scenario runner")
+
+    pinned_cli_url = _has_cli_pinned_base_url(ctx, lse_url)
+    explicit_base = _explicit_base_url(ctx, lse_url)
+    resolved_token = _resolve_token(ctx, token)
+    auth_headers: dict[str, str] | None = None
+    if explicit_base and resolved_token:
+        try:
+            auth_headers = _auth_header_provider(resolved_token, explicit_base)()
+        except _AUTH_ERRORS:
+            auth_headers = None
+
+    try:
+        with serve_scenario_editor_bundle(
+            explicit_base_url=explicit_base,
+            auth_headers=auth_headers,
+            allow_cross_origin_cache_fallback=not pinned_cli_url,
+        ) as bundle_url:
+            return _run_node_json(
+                cmd,
+                timeout=120,
+                timeout_label="scenario runner",
+                extra_env={"LS_INTERFACE_EDITOR_BUNDLE_URL": bundle_url},
+            )
+    except ScenarioBundleError as exc:
+        return {
+            "ok": False,
+            "file": str(file.resolve()),
+            "scenarioFile": str(scenario.resolve()),
+            "errors": [{"stage": "scenario", "message": str(exc)}],
+            "warnings": [],
+            "scenarios": [],
+        }
 
 
 def _print_static_report(file: Path, report: dict[str, Any], *, overall_ok: bool) -> None:
@@ -1107,8 +1227,10 @@ def preview(
     finally:
         cache.release_lease(snapshot.root)
 
+
 @app.command()
 def validate(
+    ctx: typer.Context,
     file: Path = typer.Argument(
         ...,
         exists=True,
@@ -1126,8 +1248,15 @@ def validate(
         help="Interaction scenario JS module.",
     ),
     as_json: bool = typer.Option(False, "--json", help="Print the raw JSON report."),
+    token: str | None = typer.Option(None, "--token", envvar="LABEL_STUDIO_API_KEY", help="Label Studio API token."),
+    lse_url: str | None = typer.Option(
+        None,
+        "--lse-url",
+        "--base-url",
+        help="Label Studio URL used to fetch editor-standalone assets when scenarios use InterfaceComponents (defaults to LABEL_STUDIO_URL).",
+    ),
 ) -> None:
-    """Validate an interface offline."""
+    """Validate an interface offline (and optionally execute Playwright scenarios)."""
     source_path = file
     scenario = _resolve_bundle_file(source_path, scenario, SCENARIO_FILE_CANDIDATES)
     file = _resolve_interface_file(source_path)
@@ -1135,7 +1264,7 @@ def validate(
     scenario_report = None
     if scenario is not None:
         if report.get("ok"):
-            scenario_report = _run_scenarios(file, scenario)
+            scenario_report = _run_scenarios(file, scenario, ctx=ctx, lse_url=lse_url, token=token)
         else:
             scenario_report = {
                 "ok": False,

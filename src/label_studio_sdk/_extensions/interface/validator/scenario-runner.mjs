@@ -19,6 +19,46 @@ if (!filePath || !scenarioPath || !existsSync(filePath) || !existsSync(scenarioP
   process.exit(2);
 }
 
+const PASSTHROUGH_STEP_KEYS = new Set(["then", "toJSON", "constructor", "inspect"]);
+
+const SPATIAL_AND_LABELED_ARRAY_TYPES = new Set([
+  "rectanglelabels",
+  "polygonlabels",
+  "multipolygonlabels",
+  "poselabels",
+  "cuboidlabels",
+  "ellipselabels",
+  "keypointlabels",
+  "brushlabels",
+  "bitmasklabels",
+  "vectorlabels",
+  "ocrlabels",
+  "labels",
+  "hypertextlabels",
+  "paragraphlabels",
+  "timeserieslabels",
+  "timelinelabels",
+  "videorectangle",
+  "videovector",
+  "videomasks",
+  "taxonomy",
+  "ranker",
+]);
+
+const PROXY_BUILTINS = new Set([
+  "load",
+  "isLoaded",
+  "getLoaded",
+  "createSandboxedWorker",
+  "useComponentHotkeys",
+  "matchesHotkey",
+  "parseHotkeyCombo",
+  "isInputElement",
+  "resolveAssignedHotkey",
+  "default",
+  "__esModule",
+]);
+
 const report = await run().catch((error) => ({
   ok: false,
   file: filePath,
@@ -127,39 +167,66 @@ async function runScenario(browser, compiledBody, scenario, index, scriptPaths) 
 
   try {
     const scenarioData = serializeScenarioForHarness(scenario);
+    const editorBundleUrl = (process.env.LS_INTERFACE_EDITOR_BUNDLE_URL || "").replace(/\/+$/, "");
+    const componentRefs = detectScreenComponentRefs(compiledBody);
 
-    await page.setContent(`
-      <!doctype html>
-      <html>
-        <head>
-          <meta charset="utf-8" />
-          <style>
-            html, body, #root {
-              width: 100%;
-              min-height: 100%;
-              margin: 0;
-            }
-            body {
-              font-family: Arial, sans-serif;
-            }
-            * {
-              box-sizing: border-box;
-            }
-          </style>
-        </head>
-        <body><div id="root"></div></body>
-      </html>
-    `);
-    await page.addScriptTag({ path: scriptPaths.react });
-    await page.addScriptTag({ path: scriptPaths.reactDom });
+    if (editorBundleUrl) {
+      await page.goto(`${editorBundleUrl}/interface-shell.html`, { waitUntil: "domcontentloaded" });
+      await page.waitForFunction(
+        () => Boolean(window.React && window.ReactDOM && window.InterfaceComponents),
+        null,
+        { timeout: 15000 },
+      );
+      if (componentRefs.length > 0) {
+        await page.evaluate(async (refs) => {
+          if (window.InterfaceComponents && typeof window.InterfaceComponents.load === "function") {
+            await Promise.all(
+              refs.map((ref) => Promise.resolve(window.InterfaceComponents.load(ref)).catch(() => null)),
+            );
+          }
+        }, componentRefs);
+      }
+    } else {
+      if (componentRefs.length > 0) {
+        throw new Error(
+          "Screen references window.InterfaceComponents, which requires the Label Studio editor-standalone bundle. " +
+            "Set LABEL_STUDIO_URL (or pass --lse-url) to fetch it, or run 'label-studio-sdk interface preview' once to populate the local cache.",
+        );
+      }
+      await page.setContent(`
+        <!doctype html>
+        <html>
+          <head>
+            <meta charset="utf-8" />
+            <style>
+              html, body, #root {
+                width: 100%;
+                min-height: 100%;
+                margin: 0;
+              }
+              body {
+                font-family: Arial, sans-serif;
+              }
+              * {
+                box-sizing: border-box;
+              }
+            </style>
+          </head>
+          <body><div id="root"></div></body>
+        </html>
+      `);
+      await page.addScriptTag({ path: scriptPaths.react });
+      await page.addScriptTag({ path: scriptPaths.reactDom });
+    }
+
     await page.evaluate(
-      ({ body, scenarioDef, harnessSource }) => {
+      async ({ body, scenarioDef, harnessSource }) => {
         const install = new Function(
           "compiledBody",
           "scenario",
           `return (${harnessSource})(compiledBody, scenario);`,
         );
-        return install(body, scenarioDef);
+        return await install(body, scenarioDef);
       },
       {
         body: compiledBody,
@@ -366,8 +433,6 @@ function planScenarioSteps(scenario) {
   plan.push({ key: "@round-trip", template: "restore parsed results and re-serialize", builtin: true });
   return plan;
 }
-
-const PASSTHROUGH_STEP_KEYS = new Set(["then", "toJSON", "constructor", "inspect"]);
 
 function createStepTracker(scenario, plan) {
   const declarations = declaredSteps(scenario);
@@ -657,9 +722,41 @@ function validateAnnotationResults(results, outputSchema, stage) {
 function validateResultAgainstOutputField(result, fieldDef, prefix, stage) {
   const errors = [];
   const fieldType = nonNullJsonType(fieldDef);
-  const enumValues = Array.isArray(fieldDef.enum) ? fieldDef.enum : null;
-  const itemEnums = Array.isArray(fieldDef.items?.enum) ? fieldDef.items.enum : null;
-  const usesParamOptions = typeof fieldDef.$param === "string";
+  const lsType = fieldDef["x-ls-type"];
+  const enumValues = Array.isArray(fieldDef.enum) && fieldDef.enum.length > 0 ? fieldDef.enum : null;
+  const itemEnums = Array.isArray(fieldDef.items?.enum) && fieldDef.items.enum.length > 0 ? fieldDef.items.enum : null;
+  const usesParamOptions = typeof fieldDef.$param === "string" || typeof fieldDef.items?.$param === "string";
+
+  if (lsType === "rating") {
+    if (result.type !== "rating" || typeof result.value?.rating !== "number") {
+      errors.push({ stage, message: `${prefix} must be type "rating" with numeric value.rating.` });
+    }
+    return errors;
+  }
+  if (lsType === "pairwise") {
+    if (result.type !== "pairwise" || typeof result.value?.selected !== "string") {
+      errors.push({ stage, message: `${prefix} must be type "pairwise" with string value.selected.` });
+    }
+    return errors;
+  }
+  if (lsType === "datetime") {
+    if (result.type !== "datetime" || typeof result.value?.datetime !== "string") {
+      errors.push({ stage, message: `${prefix} must be type "datetime" with string value.datetime.` });
+    }
+    return errors;
+  }
+  if (lsType === "taxonomy") {
+    if (result.type !== "taxonomy" || !Array.isArray(result.value?.taxonomy)) {
+      errors.push({ stage, message: `${prefix} must be type "taxonomy" with array value.taxonomy.` });
+    }
+    return errors;
+  }
+  if (lsType === "ranker") {
+    if (result.type !== "ranker" || !isPlainObject(result.value?.ranker)) {
+      errors.push({ stage, message: `${prefix} must be type "ranker" with object value.ranker.` });
+    }
+    return errors;
+  }
 
   if (fieldType === "string" && (enumValues || usesParamOptions)) {
     if (result.type !== "choices") {
@@ -702,9 +799,7 @@ function validateResultAgainstOutputField(result, fieldDef, prefix, stage) {
       errors.push({ stage, message: `${prefix}.value.choices must be an array.` });
     }
   } else if (fieldType === "array" && (itemEnums || usesParamOptions)) {
-    // Labeled geometry regions (PDF OCR / bbox screens) serialize as rectanglelabels/labels,
-    // while choice-only arrays still use type "choices".
-    if (result.type === "rectanglelabels" || result.type === "labels") {
+    if (SPATIAL_AND_LABELED_ARRAY_TYPES.has(result.type)) {
       if (!isPlainObject(result.value) && !Array.isArray(result.value)) {
         errors.push({ stage, message: `${prefix}.value must be an object or array for labeled region results.` });
       }
@@ -728,6 +823,9 @@ function validateResultAgainstOutputField(result, fieldDef, prefix, stage) {
   } else if (fieldType === "array") {
     const itemType = nonNullJsonType(fieldDef.items || {});
     if (itemType === "object" && isPlainObject(result.value)) {
+      return errors;
+    }
+    if (SPATIAL_AND_LABELED_ARRAY_TYPES.has(result.type)) {
       return errors;
     }
     if (result.type !== "labels" && !Array.isArray(result.value)) {
@@ -868,7 +966,7 @@ function shouldStartRegex(jsCode, slashIndex) {
   for (let i = slashIndex - 1; i >= 0; i -= 1) {
     const ch = jsCode[i];
     if (/\s/.test(ch)) continue;
-    const prefixKeyword = jsCode.slice(0, i + 1).match(/[A-Za-z_$][\w$]*$/)?.[0];
+    const prefixKeyword = jsCode.slice(Math.max(0, i - 32), i + 1).match(/[A-Za-z_$][\w$]*$/)?.[0];
     if (
       prefixKeyword &&
       ["return", "case", "throw", "delete", "void", "typeof", "yield", "await"].includes(prefixKeyword)
@@ -878,6 +976,52 @@ function shouldStartRegex(jsCode, slashIndex) {
     return "([{=,:;!&|?+-*~^<>".includes(ch);
   }
   return true;
+}
+
+function detectScreenComponentRefs(code) {
+  if (
+    typeof code !== "string" ||
+    !code ||
+    (!code.includes("InterfaceComponents") &&
+      !code.includes("requiredComponents") &&
+      !code.includes("@humansignal/interface-components"))
+  ) {
+    return [];
+  }
+  const refs = [];
+  const seen = new Set();
+  const addRef = (raw) => {
+    const name = String(raw || "").trim();
+    if (!/^[A-Za-z_$][\w$]*$/.test(name) || PROXY_BUILTINS.has(name) || seen.has(name)) return;
+    seen.add(name);
+    refs.push(name);
+  };
+  const addDestructured = (block) => {
+    for (const part of String(block || "").split(",")) {
+      const key = part.split(":")[0].split("=")[0].trim();
+      if (!key || key.startsWith("...")) continue;
+      addRef(key);
+    }
+  };
+
+  let m;
+  const dotRe = /\bInterfaceComponents\s*\??\.\s*([A-Za-z_$][\w$]*)/g;
+  while ((m = dotRe.exec(code)) !== null) addRef(m[1]);
+  const bracketRe = /\bInterfaceComponents\s*\[\s*["']([A-Za-z_$][\w$]*)["']\s*\]/g;
+  while ((m = bracketRe.exec(code)) !== null) addRef(m[1]);
+  const destructureRe = /\{([^{}]*)\}\s*=\s*(?:window\s*\.\s*)?InterfaceComponents\b(?!\s*[.[])/g;
+  while ((m = destructureRe.exec(code)) !== null) addDestructured(m[1]);
+  const requireRe = /\{([^{}]*)\}\s*=\s*require\(\s*["']@humansignal\/interface-components["']\s*\)/g;
+  while ((m = requireRe.exec(code)) !== null) addDestructured(m[1]);
+  const loadRe = /\bInterfaceComponents\s*\.\s*(?:load|isLoaded|getLoaded)\(\s*["']([A-Za-z_$][\w$]*)["']/g;
+  while ((m = loadRe.exec(code)) !== null) addRef(m[1]);
+  const requiredRe = /\brequiredComponents\s*[:=]\s*\[([^\]]*)\]/g;
+  while ((m = requiredRe.exec(code)) !== null) {
+    const strRe = /["']([A-Za-z_$][\w$]*)["']/g;
+    let sm;
+    while ((sm = strRe.exec(m[1])) !== null) addRef(sm[1]);
+  }
+  return refs;
 }
 
 function trimTrailingWhitespaceAndComments(value) {
@@ -917,7 +1061,7 @@ function getScriptPaths() {
 }
 
 function getBrowserHarnessSource() {
-  return String(function installScenarioHarness(compiledBody, scenario) {
+  return String(async function installScenarioHarness(compiledBody, scenario) {
   function getField(obj, path) {
     if (!obj || typeof obj !== "object" || !path) return undefined;
     return String(path)
@@ -934,6 +1078,8 @@ function getBrowserHarnessSource() {
     throw new Error("React and ReactDOM must be loaded before installing the scenario harness.");
   }
 
+  window.__HS_SCREEN_PARAMS__ = clone(scenario.params) || {};
+
   const factory = new Function(
     "React",
     "useState",
@@ -944,6 +1090,7 @@ function getBrowserHarnessSource() {
     "getField",
     "EditorUI",
     "EditorDeps",
+    "InterfaceComponents",
     compiledBody,
   );
 
@@ -967,6 +1114,10 @@ function getBrowserHarnessSource() {
     }
   };
 
+  const editorUi = window.EditorUI || window.__editorUIExports || {};
+  const editorDeps = { ...mockEditorDeps, ...(window.EditorDeps || {}) };
+  const interfaceComponents = window.InterfaceComponents || {};
+
   const mod = factory(
     window.React,
     window.React.useState,
@@ -975,8 +1126,9 @@ function getBrowserHarnessSource() {
     window.React.useCallback,
     window.React.useMemo,
     getField,
-    {},
-    mockEditorDeps,
+    editorUi,
+    editorDeps,
+    interfaceComponents,
   );
 
   if (!mod || typeof mod !== "object") {
@@ -992,11 +1144,36 @@ function getBrowserHarnessSource() {
     throw new Error("Interface module must export parseResults for scenario validation.");
   }
 
+  if (Array.isArray(mod.requiredComponents) && typeof window.InterfaceComponents?.load === "function") {
+    await Promise.all(
+      mod.requiredComponents.map((entry) =>
+        Promise.resolve(window.InterfaceComponents.load(String(entry))).catch(() => null),
+      ),
+    );
+  }
+
   let regions = clone(scenario.initialRegions) || [];
   let relations = clone(scenario.initialRelations) || [];
   let selectedRegionIds = new Set(scenario.selectedRegionIds || []);
-  const rootElement = document.getElementById("root");
-  const root = window.ReactDOM.createRoot(rootElement);
+  let mutationRevision = 0;
+  let validationStatus = { valid: true, errors: [] };
+
+  let rootElement = document.getElementById("root");
+  if (!rootElement) {
+    const hostContainer = document.getElementById("shell-root") || document.body;
+    rootElement = document.createElement("div");
+    rootElement.id = "root";
+    rootElement.style.cssText = "width:100%;height:100%;display:flex;flex-direction:column;";
+    hostContainer.appendChild(rootElement);
+  }
+  const root =
+    typeof window.ReactDOM.createRoot === "function"
+      ? window.ReactDOM.createRoot(rootElement)
+      : {
+          render(element) {
+            window.ReactDOM.render(element, rootElement);
+          },
+        };
 
   // Minimal PDF.js stub so PDF OCR screens can mount canvas overlays in the harness.
   if (!window.pdfjsLib) {
@@ -1053,6 +1230,7 @@ function getBrowserHarnessSource() {
       settings: clone(scenario.settings) || {},
       interfaces: new Set(scenario.interfaces || []),
       initialResults: clone(scenario.initialResults) || [],
+      mutationRevision,
       setRegions(nextRegions) {
         const resolved = typeof nextRegions === "function" ? nextRegions(clone(regions)) : nextRegions;
         regions = Array.isArray(resolved) ? clone(resolved) : [];
@@ -1061,35 +1239,93 @@ function getBrowserHarnessSource() {
             .filter((region) => region && region.selected && typeof region.id === "string")
             .map((region) => region.id),
         );
+        mutationRevision += 1;
         render();
       },
       setRelations(nextRelations) {
         const resolved = typeof nextRelations === "function" ? nextRelations(clone(relations)) : nextRelations;
         relations = Array.isArray(resolved) ? clone(resolved) : [];
+        mutationRevision += 1;
         render();
       },
       addRegion(region) {
-        const nextRegion = { ...clone(region), id: region?.id || `region-${Date.now()}` };
+        const nextRegion = { ...clone(region), id: region?.id || `region-${Date.now()}-${regions.length}` };
         regions = [...regions, nextRegion];
         if (nextRegion.selected) selectedRegionIds = new Set([nextRegion.id]);
+        mutationRevision += 1;
         render();
         return nextRegion;
       },
       updateRegion(id, patch) {
         replaceRegion(id, clone(patch) || {});
+        mutationRevision += 1;
+        render();
+      },
+      updateRegions(patches) {
+        if (Array.isArray(patches)) {
+          for (const item of patches) {
+            if (item && item.id) replaceRegion(item.id, clone(item.patch ?? item) || {});
+          }
+        } else if (patches && typeof patches === "object") {
+          for (const [id, patch] of Object.entries(patches)) {
+            replaceRegion(id, clone(patch) || {});
+          }
+        }
+        mutationRevision += 1;
         render();
       },
       deleteRegion(id) {
         regions = regions.filter((region) => region.id !== id);
         selectedRegionIds.delete(id);
         selectedRegionIds = new Set(selectedRegionIds);
+        mutationRevision += 1;
         render();
       },
-      selectRegion(id) {
-        selectedRegionIds = id ? new Set([id]) : new Set();
-        regions = regions.map((region) => ({ ...region, selected: region.id === id }));
+      applyRegionTransaction(tx) {
+        if (!tx || typeof tx !== "object") return;
+        if (Array.isArray(tx.delete) && tx.delete.length > 0) {
+          const delSet = new Set(tx.delete);
+          regions = regions.filter((region) => !delSet.has(region.id));
+          for (const id of delSet) selectedRegionIds.delete(id);
+          selectedRegionIds = new Set(selectedRegionIds);
+        }
+        if (Array.isArray(tx.update)) {
+          for (const item of tx.update) {
+            if (item && item.id) replaceRegion(item.id, clone(item.patch ?? item) || {});
+          }
+        }
+        if (Array.isArray(tx.add)) {
+          for (const region of tx.add) {
+            const nextRegion = { ...clone(region), id: region?.id || `region-${Date.now()}-${regions.length}` };
+            regions = [...regions, nextRegion];
+          }
+        }
+        mutationRevision += 1;
         render();
       },
+      selectRegion(id, opts) {
+        if (opts && opts.additive && id) {
+          const next = new Set(selectedRegionIds);
+          if (next.has(id)) next.delete(id);
+          else next.add(id);
+          selectedRegionIds = next;
+        } else {
+          selectedRegionIds = id ? new Set([id]) : new Set();
+        }
+        regions = regions.map((region) => ({ ...region, selected: selectedRegionIds.has(region.id) }));
+        render();
+      },
+      selectRegions(ids) {
+        selectedRegionIds = new Set(Array.isArray(ids) ? ids.filter(Boolean) : []);
+        regions = regions.map((region) => ({ ...region, selected: selectedRegionIds.has(region.id) }));
+        render();
+      },
+      onValidationChange(nextValidation) {
+        if (nextValidation && typeof nextValidation === "object") {
+          validationStatus = clone(nextValidation);
+        }
+      },
+      setRelationLinkingSource() {},
       addRelation(relation) {
         const nextRelation = { ...clone(relation), id: relation?.id || `relation-${Date.now()}` };
         relations = [...relations, nextRelation];
@@ -1133,10 +1369,13 @@ function getBrowserHarnessSource() {
       });
     },
     getResults() {
-      return clone(mod.getResults(regions, relations));
+      return clone(mod.getResults(regions, relations, { params: clone(scenario.params) || {} }));
     },
     parseResults(results) {
-      return clone(mod.parseResults(clone(results)));
+      return clone(mod.parseResults(clone(results), { params: clone(scenario.params) || {} }));
+    },
+    getValidation() {
+      return clone(validationStatus);
     },
     setParsed(parsed) {
       const nextParsed = clone(parsed) || {};

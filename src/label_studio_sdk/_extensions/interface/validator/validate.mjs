@@ -21,6 +21,7 @@
 
 import { readFileSync, existsSync } from "node:fs";
 import { transform } from "sucrase";
+import { loadHostInterfaceComponentsSync } from "./interface-components-shim.mjs";
 
 const filePath = process.argv[2];
 if (!filePath || !existsSync(filePath)) {
@@ -152,7 +153,7 @@ function shouldStartRegex(jsCode, slashIndex) {
   for (let i = slashIndex - 1; i >= 0; i -= 1) {
     const ch = jsCode[i];
     if (/\s/.test(ch)) continue;
-    const prefixKeyword = jsCode.slice(0, i + 1).match(/[A-Za-z_$][\w$]*$/)?.[0];
+    const prefixKeyword = jsCode.slice(Math.max(0, i - 32), i + 1).match(/[A-Za-z_$][\w$]*$/)?.[0];
     if (
       prefixKeyword &&
       ["return", "case", "throw", "delete", "void", "typeof", "yield", "await"].includes(prefixKeyword)
@@ -217,162 +218,172 @@ function validate(source) {
   }
 
   // ── layer 3: eval & module shape ────────────────────────────────────
-  let mod;
-  try {
-    const React = makeStubReact();
-    const factory = new Function(
-      "React",
-      "useState",
-      "useRef",
-      "useEffect",
-      "useCallback",
-      "useMemo",
-      "getField",
-      "EditorUI",
-      body,
-    );
-    mod = factory(
-      React,
-      React.useState,
-      React.useRef,
-      React.useEffect,
-      React.useCallback,
-      React.useMemo,
-      getField,
-      {},
-    );
-  } catch (e) {
-    errors.push({ stage: "eval", message: String(e?.message ?? e) });
-    return { ok: false, errors, warnings, exports: [], metadata };
-  }
+  const React = makeStubReact();
+  const EditorUI = makeStubEditorUI();
+  const EditorDeps = {};
+  const hostComponents = loadHostInterfaceComponentsSync(source) ?? makeStubEditorUI();
 
-  if (!mod || typeof mod !== "object") {
-    errors.push({
-      stage: "shape",
-      message: "Module did not return an object — last expression must be `({ default: Component, ... })`",
-    });
-    return { ok: false, errors, warnings, exports: [], metadata };
-  }
-  if (typeof mod.default !== "function") {
-    errors.push({ stage: "shape", message: "Module is missing `default` export (must be a function component)" });
-  }
-
-  const exports_ = Object.keys(mod);
-  metadata.hasDefault = typeof mod.default === "function";
-  metadata.hasGetResults = typeof mod.getResults === "function";
-  metadata.hasParseResults = typeof mod.parseResults === "function";
-  metadata.hasParamsSchema = isPlainObject(mod.paramsSchema);
-  metadata.hasInputSchema = isPlainObject(mod.inputSchema);
-  metadata.hasOutputSchema = isPlainObject(mod.outputSchema);
-  metadata.hasRegionSchema = isPlainObject(mod.regionSchema);
-  metadata.specVersion = typeof mod.specVersion === "number" ? mod.specVersion : null;
-  if (metadata.hasParamsSchema) metadata.paramsSchema = mod.paramsSchema;
-  if (metadata.hasInputSchema) metadata.inputSchema = mod.inputSchema;
-  if (metadata.hasOutputSchema) metadata.outputSchema = mod.outputSchema;
-  if (metadata.hasRegionSchema) metadata.regionSchema = mod.regionSchema;
-
-  // ── layer 4: schema sanity ──────────────────────────────────────────
-  for (const key of ["paramsSchema", "inputSchema", "outputSchema", "regionSchema"]) {
-    if (mod[key] !== undefined && !isPlainObject(mod[key])) {
-      errors.push({ stage: "schema", message: `\`${key}\` must be a plain object if present` });
+  return withNodeBrowserGlobals({ React, EditorUI, EditorDeps, InterfaceComponents: hostComponents }, () => {
+    let mod;
+    try {
+      const factory = new Function(
+        "React",
+        "useState",
+        "useRef",
+        "useEffect",
+        "useCallback",
+        "useMemo",
+        "getField",
+        "EditorUI",
+        "EditorDeps",
+        "InterfaceComponents",
+        body,
+      );
+      mod = factory(
+        React,
+        React.useState,
+        React.useRef,
+        React.useEffect,
+        React.useCallback,
+        React.useMemo,
+        getField,
+        EditorUI,
+        EditorDeps,
+        hostComponents,
+      );
+    } catch (e) {
+      errors.push({ stage: "eval", message: String(e?.message ?? e) });
+      return { ok: false, errors, warnings, exports: [], metadata };
     }
-  }
 
-  // ── layer 5: missing optional exports (warnings) ────────────────────
-  // Mirrors the in-app modal — these are ergonomic warnings, not blocking
-  // errors. They flag interfaces that will work but lose some capability.
-  if (!metadata.hasGetResults) {
-    warnings.push({
-      stage: "missing-export",
-      message:
-        "Missing `getResults` — the shell's default serialization will be used, which may not match your annotation structure",
-    });
-  }
-  if (!metadata.hasParseResults) {
-    warnings.push({
-      stage: "missing-export",
-      message: "Missing `parseResults` — saved annotations may not load back correctly",
-    });
-  }
-  if (!metadata.hasOutputSchema) {
-    warnings.push({
-      stage: "missing-export",
-      message: "Missing `outputSchema` — auto-labeling (Prompter) will not work with this interface",
-    });
-  }
-  if (!metadata.hasParamsSchema) {
-    warnings.push({
-      stage: "missing-export",
-      message: "Missing `paramsSchema` — the interface won't be configurable per-project",
-    });
-  }
+    if (!mod || typeof mod !== "object") {
+      errors.push({
+        stage: "shape",
+        message: "Module did not return an object — last expression must be `({ default: Component, ... })`",
+      });
+      return { ok: false, errors, warnings, exports: [], metadata };
+    }
+    if (typeof mod.default !== "function") {
+      errors.push({ stage: "shape", message: "Module is missing `default` export (must be a function component)" });
+    }
 
-  // ── layer 6: serialization round-trip ───────────────────────────────
+    const exports_ = Object.keys(mod);
+    metadata.hasDefault = typeof mod.default === "function";
+    metadata.hasGetResults = typeof mod.getResults === "function";
+    metadata.hasParseResults = typeof mod.parseResults === "function";
+    metadata.hasParamsSchema = isPlainObject(mod.paramsSchema);
+    metadata.hasInputSchema = isPlainObject(mod.inputSchema);
+    metadata.hasOutputSchema = isPlainObject(mod.outputSchema);
+    metadata.hasRegionSchema = isPlainObject(mod.regionSchema);
+    metadata.specVersion = typeof mod.specVersion === "number" ? mod.specVersion : null;
+    if (metadata.hasParamsSchema) metadata.paramsSchema = mod.paramsSchema;
+    if (metadata.hasInputSchema) metadata.inputSchema = mod.inputSchema;
+    if (metadata.hasOutputSchema) metadata.outputSchema = mod.outputSchema;
+    if (metadata.hasRegionSchema) metadata.regionSchema = mod.regionSchema;
 
-  if (metadata.hasGetResults) {
-    runSafe(() => mod.getResults([], []), (err) =>
-      errors.push({ stage: "round-trip", message: `getResults([]) threw: ${err.message}` }),
-    );
-    runSafe(
-      () => {
-        const out = mod.getResults(seedRegions(), []);
-        if (!Array.isArray(out)) {
-          errors.push({
-            stage: "round-trip",
-            message: `getResults must return an array of AnnotationResult objects (got ${describe(out)})`,
-          });
-        }
-        return out;
-      },
-      (err) => errors.push({ stage: "round-trip", message: `getResults(seed) threw: ${err.message}` }),
-    );
-  }
+    // ── layer 4: schema sanity ──────────────────────────────────────────
+    for (const key of ["paramsSchema", "inputSchema", "outputSchema", "regionSchema"]) {
+      if (mod[key] !== undefined && !isPlainObject(mod[key])) {
+        errors.push({ stage: "schema", message: `\`${key}\` must be a plain object if present` });
+      }
+    }
 
-  if (metadata.hasParseResults) {
-    runSafe(() => mod.parseResults([]), (err) =>
-      errors.push({ stage: "round-trip", message: `parseResults([]) threw: ${err.message}` }),
-    );
-  }
+    // ── layer 5: missing optional exports (warnings) ────────────────────
+    // Mirrors the in-app modal — these are ergonomic warnings, not blocking
+    // errors. They flag interfaces that will work but lose some capability.
+    if (!metadata.hasGetResults) {
+      warnings.push({
+        stage: "missing-export",
+        message:
+          "Missing `getResults` — the shell's default serialization will be used, which may not match your annotation structure",
+      });
+    }
+    if (!metadata.hasParseResults) {
+      warnings.push({
+        stage: "missing-export",
+        message: "Missing `parseResults` — saved annotations may not load back correctly",
+      });
+    }
+    if (!metadata.hasOutputSchema) {
+      warnings.push({
+        stage: "missing-export",
+        message: "Missing `outputSchema` — auto-labeling (Prompter) will not work with this interface",
+      });
+    }
+    if (!metadata.hasParamsSchema) {
+      warnings.push({
+        stage: "missing-export",
+        message: "Missing `paramsSchema` — the interface won't be configurable per-project",
+      });
+    }
 
-  if (metadata.hasGetResults && metadata.hasParseResults) {
-    runSafe(
-      () => {
-        const seeded = seedRegions();
-        const serialized = mod.getResults(seeded, []);
-        if (!Array.isArray(serialized)) return;
-        const parsed = mod.parseResults(serialized);
-        if (!parsed || !Array.isArray(parsed.regions)) {
-          errors.push({
-            stage: "round-trip",
-            message: `parseResults must return \`{ regions: [...] }\` (got ${describe(parsed)})`,
-          });
-        }
-      },
-      (err) => errors.push({ stage: "round-trip", message: `Round-trip threw: ${err.message}` }),
-    );
-  }
+    // ── layer 6: serialization round-trip ───────────────────────────────
 
-  // ── layer 7: outputSchema ↔ parseResults consistency ────────────────
-  // Generates a mock LLM JSON response from outputSchema, converts it to LS
-  // annotation results (same mapping the Prompter pipeline uses), and feeds
-  // that into parseResults. Catches deserializers that work for hand-built
-  // results but not for ones produced by the Prompter.
-  const consistency = validateOutputSchemaConsistency(mod);
-  if (!consistency.ok && consistency.error) {
-    errors.push({ stage: "consistency", message: consistency.error });
-  }
+    if (metadata.hasGetResults) {
+      runSafe(() => mod.getResults([], []), (err) =>
+        errors.push({ stage: "round-trip", message: `getResults([]) threw: ${err.message}` }),
+      );
+      runSafe(
+        () => {
+          const out = mod.getResults(seedRegions(), []);
+          if (!Array.isArray(out)) {
+            errors.push({
+              stage: "round-trip",
+              message: `getResults must return an array of AnnotationResult objects (got ${describe(out)})`,
+            });
+          }
+          return out;
+        },
+        (err) => errors.push({ stage: "round-trip", message: `getResults(seed) threw: ${err.message}` }),
+      );
+    }
 
-  return {
-    ok: errors.length === 0,
-    errors,
-    warnings,
-    exports: exports_,
-    metadata,
-    // Pass the compiled body through so callers (push) don't need a second
-    // sucrase invocation. Always present on a successful compile, even when
-    // shape/schema/round-trip layers report errors.
-    compiled: body,
-  };
+    if (metadata.hasParseResults) {
+      runSafe(() => mod.parseResults([]), (err) =>
+        errors.push({ stage: "round-trip", message: `parseResults([]) threw: ${err.message}` }),
+      );
+    }
+
+    if (metadata.hasGetResults && metadata.hasParseResults) {
+      runSafe(
+        () => {
+          const seeded = seedRegions();
+          const serialized = mod.getResults(seeded, []);
+          if (!Array.isArray(serialized)) return;
+          const parsed = mod.parseResults(serialized);
+          if (!parsed || !Array.isArray(parsed.regions)) {
+            errors.push({
+              stage: "round-trip",
+              message: `parseResults must return \`{ regions: [...] }\` (got ${describe(parsed)})`,
+            });
+          }
+        },
+        (err) => errors.push({ stage: "round-trip", message: `Round-trip threw: ${err.message}` }),
+      );
+    }
+
+    // ── layer 7: outputSchema ↔ parseResults consistency ────────────────
+    // Generates a mock LLM JSON response from outputSchema, converts it to LS
+    // annotation results (same mapping the Prompter pipeline uses), and feeds
+    // that into parseResults. Catches deserializers that work for hand-built
+    // results but not for ones produced by the Prompter.
+    const consistency = validateOutputSchemaConsistency(mod);
+    if (!consistency.ok && consistency.error) {
+      errors.push({ stage: "consistency", message: consistency.error });
+    }
+
+    return {
+      ok: errors.length === 0,
+      errors,
+      warnings,
+      exports: exports_,
+      metadata,
+      // Pass the compiled body through so callers (push) don't need a second
+      // sucrase invocation. Always present on a successful compile, even when
+      // shape/schema/round-trip layers report errors.
+      compiled: body,
+    };
+  });
 }
 
 // ── undefined component refs (port of interface-utils.ts:checkUndefinedComponents)
@@ -388,6 +399,19 @@ function checkUndefinedComponents(compiledBody) {
   const defRe = /(?:function|const|let|var|class)\s+([A-Z][A-Za-z0-9_]*)/g;
   while ((m = defRe.exec(compiledBody)) !== null) {
     defined.add(m[1]);
+  }
+  // Destructured PascalCase bindings: `const { ImageCanvas, AnswerForm: Form, Foo = Bar } = window.InterfaceComponents`
+  const destructureRe = /(?:const|let|var)\s*\{([^}]+)\}\s*=/g;
+  while ((m = destructureRe.exec(compiledBody)) !== null) {
+    for (const entry of m[1].split(",")) {
+      const lhs = entry.split("=")[0].trim();
+      if (!lhs || lhs.startsWith("...")) continue;
+      const colonIdx = lhs.indexOf(":");
+      const local = (colonIdx >= 0 ? lhs.slice(colonIdx + 1) : lhs).trim();
+      if (/^[A-Z][A-Za-z0-9_]*$/.test(local)) {
+        defined.add(local);
+      }
+    }
   }
   const missing = [];
   for (const name of referenced) {
@@ -408,20 +432,25 @@ function generateMockLlmOutput(outputSchema) {
   if (!properties) return {};
   const mock = {};
   for (const [key, def] of Object.entries(properties)) {
+    if (!def || typeof def !== "object") continue;
     let fieldType = def.type ?? "string";
     if (Array.isArray(fieldType)) fieldType = fieldType.find((t) => t !== "null") ?? "string";
-    if (def.$param && !def.enum) continue;
-    if (fieldType === "string" && def.enum) {
+    if (fieldType === "object") continue;
+    if (def.$param && (!Array.isArray(def.enum) || def.enum.length === 0)) continue;
+    const lsType = def["x-ls-type"];
+    if (fieldType === "string" && Array.isArray(def.enum) && def.enum.length > 0) {
       mock[key] = def.enum[0];
     } else if (fieldType === "string") {
-      mock[key] = "sample text";
+      mock[key] = lsType === "datetime" ? "2024-01-31" : "sample text";
     } else if (fieldType === "number" || fieldType === "integer") {
-      mock[key] = 0;
+      mock[key] = lsType === "rating" ? 1 : 0;
     } else if (fieldType === "boolean") {
       mock[key] = true;
     } else if (fieldType === "array") {
       const items = def.items;
-      mock[key] = items?.enum ? [items.enum[0]] : [];
+      if (items?.type === "object") continue;
+      if (items?.$param && (!Array.isArray(items.enum) || items.enum.length === 0)) continue;
+      mock[key] = Array.isArray(items?.enum) && items.enum.length > 0 ? [items.enum[0]] : ["sample"];
     } else {
       mock[key] = "sample text";
     }
@@ -429,18 +458,90 @@ function generateMockLlmOutput(outputSchema) {
   return mock;
 }
 
-function outputToLsRegions(llmOutput, outputSchema) {
+function buildArrayCandidateRegions(fieldKey, labels) {
+  const normalizedLabels = (Array.isArray(labels) ? labels : [labels]).map(String);
+  return [
+    {
+      id: `mock-${fieldKey}`,
+      from_name: fieldKey,
+      to_name: "data",
+      type: "choices",
+      value: { choices: normalizedLabels },
+    },
+    {
+      id: `mock-${fieldKey}`,
+      from_name: fieldKey,
+      to_name: "data",
+      type: "rectanglelabels",
+      value: { x: 10, y: 20, width: 30, height: 40, rotation: 0, rectanglelabels: normalizedLabels },
+    },
+    {
+      id: `mock-${fieldKey}`,
+      from_name: fieldKey,
+      to_name: "data",
+      type: "labels",
+      value: { start: 0, end: 6, text: "sample", labels: normalizedLabels },
+    },
+    {
+      id: `mock-${fieldKey}`,
+      from_name: fieldKey,
+      to_name: "data",
+      type: "timeserieslabels",
+      value: { start: 0, end: 10, instant: false, timeserieslabels: normalizedLabels },
+    },
+    {
+      id: `mock-${fieldKey}`,
+      from_name: fieldKey,
+      to_name: "data",
+      type: "timelinelabels",
+      value: { ranges: [{ start: 1, end: 5 }], timelinelabels: normalizedLabels },
+    },
+    {
+      id: `mock-${fieldKey}`,
+      from_name: fieldKey,
+      to_name: "data",
+      type: "taxonomy",
+      value: { taxonomy: [normalizedLabels] },
+    },
+    {
+      id: `mock-${fieldKey}`,
+      from_name: fieldKey,
+      to_name: "data",
+      type: "ranker",
+      value: { ranker: { default: normalizedLabels } },
+    },
+  ];
+}
+
+function outputToLsRegions(llmOutput, outputSchema, parseResults) {
   const properties = outputSchema?.properties;
   if (!properties || !llmOutput) return [];
   const regions = [];
   for (const [fieldKey, fieldDef] of Object.entries(properties)) {
     const value = llmOutput[fieldKey];
-    if (value === undefined || value === null) continue;
+    if (value === undefined || value === null || !fieldDef || typeof fieldDef !== "object") continue;
     let fieldType = fieldDef.type ?? "string";
     if (Array.isArray(fieldType)) fieldType = fieldType.find((t) => t !== "null") ?? "string";
-    const hasEnum = "enum" in fieldDef;
+    const lsType = fieldDef["x-ls-type"];
+    const hasEnum = Array.isArray(fieldDef.enum) && fieldDef.enum.length > 0;
     const region = { id: `mock-${fieldKey}`, from_name: fieldKey, to_name: "data" };
-    if (fieldType === "string" && hasEnum) {
+
+    if (lsType === "rating") {
+      region.type = "rating";
+      region.value = { rating: typeof value === "number" ? value : 1 };
+    } else if (lsType === "pairwise") {
+      region.type = "pairwise";
+      region.value = { selected: "left" };
+    } else if (lsType === "taxonomy") {
+      region.type = "taxonomy";
+      region.value = { taxonomy: [Array.isArray(value) ? value.map(String) : [String(value)]] };
+    } else if (lsType === "datetime") {
+      region.type = "datetime";
+      region.value = { datetime: String(value) };
+    } else if (lsType === "ranker") {
+      region.type = "ranker";
+      region.value = { ranker: { default: Array.isArray(value) ? value.map(String) : [String(value)] } };
+    } else if (fieldType === "string" && hasEnum) {
       region.type = "choices";
       region.value = { choices: typeof value === "string" ? [value] : value };
     } else if (fieldType === "string") {
@@ -453,14 +554,24 @@ function outputToLsRegions(llmOutput, outputSchema) {
       region.type = "choices";
       region.value = { choices: [value === true ? "True" : value === false ? "False" : String(value)] };
     } else if (fieldType === "array") {
-      const items = fieldDef.items;
-      if (items && "enum" in items) {
-        region.type = "choices";
-        region.value = { choices: Array.isArray(value) ? value : [value] };
-      } else {
-        region.type = "labels";
-        region.value = value;
+      const candidates = buildArrayCandidateRegions(fieldKey, value);
+      let chosen = candidates[0];
+      if (lsType !== "choices" && typeof parseResults === "function") {
+        for (const candidate of candidates) {
+          try {
+            const parsed = parseResults([candidate]);
+            const parsedRegions = Array.isArray(parsed) ? parsed : (parsed?.regions ?? []);
+            if (parsedRegions.length > 0) {
+              chosen = candidate;
+              break;
+            }
+          } catch {
+            // Try next candidate shape
+          }
+        }
       }
+      regions.push(chosen);
+      continue;
     } else {
       region.type = "textarea";
       region.value = { text: [String(value)] };
@@ -482,7 +593,7 @@ function validateOutputSchemaConsistency(mod) {
   const testedFields = Object.keys(mockLlmOutput);
   if (testedFields.length === 0) return { ok: true, skipped: true };
 
-  const mockResults = outputToLsRegions(mockLlmOutput, outputSchema);
+  const mockResults = outputToLsRegions(mockLlmOutput, outputSchema, parseResults);
   if (mockResults.length === 0) {
     return {
       ok: false,
@@ -510,6 +621,94 @@ function validateOutputSchemaConsistency(mod) {
 
 // ── helpers ─────────────────────────────────────────────────────────────
 
+function createMemoryStorage() {
+  const store = new Map();
+  return {
+    getItem: (k) => (store.has(String(k)) ? store.get(String(k)) : null),
+    setItem: (k, v) => {
+      store.set(String(k), String(v));
+    },
+    removeItem: (k) => {
+      store.delete(String(k));
+    },
+    clear: () => {
+      store.clear();
+    },
+  };
+}
+
+function makeStubEditorUI(prefix = "EditorUI") {
+  const fn = () => null;
+  const cache = new Map();
+  return new Proxy(fn, {
+    get(target, prop, receiver) {
+      if (typeof prop !== "string") return Reflect.get(target, prop, receiver);
+      if (prop in target) return Reflect.get(target, prop, receiver);
+      if (!cache.has(prop)) {
+        cache.set(prop, makeStubEditorUI(`${prefix}.${prop}`));
+      }
+      return cache.get(prop);
+    },
+  });
+}
+
+function withNodeBrowserGlobals(globals, fn) {
+  const hadWindow = Object.prototype.hasOwnProperty.call(globalThis, "window");
+  const prevWindow = globalThis.window;
+  const hadIC = Object.prototype.hasOwnProperty.call(globalThis, "InterfaceComponents");
+  const prevIC = globalThis.InterfaceComponents;
+
+  const win = hadWindow && prevWindow && typeof prevWindow === "object" ? prevWindow : {
+    location: {
+      href: "http://localhost/",
+      origin: "http://localhost",
+      protocol: "http:",
+      host: "localhost",
+      hostname: "localhost",
+      port: "",
+      pathname: "/",
+      search: "",
+      hash: "",
+    },
+    localStorage: createMemoryStorage(),
+    sessionStorage: createMemoryStorage(),
+    addEventListener() {},
+    removeEventListener() {},
+    dispatchEvent() {
+      return true;
+    },
+    postMessage() {},
+    matchMedia: () => ({
+      matches: false,
+      media: "",
+      addEventListener() {},
+      removeEventListener() {},
+    }),
+  };
+
+  const prevWinProps = new Map();
+  for (const [k, v] of Object.entries(globals)) {
+    prevWinProps.set(k, { had: Object.prototype.hasOwnProperty.call(win, k), val: win[k] });
+    win[k] = v;
+  }
+
+  globalThis.window = win;
+  globalThis.InterfaceComponents = globals.InterfaceComponents;
+
+  try {
+    return fn();
+  } finally {
+    for (const [k, info] of prevWinProps.entries()) {
+      if (info.had) win[k] = info.val;
+      else delete win[k];
+    }
+    if (hadWindow) globalThis.window = prevWindow;
+    else delete globalThis.window;
+    if (hadIC) globalThis.InterfaceComponents = prevIC;
+    else delete globalThis.InterfaceComponents;
+  }
+}
+
 function makeStubReact() {
   // Components aren't invoked during validate — only the module's last-expression
   // object literal is evaluated. So the stub only needs to satisfy code that
@@ -519,10 +718,17 @@ function makeStubReact() {
   factory.createElement = factory;
   factory.Fragment = "Fragment";
   factory.useState = (init) => [typeof init === "function" ? init() : init, noop];
+  factory.useReducer = (_reducer, init) => [init, noop];
   factory.useRef = (val) => ({ current: val });
   factory.useEffect = noop;
+  factory.useLayoutEffect = noop;
   factory.useCallback = (fn) => fn;
   factory.useMemo = (fn) => (typeof fn === "function" ? fn() : fn);
+  factory.useId = () => "id";
+  factory.createContext = (def) => ({ Provider: noop, Consumer: noop, _currentValue: def });
+  factory.useContext = (ctx) => ctx?._currentValue;
+  factory.forwardRef = (fn) => fn;
+  factory.memo = (fn) => fn;
   return factory;
 }
 
