@@ -260,10 +260,11 @@ label-studio-sdk interface sync Screen.jsx --dry-run
 By default, `sync`:
 
 - validates and compiles the file
+- uploads sibling `task.json` (`data_sample`) and `scenarios.js` (`scenarios`) when present
 - creates a new interface when no id or sidecar entry exists
 - updates the existing interface when `--id` or a sidecar entry is available
 - appends a new draft version without replacing existing versions
-- skips upload when the local source hash has not changed
+- skips upload when the local content hash (`Screen.jsx` plus `scenarios.js` when present) has not changed
 - writes a sidecar file next to the JSX source
 
 Useful options:
@@ -288,7 +289,7 @@ label-studio-sdk interface pull --id 12 --version 4 ./review-ui
 label-studio-sdk interface pull --id 12 ./review-ui --force
 ```
 
-`pull` writes `Screen.jsx`, `task.json`, optional `params.json` defaults from `paramsSchema`, and a sidecar file. Without `--version`, it pulls the latest version, including local drafts.
+`pull` writes `Screen.jsx`, `task.json`, optional `scenarios.js` when the remote interface has non-empty scenarios, optional `params.json` defaults from `paramsSchema`, and a sidecar file. Without `--version`, it pulls the latest version, including local drafts.
 
 ### `start`
 

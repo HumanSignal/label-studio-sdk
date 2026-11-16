@@ -244,6 +244,16 @@ def _load_task(task_path: Path | None) -> dict[str, Any] | None:
     return task
 
 
+def _load_scenarios(scenario_path: Path | None) -> str | None:
+    if scenario_path is None:
+        return None
+    try:
+        return scenario_path.read_text(encoding="utf-8").rstrip()
+    except (OSError, UnicodeDecodeError) as exc:
+        typer.echo(f"error: could not read scenarios file {scenario_path}: {exc}", err=True)
+        raise typer.Exit(code=2) from None
+
+
 def _resolve_bundle_file(
     bundle: Path,
     explicit: Path | None,
@@ -555,7 +565,12 @@ def _surface_http_error(exc: httpx.HTTPStatusError) -> None:
     typer.echo(f"error: HTTP {exc.response.status_code} from {exc.request.url}\n{body}", err=True)
 
 
-def _prepare_source(file: Path, *, no_validate: bool) -> tuple[str, str, str, dict[str, Any]]:
+def _prepare_source(
+    file: Path,
+    *,
+    no_validate: bool,
+    scenarios: str | None = None,
+) -> tuple[str, str, str, dict[str, Any]]:
     report = _run_validator(file)
     if not no_validate and not report.get("ok"):
         typer.echo(
@@ -573,18 +588,27 @@ def _prepare_source(file: Path, *, no_validate: bool) -> tuple[str, str, str, di
         raise typer.Exit(code=1)
 
     source = file.read_text(encoding="utf-8").rstrip()
-    source_hash = _source_hash(source)
+    source_hash = _source_hash(source, scenarios)
     return source, compiled, source_hash, report
 
 
-def _new_version(source: str, compiled: str, report: dict[str, Any], *, publish: bool) -> dict[str, Any]:
+def _new_version(
+    source: str,
+    compiled: str,
+    report: dict[str, Any],
+    *,
+    publish: bool,
+    scenarios: str | None = None,
+) -> dict[str, Any]:
     metadata = report.get("metadata") or {}
-    version = {
+    version: dict[str, Any] = {
         "code": source,
         "compiled": compiled,
         "createdAt": datetime.now(timezone.utc).isoformat(),
         "op": "api_push",
     }
+    if scenarios is not None:
+        version["scenarios"] = scenarios
     if not publish:
         version["unpublished"] = True
     for report_key, version_key in (
@@ -602,8 +626,12 @@ def _append_version_payload(version: dict[str, Any]) -> dict[str, Any]:
     return {key: value for key, value in version.items() if key not in {"id", "createdAt", "createdBy"}}
 
 
-def _source_hash(source: str) -> str:
-    return hashlib.sha256(source.rstrip().encode("utf-8")).hexdigest()
+def _source_hash(source: str, scenarios: str | None = None) -> str:
+    normalized_source = source.rstrip()
+    normalized_scenarios = scenarios.rstrip() if scenarios else ""
+    if normalized_scenarios:
+        return hashlib.sha256(f"{normalized_source}\0{normalized_scenarios}".encode("utf-8")).hexdigest()
+    return hashlib.sha256(normalized_source.encode("utf-8")).hexdigest()
 
 
 def _version_id(version: dict[str, Any], index: int) -> int:
@@ -631,13 +659,30 @@ def _latest_version_id(versions: list[dict[str, Any]]) -> int | None:
     return _version_id(versions[-1], len(versions) - 1)
 
 
-def _latest_published_version_id_for_source(versions: list[dict[str, Any]], source_hash: str) -> int | None:
-    for index in range(len(versions) - 1, -1, -1):
+def _latest_published_version_id_for_source(
+    versions: list[dict[str, Any]],
+    source_hash: str,
+    *,
+    include_scenarios: bool = False,
+    fallback_scenarios: str | None = None,
+) -> int | None:
+    last_index = len(versions) - 1
+    for index in range(last_index, -1, -1):
         version = versions[index]
         if not _is_record(version) or version.get("unpublished"):
             continue
         code = version.get("code")
-        if isinstance(code, str) and _source_hash(code) == source_hash:
+        if not isinstance(code, str):
+            continue
+        version_scenarios: str | None = None
+        if include_scenarios:
+            raw_scenarios = (
+                version.get("scenarios")
+                if "scenarios" in version
+                else (fallback_scenarios if index == last_index else None)
+            )
+            version_scenarios = raw_scenarios if isinstance(raw_scenarios, str) else ""
+        if _source_hash(code, version_scenarios) == source_hash:
             return _version_id(version, index)
     return None
 
@@ -727,7 +772,9 @@ def _sync_interface(
 
     file = file.resolve()
     base = _resolve_base_url(ctx, lse_url)
-    source, compiled, source_hash, report = _prepare_source(file, no_validate=no_validate)
+    scenario_file = _resolve_bundle_file(file.parent, None, SCENARIO_FILE_CANDIDATES)
+    scenarios = _load_scenarios(scenario_file)
+    source, compiled, source_hash, report = _prepare_source(file, no_validate=no_validate, scenarios=scenarios)
     sidecar = _read_sidecar(file)
     sidecar_entry = sidecar.get(base) if isinstance(sidecar, dict) else None
 
@@ -781,7 +828,7 @@ def _sync_interface(
         )
 
     headers = _auth_headers(resolved_token, base_url=base)
-    new_version = _new_version(source, compiled, report, publish=publish)
+    new_version = _new_version(source, compiled, report, publish=publish, scenarios=scenarios)
     history_message, artifact = _build_history_entry(file, source, compiled, message)
     schema_payload = _interface_schema_payload(report)
     task_file = _resolve_bundle_file(file.parent, None, TASK_FILE_CANDIDATES)
@@ -795,11 +842,19 @@ def _sync_interface(
                 existing = existing_resp.json()
                 prev_versions = existing.get("versions") or []
                 if not force:
-                    existing_hash = _source_hash(existing.get("code") or "")
+                    existing_scenarios = (
+                        existing.get("scenarios")
+                        if scenarios is not None and isinstance(existing.get("scenarios"), str)
+                        else ("" if scenarios is not None else None)
+                    )
+                    existing_hash = _source_hash(existing.get("code") or "", existing_scenarios)
                     if existing_hash == source_hash:
                         if publish:
                             published_source_version = _latest_published_version_id_for_source(
-                                prev_versions, source_hash
+                                prev_versions,
+                                source_hash,
+                                include_scenarios=scenarios is not None,
+                                fallback_scenarios=existing_scenarios,
                             )
                             if published_source_version is not None:
                                 typer.echo(
@@ -834,6 +889,8 @@ def _sync_interface(
                     "messages": [*(existing.get("messages") or []), history_message],
                     "artifacts": [*(existing.get("artifacts") or []), artifact],
                 }
+                if scenarios is not None:
+                    payload["scenarios"] = scenarios
                 if task_data is not None:
                     payload["data_sample"] = task_data
                 if title:
@@ -860,6 +917,8 @@ def _sync_interface(
                     "artifacts": [artifact],
                     **schema_payload,
                 }
+                if scenarios is not None:
+                    payload["scenarios"] = scenarios
                 if task_data is not None:
                     payload["data_sample"] = task_data
                 if resolved_workspace_id is not None:
@@ -1219,13 +1278,23 @@ def pull(
     if not _is_record(task_data):
         task_data = {}
 
+    scenarios: str | None = None
+    if selected_version is not None and isinstance(selected_version.get("scenarios"), str):
+        scenarios = selected_version["scenarios"]
+    elif isinstance(data.get("scenarios"), str):
+        scenarios = data["scenarios"]
+    has_scenarios = bool(scenarios and scenarios.strip())
+
     directory = directory.resolve()
     screen_path = directory / "Screen.jsx"
     task_path = directory / "task.json"
     params_path = directory / "params.json"
+    scenarios_path = directory / "scenarios.js"
     planned_files = [screen_path, task_path, _sidecar_path(screen_path)]
     if params_defaults:
         planned_files.append(params_path)
+    if has_scenarios:
+        planned_files.append(scenarios_path)
 
     existing = [path for path in planned_files if path.exists()]
     if existing and not force:
@@ -1239,8 +1308,10 @@ def pull(
     _write_bundle_file(task_path, _json_file_contents(task_data), force=force)
     if params_defaults:
         _write_bundle_file(params_path, _json_file_contents(params_defaults), force=force)
+    if has_scenarios and scenarios is not None:
+        _write_bundle_file(scenarios_path, scenarios.rstrip() + "\n", force=force)
 
-    source_hash = _source_hash(source)
+    source_hash = _source_hash(source, scenarios if has_scenarios else None)
     sidecar = {
         base: {
             "interface_id": interface_id,
@@ -1268,12 +1339,13 @@ def _create_project(
     params: Any,
 ) -> Any:
     from label_studio_sdk import LabelStudio
+    from label_studio_sdk.projects.client import OMIT
 
     client = LabelStudio(api_key=api_key, base_url=base_url)
     return client.projects.create(
         title=title,
         description=description,
-        workspace=workspace_id,
+        workspace=OMIT if workspace_id is None else workspace_id,
         is_draft=False,
         label_config="<View></View>",
         use_custom_interface=True,
@@ -1365,7 +1437,7 @@ def start(
         base_url=base,
         title=title,
         description=description,
-        workspace_id=workspace_id or sync_result.workspace_id,
+        workspace_id=workspace_id if workspace_id is not None else sync_result.workspace_id,
         interface_id=sync_result.interface_id,
         source_version=sync_result.source_version,
         params=project_params,
