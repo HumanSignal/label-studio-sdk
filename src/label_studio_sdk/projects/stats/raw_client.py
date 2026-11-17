@@ -16,7 +16,6 @@ from ...errors.not_found_error import NotFoundError
 from ...types.data_quality_agreement_confusion_matrix import DataQualityAgreementConfusionMatrix
 from ...types.data_quality_agreement_dimensions import DataQualityAgreementDimensions
 from ...types.data_quality_agreement_distribution import DataQualityAgreementDistribution
-from ...types.filtered_label_distribution_unavailable import FilteredLabelDistributionUnavailable
 from ...types.label_distribution_counts_response import LabelDistributionCountsResponse
 from ...types.label_distribution_structure_response import LabelDistributionStructureResponse
 from ...types.user_simple import UserSimple
@@ -803,9 +802,9 @@ class RawStatsClient:
                 raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        FilteredLabelDistributionUnavailable,
+                        typing.Any,
                         construct_type(
-                            type_=FilteredLabelDistributionUnavailable,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -2333,9 +2332,9 @@ class AsyncRawStatsClient:
                 raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        FilteredLabelDistributionUnavailable,
+                        typing.Any,
                         construct_type(
-                            type_=FilteredLabelDistributionUnavailable,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
