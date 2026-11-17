@@ -58,6 +58,62 @@ def test_init_screen_template_uses_shell_region_callbacks(tmp_path: Path) -> Non
     assert "addRegion" in screen and "updateRegion" in screen
     assert screen.rstrip().endswith("})")
 
+
+def test_init_scaffolds_design_system_controls(monkeypatch: Any, tmp_path: Path) -> None:
+    # FIT-3447: offline or on hosts without interfaces_components (e.g. 2.37), the starter stays free of
+    # window.InterfaceComponents so `interface validate` works without an editor-standalone bundle. When the target
+    # host reports `interfaces_components` enabled via authoring-capabilities, init scaffolds the ChoiceGroup
+    # variant and reads it by property (never destructuring the lazy window.InterfaceComponents Proxy).
+    monkeypatch.delenv("LABEL_STUDIO_URL", raising=False)
+    monkeypatch.delenv("LS_URL", raising=False)
+    monkeypatch.delenv("LABEL_STUDIO_API_KEY", raising=False)
+
+    offline_dir = tmp_path / "offline"
+    res_offline = runner.invoke(interface_cli.app, ["init", str(offline_dir)])
+    assert res_offline.exit_code == 0, res_offline.output
+    offline_screen = (offline_dir / "Screen.jsx").read_text(encoding="utf-8")
+    offline_scenarios = (offline_dir / "scenarios.js").read_text(encoding="utf-8")
+    assert "<button" in offline_screen
+    assert "InterfaceComponents" not in offline_screen
+    assert 'getByRole("button", { name: "Positive" })' in offline_scenarios
+
+    _reset_fake_http()
+    FakeHttpClient.interface_payload = {
+        "schema_version": 1,
+        "capabilities": {"interfaces_components": False, "collection": False, "scenarios": True},
+    }
+    monkeypatch.setattr(interface_cli.httpx, "Client", FakeHttpClient)
+
+    flag_off_dir = tmp_path / "flag_off"
+    res_off = runner.invoke(
+        interface_cli.app,
+        ["init", str(flag_off_dir), "--lse-url", "http://ls", "--token", "token"],
+    )
+    assert res_off.exit_code == 0, res_off.output
+    assert "InterfaceComponents" not in (flag_off_dir / "Screen.jsx").read_text(encoding="utf-8")
+
+    _reset_fake_http()
+    FakeHttpClient.interface_payload = {
+        "schema_version": 1,
+        "capabilities": {"interfaces_components": True, "collection": False, "scenarios": True},
+    }
+    flag_on_dir = tmp_path / "flag_on"
+    res_on = runner.invoke(
+        interface_cli.app,
+        ["init", str(flag_on_dir), "--lse-url", "http://ls", "--token", "token"],
+    )
+    assert res_on.exit_code == 0, res_on.output
+    assert FakeHttpClient.instances[-1].calls == [("GET", "http://ls/api/interfaces/authoring-capabilities/", None)]
+    screen = (flag_on_dir / "Screen.jsx").read_text(encoding="utf-8")
+    scenarios = (flag_on_dir / "scenarios.js").read_text(encoding="utf-8")
+
+    assert "<button" not in screen
+    assert "window.InterfaceComponents.ChoiceGroup" in screen
+    assert "} = window.InterfaceComponents" not in screen
+    assert 'getByRole("radio", { name: "Positive" })' in scenarios
+    assert 'getByRole("button"' not in scenarios
+
+
 class FakeResponse:
     def __init__(self, payload: dict[str, Any], status_code: int = 200) -> None:
         self.payload = payload

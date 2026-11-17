@@ -1663,6 +1663,85 @@ function parseResults(results) {
 })
 """
 
+SCREEN_COMPONENTS_TEMPLATE = """const labels = ["Positive", "Negative"];
+const REGION_ID = "sentiment-choice";
+
+function Screen({ task, regions, params, readOnly, hotkeys, addRegion, updateRegion }) {
+  // Read Interface Components by property; never destructure window.InterfaceComponents.
+  const ChoiceGroup = window.InterfaceComponents.ChoiceGroup;
+  const text = getField(task.data, params?.textField ?? "text") ?? "Add text in task.json";
+  const current = (regions || []).find((r) => r.id === REGION_ID);
+
+  // Every change goes through addRegion/updateRegion so the shell records undo/redo history.
+  const choose = (next) => {
+    if (readOnly) return;
+    const patch = { labels: next, _value: { choices: next } };
+    if (current) updateRegion(REGION_ID, patch);
+    else addRegion({ id: REGION_ID, type: "choices", _fromName: "sentiment", _toName: "text", ...patch });
+  };
+
+  return (
+    <div className="p-6 bg-neutral-background text-neutral-content">
+      <p>{String(text)}</p>
+      <ChoiceGroup
+        choices={labels.map((value) => ({ value }))}
+        value={current?.labels || []}
+        onChange={choose}
+        choice="single-radio"
+        layout="radio"
+        ariaLabel="Sentiment"
+        readOnly={readOnly}
+        hotkeys={hotkeys}
+      />
+    </div>
+  );
+}
+
+function getResults(regions) {
+  return (regions || [])
+    .filter((r) => r.type === "choices" && r.labels?.length)
+    .map((r) => ({
+      id: r.id,
+      from_name: "sentiment",
+      to_name: "text",
+      type: "choices",
+      value: { choices: r.labels },
+      origin: "manual",
+    }));
+}
+
+function parseResults(results) {
+  const regions = (results || [])
+    .filter((r) => r.type === "choices" && r.from_name === "sentiment")
+    .map((r) => ({ id: REGION_ID, type: "choices", labels: r.value?.choices || [] }));
+  return { regions, relations: [] };
+}
+
+({
+  default: Screen,
+  getResults,
+  parseResults,
+  paramsSchema: {
+    type: "object",
+    properties: {
+      textField: { type: "string", title: "Text field", default: "text" },
+    },
+  },
+  inputSchema: {
+    type: "object",
+    properties: {
+      text: { type: "dataField", dataType: "string", default: "text" },
+    },
+  },
+  outputSchema: {
+    type: "object",
+    properties: {
+      sentiment: { type: "string", enum: labels },
+    },
+  },
+})
+"""
+
 TASK_TEMPLATE = """{
   "text": "The interface CLI is ready to use."
 }
@@ -1699,26 +1778,75 @@ SCENARIO_TEMPLATE = """export default [
 ];
 """
 
+SCENARIO_COMPONENTS_TEMPLATE = SCENARIO_TEMPLATE.replace(
+    'await page.getByRole("button", { name: "Positive" }).click();',
+    'await page.getByRole("radio", { name: "Positive" }).click();',
+)
+
+AUTHORING_CAPABILITIES_PATH = "/api/interfaces/authoring-capabilities/"
+
+
+def _host_interfaces_components_enabled(
+    ctx: typer.Context | None,
+    *,
+    lse_url: str | None = None,
+    token: str | None = None,
+) -> bool:
+    """Return True only when an explicit target host reports ``interfaces_components`` enabled."""
+    base = _explicit_base_url(ctx, lse_url)
+    resolved_token = _resolve_token(ctx, token)
+    if not base or not resolved_token:
+        return False
+    try:
+        headers = _auth_header_provider(resolved_token, base)()
+        with httpx.Client(headers=headers, timeout=5.0, follow_redirects=False) as client:
+            resp = client.get(f"{base}{AUTHORING_CAPABILITIES_PATH}")
+        if resp.status_code != 200:
+            return False
+        payload = resp.json()
+    except (*_AUTH_ERRORS, OSError):
+        return False
+    capabilities = payload.get("capabilities") if _is_record(payload) else None
+    if not _is_record(capabilities):
+        return False
+    return bool(
+        capabilities.get("interfaces_components") is True or capabilities.get("interfacesComponentsEnabled") is True
+    )
+
 
 @app.command()
 def init(
+    ctx: typer.Context,
     directory: Path = typer.Argument(Path("."), file_okay=False, help="Directory to scaffold into."),
     force: bool = typer.Option(False, "--force", help="Overwrite existing scaffold files."),
+    token: str | None = typer.Option(None, "--token", envvar="LABEL_STUDIO_API_KEY", help="Label Studio API token."),
+    lse_url: str | None = typer.Option(
+        None,
+        "--lse-url",
+        "--base-url",
+        help="Base URL of the Label Studio instance (defaults to LABEL_STUDIO_URL).",
+    ),
 ) -> None:
     """Create starter interface files."""
     directory = directory.resolve()
     directory.mkdir(parents=True, exist_ok=True)
-    files = {
-        directory / "Screen.jsx": SCREEN_TEMPLATE,
-        directory / "task.json": TASK_TEMPLATE,
-        directory / "scenarios.js": SCENARIO_TEMPLATE,
-    }
-    existing = [path for path in files if path.exists()]
+    target_paths = (
+        directory / "Screen.jsx",
+        directory / "task.json",
+        directory / "scenarios.js",
+    )
+    existing = [path for path in target_paths if path.exists()]
     if existing and not force:
         names = ", ".join(path.name for path in existing)
         typer.echo(f"error: refusing to overwrite existing files: {names}. Use --force to overwrite.", err=True)
         raise typer.Exit(code=2)
 
+    use_components = _host_interfaces_components_enabled(ctx, lse_url=lse_url, token=token)
+    files = {
+        directory / "Screen.jsx": SCREEN_COMPONENTS_TEMPLATE if use_components else SCREEN_TEMPLATE,
+        directory / "task.json": TASK_TEMPLATE,
+        directory / "scenarios.js": SCENARIO_COMPONENTS_TEMPLATE if use_components else SCENARIO_TEMPLATE,
+    }
     for path, contents in files.items():
         path.write_text(contents, encoding="utf-8")
         typer.echo(f"wrote {path}")
