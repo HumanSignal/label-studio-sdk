@@ -11,6 +11,8 @@ from ..core.request_options import RequestOptions
 from ..types.lse_task import LseTask
 from ..types.paginated_role_based_task_list import PaginatedRoleBasedTaskList
 from ..types.role_based_task import RoleBasedTask
+from ..types.task_data_column_result import TaskDataColumnResult
+from ..types.task_data_column_value_type_enum import TaskDataColumnValueTypeEnum
 from ..types.task_event import TaskEvent
 from .raw_client import AsyncRawTasksClient, RawTasksClient
 from .types.list_tasks_request_fields import ListTasksRequestFields
@@ -66,6 +68,62 @@ class TasksClient:
         )
         """
         _response = self._raw_client.delete_all_tasks(id, request_options=request_options)
+        return _response.data
+
+    def set_data_column(
+        self,
+        id: int,
+        *,
+        column_name: str,
+        values: typing.Dict[str, typing.Any],
+        value_type: typing.Optional[TaskDataColumnValueTypeEnum] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TaskDataColumnResult:
+        """
+        Set one `task.data` key to a different value for each listed task of the project, in one synchronous request. Only that key of the listed tasks is written: other keys and other tasks are not touched, and a new column is created on the listed tasks only (the "Add or Update Columns" Data Manager action, in contrast, writes `null` into every other task when it adds a column). The column then appears in the Data Manager. All values are validated first; if any is invalid, nothing is written. The response lists the tasks that were updated and the requested IDs that are not tasks of this project. Requires the same permission and feature flag as the "Add or Update Columns" action. Values are not checked against the labeling configuration or a custom interface input schema. If an "Add or Update Columns" action that adds the same column is still running in the background, it can overwrite the values with `null`.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        column_name : str
+            Data column to set: the key in `task.data`, used exactly as sent. If no task of the project has it yet, it is created on the listed tasks only. A new column name cannot contain whitespace, quotation marks, brackets, semicolons, hashes, control characters, or SQL comments.
+
+        values : typing.Dict[str, typing.Any]
+            Map of task ID to the value for that task, for example `{"101": "Missing box", "102": "OK"}`. At most `TASK_DATA_COLUMN_MAX_TASKS` tasks per request (1000 by default).
+
+        value_type : typing.Optional[TaskDataColumnValueTypeEnum]
+            How the values are stored: `String` keeps the text exactly as sent; `Number` stores a number.
+
+            * `String` - String
+            * `Number` - Number
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TaskDataColumnResult
+            Values set
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.tasks.set_data_column(
+            id=1,
+            column_name="customer_feedback",
+            value_type="String",
+            values={"101": "Box 3 is missing", "102": "OK", "999": "Unknown task"},
+        )
+        """
+        _response = self._raw_client.set_data_column(
+            id, column_name=column_name, values=values, value_type=value_type, request_options=request_options
+        )
         return _response.data
 
     def list(
@@ -676,6 +734,70 @@ class AsyncTasksClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete_all_tasks(id, request_options=request_options)
+        return _response.data
+
+    async def set_data_column(
+        self,
+        id: int,
+        *,
+        column_name: str,
+        values: typing.Dict[str, typing.Any],
+        value_type: typing.Optional[TaskDataColumnValueTypeEnum] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TaskDataColumnResult:
+        """
+        Set one `task.data` key to a different value for each listed task of the project, in one synchronous request. Only that key of the listed tasks is written: other keys and other tasks are not touched, and a new column is created on the listed tasks only (the "Add or Update Columns" Data Manager action, in contrast, writes `null` into every other task when it adds a column). The column then appears in the Data Manager. All values are validated first; if any is invalid, nothing is written. The response lists the tasks that were updated and the requested IDs that are not tasks of this project. Requires the same permission and feature flag as the "Add or Update Columns" action. Values are not checked against the labeling configuration or a custom interface input schema. If an "Add or Update Columns" action that adds the same column is still running in the background, it can overwrite the values with `null`.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        column_name : str
+            Data column to set: the key in `task.data`, used exactly as sent. If no task of the project has it yet, it is created on the listed tasks only. A new column name cannot contain whitespace, quotation marks, brackets, semicolons, hashes, control characters, or SQL comments.
+
+        values : typing.Dict[str, typing.Any]
+            Map of task ID to the value for that task, for example `{"101": "Missing box", "102": "OK"}`. At most `TASK_DATA_COLUMN_MAX_TASKS` tasks per request (1000 by default).
+
+        value_type : typing.Optional[TaskDataColumnValueTypeEnum]
+            How the values are stored: `String` keeps the text exactly as sent; `Number` stores a number.
+
+            * `String` - String
+            * `Number` - Number
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TaskDataColumnResult
+            Values set
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.tasks.set_data_column(
+                id=1,
+                column_name="customer_feedback",
+                value_type="String",
+                values={"101": "Box 3 is missing", "102": "OK", "999": "Unknown task"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.set_data_column(
+            id, column_name=column_name, values=values, value_type=value_type, request_options=request_options
+        )
         return _response.data
 
     async def list(

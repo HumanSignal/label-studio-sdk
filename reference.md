@@ -13936,7 +13936,7 @@ client.projects.validate_label_config(
 </details>
 
 ## Tasks
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L41-L69">delete_all_tasks</a>(...)</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L43-L71">delete_all_tasks</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14009,7 +14009,116 @@ client.tasks.delete_all_tasks(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L71-L170">list</a>(...) -> PaginatedRoleBasedTaskList</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L73-L127">set_data_column</a>(...) -> TaskDataColumnResult</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set one `task.data` key to a different value for each listed task of the project, in one synchronous request. Only that key of the listed tasks is written: other keys and other tasks are not touched, and a new column is created on the listed tasks only (the "Add or Update Columns" Data Manager action, in contrast, writes `null` into every other task when it adds a column). The column then appears in the Data Manager. All values are validated first; if any is invalid, nothing is written. The response lists the tasks that were updated and the requested IDs that are not tasks of this project. Requires the same permission and feature flag as the "Add or Update Columns" action. Values are not checked against the labeling configuration or a custom interface input schema. If an "Add or Update Columns" action that adds the same column is still running in the background, it can overwrite the values with `null`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
+
+client = LabelStudio(
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
+)
+
+client.tasks.set_data_column(
+    id=1,
+    column_name="customer_feedback",
+    value_type="String",
+    values={
+        "101": "Box 3 is missing",
+        "102": "OK",
+        "999": "Unknown task"
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**column_name:** `str` — Data column to set: the key in `task.data`, used exactly as sent. If no task of the project has it yet, it is created on the listed tasks only. A new column name cannot contain whitespace, quotation marks, brackets, semicolons, hashes, control characters, or SQL comments.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**values:** `typing.Dict[str, typing.Any]` — Map of task ID to the value for that task, for example `{"101": "Missing box", "102": "OK"}`. At most `TASK_DATA_COLUMN_MAX_TASKS` tasks per request (1000 by default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**value_type:** `typing.Optional[TaskDataColumnValueTypeEnum]` 
+
+How the values are stored: `String` keeps the text exactly as sent; `Number` stores a number.
+
+* `String` - String
+* `Number` - Number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L129-L228">list</a>(...) -> PaginatedRoleBasedTaskList</code></summary>
 <dl>
 <dd>
 
@@ -14172,7 +14281,7 @@ Example: ["completed_at"]
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L172-L285">create</a>(...) -> LseTask</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L230-L343">create</a>(...) -> LseTask</code></summary>
 <dl>
 <dd>
 
@@ -14369,7 +14478,7 @@ client.tasks.create(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L287-L316">get</a>(...) -> RoleBasedTask</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L345-L374">get</a>(...) -> RoleBasedTask</code></summary>
 <dl>
 <dd>
 
@@ -14442,7 +14551,7 @@ client.tasks.get(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L318-L346">delete</a>(...)</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L376-L404">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14515,7 +14624,7 @@ client.tasks.delete(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L348-L487">update</a>(...) -> RoleBasedTask</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L406-L545">update</a>(...) -> RoleBasedTask</code></summary>
 <dl>
 <dd>
 
@@ -14772,7 +14881,7 @@ client.tasks.update(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L489-L615">create_event</a>(...) -> TaskEvent</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L547-L673">create_event</a>(...) -> TaskEvent</code></summary>
 <dl>
 <dd>
 

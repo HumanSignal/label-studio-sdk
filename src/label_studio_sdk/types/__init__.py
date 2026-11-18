@@ -331,6 +331,8 @@ if typing.TYPE_CHECKING:
     from .storage_status_enum import StorageStatusEnum
     from .task_agreement_matrix_response import TaskAgreementMatrixResponse
     from .task_assignment import TaskAssignment
+    from .task_data_column_result import TaskDataColumnResult
+    from .task_data_column_value_type_enum import TaskDataColumnValueTypeEnum
     from .task_event import TaskEvent
     from .third_party_model_version import ThirdPartyModelVersion
     from .third_party_model_version_request import ThirdPartyModelVersionRequest
@@ -665,6 +667,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StorageStatusEnum": ".storage_status_enum",
     "TaskAgreementMatrixResponse": ".task_agreement_matrix_response",
     "TaskAssignment": ".task_assignment",
+    "TaskDataColumnResult": ".task_data_column_result",
+    "TaskDataColumnValueTypeEnum": ".task_data_column_value_type_enum",
     "TaskEvent": ".task_event",
     "ThirdPartyModelVersion": ".third_party_model_version",
     "ThirdPartyModelVersionRequest": ".third_party_model_version_request",
@@ -1023,6 +1027,8 @@ __all__ = [
     "StorageStatusEnum",
     "TaskAgreementMatrixResponse",
     "TaskAssignment",
+    "TaskDataColumnResult",
+    "TaskDataColumnValueTypeEnum",
     "TaskEvent",
     "ThirdPartyModelVersion",
     "ThirdPartyModelVersionRequest",
