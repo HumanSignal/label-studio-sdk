@@ -571,14 +571,14 @@ markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win
 
 [[package]]
 name = "datamodel-code-generator"
-version = "0.97.0"
+version = "0.98.0"
 description = "Datamodel Code Generator"
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "datamodel_code_generator-0.97.0-py3-none-any.whl", hash = "sha256:b1d929491dbf38b0acc9b2e8fa4675c003d56a5a93a6959e46df742224723734"},
-    {file = "datamodel_code_generator-0.97.0.tar.gz", hash = "sha256:21b00b0ed814ba522d096c8320ff6719dceb4bf5e23466d51fdb79aa6df6ffd6"},
+    {file = "datamodel_code_generator-0.98.0-py3-none-any.whl", hash = "sha256:95033e5bf0966c8db064bbe0269fcf6eb3fcea03c3fbdb4bec9becd02214fdac"},
+    {file = "datamodel_code_generator-0.98.0.tar.gz", hash = "sha256:97fc04435e5c4272d9814f06e8bf952ebaccc678ef6a0ca5f61671ae30bcfaf4"},
 ]
 
 [package.dependencies]
