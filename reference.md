@@ -14281,7 +14281,7 @@ Example: ["completed_at"]
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L230-L343">create</a>(...) -> LseTask</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L230-L348">create</a>(...) -> LseTask</code></summary>
 <dl>
 <dd>
 
@@ -14386,6 +14386,14 @@ client.tasks.create(
 <dl>
 <dd>
 
+**import_id:** `typing.Optional[int]` — Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **inner_id:** `typing.Optional[int]` — Internal task ID in the project, starts with 1
     
 </dd>
@@ -14478,7 +14486,7 @@ client.tasks.create(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L345-L374">get</a>(...) -> RoleBasedTask</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L350-L379">get</a>(...) -> RoleBasedTask</code></summary>
 <dl>
 <dd>
 
@@ -14551,7 +14559,7 @@ client.tasks.get(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L376-L404">delete</a>(...)</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L381-L409">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14624,7 +14632,7 @@ client.tasks.delete(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L406-L545">update</a>(...) -> RoleBasedTask</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L411-L555">update</a>(...) -> RoleBasedTask</code></summary>
 <dl>
 <dd>
 
@@ -14742,6 +14750,14 @@ client.tasks.update(
 <dd>
 
 **ground_truth:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**import_id:** `typing.Optional[int]` — Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
     
 </dd>
 </dl>
@@ -14881,7 +14897,7 @@ client.tasks.update(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L547-L673">create_event</a>(...) -> TaskEvent</code></summary>
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py#L557-L683">create_event</a>(...) -> TaskEvent</code></summary>
 <dl>
 <dd>
 

@@ -73,6 +73,11 @@ class LseTask(UncheckedBaseModel):
     file_upload: typing.Optional[str] = None
     ground_truth: typing.Optional[bool] = None
     id: typing.Optional[int] = None
+    import_id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
+    """
+
     inner_id: typing.Optional[int] = None
     is_labeled: typing.Optional[bool] = pydantic.Field(default=None)
     """

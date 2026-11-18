@@ -340,6 +340,7 @@ class RawTasksClient:
         comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
         comment_count: typing.Optional[int] = OMIT,
         file_upload: typing.Optional[int] = OMIT,
+        import_id: typing.Optional[int] = OMIT,
         inner_id: typing.Optional[int] = OMIT,
         is_labeled: typing.Optional[bool] = OMIT,
         last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
@@ -374,6 +375,9 @@ class RawTasksClient:
 
         file_upload : typing.Optional[int]
             Uploaded file used as data source for this task
+
+        import_id : typing.Optional[int]
+            Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
 
         inner_id : typing.Optional[int]
             Internal task ID in the project, starts with 1
@@ -423,6 +427,7 @@ class RawTasksClient:
                 "comment_count": comment_count,
                 "data": data,
                 "file_upload": file_upload,
+                "import_id": import_id,
                 "inner_id": inner_id,
                 "is_labeled": is_labeled,
                 "last_comment_updated_at": last_comment_updated_at,
@@ -545,6 +550,7 @@ class RawTasksClient:
         data: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         draft_exists: typing.Optional[bool] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
+        import_id: typing.Optional[int] = OMIT,
         inner_id: typing.Optional[int] = OMIT,
         is_labeled: typing.Optional[bool] = OMIT,
         last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
@@ -588,6 +594,9 @@ class RawTasksClient:
         draft_exists : typing.Optional[bool]
 
         ground_truth : typing.Optional[bool]
+
+        import_id : typing.Optional[int]
+            Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
 
         inner_id : typing.Optional[int]
 
@@ -646,6 +655,7 @@ class RawTasksClient:
                 "data": data,
                 "draft_exists": draft_exists,
                 "ground_truth": ground_truth,
+                "import_id": import_id,
                 "inner_id": inner_id,
                 "is_labeled": is_labeled,
                 "last_comment_updated_at": last_comment_updated_at,
@@ -1181,6 +1191,7 @@ class AsyncRawTasksClient:
         comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
         comment_count: typing.Optional[int] = OMIT,
         file_upload: typing.Optional[int] = OMIT,
+        import_id: typing.Optional[int] = OMIT,
         inner_id: typing.Optional[int] = OMIT,
         is_labeled: typing.Optional[bool] = OMIT,
         last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
@@ -1215,6 +1226,9 @@ class AsyncRawTasksClient:
 
         file_upload : typing.Optional[int]
             Uploaded file used as data source for this task
+
+        import_id : typing.Optional[int]
+            Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
 
         inner_id : typing.Optional[int]
             Internal task ID in the project, starts with 1
@@ -1264,6 +1278,7 @@ class AsyncRawTasksClient:
                 "comment_count": comment_count,
                 "data": data,
                 "file_upload": file_upload,
+                "import_id": import_id,
                 "inner_id": inner_id,
                 "is_labeled": is_labeled,
                 "last_comment_updated_at": last_comment_updated_at,
@@ -1390,6 +1405,7 @@ class AsyncRawTasksClient:
         data: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         draft_exists: typing.Optional[bool] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
+        import_id: typing.Optional[int] = OMIT,
         inner_id: typing.Optional[int] = OMIT,
         is_labeled: typing.Optional[bool] = OMIT,
         last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
@@ -1433,6 +1449,9 @@ class AsyncRawTasksClient:
         draft_exists : typing.Optional[bool]
 
         ground_truth : typing.Optional[bool]
+
+        import_id : typing.Optional[int]
+            Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
 
         inner_id : typing.Optional[int]
 
@@ -1491,6 +1510,7 @@ class AsyncRawTasksClient:
                 "data": data,
                 "draft_exists": draft_exists,
                 "ground_truth": ground_truth,
+                "import_id": import_id,
                 "inner_id": inner_id,
                 "is_labeled": is_labeled,
                 "last_comment_updated_at": last_comment_updated_at,
