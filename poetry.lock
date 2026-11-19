@@ -618,14 +618,14 @@ watch = ["watchfiles (>=1.1)"]
 
 [[package]]
 name = "doclang"
-version = "0.9.1"
+version = "0.10.0"
 description = "DocLang reference toolkit"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "doclang-0.9.1-py3-none-any.whl", hash = "sha256:7b289d126e36b55e5e1c5a20fee3be215705ed827065061170b647ec1dccc06f"},
-    {file = "doclang-0.9.1.tar.gz", hash = "sha256:d3631f432c2f878ece98ea7b74c3f28ec413b82e89f22fe1626ec3b45cff0f12"},
+    {file = "doclang-0.10.0-py3-none-any.whl", hash = "sha256:c1a6950a00ae385a3a5f02e6a051d5c6edf5da4a4e3bff1bba3583f66242d165"},
+    {file = "doclang-0.10.0.tar.gz", hash = "sha256:1cf556be834010cf036185d76aa17678cb40de366ae34ec8d9b589f7dbed3bd7"},
 ]
 
 [package.dependencies]

@@ -34,6 +34,11 @@ class LseInterfaceList(UncheckedBaseModel):
     HumanSignal-provided system template visible to all organizations
     """
 
+    latest_published_version: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Stable id of the latest published version, for pickers that show "vN" without loading the versions JSON (derived from versions JSON; 0 for an interface without a versions array)
+    """
+
     metadata: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """
     Arbitrary metadata for this interface
