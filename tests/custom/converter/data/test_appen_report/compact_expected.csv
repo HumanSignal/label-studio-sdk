@@ -1,0 +1,5 @@
+_unit_id,_created_at,_id,_started_at,_worker_id,image_url,item_key,source_image_url,quality_check,has_issues,issue_types
+102,11/09/2026 18:53:00,71,11/09/2026 18:53:45,annotator1@example.com,https://example-cdn.test/asset_B.jpg,row-1,https://example-cdn.test/asset_A.jpg,acceptable,yes,"blurry,text_error,border_artifact"
+103,11/09/2026 18:53:00,72,11/09/2026 18:53:55,annotator1@example.com,https://example-cdn.test/asset_C.jpg,row-2,https://example-cdn.test/asset_B.jpg,acceptable,no,
+104,11/09/2026 18:53:00,73,11/09/2026 18:54:05,annotator1@example.com,https://example-cdn.test/asset_D.jpg,row-3,https://example-cdn.test/asset_C.jpg,acceptable,did_not_load,
+105,11/09/2026 18:53:00,74,11/09/2026 18:54:13,annotator1@example.com,https://example-cdn.test/asset_E.jpg,row-4,https://example-cdn.test/asset_D.jpg,acceptable,yes,"text_error,border_artifact,object_changed"

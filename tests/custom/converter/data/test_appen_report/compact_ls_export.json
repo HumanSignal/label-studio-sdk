@@ -1,0 +1,170 @@
+[
+  {
+    "id": 102,
+    "created_at": "2026-11-09T18:53:00.412871Z",
+    "data": {
+      "source_image_url": "https://example-cdn.test/asset_A.jpg",
+      "image_url": "https://example-cdn.test/asset_B.jpg",
+      "item_key": "row-1"
+    },
+    "meta": {},
+    "annotations": [
+      {
+        "id": 71,
+        "completed_by": {"id": 5, "email": "annotator1@example.com", "first_name": "", "last_name": ""},
+        "created_at": "2026-11-09T18:53:45.901234Z",
+        "updated_at": "2026-11-09T18:53:45.901234Z",
+        "lead_time": 12.4,
+        "was_cancelled": false,
+        "result": [
+          {
+            "from_name": "quality_check",
+            "to_name": "image",
+            "type": "choices",
+            "value": {"choices": ["acceptable"]}
+          },
+          {
+            "from_name": "has_issues",
+            "to_name": "image",
+            "type": "choices",
+            "value": {"choices": ["yes"]}
+          },
+          {
+            "from_name": "issue_types",
+            "to_name": "image",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "blurry",
+                "text_error",
+                "border_artifact"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "created_at": "2026-11-09T18:53:00.412871Z",
+    "data": {
+      "source_image_url": "https://example-cdn.test/asset_B.jpg",
+      "image_url": "https://example-cdn.test/asset_C.jpg",
+      "item_key": "row-2"
+    },
+    "meta": {},
+    "annotations": [
+      {
+        "id": 72,
+        "completed_by": {"id": 5, "email": "annotator1@example.com", "first_name": "", "last_name": ""},
+        "created_at": "2026-11-09T18:53:55.004000Z",
+        "updated_at": "2026-11-09T18:53:55.004000Z",
+        "lead_time": 9.1,
+        "was_cancelled": false,
+        "result": [
+          {
+            "from_name": "quality_check",
+            "to_name": "image",
+            "type": "choices",
+            "value": {"choices": ["acceptable"]}
+          },
+          {
+            "from_name": "has_issues",
+            "to_name": "image",
+            "type": "choices",
+            "value": {"choices": ["no"]}
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "created_at": "2026-11-09T18:53:00.412871Z",
+    "data": {
+      "source_image_url": "https://example-cdn.test/asset_C.jpg",
+      "image_url": "https://example-cdn.test/asset_D.jpg",
+      "item_key": "row-3"
+    },
+    "meta": {},
+    "annotations": [
+      {
+        "id": 73,
+        "completed_by": {"id": 5, "email": "annotator1@example.com", "first_name": "", "last_name": ""},
+        "created_at": "2026-11-09T18:54:05.250000Z",
+        "updated_at": "2026-11-09T18:54:05.250000Z",
+        "lead_time": 9.8,
+        "was_cancelled": false,
+        "result": [
+          {
+            "from_name": "quality_check",
+            "to_name": "image",
+            "type": "choices",
+            "value": {"choices": ["acceptable"]}
+          },
+          {
+            "from_name": "has_issues",
+            "to_name": "image",
+            "type": "choices",
+            "value": {"choices": ["did_not_load"]}
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "completed_by": {"id": 6, "email": "skipper@example.com", "first_name": "", "last_name": ""},
+        "created_at": "2026-11-09T18:54:06.000000Z",
+        "updated_at": "2026-11-09T18:54:06.000000Z",
+        "was_cancelled": true,
+        "result": []
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "created_at": "2026-11-09T18:53:00.412871Z",
+    "data": {
+      "source_image_url": "https://example-cdn.test/asset_D.jpg",
+      "image_url": "https://example-cdn.test/asset_E.jpg",
+      "item_key": "row-4"
+    },
+    "meta": {},
+    "annotations": [
+      {
+        "id": 74,
+        "completed_by": {"id": 5, "email": "annotator1@example.com", "first_name": "", "last_name": ""},
+        "created_at": "2026-11-09T18:54:13.777000Z",
+        "updated_at": "2026-11-09T18:54:13.777000Z",
+        "lead_time": 8.0,
+        "was_cancelled": false,
+        "result": [
+          {
+            "from_name": "quality_check",
+            "to_name": "image",
+            "type": "choices",
+            "value": {"choices": ["acceptable"]}
+          },
+          {
+            "from_name": "has_issues",
+            "to_name": "image",
+            "type": "choices",
+            "value": {"choices": ["yes"]}
+          },
+          {
+            "from_name": "issue_types",
+            "to_name": "image",
+            "type": "choices",
+            "value": {
+              "choices": [
+                "text_error",
+                "border_artifact",
+                "object_changed"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

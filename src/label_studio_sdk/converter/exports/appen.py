@@ -1,4 +1,4 @@
-"""LS JSON export → Appen classic Full report CSV (``type=full``; FIT-3091).
+"""LS JSON export → Appen Full report CSV (``type=full``).
 
 One row per active annotation. Flatten: choices / textarea / rating / number /
 taxonomy; other result types → JSON of ``value``. Empty input → header only.
@@ -25,6 +25,26 @@ system prefix → answer columns → source columns. The system prefix is always
 ``_started_at`` uses Appen meta when present; otherwise it falls back to the
 annotation ``created_at`` (same as ``_created_at``) so consumers such as
 CrowdTruth can compute judgment duration without tz-naive/aware errors.
+
+``layout="compact"`` (the default) is a trimmed Full report::
+
+    _unit_id,_created_at,_id,_started_at,_worker_id,<source a→z>,<answers>
+
+It keeps the Appen system columns LS can fill (same relative order as a real
+Full download, e.g. CrowdTruth's public sample
+https://raw.githubusercontent.com/CrowdTruth/CrowdTruth-core/master/tutorial/data/person-video-multiple-choice.csv),
+puts source columns before answers, renders timestamps as UTC
+``MM/DD/YYYY HH:MM:SS`` and joins multi-select choices with ``,`` (real Appen
+emits a JSON list). System columns come only from LS fields:
+
+- ``_unit_id``: task ``id``
+- ``_id``: annotation (judgment) ``id``
+- ``_worker_id``: labeler email (user id if ``completed_by`` is not expanded)
+- ``_started_at``: annotation ``created_at``, when the judgment was submitted
+- ``_created_at``: task ``created_at``, when the row was imported
+
+This timestamp pair intentionally differs from CrowdFlower's
+(``_created_at`` = judgment submitted, ``_started_at`` = judgment opened).
 """
 
 from __future__ import annotations
@@ -34,7 +54,8 @@ import io
 import json
 import os
 from collections import OrderedDict
-from typing import Any, Dict, List, Mapping, Optional, Sequence, Union
+from datetime import datetime, timezone
+from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Union
 
 # Always emitted, classic Full leading block (public Appen/CrowdFlower Full CSVs).
 CLASSIC_SYSTEM_COLUMNS: tuple[str, ...] = (
@@ -91,6 +112,18 @@ SOURCE_EXCLUDED_SYSTEM_KEYS: frozenset[str] = frozenset(
     }
 )
 
+COMPACT_SYSTEM_COLUMNS: tuple[str, ...] = (
+    "_unit_id",
+    "_created_at",
+    "_id",
+    "_started_at",
+    "_worker_id",
+)
+
+COMPACT_TIMESTAMP_FORMAT = "%m/%d/%Y %H:%M:%S"
+
+LAYOUTS: tuple[str, ...] = ("classic", "compact")
+
 ExportInput = Union[str, os.PathLike, Sequence[Mapping[str, Any]], Mapping[str, Any]]
 
 
@@ -98,28 +131,41 @@ class UnsupportedAppenReportMode(ValueError):
     """Raised when ``to_appen_report`` is called with an unsupported ``mode``."""
 
 
+class UnsupportedAppenReportLayout(ValueError):
+    """Raised when ``to_appen_report`` is called with an unsupported ``layout``."""
+
+
 def to_appen_report(
     export: ExportInput,
     mode: str = "full",
     output: Optional[Union[str, os.PathLike]] = None,
+    layout: str = "compact",
 ) -> str:
     """Transform an LS JSON export into an Appen Full report CSV.
 
     ``export`` may be a path, JSON string, task dict, or list of tasks.
-    Column order is classic Full: system prefix → answers → source. Answer
-    columns blank out when a judgment has no result for that control (source
-    values never leak into answer columns). ``from_name`` values that match
-    system columns are ignored. Returns CSV text, or ``output`` path when
-    writing a file.
+    ``layout="compact"`` (default) is the 5-column system prefix → source
+    (a→z) → answers (see module docstring); ``layout="classic"`` is the
+    14-column system prefix → answers → source. Answer columns blank out when a judgment
+    has no result for that control (source values never leak into answer
+    columns). ``from_name`` values that match system columns are ignored.
+    Returns CSV text, or ``output`` path when writing a file.
     """
     if mode != "full":
         raise UnsupportedAppenReportMode(
             f'Unsupported Appen report mode={mode!r}; only mode="full" is supported '
             "(classic job-level Full report / type=full)."
         )
+    if layout not in LAYOUTS:
+        raise UnsupportedAppenReportLayout(
+            f"Unsupported Appen report layout={layout!r}; expected one of {', '.join(LAYOUTS)}."
+        )
 
     tasks = _load_tasks(export)
-    rows, fieldnames = _tasks_to_appen_full_rows(tasks)
+    if layout == "compact":
+        rows, fieldnames = _tasks_to_appen_compact_rows(tasks)
+    else:
+        rows, fieldnames = _tasks_to_appen_full_rows(tasks)
     csv_text = _rows_to_csv(rows, fieldnames)
 
     if output is not None:
@@ -184,6 +230,34 @@ def _worker_id(annotation: Mapping[str, Any]) -> Optional[Any]:
     return None
 
 
+def _worker_email_or_id(annotation: Mapping[str, Any]) -> Optional[Any]:
+    completed_by = annotation.get("completed_by")
+    if isinstance(completed_by, Mapping) and completed_by.get("email"):
+        return completed_by["email"]
+    return _worker_id(annotation)
+
+
+def _format_compact_timestamp(value: Any) -> str:
+    if value is None or value == "":
+        return ""
+    try:
+        parsed = datetime.fromisoformat(str(value))
+    except ValueError:
+        return str(value)
+    if parsed.tzinfo is not None:
+        parsed = parsed.astimezone(timezone.utc)
+    return parsed.strftime(COMPACT_TIMESTAMP_FORMAT)
+
+
+def _active_annotations(task: Mapping[str, Any]) -> List[Mapping[str, Any]]:
+    annotations = [
+        a
+        for a in (task.get("annotations") or task.get("completions") or [])
+        if isinstance(a, Mapping) and _is_active_annotation(a)
+    ]
+    return sorted(annotations, key=lambda a: a.get("created_at") or "")
+
+
 def _is_active_annotation(annotation: Mapping[str, Any]) -> bool:
     return not (
         annotation.get("skipped", False) or annotation.get("was_cancelled", False)
@@ -235,7 +309,17 @@ def _serialize_answer_cell(val: Any) -> Any:
     return val
 
 
-def _answers_from_annotation(annotation: Mapping[str, Any]) -> Dict[str, Any]:
+def _flatten_compact_answer_value(result_item: Mapping[str, Any]) -> Any:
+    if (result_item.get("type") or "").lower() == "choices":
+        choices = (result_item.get("value") or {}).get("choices") or []
+        return ",".join(str(c) for c in choices)
+    return _flatten_answer_value(result_item)
+
+
+def _answers_from_annotation(
+    annotation: Mapping[str, Any],
+    flatten: Callable[[Mapping[str, Any]], Any] = _flatten_answer_value,
+) -> Dict[str, Any]:
     answers: Dict[str, Any] = OrderedDict()
     reserved = SYSTEM_COLUMN_NAMES
     for result_item in annotation.get("result") or []:
@@ -244,7 +328,7 @@ def _answers_from_annotation(annotation: Mapping[str, Any]) -> Dict[str, Any]:
         from_name = result_item.get("from_name")
         if not from_name or from_name in reserved:
             continue
-        flat = _flatten_answer_value(result_item)
+        flat = flatten(result_item)
         if from_name in answers:
             existing = answers[from_name]
             if not isinstance(existing, list):
@@ -319,12 +403,7 @@ def _tasks_to_appen_full_rows(
     pending: List[Dict[str, Any]] = []
 
     for task in tasks:
-        annotations = [
-            a
-            for a in (task.get("annotations") or task.get("completions") or [])
-            if isinstance(a, Mapping) and _is_active_annotation(a)
-        ]
-        annotations = sorted(annotations, key=lambda a: a.get("created_at") or "")
+        annotations = _active_annotations(task)
 
         source = _source_columns(task)
         for k in source:
@@ -405,6 +484,50 @@ def _tasks_to_appen_full_rows(
         string_rows.append(
             {name: _format_cell(raw.get(name, "")) for name in fieldnames}
         )
+    return string_rows, fieldnames
+
+
+def _tasks_to_appen_compact_rows(
+    tasks: Sequence[Mapping[str, Any]],
+) -> tuple[List[Dict[str, str]], List[str]]:
+    source_keys: set[str] = set()
+    answer_keys: "OrderedDict[str, None]" = OrderedDict()
+    pending: List[Dict[str, Any]] = []
+
+    for task in tasks:
+        source = _source_columns(task)
+        source_keys.update(source)
+        unit_id = task.get("id")
+        task_created_at = _format_compact_timestamp(task.get("created_at"))
+
+        for annotation in _active_annotations(task):
+            answers = _answers_from_annotation(annotation, flatten=_flatten_compact_answer_value)
+            for k in answers:
+                answer_keys.setdefault(k, None)
+            worker = _worker_email_or_id(annotation)
+            pending.append(
+                {
+                    "system": {
+                        "_unit_id": unit_id,
+                        "_created_at": task_created_at,
+                        "_id": annotation.get("id"),
+                        "_started_at": _format_compact_timestamp(annotation.get("created_at")),
+                        "_worker_id": worker if worker is not None else "",
+                    },
+                    "answers": answers,
+                    "source": source,
+                }
+            )
+
+    ordered_source = sorted(k for k in source_keys if k not in answer_keys)
+    fieldnames = [*COMPACT_SYSTEM_COLUMNS, *ordered_source, *answer_keys]
+
+    string_rows: List[Dict[str, str]] = []
+    for item in pending:
+        raw: Dict[str, Any] = dict(item["system"])
+        raw.update({name: item["source"].get(name, "") for name in ordered_source})
+        raw.update({name: item["answers"].get(name, "") for name in answer_keys})
+        string_rows.append({name: _format_cell(raw.get(name, "")) for name in fieldnames})
     return string_rows, fieldnames
 
 

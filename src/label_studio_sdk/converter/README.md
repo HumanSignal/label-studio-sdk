@@ -94,18 +94,17 @@ Use cases: any tasks
 
 #### Appen Full report CSV (`to_appen_report`)
 
-Transform a Label Studio JSON export into an Appen classic job-level **Full** report CSV (`type=full` — one row per judgment/annotation).
+Transform a Label Studio JSON export into an Appen job-level **Full** report CSV (`type=full` — one row per judgment/annotation).
 
 ```python
 from label_studio_sdk.converter import to_appen_report
 
-csv_text = to_appen_report("exported_tasks.json", mode="full")
-# or: to_appen_report(tasks, mode="full", output="appen_full.csv")
+csv_text = to_appen_report("exported_tasks.json")
+# or: to_appen_report(tasks, output="appen_full.csv")
+# classic 14-column Appen/CrowdFlower layout: to_appen_report(tasks, layout="classic")
 ```
 
-Column order matches classic Appen/CrowdFlower Full downloads: system prefix → answers → source. The system prefix is always:
-
-`_unit_id,_created_at,_golden,_id,_missed,_started_at,_tainted,_channel,_trust,_worker_id,_country,_region,_city,_ip`
+Only `mode="full"` is supported. See `exports/appen.py` module docstring and `tests/custom/converter/test_appen_report.py` for allowed diffs vs a live Appen download.
 
 **Appen references (parity target):**
 
@@ -113,8 +112,34 @@ Column order matches classic Appen/CrowdFlower Full downloads: system prefix →
 - API: `GET https://api.appen.com/v1/jobs/{job_id}.csv?type=full&key={api_key}` ([FAQ](https://success.appen.com/hc/en-us/articles/115000832063-Frequently-Asked-Questions))
 - [Integrating with the API](https://success.appen.com/hc/en-us/articles/202703445-Integrating-with-the-API) (judgment fields ⇔ Full CSV row)
 - [First-time user guide PDF](https://appen-success-center.s3.amazonaws.com/first_time_user_guide/Appen+Platform+First+Time+User+Guide_12-08-2020.pdf) (Full report definition)
+- [Real public Appen Full report (CrowdTruth sample)](https://raw.githubusercontent.com/CrowdTruth/CrowdTruth-core/master/tutorial/data/person-video-multiple-choice.csv)
 
-Only `mode="full"` is supported. See `exports/appen.py` module docstring and `tests/custom/converter/test_appen_report.py` for allowed diffs vs a live Appen download.
+**Classic layout** (`layout="classic"`) matches classic Appen/CrowdFlower Full downloads: system prefix → answers → source. The system prefix is always:
+
+`_unit_id,_created_at,_golden,_id,_missed,_started_at,_tainted,_channel,_trust,_worker_id,_country,_region,_city,_ip`
+
+**Compact layout** (`layout="compact"`, the default) emits a trimmed Full report:
+
+```
+_unit_id,_created_at,_id,_started_at,_worker_id,image_url,item_key,source_image_url,quality_check,has_issues,issue_types
+102,11/09/2026 18:53:00,71,11/09/2026 18:53:45,annotator1@example.com,https://example-cdn.test/asset_B.jpg,row-1,https://example-cdn.test/asset_A.jpg,acceptable,yes,"blurry,border_artifact"
+```
+
+- Only the Appen system columns LS can fill, in Appen Full order: `_unit_id,_created_at,_id,_started_at,_worker_id`.
+- Source columns (alphabetical) come before answer columns (first-seen order).
+- System columns come only from LS fields:
+
+  | Column | LS field |
+  |---|---|
+  | `_unit_id` | task `id` |
+  | `_id` | annotation (judgment) `id` |
+  | `_worker_id` | labeler email |
+  | `_started_at` | annotation `created_at` — when the judgment was submitted (varies per row) |
+  | `_created_at` | task `created_at` — when the row was imported into the project |
+
+- Timestamps are UTC `MM/DD/YYYY HH:MM:SS`. The `_created_at`/`_started_at` pair intentionally differs from CrowdFlower (where `_created_at` is judgment submit and `_started_at` judgment open).
+- `_worker_id` email: the quick `GET /api/projects/{id}/export` only has the user id, so `_worker_id` falls back to it; for emails, create a snapshot export (`POST /api/projects/{id}/exports`) with `"serialization_options": {"annotations__completed_by": {"only_id": false}}`.
+- Multi-select choices are joined with `,` in one cell (classic Appen emits a JSON list).
 
 #### JSON-MIN
 JSON-MIN exports now flatten `<Chat>` conversations into plain message objects while preserving metadata such as `createdAt` and `tool_calls`.

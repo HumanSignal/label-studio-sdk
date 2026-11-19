@@ -1,6 +1,9 @@
 """Tests for to_appen_report(..., mode="full").
 
-No live Appen CSV in CI. Shape is pinned to classic CrowdFlower/Appen Full
+Default layout is "compact", pinned byte-for-byte to
+``data/test_appen_report/compact_expected.csv``.
+
+``layout="classic"``: no live Appen CSV in CI. Shape is pinned to classic CrowdFlower/Appen Full
 headers observed in public downloads, e.g.::
 
     _unit_id,_created_at,_golden,_id,_missed,_started_at,_tainted,_channel,
@@ -9,7 +12,7 @@ headers observed in public downloads, e.g.::
     [, answer columns...]
     [, source columns...]
 
-Allowed diffs vs a live Appen ``type=full`` download (documented per FIT-3091):
+Allowed diffs vs a live Appen ``type=full`` download:
 
 - IDs / timestamps / worker ids come from the LS export, not Appen platform ids.
 - Classic system cells are blank when the LS export has no matching meta
@@ -23,6 +26,7 @@ Allowed diffs vs a live Appen ``type=full`` download (documented per FIT-3091):
 """
 
 import csv
+import functools
 import io
 import json
 from pathlib import Path
@@ -31,11 +35,18 @@ import pytest
 
 from label_studio_sdk.converter.exports.appen import (
     CLASSIC_SYSTEM_COLUMNS,
+    COMPACT_SYSTEM_COLUMNS,
+    UnsupportedAppenReportLayout,
     UnsupportedAppenReportMode,
     to_appen_report,
 )
 
-LS_EXPORT = Path(__file__).parent / "data" / "test_appen_report" / "ls_export.json"
+DATA_DIR = Path(__file__).parent / "data" / "test_appen_report"
+LS_EXPORT = DATA_DIR / "ls_export.json"
+COMPACT_LS_EXPORT = DATA_DIR / "compact_ls_export.json"
+COMPACT_EXPECTED = DATA_DIR / "compact_expected.csv"
+
+to_classic_report = functools.partial(to_appen_report, layout="classic")
 
 
 def _rows(text: str):
@@ -62,7 +73,7 @@ def _ann(ann_id, completed_by, *, created_at="2024-01-01T00:00:00Z", result=None
 
 
 def test_fixture_full_shape():
-    text = to_appen_report(str(LS_EXPORT), mode="full")
+    text = to_classic_report(str(LS_EXPORT), mode="full")
     reader = csv.DictReader(io.StringIO(text))
     fields = reader.fieldnames
     rows = list(reader)
@@ -104,17 +115,17 @@ def test_fixture_full_shape():
     ],
 )
 def test_export_input_shapes(export):
-    assert len(_rows(to_appen_report(export(), mode="full"))) == 4
+    assert len(_rows(to_classic_report(export(), mode="full"))) == 4
 
 
 def test_write_to_path_and_reject_mode(tmp_path):
     out = tmp_path / "out.csv"
-    assert to_appen_report(str(LS_EXPORT), mode="full", output=str(out)) == str(out)
+    assert to_classic_report(str(LS_EXPORT), mode="full", output=str(out)) == str(out)
     assert len(_rows(out.read_text())) == 4
     with pytest.raises(UnsupportedAppenReportMode, match="full"):
-        to_appen_report(str(LS_EXPORT), mode="aggregated")
+        to_classic_report(str(LS_EXPORT), mode="aggregated")
     with pytest.raises(FileNotFoundError, match="Export file not found"):
-        to_appen_report("/tmp/appen-report-missing-export-xyz.json", mode="full")
+        to_classic_report("/tmp/appen-report-missing-export-xyz.json", mode="full")
 
 
 @pytest.mark.parametrize(
@@ -124,7 +135,7 @@ def test_write_to_path_and_reject_mode(tmp_path):
 def test_skips_inactive_annotations(flag):
     inactive = _ann(10, {"id": 1}, result=[], **flag)
     active = _ann(11, {"id": 2}, created_at="2024-01-01T01:00:00Z")
-    rows = _rows(to_appen_report([{"id": 1, "data": {"text": "x"}, "annotations": [inactive, active]}]))
+    rows = _rows(to_classic_report([{"id": 1, "data": {"text": "x"}, "annotations": [inactive, active]}]))
     assert len(rows) == 1 and rows[0]["_id"] == "11"
 
 
@@ -141,7 +152,7 @@ def test_skips_inactive_annotations(flag):
     ],
 )
 def test_header_only_when_no_active_judgments(tasks, expect_fields_extra, expect_n):
-    reader = csv.DictReader(io.StringIO(to_appen_report(tasks, mode="full")))
+    reader = csv.DictReader(io.StringIO(to_classic_report(tasks, mode="full")))
     fields = reader.fieldnames or []
     assert tuple(fields[: len(CLASSIC_SYSTEM_COLUMNS)]) == CLASSIC_SYSTEM_COLUMNS
     for col in expect_fields_extra:
@@ -172,7 +183,7 @@ def test_answer_overrides_source_once():
             ],
         }
     ]
-    reader = csv.DictReader(io.StringIO(to_appen_report(tasks, mode="full")))
+    reader = csv.DictReader(io.StringIO(to_classic_report(tasks, mode="full")))
     assert reader.fieldnames.count("sentiment") == 1
     row = list(reader)[0]
     assert row["sentiment"] == "from_ann" and row["text"] == "hello"
@@ -202,10 +213,10 @@ def test_answer_column_blank_when_judgment_missing_result():
             ],
         }
     ]
-    rows = sorted(_rows(to_appen_report(tasks)), key=lambda r: r["_id"])
+    rows = sorted(_rows(to_classic_report(tasks)), key=lambda r: r["_id"])
     assert rows[0]["label"] == "pos"
     assert rows[1]["label"] == ""
-    assert "label" in (csv.DictReader(io.StringIO(to_appen_report(tasks))).fieldnames or [])
+    assert "label" in (csv.DictReader(io.StringIO(to_classic_report(tasks))).fieldnames or [])
 
 
 @pytest.mark.parametrize(
@@ -216,13 +227,13 @@ def test_answer_column_blank_when_judgment_missing_result():
     ],
 )
 def test_worker_id_id_then_email(completed_by, expected):
-    row = _rows(to_appen_report([{"id": 1, "data": {"text": "x"}, "annotations": [_ann(1, completed_by)]}]))[0]
+    row = _rows(to_classic_report([{"id": 1, "data": {"text": "x"}, "annotations": [_ann(1, completed_by)]}]))[0]
     assert row["_worker_id"] == expected
 
 
 def test_started_at_uses_meta_when_present():
     row = _rows(
-        to_appen_report(
+        to_classic_report(
             [
                 {
                     "id": 1,
@@ -240,23 +251,23 @@ def test_started_at_uses_meta_when_present():
 def test_source_job_id_kept_not_aliased():
     """Legit source columns job_id / external_type stay as source (no aliases)."""
     row = _rows(
-        to_appen_report(
+        to_classic_report(
             [
                 {
                     "id": 1,
-                    "data": {"text": "x", "job_id": "customer-batch-7", "external_type": "cf_internal"},
+                    "data": {"text": "x", "job_id": "source-batch-7", "external_type": "cf_internal"},
                     "annotations": [_ann(1, 1)],
                 }
             ]
         )
     )[0]
-    assert row["job_id"] == "customer-batch-7"
+    assert row["job_id"] == "source-batch-7"
     assert row["external_type"] == "cf_internal"
     assert row.get("_job_id", "") == ""
     assert row.get("_channel", "") == ""
 
     keep = _rows(
-        to_appen_report(
+        to_classic_report(
             [
                 {
                     "id": 1,
@@ -287,7 +298,7 @@ def test_multi_result_serialized_once():
             "value": {"start": 10, "end": 15, "text": "world", "labels": ["B"]},
         },
     ]
-    row = _rows(to_appen_report([{"id": 1, "data": {"text": "x"}, "annotations": [_ann(1, 1, result=result)]}]))[0]
+    row = _rows(to_classic_report([{"id": 1, "data": {"text": "x"}, "annotations": [_ann(1, 1, result=result)]}]))[0]
     parsed = json.loads(row["ner"])
     assert isinstance(parsed, list) and len(parsed) == 2
     assert isinstance(parsed[0], dict) and parsed[0]["start"] == 0
@@ -334,8 +345,112 @@ def test_multi_result_serialized_once():
 )
 def test_answer_flatten_edges(result, col, check):
     row = _rows(
-        to_appen_report([{"id": 1, "data": {"text": "x"}, "annotations": [_ann(99, 1, result=result)]}])
+        to_classic_report([{"id": 1, "data": {"text": "x"}, "annotations": [_ann(99, 1, result=result)]}])
     )[0]
     assert check(row[col])
     if col != "_id":
         assert row["_id"] == "99"
+
+
+def test_compact_layout_golden():
+    assert to_appen_report(str(COMPACT_LS_EXPORT), layout="compact") == COMPACT_EXPECTED.read_text()
+
+
+def test_compact_is_default_layout():
+    assert to_appen_report(str(COMPACT_LS_EXPORT)) == COMPACT_EXPECTED.read_text()
+    assert to_appen_report(str(LS_EXPORT)) != to_classic_report(str(LS_EXPORT))
+
+
+def test_unknown_layout_rejected():
+    with pytest.raises(UnsupportedAppenReportLayout, match="compact"):
+        to_appen_report(str(LS_EXPORT), layout="nested")
+
+
+def test_compact_header_only_when_no_active_judgments():
+    reader = csv.DictReader(
+        io.StringIO(
+            to_appen_report(
+                [{"id": 1, "data": {"b": 1, "a": 2}, "annotations": [_ann(1, 1, skipped=True, result=[])]}],
+                layout="compact",
+            )
+        )
+    )
+    assert reader.fieldnames == [*COMPACT_SYSTEM_COLUMNS, "a", "b"]
+    assert list(reader) == []
+
+
+@pytest.mark.parametrize(
+    "completed_by, expected",
+    [
+        pytest.param({"id": 77, "email": "ann@example.com"}, "ann@example.com", id="email_wins"),
+        pytest.param({"id": 77}, "77", id="id_fallback"),
+        pytest.param(77, "77", id="unexpanded_id"),
+    ],
+)
+def test_compact_worker_id_email_then_id(completed_by, expected):
+    tasks = [{"id": 1, "data": {"text": "x"}, "annotations": [_ann(1, completed_by)]}]
+    assert _rows(to_appen_report(tasks, layout="compact"))[0]["_worker_id"] == expected
+
+
+@pytest.mark.parametrize(
+    "raw, expected",
+    [
+        pytest.param("2026-11-09T13:53:00.999-05:00", "11/09/2026 18:53:00", id="offset_to_utc"),
+        pytest.param("2026-01-02T03:04:05", "01/02/2026 03:04:05", id="naive_is_utc"),
+        pytest.param("not a date", "not a date", id="unparseable_passthrough"),
+        pytest.param(None, "", id="missing"),
+    ],
+)
+def test_compact_timestamps(raw, expected):
+    tasks = [{"id": 1, "created_at": raw, "data": {"text": "x"}, "annotations": [_ann(1, 1, created_at=raw)]}]
+    row = _rows(to_appen_report(tasks, layout="compact"))[0]
+    assert row["_created_at"] == expected
+    assert row["_started_at"] == expected
+
+
+def test_compact_system_columns_come_from_ls_fields():
+    """Compact system columns map to LS fields only; Appen-style overrides in meta/data are ignored."""
+    tasks = [
+        {
+            "id": 501,
+            "created_at": "2026-11-09T18:53:00.412871Z",
+            "meta": {"_unit_id": 9, "_started_at": "2020-01-01T00:00:00Z"},
+            "data": {"_unit_id": 42, "unit_id": 7, "text": "x"},
+            "annotations": [
+                {
+                    **_ann(88, {"id": 5, "email": "labeler@example.com"}, created_at="2026-11-09T18:53:45.901Z"),
+                    "updated_at": "2026-11-10T09:00:00Z",
+                    "meta": {"_started_at": "2020-01-01T00:00:00Z"},
+                }
+            ],
+        }
+    ]
+    row = _rows(to_appen_report(tasks))[0]
+    assert row["_unit_id"] == "501"
+    assert row["_id"] == "88"
+    assert row["_worker_id"] == "labeler@example.com"
+    assert row["_started_at"] == "11/09/2026 18:53:45"
+    assert row["_created_at"] == "11/09/2026 18:53:00"
+    assert row["unit_id"] == "7"
+
+
+def test_compact_answers_and_source_collisions():
+    result = [
+        {"from_name": "label", "to_name": "text", "type": "choices", "value": {"choices": ["pos"]}},
+        {"from_name": "comment", "to_name": "text", "type": "textarea", "value": {"text": ["a", "b"]}},
+        {"from_name": "box", "to_name": "image", "type": "rectanglelabels", "value": {"x": 1, "rectanglelabels": ["car"]}},
+    ]
+    tasks = [
+        {
+            "id": 1,
+            "data": {"label": "SOURCE", "_unit_id": 42, "z": "last", "text": "x"},
+            "annotations": [_ann(1, 1, result=result)],
+        }
+    ]
+    reader = csv.DictReader(io.StringIO(to_appen_report(tasks, layout="compact")))
+    assert reader.fieldnames == [*COMPACT_SYSTEM_COLUMNS, "text", "z", "label", "comment", "box"]
+    row = list(reader)[0]
+    assert row["_unit_id"] == "1"
+    assert row["label"] == "pos"
+    assert row["comment"] == "a\nb"
+    assert json.loads(row["box"])["rectanglelabels"] == ["car"]
