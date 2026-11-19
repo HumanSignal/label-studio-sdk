@@ -7216,7 +7216,7 @@ client.prompts.update(
 </details>
 
 ## Interfaces
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L33-L101">list</a>(...) -> PaginatedLseInterfaceListList</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L33-L105">list</a>(...) -> PaginatedLseInterfaceListList</code></summary>
 <dl>
 <dd>
 
@@ -7329,6 +7329,14 @@ client.interfaces.list()
 <dl>
 <dd>
 
+**workspace_or_shared:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7341,7 +7349,7 @@ client.interfaces.list()
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L103-L203">create</a>(...) -> LseInterface</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L107-L207">create</a>(...) -> LseInterface</code></summary>
 <dl>
 <dd>
 
@@ -7422,7 +7430,7 @@ client.interfaces.create(
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L205-L240">get</a>(...) -> LseInterface</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L209-L244">get</a>(...) -> LseInterface</code></summary>
 <dl>
 <dd>
 
@@ -7501,7 +7509,7 @@ client.interfaces.get(
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L242-L348">update</a>(...) -> LseInterface</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L246-L352">update</a>(...) -> LseInterface</code></summary>
 <dl>
 <dd>
 
@@ -7591,7 +7599,7 @@ client.interfaces.update(
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L350-L384">delete</a>(...)</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L354-L388">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -7670,7 +7678,7 @@ client.interfaces.delete(
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L386-L489">partial_update</a>(...) -> LseInterface</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L390-L493">partial_update</a>(...) -> LseInterface</code></summary>
 <dl>
 <dd>
 
@@ -7853,7 +7861,7 @@ client.interfaces.partial_update(
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L491-L584">append_versions</a>(...) -> LseInterface</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L495-L588">append_versions</a>(...) -> LseInterface</code></summary>
 <dl>
 <dd>
 
@@ -8026,7 +8034,7 @@ client.interfaces.append_versions(
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L586-L662">duplicate</a>(...) -> LseInterface</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L590-L666">duplicate</a>(...) -> LseInterface</code></summary>
 <dl>
 <dd>
 
@@ -8158,7 +8166,7 @@ client.interfaces.duplicate(
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L664-L722">move</a>(...) -> LseInterfaceMovePlan</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L668-L726">move</a>(...) -> LseInterfaceMovePlan</code></summary>
 <dl>
 <dd>
 
@@ -8261,7 +8269,7 @@ client.interfaces.move(
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L724-L765">publish_version</a>(...) -> LseInterface</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L728-L769">publish_version</a>(...) -> LseInterface</code></summary>
 <dl>
 <dd>
 
@@ -8349,7 +8357,7 @@ client.interfaces.publish_version(
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L767-L808">unpublish_version</a>(...) -> LseInterface</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L771-L812">unpublish_version</a>(...) -> LseInterface</code></summary>
 <dl>
 <dd>
 
@@ -8437,7 +8445,7 @@ client.interfaces.unpublish_version(
 </dl>
 </details>
 
-<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L810-L857">update_version_description</a>(...) -> LseInterface</code></summary>
+<details><summary><code>client.interfaces.<a href="src/label_studio_sdk/interfaces/client.py#L814-L861">update_version_description</a>(...) -> LseInterface</code></summary>
 <dl>
 <dd>
 
@@ -11868,7 +11876,7 @@ client.project_templates.create_project_from_template(
 </details>
 
 ## Projects
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L78-L187">list</a>(...) -> PaginatedAllRolesProjectListList</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L79-L188">list</a>(...) -> PaginatedAllRolesProjectListList</code></summary>
 <dl>
 <dd>
 
@@ -12048,7 +12056,7 @@ client.projects.list()
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L189-L430">create</a>(...) -> LseProjectCreate</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L190-L431">create</a>(...) -> LseProjectCreate</code></summary>
 <dl>
 <dd>
 
@@ -12468,7 +12476,7 @@ Data Collection project mode (assigned or open). Set only at creation; immutable
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L432-L527">list_counts</a>(...) -> PaginatedLseProjectCountsList</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L433-L528">list_counts</a>(...) -> PaginatedLseProjectCountsList</code></summary>
 <dl>
 <dd>
 
@@ -12635,7 +12643,7 @@ client.projects.list_counts()
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L529-L566">get</a>(...) -> LseProjectResponse</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L530-L567">get</a>(...) -> LseProjectResponse</code></summary>
 <dl>
 <dd>
 
@@ -12716,7 +12724,7 @@ client.projects.get(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L568-L595">delete</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L569-L596">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -12789,7 +12797,7 @@ client.projects.delete(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L597-L948">update</a>(...) -> LseProjectResponse</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L598-L949">update</a>(...) -> LseProjectResponse</code></summary>
 <dl>
 <dd>
 
@@ -13385,7 +13393,7 @@ Metric used to evaluate annotators. Defaults to gt_agreement.
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L950-L980">list_unique_annotators</a>(...) -> typing.List[UserSimple]</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L951-L981">list_unique_annotators</a>(...) -> typing.List[UserSimple]</code></summary>
 <dl>
 <dd>
 
@@ -13458,7 +13466,7 @@ client.projects.list_unique_annotators(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L982-L1055">duplicate</a>(...) -> DuplicateProjectsResponse</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L983-L1056">duplicate</a>(...) -> DuplicateProjectsResponse</code></summary>
 <dl>
 <dd>
 
@@ -13585,7 +13593,7 @@ What to Duplicate (Project configuration only / Project configuration and tasks)
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L1057-L1183">import_tasks</a>(...) -> ImportTasksProjectsResponse</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L1058-L1184">import_tasks</a>(...) -> ImportTasksProjectsResponse</code></summary>
 <dl>
 <dd>
 
@@ -13762,7 +13770,7 @@ client.projects.import_tasks(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L1185-L1228">import_predictions</a>(...) -> ImportPredictionsProjectsResponse</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L1186-L1229">import_predictions</a>(...) -> ImportPredictionsProjectsResponse</code></summary>
 <dl>
 <dd>
 
@@ -13853,7 +13861,103 @@ client.projects.import_predictions(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L1230-L1267">validate_label_config</a>(...) -> ProjectLabelConfig</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L1231-L1284">check_interface_compatibility</a>(...) -> InterfaceCompatibilityResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
+Check the existing tasks of a project against the input schema of an interface version before attaching it. Read-only: tasks and the project are not changed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+from label_studio_sdk.environment import LabelStudioEnvironment
+
+client = LabelStudio(
+    api_key="<value>",
+    environment=LabelStudioEnvironment.DEFAULT,
+)
+
+client.projects.check_interface_compatibility(
+    id=1,
+    source_interface_id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_interface_id:** `int` — Interface to check the project tasks against.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_interface_version:** `typing.Optional[int]` — Published version id. Defaults to the latest published version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py#L1286-L1323">validate_label_config</a>(...) -> ProjectLabelConfig</code></summary>
 <dl>
 <dd>
 

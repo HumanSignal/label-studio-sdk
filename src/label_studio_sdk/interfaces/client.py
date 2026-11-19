@@ -40,6 +40,7 @@ class InterfacesClient:
         scope: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         workspace: typing.Optional[int] = None,
+        workspace_or_shared: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedLseInterfaceListList:
         """
@@ -71,6 +72,8 @@ class InterfacesClient:
 
         workspace : typing.Optional[int]
 
+        workspace_or_shared : typing.Optional[int]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -96,6 +99,7 @@ class InterfacesClient:
             scope=scope,
             search=search,
             workspace=workspace,
+            workspace_or_shared=workspace_or_shared,
             request_options=request_options,
         )
         return _response.data
@@ -882,6 +886,7 @@ class AsyncInterfacesClient:
         scope: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         workspace: typing.Optional[int] = None,
+        workspace_or_shared: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedLseInterfaceListList:
         """
@@ -912,6 +917,8 @@ class AsyncInterfacesClient:
             A search term.
 
         workspace : typing.Optional[int]
+
+        workspace_or_shared : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -946,6 +953,7 @@ class AsyncInterfacesClient:
             scope=scope,
             search=search,
             workspace=workspace,
+            workspace_or_shared=workspace_or_shared,
             request_options=request_options,
         )
         return _response.data

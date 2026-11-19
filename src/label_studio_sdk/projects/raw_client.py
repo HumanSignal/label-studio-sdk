@@ -21,6 +21,7 @@ from ..types.assignment_settings_request import AssignmentSettingsRequest
 from ..types.collection_mode_enum import CollectionModeEnum
 from ..types.control_tag_weight_request import ControlTagWeightRequest
 from ..types.import_api_request import ImportApiRequest
+from ..types.interface_compatibility_response import InterfaceCompatibilityResponse
 from ..types.lse_project_create import LseProjectCreate
 from ..types.lse_project_response import LseProjectResponse
 from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
@@ -1366,6 +1367,73 @@ class RawProjectsClient:
                         ),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def check_interface_compatibility(
+        self,
+        id: int,
+        *,
+        source_interface_id: int,
+        source_interface_version: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[InterfaceCompatibilityResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Check the existing tasks of a project against the input schema of an interface version before attaching it. Read-only: tasks and the project are not changed.
+
+        Parameters
+        ----------
+        id : int
+
+        source_interface_id : int
+            Interface to check the project tasks against.
+
+        source_interface_version : typing.Optional[int]
+            Published version id. Defaults to the latest published version.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[InterfaceCompatibilityResponse]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/interface-compatibility",
+            method="POST",
+            json={
+                "source_interface_id": source_interface_id,
+                "source_interface_version": source_interface_version,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    InterfaceCompatibilityResponse,
+                    construct_type(
+                        type_=InterfaceCompatibilityResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -2756,6 +2824,73 @@ class AsyncRawProjectsClient:
                         ),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def check_interface_compatibility(
+        self,
+        id: int,
+        *,
+        source_interface_id: int,
+        source_interface_version: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[InterfaceCompatibilityResponse]:
+        """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Check the existing tasks of a project against the input schema of an interface version before attaching it. Read-only: tasks and the project are not changed.
+
+        Parameters
+        ----------
+        id : int
+
+        source_interface_id : int
+            Interface to check the project tasks against.
+
+        source_interface_version : typing.Optional[int]
+            Published version id. Defaults to the latest published version.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[InterfaceCompatibilityResponse]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{encode_path_param(id)}/interface-compatibility",
+            method="POST",
+            json={
+                "source_interface_id": source_interface_id,
+                "source_interface_version": source_interface_version,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    InterfaceCompatibilityResponse,
+                    construct_type(
+                        type_=InterfaceCompatibilityResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

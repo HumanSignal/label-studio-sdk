@@ -97,6 +97,8 @@ if typing.TYPE_CHECKING:
     from .hotkeys import Hotkeys
     from .import_api_request import ImportApiRequest
     from .inference_run_cost_estimate import InferenceRunCostEstimate
+    from .interface_compatibility_error import InterfaceCompatibilityError
+    from .interface_compatibility_response import InterfaceCompatibilityResponse
     from .interface_move_blocker_enum import InterfaceMoveBlockerEnum
     from .interface_move_blocking_reason_enum import InterfaceMoveBlockingReasonEnum
     from .interface_move_code_enum import InterfaceMoveCodeEnum
@@ -449,6 +451,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Hotkeys": ".hotkeys",
     "ImportApiRequest": ".import_api_request",
     "InferenceRunCostEstimate": ".inference_run_cost_estimate",
+    "InterfaceCompatibilityError": ".interface_compatibility_error",
+    "InterfaceCompatibilityResponse": ".interface_compatibility_response",
     "InterfaceMoveBlockerEnum": ".interface_move_blocker_enum",
     "InterfaceMoveBlockingReasonEnum": ".interface_move_blocking_reason_enum",
     "InterfaceMoveCodeEnum": ".interface_move_code_enum",
@@ -809,6 +813,8 @@ __all__ = [
     "Hotkeys",
     "ImportApiRequest",
     "InferenceRunCostEstimate",
+    "InterfaceCompatibilityError",
+    "InterfaceCompatibilityResponse",
     "InterfaceMoveBlockerEnum",
     "InterfaceMoveBlockingReasonEnum",
     "InterfaceMoveCodeEnum",

@@ -36,6 +36,7 @@ class RawInterfacesClient:
         scope: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         workspace: typing.Optional[int] = None,
+        workspace_or_shared: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PaginatedLseInterfaceListList]:
         """
@@ -67,6 +68,8 @@ class RawInterfacesClient:
 
         workspace : typing.Optional[int]
 
+        workspace_or_shared : typing.Optional[int]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -86,6 +89,7 @@ class RawInterfacesClient:
                 "scope": scope,
                 "search": search,
                 "workspace": workspace,
+                "workspace_or_shared": workspace_or_shared,
             },
             request_options=request_options,
         )
@@ -1005,6 +1009,7 @@ class AsyncRawInterfacesClient:
         scope: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         workspace: typing.Optional[int] = None,
+        workspace_or_shared: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PaginatedLseInterfaceListList]:
         """
@@ -1036,6 +1041,8 @@ class AsyncRawInterfacesClient:
 
         workspace : typing.Optional[int]
 
+        workspace_or_shared : typing.Optional[int]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1055,6 +1062,7 @@ class AsyncRawInterfacesClient:
                 "scope": scope,
                 "search": search,
                 "workspace": workspace,
+                "workspace_or_shared": workspace_or_shared,
             },
             request_options=request_options,
         )
