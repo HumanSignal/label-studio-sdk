@@ -571,14 +571,14 @@ markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win
 
 [[package]]
 name = "datamodel-code-generator"
-version = "0.98.0"
+version = "0.99.0"
 description = "Datamodel Code Generator"
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "datamodel_code_generator-0.98.0-py3-none-any.whl", hash = "sha256:95033e5bf0966c8db064bbe0269fcf6eb3fcea03c3fbdb4bec9becd02214fdac"},
-    {file = "datamodel_code_generator-0.98.0.tar.gz", hash = "sha256:97fc04435e5c4272d9814f06e8bf952ebaccc678ef6a0ca5f61671ae30bcfaf4"},
+    {file = "datamodel_code_generator-0.99.0-py3-none-any.whl", hash = "sha256:21c2938ea94cac3be3ccd6ed993cdb191343d20459d34eef4f854a1af006d6da"},
+    {file = "datamodel_code_generator-0.99.0.tar.gz", hash = "sha256:bc921db4cf4a02b74692c33237831014d9281e7e0c18c491ad091cc3ea395af5"},
 ]
 
 [package.dependencies]
@@ -618,14 +618,14 @@ watch = ["watchfiles (>=1.1)"]
 
 [[package]]
 name = "doclang"
-version = "0.10.0"
+version = "0.10.1"
 description = "DocLang reference toolkit"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "doclang-0.10.0-py3-none-any.whl", hash = "sha256:c1a6950a00ae385a3a5f02e6a051d5c6edf5da4a4e3bff1bba3583f66242d165"},
-    {file = "doclang-0.10.0.tar.gz", hash = "sha256:1cf556be834010cf036185d76aa17678cb40de366ae34ec8d9b589f7dbed3bd7"},
+    {file = "doclang-0.10.1-py3-none-any.whl", hash = "sha256:8c5c0b2d892fd01bb05dc9e1158720cc5a652b56592681523c590ceff94faeee"},
+    {file = "doclang-0.10.1.tar.gz", hash = "sha256:c0efb5be0986b89c4f0f7f1472f3d310f78e7f0e29717c0477b64f7e622372e8"},
 ]
 
 [package.dependencies]
@@ -2187,15 +2187,15 @@ xmp = ["defusedxml"]
 
 [[package]]
 name = "platformdirs"
-version = "4.14.7"
+version = "4.14.8"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 markers = "sys_platform != \"emscripten\""
 files = [
-    {file = "platformdirs-4.14.7-py3-none-any.whl", hash = "sha256:391513b74707c42335fff3ea17eaac657a7ee9ffcadd809634d34ea594d0122c"},
-    {file = "platformdirs-4.14.7.tar.gz", hash = "sha256:5472257c1cf97a14658af52997011c7e59e4aebf3a24950b973c11b579e1b074"},
+    {file = "platformdirs-4.14.8-py3-none-any.whl", hash = "sha256:1e34af590de4d978631b751eb2202f2fee4497537a17c1720b12fcf57b331392"},
+    {file = "platformdirs-4.14.8.tar.gz", hash = "sha256:96893d686e84e9e6f358a9ea41a8de544df66dbf2ba6cda250e7dc73acf85b9b"},
 ]
 
 [[package]]
@@ -3064,14 +3064,14 @@ files = [
 
 [[package]]
 name = "typeguard"
-version = "4.6.0"
+version = "4.6.1"
 description = "Run-time type checker for Python"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "typeguard-4.6.0-py3-none-any.whl", hash = "sha256:79878165bb86f2cf5d41d159a0ff1792a796cf496882d2fe1b1c6c7049b9cdd7"},
-    {file = "typeguard-4.6.0.tar.gz", hash = "sha256:e7414f09111317de3e335de92cd397c5c0ca00b1cc1676de12e1d444a79b3f21"},
+    {file = "typeguard-4.6.1-py3-none-any.whl", hash = "sha256:aca1f365124873d5325b18aad1a3689d62f7184abe32d899413562cf51729d02"},
+    {file = "typeguard-4.6.1.tar.gz", hash = "sha256:d94fd3552c5feb6bada6e8bb1167d9916c08d7442141aeb041b847ba9bd1afb1"},
 ]
 
 [package.dependencies]
