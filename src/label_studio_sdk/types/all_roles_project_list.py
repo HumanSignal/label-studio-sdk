@@ -111,6 +111,11 @@ class AllRolesProjectList(UncheckedBaseModel):
     Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
     """
 
+    courses_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Courses replace Annotation and Reviewer Instructions on this project. Changed through the learning-assignments courses-enabled endpoint.
+    """
+
     created_at: typing.Optional[dt.datetime] = None
     created_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
     """
@@ -167,6 +172,16 @@ class AllRolesProjectList(UncheckedBaseModel):
     ground_truth_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     Honeypot annotation number in project
+    """
+
+    has_annotation_instructions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Annotation Instructions hold readable content (not empty or only empty HTML)
+    """
+
+    has_review_instructions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Review Instructions hold readable content (not empty or only empty HTML)
     """
 
     id: typing.Optional[int] = None
