@@ -1,9 +1,12 @@
+import csv
 import json
 import os
 
+import pytest
 
 from label_studio_sdk.converter import Converter
 from label_studio_sdk.converter.exports.csv2 import prepare_annotation, prepare_annotation_keys
+from label_studio_sdk.converter.utils import csv_safe
 from pandas import read_csv
 
 
@@ -267,3 +270,181 @@ def test_empty_schema_csv_keeps_interface_annotation_regions(tmp_path):
     assert boxes[0]["width"] == 30
     assert boxes[0]["height"] == 40
     assert boxes[0]["rectanglelabels"] == ["car"]
+
+
+FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
+
+
+def _formula_item(**overrides):
+    item = {
+        "id": 1,
+        "input": {"text": "plain text"},
+        "output": {},
+        "completed_by": {"email": "annotator@example.com"},
+        "annotation_id": 10,
+        "created_at": "2024-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:00Z",
+        "lead_time": 1.5,
+    }
+    item.update(overrides)
+    return item
+
+
+@pytest.mark.parametrize("prefix", FORMULA_PREFIXES)
+def test_csv_safe_prefixes_formula_strings(prefix):
+    assert csv_safe(prefix + "1+1") == "'" + prefix + "1+1"
+
+
+@pytest.mark.parametrize("value", ["plain text", "", "1+1", 5, -5, -1.5, True, None])
+def test_csv_safe_keeps_other_values(value):
+    assert csv_safe(value) is value
+
+
+@pytest.mark.parametrize("prefix", FORMULA_PREFIXES)
+def test_csv_prepare_annotation_neutralizes_formulas(prefix):
+    payload = prefix + "SUM(1+1)"
+    item = _formula_item(
+        input={"text": payload, "plain": "plain text", "number": -5},
+        output={
+            "answer": [{"type": "TextArea", "text": [payload]}],
+            "choice": [{"type": "Choices", "choices": [payload]}],
+            "label": [{"type": "Choices", "choices": ["positive"]}],
+        },
+    )
+
+    record = prepare_annotation(item)
+
+    assert record["text"] == "'" + payload
+    assert record["answer"] == "'" + payload
+    assert record["choice"] == "'" + payload
+    assert record["plain"] == "plain text"
+    assert record["label"] == "positive"
+    assert record["number"] == -5
+    assert record["id"] == 1
+    assert record["annotation_id"] == 10
+    assert record["lead_time"] == 1.5
+    assert record["annotator"] == "annotator@example.com"
+
+
+def test_csv_prepare_annotation_neutralizes_other_text_columns():
+    item = _formula_item(
+        input={"meta": {"k": "=1+1"}, "items": ["=1+1"]},
+        output={
+            "number": [{"type": "TextArea", "text": [-5]}],
+            "multi": [{"type": "TextArea", "text": ["=1+1", "=2+2"]}],
+            "chat": [{"type": "Chat", "chatmessage": {"role": "", "content": "=1+1"}}],
+        },
+        completed_by={"email": "+annotator@example.com"},
+    )
+
+    record = prepare_annotation(item)
+
+    assert record["annotator"] == "'+annotator@example.com"
+    # a non-string single result is dumped to a string that starts with "-"
+    assert record["number"] == "'-5"
+    assert record["chat_transcript"] == "'=1+1"
+    # JSON cells start with "{" or "[" and stay as they are
+    assert json.loads(record["meta"]) == {"k": "=1+1"}
+    assert json.loads(record["items"]) == ["=1+1"]
+    assert json.loads(record["multi"]) == {"text": ["=1+1", "=2+2"]}
+
+
+@pytest.mark.parametrize("sep", [",", "\t"])
+def test_csv_export_neutralizes_formulas_end_to_end(tmp_path, sep):
+    payloads = {
+        "text": "=2+5+XINJ-FORMULA",
+        "title": '=HYPERLINK("https://example.com","click")',
+        "fn": "@SUM(9+9)+XINJ",
+        "plus": "+1+1",
+        "minus": "-1+1",
+        "tab": "\t=1+1",
+        "cr": "\r=1+1",
+    }
+    # column names are user-controlled too: task data keys and control tag names
+    formula_keys = {prefix + "KEY(1)": prefix + "VALUE(1)" for prefix in FORMULA_PREFIXES}
+    input_path = tmp_path / "formula_tasks.json"
+    input_path.write_text(
+        json.dumps(
+            [
+                {
+                    "id": 1,
+                    "data": {**payloads, **formula_keys, "plain": "plain text", "number": 7},
+                    "annotations": [
+                        {
+                            "id": 10,
+                            "created_at": "2024-01-01T00:00:00Z",
+                            "completed_by": {"email": "a@example.com"},
+                            "result": [
+                                {
+                                    "from_name": "answer",
+                                    "to_name": "text",
+                                    "type": "textarea",
+                                    "value": {"text": ["=1+1"]},
+                                },
+                                {
+                                    "from_name": "sentiment",
+                                    "to_name": "text",
+                                    "type": "choices",
+                                    "value": {"choices": ["@positive"]},
+                                },
+                                {
+                                    "from_name": "=CONTROL(1)",
+                                    "to_name": "text",
+                                    "type": "textarea",
+                                    "value": {"text": ["plain answer"]},
+                                },
+                            ],
+                        }
+                    ],
+                }
+            ]
+        )
+    )
+    output_dir = tmp_path / "out"
+    schema = {
+        "answer": {
+            "type": "TextArea",
+            "to_name": ["text"],
+            "inputs": [{"type": "Text", "value": "text"}],
+            "labels": [],
+            "labels_attrs": {},
+        },
+        "sentiment": {
+            "type": "Choices",
+            "to_name": ["text"],
+            "inputs": [{"type": "Text", "value": "text"}],
+            "labels": ["@positive"],
+            "labels_attrs": {},
+        },
+        "=CONTROL(1)": {
+            "type": "TextArea",
+            "to_name": ["text"],
+            "inputs": [{"type": "Text", "value": "text"}],
+            "labels": [],
+            "labels_attrs": {},
+        },
+    }
+
+    converter = Converter(schema, str(tmp_path))
+    converter.convert_to_csv(
+        str(input_path), str(output_dir), sep=sep, header=True, is_dir=False
+    )
+
+    with open(output_dir / "result.csv", encoding="utf8", newline="") as f:
+        cells = list(csv.reader(f, delimiter=sep))
+
+    # no cell of the file, header included, may start with a formula prefix
+    assert len(cells) == 2
+    assert not any(cell[:1] in FORMULA_PREFIXES for line in cells for cell in line)
+    assert len(set(cells[0])) == len(cells[0])
+    row = dict(zip(cells[0], cells[1]))
+    for name, value in formula_keys.items():
+        assert row["'" + name] == "'" + value
+    assert row["'=CONTROL(1)"] == "plain answer"
+    for name, payload in payloads.items():
+        assert row[name] == "'" + payload
+    assert row["answer"] == "'=1+1"
+    assert row["sentiment"] == "'@positive"
+    assert row["plain"] == "plain text"
+    assert row["number"] == "7"
+    assert row["annotation_id"] == "10"

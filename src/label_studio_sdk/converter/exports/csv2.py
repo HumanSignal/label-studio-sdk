@@ -6,7 +6,12 @@ import ujson as json
 
 from copy import deepcopy, copy
 
-from label_studio_sdk.converter.utils import ensure_dir, get_annotator, prettify_result
+from label_studio_sdk.converter.utils import (
+    csv_safe,
+    ensure_dir,
+    get_annotator,
+    prettify_result,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -47,14 +52,16 @@ def convert(item_iterator, input_data, output_dir, **kwargs):
     logger.debug(
         f"Prepare done in {time.time()-start_time:0.2f} sec. Write CSV rows now ..."
     )
+    fieldnames = sorted(list(keys))
     with open(output_file, "w", encoding="utf8") as outfile:
         writer = csv.DictWriter(
             outfile,
-            fieldnames=sorted(list(keys)),
+            fieldnames=fieldnames,
             quoting=csv.QUOTE_NONNUMERIC,
             delimiter=kwargs["sep"],
         )
-        writer.writeheader()
+        # column names come from task data keys and control tag names
+        writer.writerow({key: csv_safe(key) for key in fieldnames})
 
         for item in item_iterator(input_data):
             record = prepare_annotation(item, colliding_keys)
@@ -143,7 +150,7 @@ def prepare_annotation(item, colliding_keys=None):
     if "history" in item and item["history"]:
         record["history"] = json.dumps(item["history"], ensure_ascii=False)
 
-    return record
+    return {key: csv_safe(value) for key, value in record.items()}
 
 
 def prepare_annotation_keys(item, colliding_keys=None):

@@ -428,6 +428,13 @@ def get_annotator(item, default=None, int_id=False):
     return str(annotator)
 
 
+def csv_safe(value):
+    """Prevent spreadsheet formula execution in user-controlled text cells."""
+    if isinstance(value, str) and value and value[0] in ("=", "+", "-", "@", "\t", "\r"):
+        return "'" + value
+    return value
+
+
 def get_json_root_type(filename):
     char = "x"
     with open(filename, "r", encoding="utf-8") as f:
