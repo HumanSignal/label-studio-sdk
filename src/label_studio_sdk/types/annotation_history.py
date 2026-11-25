@@ -17,6 +17,11 @@ class AnnotationHistory(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
+    acting_role: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Role the user acted as when making this change; empty for normal work
+    """
+
     action: typing.Optional[AnnotationHistoryActionEnum] = None
     annotation_id: typing.Optional[int] = pydantic.Field(default=None)
     """
