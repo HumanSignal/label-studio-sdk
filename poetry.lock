@@ -571,14 +571,14 @@ markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win
 
 [[package]]
 name = "datamodel-code-generator"
-version = "0.100.0"
+version = "0.102.0"
 description = "Datamodel Code Generator"
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "datamodel_code_generator-0.100.0-py3-none-any.whl", hash = "sha256:741cf80bc55d0d9633da9d022418dec25f5195b538a31fe615b76c4e5e93ca8d"},
-    {file = "datamodel_code_generator-0.100.0.tar.gz", hash = "sha256:3ce827baa887fc362711c7b9876cd5b2e3754a38e54f639f85495963ffaa3351"},
+    {file = "datamodel_code_generator-0.102.0-py3-none-any.whl", hash = "sha256:d6b7fad258ba81d30fbef689feb16587033d07c225cef3d94c8fc6164af7e828"},
+    {file = "datamodel_code_generator-0.102.0.tar.gz", hash = "sha256:d8eee2c54d1bc35d6313dc872f5024c61bc0200078cd6eb41b532f18f8895612"},
 ]
 
 [package.dependencies]
@@ -1953,14 +1953,14 @@ numpy = {version = ">=2", markers = "python_version >= \"3.9\""}
 
 [[package]]
 name = "packaging"
-version = "26.3"
+version = "26.4"
 description = "Core utilities for Python packages"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["main", "dev"]
 files = [
-    {file = "packaging-26.3-py3-none-any.whl", hash = "sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"},
-    {file = "packaging-26.3.tar.gz", hash = "sha256:94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"},
+    {file = "packaging-26.4-py3-none-any.whl", hash = "sha256:81383611a09c1bc0b08b76e0fd5829d7c6824c65b27a6aee339da133f4233ea2"},
+    {file = "packaging-26.4.tar.gz", hash = "sha256:c4b671c41ddb9bf26e543c37723610d28fb6bf7affc4da17cf048d419d2c062a"},
 ]
 markers = {main = "sys_platform != \"emscripten\""}
 

@@ -7,6 +7,7 @@ from ...core.request_options import RequestOptions
 from ...types.assignable_organization_role_enum import AssignableOrganizationRoleEnum
 from ...types.assignable_user_type_enum import AssignableUserTypeEnum
 from ...types.organization_invite import OrganizationInvite
+from ...types.send_invite_response import SendInviteResponse
 from .raw_client import AsyncRawInvitesClient, RawInvitesClient
 
 # this is used as the default value for optional parameters
@@ -99,7 +100,7 @@ class InvitesClient:
         user_type: typing.Optional[AssignableUserTypeEnum] = OMIT,
         workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> SendInviteResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -143,7 +144,8 @@ class InvitesClient:
 
         Returns
         -------
-        None
+        SendInviteResponse
+            Invite sent. skipped_user_ids lists invitees who were not added to the requested projects because they must verify their identity first.
 
         Examples
         --------
@@ -269,7 +271,7 @@ class AsyncInvitesClient:
         user_type: typing.Optional[AssignableUserTypeEnum] = OMIT,
         workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> SendInviteResponse:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -313,7 +315,8 @@ class AsyncInvitesClient:
 
         Returns
         -------
-        None
+        SendInviteResponse
+            Invite sent. skipped_user_ids lists invitees who were not added to the requested projects because they must verify their identity first.
 
         Examples
         --------

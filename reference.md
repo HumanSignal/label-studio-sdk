@@ -33110,7 +33110,7 @@ client.import_storage.s3s.sync(
 </details>
 
 ## Organizations Invites
-<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py#L31-L55">get_invite_link</a>() -> OrganizationInvite</code></summary>
+<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py#L32-L56">get_invite_link</a>() -> OrganizationInvite</code></summary>
 <dl>
 <dd>
 
@@ -33173,7 +33173,7 @@ client.organizations.invites.get_invite_link()
 </dl>
 </details>
 
-<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py#L57-L91">revoke_invite</a>(...)</code></summary>
+<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py#L58-L92">revoke_invite</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -33252,7 +33252,7 @@ client.organizations.invites.revoke_invite(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py#L93-L167">send_email</a>(...)</code></summary>
+<details><summary><code>client.organizations.invites.<a href="src/label_studio_sdk/organizations/invites/client.py#L94-L169">send_email</a>(...) -> SendInviteResponse</code></summary>
 <dl>
 <dd>
 

@@ -13,6 +13,7 @@ from ...errors.forbidden_error import ForbiddenError
 from ...types.assignable_organization_role_enum import AssignableOrganizationRoleEnum
 from ...types.assignable_user_type_enum import AssignableUserTypeEnum
 from ...types.organization_invite import OrganizationInvite
+from ...types.send_invite_response import SendInviteResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -131,7 +132,7 @@ class RawInvitesClient:
         user_type: typing.Optional[AssignableUserTypeEnum] = OMIT,
         workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[None]:
+    ) -> HttpResponse[SendInviteResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -175,7 +176,8 @@ class RawInvitesClient:
 
         Returns
         -------
-        HttpResponse[None]
+        HttpResponse[SendInviteResponse]
+            Invite sent. skipped_user_ids lists invitees who were not added to the requested projects because they must verify their identity first.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/invite/send-email",
@@ -195,7 +197,14 @@ class RawInvitesClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
+                _data = typing.cast(
+                    SendInviteResponse,
+                    construct_type(
+                        type_=SendInviteResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 403:
                 raise ForbiddenError(
                     headers=dict(_response.headers),
@@ -329,7 +338,7 @@ class AsyncRawInvitesClient:
         user_type: typing.Optional[AssignableUserTypeEnum] = OMIT,
         workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[None]:
+    ) -> AsyncHttpResponse[SendInviteResponse]:
         """
         <Card href="https://humansignal.com/goenterprise">
                 <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
@@ -373,7 +382,8 @@ class AsyncRawInvitesClient:
 
         Returns
         -------
-        AsyncHttpResponse[None]
+        AsyncHttpResponse[SendInviteResponse]
+            Invite sent. skipped_user_ids lists invitees who were not added to the requested projects because they must verify their identity first.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/invite/send-email",
@@ -393,7 +403,14 @@ class AsyncRawInvitesClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
+                _data = typing.cast(
+                    SendInviteResponse,
+                    construct_type(
+                        type_=SendInviteResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 403:
                 raise ForbiddenError(
                     headers=dict(_response.headers),

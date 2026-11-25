@@ -309,6 +309,7 @@ if typing.TYPE_CHECKING:
     from .scim_settings_update import ScimSettingsUpdate
     from .scope_enum import ScopeEnum
     from .segmentation_enum import SegmentationEnum
+    from .send_invite_response import SendInviteResponse
     from .serialization_option import SerializationOption
     from .serialization_option_request import SerializationOptionRequest
     from .serialization_options import SerializationOptions
@@ -647,6 +648,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScimSettingsUpdate": ".scim_settings_update",
     "ScopeEnum": ".scope_enum",
     "SegmentationEnum": ".segmentation_enum",
+    "SendInviteResponse": ".send_invite_response",
     "SerializationOption": ".serialization_option",
     "SerializationOptionRequest": ".serialization_option_request",
     "SerializationOptions": ".serialization_options",
@@ -1009,6 +1011,7 @@ __all__ = [
     "ScimSettingsUpdate",
     "ScopeEnum",
     "SegmentationEnum",
+    "SendInviteResponse",
     "SerializationOption",
     "SerializationOptionRequest",
     "SerializationOptions",
