@@ -36228,7 +36228,7 @@ client.projects.roles.get(
 </details>
 
 ## Projects Stats
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L55-L104">data_quality_agreement_confusion_matrix</a>(...) -> DataQualityAgreementConfusionMatrix</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L56-L105">data_quality_agreement_confusion_matrix</a>(...) -> DataQualityAgreementConfusionMatrix</code></summary>
 <dl>
 <dd>
 
@@ -36323,7 +36323,7 @@ client.projects.stats.data_quality_agreement_confusion_matrix(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L106-L142">data_quality_agreement_dimensions</a>(...) -> typing.List[DataQualityAgreementDimensions]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L107-L143">data_quality_agreement_dimensions</a>(...) -> typing.List[DataQualityAgreementDimensions]</code></summary>
 <dl>
 <dd>
 
@@ -36402,7 +36402,7 @@ client.projects.stats.data_quality_agreement_dimensions(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L144-L180">data_quality_agreement_distribution</a>(...) -> DataQualityAgreementDistribution</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L145-L181">data_quality_agreement_distribution</a>(...) -> DataQualityAgreementDistribution</code></summary>
 <dl>
 <dd>
 
@@ -36481,7 +36481,7 @@ client.projects.stats.data_quality_agreement_distribution(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L182-L223">model_version_annotator_agreement</a>(...) -> ModelVersionAnnotatorAgreementStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L183-L224">model_version_annotator_agreement</a>(...) -> ModelVersionAnnotatorAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36569,7 +36569,7 @@ client.projects.stats.model_version_annotator_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L225-L274">model_version_ground_truth_agreement</a>(...) -> ModelVersionGroundTruthAgreementStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L226-L275">model_version_ground_truth_agreement</a>(...) -> ModelVersionGroundTruthAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36665,7 +36665,7 @@ client.projects.stats.model_version_ground_truth_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L276-L325">model_version_prediction_agreement</a>(...) -> ModelVersionPredictionAgreementStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L277-L326">model_version_prediction_agreement</a>(...) -> ModelVersionPredictionAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36761,7 +36761,7 @@ client.projects.stats.model_version_prediction_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L327-L384">iaa</a>(...) -> IaaStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L328-L385">iaa</a>(...) -> IaaStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36872,7 +36872,7 @@ client.projects.stats.iaa(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L386-L436">users_ground_truth_agreement</a>(...) -> UsersGroundTruthAgreementStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L387-L437">users_ground_truth_agreement</a>(...) -> UsersGroundTruthAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -36968,7 +36968,7 @@ client.projects.stats.users_ground_truth_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L438-L477">agreement_annotator</a>(...) -> AgreementAnnotatorStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L439-L478">agreement_annotator</a>(...) -> AgreementAnnotatorStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37056,7 +37056,7 @@ client.projects.stats.agreement_annotator(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L479-L519">agreement_annotators</a>(...) -> AgreementAnnotatorsStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L480-L520">agreement_annotators</a>(...) -> AgreementAnnotatorsStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37144,7 +37144,7 @@ client.projects.stats.agreement_annotators(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L521-L557">data_filters</a>(...) -> DataFiltersStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L522-L558">data_filters</a>(...) -> DataFiltersStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37223,7 +37223,7 @@ client.projects.stats.data_filters(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L559-L598">finished_tasks</a>(...) -> FinishedTasksStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L560-L599">finished_tasks</a>(...) -> FinishedTasksStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37310,7 +37310,7 @@ client.projects.stats.finished_tasks(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L600-L658">label_distribution_counts</a>(...) -> LabelDistributionCountsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L601-L659">label_distribution_counts</a>(...) -> LabelDistributionCountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37422,7 +37422,7 @@ client.projects.stats.label_distribution_counts(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L660-L696">label_distribution_structure</a>(...) -> LabelDistributionStructureResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L661-L697">label_distribution_structure</a>(...) -> LabelDistributionStructureResponse</code></summary>
 <dl>
 <dd>
 
@@ -37501,7 +37501,7 @@ client.projects.stats.label_distribution_structure(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L698-L732">lead_time</a>(...) -> LeadTimeStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L699-L733">lead_time</a>(...) -> LeadTimeStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37580,7 +37580,7 @@ client.projects.stats.lead_time(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L734-L777">member_performance_participants</a>(...) -> typing.List[UserSimple]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L735-L778">member_performance_participants</a>(...) -> typing.List[UserSimple]</code></summary>
 <dl>
 <dd>
 
@@ -37667,7 +37667,7 @@ client.projects.stats.member_performance_participants(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L779-L840">member_performance_rows</a>(...) -> MemberPerformanceRowsStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L780-L857">member_performance_rows</a>(...) -> MemberPerformanceRowsStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37734,6 +37734,14 @@ client.projects.stats.member_performance_rows(
 <dl>
 <dd>
 
+**end:** `typing.Optional[datetime.datetime]` — End of the date range (ISO 8601, inclusive). Pass together with <code>start</code>.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ids:** `typing.Optional[str]` — Comma-separated participant IDs: numeric user IDs and/or synthetic members as <code>model:&lt;version&gt;</code> (annotations table only). When omitted, members and distinct model versions are derived from the project.
     
 </dd>
@@ -37766,6 +37774,14 @@ client.projects.stats.member_performance_rows(
 <dl>
 <dd>
 
+**start:** `typing.Optional[datetime.datetime]` — Start of the date range (ISO 8601, inclusive). Pass together with <code>end</code>. Each metric is dated like Analytics &gt; Member Performance: annotation work by the last submit or update, review work by the review, time by when it was spent. Agreement and evaluation metrics are all-time.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **table:** `typing.Optional[MemberPerformanceRowsStatsRequestTable]` — Which table to load: "annotations" or "reviews".
     
 </dd>
@@ -37786,7 +37802,7 @@ client.projects.stats.member_performance_rows(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L842-L891">member_performance_summary</a>(...) -> MemberPerformanceSummaryStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L859-L916">member_performance_summary</a>(...) -> MemberPerformanceSummaryStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -37853,7 +37869,23 @@ client.projects.stats.member_performance_summary(
 <dl>
 <dd>
 
+**end:** `typing.Optional[datetime.datetime]` — End of the date range (ISO 8601, inclusive). Pass together with <code>start</code>.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ids:** `typing.Optional[str]` — Comma-separated participant IDs: numeric user IDs and/or <code>model:&lt;version&gt;</code> for annotations. When omitted, derived from the project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[datetime.datetime]` — Start of the date range (ISO 8601, inclusive). Pass together with <code>end</code>. Each metric is dated like Analytics &gt; Member Performance: annotation work by the last submit or update, review work by the review, time by when it was spent. Agreement and evaluation metrics are all-time.
     
 </dd>
 </dl>
@@ -37881,7 +37913,7 @@ client.projects.stats.member_performance_summary(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L893-L938">total_agreement</a>(...) -> typing.Optional[TotalAgreementStatsResponse]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L918-L963">total_agreement</a>(...) -> typing.Optional[TotalAgreementStatsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -37970,7 +38002,7 @@ client.projects.stats.total_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L940-L983">update_stats</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L965-L1008">update_stats</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -38057,7 +38089,7 @@ client.projects.stats.update_stats(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L985-L1035">users_prediction_agreement</a>(...) -> UsersPredictionAgreementStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L1010-L1060">users_prediction_agreement</a>(...) -> UsersPredictionAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -38153,7 +38185,7 @@ client.projects.stats.users_prediction_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L1037-L1087">users_review_score</a>(...) -> UsersReviewScoreStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L1062-L1112">users_review_score</a>(...) -> UsersReviewScoreStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -38249,7 +38281,7 @@ client.projects.stats.users_review_score(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L1089-L1138">user_prediction_agreement</a>(...) -> UserPredictionAgreementStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L1114-L1163">user_prediction_agreement</a>(...) -> UserPredictionAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -38345,7 +38377,7 @@ client.projects.stats.user_prediction_agreement(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L1140-L1189">user_review_score</a>(...) -> UserReviewScoreStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L1165-L1214">user_review_score</a>(...) -> UserReviewScoreStatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -38441,7 +38473,7 @@ client.projects.stats.user_review_score(
 </dl>
 </details>
 
-<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L1191-L1240">user_ground_truth_agreement</a>(...) -> UserGroundTruthAgreementStatsResponse</code></summary>
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py#L1216-L1265">user_ground_truth_agreement</a>(...) -> UserGroundTruthAgreementStatsResponse</code></summary>
 <dl>
 <dd>
 
